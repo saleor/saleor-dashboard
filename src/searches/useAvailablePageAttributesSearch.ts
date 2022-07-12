@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchAvailablePageAttributesDocument,
   SearchAvailablePageAttributesQuery,
-  SearchAvailablePageAttributesQueryVariables
+  SearchAvailablePageAttributesQueryVariables,
 } from "@saleor/graphql";
 import makeSearch from "@saleor/hooks/makeSearch";
 
@@ -54,15 +54,15 @@ export default makeSearch<
             ...prev.pageType.availableAttributes,
             edges: [
               ...prev.pageType.availableAttributes.edges,
-              ...next.pageType.availableAttributes.edges
+              ...next.pageType.availableAttributes.edges,
             ],
-            pageInfo: next.pageType.availableAttributes.pageInfo
-          }
-        }
+            pageInfo: next.pageType.availableAttributes.pageInfo,
+          },
+        },
       };
     },
     {
-      after: result.data.pageType.availableAttributes.pageInfo.endCursor
-    }
-  )
+      after: result.data.pageType.availableAttributes.pageInfo.endCursor,
+    },
+  ),
 );

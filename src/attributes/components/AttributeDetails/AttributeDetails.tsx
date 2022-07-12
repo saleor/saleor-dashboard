@@ -7,7 +7,7 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
-  AttributeInputTypeEnum
+  AttributeInputTypeEnum,
 } from "@saleor/graphql";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -26,13 +26,13 @@ const entityTypeMessages = defineMessages({
   page: {
     id: "Iafyt5",
     defaultMessage: "Pages",
-    description: "page attribute entity type"
+    description: "page attribute entity type",
   },
   product: {
     id: "5TUpjG",
     defaultMessage: "Products",
-    description: "product attribute entity type"
-  }
+    description: "product attribute entity type",
+  },
 });
 
 const useStyles = makeStyles(
@@ -42,11 +42,11 @@ const useStyles = makeStyles(
       display: "flex",
       [theme.breakpoints.down("md")]: {
         flexFlow: "wrap",
-        rowGap: theme.spacing(3)
-      }
-    }
+        rowGap: theme.spacing(3),
+      },
+    },
   }),
-  { name: "AttributeDetails" }
+  { name: "AttributeDetails" },
 );
 
 export interface AttributeDetailsProps
@@ -70,66 +70,66 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     disabled,
     apiErrors,
     onChange,
-    set
+    set,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const inputTypeChoices = [
     {
       label: intl.formatMessage(inputTypeMessages.dropdown),
-      value: AttributeInputTypeEnum.DROPDOWN
+      value: AttributeInputTypeEnum.DROPDOWN,
     },
     {
       label: intl.formatMessage(inputTypeMessages.multiselect),
-      value: AttributeInputTypeEnum.MULTISELECT
+      value: AttributeInputTypeEnum.MULTISELECT,
     },
     {
       label: intl.formatMessage(inputTypeMessages.file),
-      value: AttributeInputTypeEnum.FILE
+      value: AttributeInputTypeEnum.FILE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.references),
-      value: AttributeInputTypeEnum.REFERENCE
+      value: AttributeInputTypeEnum.REFERENCE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.text),
-      value: AttributeInputTypeEnum.RICH_TEXT
+      value: AttributeInputTypeEnum.RICH_TEXT,
     },
     {
       label: intl.formatMessage(inputTypeMessages.numeric),
-      value: AttributeInputTypeEnum.NUMERIC
+      value: AttributeInputTypeEnum.NUMERIC,
     },
     {
       label: intl.formatMessage(inputTypeMessages.boolean),
-      value: AttributeInputTypeEnum.BOOLEAN
+      value: AttributeInputTypeEnum.BOOLEAN,
     },
     {
       label: intl.formatMessage(inputTypeMessages.date),
-      value: AttributeInputTypeEnum.DATE
+      value: AttributeInputTypeEnum.DATE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.dateTime),
-      value: AttributeInputTypeEnum.DATE_TIME
+      value: AttributeInputTypeEnum.DATE_TIME,
     },
     {
       label: intl.formatMessage(inputTypeMessages.swatch),
-      value: AttributeInputTypeEnum.SWATCH
-    }
+      value: AttributeInputTypeEnum.SWATCH,
+    },
   ];
   const entityTypeChoices = [
     {
       label: intl.formatMessage(entityTypeMessages.page),
-      value: AttributeEntityTypeEnum.PAGE
+      value: AttributeEntityTypeEnum.PAGE,
     },
     {
       label: intl.formatMessage(entityTypeMessages.product),
-      value: AttributeEntityTypeEnum.PRODUCT
-    }
+      value: AttributeEntityTypeEnum.PRODUCT,
+    },
   ];
 
   const formApiErrors = getFormErrors(
     ["name", "slug", "inputType", "entityType", "unit"],
-    apiErrors
+    apiErrors,
   );
 
   return (

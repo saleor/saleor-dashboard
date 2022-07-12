@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AttributeDeleteDialog, {
-  AttributeDeleteDialogProps
+  AttributeDeleteDialogProps,
 } from "../../../attributes/components/AttributeDeleteDialog";
 import Decorator from "../../Decorator";
 
@@ -11,7 +11,7 @@ const props: AttributeDeleteDialogProps = {
   name: "Size",
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Attributes / Attribute delete", module)

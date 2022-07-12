@@ -4,7 +4,7 @@ import {
   CountryCode,
   DateRangeInput,
   OrderStatus,
-  PaymentChargeStatusEnum
+  PaymentChargeStatusEnum,
 } from "@saleor/graphql";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
@@ -17,13 +17,13 @@ import {
   commonStatusMessages,
   errorMessages,
   orderStatusMessages,
-  paymentStatusMessages
+  paymentStatusMessages,
 } from "./intl";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
   StatusType,
-  UserError
+  UserError,
 } from "./types";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
@@ -46,9 +46,9 @@ export function renderCollection<T>(
   renderItem: (
     item: T | undefined,
     index: number | undefined,
-    collection: T[]
+    collection: T[],
   ) => any,
-  renderEmpty?: (collection: T[]) => any
+  renderEmpty?: (collection: T[]) => any,
 ) {
   if (collection === undefined) {
     return renderItem(undefined, undefined, collection);
@@ -75,105 +75,105 @@ export const removeDoubleSlashes = (url: string) =>
 
 export const transformPaymentStatus = (
   status: string,
-  intl: IntlShape
+  intl: IntlShape,
 ): { localized: string; status: StatusType } => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
     case PaymentChargeStatusEnum.FULLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
-        status: StatusType.SUCCESS
+        status: StatusType.SUCCESS,
       };
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
     case PaymentChargeStatusEnum.PENDING:
       return {
         localized: intl.formatMessage(paymentStatusMessages.pending),
-        status: StatusType.WARNING
+        status: StatusType.WARNING,
       };
     case PaymentChargeStatusEnum.REFUSED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refused),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
     case PaymentChargeStatusEnum.CANCELLED:
       return {
         localized: intl.formatMessage(commonStatusMessages.cancelled),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
     case PaymentChargeStatusEnum.NOT_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
   }
   return {
     localized: status,
-    status: StatusType.ERROR
+    status: StatusType.ERROR,
   };
 };
 
 export const transformOrderStatus = (
   status: string,
-  intl: IntlShape
+  intl: IntlShape,
 ): { localized: string; status: StatusType } => {
   switch (status) {
     case OrderStatus.FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.fulfilled),
-        status: StatusType.SUCCESS
+        status: StatusType.SUCCESS,
       };
     case OrderStatus.PARTIALLY_FULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-        status: StatusType.WARNING
+        status: StatusType.WARNING,
       };
     case OrderStatus.UNFULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
     case OrderStatus.CANCELED:
       return {
         localized: intl.formatMessage(commonStatusMessages.cancelled),
-        status: StatusType.ERROR
+        status: StatusType.ERROR,
       };
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
     case OrderStatus.PARTIALLY_RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
-        status: StatusType.INFO
+        status: StatusType.INFO,
       };
   }
   return {
     localized: status,
-    status: StatusType.ERROR
+    status: StatusType.ERROR,
   };
 };
 
@@ -188,7 +188,7 @@ export const transformAddressToForm = (data?: AddressType) => ({
   phone: data?.phone || "",
   postalCode: data?.postalCode || "",
   streetAddress1: data?.streetAddress1 || "",
-  streetAddress2: data?.streetAddress2 || ""
+  streetAddress2: data?.streetAddress2 || "",
 });
 
 export function maybe<T>(exp: () => T): T | undefined;
@@ -204,7 +204,7 @@ export function maybe(exp: any, d?: any) {
 
 export function only<T>(obj: T, key: keyof T): boolean {
   return Object.keys(obj).every(objKey =>
-    objKey === key ? obj[key] !== undefined : obj[key] === undefined
+    objKey === key ? obj[key] !== undefined : obj[key] === undefined,
   );
 }
 
@@ -247,7 +247,7 @@ export const extractMutationErrors = async <
   TPromise extends Promise<FetchResult<TData>>,
   TErrors extends ReturnType<typeof getMutationErrors>
 >(
-  submitPromise: TPromise
+  submitPromise: TPromise,
 ): Promise<TErrors> => {
   const result = await submitPromise;
 
@@ -261,14 +261,14 @@ export const getMutationErrors = <
   TData extends T["data"],
   TErrors extends TData[keyof TData]["errors"]
 >(
-  result: T
+  result: T,
 ): TErrors[] => {
   if (!result?.data) {
     return [] as TErrors;
   }
   return Object.values(result.data).reduce(
     (acc: TErrors[], mut: TData) => [...acc, ...(mut.errors || [])],
-    [] as TErrors[]
+    [] as TErrors[],
   ) as TErrors;
 };
 
@@ -282,18 +282,18 @@ export function getMutationStatus<
 
 export function getMutationProviderData<TData, TVariables>(
   mutateFn: MutationFunction<TData, TVariables>,
-  opts: MutationResult<TData> & MutationResultAdditionalProps
+  opts: MutationResult<TData> & MutationResultAdditionalProps,
 ): PartialMutationProviderOutput<TData, TVariables> {
   return {
     mutate: variables => mutateFn({ variables }),
-    opts
+    opts,
   };
 }
 
 export const parseLogMessage = ({
   intl,
   code,
-  field
+  field,
 }: {
   intl: IntlShape;
   code: string;
@@ -304,8 +304,8 @@ export const parseLogMessage = ({
     fieldError:
       field &&
       intl.formatMessage(errorMessages.codeErrorFieldMessage, {
-        fieldName: field
-      })
+        fieldName: field,
+      }),
   });
 
 interface User {
@@ -337,7 +337,7 @@ interface AnyEventWithPropagation {
   stopPropagation: () => void;
 }
 export function stopPropagation<T extends AnyEventWithPropagation>(
-  cb: (event?: T) => void
+  cb: (event?: T) => void,
 ) {
   return (event: T) => {
     event.stopPropagation();
@@ -349,7 +349,7 @@ interface AnyEventWithPreventDefault {
   preventDefault: () => void;
 }
 export function preventDefault<T extends AnyEventWithPreventDefault>(
-  cb: (event?: T) => void
+  cb: (event?: T) => void,
 ) {
   return (event: T) => {
     event.preventDefault();
@@ -375,7 +375,7 @@ export function splitDateTime(dateTime: string) {
   if (!dateTime) {
     return {
       date: "",
-      time: ""
+      time: "",
     };
   }
   // Default html input format YYYY-MM-DD HH:mm
@@ -384,7 +384,7 @@ export function splitDateTime(dateTime: string) {
     .split(" ");
   return {
     date: splitDateTime[0],
-    time: splitDateTime[1]
+    time: splitDateTime[1],
   };
 }
 
@@ -412,7 +412,7 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
 
 export function findValueInEnum<TEnum extends {}>(
   needle: string,
-  haystack: TEnum
+  haystack: TEnum,
 ): TEnum[keyof TEnum] {
   const match = Object.entries(haystack).find(([_, value]) => value === needle);
 
@@ -435,17 +435,17 @@ export function capitalize(s: string) {
 }
 
 export function transformFormToAddressInput<T>(
-  address: T & AddressTypeInput
+  address: T & AddressTypeInput,
 ): T & AddressInput {
   return {
     ...address,
-    country: findInEnum(address.country, CountryCode)
+    country: findInEnum(address.country, CountryCode),
   };
 }
 
 export function getStringOrPlaceholder(
   s: string | undefined,
-  placeholder?: string
+  placeholder?: string,
 ): string {
   return s || placeholder || "...";
 }
@@ -461,7 +461,7 @@ export const getDatePeriod = (days: number): DateRangeInput => {
 
   return {
     gte: start.format(format),
-    lte: end.format(format)
+    lte: end.format(format),
   };
 };
 
@@ -478,11 +478,11 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   phone: data?.phone || "",
   postalCode: data?.postalCode || "",
   streetAddress1: data?.streetAddress1 || "",
-  streetAddress2: data?.streetAddress2 || ""
+  streetAddress2: data?.streetAddress2 || "",
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(
-  data: T
+  data: T,
 ) {
   if (!data || !data.firstName || !data.lastName) {
     return "";
@@ -523,7 +523,7 @@ export function PromiseQueue() {
 
 export const combinedMultiAutocompleteChoices = (
   selected: MultiAutocompleteChoiceType[],
-  choices: MultiAutocompleteChoiceType[]
+  choices: MultiAutocompleteChoiceType[],
 ) => uniqBy([...selected, ...choices], "value");
 
 export const isInDevelopment =

@@ -5,15 +5,15 @@ export function createShippingRate({
   shippingZone,
   type = "PRICE",
   maxWeight,
-  minWeight
+  minWeight,
 }) {
   const maxOrderWeight = getValueWithDefault(
     maxWeight,
-    `maximumOrderWeight: ${maxWeight}`
+    `maximumOrderWeight: ${maxWeight}`,
   );
   const minOrderWeight = getValueWithDefault(
     minWeight,
-    `minimumOrderWeight: ${minWeight}`
+    `minimumOrderWeight: ${minWeight}`,
   );
 
   const mutation = `mutation{
@@ -40,7 +40,7 @@ export function createShippingRate({
 export function createShippingZone(name, country, channelId) {
   const channelsLines = getValueWithDefault(
     channelId,
-    `addChannels:["${channelId}"]`
+    `addChannels:["${channelId}"]`,
   );
   const mutation = `mutation{
     shippingZoneCreate(input:{
@@ -68,7 +68,7 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
     shippingZoneUpdate(id:"${shippingZoneId}", input:{
       addChannels:["${channelId}"]
     }){
-      shippingErrors{
+      errors{
         field
         message
       }
@@ -81,7 +81,7 @@ export function addChannelToShippingMethod(
   shippingRateId,
   channelId,
   price,
-  minProductPrice = 0
+  minProductPrice = 0,
 ) {
   const mutation = `mutation{
     shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
@@ -106,7 +106,7 @@ export function addChannelToShippingMethod(
 export function deleteShippingZone(shippingZoneId) {
   const mutation = `mutation{
           shippingZoneDelete(id:"${shippingZoneId}"){
-            shippingErrors{
+            errors{
               message
             }
           }

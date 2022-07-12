@@ -10,7 +10,7 @@ const Pages = createSvgIcon(
       fill="#06847B"
     />
   </>,
-  "Pages"
+  "Pages",
 );
 
 export default Pages;

@@ -16,11 +16,11 @@ function getDefaultModeActions(
   intl: IntlShape,
   navigate: UseNavigatorResult,
   createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
-  setMode: (mode: QuickSearchMode) => void
+  setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchAction[] {
   return [
     ...searchInViews(query, intl, navigate),
-    ...searchInCommands(query, intl, navigate, createOrder, setMode)
+    ...searchInCommands(query, intl, navigate, createOrder, setMode),
   ]
     .filter(action => action.score >= threshold)
     .sort(sortScores)

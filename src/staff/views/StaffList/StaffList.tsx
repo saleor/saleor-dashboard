@@ -1,7 +1,7 @@
 import { newPasswordUrl } from "@saleor/auth/urls";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -12,7 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
@@ -28,14 +28,14 @@ import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
 import StaffAddMemberDialog, {
-  AddMemberFormData
+  AddMemberFormData,
 } from "../../components/StaffAddMemberDialog";
 import StaffListPage from "../../components/StaffListPage";
 import {
   staffListUrl,
   StaffListUrlDialog,
   StaffListUrlQueryParams,
-  staffMemberDetailsUrl
+  staffMemberDetailsUrl,
 } from "../../urls";
 import {
   deleteFilterTab,
@@ -45,7 +45,7 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -57,7 +57,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(
-    ListViews.STAFF_MEMBERS_LIST
+    ListViews.STAFF_MEMBERS_LIST,
   );
   const intl = useIntl();
 
@@ -68,18 +68,18 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      staffUsers: true
-    }
+      staffUsers: true,
+    },
   });
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
@@ -87,17 +87,17 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       if (data.staffCreate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
       }
-    }
+    },
   });
 
   const paginationValues = usePaginator({
     pageInfo: staffQueryData?.staffUsers.pageInfo,
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const handleSort = createSortHandler(navigate, staffListUrl, params);
@@ -109,12 +109,12 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     createUrl: staffListUrl,
     getFilterQueryParam,
     navigate,
-    params
+    params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -126,8 +126,8 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     navigate(
       staffListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -144,9 +144,9 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const {
     loadMore: loadMorePermissionGroups,
     search: searchPermissionGroups,
-    result: searchPermissionGroupsOpts
+    result: searchPermissionGroupsOpts,
   } = usePermissionGroupSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const handleStaffMemberAdd = (variables: AddMemberFormData) =>
@@ -160,10 +160,10 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
           redirectUrl: urlJoin(
             window.location.origin,
             APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
-            newPasswordUrl().replace(/\?/, "")
-          )
-        }
-      }
+            newPasswordUrl().replace(/\?/, ""),
+          ),
+        },
+      },
     });
 
   return (
@@ -190,7 +190,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       />
       <StaffAddMemberDialog
         availablePermissionGroups={mapEdgesToItems(
-          searchPermissionGroupsOpts?.data?.search
+          searchPermissionGroupsOpts?.data?.search,
         )}
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""
@@ -202,7 +202,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         fetchMorePermissionGroups={{
           hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
           loading: searchPermissionGroupsOpts.loading,
-          onFetchMore: loadMorePermissionGroups
+          onFetchMore: loadMorePermissionGroups,
         }}
         onSearchChange={searchPermissionGroups}
       />

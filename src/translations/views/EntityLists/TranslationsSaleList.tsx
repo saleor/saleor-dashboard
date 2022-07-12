@@ -3,7 +3,7 @@ import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -13,17 +13,17 @@ import { sumCompleted } from "./utils";
 
 const TranslationsSaleList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
   const { data, loading } = useSaleTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: data?.translations?.pageInfo,
     paginationState: variables,
-    queryString: params
+    queryString: params,
   });
 
   return (
@@ -35,11 +35,11 @@ const TranslationsSaleList: React.FC<TranslationsEntityListProps> = ({
             node.__typename === "SaleTranslatableContent" && {
               completion: {
                 current: sumCompleted([node.translation?.name]),
-                max: 1
+                max: 1,
               },
               id: node.sale?.id,
-              name: node.sale?.name
-            }
+              name: node.sale?.name,
+            },
         )}
         getRowHref={id =>
           languageEntityUrl(variables.language, TranslatableEntities.sales, id)

@@ -4,7 +4,7 @@ import { Button } from "@saleor/components/Button";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
-  usePageListQuery
+  usePageListQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -13,7 +13,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -29,7 +29,7 @@ import PageListPage from "../../components/PageListPage/PageListPage";
 import {
   pageListUrl,
   PageListUrlDialog,
-  PageListUrlQueryParams
+  PageListUrlQueryParams,
 } from "../../urls";
 import { getFilterVariables, getSortQueryVariables } from "./sort";
 
@@ -41,10 +41,10 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.PAGES_LIST
+    ListViews.PAGES_LIST,
   );
 
   usePaginationReset(pageListUrl, params, settings.rowNumber);
@@ -56,19 +56,19 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = usePageListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.pages.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -85,13 +85,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           text: intl.formatMessage({
             id: "41z2Qi",
             defaultMessage: "Removed pages",
-            description: "notification"
-          })
+            description: "notification",
+          }),
         });
         reset();
         refetch();
       }
-    }
+    },
   });
 
   const [bulkPagePublish, bulkPagePublishOpts] = usePageBulkPublishMutation({
@@ -103,13 +103,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           text: intl.formatMessage({
             id: "AzshS2",
             defaultMessage: "Published pages",
-            description: "notification"
-          })
+            description: "notification",
+          }),
         });
         reset();
         refetch();
       }
-    }
+    },
   });
 
   const handleSort = createSortHandler(navigate, pageListUrl, params);
@@ -124,7 +124,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onSort={handleSort}
         actionDialogOpts={{
           open: openModal,
-          close: closeModal
+          close: closeModal,
         }}
         params={params}
         toolbar={
@@ -132,7 +132,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             <Button
               onClick={() =>
                 openModal("unpublish", {
-                  ids: listElements
+                  ids: listElements,
                 })
               }
             >
@@ -145,7 +145,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             <Button
               onClick={() =>
                 openModal("publish", {
-                  ids: listElements
+                  ids: listElements,
                 })
               }
             >
@@ -160,7 +160,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
               color="primary"
               onClick={() =>
                 openModal("remove", {
-                  ids: listElements
+                  ids: listElements,
                 })
               }
             >
@@ -182,14 +182,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           bulkPagePublish({
             variables: {
               ids: params.ids,
-              isPublished: true
-            }
+              isPublished: true,
+            },
           })
         }
         title={intl.formatMessage({
           id: "wyvzh9",
           defaultMessage: "Publish Pages",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -199,7 +199,9 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             description="dialog content"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+              displayQuantity: (
+                <strong>{maybe(() => params.ids.length)}</strong>
+              ),
             }}
           />
         </DialogContentText>
@@ -212,14 +214,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           bulkPagePublish({
             variables: {
               ids: params.ids,
-              isPublished: false
-            }
+              isPublished: false,
+            },
           })
         }
         title={intl.formatMessage({
           id: "yHQQMQ",
           defaultMessage: "Unpublish Pages",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <FormattedMessage
@@ -228,7 +230,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           description="dialog content"
           values={{
             counter: maybe(() => params.ids.length),
-            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
           }}
         />
       </ActionDialog>
@@ -239,15 +241,15 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onConfirm={() =>
           bulkPageRemove({
             variables: {
-              ids: params.ids
-            }
+              ids: params.ids,
+            },
           })
         }
         variant="delete"
         title={intl.formatMessage({
           id: "3Sz1/t",
           defaultMessage: "Delete Pages",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <FormattedMessage
@@ -256,7 +258,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           description="dialog content"
           values={{
             counter: maybe(() => params.ids.length),
-            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>
+            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
           }}
         />
       </ActionDialog>

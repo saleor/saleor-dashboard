@@ -17,7 +17,7 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
   quantity,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -30,7 +30,7 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
       title={intl.formatMessage({
         id: "lT5MYM",
         defaultMessage: "Unassign users",
-        description: "dialog title"
+        description: "dialog title",
       })}
       variant="delete"
     >
@@ -41,7 +41,7 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
           description="dialog content"
           values={{
             counter: quantity,
-            displayQuantity: <strong>{quantity}</strong>
+            displayQuantity: <strong>{quantity}</strong>,
           }}
         />
       </DialogContentText>

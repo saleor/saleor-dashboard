@@ -1,7 +1,7 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 import {
   ChannelSaleFormData,
-  SaleDetailsPageFormData
+  SaleDetailsPageFormData,
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
@@ -27,16 +27,16 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
       change({
         target: {
           name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER
-        }
+          value: VoucherTypeEnum.ENTIRE_ORDER,
+        },
       });
     } else if (event.target.value === DiscountTypeEnum.SHIPPING) {
       // if currently type should be shipping
       change({
         target: {
           name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER
-        }
+          value: VoucherTypeEnum.ENTIRE_ORDER,
+        },
       });
     }
     change(event);
@@ -46,11 +46,11 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
 export function createChannelsChangeHandler(
   channelListings: ChannelVoucherData[],
   updateChannels: (data: ChannelVoucherData[]) => void,
-  triggerChange: () => void
+  triggerChange: () => void,
 ) {
   return (id: string, input: ChannelInput) => {
     const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
+      channel => channel.id === id,
     );
     const channel = channelListings[channelIndex];
     const { discountValue, minSpent } = input;
@@ -61,10 +61,10 @@ export function createChannelsChangeHandler(
         ...(minSpent !== undefined
           ? { minSpent }
           : {
-              discountValue
-            })
+              discountValue,
+            }),
       },
-      ...channelListings.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1),
     ];
     updateChannels(updatedChannels);
     triggerChange();
@@ -75,11 +75,11 @@ export function createSaleChannelsChangeHandler(
   channelListings: ChannelSaleFormData[],
   updateChannels: (data: ChannelSaleFormData[]) => void,
   triggerChange: () => void,
-  saleType: SaleType
+  saleType: SaleType,
 ) {
   return (id: string, passedValue: string) => {
     const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
+      channel => channel.id === id,
     );
     const channel = channelListings[channelIndex];
     const { percentageValue, fixedValue } = channel;
@@ -93,9 +93,9 @@ export function createSaleChannelsChangeHandler(
       {
         ...channel,
         fixedValue: newFixed,
-        percentageValue: newPercentage
+        percentageValue: newPercentage,
       },
-      ...channelListings.slice(channelIndex + 1)
+      ...channelListings.slice(channelIndex + 1),
     ];
 
     updateChannels(updatedChannels);
@@ -106,7 +106,7 @@ export function createSaleChannelsChangeHandler(
 export const getChannelsVariables = (
   id: string,
   formData: VoucherDetailsPageFormData,
-  prevChannels?: ChannelVoucherData[]
+  prevChannels?: ChannelVoucherData[],
 ) => {
   const initialIds = prevChannels.map(channel => channel.id);
   const modifiedIds = formData.channelListings.map(channel => channel.id);
@@ -128,17 +128,17 @@ export const getChannelsVariables = (
               ? null
               : formData.requirementsPicker === RequirementsPicker.ITEM
               ? 0
-              : channel.minSpent
+              : channel.minSpent,
         })) || [],
-      removeChannels: idsDiff.removed
-    }
+      removeChannels: idsDiff.removed,
+    },
   };
 };
 
 export const getSaleChannelsVariables = (
   id: string,
   formData: SaleDetailsPageFormData,
-  prevChannelsIds?: string[]
+  prevChannelsIds?: string[],
 ) => {
   const modifiedIds = formData.channelListings.map(channel => channel.id);
 
@@ -153,9 +153,9 @@ export const getSaleChannelsVariables = (
           discountValue:
             formData.type === SaleType.FIXED
               ? channel.fixedValue
-              : channel.percentageValue
+              : channel.percentageValue,
         })) || [],
-      removeChannels: idsDiff.removed
-    }
+      removeChannels: idsDiff.removed,
+    },
   };
 };

@@ -16,7 +16,7 @@ type FilterNumericFieldProps = FilterFieldBaseProps<
 export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
   filter,
   onFilterPropertyChange,
-  currencySymbol
+  currencySymbol,
 }) => {
   const classes = useCommonStyles({});
   const isMultiple = filter.multiple;
@@ -26,10 +26,10 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
       payload: {
         name: filter.name,
         update: {
-          value
-        }
+          value,
+        },
       },
-      type: "set-property"
+      type: "set-property",
     });
 
   return (
@@ -45,10 +45,10 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
           name={filter.name + (isMultiple ? "_min" : "")}
           InputProps={{
             classes: {
-              input: classes.input
+              input: classes.input,
             },
             type: "number",
-            endAdornment: filter.type === FieldType.price && currencySymbol
+            endAdornment: filter.type === FieldType.price && currencySymbol,
           }}
           value={filter.value[0]}
           onChange={({ target: { value } }) =>
@@ -77,10 +77,10 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
               name={filter.name + "_max"}
               InputProps={{
                 classes: {
-                  input: classes.input
+                  input: classes.input,
                 },
                 type: "number",
-                endAdornment: filter.type === FieldType.price && currencySymbol
+                endAdornment: filter.type === FieldType.price && currencySymbol,
               }}
               value={filter.value[1]}
               onChange={event =>

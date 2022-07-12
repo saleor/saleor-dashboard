@@ -7,7 +7,7 @@ function getPosition(anchor?: HTMLElement): Position {
   if (!!anchor) {
     return {
       x: anchor.scrollLeft,
-      y: anchor.scrollTop
+      y: anchor.scrollTop,
     };
   }
   return undefined;
@@ -16,7 +16,7 @@ function getPosition(anchor?: HTMLElement): Position {
 export function isScrolledToBottom(
   anchor: MutableRefObject<HTMLElement>,
   position: Position,
-  offset: number = 0
+  offset: number = 0,
 ) {
   return !!anchor.current && position
     ? position.y + anchor.current.clientHeight + offset >=
@@ -31,7 +31,7 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
     if (!!anchor.current) {
       const handleScroll = throttle(
         () => setScroll(getPosition(anchor.current)),
-        100
+        100,
       );
       anchor.current.addEventListener("scroll", handleScroll);
 

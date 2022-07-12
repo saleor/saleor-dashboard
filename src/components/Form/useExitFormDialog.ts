@@ -4,7 +4,7 @@ import {
   ExitFormDialogContext,
   ExitFormDialogData,
   SubmitFn,
-  WithFormId
+  WithFormId,
 } from "./ExitFormDialogProvider";
 
 export interface UseExitFormDialogResult
@@ -20,7 +20,7 @@ export interface UseExitFormDialogProps {
 }
 
 export const useExitFormDialog = (
-  { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined }
+  { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined },
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol()).current;
 
@@ -28,7 +28,7 @@ export const useExitFormDialog = (
   const {
     setIsDirty,
     setIsSubmitDisabled,
-    setExitDialogSubmitRef
+    setExitDialogSubmitRef,
   } = exitDialogProps;
 
   React.useEffect(() => {
@@ -42,6 +42,6 @@ export const useExitFormDialog = (
     formId: id,
     setIsDirty: (value: boolean) => setIsDirty(id, value),
     setExitDialogSubmitRef: (submitFn: SubmitFn) =>
-      setExitDialogSubmitRef(id, submitFn)
+      setExitDialogSubmitRef(id, submitFn),
   };
 };

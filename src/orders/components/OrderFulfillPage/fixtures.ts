@@ -30,10 +30,10 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
               {
                 __typename: "AttributeValue",
                 id: "QXR0cmlidXRlVmFsdWU6MzY=",
-                name: "S"
-              }
-            ]
-          }
+                name: "S",
+              },
+            ],
+          },
         ],
         stocks: [
           {
@@ -41,36 +41,36 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
             id: "U3RvY2s6NTIy",
             warehouse: warehouseList[0],
             quantity: 1217,
-            quantityAllocated: 10
+            quantityAllocated: 10,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTIx",
             warehouse: warehouseList[1],
             quantity: 1217,
-            quantityAllocated: 20
+            quantityAllocated: 20,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTIz",
             warehouse: warehouseList[2],
             quantity: 1217,
-            quantityAllocated: 4
+            quantityAllocated: 4,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTI0",
             warehouse: warehouseList[3],
             quantity: 1220,
-            quantityAllocated: 7
-          }
+            quantityAllocated: 7,
+          },
         ],
-        trackInventory: false
+        trackInventory: false,
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage.default
-      }
+        url: placeholderImage.default,
+      },
     },
     {
       __typename: "OrderLine",
@@ -94,10 +94,10 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
               {
                 __typename: "AttributeValue",
                 id: "QXR0cmlidXRlVmFsdWU6NjE=",
-                name: "2.5l"
-              }
-            ]
-          }
+                name: "2.5l",
+              },
+            ],
+          },
         ],
         stocks: [
           {
@@ -105,29 +105,29 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
             id: "U3RvY2s6NTI=",
             warehouse: warehouseList[1],
             quantity: 760,
-            quantityAllocated: 2
+            quantityAllocated: 2,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTE=",
             warehouse: warehouseList[2],
             quantity: 760,
-            quantityAllocated: 33
+            quantityAllocated: 33,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTM=",
             warehouse: warehouseList[3],
             quantity: 760,
-            quantityAllocated: 4
-          }
+            quantityAllocated: 4,
+          },
         ],
-        trackInventory: true
+        trackInventory: true,
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage.default
-      }
+        url: placeholderImage.default,
+      },
     },
     {
       __typename: "OrderLine",
@@ -151,10 +151,10 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
               {
                 __typename: "AttributeValue",
                 id: "QXR0cmlidXRlVmFsdWU6NjI=",
-                name: "5l"
-              }
-            ]
-          }
+                name: "5l",
+              },
+            ],
+          },
         ],
         stocks: [
           {
@@ -162,23 +162,23 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
             id: "U3RvY2s6NTc=",
             warehouse: warehouseList[0],
             quantity: 587,
-            quantityAllocated: 0
+            quantityAllocated: 0,
           },
           {
             __typename: "Stock",
             id: "U3RvY2s6NTY=",
             warehouse: warehouseList[2],
             quantity: 587,
-            quantityAllocated: 1
-          }
+            quantityAllocated: 1,
+          },
         ],
-        trackInventory: true
+        trackInventory: true,
       },
       thumbnail: {
         __typename: "Image",
-        url: placeholderImage.default
-      }
-    }
+        url: placeholderImage.default,
+      },
+    },
   ],
-  number: "9123"
+  number: "9123",
 };

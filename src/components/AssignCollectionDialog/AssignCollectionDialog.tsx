@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, {
-  AssignContainerDialogProps
+  AssignContainerDialogProps,
 } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
@@ -26,9 +26,9 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
         placeholder: intl.formatMessage(
-          messages.assignCollectionDialogPlaceholder
+          messages.assignCollectionDialogPlaceholder,
         ),
-        confirmBtn: intl.formatMessage(messages.confirmBtn)
+        confirmBtn: intl.formatMessage(messages.confirmBtn),
       }}
       {...rest}
     />

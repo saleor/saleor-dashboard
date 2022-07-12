@@ -3,7 +3,7 @@ export function createChannel({
   name,
   slug = name,
   currencyCode = "PLN",
-  defaultCountry = "PL"
+  defaultCountry = "PL",
 }) {
   const createChannelMutation = `mutation{
     channelCreate(input: {
@@ -50,7 +50,7 @@ export function deleteChannel(channelId, targetChannelId) {
       channel{
         name
       }
-      channelErrors{
+      errors{
         message
       }
     }
@@ -61,6 +61,20 @@ export function deleteChannel(channelId, targetChannelId) {
 export function activateChannel(channelId) {
   const mutation = `mutation{
     channelActivate(id:"${channelId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function updateChannelWarehouses(channelId, warehouseId) {
+  const mutation = `mutation{
+    channelUpdate(id:"${channelId}", input:{
+      addWarehouses:"${warehouseId}"
+    }){
       errors{
         field
         message

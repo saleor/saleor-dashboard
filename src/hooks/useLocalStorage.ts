@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 export type UseLocalStorage<T> = [T, Dispatch<SetStateAction<T>>];
 export default function useLocalStorage<T>(
   key: string,
-  initialValue: SetStateAction<T>
+  initialValue: SetStateAction<T>,
 ): UseLocalStorage<T> {
   const saveToLocalStorage = (valueToStore: T) => {
     try {

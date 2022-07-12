@@ -13,7 +13,7 @@ const CheckboxIndeterminate = createSvgIcon(
     />
     <rect x="8" y="11" width="8" height="2" fill="currentColor" />
   </>,
-  "CheckboxIndeterminate"
+  "CheckboxIndeterminate",
 );
 
 export default CheckboxIndeterminate;

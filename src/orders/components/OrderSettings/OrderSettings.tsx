@@ -16,7 +16,7 @@ export interface OrderSettingsProps {
 const OrderSettings: React.FC<OrderSettingsProps> = ({
   data,
   disabled,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -26,7 +26,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
         title={intl.formatMessage({
           id: "CLYlsu",
           defaultMessage: "Settings",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>

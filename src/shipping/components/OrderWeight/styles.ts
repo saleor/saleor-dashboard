@@ -5,10 +5,10 @@ export const useStyles = makeStyles(
     grid: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "1fr 1fr"
-    }
+      gridTemplateColumns: "1fr 1fr",
+    },
   }),
   {
-    name: "OrderWeight"
-  }
+    name: "OrderWeight",
+  },
 );

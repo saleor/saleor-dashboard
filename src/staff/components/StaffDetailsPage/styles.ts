@@ -4,11 +4,11 @@ const useStyles = makeStyles(
   () => ({
     noOverflow: {
       "&&": {
-        overflow: "visible"
-      }
-    }
+        overflow: "visible",
+      },
+    },
   }),
-  { name: "StaffDetailsPage" }
+  { name: "StaffDetailsPage" },
 );
 
 export default useStyles;

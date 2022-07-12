@@ -4,19 +4,19 @@ export const messages = defineMessages({
   assignVariantDialogHeader: {
     id: "dTCDMn",
     defaultMessage: "Assign Product",
-    description: "dialog header"
+    description: "dialog header",
   },
   assignProductDialogButton: {
     id: "Nv/toB",
     defaultMessage: "Assign and save",
-    description: "button"
+    description: "button",
   },
   assignProductDialogContent: {
     id: "/TF6BZ",
-    defaultMessage: "Search Products"
+    defaultMessage: "Search Products",
   },
   assignProductDialogSearch: {
     id: "SHm7ee",
-    defaultMessage: "Search by product name, attribute, product type etc..."
-  }
+    defaultMessage: "Search by product name, attribute, product type etc...",
+  },
 });

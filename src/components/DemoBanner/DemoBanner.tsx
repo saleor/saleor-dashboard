@@ -25,7 +25,7 @@ export const DemoBanner: React.FC = () => {
                 values={{
                   emphasis: (children: any) => (
                     <em className={classes.textEmphasis}>{children}</em>
-                  )
+                  ),
                 }}
               />
             ) : (
@@ -43,7 +43,7 @@ export const DemoBanner: React.FC = () => {
                 values={{
                   emphasis: (children: any) => (
                     <em className={classes.textEmphasis}>{children}</em>
-                  )
+                  ),
                 }}
               />
             ) : (

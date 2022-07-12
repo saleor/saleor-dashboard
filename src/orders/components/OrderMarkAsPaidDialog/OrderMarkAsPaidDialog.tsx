@@ -25,7 +25,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
   onClose,
   onConfirm,
   open,
-  transactionReference
+  transactionReference,
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
@@ -37,7 +37,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
       title={intl.formatMessage({
         id: "+B25o/",
         defaultMessage: "Mark Order as Paid",
-        description: "dialog header"
+        description: "dialog header",
       })}
       onClose={onClose}
       onConfirm={onConfirm}
@@ -59,7 +59,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
         label={intl.formatMessage({
           id: "EbVf0Z",
           defaultMessage: "Transaction reference",
-          description: "transaction reference"
+          description: "transaction reference",
         })}
         value={transactionReference}
         onChange={handleTransactionReference}

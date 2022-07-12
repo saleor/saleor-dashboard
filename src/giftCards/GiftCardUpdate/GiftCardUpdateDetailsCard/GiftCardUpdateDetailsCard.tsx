@@ -23,7 +23,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
   const {
     toggleValue,
     data: { tags },
-    formErrors
+    formErrors,
   } = useGiftCardUpdateForm();
 
   return (

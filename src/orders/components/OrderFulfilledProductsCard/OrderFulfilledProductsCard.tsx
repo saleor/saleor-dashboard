@@ -29,11 +29,11 @@ const statusesToMergeLines = [
   FulfillmentStatus.REFUNDED,
   FulfillmentStatus.REFUNDED_AND_RETURNED,
   FulfillmentStatus.RETURNED,
-  FulfillmentStatus.REPLACED
+  FulfillmentStatus.REPLACED,
 ];
 const cancelableStatuses = [
   FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL
+  FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
 const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
@@ -44,7 +44,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
-    onRefund
+    onRefund,
   } = props;
   const classes = useStyles(props);
 

@@ -1,5 +1,5 @@
 import MuiCheckbox, {
-  CheckboxProps as MuiCheckboxProps
+  CheckboxProps as MuiCheckboxProps,
 } from "@material-ui/core/Checkbox";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -8,10 +8,10 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     error: {
-      color: theme.palette.error.main
-    }
+      color: theme.palette.error.main,
+    },
   }),
-  { name: "Checkbox" }
+  { name: "Checkbox" },
 );
 
 export type CheckboxProps = Omit<

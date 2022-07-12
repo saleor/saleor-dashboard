@@ -17,7 +17,7 @@ const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
   confirmButtonState,
   onClose,
   onConfirm,
-  open
+  open,
 }) => {
   const intl = useIntl();
 
@@ -31,7 +31,7 @@ const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
       title={intl.formatMessage({
         id: "quV5zH",
         defaultMessage: "Delete Token",
-        description: "dialog title"
+        description: "dialog title",
       })}
     >
       <DialogContentText>
@@ -40,7 +40,7 @@ const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
           defaultMessage="Are you sure you want to delete token {token}?"
           description="delete token"
           values={{
-            token: <strong>{name}</strong>
+            token: <strong>{name}</strong>,
           }}
         />
       </DialogContentText>

@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -37,7 +37,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   open,
   initial,
   onClose,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -48,7 +48,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
       <Form
         initial={{
-          amount: initial
+          amount: initial,
         }}
         onSubmit={onSubmit}
       >
@@ -58,7 +58,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
               {intl.formatMessage({
                 id: "+PbHKD",
                 defaultMessage: "Capture Payment",
-                description: "dialog header"
+                description: "dialog header",
               })}
             </DialogTitle>
             <DialogContent>
@@ -69,12 +69,12 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 label={intl.formatMessage({
                   id: "OhdPS1",
                   defaultMessage: "Amount",
-                  description: "amount of refunded money"
+                  description: "amount of refunded money",
                 })}
                 name="amount"
                 onChange={change}
                 inputProps={{
-                  step: "0.01"
+                  step: "0.01",
                 }}
                 type="number"
                 value={data.amount}

@@ -5,10 +5,10 @@ import { extensionList } from "./queries";
 export const mocks: MockedResponse[] = [
   {
     request: {
-      query: extensionList
+      query: extensionList,
     },
     result: {
-      data: []
-    }
-  }
+      data: [],
+    },
+  },
 ];

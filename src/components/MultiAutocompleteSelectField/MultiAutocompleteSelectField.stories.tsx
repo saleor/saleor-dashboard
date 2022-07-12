@@ -7,10 +7,10 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import MultiAutocompleteSelectField, {
-  MultiAutocompleteSelectFieldProps
+  MultiAutocompleteSelectFieldProps,
 } from "./MultiAutocompleteSelectField";
 import MultiAutocompleteSelectFieldContent, {
-  MultiAutocompleteSelectFieldContentProps
+  MultiAutocompleteSelectFieldContentProps,
 } from "./MultiAutocompleteSelectFieldContent";
 
 const suggestions = countries.map(c => ({ label: c.name, value: c.code }));
@@ -23,7 +23,7 @@ const props: MultiAutocompleteSelectFieldProps = {
   name: "country",
   onChange: () => undefined,
   placeholder: "Select country",
-  value: undefined
+  value: undefined,
 };
 
 const Story: React.FC<Partial<
@@ -65,7 +65,7 @@ const contentProps: MultiAutocompleteSelectFieldContentProps = {
   highlightedIndex: 0,
   inputValue: suggestions[0].label,
   loading: false,
-  onFetchMore: () => undefined
+  onFetchMore: () => undefined,
 };
 
 storiesOf("Generics / Multiple select with autocomplete", module)

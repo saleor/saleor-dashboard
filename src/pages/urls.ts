@@ -10,7 +10,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const pagesSection = "/pages/";
@@ -24,15 +24,15 @@ export type PageListUrlDialog =
 export enum PageListUrlSortField {
   title = "title",
   slug = "slug",
-  visible = "visible"
+  visible = "visible",
 }
 
 export enum PageListUrlFiltersEnum {
-  query = "query"
+  query = "query",
 }
 
 export enum PageListUrlFiltersWithMultipleValues {
-  pageTypes = "pageTypes"
+  pageTypes = "pageTypes",
 }
 
 export type PageListUrlFilters = Filters<PageListUrlFiltersEnum> &

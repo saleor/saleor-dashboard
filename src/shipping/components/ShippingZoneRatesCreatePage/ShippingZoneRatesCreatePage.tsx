@@ -13,7 +13,7 @@ import {
   ShippingChannelsErrorFragment,
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment
+  ShippingMethodTypeFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -45,7 +45,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
-    inclusion: PostalCodeRuleInclusionTypeEnum
+    inclusion: PostalCodeRuleInclusionTypeEnum,
   ) => void;
   onPostalCodeAssign: () => void;
   onPostalCodeUnassign: (code: any) => void;
@@ -71,7 +71,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   saveButtonBarState,
   variant,
   postalCodes,
-  formId
+  formId,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -86,34 +86,34 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     name: "",
     description: null,
     orderValueRestricted: true,
-    type: null
+    type: null,
   };
 
   const {
     change,
     data: formData,
     setIsSubmitDisabled,
-    triggerChange
+    triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const richText = useRichText({
     initial: null,
-    triggerChange
+    triggerChange,
   });
 
   const data: ShippingZoneRateCommonFormData = {
     ...formData,
-    description: null
+    description: null,
   };
 
   const getData = async (): Promise<ShippingZoneRateCommonFormData> => ({
     ...formData,
-    description: await richText.getValue()
+    description: await richText.getValue(),
   });
 
   const handleFormElementSubmit: FormEventHandler = async event => {
@@ -126,10 +126,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   const handleChannelsChange = createChannelsChangeHandler(
     shippingChannels,
     onChannelsChange,
-    triggerChange
+    triggerChange,
   );
   const isValid = !data.channelListings?.some(channel =>
-    validatePrice(channel.price)
+    validatePrice(channel.price),
   );
   const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
@@ -147,12 +147,12 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 ? intl.formatMessage({
                     id: "RXPGi/",
                     defaultMessage: "Price Rate Create",
-                    description: "page title"
+                    description: "page title",
                   })
                 : intl.formatMessage({
                     id: "NDm2Fe",
                     defaultMessage: "Weight Rate Create",
-                    description: "page title"
+                    description: "page title",
                   })
             }
           />

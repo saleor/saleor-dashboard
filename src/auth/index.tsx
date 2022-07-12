@@ -8,7 +8,7 @@ import {
   LoginUrlQueryParams,
   newPasswordPath,
   passwordResetPath,
-  passwordResetSuccessPath
+  passwordResetSuccessPath,
 } from "./urls";
 import LoginViewComponent from "./views/Login";
 import NewPassword from "./views/NewPassword";
@@ -28,7 +28,7 @@ export const UserContext = React.createContext<Context>({
   logout: undefined,
   requestLoginByExternalPlugin: undefined,
   authenticating: false,
-  authenticated: false
+  authenticated: false,
 });
 
 const AuthRouter: React.FC = () => (

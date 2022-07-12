@@ -11,7 +11,7 @@ interface PluginChannelConfigurationCellProps {
 }
 
 const PluginChannelConfigurationCell: React.FC<PluginChannelConfigurationCellProps> = ({
-  plugin
+  plugin,
 }) => {
   const message = isPluginGlobal(plugin.globalConfiguration)
     ? messages.globalLabel

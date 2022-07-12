@@ -27,10 +27,6 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
-  "+G9l7u": {
-    "context": "all selected zones card message",
-    "string": "All available shipping zones have been selected"
-  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -85,6 +81,9 @@
   "+hib+V": {
     "context": "error message",
     "string": "This attribute is already assigned."
+  },
+  "+iV0gu": {
+    "string": "Internal Apps"
   },
   "+iVKR1": {
     "context": "assign attribute value button",
@@ -167,6 +166,10 @@
     "context": "dialog header",
     "string": "Add Tracking Code"
   },
+  "/C//FB": {
+    "context": "header, allocated product quantity",
+    "string": "Allocated"
+  },
   "/JENWS": {
     "string": "Reduced Tax Rates"
   },
@@ -220,6 +223,10 @@
   },
   "/glQgs": {
     "string": "No channels found"
+  },
+  "/iijFq": {
+    "context": "input label",
+    "string": "Global threshold"
   },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
@@ -320,6 +327,10 @@
   "0iMYc+": {
     "context": "field is optional",
     "string": "(Optional)"
+  },
+  "0kPdlb": {
+    "context": "deprecated secret key toolbar label",
+    "string": "Use RS256 signature instead."
   },
   "0krqBj": {
     "context": "page header",
@@ -593,9 +604,6 @@
   "2pw5dQ": {
     "context": "payment status",
     "string": "Fully paid"
-  },
-  "2qJc9y": {
-    "string": "CANCEL END DATE"
   },
   "2r4cTE": {
     "context": "button",
@@ -1119,9 +1127,6 @@
     "context": "attribute value deleted",
     "string": "Value deleted"
   },
-  "7Ii5ZQ": {
-    "string": "SETUP END DATE"
-  },
   "7JAAul": {
     "context": "product field",
     "string": "Export Product Weight"
@@ -1199,10 +1204,6 @@
     "context": "info text",
     "string": "This rate will apply to all orders"
   },
-  "7wkGxW": {
-    "context": "app has been installed",
-    "string": "{unitsLeft} units left"
-  },
   "7yKZvp": {
     "context": "section header",
     "string": "User Status"
@@ -1215,17 +1216,9 @@
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
   },
-  "89PSdB": {
-    "context": "link",
-    "string": "Edit settings"
-  },
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"
-  },
-  "8CbACQ": {
-    "context": "add shipping zone title",
-    "string": "Add Shipping Zones"
   },
   "8EGagh": {
     "context": "search box label",
@@ -1327,6 +1320,10 @@
   "9EMudJ": {
     "context": "option",
     "string": "Create single variant"
+  },
+  "9IWg/f": {
+    "context": "button",
+    "string": "SETUP END DATE"
   },
   "9OtpHt": {
     "string": "Order line deleted"
@@ -1458,10 +1455,6 @@
   "AKv2BI": {
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
-  },
-  "ANRRpG": {
-    "context": "card title",
-    "string": "Shipping Zones"
   },
   "AOI4LW": {
     "context": "navigator placeholder",
@@ -1658,6 +1651,10 @@
   "BtErCZ": {
     "string": "Search Plugins..."
   },
+  "BvmnJq": {
+    "context": "section header",
+    "string": "Third Party Apps"
+  },
   "Bx367s": {
     "context": "product is hidden",
     "string": "Hidden"
@@ -1702,10 +1699,6 @@
   "C9pcQx": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
-  },
-  "CEavJt": {
-    "context": "section header",
-    "string": "Unlimited"
   },
   "CG+awx": {
     "context": "dialog content",
@@ -1896,6 +1889,10 @@
   "DRMMDs": {
     "string": "Attribute Name"
   },
+  "DRwqnt": {
+    "context": "order history message",
+    "string": "Transaction capture requested"
+  },
   "DTL7sE": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
@@ -1921,6 +1918,10 @@
   "DzPVnj": {
     "context": "date time attribute type",
     "string": "Date Time"
+  },
+  "E+M17x": {
+    "context": "marketplace section name",
+    "string": "Marketplace"
   },
   "E22x4H": {
     "context": "no card defuned alert message",
@@ -2018,6 +2019,10 @@
   "ErNH3D": {
     "string": "Define where this attribute should be used in Saleor system"
   },
+  "ErvPaM": {
+    "context": "header",
+    "string": "Warehouse Name"
+  },
   "EsZH44": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle hidden",
     "string": "Hidden"
@@ -2025,6 +2030,10 @@
   "EtGDeK": {
     "context": "header",
     "string": "{pluginName} Details"
+  },
+  "EuOXmr": {
+    "context": "add items title",
+    "string": "Add {itemsName}"
   },
   "Ev6SEF": {
     "string": "New Password"
@@ -2413,6 +2422,10 @@
     "context": "number of variants",
     "string": "Variants ({quantity})"
   },
+  "HYC6cH": {
+    "context": "input description",
+    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
+  },
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
@@ -2569,6 +2582,10 @@
   "Ihp4D3": {
     "context": "header",
     "string": "Edit Media"
+  },
+  "ImTelT": {
+    "context": "card subtitle",
+    "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
   },
   "IoCMjg": {
     "context": "no collections",
@@ -2733,6 +2750,10 @@
     "context": "section header",
     "string": "Organize Product"
   },
+  "JkO0jp": {
+    "context": "input description",
+    "string": "{unitsLeft} units left"
+  },
   "JnzDrI": {
     "context": "discount type",
     "string": "Fixed Amount"
@@ -2760,17 +2781,9 @@
     "context": "filtering option",
     "string": "All Warehouses"
   },
-  "JufWFT": {
-    "context": "app installation error",
-    "string": "There was a problem during installation"
-  },
   "Jwuu4X": {
     "context": "select product informations to be exported",
     "string": "Information exported:"
-  },
-  "JyQEHU": {
-    "context": "tabel column header",
-    "string": "Channels"
   },
   "JyQoES": {
     "context": "delete attribute value",
@@ -2835,10 +2848,6 @@
   "KSp+8B": {
     "context": "product available for purchase date",
     "string": "will become available on {date}"
-  },
-  "KTAg0f": {
-    "context": "tabel column header",
-    "string": "Warehouse Name"
   },
   "KXkdMH": {
     "context": "order discount removed title",
@@ -3190,9 +3199,6 @@
   "NZtcLb": {
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
-  },
-  "NcY4ph": {
-    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
   },
   "Nfh9QM": {
     "context": "checkbox gift cards label description",
@@ -3688,9 +3694,6 @@
     "context": "use attribute in filtering",
     "string": "Use in Filtering"
   },
-  "RJ5QxE": {
-    "string": "Global threshold"
-  },
   "RLBLPQ": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
@@ -3822,6 +3825,10 @@
   "SKFr04": {
     "string": "Attribute not found."
   },
+  "SM+yG0": {
+    "context": "input label",
+    "string": "SKU (Stock Keeping Unit)"
+  },
   "SMakqb": {
     "context": "customer contact section, header",
     "string": "Contact Information"
@@ -3929,10 +3936,6 @@
   "T8rvXs": {
     "context": "order subtotal price",
     "string": "Subtotal"
-  },
-  "TBaMo2": {
-    "context": "about app",
-    "string": "About"
   },
   "TC/EOG": {
     "context": "status section title",
@@ -4201,6 +4204,10 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
+  "V1MytH": {
+    "context": "shipping zones section name",
+    "string": "Shipping Zones"
+  },
   "V1mqpZ": {
     "context": "button",
     "string": "Create Permission Group"
@@ -4459,6 +4466,10 @@
     "context": "gift card bulk create success dialog title",
     "string": "Bulk Issue Gift Cards"
   },
+  "Wyl25+": {
+    "context": "product inventory, checkbox description",
+    "string": "Active inventory tracking will automatically calculate changes of stock"
+  },
   "WzA5Ll": {
     "string": "Cannot remove user from last group"
   },
@@ -4595,6 +4606,10 @@
   "XkX56I": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "Xl0o2y": {
+    "context": "app installation error",
+    "string": "Problem occured during installation"
   },
   "XlPKAR": {
     "context": "WarehouseSettings private stock description",
@@ -4787,6 +4802,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZKuzRy": {
+    "context": "order history message",
+    "string": "Transaction void requested"
+  },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -4808,10 +4827,6 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
-  },
-  "ZeD2TK": {
-    "context": "section header",
-    "string": "Third-party Apps"
   },
   "Zg0dRo": {
     "context": "dialog description",
@@ -5384,9 +5399,6 @@
     "context": "button",
     "string": "Choose file"
   },
-  "ekXood": {
-    "string": "Unlimited"
-  },
   "erC44f": {
     "context": "filters error messages dependencies missing",
     "string": "Filter requires other filters: {dependencies}"
@@ -5502,6 +5514,10 @@
     "context": "custom app name",
     "string": "App Name"
   },
+  "fqJXzO": {
+    "context": "order history message",
+    "string": "Transaction refund requested"
+  },
   "ftcHpD": {
     "string": "Customer created"
   },
@@ -5534,10 +5550,6 @@
   },
   "g/BrOt": {
     "string": "Url has invalid format"
-  },
-  "g/FRtd": {
-    "context": "table column header, allocated product quantity",
-    "string": "Allocated"
   },
   "g1WQlC": {
     "context": "page title",
@@ -5597,10 +5609,6 @@
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
   },
-  "ge/xFX": {
-    "context": "table column header",
-    "string": "Quantity"
-  },
   "ghGLbJ": {
     "context": "OrderPayment click&collect shipping method",
     "string": "click&collect"
@@ -5627,10 +5635,6 @@
   "gr53VQ": {
     "context": "page header",
     "string": "Create Page"
-  },
-  "gtKcPf": {
-    "context": "title",
-    "string": "{zonesCount} / {totalCount} shipping zones"
   },
   "gvOzOl": {
     "string": "Page Title"
@@ -5701,10 +5705,6 @@
   "hX5PAb": {
     "string": "No results found"
   },
-  "hdcGSJ": {
-    "context": "button",
-    "string": "Support/FAQ"
-  },
   "hkENym": {
     "string": "Customer"
   },
@@ -5714,6 +5714,10 @@
   "hnBvH7": {
     "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
+  },
+  "hnRRUe": {
+    "context": "docs link label",
+    "string": "Learn more..."
   },
   "ho75Lr": {
     "context": "status label deactivated",
@@ -5874,9 +5878,6 @@
   "j8PV7E": {
     "context": "attribute values",
     "string": "Values"
-  },
-  "jABdx1": {
-    "string": "Active inventory tracking will automatically calculate changes of stock"
   },
   "jBu2yj": {
     "context": "acre-inch unit",
@@ -6204,10 +6205,6 @@
   },
   "llBnr+": {
     "string": "Warehouse Name"
-  },
-  "llC1q8": {
-    "context": "button",
-    "string": "App home page"
   },
   "lm9NSK": {
     "context": "password reset, button",
@@ -7163,9 +7160,17 @@
     "context": "Header row stock label",
     "string": "Stock"
   },
+  "taS/08": {
+    "context": "variant stocks section subtitle",
+    "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
+  },
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "tlGXkh": {
+    "context": "input description",
+    "string": "Unlimited"
   },
   "toDL5R": {
     "context": "order status",
@@ -7235,6 +7240,10 @@
   "uIPD1i": {
     "context": "app has been removed",
     "string": "App successfully removed"
+  },
+  "uKlrEk": {
+    "context": "all selected items message",
+    "string": "All available {itemsName} have been selected"
   },
   "uMpv1v": {
     "string": "Fulfillment successfully cancelled"
@@ -7352,6 +7361,10 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "v9ILn/": {
+    "context": "button",
+    "string": "CANCEL END DATE"
   },
   "vC8vyb": {
     "context": "enabled status option label",
@@ -7505,9 +7518,6 @@
     "context": "section header",
     "string": "Plugin Information and Status"
   },
-  "w4R/SO": {
-    "string": "Local Apps"
-  },
   "w6Gau0": {
     "context": "deactivate named app",
     "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
@@ -7620,15 +7630,16 @@
     "context": "dialog header",
     "string": "Assign Variant"
   },
-  "xB7BTp": {
-    "string": "SKU (Stock Keeping Unit)"
-  },
   "xHj9Qe": {
     "context": "gift card settings header",
     "string": "Gift Cards Settings"
   },
   "xJQX5t": {
     "string": "No staff members found"
+  },
+  "xNfh4L": {
+    "context": "app permissions tooltip header",
+    "string": "App permissions"
   },
   "xOEZjV": {
     "context": "attribute's label",
@@ -7839,6 +7850,9 @@
   "z8jo8h": {
     "context": "button",
     "string": "View products"
+  },
+  "z9c6/C": {
+    "string": "Deprecated"
   },
   "z9wQ/U": {
     "context": "no variant stock in warehouse",

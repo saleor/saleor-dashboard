@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SaleListPage, {
-  SaleListPageProps
+  SaleListPageProps,
 } from "../../../discounts/components/SaleListPage";
 import { saleList } from "../../../discounts/fixtures";
 import {
@@ -13,7 +13,7 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "../../../fixtures";
 import Decorator from "../../Decorator";
 
@@ -30,32 +30,32 @@ const props: SaleListPageProps = {
       choices: [
         {
           value: "default-channel",
-          label: "Default channel"
-        }
-      ]
+          label: "Default channel",
+        },
+      ],
     },
     saleType: {
       active: false,
-      value: DiscountValueTypeEnum.FIXED
+      value: DiscountValueTypeEnum.FIXED,
     },
     started: {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
+        min: undefined,
+      },
     },
     status: {
       active: false,
-      value: [DiscountStatusEnum.ACTIVE]
-    }
+      value: [DiscountStatusEnum.ACTIVE],
+    },
   },
   sales: saleList,
   selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
-    sort: SaleListUrlSortField.name
-  }
+    sort: SaleListUrlSortField.name,
+  },
 };
 
 storiesOf("Views / Discounts / Sale list", module)

@@ -11,7 +11,7 @@ import { TypedTypePolicies } from "./typePolicies.generated";
 export const link = createUploadLink({
   credentials: "include",
   uri: API_URI,
-  fetch: createFetch()
+  fetch: createFetch(),
 });
 
 export const apolloClient = new ApolloClient({
@@ -19,26 +19,26 @@ export const apolloClient = new ApolloClient({
     possibleTypes: introspectionQueryResultData.possibleTypes,
     typePolicies: {
       CountryDisplay: {
-        keyFields: ["code"]
+        keyFields: ["code"],
       },
       Money: {
-        merge: false
+        merge: false,
       },
       TaxedMoney: {
-        merge: false
+        merge: false,
       },
       Weight: {
-        merge: false
+        merge: false,
       },
       Shop: {
-        keyFields: []
-      }
-    } as TypedTypePolicies
+        keyFields: [],
+      },
+    } as TypedTypePolicies,
   }),
-  link
+  link,
 });
 
 export const saleorClient = createSaleorClient({
   apiUrl: API_URI,
-  channel: ""
+  channel: "",
 });

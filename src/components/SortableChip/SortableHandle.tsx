@@ -6,10 +6,10 @@ import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 const useStyles = makeStyles(
   {
     drag: {
-      cursor: "grab"
-    }
+      cursor: "grab",
+    },
   },
-  { name: "SortableHandle" }
+  { name: "SortableHandle" },
 );
 
 interface SortableHandle {

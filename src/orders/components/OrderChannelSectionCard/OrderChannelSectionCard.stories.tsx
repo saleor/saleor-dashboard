@@ -6,7 +6,7 @@ import React from "react";
 import OrderChannelSectionCard, { OrderChannelSectionCardProps } from ".";
 
 const props: OrderChannelSectionCardProps = {
-  selectedChannelName: "International store"
+  selectedChannelName: "International store",
 };
 
 storiesOf("Orders / Order details channel section", module)

@@ -8,12 +8,12 @@ import Decorator from "../../Decorator";
 const props: MoneyRangeProps = {
   from: {
     amount: 5.2,
-    currency: "USD"
+    currency: "USD",
   },
   to: {
     amount: 10.6,
-    currency: "USD"
-  }
+    currency: "USD",
+  },
 };
 
 storiesOf("Generics / Money range", module)

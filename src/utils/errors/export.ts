@@ -5,7 +5,7 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 function getExportErrorMessage(
   err: Omit<ExportErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   return getCommonFormFieldErrorMessage(err, intl);
 }

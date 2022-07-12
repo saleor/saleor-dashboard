@@ -3,7 +3,7 @@ import { IMessageContext } from "@saleor/components/messages";
 import {
   CheckExportFileStatusQuery,
   CheckOrderInvoicesStatusQuery,
-  JobStatusEnum
+  JobStatusEnum,
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { IntlShape } from "react-intl";
@@ -13,7 +13,7 @@ import {
   InvoiceGenerateParams,
   QueuedTask,
   TaskData,
-  TaskStatus
+  TaskStatus,
 } from "./types";
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
@@ -33,7 +33,7 @@ export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
     status = await task.handle();
     if (status !== TaskStatus.PENDING) {
       task.onCompleted({
-        status
+        status,
       });
     }
   } catch (error) {
@@ -50,7 +50,7 @@ export function handleError(error: Error) {
 export function queueCustom(
   id: number,
   tasks: React.MutableRefObject<QueuedTask[]>,
-  data: TaskData
+  data: TaskData,
 ) {
   (["handle", "onCompleted"] as Array<keyof TaskData>)
     .filter(field => !data[field])
@@ -64,8 +64,8 @@ export function queueCustom(
       id,
       onCompleted: data.onCompleted,
       onError: data.onError || handleError,
-      status: TaskStatus.PENDING
-    }
+      status: TaskStatus.PENDING,
+    },
   ];
 }
 
@@ -75,7 +75,7 @@ export function queueInvoiceGenerate(
   tasks: React.MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatusQuery>>,
   notify: IMessageContext,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   if (!generateInvoice) {
     throw new Error("generateInvoice is required when creating custom task");
@@ -86,7 +86,7 @@ export function queueInvoiceGenerate(
       handle: async () => {
         const result = await fetch();
         const status = result.data.order.invoices.find(
-          invoice => invoice.id === generateInvoice.invoiceId
+          invoice => invoice.id === generateInvoice.invoiceId,
         ).status;
 
         return getTaskStatus(status);
@@ -97,16 +97,16 @@ export function queueInvoiceGenerate(
           ? notify({
               status: "success",
               text: intl.formatMessage(messages.invoiceGenerateFinishedText),
-              title: intl.formatMessage(messages.invoiceGenerateFinishedTitle)
+              title: intl.formatMessage(messages.invoiceGenerateFinishedTitle),
             })
           : notify({
               status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong),
-              title: intl.formatMessage(messages.invoiceGenerationFailedTitle)
+              title: intl.formatMessage(messages.invoiceGenerationFailedTitle),
             }),
       onError: handleError,
-      status: TaskStatus.PENDING
-    }
+      status: TaskStatus.PENDING,
+    },
   ];
 }
 
@@ -115,7 +115,7 @@ export function queueExport(
   tasks: React.MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckExportFileStatusQuery>>,
   notify: IMessageContext,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   tasks.current = [
     ...tasks.current,
@@ -132,15 +132,15 @@ export function queueExport(
           ? notify({
               status: "success",
               text: intl.formatMessage(messages.exportFinishedText),
-              title: intl.formatMessage(messages.exportFinishedTitle)
+              title: intl.formatMessage(messages.exportFinishedTitle),
             })
           : notify({
               status: "error",
               text: intl.formatMessage(commonMessages.somethingWentWrong),
-              title: intl.formatMessage(messages.exportFailedTitle)
+              title: intl.formatMessage(messages.exportFailedTitle),
             }),
       onError: handleError,
-      status: TaskStatus.PENDING
-    }
+      status: TaskStatus.PENDING,
+    },
   ];
 }

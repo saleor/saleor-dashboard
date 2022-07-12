@@ -1,7 +1,7 @@
 import {
   QuickSearchAction,
   QuickSearchActionInput,
-  QuickSearchMode
+  QuickSearchMode,
 } from "../types";
 
 export function getActions(actions: QuickSearchAction[]): QuickSearchAction[] {
@@ -19,7 +19,7 @@ export function hasViews(actions: QuickSearchAction[]): boolean {
 }
 
 export function getCustomers(
-  actions: QuickSearchAction[]
+  actions: QuickSearchAction[],
 ): QuickSearchAction[] {
   return actions.filter(action => action.type === "customer");
 }
@@ -36,7 +36,7 @@ export function hasCatalog(actions: QuickSearchAction[]): boolean {
 
 export function sortScores(
   a: QuickSearchActionInput,
-  b: QuickSearchActionInput
+  b: QuickSearchActionInput,
 ) {
   return a.score <= b.score ? 1 : -1;
 }

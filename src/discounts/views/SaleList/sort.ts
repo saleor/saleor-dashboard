@@ -6,7 +6,7 @@ export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
 
 export function canBeSorted(
   sort: SaleListUrlSortField,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ) {
   switch (sort) {
     case SaleListUrlSortField.name:
@@ -39,5 +39,5 @@ export function getSortQueryField(sort: SaleListUrlSortField): SaleSortField {
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

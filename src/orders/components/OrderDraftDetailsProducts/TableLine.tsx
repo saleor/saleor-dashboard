@@ -3,7 +3,7 @@ import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderLineFragment, OrderLineInput } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React, { useRef } from "react";
@@ -11,48 +11,48 @@ import React, { useRef } from "react";
 import { maybe } from "../../../misc";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import TableLineForm, { FormData } from "./TableLineForm";
+import TableLineForm from "./TableLineForm";
 
 const useStyles = makeStyles(
   theme => ({
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: `calc(76px + ${theme.spacing(0.5)})`
+      width: `calc(76px + ${theme.spacing(0.5)})`,
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     strike: {
       textDecoration: "line-through",
-      color: theme.palette.grey[400]
+      color: theme.palette.grey[400],
     },
     errorInfo: {
-      color: theme.palette.error.main
+      color: theme.palette.error.main,
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
-  { name: "OrderDraftDetailsProducts" }
+  { name: "OrderDraftDetailsProducts" },
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
   line: OrderLineFragment;
-  onOrderLineChange: (id: string, data: FormData) => void;
+  onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
 }
 
@@ -69,7 +69,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isDialogOpen,
   undiscountedPrice,
   discountedPrice,
-  orderLineDiscountUpdateStatus
+  orderLineDiscountUpdateStatus,
 }) => {
   const classes = useStyles({});
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
@@ -124,7 +124,7 @@ const TableLine: React.FC<TableLineProps> = ({
         <Money
           money={{
             amount: discountedPrice.amount * quantity,
-            currency: discountedPrice.currency
+            currency: discountedPrice.currency,
           }}
         />
       </TableCell>

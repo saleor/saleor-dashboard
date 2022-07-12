@@ -9,7 +9,7 @@ import Decorator from "../../Decorator";
 
 const props = {
   text: "This is message",
-  title: "Title"
+  title: "Title",
 };
 const Story: React.FC<IMessage> = ({
   actionBtn,
@@ -17,7 +17,7 @@ const Story: React.FC<IMessage> = ({
   onUndo,
   status,
   title,
-  text
+  text,
 }) => {
   const pushMessage = useNotifier();
 
@@ -31,7 +31,7 @@ const Story: React.FC<IMessage> = ({
           onUndo: onUndo ? () => undefined : undefined,
           status,
           text,
-          title
+          title,
         })
       }
       style={{ display: "block", margin: "auto" }}

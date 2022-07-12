@@ -13,7 +13,7 @@ import {
   ListActions,
   PageListProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +22,7 @@ import SaleList from "../SaleList";
 import {
   createFilterStructure,
   SaleFilterKeys,
-  SaleListFilterOpts
+  SaleListFilterOpts,
 } from "./filters";
 
 export interface SaleListPageProps
@@ -73,14 +73,14 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "Yjhgle",
             defaultMessage: "All Sales",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "MSD3A/",
-            defaultMessage: "Search Sale"
+            defaultMessage: "Search Sale",
           })}
           tabs={tabs}
           onAll={onAll}

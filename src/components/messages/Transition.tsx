@@ -5,12 +5,12 @@ const duration = 250;
 
 const defaultStyle = {
   opacity: 0,
-  transition: `opacity ${duration}ms ease`
+  transition: `opacity ${duration}ms ease`,
 };
 
 const transitionStyles = {
   entered: { opacity: 1 },
-  entering: { opacity: 0 }
+  entering: { opacity: 0 },
 };
 
 const Transition = ({ children, ...props }) => (
@@ -19,7 +19,7 @@ const Transition = ({ children, ...props }) => (
       <div
         style={{
           ...defaultStyle,
-          ...transitionStyles[state]
+          ...transitionStyles[state],
         }}
       >
         {children}

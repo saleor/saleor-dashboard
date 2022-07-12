@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageDetailsFragment, PageErrorFragment } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
@@ -30,10 +30,10 @@ export interface PageOrganizeContentProps {
 const useStyles = makeStyles(
   theme => ({
     label: {
-      marginBottom: theme.spacing(0.5)
-    }
+      marginBottom: theme.spacing(0.5),
+    },
   }),
-  { name: "PageOrganizeContent" }
+  { name: "PageOrganizeContent" },
 );
 
 const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
@@ -47,7 +47,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     pageTypes,
     onPageTypeChange,
     fetchPageTypes,
-    fetchMorePageTypes
+    fetchMorePageTypes,
   } = props;
 
   const classes = useStyles(props);
@@ -61,7 +61,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
         title={intl.formatMessage({
           id: "jU9GPX",
           defaultMessage: "Organize Content",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
@@ -72,7 +72,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             displayValue={pageTypeInputDisplayValue}
             label={intl.formatMessage({
               id: "W5SK5c",
-              defaultMessage: "Select content type"
+              defaultMessage: "Select content type",
             })}
             error={!!formErrors.pageType}
             helperText={getPageErrorMessage(formErrors.pageType, intl)}
@@ -81,7 +81,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             value={data.pageType?.id}
             choices={pageTypes}
             InputProps={{
-              autoComplete: "off"
+              autoComplete: "off",
             }}
             fetchChoices={fetchPageTypes}
             {...fetchMorePageTypes}

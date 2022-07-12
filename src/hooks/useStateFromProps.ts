@@ -8,7 +8,7 @@ export interface UseStateFromPropsOpts<T> {
 
 function useStateFromProps<T>(
   data: T,
-  opts: UseStateFromPropsOpts<T> = {}
+  opts: UseStateFromPropsOpts<T> = {},
 ): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState(data);
   const [prevData, setPrevData] = useState(data);

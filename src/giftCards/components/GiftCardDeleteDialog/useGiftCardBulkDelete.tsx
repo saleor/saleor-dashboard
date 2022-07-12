@@ -1,7 +1,7 @@
 import { useGiftCardList } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import {
   BulkDeleteGiftCardMutation,
-  useBulkDeleteGiftCardMutation
+  useBulkDeleteGiftCardMutation,
 } from "@saleor/graphql";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -17,7 +17,7 @@ interface UseGiftCardBulkDeleteProps {
 
 const useGiftCardBulkDelete = ({
   onClose,
-  refetchQueries
+  refetchQueries,
 }: {
   onClose: () => void;
   refetchQueries?: string[];
@@ -28,12 +28,12 @@ const useGiftCardBulkDelete = ({
   const {
     listElements,
     selectedItemsCount,
-    reset: resetSelectedItems
+    reset: resetSelectedItems,
   } = useGiftCardList();
 
   const [
     bulkDeleteGiftCard,
-    bulkDeleteGiftCardOpts
+    bulkDeleteGiftCardOpts,
   ] = useBulkDeleteGiftCardMutation({
     onCompleted: data => {
       const errors = data?.giftCardBulkDelete?.errors;
@@ -42,8 +42,8 @@ const useGiftCardBulkDelete = ({
         notify({
           status: "success",
           text: intl.formatMessage(messages.deleteSuccessAlertText, {
-            selectedItemsCount
-          })
+            selectedItemsCount,
+          }),
         });
 
         onClose();
@@ -53,10 +53,10 @@ const useGiftCardBulkDelete = ({
 
       notify({
         status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError)
+        text: intl.formatMessage(commonErrorMessages.unknownError),
       });
     },
-    refetchQueries
+    refetchQueries,
   });
 
   const onBulkDeleteGiftCards = () =>
@@ -64,7 +64,7 @@ const useGiftCardBulkDelete = ({
 
   return {
     onBulkDeleteGiftCards,
-    bulkDeleteGiftCardOpts
+    bulkDeleteGiftCardOpts,
   };
 };
 

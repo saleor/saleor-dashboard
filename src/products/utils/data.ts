@@ -1,12 +1,12 @@
 import {
   getDefaultAttributeValues,
   getSelectedAttributeValues,
-  mergeChoicesWithValues
+  mergeChoicesWithValues,
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
-  VariantAttributeScope
+  VariantAttributeScope,
 } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -18,7 +18,7 @@ import {
   ProductVariantFragment,
   SelectedVariantAttributeFragment,
   StockInput,
-  VariantAttributeFragment
+  VariantAttributeFragment,
 } from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -46,7 +46,7 @@ export interface ProductType {
 }
 
 export function getAttributeInputFromProduct(
-  product: ProductFragment
+  product: ProductFragment,
 ): AttributeInput[] {
   return (
     product?.attributes?.map(attribute => ({
@@ -56,17 +56,17 @@ export function getAttributeInputFromProduct(
         isRequired: attribute.attribute.valueRequired,
         selectedValues: attribute.values,
         values: mergeChoicesWithValues(attribute),
-        unit: attribute.attribute.unit
+        unit: attribute.attribute.unit,
       },
       id: attribute.attribute.id,
       label: attribute.attribute.name,
-      value: getSelectedAttributeValues(attribute)
+      value: getSelectedAttributeValues(attribute),
     })) ?? []
   );
 }
 
 export function getAttributeInputFromProductType(
-  productType: ProductType
+  productType: ProductType,
 ): AttributeInput[] {
   return productType.productAttributes.map(attribute => ({
     data: {
@@ -74,17 +74,17 @@ export function getAttributeInputFromProductType(
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: mapEdgesToItems(attribute.choices) || [],
-      unit: attribute.unit
+      unit: attribute.unit,
     },
     id: attribute.id,
     label: attribute.name,
-    value: []
+    value: [],
   }));
 }
 
 export function getAttributeInputFromAttributes(
   variantAttributes: VariantAttributeFragment[],
-  variantAttributeScope: VariantAttributeScope
+  variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
@@ -93,17 +93,17 @@ export function getAttributeInputFromAttributes(
       isRequired: attribute.valueRequired,
       values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit,
-      variantAttributeScope
+      variantAttributeScope,
     },
     id: attribute.id,
     label: attribute.name,
-    value: getDefaultAttributeValues(attribute)
+    value: getDefaultAttributeValues(attribute),
   }));
 }
 
 export function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
-  variantAttributeScope: VariantAttributeScope
+  variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
   return variantAttributes?.map(attribute => ({
     data: {
@@ -113,24 +113,24 @@ export function getAttributeInputFromSelectedAttributes(
       selectedValues: attribute.values,
       values: mergeChoicesWithValues(attribute),
       unit: attribute.attribute.unit,
-      variantAttributeScope
+      variantAttributeScope,
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,
-    value: getSelectedAttributeValues(attribute)
+    value: getSelectedAttributeValues(attribute),
   }));
 }
 
 export function getAttributeInputFromVariant(
-  variant: ProductVariantFragment
+  variant: ProductVariantFragment,
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.selectionAttributes,
-    VariantAttributeScope.VARIANT_SELECTION
+    VariantAttributeScope.VARIANT_SELECTION,
   );
   const nonSelectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.nonSelectionAttributes,
-    VariantAttributeScope.NOT_VARIANT_SELECTION
+    VariantAttributeScope.NOT_VARIANT_SELECTION,
   );
 
   return (
@@ -139,16 +139,16 @@ export function getAttributeInputFromVariant(
 }
 
 export function getVariantAttributeInputFromProduct(
-  product: ProductVariantCreateDataQuery["product"]
+  product: ProductVariantCreateDataQuery["product"],
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromAttributes(
     product?.productType?.selectionVariantAttributes,
-    VariantAttributeScope.VARIANT_SELECTION
+    VariantAttributeScope.VARIANT_SELECTION,
   );
 
   const nonSelectionAttributeInput = getAttributeInputFromAttributes(
     product?.productType?.nonSelectionVariantAttributes,
-    VariantAttributeScope.NOT_VARIANT_SELECTION
+    VariantAttributeScope.NOT_VARIANT_SELECTION,
   );
 
   return (
@@ -157,43 +157,43 @@ export function getVariantAttributeInputFromProduct(
 }
 
 export function getStockInputFromVariant(
-  variant: ProductVariantFragment
+  variant: ProductVariantFragment,
 ): ProductStockInput[] {
   return (
     variant?.stocks.map(stock => ({
       data: {
-        quantityAllocated: stock.quantityAllocated
+        quantityAllocated: stock.quantityAllocated,
       },
       id: stock.warehouse.id,
       label: stock.warehouse.name,
-      value: stock.quantity.toString()
+      value: stock.quantity.toString(),
     })) || []
   );
 }
 
 export function getStockInputFromProduct(
-  product: ProductFragment
+  product: ProductFragment,
 ): ProductStockInput[] {
   return product?.variants[0]?.stocks.map(stock => ({
     data: {
-      quantityAllocated: stock?.quantityAllocated
+      quantityAllocated: stock?.quantityAllocated,
     },
     id: stock.warehouse.id,
     label: stock.warehouse.name,
-    value: stock.quantity.toString()
+    value: stock.quantity.toString(),
   }));
 }
 
 export function getCollectionInput(
-  productCollections: ProductFragment["collections"]
+  productCollections: ProductFragment["collections"],
 ): Collection[] {
   return maybe(
     () =>
       productCollections.map(collection => ({
         id: collection.id,
-        label: collection.name
+        label: collection.name,
       })),
-    []
+    [],
   );
 }
 
@@ -202,9 +202,9 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
     () =>
       nodes.map(node => ({
         label: node.name,
-        value: node.id
+        value: node.id,
       })),
-    []
+    [],
   );
 }
 
@@ -238,7 +238,7 @@ export function getProductUpdatePageFormData(
   variants: ProductDetailsVariantFragment[],
   currentChannels: ChannelData[],
   channelsData: ChannelData[],
-  channelsWithVariants: ChannelsWithVariantsData
+  channelsWithVariants: ChannelsWithVariantsData,
 ): ProductUpdatePageFormData {
   const variant = product?.variants[0];
   return {
@@ -249,7 +249,7 @@ export function getProductUpdatePageFormData(
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
-      []
+      [],
     ),
     channelListings: currentChannels.map(listing => ({ ...listing })),
     isAvailable: !!product?.isAvailable,
@@ -266,7 +266,7 @@ export function getProductUpdatePageFormData(
           : variants && variants[0]
           ? variants[0].sku
           : undefined,
-      ""
+      "",
     ),
     slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
@@ -276,16 +276,16 @@ export function getProductUpdatePageFormData(
     globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate
+    preorderEndDateTime: variant?.preorder?.endDate,
   };
 }
 
 export function mapFormsetStockToStockInput(
-  stock: FormsetAtomicData<null, string>
+  stock: FormsetAtomicData<null, string>,
 ): StockInput {
   return {
     quantity: parseInt(stock.value, 10) || 0,
-    warehouse: stock.id
+    warehouse: stock.id,
   };
 }
 

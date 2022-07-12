@@ -18,7 +18,7 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
   onClose,
   onSubmit,
   open,
-  tabName
+  tabName,
 }) => {
   const intl = useIntl();
 
@@ -31,7 +31,7 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
       title={intl.formatMessage({
         id: "7NfoiJ",
         defaultMessage: "Delete Search",
-        description: "custom search delete, dialog header"
+        description: "custom search delete, dialog header",
       })}
       variant="delete"
     >
@@ -40,7 +40,7 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
           id="UaYJJ8"
           defaultMessage="Are you sure you want to delete {name} search tab?"
           values={{
-            name: <strong>{tabName}</strong>
+            name: <strong>{tabName}</strong>,
           }}
         />
       </DialogContentText>

@@ -4,11 +4,11 @@ import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import Timeline, {
   TimelineAddNote,
-  TimelineNote
+  TimelineNote,
 } from "@saleor/components/Timeline";
 import {
   GiftCardEventsEnum,
-  useGiftCardAddNoteMutation
+  useGiftCardAddNoteMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
@@ -38,15 +38,15 @@ const GiftCardHistory: React.FC = () => {
       if (errors.length > 0) {
         notify({
           status: "error",
-          text: intl.formatMessage(messages.noteAddError)
+          text: intl.formatMessage(messages.noteAddError),
         });
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(messages.noteAddedSuccessfully)
+          text: intl.formatMessage(messages.noteAddedSuccessfully),
         });
       }
-    }
+    },
   });
 
   const onNoteAdd = (data: FormData) => {

@@ -8,7 +8,7 @@ Cypress.Commands.add("loginUser", () =>
     .get(LOGIN_SELECTORS.emailPasswordInput)
     .type(Cypress.env("USER_PASSWORD"), { log: false })
     .get(LOGIN_SELECTORS.signInButton)
-    .click()
+    .click(),
 );
 
 Cypress.Commands.add("loginInShop", () => {
@@ -23,7 +23,7 @@ Cypress.Commands.add(
       token
       csrfToken
       refreshToken
-      errors: accountErrors {
+      errors: errors {
         code
         field
         message
@@ -36,12 +36,12 @@ Cypress.Commands.add(
     return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
       window.localStorage.setItem(
         "_saleorCSRFToken",
-        resp.body.data.tokenCreate.csrfToken
+        resp.body.data.tokenCreate.csrfToken,
       );
       window.sessionStorage.setItem(
         authorization,
-        resp.body.data.tokenCreate.token
+        resp.body.data.tokenCreate.token,
       );
     });
-  }
+  },
 );

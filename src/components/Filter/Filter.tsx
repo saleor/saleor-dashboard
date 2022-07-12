@@ -3,7 +3,7 @@ import {
   ClickAwayListener,
   Grow,
   Popper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -16,7 +16,7 @@ import {
   FilterElement,
   FilterErrorMessages,
   IFilter,
-  InvalidFilters
+  InvalidFilters,
 } from "./types";
 import useFilter from "./useFilter";
 import { extractInvalidFilters } from "./utils";
@@ -34,7 +34,7 @@ const useStyles = makeStyles(
     addFilterButton: {
       "&$filterButton": {
         "&:hover, &:focus": {
-          backgroundColor: fade(theme.palette.primary.main, 0.1)
+          backgroundColor: fade(theme.palette.primary.main, 0.1),
         },
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.primary.main}`,
@@ -42,22 +42,22 @@ const useStyles = makeStyles(
         marginBottom: 0,
         marginRight: theme.spacing(2),
         marginTop: 0,
-        transition: theme.transitions.duration.short + "ms"
-      }
+        transition: theme.transitions.duration.short + "ms",
+      },
     },
     addFilterButtonActive: {
       "&$addFilterButton": {
-        backgroundColor: fade(theme.palette.primary.main, 0.1)
-      }
+        backgroundColor: fade(theme.palette.primary.main, 0.1),
+      },
     },
     addFilterIcon: {
-      transition: theme.transitions.duration.short + "ms"
+      transition: theme.transitions.duration.short + "ms",
     },
     addFilterText: {
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 600 as 600,
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     filterButton: {
       alignItems: "center",
@@ -69,32 +69,32 @@ const useStyles = makeStyles(
       margin: theme.spacing(2, 1),
       marginLeft: 0,
       padding: theme.spacing(0, 2),
-      position: "relative"
+      position: "relative",
     },
     paper: {
       "& p": {
-        paddingBottom: 10
+        paddingBottom: 10,
       },
       marginTop: theme.spacing(2),
       padding: theme.spacing(2),
-      width: 240
+      width: 240,
     },
     popover: {
       width: 376,
-      zIndex: 3
+      zIndex: 3,
     },
     rotate: {
-      transform: "rotate(180deg)"
+      transform: "rotate(180deg)",
     },
     separator: {
       backgroundColor: theme.palette.primary.main,
       display: "inline-block",
       height: 28,
       margin: theme.spacing(0, 1.5, 0, 1),
-      width: 1
-    }
+      width: 1,
+    },
   }),
-  { name: "Filter" }
+  { name: "Filter" },
 );
 const Filter: React.FC<FilterProps> = props => {
   const {
@@ -102,7 +102,7 @@ const Filter: React.FC<FilterProps> = props => {
     menu,
     onFilterAdd,
     onFilterAttributeFocus,
-    errorMessages
+    errorMessages,
   } = props;
   const classes = useStyles(props);
 
@@ -144,7 +144,7 @@ const Filter: React.FC<FilterProps> = props => {
         <ButtonBase
           className={classNames(classes.filterButton, classes.addFilterButton, {
             [classes.addFilterButtonActive]:
-              isFilterMenuOpened || isFilterActive
+              isFilterMenuOpened || isFilterActive,
           })}
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
           data-test-id="show-filters-button"
@@ -162,7 +162,7 @@ const Filter: React.FC<FilterProps> = props => {
               <Typography className={classes.addFilterText}>
                 {menu.reduce((acc, filterElement) => {
                   const dataFilterElement = data.find(
-                    ({ name }) => name === filterElement.name
+                    ({ name }) => name === filterElement.name,
                   );
 
                   if (!dataFilterElement) {
@@ -184,15 +184,15 @@ const Filter: React.FC<FilterProps> = props => {
           placement="bottom-start"
           modifiers={{
             flip: {
-              enabled: false
+              enabled: false,
             },
             hide: {
-              enabled: false
+              enabled: false,
             },
             preventOverflow: {
               boundariesElement: "scrollParent",
-              enabled: false
-            }
+              enabled: false,
+            },
           }}
         >
           {({ TransitionProps, placement }) => (
@@ -200,7 +200,7 @@ const Filter: React.FC<FilterProps> = props => {
               {...TransitionProps}
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "right top" : "right bottom"
+                  placement === "bottom" ? "right top" : "right bottom",
               }}
             >
               <FilterContent

@@ -1,15 +1,15 @@
 import {
   ProductCountQueryVariables,
-  useProductCountQuery
+  useProductCountQuery,
 } from "@saleor/graphql";
 import {
   UseTypeDeleteData,
-  UseTypeDeleteProps
+  UseTypeDeleteProps,
 } from "@saleor/pageTypes/hooks/usePageTypeDelete/types";
 import { productListUrl } from "@saleor/products/urls";
 import {
   ProductTypeListUrlQueryParams,
-  ProductTypeUrlQueryParams
+  ProductTypeUrlQueryParams,
 } from "@saleor/productTypes/urls";
 import React from "react";
 
@@ -22,7 +22,7 @@ type UseProductTypeDeleteProps<
 function useProductTypeDelete({
   params,
   singleId,
-  selectedTypes
+  selectedTypes,
 }: UseProductTypeDeleteProps): UseTypeDeleteData {
   const productTypes = selectedTypes || [singleId];
 
@@ -33,10 +33,10 @@ function useProductTypeDelete({
   >(
     () => ({
       filter: {
-        productTypes
-      }
+        productTypes,
+      },
     }),
-    [productTypes]
+    [productTypes],
   );
 
   const shouldSkipProductListQuery =
@@ -44,14 +44,14 @@ function useProductTypeDelete({
 
   const {
     data: productsAssignedToSelectedTypesData,
-    loading: loadingProductsAssignedToSelectedTypes
+    loading: loadingProductsAssignedToSelectedTypes,
   } = useProductCountQuery({
     variables: productsAssignedToSelectedTypesQueryVars,
-    skip: shouldSkipProductListQuery
+    skip: shouldSkipProductListQuery,
   });
 
   const selectedProductsAssignedToDeleteUrl = productListUrl({
-    productTypes
+    productTypes,
   });
 
   const assignedItemsCount =
@@ -63,7 +63,7 @@ function useProductTypeDelete({
     assignedItemsCount,
     viewAssignedItemsUrl: selectedProductsAssignedToDeleteUrl,
     isLoading: loadingProductsAssignedToSelectedTypes,
-    typesToDelete: productTypes
+    typesToDelete: productTypes,
   };
 }
 

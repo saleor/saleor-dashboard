@@ -11,33 +11,33 @@ const messages = defineMessages({
   chooseMedia: {
     id: "2J6EFz",
     defaultMessage: "Choose media",
-    description: "button"
+    description: "button",
   },
   media: {
     id: "/Mcvt4",
     defaultMessage: "Media",
-    description: "section header"
+    description: "section header",
   },
   selectSpecificVariant: {
     id: "JfKvrV",
     defaultMessage: "Select a specific variant media from product media",
-    description: "select variant media"
-  }
+    description: "select variant media",
+  },
 });
 
 const useStyles = makeStyles(
   theme => ({
     gridElement: {
       "& img": {
-        width: "100%"
-      }
+        width: "100%",
+      },
     },
     helpText: {
-      gridColumnEnd: "span 4"
+      gridColumnEnd: "span 4",
     },
     image: {
       objectFit: "contain",
-      width: "100%"
+      width: "100%",
     },
     imageContainer: {
       background: "#ffffff",
@@ -45,15 +45,15 @@ const useStyles = makeStyles(
       borderRadius: theme.spacing(),
       height: theme.spacing(17.5),
       marginBottom: theme.spacing(2),
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "repeat(4, 1fr)"
-    }
+      gridTemplateColumns: "repeat(4, 1fr)",
+    },
   }),
-  { name: "ProductVariantMedia" }
+  { name: "ProductVariantMedia" },
 );
 
 interface ProductVariantMediaProps {

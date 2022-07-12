@@ -4,10 +4,10 @@ import urlJoin from "url-join";
 import { Dialog, Filters, SingleAction, Sort } from "../types";
 
 export enum ChannelsListUrlFiltersEnum {
-  query = "query"
+  query = "query",
 }
 export enum ChannelsListUrlSortField {
-  name = "name"
+  name = "name",
 }
 export type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
 export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;

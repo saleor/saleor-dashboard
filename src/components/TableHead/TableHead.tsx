@@ -2,7 +2,7 @@ import {
   TableCell,
   TableHead as MuiTableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -26,38 +26,38 @@ export interface TableHeadProps extends MuiTableHeadProps {
 const useStyles = makeStyles(
   theme => ({
     cell: {
-      height: 56
+      height: 56,
     },
     container: {
       alignItems: "center",
       display: "flex",
       height: 47,
-      marginRight: theme.spacing(-2)
+      marginRight: theme.spacing(-2),
     },
     dragRows: {
       padding: 0,
-      width: 52
+      width: 52,
     },
     padding: {
       "&:last-child": {
-        padding: 0
-      }
+        padding: 0,
+      },
     },
     root: {
       paddingLeft: 0,
-      paddingRight: theme.spacing(4)
+      paddingRight: theme.spacing(4),
     },
     spacer: {
-      flex: 1
+      flex: 1,
     },
     toolbar: {
       "& > *": {
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
       },
-      marginRight: theme.spacing(1.5)
-    }
+      marginRight: theme.spacing(1.5),
+    },
   }),
-  { name: "TableHead" }
+  { name: "TableHead" },
 );
 
 function getColSpan(colSpan: number, dragRows: boolean): number {
@@ -90,7 +90,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
           <TableCell
             padding="checkbox"
             className={classNames(classes.cell, {
-              [classes.dragRows]: dragRows
+              [classes.dragRows]: dragRows,
             })}
           >
             <Checkbox
@@ -114,7 +114,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
                       id="qu/hXD"
                       defaultMessage="Selected {number} items"
                       values={{
-                        number: selected
+                        number: selected,
                       }}
                     />
                   </Typography>

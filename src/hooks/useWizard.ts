@@ -12,7 +12,7 @@ export type UseWizard<T> = [T, UseWizardActions<T>];
 function useWizard<T>(
   initial: T,
   steps: T[],
-  opts?: UseWizardOpts<T>
+  opts?: UseWizardOpts<T>,
 ): UseWizard<T> {
   const [stepIndex, setStepIndex] = useState(steps.indexOf(initial));
 
@@ -53,8 +53,8 @@ function useWizard<T>(
     {
       next,
       prev,
-      set
-    }
+      set,
+    },
   ];
 }
 

@@ -10,7 +10,7 @@ const ProductTypes = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  "ProductTypes"
+  "ProductTypes",
 );
 
 export default (props: SvgIconProps) => (

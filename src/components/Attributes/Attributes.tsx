@@ -10,7 +10,7 @@ import {
   AttributeValueFragment,
   MeasurementUnitsEnum,
   PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment
+  ProductErrorWithAttributesFragment,
 } from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -54,67 +54,67 @@ const useStyles = makeStyles(
   theme => ({
     attributeSection: {
       "&:last-of-type": {
-        paddingBottom: 0
+        paddingBottom: 0,
       },
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
     },
     attributeSectionLabel: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     card: {
-      overflow: "visible"
+      overflow: "visible",
     },
     cardContent: {
       "&:last-child": {
-        paddingBottom: theme.spacing(2)
+        paddingBottom: theme.spacing(2),
       },
-      paddingTop: theme.spacing(1)
+      paddingTop: theme.spacing(1),
     },
     expansionBar: {
-      display: "flex"
+      display: "flex",
     },
     expansionBarButton: {
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     expansionBarButtonIcon: {
-      transition: theme.transitions.duration.short + "ms"
+      transition: theme.transitions.duration.short + "ms",
     },
     expansionBarLabel: {
       color: theme.palette.text.disabled,
-      fontSize: 14
+      fontSize: 14,
     },
     expansionBarLabelContainer: {
       alignItems: "center",
       display: "flex",
-      flex: 1
+      flex: 1,
     },
     rotate: {
-      transform: "rotate(180deg)"
+      transform: "rotate(180deg)",
     },
     uploadFileButton: {
-      float: "right"
+      float: "right",
     },
     uploadFileContent: {
       color: theme.palette.primary.main,
       float: "right",
-      fontSize: theme.typography.body1.fontSize
-    }
+      fontSize: theme.typography.body1.fontSize,
+    },
   }),
-  { name: "Attributes" }
+  { name: "Attributes" },
 );
 
 const messages = defineMessages({
   attributesNumber: {
     id: "z0gGP+",
     defaultMessage: "{number} Attributes",
-    description: "number of attributes"
+    description: "number of attributes",
   },
   header: {
     id: "3ukd9/",
     defaultMessage: "Attributes",
-    description: "attributes, section header"
-  }
+    description: "attributes, section header",
+  },
 });
 
 const Attributes: React.FC<AttributesProps> = ({
@@ -141,7 +141,7 @@ const Attributes: React.FC<AttributesProps> = ({
               <FormattedMessage
                 {...messages.attributesNumber}
                 values={{
-                  number: attributes.length
+                  number: attributes.length,
                 }}
               />
             </Typography>
@@ -154,7 +154,7 @@ const Attributes: React.FC<AttributesProps> = ({
           >
             <ArrowDropDownIcon
               className={classNames(classes.expansionBarButtonIcon, {
-                [classes.rotate]: expanded
+                [classes.rotate]: expanded,
               })}
             />
           </IconButton>
@@ -164,7 +164,7 @@ const Attributes: React.FC<AttributesProps> = ({
             <Hr />
             {attributes.map((attribute, attributeIndex) => {
               const error = errors.find(err =>
-                err.attributes?.includes(attribute.id)
+                err.attributes?.includes(attribute.id),
               );
 
               return (

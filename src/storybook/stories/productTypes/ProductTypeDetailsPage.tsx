@@ -6,7 +6,7 @@ import React from "react";
 
 import ProductTypeDetailsPage, {
   ProductTypeDetailsPageProps,
-  ProductTypeForm
+  ProductTypeForm,
 } from "../../../productTypes/components/ProductTypeDetailsPage";
 import { productType } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
@@ -28,7 +28,7 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   taxTypes: [],
   variantAttributeList: listActionsProps,
   setSelectedVariantAttributes: () => undefined,
-  selectedVariantAttributes: []
+  selectedVariantAttributes: [],
 };
 
 storiesOf("Views / Product types / Product type details", module)
@@ -47,7 +47,7 @@ storiesOf("Views / Product types / Product type details", module)
       {...props}
       productType={{
         ...productType,
-        productAttributes: []
+        productAttributes: [],
       }}
     />
   ))

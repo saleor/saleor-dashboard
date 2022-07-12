@@ -21,7 +21,7 @@ describe("Filtering query params", () => {
   it("should not be empty object if params given", () => {
     const params: CustomerListUrlFilters = {
       joinedFrom: date.from,
-      numberOfOrdersTo: "5"
+      numberOfOrdersTo: "5",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -39,35 +39,35 @@ describe("Filtering URL params", () => {
         active: false,
         value: {
           max: date.to,
-          min: date.from
-        }
+          min: date.from,
+        },
       },
       numberOfOrders: {
         active: false,
         value: {
           max: "5",
-          min: "1"
-        }
-      }
+          min: "1",
+        },
+      },
     },
     [
       {
         code: PermissionEnum.MANAGE_USERS,
         name: "Manage customers.",
-        __typename: "UserPermission"
+        __typename: "UserPermission",
       },
       {
         code: PermissionEnum.MANAGE_ORDERS,
         name: "Manage orders..",
-        __typename: "UserPermission"
-      }
-    ]
+        __typename: "UserPermission",
+      },
+    ],
   );
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -76,7 +76,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

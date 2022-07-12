@@ -41,7 +41,7 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
                     <Link href={apiUri} onClick={onApiUriClick}>
                       {apiUri}
                     </Link>
-                  )
+                  ),
                 }}
               />
             </Typography>

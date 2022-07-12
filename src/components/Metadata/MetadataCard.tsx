@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import { MetadataInput } from "@saleor/graphql";
@@ -36,7 +36,7 @@ export const valueInputPrefix = EventDataField.value;
 const MetadataCard: React.FC<MetadataCardProps> = ({
   data,
   isPrivate,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
   const loaded = React.useRef(false);
@@ -66,16 +66,16 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               ? intl.formatMessage({
                   id: "ETHnjq",
                   defaultMessage: "Private Metadata",
-                  description: "header"
+                  description: "header",
                 })
               : intl.formatMessage({
                   id: "VcI+Zh",
                   defaultMessage: "Metadata",
-                  description: "header"
+                  description: "header",
                 })}
             <IconButton
               className={classNames(classes.expandBtn, {
-                [classes.rotate]: expanded
+                [classes.rotate]: expanded,
               })}
               hoverOutline={false}
               variant="secondary"
@@ -101,7 +101,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"
                   description="number of metadata fields in model"
                   values={{
-                    number: data.length
+                    number: data.length,
                   }}
                 />
               </Typography>
@@ -153,8 +153,8 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                           <TextField
                             InputProps={{
                               classes: {
-                                input: classes.nameInput
-                              }
+                                input: classes.nameInput,
+                              },
                             }}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             fullWidth
@@ -166,8 +166,8 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                           <TextField
                             InputProps={{
                               classes: {
-                                root: classes.input
-                              }
+                                root: classes.input,
+                              },
                             }}
                             multiline
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -184,8 +184,8 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                               onChange({
                                 target: {
                                   name: EventDataAction.delete,
-                                  value: fieldIndex
-                                }
+                                  value: fieldIndex,
+                                },
                               })
                             }
                           >
@@ -205,8 +205,8 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                     onChange({
                       target: {
                         name: EventDataAction.add,
-                        value: null
-                      }
+                        value: null,
+                      },
                     })
                   }
                 >

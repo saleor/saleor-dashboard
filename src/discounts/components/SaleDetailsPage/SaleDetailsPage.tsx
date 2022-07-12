@@ -16,7 +16,7 @@ import {
   DiscountErrorFragment,
   PermissionEnum,
   SaleDetailsFragment,
-  SaleType as SaleTypeEnum
+  SaleType as SaleTypeEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -58,7 +58,7 @@ export enum SaleDetailsPageTab {
   categories = "categories",
   collections = "collections",
   products = "products",
-  variants = "variants"
+  variants = "variants",
 }
 
 export interface SaleDetailsPageProps
@@ -125,13 +125,13 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   selected,
   selectedChannelId,
   toggle,
-  toggleAll
+  toggleAll,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const initialForm: SaleDetailsPageFormData = {
@@ -144,7 +144,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     startTime: splitDateTime(sale?.startDate ?? "").time,
     type: sale?.type ?? SaleTypeEnum.FIXED,
     metadata: sale?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
+    privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput),
   };
 
   const checkIfSaveIsDisabled = (data: SaleDetailsPageFormData) =>
@@ -164,7 +164,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
           data.channelListings,
           onChannelsChange,
           triggerChange,
-          data.type
+          data.type,
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -201,14 +201,14 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       {
                         id: "ppLwx3",
                         defaultMessage: "Categories ({quantity})",
-                        description: "number of categories"
+                        description: "number of categories",
                       },
                       {
                         quantity: maybe(
                           () => sale.categories.totalCount.toString(),
-                          "…"
-                        )
-                      }
+                          "…",
+                        ),
+                      },
                     )}
                   </CategoriesTab>
                   <CollectionsTab
@@ -219,14 +219,14 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       {
                         id: "QdGzUf",
                         defaultMessage: "Collections ({quantity})",
-                        description: "number of collections"
+                        description: "number of collections",
                       },
                       {
                         quantity: maybe(
                           () => sale.collections.totalCount.toString(),
-                          "…"
-                        )
-                      }
+                          "…",
+                        ),
+                      },
                     )}
                   </CollectionsTab>
                   <ProductsTab
@@ -238,14 +238,14 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       {
                         id: "bNw8PM",
                         defaultMessage: "Products ({quantity})",
-                        description: "number of products"
+                        description: "number of products",
                       },
                       {
                         quantity: maybe(
                           () => sale.products.totalCount.toString(),
-                          "…"
-                        )
-                      }
+                          "…",
+                        ),
+                      },
                     )}
                   </ProductsTab>
                   <VariantsTab
@@ -257,14 +257,14 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       {
                         id: "HVlMK2",
                         defaultMessage: "Variants ({quantity})",
-                        description: "number of variants"
+                        description: "number of variants",
                       },
                       {
                         quantity: maybe(
                           () => sale.variants.totalCount.toString(),
-                          "…"
-                        )
-                      }
+                          "…",
+                        ),
+                      },
                     )}
                   </VariantsTab>
                 </TabContainer>
@@ -337,7 +337,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({
                     id: channel.id,
-                    name: channel.name
+                    name: channel.name,
                   }))}
                   disabled={disabled}
                   openModal={openChannelsModal}

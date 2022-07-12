@@ -4,7 +4,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -39,7 +39,7 @@ interface VoucherValueProps {
 
 export enum VoucherType {
   ENTIRE_ORDER = "ENTIRE_ORDER",
-  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT"
+  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
 const numberOfColumns = 2;
@@ -55,7 +55,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
     label: translatedVoucherTypes[type],
-    value: type
+    value: type,
   }));
 
   return (
@@ -64,7 +64,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         title={intl.formatMessage({
           id: "/oaqFS",
           defaultMessage: "Value",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>
@@ -101,7 +101,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 data.channelListings,
                 (listing, index) => {
                   const error = formErrors.discountValue?.channels?.find(
-                    id => id === listing.id
+                    id => id === listing.id,
                   );
                   return (
                     <TableRow key={listing?.id || `skeleton-${index}`}>
@@ -120,31 +120,31 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                                   ? listing.currency
                                   : "%",
                               name: "discountType" as keyof FormData,
-                              values: null
+                              values: null,
                             }}
                             helperText={
                               error
                                 ? getDiscountErrorMessage(
                                     formErrors.discountValue,
-                                    intl
+                                    intl,
                                   )
                                 : ""
                             }
                             name={"value"}
                             onChange={e =>
                               onChannelChange(listing.id, {
-                                discountValue: e.target.value
+                                discountValue: e.target.value,
                               })
                             }
                             label={intl.formatMessage({
                               id: "mmcHeH",
-                              defaultMessage: "Discount Value"
+                              defaultMessage: "Discount Value",
                             })}
                             value={listing.discountValue || ""}
                             type="number"
                             fullWidth
                             inputProps={{
-                              min: 0
+                              min: 0,
                             }}
                           />
                         ) : (
@@ -163,7 +163,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                       />
                     </TableCell>
                   </TableRow>
-                )
+                ),
               )}
             </TableBody>
           </ResponsiveTable>
@@ -180,7 +180,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               hint={getDiscountErrorMessage(formErrors.type, intl)}
               label={intl.formatMessage({
                 id: "9UHfux",
-                defaultMessage: "Voucher Specific Information"
+                defaultMessage: "Voucher Specific Information",
               })}
               name={"type" as keyof VoucherDetailsPageFormData}
               value={data.type}

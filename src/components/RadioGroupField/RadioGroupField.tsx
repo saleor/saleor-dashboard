@@ -4,7 +4,7 @@ import {
   FormHelperText,
   MenuItem,
   Radio,
-  RadioGroup
+  RadioGroup,
 } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
@@ -48,14 +48,14 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
     name,
     hint,
     variant = "block",
-    innerContainerClassName
+    innerContainerClassName,
   } = props;
   const classes = useStyles(props);
 
   return (
     <FormControl
       className={classNames(classes.root, className, {
-        [classes.rootNoLabel]: !label
+        [classes.rootNoLabel]: !label,
       })}
       error={error}
       disabled={disabled}
@@ -68,7 +68,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
         onChange={onChange}
         className={classNames({
           [classes.radioGroupInline]: variant === "inline",
-          [innerContainerClassName]: !!innerContainerClassName
+          [innerContainerClassName]: !!innerContainerClassName,
         })}
       >
         {choices.length > 0 ? (
@@ -78,15 +78,15 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
               value={choice.value}
               className={classNames({
                 [classes.radioLabel]: variant !== "inline",
-                [classes.radioLabelInline]: variant === "inline"
+                [classes.radioLabelInline]: variant === "inline",
               })}
               classes={{
-                label: classes.label
+                label: classes.label,
               }}
               control={
                 <Radio
                   className={classNames({
-                    [classes.alignTop]: alignTop
+                    [classes.alignTop]: alignTop,
                   })}
                   color="primary"
                 />

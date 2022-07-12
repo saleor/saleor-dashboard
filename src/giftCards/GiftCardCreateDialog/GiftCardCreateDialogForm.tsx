@@ -7,7 +7,7 @@ import {
   GiftCardErrorFragment,
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
-  useGiftCardSettingsQuery
+  useGiftCardSettingsQuery,
 } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -26,7 +26,7 @@ import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import {
   GiftCardCreateFormCommonProps,
-  GiftCardCreateFormCustomer
+  GiftCardCreateFormCustomer,
 } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
@@ -47,7 +47,7 @@ export const initialData: GiftCardCreateFormData = {
   expiryDate: "",
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
   expiryPeriodAmount: 12,
-  requiresActivation: true
+  requiresActivation: true,
 };
 interface GiftCardCreateDialogFormProps {
   opts: { status: ConfirmButtonTransitionState };
@@ -64,14 +64,14 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   opts,
   onClose,
   apiErrors,
-  initialCustomer
+  initialCustomer,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   const {
     data: settingsData,
-    loading: loadingSettings
+    loading: loadingSettings,
   } = useGiftCardSettingsQuery();
 
   const [selectedCustomer, setSelectedCustomer] = useState<
@@ -95,7 +95,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     return {
       expiryType,
       expiryPeriodType: expiryPeriod?.type,
-      expiryPeriodAmount: expiryPeriod?.amount
+      expiryPeriodAmount: expiryPeriod?.amount,
     };
   };
 
@@ -105,14 +105,14 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       ...getInitialExpirySettingsData(),
       balanceCurrency: "",
       channelSlug: "",
-      sendToCustomerSelected: !!initialCustomer
+      sendToCustomerSelected: !!initialCustomer,
     },
-    handleSubmit
+    handleSubmit,
   );
 
   const formErrors = getFormErrors(
     ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
-    apiErrors
+    apiErrors,
   );
 
   const {
@@ -123,7 +123,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     expirySelected,
     expiryType,
     expiryDate,
-    requiresActivation
+    requiresActivation,
   } = data;
 
   const shouldEnableSubmitButton = () => {
@@ -142,7 +142,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     data,
     errors: formErrors,
     toggleValue,
-    change
+    change,
   };
 
   return (
@@ -176,7 +176,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           multiline
           className={classes.noteField}
           label={`${intl.formatMessage(
-            messages.noteLabel
+            messages.noteLabel,
           )} *${intl.formatMessage(commonMessages.optionalField)}`}
         />
         <VerticalSpacer />

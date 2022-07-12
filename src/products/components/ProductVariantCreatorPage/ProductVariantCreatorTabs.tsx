@@ -12,26 +12,26 @@ function useSteps(): Array<Step<ProductVariantCreatorStep>> {
       label: intl.formatMessage({
         id: "rVaB7c",
         defaultMessage: "Select Values",
-        description: "attribute values, variant creation step"
+        description: "attribute values, variant creation step",
       }),
-      value: ProductVariantCreatorStep.values
+      value: ProductVariantCreatorStep.values,
     },
     {
       label: intl.formatMessage({
         id: "Sx7QVu",
         defaultMessage: "Prices and SKU",
-        description: "variant creation step"
+        description: "variant creation step",
       }),
-      value: ProductVariantCreatorStep.prices
+      value: ProductVariantCreatorStep.prices,
     },
     {
       label: intl.formatMessage({
         id: "slKV5G",
         defaultMessage: "Summary",
-        description: "variant creation step"
+        description: "variant creation step",
       }),
-      value: ProductVariantCreatorStep.summary
-    }
+      value: ProductVariantCreatorStep.summary,
+    },
   ];
 }
 
@@ -46,7 +46,7 @@ export interface ProductVariantCreatorTabsProps {
 
 const ProductVariantCreatorTabs: React.FC<ProductVariantCreatorTabsProps> = ({
   step: currentStep,
-  onStepClick
+  onStepClick,
 }) => {
   const steps = useSteps();
 

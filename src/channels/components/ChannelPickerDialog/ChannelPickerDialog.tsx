@@ -22,11 +22,11 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
   defaultChoice,
   open,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(
-    defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : "")
+    defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : ""),
   );
   const { result, search } = useChoiceSearch(channelsChoices);
 
@@ -39,7 +39,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       title={intl.formatMessage({
         id: "G/pgG3",
         defaultMessage: "Select a channel",
-        description: "dialog header"
+        description: "dialog header",
       })}
     >
       <Autocomplete
@@ -48,7 +48,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
         label={intl.formatMessage({
           defaultMessage: "Channel name",
           id: "nKwgxY",
-          description: "select label"
+          description: "select label",
         })}
         data-test-id="channel-autocomplete"
         value={choice}

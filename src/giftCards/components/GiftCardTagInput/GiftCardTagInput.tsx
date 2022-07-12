@@ -30,24 +30,24 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   values,
   error,
   optional = true,
-  loading
+  loading,
 }) => {
   const intl = useIntl();
 
   const { loadMore, search, result } = useGiftCardTagsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const choices = mapMultiValueNodeToChoice(
     uniq(
-      compact(mapEdgesToItems(result?.data?.search)?.map(({ name }) => name))
+      compact(mapEdgesToItems(result?.data?.search)?.map(({ name }) => name)),
     ),
-    "tags"
+    "tags",
   );
 
   const label = optional
     ? `${intl.formatMessage(messages.placeholder)} *${intl.formatMessage(
-        commonMessages.optionalField
+        commonMessages.optionalField,
       )}`
     : intl.formatMessage(messages.placeholder);
 

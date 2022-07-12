@@ -13,7 +13,7 @@ import {
   CollectionChannelListingErrorFragment,
   CollectionDetailsQuery,
   CollectionErrorFragment,
-  PermissionEnum
+  PermissionEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -113,7 +113,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 helperText={intl.formatMessage({
                   id: "Rj8LxK",
                   defaultMessage:
-                    "Add search engine title and description to make this collection easier to find"
+                    "Add search engine title and description to make this collection easier to find",
                 })}
                 errors={errors}
                 slug={data.slug}
@@ -131,14 +131,14 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                     hiddenLabel: intl.formatMessage({
                       id: "V8FhTt",
                       defaultMessage: "Hidden",
-                      description: "collection label"
+                      description: "collection label",
                     }),
 
                     visibleLabel: intl.formatMessage({
                       id: "9vQR6c",
                       defaultMessage: "Visible",
-                      description: "collection label"
-                    })
+                      description: "collection label",
+                    }),
                   }}
                   errors={channelsErrors}
                   allChannelsCount={channelsCount}

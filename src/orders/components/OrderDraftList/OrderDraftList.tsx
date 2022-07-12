@@ -14,7 +14,7 @@ import {
   maybe,
   renderCollection,
   transformOrderStatus,
-  transformPaymentStatus
+  transformPaymentStatus,
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
@@ -26,29 +26,29 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colCustomer: {
-        width: 300
+        width: 300,
       },
       colDate: {
-        width: 300
+        width: 300,
       },
       colNumber: {
-        width: 160
+        width: 160,
       },
-      colTotal: {}
+      colTotal: {},
     },
     colCustomer: {},
     colDate: {},
     colNumber: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "OrderDraftList" }
+  { name: "OrderDraftList" },
 );
 
 interface OrderDraftListProps
@@ -70,7 +70,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -81,7 +81,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     ? orders.map(order => ({
         ...order,
         paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
-        status: transformOrderStatus(order.status, intl)
+        status: transformOrderStatus(order.status, intl),
       }))
     : undefined;
 
@@ -221,7 +221,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

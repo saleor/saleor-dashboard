@@ -11,7 +11,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 import { OrderFilterGiftCard } from "./components/OrderListPage";
 
@@ -27,16 +27,16 @@ export enum OrderListUrlFiltersEnum {
   payment = "payment",
   query = "query",
   clickAndCollect = "clickAndCollect",
-  preorder = "preorder"
+  preorder = "preorder",
 }
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",
   paymentStatus = "paymentStatus",
   channel = "channel",
-  giftCard = "giftCard"
+  giftCard = "giftCard",
 }
 export enum OrderListFitersWithKeyValueValues {
-  metadata = "metadata"
+  metadata = "metadata",
 }
 
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
@@ -49,7 +49,8 @@ export enum OrderListUrlSortField {
   date = "date",
   fulfillment = "status",
   payment = "payment",
-  total = "total"
+  total = "total",
+  rank = "rank",
 }
 export type OrderListUrlSort = Sort<OrderListUrlSortField>;
 export type OrderListUrlQueryParams = BulkAction &
@@ -72,7 +73,7 @@ export enum OrderDraftListUrlFiltersEnum {
   createdFrom = "createdFrom",
   createdTo = "createdTo",
   customer = "customer",
-  query = "query"
+  query = "query",
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
 export type OrderDraftListUrlDialog =
@@ -83,7 +84,7 @@ export enum OrderDraftListUrlSortField {
   number = "number",
   customer = "customer",
   date = "date",
-  total = "total"
+  total = "total",
 }
 export type OrderDraftListUrlSort = Sort<OrderDraftListUrlSortField>;
 export type OrderDraftListUrlQueryParams = ActiveTab &
@@ -93,7 +94,7 @@ export type OrderDraftListUrlQueryParams = ActiveTab &
   OrderDraftListUrlSort &
   Pagination;
 export const orderDraftListUrl = (
-  params?: OrderDraftListUrlQueryParams
+  params?: OrderDraftListUrlQueryParams,
 ): string => {
   const orderDraftList = orderDraftListPath;
   if (params === undefined) {
@@ -137,7 +138,7 @@ export const orderReturnPath = (id: string) => urlJoin(orderPath(id), "return");
 
 export const orderFulfillUrl = (
   id: string,
-  params?: OrderFulfillUrlQueryParams
+  params?: OrderFulfillUrlQueryParams,
 ) => orderFulfillPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
@@ -152,5 +153,5 @@ export const orderReturnUrl = (id: string) =>
 
 export const orderGiftCardBoughtPath = () =>
   orderListUrl({
-    giftCard: [OrderFilterGiftCard.paid]
+    giftCard: [OrderFilterGiftCard.paid],
   });

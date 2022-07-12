@@ -26,8 +26,8 @@ const props: AttributesProps = {
     getDefaultValue: () => undefined,
     getHandleChange: () => () => undefined,
     getMountEditor: () => () => undefined,
-    getShouldMount: () => true
-  }
+    getShouldMount: () => true,
+  },
 };
 
 storiesOf("Attributes / Attributes", module)

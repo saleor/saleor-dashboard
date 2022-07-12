@@ -3,7 +3,7 @@ import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: PageTypeListUrlSortField
+  sort: PageTypeListUrlSortField,
 ): PageTypeSortField {
   switch (sort) {
     case PageTypeListUrlSortField.name:
@@ -14,5 +14,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

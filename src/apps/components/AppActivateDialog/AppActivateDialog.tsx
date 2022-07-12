@@ -18,7 +18,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
   open,
   name,
   onClose,
-  onConfirm
+  onConfirm,
 }) => {
   const intl = useIntl();
 
@@ -27,7 +27,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       confirmButtonLabel={intl.formatMessage({
         id: "D3E2b5",
         defaultMessage: "Activate",
-        description: "button label"
+        description: "button label",
       })}
       confirmButtonState={confirmButtonState}
       open={open}
@@ -36,7 +36,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       title={intl.formatMessage({
         id: "YHNozE",
         defaultMessage: "Activate App",
-        description: "dialog header"
+        description: "dialog header",
       })}
       variant="default"
     >
@@ -53,7 +53,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
             defaultMessage="Are you sure you want to activate {name}? Activating will start gathering events."
             description="activate app"
             values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>
+              name: <strong>{getStringOrPlaceholder(name)}</strong>,
             }}
           />
         )}

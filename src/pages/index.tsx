@@ -12,7 +12,7 @@ import {
   PageListUrlQueryParams,
   PageListUrlSortField,
   pagePath,
-  PageUrlQueryParams
+  PageUrlQueryParams,
 } from "./urls";
 import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
@@ -23,7 +23,7 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const params: PageListUrlQueryParams = asSortParams(
     qs,
     PageListUrlSortField,
-    PageListUrlSortField.title
+    PageListUrlSortField.title,
   );
   return <PageListComponent params={params} />;
 };

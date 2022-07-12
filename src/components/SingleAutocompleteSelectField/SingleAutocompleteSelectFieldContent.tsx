@@ -3,11 +3,11 @@ import {
   CircularProgress,
   MenuItem,
   Paper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
 import useElementScroll, {
-  isScrolledToBottom
+  isScrolledToBottom,
 } from "@saleor/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
@@ -57,10 +57,10 @@ const useStyles = makeStyles(
       borderRadius: "100%",
       height: 24,
       marginRight: theme.spacing(),
-      width: 24
+      width: 24,
     },
     arrowContainer: {
-      position: "relative"
+      position: "relative",
     },
     arrowInnerContainer: {
       alignItems: "center",
@@ -76,53 +76,53 @@ const useStyles = makeStyles(
       opacity: 1,
       position: "absolute",
       transition: theme.transitions.duration.short + "ms",
-      width: "100%"
+      width: "100%",
     },
     content: {
       maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
-        2
+        2,
       )})`,
       overflow: "scroll",
-      padding: 8
+      padding: 8,
     },
     hide: {
       opacity: 0,
-      zIndex: -1
+      zIndex: -1,
     },
     hr: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     menuItem: {
       height: "auto",
       whiteSpace: "normal",
       '&[aria-selected="true"]': {
-        backgroundColor: theme.palette.background.default
-      }
+        backgroundColor: theme.palette.background.default,
+      },
     },
     progress: {},
     progressContainer: {
       display: "flex",
       justifyContent: "center",
-      padding: theme.spacing(1, 0)
+      padding: theme.spacing(1, 0),
     },
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
       margin: theme.spacing(1, 0),
       overflow: "hidden",
-      zIndex: 22
-    }
+      zIndex: 22,
+    },
   }),
   {
-    name: "SingleAutocompleteSelectFieldContent"
-  }
+    name: "SingleAutocompleteSelectFieldContent",
+  },
 );
 
 function getChoiceIndex(
   index: number,
   emptyValue: boolean,
   customValue: boolean,
-  add: boolean
+  add: boolean,
 ) {
   let choiceIndex = index;
   if (emptyValue) {
@@ -150,7 +150,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     isCustomValueSelected,
     selectedItem,
     onFetchMore,
-    style
+    style,
   } = props;
 
   if (!!add && !!displayCustomValue) {
@@ -181,7 +181,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     }
     if (anchor.current?.scrollTo && !initialized) {
       anchor.current.scrollTo({
-        top: 0
+        top: 0,
       });
       setInitialized(true);
     }
@@ -198,7 +198,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   }, [loading]);
 
   const emptyOptionProps = getItemProps({
-    item: ""
+    item: "",
   });
 
   const choicesToDisplay = choices.slice(0, slice);
@@ -230,7 +230,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 className={classes.menuItem}
                 component="div"
                 {...getItemProps({
-                  item: inputValue
+                  item: inputValue,
                 })}
                 data-test-id="single-autocomplete-select-option-add"
                 data-test-type="add"
@@ -247,7 +247,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 selected={isCustomValueSelected}
                 component="div"
                 {...getItemProps({
-                  item: inputValue
+                  item: inputValue,
                 })}
                 data-test-id="single-autocomplete-select-option"
                 data-test-type="custom"
@@ -257,7 +257,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                   defaultMessage="Add new value: {value}"
                   description="add custom select input option"
                   values={{
-                    value: inputValue
+                    value: inputValue,
                   }}
                 />
               </MenuItem>
@@ -270,7 +270,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 index,
                 emptyOption,
                 displayCustomValue,
-                !!add
+                !!add,
               );
               const key = React.isValidElement(suggestion.label)
                 ? `${index}${suggestion.value}${
@@ -286,7 +286,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                   component="div"
                   {...getItemProps({
                     index: choiceIndex,
-                    item: suggestion.value
+                    item: suggestion.value,
                   })}
                   data-test-id="single-autocomplete-select-option"
                   data-test-value={suggestion.value}
@@ -321,7 +321,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             className={classNames(classes.arrowInnerContainer, {
               // Needs to be explicitly compared to false because
               // scrolledToBottom can be either true, false or undefined
-              [classes.hide]: scrolledToBottom !== false
+              [classes.hide]: scrolledToBottom !== false,
             })}
           >
             <SVG src={chevronDown} />

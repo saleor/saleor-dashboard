@@ -7,14 +7,14 @@ import React from "react";
 
 import { attributes } from "../../../attributes/fixtures";
 import ProductExportDialog, {
-  ProductExportDialogProps
+  ProductExportDialogProps,
 } from "./ProductExportDialog";
 
 const props: ProductExportDialogProps = {
   attributes: attributes.map(attr => ({
     __typename: "Attribute",
     id: attr.id,
-    name: attr.name
+    name: attr.name,
   })),
   channels: channelsList,
   confirmButtonState: "default",
@@ -28,10 +28,10 @@ const props: ProductExportDialogProps = {
   open: true,
   productQuantity: {
     all: 100,
-    filter: 32
+    filter: 32,
   },
   selectedProducts: 18,
-  warehouses: warehouseList
+  warehouses: warehouseList,
 };
 
 storiesOf("Views / Products / Export / Export settings", module)
@@ -49,7 +49,7 @@ storiesOf("Views / Products / Export / Export settings", module)
         __typename: "ExportError",
         code: ExportErrorCode.INVALID,
         field,
-        message: "Export invalid"
+        message: "Export invalid",
       }))}
     />
   ));

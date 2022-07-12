@@ -3,7 +3,7 @@ import {
   AccordionSummary,
   makeStyles,
   Paper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
@@ -18,7 +18,7 @@ import {
   FilterElement,
   FilterErrorMessages,
   IFilter,
-  InvalidFilters
+  InvalidFilters,
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
 import FilterContentBodyNameField from "./FilterContentBodyNameField";
@@ -29,7 +29,7 @@ const useExpanderStyles = makeStyles(
   theme => ({
     btn: {
       border: "none",
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
 
     expanded: {},
@@ -39,16 +39,16 @@ const useExpanderStyles = makeStyles(
       padding: 0,
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "FilterContentExpander" }
+  { name: "FilterContentExpander" },
 );
 
 const useSummaryStyles = makeStyles(
@@ -63,24 +63,24 @@ const useSummaryStyles = makeStyles(
       paddingRight: theme.spacing(2),
 
       "&$expanded": {
-        minHeight: 0
-      }
+        minHeight: 0,
+      },
     },
     content: {
       margin: 0,
 
       "&$expanded": {
-        margin: 0
-      }
-    }
+        margin: 0,
+      },
+    },
   }),
-  { name: "FilterContentExpanderSummary" }
+  { name: "FilterContentExpanderSummary" },
 );
 
 export interface FilterContentProps<K extends string = string> {
   filters: IFilter<K>;
   onFilterPropertyChange: <T extends FieldType>(
-    value: FilterReducerAction<K, T>
+    value: FilterReducerAction<K, T>,
   ) => void;
   onFilterAttributeFocus?: (id?: string) => void;
   onClear: () => void;
@@ -100,7 +100,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   onFilterPropertyChange,
   onFilterAttributeFocus,
   onSubmit,
-  dataStructure
+  dataStructure,
 }) => {
   const expanderClasses = useExpanderStyles({});
   const summaryClasses = useSummaryStyles({});
@@ -109,12 +109,12 @@ const FilterContent: React.FC<FilterContentProps> = ({
 
   const getAutocompleteValuesWithNewValues = (
     autocompleteDisplayValues: FilterAutocompleteDisplayValues,
-    filterField: FilterElement<string>
+    filterField: FilterElement<string>,
   ) => {
     if (filterField.type === FieldType.autocomplete) {
       return {
         ...autocompleteDisplayValues,
-        [filterField.name]: filterField.options
+        [filterField.name]: filterField.options,
       };
     }
 
@@ -126,20 +126,20 @@ const FilterContent: React.FC<FilterContentProps> = ({
       if (filterField.multipleFields) {
         return filterField.multipleFields.reduce(
           getAutocompleteValuesWithNewValues,
-          acc
+          acc,
         );
       }
 
       return getAutocompleteValuesWithNewValues(acc, filterField);
     },
-    {}
+    {},
   );
 
   const [
     autocompleteDisplayValues,
-    setAutocompleteDisplayValues
+    setAutocompleteDisplayValues,
   ] = useStateFromProps<FilterAutocompleteDisplayValues>(
-    initialAutocompleteDisplayValues
+    initialAutocompleteDisplayValues,
   );
 
   const commonFilterBodyProps: Omit<
@@ -149,7 +149,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     currencySymbol,
     autocompleteDisplayValues,
     setAutocompleteDisplayValues,
-    initialAutocompleteDisplayValues
+    initialAutocompleteDisplayValues,
   };
 
   const handleFilterAttributeFocus = (filter?: FilterElement<string>) => {
@@ -190,12 +190,12 @@ const FilterContent: React.FC<FilterContentProps> = ({
     const { update } = action.payload;
     onFilterPropertyChange({
       ...action,
-      payload: { ...action.payload, update: { ...update, active: true } }
+      payload: { ...action.payload, update: { ...update, active: true } },
     });
   };
 
   const getFilterFromCurrentData = function<T extends string>(
-    filter: FilterElement<T>
+    filter: FilterElement<T>,
   ) {
     return filters.find(({ name }) => filter.name === name);
   };
@@ -225,9 +225,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 <AccordionSummary
                   IconButtonProps={{
                     classes: {
-                      root: expanderClasses.btn
+                      root: expanderClasses.btn,
                     },
-                    disableRipple: true
+                    disableRipple: true,
                   }}
                   expandIcon={<IconChevronDown />}
                   classes={summaryClasses}
@@ -260,7 +260,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         }
                         filter={{
                           ...getFilterFromCurrentData(filterField),
-                          active: currentFilter?.active
+                          active: currentFilter?.active,
                         }}
                       >
                         <Typography>{filterField.label}</Typography>

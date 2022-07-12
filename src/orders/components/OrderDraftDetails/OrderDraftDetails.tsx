@@ -1,27 +1,22 @@
 import { Card, CardContent } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsFragment, OrderLineInput } from "@saleor/graphql";
 import {
   OrderDiscountContext,
-  OrderDiscountContextConsumerProps
+  OrderDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import OrderDraftDetailsProducts, {
-  FormData as OrderDraftDetailsProductsFormData
-} from "../OrderDraftDetailsProducts";
+import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
   onOrderLineAdd: () => void;
-  onOrderLineChange: (
-    id: string,
-    data: OrderDraftDetailsProductsFormData
-  ) => void;
+  onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
 }
@@ -31,7 +26,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
-  onShippingMethodEdit
+  onShippingMethodEdit,
 }) => {
   const intl = useIntl();
 
@@ -41,7 +36,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         title={intl.formatMessage({
           id: "18wvf7",
           defaultMessage: "Order Details",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           order?.channel.isActive && (

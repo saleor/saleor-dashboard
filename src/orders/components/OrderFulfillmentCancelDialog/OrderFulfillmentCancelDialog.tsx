@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
@@ -25,16 +25,16 @@ export interface OrderFulfillmentCancelDialogFormData {
 const useStyles = makeStyles(
   theme => ({
     enableOverflow: {
-      overflow: "visible"
+      overflow: "visible",
     },
     paragraph: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     selectCcontainer: {
-      width: "60%"
-    }
+      width: "60%",
+    },
   }),
-  { name: "OrderFulfillmentCancelDialog" }
+  { name: "OrderFulfillmentCancelDialog" },
 );
 
 export interface OrderFulfillmentCancelDialogProps {
@@ -53,7 +53,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
     open,
     warehouses,
     onConfirm,
-    onClose
+    onClose,
   } = props;
 
   const classes = useStyles(props);
@@ -62,13 +62,13 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
 
   const choices = warehouses?.map(warehouse => ({
     label: warehouse.name,
-    value: warehouse.id
+    value: warehouse.id,
   }));
 
   return (
     <Dialog
       classes={{
-        paper: classes.enableOverflow
+        paper: classes.enableOverflow,
       }}
       onClose={onClose}
       open={open}
@@ -80,7 +80,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
           const handleChange = createSingleAutocompleteSelectHandler(
             change,
             setDisplayValue,
-            choices
+            choices,
           );
           return (
             <>
@@ -108,7 +108,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                     label={intl.formatMessage({
                       id: "aHc89n",
                       defaultMessage: "Select Warehouse",
-                      description: "select warehouse to restock items"
+                      description: "select warehouse to restock items",
                     })}
                     name="warehouseId"
                     value={formData.warehouseId}

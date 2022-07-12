@@ -11,7 +11,7 @@ interface UseRichTextOptions {
 export function useRichText({
   initial,
   loading,
-  triggerChange
+  triggerChange,
 }: UseRichTextOptions) {
   const editorRef = useRef<EditorCore>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
@@ -52,7 +52,7 @@ export function useRichText({
     handleChange,
     getValue,
     defaultValue,
-    isReadyForMount
+    isReadyForMount,
   };
 }
 

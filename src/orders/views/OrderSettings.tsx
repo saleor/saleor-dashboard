@@ -1,6 +1,6 @@
 import {
   useOrderSettingsQuery,
-  useOrderSettingsUpdateMutation
+  useOrderSettingsUpdateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -19,43 +19,43 @@ export const OrderSettings: React.FC = () => {
 
   const [
     orderSettingsUpdate,
-    orderSettingsUpdateOpts
+    orderSettingsUpdateOpts,
   ] = useOrderSettingsUpdateMutation({
     onCompleted: ({ orderSettingsUpdate: { errors } }) => {
       if (!errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         return;
       }
 
       notify({
         status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong)
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
-    }
+    },
   });
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
     automaticallyFulfillNonShippableGiftCard,
     fulfillmentAutoApprove,
-    fulfillmentAllowUnpaid
+    fulfillmentAllowUnpaid,
   }: OrderSettingsFormData) =>
     extractMutationErrors(
       orderSettingsUpdate({
         variables: {
           orderSettingsInput: {
             automaticallyFulfillNonShippableGiftCard,
-            automaticallyConfirmAllNewOrders
+            automaticallyConfirmAllNewOrders,
           },
           shopSettingsInput: {
             fulfillmentAutoApprove,
-            fulfillmentAllowUnpaid
-          }
-        }
-      })
+            fulfillmentAllowUnpaid,
+          },
+        },
+      }),
     );
 
   return (
@@ -67,7 +67,7 @@ export const OrderSettings: React.FC = () => {
       saveButtonBarState={getMutationState(
         orderSettingsUpdateOpts.called,
         orderSettingsUpdateOpts.loading,
-        [...(orderSettingsUpdateOpts.data?.orderSettingsUpdate.errors || [])]
+        [...(orderSettingsUpdateOpts.data?.orderSettingsUpdate.errors || [])],
       )}
     />
   );

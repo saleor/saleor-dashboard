@@ -13,33 +13,33 @@ export interface GridProps {
 const useStyles = makeStyles(
   theme => ({
     default: {
-      gridTemplateColumns: "9fr 4fr"
+      gridTemplateColumns: "9fr 4fr",
     },
     inverted: {
-      gridTemplateColumns: "4fr 9fr"
+      gridTemplateColumns: "4fr 9fr",
     },
     root: {
       "& > div": {
-        overflow: "hidden"
+        overflow: "hidden",
       },
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridRowGap: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
         gridRowGap: theme.spacing(1),
-        gridTemplateColumns: "1fr"
-      }
+        gridTemplateColumns: "1fr",
+      },
     },
     uniform: {
-      gridTemplateColumns: "1fr 1fr"
+      gridTemplateColumns: "1fr 1fr",
     },
     richText: {
       "&& > div": {
-        overflow: "visible"
-      }
-    }
+        overflow: "visible",
+      },
+    },
   }),
-  { name: "Grid" }
+  { name: "Grid" },
 );
 
 export const Grid: React.FC<GridProps> = props => {
@@ -53,7 +53,7 @@ export const Grid: React.FC<GridProps> = props => {
         [classes.default]: variant === "default",
         [classes.inverted]: variant === "inverted",
         [classes.uniform]: variant === "uniform",
-        [classes.richText]: richText
+        [classes.richText]: richText,
       })}
     >
       {children}
@@ -62,6 +62,6 @@ export const Grid: React.FC<GridProps> = props => {
 };
 Grid.displayName = "Grid";
 Grid.defaultProps = {
-  variant: "default"
+  variant: "default",
 };
 export default Grid;

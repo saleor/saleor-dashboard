@@ -19,7 +19,7 @@ describe("Filtering query params", () => {
 
   it("should not be empty object if params given", () => {
     const params: StaffListUrlFilters = {
-      status: StaffMemberStatus.ACTIVE
+      status: StaffMemberStatus.ACTIVE,
     };
     const filterVariables = getFilterVariables(params);
 
@@ -33,14 +33,14 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     status: {
       active: false,
-      value: StaffMemberStatus.ACTIVE
-    }
+      value: StaffMemberStatus.ACTIVE,
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -49,7 +49,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

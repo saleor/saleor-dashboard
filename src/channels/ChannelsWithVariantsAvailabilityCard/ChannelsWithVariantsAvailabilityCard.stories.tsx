@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsWithVariantsAvailabilityCard, {
-  ChannelsWithVariantsAvailabilityCardProps
+  ChannelsWithVariantsAvailabilityCardProps,
 } from "./ChannelsWithVariantsAvailabilityCard";
 
 const props: ChannelsWithVariantsAvailabilityCardProps = {
@@ -21,7 +21,7 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       currency: "EUR",
       variantsIds: ["variantA"],
       costPrice: "5",
-      price: "15"
+      price: "15",
     },
     {
       id: "2",
@@ -34,7 +34,7 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       currency: "EUR",
       variantsIds: ["variantA"],
       costPrice: "5",
-      price: "15"
+      price: "15",
     },
     {
       id: "3",
@@ -47,8 +47,8 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       currency: "EUR",
       variantsIds: ["variantA"],
       costPrice: "5",
-      price: "15"
-    }
+      price: "15",
+    },
   ],
   variants: [
     {
@@ -57,9 +57,9 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       media: [
         {
           url:
-            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_06.png"
-        }
-      ]
+            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_06.png",
+        },
+      ],
     },
     {
       id: "variantB",
@@ -67,39 +67,39 @@ const props: ChannelsWithVariantsAvailabilityCardProps = {
       media: [
         {
           url:
-            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_05.png"
-        }
-      ]
+            "https://test-envs-stack-testenvsmediabucket050c0d50-qdkqrzgoumxv.s3.amazonaws.com/feature-assing-variants-to-channel-listings/products/saleordemoproduct_fd_juice_05.png",
+        },
+      ],
     },
     {
       id: "variantC",
       name: "Variant C",
-      media: []
-    }
+      media: [],
+    },
   ] as ProductDetailsVariantFragment[],
   channelsWithVariantsData: {
     ["1"]: {
       selectedVariantsIds: ["variantA", "variantB"],
       variantsIdsToRemove: [],
-      variantsIdsToAdd: []
+      variantsIdsToAdd: [],
     },
     ["2"]: {
       selectedVariantsIds: ["variantA", "variantC"],
       variantsIdsToRemove: [],
-      variantsIdsToAdd: []
+      variantsIdsToAdd: [],
     },
     ["3"]: {
       selectedVariantsIds: [],
       variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    }
+      variantsIdsToAdd: [],
+    },
   },
   messages: {
     hiddenLabel: "Not published",
-    visibleLabel: "Published"
+    visibleLabel: "Published",
   },
   onChange: () => undefined,
-  openModal: () => undefined
+  openModal: () => undefined,
 };
 
 storiesOf("Channels / Channels with variants availability card", module)

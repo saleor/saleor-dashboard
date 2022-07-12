@@ -29,21 +29,21 @@ const MessageManagerProvider = ({ children }) => {
   const timerCallback = (notification: INotification) => {
     remove(notification.id);
     timersArr.current = timersArr.current.filter(
-      timer => timer.id !== notification.id
+      timer => timer.id !== notification.id,
     );
   };
 
   const remove = useCallback(notificationId => {
     setNotifications(currentNotifications =>
-      currentNotifications.filter(n => n.id !== notificationId)
+      currentNotifications.filter(n => n.id !== notificationId),
     );
   }, []);
 
   const clearErrorNotifications = useCallback(() => {
     setNotifications(notifications =>
       notifications.filter(
-        notification => notification.message.status !== "error"
-      )
+        notification => notification.message.status !== "error",
+      ),
     );
   }, []);
 
@@ -55,7 +55,7 @@ const MessageManagerProvider = ({ children }) => {
         close: () => remove(id),
         id,
         message,
-        timeout
+        timeout,
       };
       if (timeout !== null) {
         const timeoutId = window.setTimeout(() => {
@@ -67,7 +67,7 @@ const MessageManagerProvider = ({ children }) => {
           notification,
           remaining: timeout,
           start: new Date().getTime(),
-          timeoutId
+          timeoutId,
         });
       }
 
@@ -75,12 +75,12 @@ const MessageManagerProvider = ({ children }) => {
 
       return notification;
     },
-    []
+    [],
   );
 
   const getCurrentTimer = (notification: INotification) => {
     const currentTimerIndex = timersArr.current.findIndex(
-      timer => timer.id === notification.id
+      timer => timer.id === notification.id,
     );
     return timersArr.current[currentTimerIndex];
   };
@@ -99,7 +99,7 @@ const MessageManagerProvider = ({ children }) => {
       currentTimer.start = new Date().getTime();
       currentTimer.timeoutId = window.setTimeout(
         () => timerCallback(notification),
-        currentTimer.remaining
+        currentTimer.remaining,
       );
     }
   };
@@ -123,7 +123,7 @@ const MessageManagerProvider = ({ children }) => {
                 {...(!!notification.timeout
                   ? {
                       onMouseEnter: () => pauseTimer(notification),
-                      onMouseLeave: () => resumeTimer(notification)
+                      onMouseLeave: () => resumeTimer(notification),
                     }
                   : {})}
                 onClose={notification.close}
@@ -140,26 +140,26 @@ const MessageManagerProvider = ({ children }) => {
                       <pre
                         style={{
                           wordWrap: "break-word",
-                          whiteSpace: "pre-wrap"
+                          whiteSpace: "pre-wrap",
                         }}
                       >
                         {notification.message.apiMessage}
                       </pre>
                     ),
                     hideApiLabel: intl.formatMessage(
-                      notificationMessages.hideError
+                      notificationMessages.hideError,
                     ),
                     showApiLabel: intl.formatMessage(
-                      notificationMessages.seeError
-                    )
+                      notificationMessages.seeError,
+                    ),
                   }
                 }
                 {...(!!notification.message.actionBtn
                   ? {
                       action: {
                         label: notification.message.actionBtn.label,
-                        onClick: notification.message.actionBtn.action
-                      }
+                        onClick: notification.message.actionBtn.action,
+                      },
                     }
                   : {})}
                 className={classes.notification}

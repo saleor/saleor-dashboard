@@ -7,7 +7,7 @@ import { defineMessages, useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     container: {
-      position: "relative"
+      position: "relative",
     },
     errorBox: {
       backgroundColor: theme.palette.error.main,
@@ -15,25 +15,25 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(3),
       padding: theme.spacing(2, 3),
       width: 280,
-      zIndex: 1000
+      zIndex: 1000,
     },
     errorText: {
       color: "white",
-      fontSize: 14
+      fontSize: 14,
     },
     errorTextHighlighted: {
       color: theme.palette.error.main,
       fontSize: 12,
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     titleContainer: {
       alignItems: "center",
       display: "flex",
       flexDirection: "row",
-      justifyContent: "flex-end"
-    }
+      justifyContent: "flex-end",
+    },
   }),
-  { name: "ProductErrorCell" }
+  { name: "ProductErrorCell" },
 );
 
 const messages = defineMessages({
@@ -41,13 +41,13 @@ const messages = defineMessages({
     id: "RlbhwF",
     defaultMessage:
       "This product is no longer in database so it can’t be replaced, nor returned",
-    description: "product no longer exists error description"
+    description: "product no longer exists error description",
   },
   title: {
     id: "p4zuQp",
     defaultMessage: "Product no longer exists",
-    description: "product no longer exists error title"
-  }
+    description: "product no longer exists error title",
+  },
 });
 
 interface ProductErrorCellProps {

@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -32,7 +32,7 @@ export interface WebhooksListProps {
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
   createHref,
-  onRemove
+  onRemove,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -44,7 +44,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         title={intl.formatMessage({
           id: "jqnwW9",
           defaultMessage: "Webhooks",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           !!createHref && (
@@ -69,7 +69,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               {intl.formatMessage({
                 id: "OTpV1t",
                 defaultMessage: "Name",
-                description: "webhook name"
+                description: "webhook name",
               })}
             </TableCellHeader>
             <TableCell
@@ -78,7 +78,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               {intl.formatMessage({
                 id: "a/QJBx",
                 defaultMessage: "Action",
-                description: "user action bar"
+                description: "user action bar",
               })}
             </TableCell>
           </TableRow>
@@ -95,7 +95,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               >
                 <TableCell
                   className={classNames(classes.colName, {
-                    [classes.colNameUnnamed]: isUnnamed(webhook)
+                    [classes.colNameUnnamed]: isUnnamed(webhook),
                   })}
                 >
                   {isUnnamed(webhook) ? (
@@ -131,11 +131,11 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 <TableCell colSpan={numberOfColumns}>
                   {intl.formatMessage({
                     id: "wbjuR4",
-                    defaultMessage: "No webhooks found"
+                    defaultMessage: "No webhooks found",
                   })}
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

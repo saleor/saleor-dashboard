@@ -9,7 +9,7 @@ import Savebar from "@saleor/components/Savebar";
 import {
   AppErrorFragment,
   PermissionEnum,
-  PermissionFragment
+  PermissionFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -33,7 +33,7 @@ export interface CustomAppCreatePageProps {
   permissions: PermissionFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (
-    data: CustomAppCreatePageFormData
+    data: CustomAppCreatePageFormData,
   ) => SubmitPromise<AppErrorFragment[]>;
 }
 
@@ -45,7 +45,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const initialForm: CustomAppCreatePageFormData = {
     hasFullAccess: false,
     name: "",
-    permissions: []
+    permissions: [],
   };
 
   const formErrors = getFormErrors(["permissions"], errors || []);
@@ -67,7 +67,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
             title={intl.formatMessage({
               id: "GjH9uy",
               defaultMessage: "Create New App",
-              description: "header"
+              description: "header",
             })}
           />
           <Grid>
@@ -89,13 +89,13 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               fullAccessLabel={intl.formatMessage({
                 id: "D4nzdD",
                 defaultMessage: "Grant this app full access to the store",
-                description: "checkbox label"
+                description: "checkbox label",
               })}
               description={intl.formatMessage({
                 id: "flP8Hj",
                 defaultMessage:
                   "Expand or restrict app permissions to access certain part of Saleor system.",
-                description: "card description"
+                description: "card description",
               })}
             />
           </Grid>

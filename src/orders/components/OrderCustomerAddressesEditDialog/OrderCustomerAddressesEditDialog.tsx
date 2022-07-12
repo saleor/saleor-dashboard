@@ -4,7 +4,7 @@ import {
   DialogContent,
   Divider,
   FormControlLabel,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
@@ -17,7 +17,7 @@ import {
   AddressTypeEnum,
   CountryWithCodeFragment,
   Node,
-  OrderErrorFragment
+  OrderErrorFragment,
 } from "@saleor/graphql";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -32,7 +32,7 @@ import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
-  OrderCustomerAddressesEditFormData
+  OrderCustomerAddressesEditFormData,
 } from "./form";
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
@@ -41,12 +41,12 @@ import { useStyles } from "./styles";
 import {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput,
-  OrderCustomerSearchAddressState
+  OrderCustomerSearchAddressState,
 } from "./types";
 import {
   getAddressEditProps,
   hasPreSubmitErrors,
-  validateDefaultAddress
+  validateDefaultAddress,
 } from "./utils";
 
 export interface OrderCustomerAddressesEditDialogProps {
@@ -63,13 +63,13 @@ export interface OrderCustomerAddressesEditDialogProps {
   defaultBillingAddress?: Node;
   onClose();
   onConfirm(
-    data: Partial<OrderCustomerAddressesEditDialogOutput>
+    data: Partial<OrderCustomerAddressesEditDialogOutput>,
   ): SubmitPromise<any[]>;
 }
 
 const defaultSearchState: OrderCustomerSearchAddressState = {
   open: false,
-  type: undefined
+  type: undefined,
 };
 
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
@@ -86,7 +86,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     onClose,
     onConfirm,
     orderShippingAddress,
-    orderBillingAddress
+    orderBillingAddress,
   } = props;
 
   const classes = useStyles(props);
@@ -97,20 +97,20 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const {
     errors: shippingValidationErrors,
-    submit: handleShippingSubmit
+    submit: handleShippingSubmit,
   } = useAddressValidation(address => address, AddressTypeEnum.SHIPPING);
   const {
     errors: billingValidationErrors,
-    submit: handleBillingSubmit
+    submit: handleBillingSubmit,
   } = useAddressValidation(address => address, AddressTypeEnum.BILLING);
 
   const dialogErrors = useModalDialogErrors(
     [...errors, ...shippingValidationErrors, ...billingValidationErrors],
-    open
+    open,
   );
 
   const continueToSearchAddressesState = (
-    data: OrderCustomerAddressesEditFormData
+    data: OrderCustomerAddressesEditFormData,
   ): boolean => {
     if (hasCustomerChanged || addressSearchState.open) {
       return false;
@@ -130,14 +130,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const getCustomerAddress = (
-    selectedCustomerAddressID: string
+    selectedCustomerAddressID: string,
   ): AddressInput =>
     transformAddressToAddressInput(
-      customerAddresses.find(getById(selectedCustomerAddressID))
+      customerAddresses.find(getById(selectedCustomerAddressID)),
     );
   // async because handleShippingSubmit can return a promise
   const handleAddressesSubmit = async (
-    data: OrderCustomerAddressesEditFormData
+    data: OrderCustomerAddressesEditFormData,
   ) => {
     const shippingAddress =
       customerAddresses.length > 0 &&
@@ -155,18 +155,18 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return {
         shippingAddress,
-        ...(data.cloneAddress && { billingAddress: shippingAddress })
+        ...(data.cloneAddress && { billingAddress: shippingAddress }),
       };
     }
     if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
       return {
         ...(data.cloneAddress && { shippingAddress: billingAddress }),
-        billingAddress
+        billingAddress,
       };
     }
     return {
       shippingAddress,
-      billingAddress: data.cloneAddress ? shippingAddress : billingAddress
+      billingAddress: data.cloneAddress ? shippingAddress : billingAddress,
     };
   };
 
@@ -204,7 +204,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         type:
           variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS
             ? AddressTypeEnum.SHIPPING
-            : AddressTypeEnum.BILLING
+            : AddressTypeEnum.BILLING,
       });
       return;
     }
@@ -218,7 +218,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     }
     return Promise.resolve([
       ...shippingValidationErrors,
-      ...billingValidationErrors
+      ...billingValidationErrors,
     ]);
   };
 
@@ -230,18 +230,18 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const validatedDefaultShippingAddress = validateDefaultAddress(
     defaultShippingAddress,
-    customerAddresses
+    customerAddresses,
   );
   const validatedDefaultBillingAddress = validateDefaultAddress(
     defaultBillingAddress,
-    customerAddresses
+    customerAddresses,
   );
 
   const addressEditCommonProps = {
     showCard: hasCustomerChanged,
     loading,
     countryChoices,
-    customerAddresses
+    customerAddresses,
   };
 
   const exitModal = () => {
@@ -262,7 +262,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         defaultCloneAddress={hasCustomerChanged}
         initial={{
           shippingAddress: orderShippingAddress,
-          billingAddress: orderBillingAddress
+          billingAddress: orderBillingAddress,
         }}
         onSubmit={handleContinue}
       >
@@ -274,7 +274,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             change,
             dialogErrors,
             setAddressSearchState,
-            addressEditCommonProps
+            addressEditCommonProps,
           );
           const billingAddressEditProps = getAddressEditProps(
             "billing",
@@ -283,7 +283,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             change,
             dialogErrors,
             setAddressSearchState,
-            addressEditCommonProps
+            addressEditCommonProps,
           );
           return (
             <>
@@ -303,13 +303,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   onChangeCustomerShippingAddress={customerAddress =>
                     handlers.changeCustomerAddress(
                       customerAddress,
-                      "customerShippingAddress"
+                      "customerShippingAddress",
                     )
                   }
                   onChangeCustomerBillingAddress={customerAddress =>
                     handlers.changeCustomerAddress(
                       customerAddress,
-                      "customerBillingAddress"
+                      "customerBillingAddress",
                     )
                   }
                   exitSearch={() => setAddressSearchState(defaultSearchState)}
@@ -338,15 +338,15 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                 change({
                                   target: {
                                     name: "cloneAddress",
-                                    value: !data.cloneAddress
-                                  }
+                                    value: !data.cloneAddress,
+                                  },
                                 })
                               }
                               data-test-id="billing-same-as-shipping"
                             />
                           }
                           label={intl.formatMessage(
-                            dialogMessages.billingSameAsShipping
+                            dialogMessages.billingSameAsShipping,
                           )}
                         />
                         {!data.cloneAddress && (
@@ -391,15 +391,15 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                     change({
                                       target: {
                                         name: "cloneAddress",
-                                        value: !data.cloneAddress
-                                      }
+                                        value: !data.cloneAddress,
+                                      },
                                     })
                                   }
                                   data-test-id="billing-same-as-shipping"
                                 />
                               }
                               label={intl.formatMessage(
-                                dialogMessages.billingSameAsShipping
+                                dialogMessages.billingSameAsShipping,
                               )}
                             />
                           </>
@@ -426,15 +426,15 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                     change({
                                       target: {
                                         name: "cloneAddress",
-                                        value: !data.cloneAddress
-                                      }
+                                        value: !data.cloneAddress,
+                                      },
                                     })
                                   }
                                   data-test-id="billing-same-as-shipping"
                                 />
                               }
                               label={intl.formatMessage(
-                                dialogMessages.shippingSameAsBilling
+                                dialogMessages.shippingSameAsBilling,
                               )}
                             />
                           </>

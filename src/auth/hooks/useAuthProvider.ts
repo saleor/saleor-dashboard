@@ -9,12 +9,12 @@ import {
   GetExternalAccessTokenData,
   LoginData,
   useAuth,
-  useAuthState
+  useAuthState,
 } from "@saleor/sdk";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
-  saveCredentials
+  saveCredentials,
 } from "@saleor/utils/credentialsManagement";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
@@ -25,7 +25,7 @@ import {
   RequestExternalLoginInput,
   RequestExternalLogoutInput,
   UserContext,
-  UserContextError
+  UserContextError,
 } from "../types";
 import { displayDemoMessage } from "../utils";
 
@@ -38,19 +38,19 @@ export interface UseAuthProviderOpts {
 export function useAuthProvider({
   intl,
   notify,
-  apolloClient
+  apolloClient,
 }: UseAuthProviderOpts): UserContext {
   const {
     login,
     getExternalAuthUrl,
     getExternalAccessToken,
-    logout
+    logout,
   } = useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
     "requestedExternalPluginId",
-    null
+    null,
   );
   const [error, setError] = useState<UserContextError>();
   const permitCredentialsAPI = useRef(true);
@@ -84,7 +84,7 @@ export function useAuthProvider({
     skip: !authenticated,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "cache-and-network",
   });
 
   const handleLogout = async () => {
@@ -93,8 +93,8 @@ export function useAuthProvider({
 
     const result = await logout({
       input: JSON.stringify({
-        returnTo
-      } as RequestExternalLogoutInput)
+        returnTo,
+      } as RequestExternalLogoutInput),
     });
 
     if (isCredentialsManagementAPISupported) {
@@ -127,7 +127,7 @@ export function useAuthProvider({
       const result = await login({
         email,
         password,
-        includeDetails: false
+        includeDetails: false,
       });
 
       if (result && !result.data.tokenCreate.errors.length) {
@@ -149,11 +149,11 @@ export function useAuthProvider({
 
   const handleRequestExternalLogin = async (
     pluginId: string,
-    input: RequestExternalLoginInput
+    input: RequestExternalLoginInput,
   ) => {
     const result = await getExternalAuthUrl({
       pluginId,
-      input: JSON.stringify(input)
+      input: JSON.stringify(input),
     });
 
     return result?.data?.externalAuthenticationUrl;
@@ -161,12 +161,12 @@ export function useAuthProvider({
 
   const handleExternalLogin = async (
     pluginId: string,
-    input: ExternalLoginInput
+    input: ExternalLoginInput,
   ) => {
     try {
       const result = await getExternalAccessToken({
         pluginId,
-        input: JSON.stringify(input)
+        input: JSON.stringify(input),
       });
 
       if (result && !result.data?.externalObtainAccessTokens.errors.length) {
@@ -186,13 +186,13 @@ export function useAuthProvider({
   };
 
   const logoutNonStaffUser = async (
-    data: LoginData | GetExternalAccessTokenData
+    data: LoginData | GetExternalAccessTokenData,
   ) => {
     if (data.user && !data.user.isStaff) {
       notify({
         status: "error",
         text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
-        title: intl.formatMessage(commonMessages.insufficientPermissions)
+        title: intl.formatMessage(commonMessages.insufficientPermissions),
       });
       await handleLogout();
     }
@@ -206,6 +206,6 @@ export function useAuthProvider({
     authenticating: authenticating && !error,
     authenticated: authenticated && user?.isStaff,
     user: userDetails.data?.me,
-    error
+    error,
   };
 }

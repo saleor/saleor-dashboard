@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
 import BackButton from "@saleor/components/BackButton";
@@ -11,7 +11,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import {
   AttributeErrorFragment,
-  AttributeInputTypeEnum
+  AttributeInputTypeEnum,
 } from "@saleor/graphql";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
@@ -42,19 +42,19 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   onClose,
   onSubmit,
   open,
-  inputType
+  inputType,
 }) => {
   const intl = useIntl();
   const attributeValueFields = attributeValue?.fileUrl
     ? {
         fileUrl: attributeValue?.fileUrl,
-        contentType: attributeValue?.contentType
+        contentType: attributeValue?.contentType,
       }
     : { value: attributeValue?.value ?? "" };
 
   const initialForm: AttributeValueEditDialogFormData = {
     name: attributeValue?.name ?? "",
-    ...attributeValueFields
+    ...attributeValueFields,
   };
   const errors = useModalDialogErrors(apiErrors, open);
   const formErrors = getFormErrors(["name"], errors);
@@ -89,13 +89,13 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 fullWidth
                 helperText={getAttributeValueErrorMessage(
                   formErrors.name,
-                  intl
+                  intl,
                 )}
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
                   id: "UhcALJ",
                   defaultMessage: "Name",
-                  description: "attribute name"
+                  description: "attribute name",
                 })}
                 value={data.name}
                 onChange={change}

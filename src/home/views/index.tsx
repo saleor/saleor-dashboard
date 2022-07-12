@@ -4,7 +4,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import {
   OrderStatusFilter,
   StockAvailability,
-  useHomeQuery
+  useHomeQuery,
 } from "@saleor/graphql";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -23,7 +23,7 @@ const HomeSection = () => {
   const { data } = useHomeQuery({
     displayLoader: true,
     skip: noChannel,
-    variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) }
+    variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },
   });
 
   return (
@@ -35,15 +35,15 @@ const HomeSection = () => {
       createNewChannelHref={channelsListUrl()}
       ordersToCaptureHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_CAPTURE],
-        channel: [channel?.id]
+        channel: [channel?.id],
       })}
       ordersToFulfillHref={orderListUrl({
         status: [OrderStatusFilter.READY_TO_FULFILL],
-        channel: [channel?.id]
+        channel: [channel?.id],
       })}
       productsOutOfStockHref={productListUrl({
         stockStatus: StockAvailability.OUT_OF_STOCK,
-        channel: channel?.slug
+        channel: channel?.slug,
       })}
       ordersToCapture={data?.ordersToCapture?.totalCount}
       ordersToFulfill={data?.ordersToFulfill?.totalCount}

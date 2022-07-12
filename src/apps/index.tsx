@@ -13,22 +13,20 @@ import {
   AppInstallUrlQueryParams,
   AppListUrlQueryParams,
   appPath,
-  appSettingsPath,
   appsListPath,
   customAppAddPath,
   customAppPath,
-  CustomAppUrlQueryParams
+  CustomAppUrlQueryParams,
 } from "./urls";
 import AppView from "./views/App";
 import AppDetailsView from "./views/AppDetails";
 import AppInstallView from "./views/AppInstall";
-import AppSettingsView from "./views/AppSettings";
 import AppsListView from "./views/AppsList";
 import CustomAppCreateView from "./views/CustomAppCreate";
 import CustomAppDetailsView from "./views/CustomAppDetails";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
@@ -37,10 +35,6 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
     <AppDetailsView id={decodeURIComponent(match.params.id)} params={params} />
   );
 };
-
-const AppSettings: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match
-}) => <AppSettingsView id={decodeURIComponent(match.params.id)} />;
 
 const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
   <AppView id={decodeURIComponent(match.params.id)} />
@@ -61,7 +55,7 @@ interface CustomAppDetailsProps extends RouteComponentProps<{ id?: string }> {
 const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
   match,
   token,
-  onTokenClose
+  onTokenClose,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppUrlQueryParams = qs;
@@ -103,7 +97,6 @@ const Component = () => {
         />
         <Route exact path={appInstallPath} component={AppInstall} />
         <Route exact path={appDetailsPath(":id")} component={AppDetails} />
-        <Route exact path={appSettingsPath(":id")} component={AppSettings} />
         <Route path={appPath(":id")} component={App} />
         <Route
           exact

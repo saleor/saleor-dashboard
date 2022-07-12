@@ -14,7 +14,7 @@ import {
   CustomerListUrlQueryParams,
   CustomerListUrlSortField,
   customerPath,
-  CustomerUrlQueryParams
+  CustomerUrlQueryParams,
 } from "./urls";
 import CustomerAddressesViewComponent from "./views/CustomerAddresses";
 import CustomerCreateView from "./views/CustomerCreate";
@@ -25,7 +25,7 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerListUrlQueryParams = asSortParams(
     qs,
-    CustomerListUrlSortField
+    CustomerListUrlSortField,
   );
 
   return <CustomerListViewComponent params={params} />;

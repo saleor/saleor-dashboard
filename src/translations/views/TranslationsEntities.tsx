@@ -24,7 +24,7 @@ interface TranslationsEntitiesProps {
 
 const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   language,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const shop = useShop();
@@ -33,9 +33,9 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
     navigate(
       "?" +
         stringifyQs({
-          tab: TranslatableEntities.categories
+          tab: TranslatableEntities.categories,
         }),
-      { replace: true }
+      { replace: true },
     );
   }
 
@@ -44,75 +44,75 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.categories
-          })
+            tab: TranslatableEntities.categories,
+          }),
       ),
     onCollectionsTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.collections
-          })
+            tab: TranslatableEntities.collections,
+          }),
       ),
     onPagesTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.pages
-          })
+            tab: TranslatableEntities.pages,
+          }),
       ),
     onAttributesTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.attributes
-          })
+            tab: TranslatableEntities.attributes,
+          }),
       ),
     onProductsTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.products
-          })
+            tab: TranslatableEntities.products,
+          }),
       ),
     onSalesTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.sales
-          })
+            tab: TranslatableEntities.sales,
+          }),
       ),
     onShippingMethodsTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.shippingMethods
-          })
+            tab: TranslatableEntities.shippingMethods,
+          }),
       ),
     onVouchersTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.vouchers
-          })
-      )
+            tab: TranslatableEntities.vouchers,
+          }),
+      ),
   };
   const lang = maybe(() =>
-    shop.languages.find(languageFromList => languageFromList.code === language)
+    shop.languages.find(languageFromList => languageFromList.code === language),
   );
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      language: language as any
+      language: language as any,
     }),
-    [params]
+    [params],
   );
   return (
     <TranslationsEntitiesListPage
       filters={{
         current: params.tab,
-        ...filterCallbacks
+        ...filterCallbacks,
       }}
       language={lang}
     >

@@ -3,7 +3,7 @@ import {
   CardContent,
   Popper,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { PopperPlacementType } from "@material-ui/core/Popper";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
@@ -20,7 +20,7 @@ import React, {
   MutableRefObject,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -28,7 +28,7 @@ import ModalTitle from "./ModalTitle";
 import {
   ORDER_LINE_DISCOUNT,
   OrderDiscountCommonInput,
-  OrderDiscountType
+  OrderDiscountType,
 } from "./types";
 
 const fullNumbersRegex = /^[0-9]*$/;
@@ -39,75 +39,75 @@ const useStyles = makeStyles(
   theme => ({
     container: {
       zIndex: 1000,
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     removeButton: {
       "&:hover": {
-        backgroundColor: theme.palette.error.main
+        backgroundColor: theme.palette.error.main,
       },
       backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
+      color: theme.palette.error.contrastText,
     },
     radioContainer: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center"
+      alignItems: "center",
     },
     reasonInput: {
       marginTop: theme.spacing(1),
-      width: "100%"
+      width: "100%",
     },
     buttonWrapper: {
       display: "flex",
       flexDirection: "row",
-      flex: 1
-    }
+      flex: 1,
+    },
   }),
-  { name: "OrderLineDiscountModal" }
+  { name: "OrderLineDiscountModal" },
 );
 
 const messages = defineMessages({
   buttonLabel: {
     id: "QSnh4Y",
     defaultMessage: "Add",
-    description: "add button label"
+    description: "add button label",
   },
   itemDiscountTitle: {
     id: "WTj17Z",
     defaultMessage: "Discount Item",
-    description: "dialog title item discount"
+    description: "dialog title item discount",
   },
   orderDiscountTitle: {
     id: "YFDAaX",
     defaultMessage: "Discount this Order by:",
-    description: "dialog title order discount"
+    description: "dialog title order discount",
   },
   percentageOption: {
     id: "WUf3Iu",
     defaultMessage: "Percentage",
-    description: "percentage option"
+    description: "percentage option",
   },
   fixedAmountOption: {
     id: "fo7nfa",
     defaultMessage: "Fixed Amount",
-    description: "fixed amount"
+    description: "fixed amount",
   },
   invalidValue: {
     id: "IN5iJz",
     defaultMessage: "Invalid value",
-    description: "value input helper text"
+    description: "value input helper text",
   },
   discountValueLabel: {
     id: "GAmGog",
     defaultMessage: "Discount value",
-    description: "value input label"
+    description: "value input label",
   },
   discountReasonLabel: {
     id: "nvSJNR",
     defaultMessage: "Reason",
-    description: "discount reason input lavel"
-  }
+    description: "discount reason input lavel",
+  },
 });
 
 export interface OrderDiscountCommonModalProps {
@@ -135,7 +135,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   dialogPlacement,
   isOpen,
   confirmStatus,
-  removeStatus
+  removeStatus,
 }) => {
   const { currency, amount: maxAmount } = maxPrice;
 
@@ -160,7 +160,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     return {
       calculationMode,
       reason: existingDiscount?.reason || "",
-      value: getInitialDiscountValue(calculationMode)
+      value: getInitialDiscountValue(calculationMode),
     };
   };
 
@@ -170,7 +170,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [reason, setReason] = useState<string>(initialData.reason);
   const [value, setValue] = useState<string>(initialData.value);
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
-    initialData.calculationMode
+    initialData.calculationMode,
   );
   const previousCalculationMode = useRef(calculationMode);
 
@@ -180,19 +180,19 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const discountTypeChoices = [
     {
       label: intl.formatMessage(messages.percentageOption),
-      value: DiscountValueTypeEnum.PERCENTAGE
+      value: DiscountValueTypeEnum.PERCENTAGE,
     },
     {
       label: intl.formatMessage(messages.fixedAmountOption),
-      value: DiscountValueTypeEnum.FIXED
-    }
+      value: DiscountValueTypeEnum.FIXED,
+    },
   ];
 
   const isDiscountTypePercentage =
     calculationMode === DiscountValueTypeEnum.PERCENTAGE;
 
   const handleSetDiscountValue = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event.target.value;
 
@@ -220,7 +220,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     onConfirm({
       calculationMode,
       reason,
-      value: getParsedDiscountValue()
+      value: getParsedDiscountValue(),
     });
   };
 
@@ -233,7 +233,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
   useEffect(setDefaultValues, [
     existingDiscount?.value,
-    existingDiscount?.reason
+    existingDiscount?.reason,
   ]);
 
   const handleValueConversion = () => {
@@ -252,7 +252,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     ).toFixed(2);
 
     const recalculatedValueFromFixedToPercentage = Math.round(
-      (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount
+      (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount,
     ).toString();
 
     const recalculatedValue = changedFromPercentageToFixed

@@ -1,7 +1,7 @@
 import { Card } from "@material-ui/core";
 import {
   categoryAddUrl,
-  CategoryListUrlSortField
+  CategoryListUrlSortField,
 } from "@saleor/categories/urls";
 import { Button } from "@saleor/components/Button";
 import Container from "@saleor/components/Container";
@@ -14,7 +14,7 @@ import {
   PageListProps,
   SearchPageProps,
   SortPage,
-  TabPageProps
+  TabPageProps,
 } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -72,13 +72,13 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           allTabLabel={intl.formatMessage({
             id: "vy7fjd",
             defaultMessage: "All Categories",
-            description: "tab name"
+            description: "tab name",
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             id: "JiXNEV",
-            defaultMessage: "Search Category"
+            defaultMessage: "Search Category",
           })}
           tabs={tabs}
           onAll={onAll}

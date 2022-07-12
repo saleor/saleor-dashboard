@@ -13,7 +13,7 @@ const props: OrderChangeWarehouseDialogProps = {
   lines: order("abc").lines,
   currentWarehouse: null,
   onConfirm: () => null,
-  onClose: () => null
+  onClose: () => null,
 };
 
 const mocks: MockedResponse[] = [
@@ -24,18 +24,18 @@ const mocks: MockedResponse[] = [
         first: 20,
         after: null,
         query: "",
-        ...allPermissions
-      }
+        ...allPermissions,
+      },
     },
     result: {
-      data: { search: warehouseSearch }
-    }
-  }
+      data: { search: warehouseSearch },
+    },
+  },
 ];
 
 storiesOf(
   "Orders / Order details fulfillment warehouse selection modal",
-  module
+  module,
 )
   .addDecorator(Decorator)
   .add("default", () => (

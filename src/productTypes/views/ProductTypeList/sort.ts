@@ -3,7 +3,7 @@ import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: ProductTypeListUrlSortField
+  sort: ProductTypeListUrlSortField,
 ): ProductTypeSortField {
   switch (sort) {
     case ProductTypeListUrlSortField.name:
@@ -16,5 +16,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

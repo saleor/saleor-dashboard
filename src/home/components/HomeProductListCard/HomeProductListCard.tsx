@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
@@ -25,29 +25,29 @@ const useStyles = makeStyles(
   theme => ({
     avatarProps: {
       height: 64,
-      width: 64
+      width: 64,
     },
     colAvatar: {
       paddingBottom: theme.spacing(2),
       paddingRight: theme.spacing(),
       paddingTop: theme.spacing(2),
-      width: 112
+      width: 112,
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     label: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     noProducts: {
       paddingBottom: 20,
-      paddingTop: 20
+      paddingTop: 20,
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "HomeProductListCard" }
+  { name: "HomeProductListCard" },
 );
 
 interface HomeProductListProps {
@@ -67,7 +67,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
         title={intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
-          description: "header"
+          description: "header",
         })}
       />
       <ResponsiveTable>
@@ -84,7 +84,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                 key={variant ? variant.id : "skeleton"}
                 hover={!!variant}
                 className={classNames({
-                  [classes.tableRow]: !!variant
+                  [classes.tableRow]: !!variant,
                 })}
                 href={productVariantEditUrl(variant.product.id, variant.id)}
               >
@@ -104,7 +104,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                         {maybe(() =>
                           variant.attributes
                             .map(attribute => attribute.values[0].name)
-                            .join(" / ")
+                            .join(" / "),
                         )}
                       </Typography>
                       <Typography color={"textSecondary"}>
@@ -113,7 +113,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
                           description="number of ordered products"
                           values={{
-                            amount: variant.quantityOrdered
+                            amount: variant.quantityOrdered,
                           }}
                         />
                       </Typography>
@@ -129,7 +129,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                       () => (
                         <Money money={variant.revenue.gross} />
                       ),
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </Typography>
                 </TableCell>
@@ -146,7 +146,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                   </Typography>
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

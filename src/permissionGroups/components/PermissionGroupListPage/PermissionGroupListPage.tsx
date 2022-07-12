@@ -12,7 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { PageListProps, SortPage } from "../../../types";
 import {
   permissionGroupAddUrl,
-  PermissionGroupListUrlSortField
+  PermissionGroupListUrlSortField,
 } from "../../urls";
 import PermissionGroupList from "../PermissionGroupList";
 

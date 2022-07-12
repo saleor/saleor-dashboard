@@ -1,10 +1,10 @@
 import {
   OrderSettingsFragment,
-  ShopOrderSettingsFragment
+  ShopOrderSettingsFragment,
 } from "@saleor/graphql";
 import useForm, {
   CommonUseFormResult,
-  SubmitPromise
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
@@ -29,7 +29,7 @@ export interface OrderSettingsFormProps {
 
 function getOrderSeettingsFormData(
   orderSettings: OrderSettingsFragment,
-  shop: ShopOrderSettingsFragment
+  shop: ShopOrderSettingsFragment,
 ): OrderSettingsFormData {
   return {
     automaticallyFulfillNonShippableGiftCard:
@@ -37,7 +37,7 @@ function getOrderSeettingsFormData(
     automaticallyConfirmAllNewOrders:
       orderSettings?.automaticallyConfirmAllNewOrders,
     fulfillmentAutoApprove: shop?.fulfillmentAutoApprove,
-    fulfillmentAllowUnpaid: shop?.fulfillmentAllowUnpaid
+    fulfillmentAllowUnpaid: shop?.fulfillmentAllowUnpaid,
   };
 }
 
@@ -45,19 +45,19 @@ function useOrderSettingsForm(
   orderSettings: OrderSettingsFragment,
   shop: ShopOrderSettingsFragment,
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise,
-  disabled: boolean
+  disabled: boolean,
 ): UseOrderSettingsFormResult {
   const { data, handleChange, formId, setIsSubmitDisabled } = useForm(
     getOrderSeettingsFormData(orderSettings, shop),
     undefined,
     {
-      confirmLeave: true
-    }
+      confirmLeave: true,
+    },
   );
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const submit = () => handleFormSubmit(data);
@@ -67,7 +67,7 @@ function useOrderSettingsForm(
     change: handleChange,
     data,
     submit,
-    isSaveDisabled: disabled
+    isSaveDisabled: disabled,
   };
 }
 
@@ -76,7 +76,7 @@ const OrderSettingsForm: React.FC<OrderSettingsFormProps> = ({
   orderSettings,
   shop,
   onSubmit,
-  disabled
+  disabled,
 }) => {
   const props = useOrderSettingsForm(orderSettings, shop, onSubmit, disabled);
 

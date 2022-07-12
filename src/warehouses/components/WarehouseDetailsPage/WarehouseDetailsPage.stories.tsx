@@ -7,21 +7,21 @@ import React from "react";
 import { warehouse } from "../../fixtures";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
-  WarehouseDetailsPageProps
+  WarehouseDetailsPageProps,
 } from "./WarehouseDetailsPage";
 
 const props: WarehouseDetailsPageProps = {
   countries: countries.map(c => ({
     __typename: "CountryDisplay",
     code: c.code,
-    country: c.name
+    country: c.name,
   })),
   disabled: false,
   errors: [],
   onDelete: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  warehouse
+  warehouse,
 };
 storiesOf("Views / Warehouses / Warehouse details", module)
   .addDecorator(Decorator)
@@ -42,12 +42,12 @@ storiesOf("Views / Warehouses / Warehouse details", module)
         "phone",
         "postalCode",
         "streetAddress1",
-        "streetAddress2"
+        "streetAddress2",
       ] as Array<keyof WarehouseDetailsPageFormData>).map(field => ({
         __typename: "WarehouseError",
         code: WarehouseErrorCode.INVALID,
         field,
-        message: "Warehouse invalid"
+        message: "Warehouse invalid",
       }))}
     />
   ));

@@ -4,28 +4,28 @@ export const useStyles = makeStyles(
   theme => ({
     colName: {
       width: "auto",
-      margin: "0px"
+      margin: "0px",
     },
     colQuantity: {
       textAlign: "right",
       width: 100,
-      padding: "4px 4px"
+      padding: "4px 4px",
     },
     colWarehouseStock: {
       textAlign: "right",
       width: 150,
-      padding: "4px 24px"
+      padding: "4px 24px",
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     label: {
-      margin: theme.spacing(2)
+      margin: theme.spacing(2),
     },
     scrollable: {
       maxHeight: 450,
-      overflow: "scroll"
-    }
+      overflow: "scroll",
+    },
   }),
-  { name: "OrderFulfillStockExceededDialog" }
+  { name: "OrderFulfillStockExceededDialog" },
 );

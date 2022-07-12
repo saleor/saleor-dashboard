@@ -4,7 +4,7 @@ import { MinMax } from "@saleor/types";
 export const filterPostalCodes = (postalCodes, codeToFilterOut) =>
   postalCodes.filter(
     rule =>
-      rule.start !== codeToFilterOut.start && rule.end !== codeToFilterOut.end
+      rule.start !== codeToFilterOut.start && rule.end !== codeToFilterOut.end,
   );
 
 export const getPostalCodeRuleByMinMax = ({ min, max }) => ({ start, end }) =>
@@ -12,11 +12,11 @@ export const getPostalCodeRuleByMinMax = ({ min, max }) => ({ start, end }) =>
 
 export const getRuleObject = (
   rule: MinMax,
-  inclusionType: PostalCodeRuleInclusionTypeEnum
+  inclusionType: PostalCodeRuleInclusionTypeEnum,
 ) => ({
   __typename: undefined,
   end: rule.max,
   id: undefined,
   inclusionType,
-  start: rule.min
+  start: rule.min,
 });

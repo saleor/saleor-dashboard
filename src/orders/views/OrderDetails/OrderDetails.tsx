@@ -7,7 +7,7 @@ import {
   useOrderConfirmMutation,
   useOrderDetailsQuery,
   useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -24,7 +24,7 @@ import {
   orderListUrl,
   orderUrl,
   OrderUrlDialog,
-  OrderUrlQueryParams
+  OrderUrlQueryParams,
 } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
@@ -44,7 +44,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
     updatePrivateMetadata,
-    updatePrivateMetadataOpts
+    updatePrivateMetadataOpts,
   ] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
 
@@ -63,14 +63,14 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         status: isError ? "error" : "success",
         text: isError
           ? getOrderErrorMessage(errors[0], intl)
-          : "Confirmed Order"
+          : "Confirmed Order",
       });
-    }
+    },
   });
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const order = data?.order;
@@ -90,7 +90,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       order,
       () => Promise.resolve([]),
       variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables })
+      variables => updatePrivateMetadata({ variables }),
     );
 
     const result = await update(data);
@@ -98,7 +98,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     if (result.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
     }
 
@@ -139,8 +139,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
               queue(Task.INVOICE_GENERATE, {
                 generateInvoice: {
                   invoiceId: data.invoiceRequest.invoice.id,
-                  orderId: id
-                }
+                  orderId: id,
+                },
               });
             }
           }}
@@ -164,7 +164,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             orderDraftFinalize,
             orderPaymentMarkAsPaid,
             orderInvoiceRequest,
-            orderInvoiceSend
+            orderInvoiceSend,
           }) => (
             <>
               {!isOrderDraft && !isOrderUnconfirmed && (

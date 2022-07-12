@@ -25,6 +25,7 @@ export const AppFragmentDoc = gql`
   type
   homepageUrl
   appUrl
+  manifestUrl
   configurationUrl
   supportUrl
   version
@@ -47,6 +48,25 @@ export const AppFragmentDoc = gql`
   }
 }
     ${WebhookFragmentDoc}`;
+export const AppPermissionFragmentDoc = gql`
+    fragment AppPermission on Permission {
+  name
+  code
+}
+    `;
+export const AppListItemFragmentDoc = gql`
+    fragment AppListItem on App {
+  id
+  name
+  isActive
+  type
+  appUrl
+  manifestUrl
+  permissions {
+    ...AppPermission
+  }
+}
+    ${AppPermissionFragmentDoc}`;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -3135,16 +3155,12 @@ export const AppsListDocument = gql`
     totalCount
     edges {
       node {
-        id
-        name
-        isActive
-        type
-        appUrl
+        ...AppListItem
       }
     }
   }
 }
-    `;
+    ${AppListItemFragmentDoc}`;
 
 /**
  * __useAppsListQuery__
@@ -13479,6 +13495,7 @@ export const SearchWarehousesDocument = gql`
     sortBy: {direction: ASC, field: NAME}
     filter: {search: $query}
   ) {
+    totalCount
     edges {
       node {
         id
@@ -16327,6 +16344,46 @@ export function useWarehouseDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type WarehouseDetailsQueryHookResult = ReturnType<typeof useWarehouseDetailsQuery>;
 export type WarehouseDetailsLazyQueryHookResult = ReturnType<typeof useWarehouseDetailsLazyQuery>;
 export type WarehouseDetailsQueryResult = Apollo.QueryResult<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>;
+export const ChannelWarehousesDocument = gql`
+    query ChannelWarehouses($filter: WarehouseFilterInput) {
+  warehouses(filter: $filter, first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelWarehousesQuery__
+ *
+ * To run a query within a React component, call `useChannelWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelWarehousesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useChannelWarehousesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
+      }
+export function useChannelWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
+        }
+export type ChannelWarehousesQueryHookResult = ReturnType<typeof useChannelWarehousesQuery>;
+export type ChannelWarehousesLazyQueryHookResult = ReturnType<typeof useChannelWarehousesLazyQuery>;
+export type ChannelWarehousesQueryResult = Apollo.QueryResult<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>;
 export const WebhookCreateDocument = gql`
     mutation WebhookCreate($input: WebhookCreateInput!) {
   webhookCreate(input: $input) {

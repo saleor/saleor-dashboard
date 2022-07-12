@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import { Button } from "@saleor/components/Button";
@@ -30,18 +30,18 @@ const messages = defineMessages({
   buttonMessage: {
     id: "4W/CKn",
     defaultMessage: "Upload URL",
-    description: "modal button"
-  }
+    description: "modal button",
+  },
 });
 
 const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   open,
   onClose,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const initialValues: FormValues = {
-    mediaUrl: ""
+    mediaUrl: "",
   };
 
   const handleOnSubmit = (values: FormValues) => {

@@ -6,18 +6,18 @@ import { Sort } from "../types";
 
 export function getSortUrlVariables<TSortKey extends string>(
   field: TSortKey,
-  params: Sort<TSortKey>
+  params: Sort<TSortKey>,
 ): Sort<TSortKey> {
   if (field === params.sort) {
     return {
       asc: !params.asc,
-      sort: field
+      sort: field,
     };
   }
 
   return {
     asc: true,
-    sort: field
+    sort: field,
   };
 }
 
@@ -36,7 +36,7 @@ export function getSortParams<
 >(params: TParams): Sort<TFields> {
   return {
     asc: params.asc,
-    sort: params.sort
+    sort: params.sort,
   };
 }
 
@@ -48,17 +48,17 @@ export function asSortParams<
   params: TParams,
   fields: TFields,
   defaultField?: keyof TFields,
-  defaultOrder?: boolean
+  defaultOrder?: boolean,
 ): TParams & Sort {
   return {
     ...params,
     asc: parseBoolean(
       params.asc,
-      defaultOrder === undefined ? true : defaultOrder
+      defaultOrder === undefined ? true : defaultOrder,
     ),
     sort: params.sort
       ? findValueInEnum(params.sort, fields)
-      : defaultField?.toString() || "name"
+      : defaultField?.toString() || "name",
   };
 }
 
@@ -67,7 +67,7 @@ interface SortingInput<T extends string> {
   field: T;
 }
 type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
-  sort: TUrlField
+  sort: TUrlField,
 ) => TSortField;
 type GetSortQueryVariables<
   TSortField extends string,
@@ -78,7 +78,7 @@ export function createGetSortQueryVariables<
   TSortField extends string,
   TParams extends Record<any, any>
 >(
-  getSortQueryField: GetSortQueryField<TUrlField, TSortField>
+  getSortQueryField: GetSortQueryField<TUrlField, TSortField>,
 ): GetSortQueryVariables<TSortField, TParams> {
   return (params: TParams) => {
     const field = getSortQueryField(params.sort);
@@ -86,7 +86,7 @@ export function createGetSortQueryVariables<
     if (!!field) {
       return {
         direction: getOrderDirection(params.asc),
-        field
+        field,
       };
     }
 

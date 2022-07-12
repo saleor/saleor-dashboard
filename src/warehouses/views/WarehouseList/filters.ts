@@ -2,34 +2,34 @@ import { WarehouseFilterInput } from "@saleor/graphql";
 
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
 } from "../../../utils/filters";
 import {
   WarehouseListUrlFilters,
   WarehouseListUrlFiltersEnum,
-  WarehouseListUrlQueryParams
+  WarehouseListUrlQueryParams,
 } from "../../urls";
 
 export const WAREHOUSE_FILTERS_KEY = "warehouseFilters";
 
 export function getFilterVariables(
-  params: WarehouseListUrlFilters
+  params: WarehouseListUrlFilters,
 ): WarehouseFilterInput {
   return {
-    search: params.query
+    search: params.query,
   };
 }
 
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<WarehouseListUrlFilters>(WAREHOUSE_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<WarehouseListUrlQueryParams, WarehouseListUrlFilters>(
-  WarehouseListUrlFiltersEnum
+  WarehouseListUrlFiltersEnum,
 );

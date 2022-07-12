@@ -3,7 +3,7 @@ export function createAttribute({
   attributeValues = ["value"],
   type = "PRODUCT_TYPE",
   inputType = "DROPDOWN",
-  filterableInDashboard = false
+  filterableInDashboard = false,
 }) {
   const values = attributeValues.map(element => `{name:"${element}"}`);
   const mutation = `mutation{
@@ -59,7 +59,7 @@ export function getAttributes(first, search) {
 export function deleteAttribute(attributeId) {
   const mutation = `mutation{
     attributeDelete(id:"${attributeId}"){
-      attributeErrors{
+      errors{
         field
         message
       }

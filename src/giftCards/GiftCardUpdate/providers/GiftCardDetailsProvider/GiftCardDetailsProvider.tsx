@@ -20,16 +20,16 @@ export const GiftCardDetailsContext = createContext<
 
 const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
   children,
-  id
+  id,
 }) => {
   const { data, loading } = useGiftCardDetailsQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const providerValues: GiftCardDetailsConsumerProps = {
     giftCard: getExtendedGiftCard(data?.giftCard),
-    loading
+    loading,
   };
 
   return (

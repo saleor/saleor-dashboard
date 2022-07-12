@@ -7,7 +7,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -46,13 +46,13 @@ function handleContainerAssign(
   containerId: string,
   isSelected: boolean,
   selectedContainers: string[],
-  setSelectedContainers: (data: string[]) => void
+  setSelectedContainers: (data: string[]) => void,
 ) {
   if (isSelected) {
     setSelectedContainers(
       selectedContainers.filter(
-        selectedContainer => selectedContainer !== containerId
-      )
+        selectedContainer => selectedContainer !== containerId,
+      ),
     );
   } else {
     setSelectedContainers([...selectedContainers, containerId]);
@@ -72,14 +72,14 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
     onClose,
     onFetch,
     onFetchMore,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const [query, onQueryChange] = useSearchQuery(onFetch);
   const [selectedContainers, setSelectedContainers] = React.useState<string[]>(
-    []
+    [],
   );
 
   const handleSubmit = () => onSubmit(selectedContainers);
@@ -103,7 +103,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
+            endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
       </DialogContent>
@@ -127,7 +127,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
             <TableBody>
               {containers?.map(container => {
                 const isSelected = !!selectedContainers.find(
-                  selectedContainer => selectedContainer === container.id
+                  selectedContainer => selectedContainer === container.id,
                 );
 
                 return (
@@ -143,7 +143,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                             container.id,
                             isSelected,
                             selectedContainers,
-                            setSelectedContainers
+                            setSelectedContainers,
                           )
                         }
                       />

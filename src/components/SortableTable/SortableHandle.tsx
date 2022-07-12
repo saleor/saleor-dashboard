@@ -8,13 +8,13 @@ const useStyles = makeStyles(
     columnDrag: {
       "&&&": {
         paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(2)
+        paddingRight: theme.spacing(2),
       },
       cursor: "grab",
-      width: `calc(48px + ${theme.spacing(1.5)})`
-    }
+      width: `calc(48px + ${theme.spacing(1.5)})`,
+    },
   }),
-  { name: "SortableHandle" }
+  { name: "SortableHandle" },
 );
 
 const SortableHandle = SortableHandleHoc(() => {

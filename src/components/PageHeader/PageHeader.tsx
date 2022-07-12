@@ -9,11 +9,11 @@ import Skeleton from "../Skeleton";
 const useStyles = makeStyles(
   theme => ({
     limit: {
-      marginRight: theme.spacing(4)
+      marginRight: theme.spacing(4),
     },
     preview: {
       position: "absolute",
-      top: theme.spacing(-4)
+      top: theme.spacing(-4),
     },
     root: {
       alignItems: "center",
@@ -22,26 +22,26 @@ const useStyles = makeStyles(
         flexDirection: "column",
         alignItems: "flex-start",
         "& > *": {
-          width: "100%"
+          width: "100%",
         },
         "& > *:not(first-child)": {
-          marginTop: theme.spacing(2)
-        }
-      }
+          marginTop: theme.spacing(2),
+        },
+      },
     },
     title: {
       [theme.breakpoints.down("sm")]: {
         fontSize: 20,
-        padding: 0
+        padding: 0,
       },
       fontWeight: 700,
       flex: 1,
       whiteSpace: "nowrap",
       overflow: "hidden",
-      textOverflow: "ellipsis"
-    }
+      textOverflow: "ellipsis",
+    },
   }),
-  { name: "PageHeader" }
+  { name: "PageHeader" },
 );
 
 interface PageHeaderProps {
@@ -64,7 +64,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
     limitText,
     title,
     cardMenu,
-    preview
+    preview,
   } = props;
 
   const classes = useStyles(props);

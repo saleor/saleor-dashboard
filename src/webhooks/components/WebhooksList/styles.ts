@@ -5,32 +5,32 @@ export const useStyles = makeStyles(
     [theme.breakpoints.up("lg")]: {
       colAction: {
         "& svg": {
-          color: theme.palette.primary.main
+          color: theme.palette.primary.main,
         },
-        textAlign: "right" as "right"
+        textAlign: "right" as "right",
       },
       colName: {
         "&&": {
-          width: "auto"
-        }
-      }
+          width: "auto",
+        },
+      },
     },
     colName: {
       paddingLeft: 0,
-      width: 250
+      width: 250,
     },
     colNameUnnamed: {
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
     },
     colRight: {
-      textAlign: "right"
+      textAlign: "right",
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "WebhooksList" }
+  { name: "WebhooksList" },
 );

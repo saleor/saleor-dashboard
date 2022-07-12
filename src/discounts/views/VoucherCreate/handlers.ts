@@ -8,21 +8,21 @@ import {
   VoucherChannelListingUpdateMutationVariables,
   VoucherCreateMutation,
   VoucherCreateMutationVariables,
-  VoucherTypeEnum
+  VoucherTypeEnum,
 } from "@saleor/graphql";
 import {
   extractMutationErrors,
   getMutationErrors,
-  joinDateTime
+  joinDateTime,
 } from "@saleor/misc";
 
 export function createHandler(
   voucherCreate: (
-    variables: VoucherCreateMutationVariables
+    variables: VoucherCreateMutationVariables,
   ) => Promise<FetchResult<VoucherCreateMutation>>,
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
-  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>
+  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const response = await voucherCreate({
@@ -49,8 +49,8 @@ export function createHandler(
           formData.discountType === DiscountTypeEnum.SHIPPING
             ? VoucherTypeEnum.SHIPPING
             : formData.type,
-        usageLimit: formData.hasUsageLimit ? formData.usageLimit : null
-      }
+        usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
+      },
     });
 
     const errors = getMutationErrors(response);
@@ -64,9 +64,9 @@ export function createHandler(
         variables: getChannelsVariables(
           response.data.voucherCreate.voucher.id,
           formData,
-          formData.channelListings
-        )
-      })
+          formData.channelListings,
+        ),
+      }),
     );
 
     if (channelsUpdateErrors.length > 0) {

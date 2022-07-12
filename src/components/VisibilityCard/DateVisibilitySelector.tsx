@@ -15,20 +15,20 @@ const useStyles = makeStyles(
       fontSize: 14,
       margin: theme.spacing(1, 0),
       paddingBottom: 10,
-      paddingTop: 0
+      paddingTop: 0,
     },
     container: {
       alignItems: "baseline",
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
     icon: {
       cursor: "pointer",
-      marginLeft: theme.spacing(2)
-    }
+      marginLeft: theme.spacing(2),
+    },
   }),
-  { name: "DateVisibilitySelector" }
+  { name: "DateVisibilitySelector" },
 );
 
 interface Props {
@@ -40,7 +40,7 @@ interface Props {
 const DateVisibilitySelector = ({
   buttonText,
   children,
-  onInputClose
+  onInputClose,
 }: Props) => {
   const classes = useStyles({});
 

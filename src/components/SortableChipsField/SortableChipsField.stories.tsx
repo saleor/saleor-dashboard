@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SortableChipsField, {
-  SortableChipsFieldProps
+  SortableChipsFieldProps,
 } from "./SortableChipsField";
 
 const props: SortableChipsFieldProps = {
@@ -16,8 +16,8 @@ const props: SortableChipsFieldProps = {
     { label: "Item 3", value: "item-3" },
     { label: "Item 4", value: "item-4" },
     { label: "Item 5", value: "item-5" },
-    { label: "Item 6", value: "item-6" }
-  ]
+    { label: "Item 6", value: "item-6" },
+  ],
 };
 
 storiesOf("Generics / Sortable chips field", module)

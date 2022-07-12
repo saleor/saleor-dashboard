@@ -4,6 +4,6 @@ export const messages = defineMessages({
   assignContainerDialogButton: {
     id: "oiuwOl",
     defaultMessage: "Assign",
-    description: "button"
-  }
+    description: "button",
+  },
 });

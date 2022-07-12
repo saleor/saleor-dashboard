@@ -2,7 +2,7 @@ import { date } from "@saleor/fixtures";
 import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
 import {
   createFilterStructure,
-  OrderFilterGiftCard
+  OrderFilterGiftCard,
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlFilters } from "@saleor/orders/urls";
 import { getFilterQueryParams } from "@saleor/utils/filters";
@@ -28,8 +28,8 @@ describe("Filtering query params", () => {
       customer: "email@example.com",
       status: [
         OrderStatusFilter.FULFILLED,
-        OrderStatusFilter.PARTIALLY_FULFILLED
-      ]
+        OrderStatusFilter.PARTIALLY_FULFILLED,
+      ],
     };
     const filterVariables = getFilterVariables(params);
 
@@ -43,65 +43,65 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     preorder: {
       active: false,
-      value: false
+      value: false,
     },
     clickAndCollect: {
       active: false,
-      value: false
+      value: false,
     },
     channel: {
       active: false,
       value: [
         {
           label: "Channel PLN",
-          value: "channelId"
-        }
-      ]
+          value: "channelId",
+        },
+      ],
     },
     created: {
       active: false,
       value: {
         max: date.to,
-        min: date.from
-      }
+        min: date.from,
+      },
     },
     customer: {
       active: false,
-      value: "email@example.com"
+      value: "email@example.com",
     },
     status: {
       active: false,
       value: [
         OrderStatusFilter.FULFILLED,
-        OrderStatusFilter.PARTIALLY_FULFILLED
-      ]
+        OrderStatusFilter.PARTIALLY_FULFILLED,
+      ],
     },
     paymentStatus: {
       active: false,
       value: [
         PaymentChargeStatusEnum.FULLY_CHARGED,
-        PaymentChargeStatusEnum.PARTIALLY_CHARGED
-      ]
+        PaymentChargeStatusEnum.PARTIALLY_CHARGED,
+      ],
     },
     giftCard: {
       active: false,
-      value: [OrderFilterGiftCard.paid, OrderFilterGiftCard.bought]
+      value: [OrderFilterGiftCard.paid, OrderFilterGiftCard.bought],
     },
     metadata: {
       active: false,
       value: [
         {
           key: "",
-          value: ""
-        }
-      ]
-    }
+          value: "",
+        },
+      ],
+    },
   });
 
   it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(
       filters,
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
@@ -110,7 +110,7 @@ describe("Filtering URL params", () => {
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       setFilterOptsStatus(filters, true),
-      getFilterQueryParam
+      getFilterQueryParam,
     );
 
     expect(filterQueryParams).toMatchSnapshot();

@@ -5,10 +5,10 @@ const useStyles = makeStyles(
     ellipsis: {
       overflow: "hidden",
       whiteSpace: "nowrap",
-      textOverflow: "ellipsis"
-    }
+      textOverflow: "ellipsis",
+    },
   },
-  { name: "SaleSummary" }
+  { name: "SaleSummary" },
 );
 
 export default useStyles;

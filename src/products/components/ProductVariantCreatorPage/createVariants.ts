@@ -1,6 +1,6 @@
 import {
   BulkAttributeValueInput,
-  ProductVariantBulkCreateInput
+  ProductVariantBulkCreateInput,
 } from "@saleor/graphql";
 
 import {
@@ -8,7 +8,7 @@ import {
   ChannelPrice,
   Price,
   ProductVariantCreateFormData,
-  Stock
+  Stock,
 } from "./form";
 
 interface CreateVariantAttributeValueInput {
@@ -21,21 +21,21 @@ type CreateVariantInput = CreateVariantAttributeValueInput[];
 
 function findAttribute(
   attributes: CreateVariantInput,
-  stockOrPrice: Stock | Price
+  stockOrPrice: Stock | Price,
 ) {
   return attributes.find(
-    attribute => attribute.attributeId === stockOrPrice.attribute
+    attribute => attribute.attributeId === stockOrPrice.attribute,
   );
 }
 
 function getAttributeValueStock(
   attributes: CreateVariantInput,
-  stock: Stock
+  stock: Stock,
 ): number[] {
   const attribute = findAttribute(attributes, stock);
 
   const attributeValue = stock.values.find(
-    attributeValue => attribute.attributeValueSlug === attributeValue.slug
+    attributeValue => attribute.attributeValueSlug === attributeValue.slug,
   );
 
   return attributeValue.value;
@@ -43,12 +43,12 @@ function getAttributeValueStock(
 
 function getAttributeValuePrice(
   attributes: CreateVariantInput,
-  price: Price
+  price: Price,
 ): ChannelPrice[] {
   const attribute = findAttribute(attributes, price);
 
   const attributeValue = price.values.find(
-    attributeValue => attribute.attributeValueSlug === attributeValue.slug
+    attributeValue => attribute.attributeValueSlug === attributeValue.slug,
   );
 
   return attributeValue.value;
@@ -57,7 +57,7 @@ function getAttributeValuePrice(
 function getStockFromMode(
   attributes: CreateVariantInput,
   stock: Stock,
-  skipValue: number[]
+  skipValue: number[],
 ): number[] {
   switch (stock.mode) {
     case "all":
@@ -72,7 +72,7 @@ function getStockFromMode(
 function getPriceFromMode(
   attributes: CreateVariantInput,
   price: Price,
-  skipValue: ChannelPrice[]
+  skipValue: ChannelPrice[],
 ): ChannelPrice[] {
   switch (price.mode) {
     case "all":
@@ -87,33 +87,33 @@ function getPriceFromMode(
 function getAttributeFromAttributeValueInput({
   attributeId,
   attributeBooleanValue,
-  attributeValueSlug
+  attributeValueSlug,
 }: CreateVariantAttributeValueInput): BulkAttributeValueInput {
   if (attributeBooleanValue === null) {
     return {
       id: attributeId,
-      values: attributeValueSlug === null ? [] : [attributeValueSlug]
+      values: attributeValueSlug === null ? [] : [attributeValueSlug],
     };
   }
   return {
     id: attributeId,
-    boolean: attributeBooleanValue
+    boolean: attributeBooleanValue,
   };
 }
 
 function createVariant(
   data: ProductVariantCreateFormData,
-  attributes: CreateVariantInput
+  attributes: CreateVariantInput,
 ): ProductVariantBulkCreateInput {
   const price = getPriceFromMode(
     attributes,
     data.price,
-    data.price.channels.map(channel => ({ ...channel, price: "" }))
+    data.price.channels.map(channel => ({ ...channel, price: "" })),
   );
   const stocks = getStockFromMode(
     attributes,
     data.stock,
-    data.warehouses.map(() => 0)
+    data.warehouses.map(() => 0),
   );
 
   return {
@@ -122,14 +122,14 @@ function createVariant(
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({
       quantity,
-      warehouse: data.warehouses[stockIndex]
-    }))
+      warehouse: data.warehouses[stockIndex],
+    })),
   };
 }
 
 function addAttributeToVariant(
   attribute: Attribute,
-  variant: CreateVariantInput
+  variant: CreateVariantInput,
 ): CreateVariantInput[] {
   if (attribute.values.length === 0) {
     return [
@@ -138,9 +138,9 @@ function addAttributeToVariant(
         {
           attributeId: attribute.id,
           attributeValueSlug: null,
-          attributeBooleanValue: null
-        }
-      ]
+          attributeBooleanValue: null,
+        },
+      ],
     ];
   }
   return attribute.values.map(attributeValue => [
@@ -148,21 +148,21 @@ function addAttributeToVariant(
     {
       attributeId: attribute.id,
       attributeValueSlug: attributeValue.slug,
-      attributeBooleanValue: attributeValue.value?.boolean ?? null
-    }
+      attributeBooleanValue: attributeValue.value?.boolean ?? null,
+    },
   ]);
 }
 
 export function createVariantFlatMatrixDimension(
   variants: CreateVariantInput[],
-  attributes: Attribute[]
+  attributes: Attribute[],
 ): CreateVariantInput[] {
   if (attributes.length > 0) {
     return createVariantFlatMatrixDimension(
       variants.flatMap(variant =>
-        addAttributeToVariant(attributes[0], variant)
+        addAttributeToVariant(attributes[0], variant),
       ),
-      attributes.slice(1)
+      attributes.slice(1),
     );
   } else {
     return variants;
@@ -170,7 +170,7 @@ export function createVariantFlatMatrixDimension(
 }
 
 export function createVariants(
-  data: ProductVariantCreateFormData
+  data: ProductVariantCreateFormData,
 ): ProductVariantBulkCreateInput[] {
   if (
     (data.price.mode === "attribute" && !data.price.attribute) ||
@@ -180,7 +180,7 @@ export function createVariants(
   }
   const variants = createVariantFlatMatrixDimension(
     [[]],
-    data.attributes
+    data.attributes,
   ).map(variant => createVariant(data, variant));
 
   return variants;

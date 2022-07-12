@@ -33,7 +33,7 @@ export function parseEventData(event: ChangeEvent): EventData {
     action,
     field,
     fieldIndex,
-    value
+    value,
   };
 }
 

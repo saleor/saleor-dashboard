@@ -7,7 +7,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ChannelsAvailabilityCard, {
-  ChannelsAvailabilityCardProps
+  ChannelsAvailabilityCardProps,
 } from "./ChannelsAvailabilityCard";
 
 const user: UserFragment = {
@@ -22,9 +22,9 @@ const user: UserFragment = {
     {
       __typename: "UserPermission",
       code: PermissionEnum.MANAGE_CHANNELS,
-      name: "Manage Channels"
-    }
-  ]
+      name: "Manage Channels",
+    },
+  ],
 };
 
 const productChannels = createChannelsDataFromProduct(product(""));
@@ -34,11 +34,11 @@ const props: ChannelsAvailabilityCardProps = {
   managePermissions: [PermissionEnum.MANAGE_CHANNELS],
   channelsList: productChannels.map(channel => ({
     id: channel.id,
-    name: channel.name
+    name: channel.name,
   })),
   errors: [],
   onChange: () => undefined,
-  openModal: () => undefined
+  openModal: () => undefined,
 };
 
 storiesOf("Generics / Channels availability card", module)
@@ -59,7 +59,7 @@ storiesOf("Generics / Channels availability card", module)
         hiddenLabel: "Hidden",
         visibleLabel: "Visible",
         availableDateText: "available from 07/30/2020",
-        setAvailabilityDateLabel: "xd4"
+        setAvailabilityDateLabel: "xd4",
       }}
     />
   ));

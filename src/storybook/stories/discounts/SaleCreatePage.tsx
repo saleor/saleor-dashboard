@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import SaleCreatePage, {
-  SaleCreatePageProps
+  SaleCreatePageProps,
 } from "../../../discounts/components/SaleCreatePage";
 import Decorator from "../../Decorator";
 
@@ -20,7 +20,7 @@ const props: SaleCreatePageProps = {
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
 };
 
 storiesOf("Views / Discounts / Sale create", module)
@@ -35,7 +35,7 @@ storiesOf("Views / Discounts / Sale create", module)
         channels: [],
         code: DiscountErrorCode.INVALID,
         field,
-        message: "Discount invalid"
+        message: "Discount invalid",
       }))}
     />
   ));

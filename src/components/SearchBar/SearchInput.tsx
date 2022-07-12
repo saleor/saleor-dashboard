@@ -12,15 +12,15 @@ export interface SearchInputProps extends SearchPageProps {
 const useStyles = makeStyles(
   {
     input: {
-      padding: "10.5px 12px"
+      padding: "10.5px 12px",
     },
     root: {
-      flex: 1
-    }
+      flex: 1,
+    },
   },
   {
-    name: "SearchInput"
-  }
+    name: "SearchInput",
+  },
 );
 
 const SearchInput: React.FC<SearchInputProps> = props => {
@@ -45,7 +45,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
             className={classes.root}
             inputProps={{
               className: classes.input,
-              placeholder
+              placeholder,
             }}
             value={search}
             onChange={handleSearchChange}

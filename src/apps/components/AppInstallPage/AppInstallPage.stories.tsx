@@ -9,7 +9,7 @@ const props: AppInstallPageProps = {
   data: installApp,
   loading: false,
   navigateToAppsList: () => undefined,
-  onSubmit: () => undefined
+  onSubmit: () => undefined,
 };
 
 storiesOf("Views / Apps / Install App", module)

@@ -13,7 +13,7 @@ import {
   AttributeListUrlQueryParams,
   AttributeListUrlSortField,
   attributePath,
-  AttributeUrlQueryParams
+  AttributeUrlQueryParams,
 } from "./urls";
 import AttributeCreateComponent from "./views/AttributeCreate";
 import AttributeDetailsComponent from "./views/AttributeDetails";
@@ -23,7 +23,7 @@ const AttributeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AttributeListUrlQueryParams = asSortParams(
     qs,
-    AttributeListUrlSortField
+    AttributeListUrlSortField,
   );
 
   return <AttributeListComponent params={params} />;
@@ -37,7 +37,7 @@ const AttributeCreate: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 
 const AttributeDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: AttributeUrlQueryParams = qs;

@@ -6,7 +6,7 @@ export const DEFAULT_SORT_KEY = VoucherListUrlSortField.code;
 
 export function canBeSorted(
   sort: VoucherListUrlSortField,
-  isChannelSelected: boolean
+  isChannelSelected: boolean,
 ) {
   switch (sort) {
     case VoucherListUrlSortField.code:
@@ -24,7 +24,7 @@ export function canBeSorted(
 }
 
 export function getSortQueryField(
-  sort: VoucherListUrlSortField
+  sort: VoucherListUrlSortField,
 ): VoucherSortField {
   switch (sort) {
     case VoucherListUrlSortField.code:
@@ -47,5 +47,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

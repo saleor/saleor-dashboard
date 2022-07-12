@@ -9,6 +9,7 @@ export const appFragment = gql`
     type
     homepageUrl
     appUrl
+    manifestUrl
     configurationUrl
     supportUrl
     version
@@ -29,5 +30,26 @@ export const appFragment = gql`
     webhooks {
       ...Webhook
     }
+  }
+`;
+
+export const appListItemFragment = gql`
+  fragment AppListItem on App {
+    id
+    name
+    isActive
+    type
+    appUrl
+    manifestUrl
+    permissions {
+      ...AppPermission
+    }
+  }
+`;
+
+export const appPermissionFragment = gql`
+  fragment AppPermission on Permission {
+    name
+    code
   }
 `;

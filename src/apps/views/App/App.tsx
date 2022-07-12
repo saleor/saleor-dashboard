@@ -11,7 +11,7 @@ import AppPage from "../../components/AppPage";
 import {
   appDetailsUrl,
   appsListPath,
-  getAppCompleteUrlFromDashboardUrl
+  getAppCompleteUrlFromDashboardUrl,
 } from "../../urls";
 
 interface AppProps {
@@ -20,9 +20,9 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = ({ id }) => {
   const location = useLocation();
-  const { data } = useAppQuery({
+  const { data, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const appExists = data?.app !== null;
@@ -38,7 +38,7 @@ export const App: React.FC<AppProps> = ({ id }) => {
   const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(
     location.pathname,
     data?.app.appUrl,
-    id
+    id,
   );
 
   return (
@@ -46,10 +46,11 @@ export const App: React.FC<AppProps> = ({ id }) => {
       data={data?.app}
       url={appCompleteUrl}
       aboutHref={appDetailsUrl(id)}
+      refetch={refetch}
       onError={() =>
         notify({
           status: "error",
-          text: intl.formatMessage(appMessages.failedToFetchAppSettings)
+          text: intl.formatMessage(appMessages.failedToFetchAppSettings),
         })
       }
     />

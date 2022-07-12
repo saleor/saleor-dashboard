@@ -1,13 +1,13 @@
 import {
   getDataForDescriptionInVariables,
-  getValueWithDefault
+  getValueWithDefault,
 } from "./utils/Utils";
 
 export function createCategory({ name, slug = name, parent }) {
   const parentLine = getValueWithDefault(parent, `parent:"${parent}"`);
   const mutation = `mutation{
     categoryCreate(input:{name:"${name}", slug: "${slug}"} ${parentLine}){
-      productErrors{
+      errors{
         field
         message
       }
@@ -30,7 +30,7 @@ export function getCategory(categoryId, translationLanguageCode) {
     description
     seoTitle
     seoDescription
-  }`
+  }`,
   );
 
   const mutation = `query{
@@ -78,7 +78,7 @@ export function getCategories(first, search) {
 export function deleteCategory(categoryId) {
   const mutation = `mutation{
     categoryDelete(id:"${categoryId}"){
-      productErrors{
+      errors{
         field
         message
       }
@@ -93,7 +93,7 @@ export function updateCategoryTranslation({
   seoTitle,
   seoDescription,
   name,
-  description
+  description,
 }) {
   const descriptionData = getDataForDescriptionInVariables(description);
   const mutation = `mutation Update_fields${descriptionData.mutationVariables}{
@@ -115,6 +115,6 @@ export function updateCategoryTranslation({
     mutation,
     "auth",
     descriptionData.variables,
-    true
+    true,
   );
 }

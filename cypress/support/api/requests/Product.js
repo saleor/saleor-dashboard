@@ -3,7 +3,7 @@ import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingO
 import {
   getDataForDescriptionInVariables,
   getValueWithDefault,
-  getVariantsListIds
+  getVariantsListIds,
 } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
@@ -33,7 +33,7 @@ export function getFirstProducts(first, search) {
 export function updateProduct(productId, input) {
   const mutation = `mutation {
     productUpdate(id:"${productId}", input:${stringify(input)} ){
-      productErrors{
+      errors{
         field
         message
       }
@@ -55,7 +55,7 @@ export function updateChannelInProduct({
   variantsIdsToRemove = "[]",
   isPublished = true,
   isAvailableForPurchase = true,
-  visibleInListings = true
+  visibleInListings = true,
 }) {
   const mutation = `mutation{
     productChannelListingUpdate(id:"${productId}",
@@ -85,7 +85,7 @@ export function updateChannelPriceInVariant(variantId, channelId) {
       price: 10
       costPrice: 10
     }){
-      productChannelListingErrors{
+      errors{
         message
       }
     }
@@ -99,24 +99,24 @@ export function createProduct({
   productTypeId,
   categoryId,
   collectionId,
-  description
+  description,
 }) {
   const collection = getValueWithDefault(
     collectionId,
-    `collections:["${collectionId}"]`
+    `collections:["${collectionId}"]`,
   );
   const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
   const descriptionData = getDataForDescriptionInVariables(description);
   const attributeValuesLine = getValueWithDefault(
     attributeValue,
-    `values:["${attributeValue}"]`
+    `values:["${attributeValue}"]`,
   );
   const attributes = getValueWithDefault(
     attributeId,
     `attributes:[{
       id:"${attributeId}"
       ${attributeValuesLine}
-    }]`
+    }]`,
   );
   const mutation = `mutation createProduct${descriptionData.mutationVariables}{
     productCreate(input:{
@@ -133,7 +133,7 @@ export function createProduct({
         id
         name
       }
-      productErrors{
+      errors{
         field
         message
       }
@@ -156,11 +156,11 @@ export function createVariant({
   trackInventory = true,
   weight = 1,
   attributeName = "value",
-  preorder
+  preorder,
 }) {
   const preorderLines = getValueWithDefault(
     preorder,
-    `preorder:${stringify(preorder)}`
+    `preorder:${stringify(preorder)}`,
   );
   const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
 
@@ -170,7 +170,7 @@ export function createVariant({
     id:"${attributeId}"
     values: ["${attributeName}"]
   }]`,
-    "attributes:[]"
+    "attributes:[]",
   );
 
   const channelListings = getValueWithDefault(
@@ -179,7 +179,7 @@ export function createVariant({
       channelId:"${channelId}"
       price:"${price}"
       costPrice:"${costPrice}"
-    }`
+    }`,
   );
 
   const stocks = getValueWithDefault(
@@ -187,7 +187,7 @@ export function createVariant({
     `stocks:{
       warehouse:"${warehouseId}"
       quantity:${quantityInWarehouse}
-    }`
+    }`,
   );
 
   const mutation = `mutation{
@@ -218,7 +218,7 @@ export function createVariant({
 export function deleteProduct(productId) {
   const mutation = `mutation{
     productDelete(id: "${productId}"){
-      productErrors{
+      errors{
         field
         message
       }
@@ -254,7 +254,7 @@ export function getVariant(id, channelSlug, auth = "auth") {
     globalThreshold
     globalSoldUnits
     endDate
-  }`
+  }`,
   );
 
   const query = `query{
@@ -317,11 +317,11 @@ export function deactivatePreorderOnVariant(variantId) {
 export function activatePreorderOnVariant({
   variantId,
   threshold = 50,
-  endDate
+  endDate,
 }) {
   const thresholdLine = getValueWithDefault(
     threshold,
-    `globalThreshold:${threshold}`
+    `globalThreshold:${threshold}`,
   );
   const endDateLine = getValueWithDefault(endDate, `endDate:${endDate}`);
   const mutation = `mutation{

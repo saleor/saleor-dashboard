@@ -3,7 +3,7 @@ import reduce from "lodash/reduce";
 
 import {
   GiftCardBulkCreateFormData,
-  GiftCardBulkCreateFormErrors
+  GiftCardBulkCreateFormErrors,
 } from "./types";
 
 export const validateField = (
@@ -12,10 +12,10 @@ export const validateField = (
     expiryPeriodAmount,
     expiryType,
     expirySelected,
-    expiryPeriodType
+    expiryPeriodType,
   }: GiftCardBulkCreateFormData,
   value,
-  key: keyof GiftCardBulkCreateFormData
+  key: keyof GiftCardBulkCreateFormData,
 ): Pick<GiftCardErrorFragment, "field" | "code"> | null => {
   const error = { code: GiftCardErrorCode.INVALID, field: key };
   const expiryDateSelected = expirySelected && expiryType === "EXPIRY_DATE";
@@ -39,7 +39,7 @@ export const validateField = (
 };
 
 export const validateForm = (
-  formData: GiftCardBulkCreateFormData
+  formData: GiftCardBulkCreateFormData,
 ): GiftCardBulkCreateFormErrors =>
   reduce(
     formData,
@@ -48,7 +48,7 @@ export const validateForm = (
         cardsAmount: "count",
         balanceCurrency: "balance",
         balanceAmount: "balance",
-        expiryPeriodAmount: "expiryDate"
+        expiryPeriodAmount: "expiryDate",
       };
 
       const formError = validateField(formData, value, key);
@@ -59,5 +59,5 @@ export const validateForm = (
 
       return { ...resultErrors, [correspondingKeys[key] || key]: formError };
     },
-    {}
+    {},
   );

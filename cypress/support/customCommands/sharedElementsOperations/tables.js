@@ -20,7 +20,7 @@ Cypress.Commands.add(
     elementsName,
     elementsIds,
     counter = 0,
-    actionFunction
+    actionFunction,
   }) => {
     cy.wait(`@${elementsGraphqlAlias}`)
       .its("response.body")
@@ -40,7 +40,7 @@ Cypress.Commands.add(
         elementsIds = Array.isArray(elementsIds) ? elementsIds : [elementsIds];
         elementsIds.forEach(id => {
           const isShippingOnList = shippingList.find(
-            element => element.node.id === id
+            element => element.node.id === id,
           );
           if (isShippingOnList) {
             actionFunction(id);
@@ -55,15 +55,17 @@ Cypress.Commands.add(
         if (counter === elementsIds.length) {
           return;
         }
-        cy.get(BUTTON_SELECTORS.nextPaginationButton)
+        cy.get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(BUTTON_SELECTORS.nextPaginationButton)
           .click()
           .findElementsAndMakeActionOnTable({
             elementsIds: notSelectedElements,
             actionFunction,
             counter,
             elementsGraphqlAlias,
-            elementsName
+            elementsName,
           });
       });
-  }
+  },
 );

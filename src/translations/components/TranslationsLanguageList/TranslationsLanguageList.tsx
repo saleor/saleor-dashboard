@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -23,13 +23,13 @@ export interface TranslationsLanguageListProps {
 const useStyles = makeStyles(
   {
     capitalize: {
-      textTransform: "capitalize"
+      textTransform: "capitalize",
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   },
-  { name: "TranslationsLanguageList" }
+  { name: "TranslationsLanguageList" },
 );
 
 const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
@@ -61,7 +61,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
                 <TableCell className={classes.capitalize}>
                   {maybe<React.ReactNode>(
                     () => language.language,
-                    <Skeleton />
+                    <Skeleton />,
                   )}
                 </TableCell>
               </TableRowLink>
@@ -75,7 +75,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

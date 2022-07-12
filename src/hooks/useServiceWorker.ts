@@ -31,7 +31,7 @@ export const useServiceWorker = (timeout: number) => {
   useEffect(() => {
     register("/sw.js", {
       registered: onRegistered,
-      updated: onUpdate
+      updated: onUpdate,
     });
   }, []);
 

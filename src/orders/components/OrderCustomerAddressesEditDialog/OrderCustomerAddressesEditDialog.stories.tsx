@@ -4,7 +4,7 @@ import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
-  OrderCustomerAddressesEditDialogProps
+  OrderCustomerAddressesEditDialogProps,
 } from ".";
 import { AddressEditDialogVariant } from "./types";
 
@@ -18,7 +18,7 @@ const props: OrderCustomerAddressesEditDialogProps = {
   onConfirm: () => undefined,
   open: true,
   errors: undefined,
-  countries
+  countries,
 };
 
 storiesOf("Orders / Changing address in order", module)
@@ -28,7 +28,7 @@ storiesOf("Orders / Changing address in order", module)
       {...props}
       customerAddresses={[
         order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
+        { ...order.billingAddress, id: "asdfghjfuunie" },
       ]}
     />
   ))
@@ -38,7 +38,7 @@ storiesOf("Orders / Changing address in order", module)
       variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
       customerAddresses={[
         order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
+        { ...order.billingAddress, id: "asdfghjfuunie" },
       ]}
     />
   ))
@@ -48,7 +48,7 @@ storiesOf("Orders / Changing address in order", module)
       variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
       customerAddresses={[
         order.shippingAddress,
-        { ...order.billingAddress, id: "asdfghjfuunie" }
+        { ...order.billingAddress, id: "asdfghjfuunie" },
       ]}
     />
   ))

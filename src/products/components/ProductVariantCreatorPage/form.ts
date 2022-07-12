@@ -3,7 +3,7 @@ import {
   AttributeValueFragment,
   ProductVariantAttributesFragment,
   ProductVariantBulkCreateInput,
-  WarehouseFragment
+  WarehouseFragment,
 } from "@saleor/graphql";
 
 export interface ChannelPrice {
@@ -44,32 +44,32 @@ export interface ProductVariantCreateFormData {
 export const createInitialForm = (
   attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"],
   channels: ChannelPriceData[],
-  warehouses: WarehouseFragment[]
+  warehouses: WarehouseFragment[],
 ): ProductVariantCreateFormData => {
   const channelListings =
     channels?.map(channel => ({
       channelId: channel.id,
-      price: channel.price?.toString() || ""
+      price: channel.price?.toString() || "",
     })) || [];
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.id,
       valueRequired: attribute.valueRequired,
-      values: []
+      values: [],
     })),
     price: {
       attribute: undefined,
       channels: channelListings,
       mode: "all",
-      values: []
+      values: [],
     },
     stock: {
       attribute: undefined,
       mode: "all",
       value: warehouses.length === 1 ? [0] : [],
-      values: []
+      values: [],
     },
     variants: [],
-    warehouses: warehouses.length === 1 ? [warehouses[0].id] : []
+    warehouses: warehouses.length === 1 ? [warehouses[0].id] : [],
   };
 };

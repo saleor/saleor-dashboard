@@ -2,7 +2,7 @@ import {
   OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
-  useOrderDiscountUpdateMutation
+  useOrderDiscountUpdateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
@@ -15,7 +15,7 @@ import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
 import {
   getManualOrderDiscount,
   getParsedDiscountData,
-  useDiscountDialog
+  useDiscountDialog,
 } from "./utils";
 
 export interface OrderDiscountContextConsumerProps
@@ -34,7 +34,7 @@ interface OrderDiscountProviderProps {
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   children,
-  order
+  order,
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -47,23 +47,23 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
 
   const [orderDiscountAdd, orderDiscountAddOpts] = useOrderDiscountAddMutation({
     onCompleted: ({ orderDiscountAdd: { errors } }) =>
-      handleDiscountDataSubmission(errors)
+      handleDiscountDataSubmission(errors),
   });
 
   const [
     orderDiscountUpdate,
-    orderDiscountUpdateOpts
+    orderDiscountUpdateOpts,
   ] = useOrderDiscountUpdateMutation({
     onCompleted: ({ orderDiscountUpdate: { errors } }) =>
-      handleDiscountDataSubmission(errors)
+      handleDiscountDataSubmission(errors),
   });
 
   const [
     orderDiscountRemove,
-    orderDiscountRemoveOpts
+    orderDiscountRemoveOpts,
   ] = useOrderDiscountDeleteMutation({
     onCompleted: ({ orderDiscountDelete: { errors } }) =>
-      handleDiscountDataSubmission(errors)
+      handleDiscountDataSubmission(errors),
   });
 
   const handleDiscountDataSubmission = (errors: any[]) => {
@@ -75,8 +75,8 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     orderDiscountAdd({
       variables: {
         orderId,
-        input: getParsedDiscountData(data)
-      }
+        input: getParsedDiscountData(data),
+      },
     });
 
   const updateOrderDiscount = (data: OrderDiscountCommonInput) =>
@@ -84,8 +84,8 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     orderDiscountUpdate({
       variables: {
         discountId: orderDiscount?.id,
-        input: getParsedDiscountData(data)
-      }
+        input: getParsedDiscountData(data),
+      },
     });
 
   const removeOrderDiscount = () =>
@@ -110,7 +110,7 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
     closeDialog,
     openDialog,
     discountedPrice: order.total.gross,
-    undiscountedPrice: order.undiscountedTotal.gross
+    undiscountedPrice: order.undiscountedTotal.gross,
   };
 
   return (

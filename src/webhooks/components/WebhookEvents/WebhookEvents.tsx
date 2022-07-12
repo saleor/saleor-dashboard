@@ -3,16 +3,16 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
+  MultiAutocompleteChoiceType,
 } from "@saleor/components/MultiAutocompleteSelectField";
 import {
   WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum
+  WebhookEventTypeSyncEnum,
 } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   mapAsyncEventsToChoices,
-  mapSyncEventsToChoices
+  mapSyncEventsToChoices,
 } from "@saleor/webhooks/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,7 +35,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   syncEventsChoices,
   asyncEventsChoices,
   onSyncEventChange,
-  onAsyncEventChange
+  onAsyncEventChange,
 }) => {
   const intl = useIntl();
 
@@ -79,7 +79,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
         <MultiAutocompleteSelectField
           displayValues={mapAsyncEventsToChoices(
             data.asyncEvents,
-            data.asyncEvents
+            data.asyncEvents,
           )}
           label={intl.formatMessage(messages.registeredEvents)}
           choices={asyncEventsChoices}

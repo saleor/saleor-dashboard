@@ -11,7 +11,7 @@ import React, { createContext, useContext } from "react";
 import { GIFT_CARD_LIST_QUERY } from "../../queries";
 import {
   GiftCardListActionParamsEnum,
-  GiftCardListUrlQueryParams
+  GiftCardListUrlQueryParams,
 } from "../../types";
 
 interface GiftCardListDialogsProviderProps {
@@ -39,7 +39,7 @@ export const useGiftCardListDialogs = () =>
 
 const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
   children,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
 
@@ -76,7 +76,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
     openSearchSaveDialog,
     openSearchDeleteDialog,
     onClose,
-    id
+    id,
   };
 
   return (

@@ -5,7 +5,7 @@ import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
   useMenuDeleteMutation,
-  useMenuListQuery
+  useMenuListQuery,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -14,7 +14,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
-  PaginatorContext
+  PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
@@ -38,10 +38,10 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
+    params.ids,
   );
   const { updateListSettings, settings } = useListSettings(
-    ListViews.NAVIGATION_LIST
+    ListViews.NAVIGATION_LIST,
   );
 
   usePaginationReset(menuListUrl, params, settings.rowNumber);
@@ -54,28 +54,28 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         ...params,
         action: undefined,
         id: undefined,
-        ids: undefined
+        ids: undefined,
       }),
-      { replace: true }
+      { replace: true },
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber]
+    [params, settings.rowNumber],
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.menus.pageInfo),
     paginationState,
-    queryString: params
+    queryString: params,
   });
 
   const [menuCreate, menuCreateOpts] = useMenuCreateMutation({
@@ -85,12 +85,12 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
           status: "success",
           text: intl.formatMessage({
             id: "ugnggZ",
-            defaultMessage: "Created menu"
-          })
+            defaultMessage: "Created menu",
+          }),
         });
         navigate(menuUrl(data.menuCreate.menu.id));
       }
-    }
+    },
   });
 
   const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
@@ -100,13 +100,13 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
           status: "success",
           text: intl.formatMessage({
             id: "OwG/0z",
-            defaultMessage: "Deleted menu"
-          })
+            defaultMessage: "Deleted menu",
+          }),
         });
         closeModal();
         refetch();
       }
-    }
+    },
   });
 
   const [menuBulkDelete, menuBulkDeleteOpts] = useMenuBulkDeleteMutation({
@@ -114,13 +114,13 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
       if (data.menuBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
         reset();
         refetch();
       }
-    }
+    },
   });
 
   const handleSort = createSortHandler(navigate, menuListUrl, params);
@@ -135,8 +135,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
           navigate(
             menuListUrl({
               action: "remove",
-              id
-            })
+              id,
+            }),
           )
         }
         onUpdateListSettings={updateListSettings}
@@ -153,8 +153,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                 menuListUrl({
                   ...params,
                   action: "remove-many",
-                  ids: listElements
-                })
+                  ids: listElements,
+                }),
               )
             }
           >
@@ -170,7 +170,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onClose={closeModal}
         onConfirm={formData =>
           menuCreate({
-            variables: { input: formData }
+            variables: { input: formData },
           })
         }
       />
@@ -181,15 +181,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onConfirm={() =>
           menuDelete({
             variables: {
-              id: params.id
-            }
+              id: params.id,
+            },
           })
         }
         variant="delete"
         title={intl.formatMessage({
           id: "QzseV7",
           defaultMessage: "Delete Menu",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -198,8 +198,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
             defaultMessage="Are you sure you want to delete {menuName}?"
             values={{
               menuName: getStringOrPlaceholder(
-                mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name
-              )
+                mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
+              ),
             }}
           />
         </DialogContentText>
@@ -213,15 +213,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onConfirm={() =>
           menuBulkDelete({
             variables: {
-              ids: params.ids
-            }
+              ids: params.ids,
+            },
           })
         }
         variant="delete"
         title={intl.formatMessage({
           id: "1LBYpE",
           defaultMessage: "Delete Menus",
-          description: "dialog header"
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -234,7 +234,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                 <strong>
                   {maybe(() => params.ids.length.toString(), "...")}
                 </strong>
-              )
+              ),
             }}
           />
         </DialogContentText>

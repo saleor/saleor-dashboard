@@ -30,7 +30,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { last4CodeChars, isExpired } = giftCard;
 
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
-    last4CodeChars
+    last4CodeChars,
   });
 
   return (

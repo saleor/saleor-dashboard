@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderPaymentVoidDialog, {
-  OrderPaymentVoidDialogProps
+  OrderPaymentVoidDialogProps,
 } from "../../../orders/components/OrderPaymentVoidDialog";
 import Decorator from "../../Decorator";
 
@@ -12,7 +12,7 @@ const props: OrderPaymentVoidDialogProps = {
   errors: [],
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Orders / OrderPaymentVoidDialog", module)
@@ -27,8 +27,8 @@ storiesOf("Orders / OrderPaymentVoidDialog", module)
           code: OrderErrorCode.VOID_INACTIVE_PAYMENT,
           field: null,
           addressType: null,
-          message: "Void inactive payment Error"
-        }
+          message: "Void inactive payment Error",
+        },
       ]}
     />
   ));

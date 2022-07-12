@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import MenuItemDialog, {
-  MenuItemDialogProps
+  MenuItemDialogProps,
 } from "../../../navigation/components/MenuItemDialog";
 import Decorator from "../../Decorator";
 
@@ -12,13 +12,13 @@ const props: MenuItemDialogProps = {
     {
       __typename: "Category",
       id: "1",
-      name: "Chairs"
+      name: "Chairs",
     },
     {
       __typename: "Category",
       id: "2",
-      name: "Desks"
-    }
+      name: "Desks",
+    },
   ],
   collections: [],
   confirmButtonState: "default",
@@ -29,7 +29,7 @@ const props: MenuItemDialogProps = {
   onQueryChange: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  pages: []
+  pages: [],
 };
 
 storiesOf("Navigation / Menu item", module)
@@ -40,7 +40,7 @@ storiesOf("Navigation / Menu item", module)
       {...props}
       initial={{
         ...props.categories[0],
-        type: "category"
+        type: "category",
       }}
       initialDisplayValue={props.categories[0].name}
     />
@@ -52,7 +52,7 @@ storiesOf("Navigation / Menu item", module)
         __typename: "MenuError",
         code: MenuErrorCode.INVALID,
         field,
-        message: "Invalid field"
+        message: "Invalid field",
       }))}
     />
   ));

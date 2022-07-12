@@ -23,7 +23,7 @@ export interface MenuListPageProps
 const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   const intl = useIntl();
   const addUrl = menuListUrl({
-    action: "add"
+    action: "add",
   });
 
   return (

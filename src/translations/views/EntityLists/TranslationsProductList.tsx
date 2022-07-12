@@ -3,7 +3,7 @@ import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
 import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -13,17 +13,17 @@ import { sumCompleted } from "./utils";
 
 const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
   params,
-  variables
+  variables,
 }) => {
   const { data, loading } = useProductTranslationsQuery({
     displayLoader: true,
-    variables
+    variables,
   });
 
   const paginationValues = usePaginator({
     pageInfo: data?.translations?.pageInfo,
     paginationState: variables,
-    queryString: params
+    queryString: params,
   });
 
   return (
@@ -40,20 +40,20 @@ const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
                   node.translation?.seoDescription,
                   node.translation?.seoTitle,
                   ...(node.attributeValues?.map(
-                    ({ translation }) => translation?.richText
-                  ) || [])
+                    ({ translation }) => translation?.richText,
+                  ) || []),
                 ]),
-                max: 4 + (node.attributeValues?.length || 0)
+                max: 4 + (node.attributeValues?.length || 0),
               },
               id: node?.product?.id,
-              name: node?.product?.name
-            }
+              name: node?.product?.name,
+            },
         )}
         getRowHref={id =>
           languageEntityUrl(
             variables.language,
             TranslatableEntities.products,
-            id
+            id,
           )
         }
       />

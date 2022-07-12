@@ -6,11 +6,11 @@ import IAppState, { initialAppState } from "./state";
 
 export type AppStateContextType = [
   IAppState,
-  React.Dispatch<AppStateReducerAction>
+  React.Dispatch<AppStateReducerAction>,
 ];
 export const AppStateContext = React.createContext<AppStateContextType>([
   initialAppState,
-  () => undefined
+  () => undefined,
 ]);
 const AppStateProvider: React.FC = ({ children }) => {
   const { location } = useRouter();
@@ -21,9 +21,9 @@ const AppStateProvider: React.FC = ({ children }) => {
     if (!!state.error) {
       dispatch({
         payload: {
-          error: undefined
+          error: undefined,
         },
-        type: "displayError"
+        type: "displayError",
       });
     }
   }, [location]);

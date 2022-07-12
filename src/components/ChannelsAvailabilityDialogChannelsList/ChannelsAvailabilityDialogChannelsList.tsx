@@ -8,18 +8,18 @@ import React from "react";
 export const useStyles = makeStyles(
   theme => ({
     label: {
-      fontSize: 14
+      fontSize: 14,
     },
     option: {
       "&:last-child": {
         "& hr": {
-          display: "none"
-        }
+          display: "none",
+        },
       },
-      margin: theme.spacing(1, 0)
-    }
+      margin: theme.spacing(1, 0),
+    },
   }),
-  { name: "ChannelsAvailabilityContent" }
+  { name: "ChannelsAvailabilityContent" },
 );
 
 export interface ChannelsAvailabilityContentProps {
@@ -31,7 +31,7 @@ export interface ChannelsAvailabilityContentProps {
 const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
   isChannelSelected,
   channels,
-  onChange
+  onChange,
 }) => {
   const classes = useStyles({});
 

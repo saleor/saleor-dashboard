@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchProductTypesDocument,
   SearchProductTypesQuery,
-  SearchProductTypesQueryVariables
+  SearchProductTypesQueryVariables,
 } from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 

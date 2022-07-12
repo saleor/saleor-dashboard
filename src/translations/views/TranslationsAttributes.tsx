@@ -3,11 +3,11 @@ import {
   LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
   useUpdateAttributeTranslationsMutation,
-  useUpdateAttributeValueTranslationsMutation
+  useUpdateAttributeValueTranslationsMutation,
 } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
-  useLocalPaginationState
+  useLocalPaginationState,
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -21,7 +21,7 @@ import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
 import TranslationsAttributesPage, {
-  fieldNames
+  fieldNames,
 } from "../components/TranslationsAttributesPage";
 import { TranslationField } from "../types";
 
@@ -37,7 +37,7 @@ export interface TranslationsAttributesProps {
 const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -45,11 +45,11 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   const intl = useIntl();
 
   const { updateListSettings, settings } = useListSettings(
-    ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST
+    ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
   );
   const [
     valuesPaginationState,
-    setValuesPaginationState
+    setValuesPaginationState,
   ] = useLocalPaginationState(settings?.rowNumber);
 
   const attributeTranslations = useAttributeTranslationDetailsQuery({
@@ -59,8 +59,8 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
       firstValues: valuesPaginationState.first,
       lastValues: valuesPaginationState.last,
       afterValues: valuesPaginationState.after,
-      beforeValues: valuesPaginationState.before
-    }
+      beforeValues: valuesPaginationState.before,
+    },
   });
   const translationData = attributeTranslations?.data?.translation;
   const translation =
@@ -71,48 +71,48 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   const paginate = useLocalPaginator(setValuesPaginationState);
   const { pageInfo, ...paginationValues } = paginate(
     translation?.attribute?.choices?.pageInfo,
-    valuesPaginationState
+    valuesPaginationState,
   );
 
   const [
     updateAttributeTranslations,
-    updateAttributeTranslationsOpts
+    updateAttributeTranslationsOpts,
   ] = useUpdateAttributeTranslationsMutation({
     onCompleted: data => {
       if (data.attributeTranslate.errors.length === 0) {
         attributeTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const [
     updateAttributeValueTranslations,
-    updateAttributeValueTranslationsOpts
+    updateAttributeValueTranslationsOpts,
   ] = useUpdateAttributeValueTranslationsMutation({
     onCompleted: data => {
       if (data.attributeValueTranslate.errors.length === 0) {
         attributeTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate("?", { replace: true });
       }
-    }
+    },
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -121,7 +121,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
 
   const handleSubmit = (
     { name }: TranslationField,
-    data: string | OutputData
+    data: string | OutputData,
   ) => {
     const [fieldName, fieldId] = name.split(":");
 
@@ -130,8 +130,8 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         variables: {
           id: fieldId,
           input: { name: data as string },
-          language: languageCode
-        }
+          language: languageCode,
+        },
       });
     } else if (
       [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
@@ -145,9 +145,9 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
             input: isRichText
               ? { richText: JSON.stringify(data) }
               : { name: data as string },
-            language: languageCode
-          }
-        })
+            language: languageCode,
+          },
+        }),
       );
     }
   };
@@ -159,14 +159,14 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
       updateAttributeValueTranslationsOpts.loading,
     maybe(
       () => updateAttributeTranslationsOpts.data.attributeTranslate.errors,
-      []
+      [],
     ),
     maybe(
       () =>
         updateAttributeValueTranslationsOpts.data.attributeValueTranslate
           .errors,
-      []
-    )
+      [],
+    ),
   );
 
   return (

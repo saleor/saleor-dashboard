@@ -7,7 +7,7 @@ import {
   menuListPath,
   MenuListUrlQueryParams,
   MenuListUrlSortField,
-  menuPath
+  menuPath,
 } from "./urls";
 import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";
@@ -21,7 +21,7 @@ const MenuList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 
 const MenuDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   location,
-  match
+  match,
 }) => {
   const qs = parseQs(location.search.substr(1));
 

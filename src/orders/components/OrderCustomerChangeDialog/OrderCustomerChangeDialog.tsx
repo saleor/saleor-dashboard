@@ -6,7 +6,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -16,7 +16,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderCustomerChangeForm, {
   CustomerChangeActionEnum,
-  OrderCustomerChangeData
+  OrderCustomerChangeData,
 } from "./form";
 import messages from "./messages";
 import { useStyles } from "./styles";

@@ -18,7 +18,7 @@ const props: RichTextEditorProps = {
   helperText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   label: "Content",
   name: "content",
-  editorRef: null
+  editorRef: null,
 };
 
 storiesOf("Generics / Rich text editor", module)

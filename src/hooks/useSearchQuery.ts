@@ -4,7 +4,7 @@ import React from "react";
 export type UseSearchQuery = [string, (event: ChangeEvent) => void, () => void];
 function useSearchQuery(
   onFetch: (query: string) => void,
-  initial?: string
+  initial?: string,
 ): UseSearchQuery {
   const [query, setQuery] = React.useState(initial || "");
   const change = (event: ChangeEvent) => {
@@ -18,8 +18,8 @@ function useSearchQuery(
     change({
       target: {
         name: "",
-        value: initial || ""
-      }
+        value: initial || "",
+      },
     });
 
   return [query, change, reset];

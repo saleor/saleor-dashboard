@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 const props: ChipProps = {
-  label: "Lorem Ipsum"
+  label: "Lorem Ipsum",
 };
 
 storiesOf("Generics / Chip", module)
