@@ -79,6 +79,7 @@
       "ProductVariantUpdated",
       "SaleCreated",
       "SaleDeleted",
+      "SaleToggle",
       "SaleUpdated",
       "ShippingPriceCreated",
       "ShippingPriceDeleted",

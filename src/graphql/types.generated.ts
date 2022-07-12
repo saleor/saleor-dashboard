@@ -5002,6 +5002,7 @@ export enum WebhookEventTypeAsyncEnum {
   SALE_CREATED = 'SALE_CREATED',
   SALE_UPDATED = 'SALE_UPDATED',
   SALE_DELETED = 'SALE_DELETED',
+  SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   /** An invoice is deleted. */
@@ -5173,6 +5174,7 @@ export enum WebhookEventTypeEnum {
   SALE_CREATED = 'SALE_CREATED',
   SALE_UPDATED = 'SALE_UPDATED',
   SALE_DELETED = 'SALE_DELETED',
+  SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   /** An invoice is deleted. */
@@ -5330,6 +5332,7 @@ export enum WebhookSampleEventTypeEnum {
   SALE_CREATED = 'SALE_CREATED',
   SALE_UPDATED = 'SALE_UPDATED',
   SALE_DELETED = 'SALE_DELETED',
+  SALE_TOGGLE = 'SALE_TOGGLE',
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   INVOICE_DELETED = 'INVOICE_DELETED',
   INVOICE_SENT = 'INVOICE_SENT',
