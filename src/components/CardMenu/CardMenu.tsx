@@ -8,7 +8,7 @@ import {
   Popper,
   Typography,
 } from "@material-ui/core";
-import { makeStyles, MoreIcon } from "@saleor/macaw-ui";
+import { IconButtonProps, makeStyles, MoreIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -32,6 +32,8 @@ export interface CardMenuProps {
   disabled?: boolean;
   menuItems: CardMenuItem[];
   outlined?: boolean;
+  Icon?: React.ElementType<{}>;
+  IconButtonProps?: IconButtonProps;
 }
 
 const useStyles = makeStyles(
@@ -64,7 +66,15 @@ const useStyles = makeStyles(
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const { className, disabled, menuItems, outlined, ...rest } = props;
+  const {
+    className,
+    disabled,
+    menuItems,
+    outlined,
+    Icon: icon,
+    IconButtonProps = {},
+    ...rest
+  } = props;
   const classes = useStyles(props);
 
   const anchorRef = useRef<HTMLButtonElement | null>(null);
@@ -120,6 +130,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
 
   const isWithLoading = menuItems.some(({ withLoading }) => withLoading);
 
+  const Icon = icon ?? MoreIcon;
+
   return (
     <div className={className} {...rest}>
       <IconButton
@@ -133,8 +145,9 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         onClick={handleToggle}
         variant={outlined ? "primary" : "secondary"}
         state={open ? "active" : "default"}
+        {...IconButtonProps}
       >
-        <MoreIcon />
+        <Icon />
       </IconButton>
       <Popper
         placement="bottom-end"

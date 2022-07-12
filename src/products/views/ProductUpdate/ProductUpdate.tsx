@@ -19,28 +19,16 @@ import {
 } from "@saleor/config";
 import {
   ProductMediaCreateMutationVariables,
-  ProductUpdateMutation,
-  useAttributeValueDeleteMutation,
-  useFileUploadMutation,
-  useProductChannelListingUpdateMutation,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
-  useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
-  useProductVariantChannelListingUpdateMutation,
   useProductVariantPreorderDeactivateMutation,
-  useProductVariantReorderMutation,
-  useSimpleProductUpdateMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
-  useVariantCreateMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -48,7 +36,6 @@ import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -58,7 +45,6 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
@@ -73,6 +59,7 @@ import {
   ProductUrlQueryParams,
   productVariantAddUrl,
   productVariantCreatorUrl,
+  productVariantEditUrl,
 } from "../../urls";
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -81,9 +68,8 @@ import {
 import {
   createImageReorderHandler,
   createImageUploadHandler,
-  createUpdateHandler,
-  createVariantReorderHandler,
 } from "./handlers";
+import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
@@ -118,9 +104,6 @@ interface ProductUpdateProps {
 export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const intl = useIntl();
   const {
     loadMore: loadMoreCategories,
@@ -163,12 +146,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     },
   });
   const shop = useShop();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [
-    productVariantCreate,
-    productVariantCreateOpts,
-  ] = useVariantCreateMutation({});
 
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
@@ -180,32 +157,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
 
-  const { availableChannels, channel } = useAppChannel(!isSimpleProduct);
+  const { availableChannels } = useAppChannel(!isSimpleProduct);
 
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true,
     },
-  });
-
-  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-
-  const handleUpdate = (data: ProductUpdateMutation) => {
-    if (data.productUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
-      });
-    }
-  };
-  const [updateProduct, updateProductOpts] = useProductUpdateMutation({
-    onCompleted: handleUpdate,
-  });
-  const [
-    updateSimpleProduct,
-    updateSimpleProductOpts,
-  ] = useSimpleProductUpdateMutation({
-    onCompleted: handleUpdate,
   });
 
   const [
@@ -261,7 +218,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onCompleted: data => {
       if (data.productVariantBulkDelete.errors.length === 0) {
         closeModal();
-        reset();
         refetch();
         limitOpts.refetch();
       }
@@ -325,27 +281,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
 
   const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useProductChannelListingUpdateMutation({
-    onCompleted: data => {
-      if (!!data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      }
-    },
-  });
-
-  const [
-    updateVariantChannels,
-    updateVariantChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation({});
-
-  const [
     createProductMedia,
     createProductMediaOpts,
   ] = useProductMediaCreateMutation({
@@ -380,20 +315,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     });
   };
 
-  const [
-    deleteAttributeValue,
-    deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
-
   const onSetDefaultVariant = useOnSetDefaultVariant(
     product ? product.id : null,
     null,
   );
-
-  const [
-    reorderProductVariants,
-    reorderProductVariantsOpts,
-  ] = useProductVariantReorderMutation({});
 
   const handleBack = () => navigate(productListUrl());
 
@@ -403,32 +328,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
 
-  const handleSubmit = createMetadataUpdateHandler(
-    product,
-    createUpdateHandler(
-      product,
-      allChannels,
-      variables => uploadFile({ variables }),
-      variables => updateProduct({ variables }),
-      variables => updateSimpleProduct({ variables }),
-      updateChannels,
-      updateVariantChannels,
-      productVariantCreate,
-      variables => deleteAttributeValue({ variables }),
-    ),
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const [submit, submitOpts] = useProductUpdateHandler(product, allChannels);
 
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables }),
-  );
-
-  const handleVariantReorder = createVariantReorderHandler(product, variables =>
-    reorderProductVariants({ variables }),
   );
 
   const handleDeactivatePreorder = async () => {
@@ -453,26 +359,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     );
 
   const disableFormSave =
-    uploadFileOpts.loading ||
+    submitOpts.loading ||
     createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    updateProductOpts.loading ||
-    reorderProductVariantsOpts.loading ||
-    updateChannelsOpts.loading ||
-    updateVariantChannelsOpts.loading ||
-    productVariantCreateOpts.loading ||
     deactivatePreoderOpts.loading ||
-    deleteAttributeValueOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
 
   const formTransitionState = getMutationState(
-    updateProductOpts.called || updateSimpleProductOpts.called,
-    updateProductOpts.loading || updateSimpleProductOpts.loading,
-    updateProductOpts.data?.productUpdate.errors,
-    updateSimpleProductOpts.data?.productUpdate.errors,
-    updateSimpleProductOpts.data?.productVariantUpdate.errors,
+    submitOpts.called,
+    submitOpts.loading,
+    submitOpts.errors,
     createProductMediaOpts.data?.productMediaCreate.errors,
   );
 
@@ -483,18 +381,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const attributeValues =
     mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
-
-  const errors = [
-    ...(updateProductOpts.data?.productUpdate.errors || []),
-    ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
-    ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
-  ];
-
-  const channelsErrors = [
-    ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors || []),
-    ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
-      ?.errors || []),
-  ];
 
   const fetchMoreCollections = getSearchFetchMoreProps(
     searchCollectionsOpts,
@@ -560,11 +446,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ))}
       <ProductUpdatePage
+        channels={availableChannels}
         productId={id}
         isSimpleProduct={isSimpleProduct}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        channelsErrors={channelsErrors}
+        channelsErrors={submitOpts.channelsErrors}
         currentChannels={currentChannels}
         allChannelsCount={allChannels?.length}
         channelsData={channelsData}
@@ -576,7 +463,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         defaultWeightUnit={shop?.defaultWeightUnit}
         disabled={disableFormSave}
         onSetDefaultVariant={onSetDefaultVariant}
-        errors={errors}
+        errors={submitOpts.errors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
@@ -592,33 +479,23 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
-        onSubmit={handleSubmit}
+        onSubmit={submit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantsAdd={() => openModal("add-variants")}
-        onVariantReorder={handleVariantReorder}
+        onVariantBulkDelete={ids =>
+          openModal("remove-variants", {
+            ids,
+          })
+        }
+        onVariantShow={variantId =>
+          navigate(productVariantEditUrl(product.id, variantId), {
+            resetScroll: true,
+          })
+        }
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
         onImageDelete={handleImageDelete}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove-variants", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        selectedChannelId={channel?.id}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }

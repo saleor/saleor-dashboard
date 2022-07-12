@@ -8,7 +8,6 @@ import {
   WeightUnitsEnum,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
-import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -595,142 +594,408 @@ export const product: (
   url: "/example-url",
   variants: [
     {
-      __typename: "ProductVariant",
-      channelListings: [],
-      id: "pv75934",
-      quantityLimitPerCustomer: 30,
-      margin: 2,
-      media: [
+      id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
+      sku: "43226647",
+      name: "1l",
+      margin: null,
+      attributes: [
         {
-          __typename: "ProductMedia",
-          id: "pi92837",
-          type: ProductMediaType.IMAGE,
-          oembedData: "{}",
-          url: placeholderImage,
-        },
-        {
-          __typename: "ProductMedia",
-          id: "pi92838",
-          type: ProductMediaType.IMAGE,
-          oembedData: "{}",
-          url: placeholderImage,
+          attribute: {
+            id: "QXR0cmlidXRlOjE1",
+            name: "Bottle Size",
+            __typename: "Attribute",
+          },
+          values: [
+            {
+              id: "QXR0cmlidXRlVmFsdWU6NDc=",
+              name: "1l",
+              __typename: "AttributeValue",
+            },
+          ],
+          __typename: "SelectedAttribute",
         },
       ],
-      name: "Cordoba Oro",
-      sku: "87192-94370",
+      media: [
+        {
+          id: "1",
+          type: ProductMediaType.IMAGE,
+          url: placeholderImage,
+          __typename: "ProductMedia",
+        },
+      ],
       stocks: [
         {
-          __typename: "Stock",
-          id: "1",
-          quantity: 1,
+          id: "U3RvY2s6MTY0",
+          quantity: 272,
           quantityAllocated: 0,
-          warehouse: warehouseList[0],
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            name: "Europe for click and collect",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
         },
         {
+          id: "U3RvY2s6MTY1",
+          quantity: 272,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            name: "Europe",
+            __typename: "Warehouse",
+          },
           __typename: "Stock",
-          id: "2",
-          quantity: 4,
+        },
+        {
+          id: "U3RvY2s6MTY2",
+          quantity: 274,
           quantityAllocated: 2,
-          warehouse: warehouseList[1],
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            name: "Asia",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTYz",
+          quantity: 272,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            name: "Oceania",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTY4",
+          quantity: 272,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            name: "Africa",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTY3",
+          quantity: 274,
+          quantityAllocated: 2,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            name: "Americas",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
         },
       ],
       trackInventory: true,
-      preorder: {
-        __typename: "PreorderData",
-        endDate: null,
-        globalSoldUnits: null,
-        globalThreshold: 0,
-      },
-    },
-    {
-      __typename: "ProductVariant",
-      quantityLimitPerCustomer: null,
+      preorder: null,
       channelListings: [
         {
-          __typename: "ProductVariantChannelListing",
           channel: {
-            __typename: "Channel",
+            id: "Q2hhbm5lbDox",
+            name: "Channel-USD",
             currencyCode: "USD",
-            id: "123",
-            name: "Channel1",
-          },
-          costPrice: {
-            __typename: "Money",
-            amount: 10,
-            currency: "USD",
+            __typename: "Channel",
           },
           price: {
-            __typename: "Money",
-            amount: 1,
+            amount: 5.0,
             currency: "USD",
+            __typename: "Money",
+          },
+          costPrice: {
+            amount: 1.5,
+            currency: "USD",
+            __typename: "Money",
           },
           preorderThreshold: {
-            __typename: "PreorderThreshold",
-            quantity: 0,
+            quantity: null,
             soldUnits: 0,
+            __typename: "PreorderThreshold",
           },
+          __typename: "ProductVariantChannelListing",
         },
         {
-          __typename: "ProductVariantChannelListing",
           channel: {
+            id: "Q2hhbm5lbDoy",
+            name: "Channel-PLN",
+            currencyCode: "PLN",
             __typename: "Channel",
-            currencyCode: "USD",
-            id: "124",
-            name: "Channel2",
-          },
-          costPrice: {
-            __typename: "Money",
-            amount: 10,
-            currency: "USD",
           },
           price: {
+            amount: 20.0,
+            currency: "PLN",
             __typename: "Money",
-            amount: 1,
-            currency: "USD",
+          },
+          costPrice: {
+            amount: 6.0,
+            currency: "PLN",
+            __typename: "Money",
           },
           preorderThreshold: {
-            __typename: "PreorderThreshold",
-            quantity: 0,
+            quantity: null,
             soldUnits: 0,
+            __typename: "PreorderThreshold",
           },
+          __typename: "ProductVariantChannelListing",
         },
       ],
-      id: "pv68615",
-      margin: 7,
+      quantityLimitPerCustomer: null,
+      __typename: "ProductVariant",
+    },
+    {
+      id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
+      sku: "80884671",
+      name: "80884671",
+      margin: null,
+      attributes: [
+        {
+          attribute: {
+            id: "QXR0cmlidXRlOjE1",
+            name: "Bottle Size",
+            __typename: "Attribute",
+          },
+          values: [
+            {
+              id: "QXR0cmlidXRlVmFsdWU6NDg=",
+              name: "2l",
+              __typename: "AttributeValue",
+            },
+          ],
+          __typename: "SelectedAttribute",
+        },
+      ],
       media: [
         {
-          __typename: "ProductMedia",
-          id: "pi81234",
+          id: "1",
           type: ProductMediaType.IMAGE,
-          oembedData: "{}",
           url: placeholderImage,
-        },
-        {
           __typename: "ProductMedia",
-          id: "pi1236912",
-          type: ProductMediaType.IMAGE,
-          oembedData: "{}",
-          url: placeholderImage,
         },
       ],
-      name: "silver",
-      sku: "69055-15190",
+      stocks: [],
+      trackInventory: true,
+      preorder: null,
+      channelListings: [
+        {
+          channel: {
+            id: "Q2hhbm5lbDox",
+            name: "Channel-USD",
+            currencyCode: "USD",
+            __typename: "Channel",
+          },
+          price: {
+            amount: 7.0,
+            currency: "USD",
+            __typename: "Money",
+          },
+          costPrice: {
+            amount: 2.0,
+            currency: "USD",
+            __typename: "Money",
+          },
+          preorderThreshold: {
+            quantity: null,
+            soldUnits: 0,
+            __typename: "PreorderThreshold",
+          },
+          __typename: "ProductVariantChannelListing",
+        },
+        {
+          channel: {
+            id: "Q2hhbm5lbDoy",
+            name: "Channel-PLN",
+            currencyCode: "PLN",
+            __typename: "Channel",
+          },
+          price: {
+            amount: 28.0,
+            currency: "PLN",
+            __typename: "Money",
+          },
+          costPrice: {
+            amount: 8.0,
+            currency: "PLN",
+            __typename: "Money",
+          },
+          preorderThreshold: {
+            quantity: null,
+            soldUnits: 0,
+            __typename: "PreorderThreshold",
+          },
+          __typename: "ProductVariantChannelListing",
+        },
+      ],
+      quantityLimitPerCustomer: null,
+      __typename: "ProductVariant",
+    },
+    {
+      id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
+      sku: "93855755",
+      name: "500ml",
+      margin: null,
+      attributes: [
+        {
+          attribute: {
+            id: "QXR0cmlidXRlOjE1",
+            name: "Bottle Size",
+            __typename: "Attribute",
+          },
+          values: [
+            {
+              id: "QXR0cmlidXRlVmFsdWU6NDY=",
+              name: "500ml",
+              __typename: "AttributeValue",
+            },
+          ],
+          __typename: "SelectedAttribute",
+        },
+      ],
+      media: [
+        {
+          id: "1",
+          type: ProductMediaType.IMAGE,
+          url: placeholderImage,
+          __typename: "ProductMedia",
+        },
+      ],
       stocks: [
         {
+          id: "U3RvY2s6MTU5",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            name: "Europe",
+            __typename: "Warehouse",
+          },
           __typename: "Stock",
-          id: "1",
-          quantity: 13,
-          quantityAllocated: 2,
-          warehouse: warehouseList[0],
+        },
+        {
+          id: "U3RvY2s6MTYw",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            name: "Asia",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTYx",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            name: "Americas",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTU3",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            name: "Oceania",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTU4",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            name: "Europe for click and collect",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
+        },
+        {
+          id: "U3RvY2s6MTYy",
+          quantity: 418,
+          quantityAllocated: 0,
+          warehouse: {
+            id:
+              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            name: "Africa",
+            __typename: "Warehouse",
+          },
+          __typename: "Stock",
         },
       ],
-      trackInventory: false,
-      preorder: {
-        __typename: "PreorderData",
-        endDate: null,
-        globalSoldUnits: null,
-        globalThreshold: 0,
-      },
+      trackInventory: true,
+      preorder: null,
+      channelListings: [
+        {
+          channel: {
+            id: "Q2hhbm5lbDox",
+            name: "Channel-USD",
+            currencyCode: "USD",
+            __typename: "Channel",
+          },
+          price: {
+            amount: 5.0,
+            currency: "USD",
+            __typename: "Money",
+          },
+          costPrice: {
+            amount: 1.0,
+            currency: "USD",
+            __typename: "Money",
+          },
+          preorderThreshold: {
+            quantity: null,
+            soldUnits: 0,
+            __typename: "PreorderThreshold",
+          },
+          __typename: "ProductVariantChannelListing",
+        },
+        {
+          channel: {
+            id: "Q2hhbm5lbDoy",
+            name: "Channel-PLN",
+            currencyCode: "PLN",
+            __typename: "Channel",
+          },
+          price: {
+            amount: 20.0,
+            currency: "PLN",
+            __typename: "Money",
+          },
+          costPrice: {
+            amount: 4.0,
+            currency: "PLN",
+            __typename: "Money",
+          },
+          preorderThreshold: {
+            quantity: null,
+            soldUnits: 0,
+            __typename: "PreorderThreshold",
+          },
+          __typename: "ProductVariantChannelListing",
+        },
+      ],
+      quantityLimitPerCustomer: null,
+      __typename: "ProductVariant",
     },
   ],
   visibleInListings: true,
@@ -3105,6 +3370,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     channelListings: [
       {
         __typename: "ProductChannelListing",
+        id: "11",
         isPublished: false,
         publicationDate: null,
         channel: {
@@ -3116,6 +3382,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       },
       {
         __typename: "ProductChannelListing",
+        id: "12",
         isPublished: true,
         publicationDate: "2022-01-21",
         channel: {

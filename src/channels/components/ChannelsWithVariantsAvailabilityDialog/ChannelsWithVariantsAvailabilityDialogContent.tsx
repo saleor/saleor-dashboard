@@ -141,7 +141,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
 
   return (
     <>
-      {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
+      {map(channelsWithVariants, ({ availableVariants }, channelId) => {
         const filteredChannel = channels.find(getById(channelId));
 
         if (!filteredChannel) {
@@ -151,7 +151,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
         const { name } = filteredChannel;
 
         const isVariantSelected = (variantId: string) =>
-          selectedVariantsIds.includes(variantId);
+          availableVariants.includes(variantId);
 
         const getVariantThumbnailSrc = (variantId: string) =>
           allVariants.find(getById(variantId)).media[0]?.url ||
@@ -184,7 +184,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                           text={intl.formatMessage(
                             messages.variantsSelectedLabel,
                             {
-                              variantsAmount: selectedVariantsIds.length,
+                              variantsAmount: availableVariants.length,
                             },
                           )}
                         />

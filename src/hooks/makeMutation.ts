@@ -78,6 +78,7 @@ export function useMutation<TData, TVariables>(
             });
           });
         }
+        showAllErrors({ notify, error: err });
       } else {
         showAllErrors({ notify, error: err });
       }

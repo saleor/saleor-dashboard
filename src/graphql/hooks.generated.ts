@@ -1934,6 +1934,16 @@ export const ProductDetailsVariantFragmentDoc = gql`
   sku
   name
   margin
+  attributes {
+    attribute {
+      id
+      name
+    }
+    values {
+      id
+      name
+    }
+  }
   media {
     url(size: 200)
   }
@@ -2078,6 +2088,7 @@ export const ProductVariantFragmentDoc = gql`
       url
     }
     channelListings {
+      id
       publicationDate
       isPublished
       channel {

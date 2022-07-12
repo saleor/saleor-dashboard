@@ -20,7 +20,7 @@ const useStyles = makeStyles(
     },
     root: {
       "& > div": {
-        overflow: "hidden",
+        minWidth: 0,
       },
       display: "grid",
       gridColumnGap: theme.spacing(3),
@@ -33,11 +33,8 @@ const useStyles = makeStyles(
     uniform: {
       gridTemplateColumns: "1fr 1fr",
     },
-    richText: {
-      "&& > div": {
-        overflow: "visible",
-      },
-    },
+    // TODO: Remove me
+    richText: {},
   }),
   { name: "Grid" },
 );
