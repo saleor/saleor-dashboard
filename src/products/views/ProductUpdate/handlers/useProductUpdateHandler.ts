@@ -70,23 +70,11 @@ export function useProductUpdateHandler(
     updateStocks,
     updateStocksOpts,
   ] = useVariantDatagridStockUpdateMutation({});
-  const [updateVariant, updateVariantOpts] = useVariantDatagridUpdateMutation(
-    {},
-  );
+  const [updateVariant, updateVariantOpts] = useVariantDatagridUpdateMutation();
 
-  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation();
 
-  const handleUpdate = (data: ProductUpdateMutation) => {
-    if (data.productUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
-      });
-    }
-  };
-  const [updateProduct, updateProductOpts] = useProductUpdateMutation({
-    onCompleted: handleUpdate,
-  });
+  const [updateProduct, updateProductOpts] = useProductUpdateMutation();
   const [
     updateChannels,
     updateChannelsOpts,
@@ -106,14 +94,14 @@ export function useProductUpdateHandler(
   const [
     updateVariantChannels,
     updateVariantChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation({});
+  ] = useProductVariantChannelListingUpdateMutation();
 
   const [
     deleteAttributeValue,
     deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
+  ] = useAttributeValueDeleteMutation();
 
-  const submit = createMetadataUpdateHandler(
+  const sendMutations = createMetadataUpdateHandler(
     product,
     product?.productType.hasVariants
       ? createProductWithVariantsUpdateHandler(
@@ -139,6 +127,19 @@ export function useProductUpdateHandler(
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
+
+  const submit = async (data: ProductUpdateSubmitData) => {
+    const errors = await sendMutations(data);
+
+    if (errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges),
+      });
+    }
+
+    return errors;
+  };
 
   const called =
     updateMetadataOpts.called ||
