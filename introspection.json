@@ -13970,6 +13970,53 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutAddressValidationRules",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "checkRequiredFields",
+            "description": "Determines if an error should be raised when the provided address doesn't have all the required fields. The list of required fields is dynamic and depends on the country code (use the `addressValidationRules` query to fetch them). Note: country code is mandatory for all addresses regardless of the rules provided in this input.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "checkFieldsFormat",
+            "description": "Determines if an error should be raised when the provided address doesn't match the expected format. Example: using letters for postal code when the numbers are expected.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "enableFieldsNormalization",
+            "description": "Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "true",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "CheckoutBillingAddressUpdate",
         "description": "Update billing address in the existing checkout.",
@@ -14412,6 +14459,18 @@
             "type": {
               "kind": "ENUM",
               "name": "LanguageCodeEnum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "validationRules",
+            "description": "The checkout validation rules that can be changed.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutValidationRules",
               "ofType": null
             },
             "defaultValue": null,
@@ -16430,6 +16489,41 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CheckoutValidationRules",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "shippingAddress",
+            "description": "The validation rules that can be applied to provided shipping address data.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutAddressValidationRules",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "billingAddress",
+            "description": "The validation rules that can be applied to provided billing address data.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CheckoutAddressValidationRules",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -24774,7 +24868,7 @@
           },
           {
             "kind": "OBJECT",
-            "name": "OrderFullyPaid",
+            "name": "InvoiceRequested",
             "ofType": null
           },
           {
@@ -24844,7 +24938,7 @@
           },
           {
             "kind": "OBJECT",
-            "name": "ProductVariantCreated",
+            "name": "PageCreated",
             "ofType": null
           },
           {
@@ -24975,11 +25069,6 @@
           {
             "kind": "OBJECT",
             "name": "StaffUpdated",
-            "ofType": null
-          },
-          {
-            "kind": "OBJECT",
-            "name": "ShippingZoneUpdated",
             "ofType": null
           },
           {
@@ -32787,54 +32876,6 @@
         "name": "InvoiceDeleted",
         "description": null,
         "fields": [
-          {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "issuedAt",
             "description": "Time of the event.",
@@ -41552,54 +41593,6 @@
             "deprecationReason": null
           },
           {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "menuItem",
             "description": "The menu item the event relates to.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [
@@ -50185,6 +50178,18 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "validationRules",
+                "description": "The rules for changing validation for received billing address data.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CheckoutAddressValidationRules",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -50940,6 +50945,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "UUID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "validationRules",
+                "description": "The rules for changing validation for received shipping address data.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CheckoutAddressValidationRules",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -56104,54 +56121,6 @@
         "name": "OrderCancelled",
         "description": null,
         "fields": [
-          {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
           {
             "name": "issuedAt",
             "description": "Time of the event.",
@@ -74790,54 +74759,6 @@
             "deprecationReason": null
           },
           {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "product",
             "description": "The product the event relates to.\n\nAdded in Saleor 3.2.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [
@@ -83881,54 +83802,6 @@
             "deprecationReason": null
           },
           {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "sale",
             "description": "The sale the event relates to.\n\nAdded in Saleor 3.2.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [
@@ -87207,287 +87080,6 @@
             "description": "The user or application that triggered the event.",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ShippingError",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use `errors` field instead."
-          },
-          {
-            "name": "errors",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ShippingError",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ShippingPriceCreated",
-        "description": null,
-        "fields": [
-          {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "shippingMethod",
-            "description": "The shipping method the event relates to.\n\nAdded in Saleor 3.2.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
-            "args": [
-              {
-                "name": "channel",
-                "description": "Slug of a channel for which the data should be returned.",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ShippingMethodType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "shippingZone",
-            "description": "The shipping zone the shipping method belongs to.\n\nAdded in Saleor 3.2.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
-            "args": [
-              {
-                "name": "channel",
-                "description": "Slug of a channel for which the data should be returned.",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ShippingZone",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [
-          {
-            "kind": "INTERFACE",
-            "name": "Event",
-            "ofType": null
-          }
-        ],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ShippingPriceDelete",
-        "description": "Deletes a shipping price. \n\nRequires one of the following permissions: MANAGE_SHIPPING.",
-        "fields": [
-          {
-            "name": "shippingMethod",
-            "description": "A shipping method to delete.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ShippingMethodType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "shippingErrors",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ShippingError",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 4.0. Use `errors` field instead."
-          },
-          {
-            "name": "errors",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ShippingError",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ShippingPriceDeleted",
-        "description": null,
-        "fields": [
-          {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
               "kind": "UNION",
               "name": "IssuingPrincipal",
               "ofType": null
@@ -89410,84 +89002,6 @@
               }
             },
             "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "removeChannels",
-            "description": "List of channels to unassign from the shipping zone.",
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ShippingZoneUpdated",
-        "description": null,
-        "fields": [
-          {
-            "name": "issuedAt",
-            "description": "Time of the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "DateTime",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "version",
-            "description": "Saleor version that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "issuingPrincipal",
-            "description": "The user or application that triggered the event.",
-            "args": [],
-            "type": {
-              "kind": "UNION",
-              "name": "IssuingPrincipal",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recipient",
-            "description": "The application receiving the webhook.",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "App",
-              "ofType": null
-            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -102417,48 +101931,6 @@
           {
             "name": "ANY_EVENTS",
             "description": "All the events.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ADDRESS_CREATED",
-            "description": "A new address created.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ADDRESS_UPDATED",
-            "description": "An address updated.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ADDRESS_DELETED",
-            "description": "An address deleted.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "APP_INSTALLED",
-            "description": "A new app installed.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "APP_UPDATED",
-            "description": "An app updated.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "APP_DELETED",
-            "description": "An app deleted.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "APP_STATUS_CHANGED",
-            "description": "An app status is changed.",
             "isDeprecated": false,
             "deprecationReason": null
           },
