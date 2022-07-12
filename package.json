@@ -54,6 +54,7 @@
     "is-url": "^1.2.4",
     "jss": "^9.8.7",
     "junit-report-merger": "^3.0.5",
+    "jwt-decode": "^3.1.2",
     "keycode": "^2.2.0",
     "lodash": "^4.17.20",
     "moment-timezone": "^0.5.32",

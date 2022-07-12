@@ -20,7 +20,7 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = ({ id }) => {
   const location = useLocation();
-  const { data } = useAppQuery({
+  const { data, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id },
   });
@@ -46,6 +46,7 @@ export const App: React.FC<AppProps> = ({ id }) => {
       data={data?.app}
       url={appCompleteUrl}
       aboutHref={appDetailsUrl(id)}
+      refetch={refetch}
       onError={() =>
         notify({
           status: "error",

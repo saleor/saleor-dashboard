@@ -8,12 +8,14 @@ import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
+import useTokenRefresh from "./useTokenRefresh";
 
 interface Props {
   src: string;
   appToken: string;
   appId: string;
   className?: string;
+  refetch?: () => void;
   onLoad?(): void;
   onError?(): void;
 }
@@ -27,6 +29,7 @@ export const AppFrame: React.FC<Props> = ({
   className,
   onLoad,
   onError,
+  refetch,
 }) => {
   const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
@@ -44,6 +47,8 @@ export const AppFrame: React.FC<Props> = ({
       },
     });
   }, [location.pathname]);
+
+  useTokenRefresh(appToken, refetch);
 
   const handleLoad = () => {
     postToExtension({
