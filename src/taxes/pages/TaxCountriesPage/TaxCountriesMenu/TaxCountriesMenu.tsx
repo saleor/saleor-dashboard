@@ -24,12 +24,14 @@ interface TaxCountriesMenuProps {
   configurations: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
+  onCountryAdd: () => void;
 }
 
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   configurations,
   selectedCountryId,
   onCountryDelete,
+  onCountryAdd
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -39,7 +41,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
       <CardTitle
         title={intl.formatMessage(taxesMessages.countryList)}
         toolbar={
-          <Button variant="secondary">
+          <Button onClick={onCountryAdd} variant="secondary">
             <FormattedMessage {...taxesMessages.addCountryLabel} />
           </Button>
         }

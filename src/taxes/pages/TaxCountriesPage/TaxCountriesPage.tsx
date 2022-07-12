@@ -10,7 +10,10 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import { TaxCountryConfigurationFragment } from "@saleor/graphql";
+import {
+  CountryFragment,
+  TaxCountryConfigurationFragment
+} from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
   List,
@@ -23,6 +26,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -34,6 +38,10 @@ interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
+  allCountries: CountryFragment[] | undefined;
+  isDialogOpen: boolean;
+  openDialog: (action?: string) => void;
+  closeDialog: () => void;
 }
 
 const useStyles = makeStyles(
@@ -49,7 +57,15 @@ const useStyles = makeStyles(
 );
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
-  const { countryTaxesData, selectedCountryId, handleTabChange } = props;
+  const {
+    countryTaxesData,
+    selectedCountryId,
+    handleTabChange,
+    allCountries,
+    isDialogOpen,
+    openDialog,
+    closeDialog
+  } = props;
   const intl = useIntl();
   const classes = useStyles();
 
@@ -95,6 +111,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
           configurations={countryTaxesData}
           selectedCountryId={selectedCountryId}
           onCountryDelete={() => null}
+          onCountryAdd={() => openDialog("add-country")}
         />
         <Card>
           <CardTitle
@@ -153,6 +170,17 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
           )}
         </Card>
       </Grid>
+      {allCountries && (
+        <TaxCountryDialog
+          open={isDialogOpen}
+          countries={allCountries.map(country => ({
+            checked: false,
+            ...country
+          }))}
+          onConfirm={() => null}
+          onClose={closeDialog}
+        />
+      )}
     </Container>
   );
 };

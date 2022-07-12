@@ -30,8 +30,17 @@ const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
 };
 
 const CountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match,
-}) => <CountriesListComponent id={decodeURIComponent(match.params.id)} />;
+  match
+}) => {
+  const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
+
+  return (
+    <CountriesListComponent
+      id={decodeURIComponent(match.params.id)}
+      params={qs}
+    />
+  );
+};
 
 const TaxClassesList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
