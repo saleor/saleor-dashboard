@@ -6508,6 +6508,10 @@ export type ShippingPriceTranslateErrorFragmentFragment = { __typename: 'Transla
 
 export type TaxConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode };
 
+export type TaxCountryConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode };
+
+export type TaxCountryConfigurationDeleteErrorFragmentFragment = { __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
@@ -8296,6 +8300,21 @@ export type TaxConfigurationUpdateMutationVariables = Exact<{
 
 
 export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+
+export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
+  countryCode: CountryCode;
+  updateTaxClassRates: Array<TaxClassRateInput> | TaxClassRateInput;
+}>;
+
+
+export type TaxCountryConfigurationUpdateMutation = { __typename: 'Mutation', taxCountryConfigurationUpdate: { __typename: 'TaxCountryConfigurationUpdate', errors: Array<{ __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> } | null } | null };
+
+export type TaxCountryConfigurationDeleteMutationVariables = Exact<{
+  countryCode: CountryCode;
+}>;
+
+
+export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> } | null } | null };
 
 export type CountryListQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -493,3 +493,16 @@ export const taxConfigurationUpdateError = gql`
     code
   }
 `;
+
+export const taxCountryConfigurationUpdateError = gql`
+  fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+    field
+    code
+  }
+`;
+export const taxCountryConfigurationDeleteError = gql`
+  fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+    field
+    code
+  }
+`;

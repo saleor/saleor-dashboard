@@ -950,6 +950,18 @@ export const TaxConfigurationUpdateErrorFragmentFragmentDoc = gql`
   code
 }
     `;
+export const TaxCountryConfigurationUpdateErrorFragmentFragmentDoc = gql`
+    fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+  field
+  code
+}
+    `;
+export const TaxCountryConfigurationDeleteErrorFragmentFragmentDoc = gql`
+    fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+  field
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -14792,6 +14804,88 @@ export function useTaxConfigurationUpdateMutation(baseOptions?: ApolloReactHooks
 export type TaxConfigurationUpdateMutationHookResult = ReturnType<typeof useTaxConfigurationUpdateMutation>;
 export type TaxConfigurationUpdateMutationResult = Apollo.MutationResult<Types.TaxConfigurationUpdateMutation>;
 export type TaxConfigurationUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>;
+export const TaxCountryConfigurationUpdateDocument = gql`
+    mutation TaxCountryConfigurationUpdate($countryCode: CountryCode!, $updateTaxClassRates: [TaxClassRateInput!]!) {
+  taxCountryConfigurationUpdate(
+    countryCode: $countryCode
+    updateTaxClassRates: $updateTaxClassRates
+  ) {
+    errors {
+      ...TaxCountryConfigurationUpdateErrorFragment
+    }
+    taxCountryConfiguration {
+      ...TaxCountryConfiguration
+    }
+  }
+}
+    ${TaxCountryConfigurationUpdateErrorFragmentFragmentDoc}
+${TaxCountryConfigurationFragmentDoc}`;
+export type TaxCountryConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
+
+/**
+ * __useTaxCountryConfigurationUpdateMutation__
+ *
+ * To run a mutation, you first call `useTaxCountryConfigurationUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTaxCountryConfigurationUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [taxCountryConfigurationUpdateMutation, { data, loading, error }] = useTaxCountryConfigurationUpdateMutation({
+ *   variables: {
+ *      countryCode: // value for 'countryCode'
+ *      updateTaxClassRates: // value for 'updateTaxClassRates'
+ *   },
+ * });
+ */
+export function useTaxCountryConfigurationUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>(TaxCountryConfigurationUpdateDocument, options);
+      }
+export type TaxCountryConfigurationUpdateMutationHookResult = ReturnType<typeof useTaxCountryConfigurationUpdateMutation>;
+export type TaxCountryConfigurationUpdateMutationResult = Apollo.MutationResult<Types.TaxCountryConfigurationUpdateMutation>;
+export type TaxCountryConfigurationUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
+export const TaxCountryConfigurationDeleteDocument = gql`
+    mutation TaxCountryConfigurationDelete($countryCode: CountryCode!) {
+  taxCountryConfigurationDelete(countryCode: $countryCode) {
+    errors {
+      ...TaxCountryConfigurationDeleteErrorFragment
+    }
+    taxCountryConfiguration {
+      ...TaxCountryConfiguration
+    }
+  }
+}
+    ${TaxCountryConfigurationDeleteErrorFragmentFragmentDoc}
+${TaxCountryConfigurationFragmentDoc}`;
+export type TaxCountryConfigurationDeleteMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
+
+/**
+ * __useTaxCountryConfigurationDeleteMutation__
+ *
+ * To run a mutation, you first call `useTaxCountryConfigurationDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTaxCountryConfigurationDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [taxCountryConfigurationDeleteMutation, { data, loading, error }] = useTaxCountryConfigurationDeleteMutation({
+ *   variables: {
+ *      countryCode: // value for 'countryCode'
+ *   },
+ * });
+ */
+export function useTaxCountryConfigurationDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>(TaxCountryConfigurationDeleteDocument, options);
+      }
+export type TaxCountryConfigurationDeleteMutationHookResult = ReturnType<typeof useTaxCountryConfigurationDeleteMutation>;
+export type TaxCountryConfigurationDeleteMutationResult = Apollo.MutationResult<Types.TaxCountryConfigurationDeleteMutation>;
+export type TaxCountryConfigurationDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
 export const CountryListDocument = gql`
     query CountryList {
   shop {
