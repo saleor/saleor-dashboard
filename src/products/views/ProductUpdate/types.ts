@@ -1,5 +1,5 @@
 export interface ChannelWithVariantData {
-  selectedVariantsIds: string[];
+  availableVariants: string[];
   variantsIdsToRemove: string[];
   variantsIdsToAdd: string[];
 }

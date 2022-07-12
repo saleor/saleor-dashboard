@@ -26,7 +26,7 @@ describe("useChannelsWithProductVariants", () => {
     const { result } = setupHook();
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(2);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -36,7 +36,7 @@ describe("useChannelsWithProductVariants", () => {
     ).toHaveLength(0);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel2.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
@@ -52,7 +52,7 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.addVariantToChannel("channel1", "variant3"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(3);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -62,7 +62,7 @@ describe("useChannelsWithProductVariants", () => {
     ).toHaveLength(0);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel2.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
@@ -78,7 +78,7 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.removeVariantFromChannel("channel1", "variant2"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(1);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -88,7 +88,7 @@ describe("useChannelsWithProductVariants", () => {
     ).toHaveLength(1);
 
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel2.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
@@ -105,7 +105,7 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.toggleAllChannelVariants("channel1"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -118,7 +118,7 @@ describe("useChannelsWithProductVariants", () => {
     act(() => result.current.toggleAllChannelVariants("channel1"));
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(5);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -135,7 +135,7 @@ describe("useChannelsWithProductVariants", () => {
     act(result.current.toggleAllChannels);
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(5);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -144,7 +144,7 @@ describe("useChannelsWithProductVariants", () => {
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(0);
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel2.availableVariants,
     ).toHaveLength(5);
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,
@@ -157,7 +157,7 @@ describe("useChannelsWithProductVariants", () => {
     act(result.current.toggleAllChannels);
 
     expect(
-      result.current.channelsWithVariantsData.channel1.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel1.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToAdd,
@@ -166,7 +166,7 @@ describe("useChannelsWithProductVariants", () => {
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove,
     ).toHaveLength(2);
     expect(
-      result.current.channelsWithVariantsData.channel2.selectedVariantsIds,
+      result.current.channelsWithVariantsData.channel2.availableVariants,
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToAdd,

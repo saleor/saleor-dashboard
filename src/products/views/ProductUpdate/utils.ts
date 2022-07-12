@@ -48,7 +48,7 @@ export const getParsedChannelsWithVariantsDataFromChannels = (
     ({ variantsIds }) =>
       ({
         ...initialChannelWithVariantData,
-        selectedVariantsIds: variantsIds,
+        availableVariants: variantsIds,
       } as ChannelWithVariantData),
   );
 
@@ -72,13 +72,13 @@ export const areAllChannelVariantsSelected = (
 
 export const areAnyChannelVariantsSelected = (
   channelsWithVariantsData: ChannelWithVariantData,
-) => channelsWithVariantsData?.selectedVariantsIds.length > 0;
+) => channelsWithVariantsData?.availableVariants.length > 0;
 
 export const getTotalSelectedChannelsCount = (
   channelsWithVariantsData: ChannelsWithVariantsData,
 ) =>
   Object.values(channelsWithVariantsData).filter(
-    channel => channel.selectedVariantsIds.length > 0,
+    channel => channel.availableVariants.length > 0,
   ).length;
 
 export const addAllVariantsToAllChannels = (
@@ -110,13 +110,9 @@ export const channelVariantListingDiffToDict = (
 ): ChannelVariantListing =>
   reduce(
     listing,
-    (
-      listingDict: ChannelVariantListing,
-      { selectedVariantsIds },
-      channelId,
-    ) => ({
+    (listingDict: ChannelVariantListing, { availableVariants }, channelId) => ({
       ...listingDict,
-      [channelId]: selectedVariantsIds,
+      [channelId]: availableVariants,
     }),
     {},
   );
