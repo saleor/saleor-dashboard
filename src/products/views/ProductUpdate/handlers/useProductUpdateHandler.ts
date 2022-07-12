@@ -14,6 +14,7 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useVariantDatagridStockUpdateMutation,
+  useVariantDatagridUpdateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -69,6 +70,9 @@ export function useProductUpdateHandler(
     updateStocks,
     updateStocksOpts,
   ] = useVariantDatagridStockUpdateMutation({});
+  const [updateVariant, updateVariantOpts] = useVariantDatagridUpdateMutation(
+    {},
+  );
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -119,6 +123,7 @@ export function useProductUpdateHandler(
           updateProduct,
           updateChannels,
           variables => deleteAttributeValue({ variables }),
+          updateVariant,
           updateStocks,
         )
       : createSimpleProductUpdateHandler(
@@ -144,7 +149,8 @@ export function useProductUpdateHandler(
     updateChannelsOpts.called ||
     updateVariantChannelsOpts.called ||
     deleteAttributeValueOpts.called ||
-    updateStocksOpts.called;
+    updateStocksOpts.called ||
+    updateVariantOpts.called;
   const loading =
     updateMetadataOpts.loading ||
     updatePrivateMetadataOpts.loading ||
@@ -154,7 +160,8 @@ export function useProductUpdateHandler(
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     deleteAttributeValueOpts.loading ||
-    updateStocksOpts.loading;
+    updateStocksOpts.loading ||
+    updateVariantOpts.loading;
 
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors ?? []),

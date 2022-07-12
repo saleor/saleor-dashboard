@@ -12,25 +12,33 @@ import {
   AttributeErrorFragment,
   AttributeValueDeleteMutation,
   AttributeValueDeleteMutationVariables,
+  BulkStockErrorFragment,
   FileUploadMutationFn,
   ProductChannelListingUpdateMutation,
   ProductChannelListingUpdateMutationVariables,
   ProductErrorWithAttributesFragment,
   ProductFragment,
   ProductUpdateMutationFn,
+  StockErrorFragment,
   UploadErrorFragment,
   VariantDatagridStockUpdateMutationFn,
+  VariantDatagridUpdateMutationFn,
 } from "@saleor/graphql";
 import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
-import { getStocks } from "@saleor/products/components/ProductVariants/utils";
+import {
+  getStocks,
+  getVariantInputs,
+} from "@saleor/products/components/ProductVariants/utils";
 
 import { getChannelsVariables, getProductUpdateVariables } from "./utils";
 
 export type ProductWithVariantsUpdateError =
   | ProductErrorWithAttributesFragment
   | AttributeErrorFragment
-  | UploadErrorFragment;
+  | UploadErrorFragment
+  | StockErrorFragment
+  | BulkStockErrorFragment;
 
 export function createProductWithVariantsUpdateHandler(
   product: ProductFragment,
@@ -43,6 +51,7 @@ export function createProductWithVariantsUpdateHandler(
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
+  updateVariant: VariantDatagridUpdateMutationFn,
   updateStocks: VariantDatagridStockUpdateMutationFn,
 ) {
   return async (
@@ -72,14 +81,20 @@ export function createProductWithVariantsUpdateHandler(
     });
     errors = [...errors, ...result.data.productUpdate.errors];
 
-    const stockUpdateResult = await Promise.all(
-      getStocks(product.variants, data.variants).map(variables =>
-        updateStocks({
-          variables,
-        }),
+    const variantUpdateResult = await Promise.all<FetchResult>([
+      ...getStocks(product.variants, data.variants).map(variables =>
+        updateStocks({ variables }),
       ),
-    );
-    errors = [...errors, ...stockUpdateResult.map(getMutationErrors).flat()];
+      ...getVariantInputs(product.variants, data.variants).map(variables =>
+        updateVariant({ variables }),
+      ),
+    ]);
+    errors = [
+      ...errors,
+      ...(variantUpdateResult.flatMap(getMutationErrors) as Array<
+        StockErrorFragment | BulkStockErrorFragment
+      >),
+    ];
 
     await updateChannels({
       variables: getChannelsVariables(product, allChannels, data),

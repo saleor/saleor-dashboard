@@ -13,7 +13,6 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductUpdateMutationVariables,
-  SimpleProductUpdateMutation,
 } from "@saleor/graphql";
 import { weight } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -52,13 +51,6 @@ export const getSimpleProductVariables = (
       : undefined,
   },
 });
-
-export const getSimpleProductErrors = (data: SimpleProductUpdateMutation) => [
-  ...data.productUpdate.errors,
-  ...data.productVariantStocksCreate.errors,
-  ...data.productVariantStocksDelete.errors,
-  ...data.productVariantStocksUpdate.errors,
-];
 
 const shouldRemoveChannel = (allVariants: ProductDetailsVariantFragment[]) => ({
   removeVariants,

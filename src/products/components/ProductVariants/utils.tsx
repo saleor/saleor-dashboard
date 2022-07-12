@@ -1,9 +1,6 @@
 import { GridCell } from "@glideapps/glide-data-grid";
 import { numberCell, textCell } from "@saleor/components/Datagrid/cells";
-import {
-  NumberCell,
-  numberCellEmptyValue,
-} from "@saleor/components/Datagrid/NumberCell";
+import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import {
   DatagridChange,
@@ -13,6 +10,7 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   VariantDatagridStockUpdateMutationVariables,
+  VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { MutableRefObject } from "react";
@@ -24,6 +22,53 @@ const isStockColumn = /^stock:(.*)/;
 // const isChannelColumn = /^channel:(.*)/;
 const isAttributeColumn = /^attribute:(.*)/;
 
+export function getVariantInputs(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridUpdateMutationVariables[] {
+  const attributeChanges = data.updates.filter(change =>
+    isAttributeColumn.test(change.column),
+  );
+  const skuChanges = data.updates.filter(change => change.column === "sku");
+
+  return variants
+    .map(
+      (variant, variantIndex): VariantDatagridUpdateMutationVariables => {
+        const sku = skuChanges.find(
+          change =>
+            change.row ===
+            variantIndex + data.removed.filter(r => r <= variantIndex).length,
+        )?.data;
+
+        const attributes = attributeChanges
+          .filter(
+            change =>
+              change.row ===
+              variantIndex + data.removed.filter(r => r <= variantIndex).length,
+          )
+          .map(change => {
+            const attributeId = change.column.match(isAttributeColumn)[1];
+
+            return {
+              id: attributeId,
+              values: [change.data],
+            };
+          });
+
+        return {
+          id: variant.id,
+          input: {
+            attributes,
+            sku,
+          },
+        };
+      },
+    )
+    .filter(
+      variables => variables.input.sku || variables.input.attributes.length > 0,
+    );
+}
+
 export function getStocks(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
@@ -32,28 +77,33 @@ export function getStocks(
     isStockColumn.test(change.column),
   );
 
-  return variants.map((variant, variantIndex) => {
-    const variantChanges = stockChanges
-      .filter(
-        change =>
-          change.row ===
-          variantIndex + data.removed.filter(r => r <= variantIndex).length,
-      )
-      .map(change => ({
-        warehouse: change.column.match(isStockColumn)[1],
-        quantity: change.data.value,
-      }));
+  return variants
+    .map((variant, variantIndex) => {
+      const variantChanges = stockChanges
+        .filter(
+          change =>
+            change.row ===
+            variantIndex + data.removed.filter(r => r <= variantIndex).length,
+        )
+        .map(change => ({
+          warehouse: change.column.match(isStockColumn)[1],
+          quantity: change.data.value,
+        }));
 
-    return {
-      id: variant.id,
-      stocks: variantChanges.filter(
-        change => change.quantity !== numberCellEmptyValue,
-      ),
-      removeStocks: variantChanges
-        .filter(change => change.quantity === numberCellEmptyValue)
-        .map(({ warehouse }) => warehouse),
-    };
-  });
+      return {
+        id: variant.id,
+        stocks: variantChanges.filter(
+          change => change.quantity !== numberCellEmptyValue,
+        ),
+        removeStocks: variantChanges
+          .filter(change => change.quantity === numberCellEmptyValue)
+          .map(({ warehouse }) => warehouse),
+      };
+    })
+    .filter(
+      variables =>
+        variables.removeStocks.length > 0 || variables.stocks.length > 0,
+    );
 }
 
 interface GetData {
