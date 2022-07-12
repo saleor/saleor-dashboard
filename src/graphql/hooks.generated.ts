@@ -962,6 +962,12 @@ export const TaxCountryConfigurationDeleteErrorFragmentFragmentDoc = gql`
   code
 }
     `;
+export const TaxClassUpdateErrorFragmentFragmentDoc = gql`
+    fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+  field
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -14886,6 +14892,46 @@ export function useTaxCountryConfigurationDeleteMutation(baseOptions?: ApolloRea
 export type TaxCountryConfigurationDeleteMutationHookResult = ReturnType<typeof useTaxCountryConfigurationDeleteMutation>;
 export type TaxCountryConfigurationDeleteMutationResult = Apollo.MutationResult<Types.TaxCountryConfigurationDeleteMutation>;
 export type TaxCountryConfigurationDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
+export const TaxClassUpdateDocument = gql`
+    mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
+  taxClassUpdate(id: $id, input: $input) {
+    errors {
+      ...TaxClassUpdateErrorFragment
+    }
+    taxClass {
+      ...TaxClass
+    }
+  }
+}
+    ${TaxClassUpdateErrorFragmentFragmentDoc}
+${TaxClassFragmentDoc}`;
+export type TaxClassUpdateMutationFn = Apollo.MutationFunction<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>;
+
+/**
+ * __useTaxClassUpdateMutation__
+ *
+ * To run a mutation, you first call `useTaxClassUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTaxClassUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [taxClassUpdateMutation, { data, loading, error }] = useTaxClassUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useTaxClassUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>(TaxClassUpdateDocument, options);
+      }
+export type TaxClassUpdateMutationHookResult = ReturnType<typeof useTaxClassUpdateMutation>;
+export type TaxClassUpdateMutationResult = Apollo.MutationResult<Types.TaxClassUpdateMutation>;
+export type TaxClassUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>;
 export const CountryListDocument = gql`
     query CountryList {
   shop {

@@ -506,3 +506,10 @@ export const taxCountryConfigurationDeleteError = gql`
     code
   }
 `;
+
+export const taxClassUpdateError = gql`
+  fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+    field
+    code
+  }
+`;

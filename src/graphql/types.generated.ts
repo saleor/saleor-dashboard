@@ -6512,6 +6512,8 @@ export type TaxCountryConfigurationUpdateErrorFragmentFragment = { __typename: '
 
 export type TaxCountryConfigurationDeleteErrorFragmentFragment = { __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode };
 
+export type TaxClassUpdateErrorFragmentFragment = { __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
@@ -8315,6 +8317,14 @@ export type TaxCountryConfigurationDeleteMutationVariables = Exact<{
 
 
 export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> } | null } | null };
+
+export type TaxClassUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: TaxClassUpdateInput;
+}>;
+
+
+export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
 
 export type CountryListQueryVariables = Exact<{ [key: string]: never; }>;
 

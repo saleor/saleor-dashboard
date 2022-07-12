@@ -75,3 +75,16 @@ export const taxCountryConfigurationDelete = gql`
     }
   }
 `;
+
+export const taxClassUpdate = gql`
+  mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
+    taxClassUpdate(id: $id, input: $input) {
+      errors {
+        ...TaxClassUpdateErrorFragment
+      }
+      taxClass {
+        ...TaxClass
+      }
+    }
+  }
+`;
