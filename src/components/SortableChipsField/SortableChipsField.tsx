@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ReorderAction } from "@saleor/types";
+import { ReorderAction, ReorderEvent } from "@saleor/types";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
@@ -14,6 +14,15 @@ const useStyles = makeStyles(
       background: theme.palette.background.paper,
       color: theme.palette.primary.dark,
       marginBottom: theme.spacing(1),
+    },
+    chipHelper: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 0,
+    },
+    grabbing: {
+      cursor: "grabbing",
     },
     errorText: {
       color: theme.palette.error.light,
@@ -49,12 +58,23 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
   } = props;
   const classes = useStyles(props);
 
+  const handleSortStart = () => {
+    document.body.classList.add(classes.grabbing);
+  };
+
+  const handleSortEnd = (event: ReorderEvent) => {
+    document.body.classList.remove(classes.grabbing);
+    onValueReorder(event);
+  };
+
   return (
     <SortableContainer
       axis="xy"
       lockAxis="xy"
       useDragHandle
-      onSortEnd={onValueReorder}
+      onSortStart={handleSortStart}
+      onSortEnd={handleSortEnd}
+      helperClass={classes.chipHelper}
     >
       <div>
         {loading ? (
