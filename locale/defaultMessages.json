@@ -445,9 +445,6 @@
   "1div9r": {
     "string": "Search Attribute"
   },
-  "1eCau/": {
-    "string": "Unnamed webhook"
-  },
   "1eEyJv": {
     "context": "ExitFormPrompt continue editing button",
     "string": "Continue editing"
@@ -1640,6 +1637,10 @@
     "context": "section header",
     "string": "Unfulfilled Items"
   },
+  "Bkxrhw": {
+    "context": "no webhooks message",
+    "string": "No webhooks found"
+  },
   "BooQvo": {
     "context": "navigator placeholder",
     "string": "Type {key} to see available actions"
@@ -2392,6 +2393,9 @@
     "context": "pages section name",
     "string": "Pages"
   },
+  "HAlOn1": {
+    "string": "Name"
+  },
   "HLqWXA": {
     "context": "voucher value requirement",
     "string": "Usage Limit"
@@ -2968,6 +2972,10 @@
     "context": "metadata field value, header",
     "string": "Value"
   },
+  "Lm2Zw7": {
+    "context": "name placeholder",
+    "string": "Unnamed webhook"
+  },
   "LmKz3g": {
     "string": "Storefront"
   },
@@ -3251,6 +3259,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated"
   },
+  "NwQXZp": {
+    "context": "status",
+    "string": "Not active"
+  },
   "NxRsHQ": {
     "context": "section header",
     "string": "Fulfillment - #{fulfilmentId}"
@@ -3301,10 +3313,6 @@
   "OTek3r": {
     "context": "product variant name",
     "string": "Variant"
-  },
-  "OTpV1t": {
-    "context": "webhook name",
-    "string": "Name"
   },
   "OVOU1z": {
     "context": "section header",
@@ -5139,6 +5147,10 @@
   "c0H45L": {
     "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
   },
+  "c24hjq": {
+    "context": "status",
+    "string": "Active"
+  },
   "c4gbXr": {
     "string": "Draft order successfully finalized"
   },
@@ -5939,10 +5951,6 @@
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
-  },
-  "jqnwW9": {
-    "context": "header",
-    "string": "Webhooks"
   },
   "jswILH": {
     "context": "add attribute as column in product list table",
@@ -7556,9 +7564,6 @@
   "wWYYBR": {
     "context": "product variant inventory",
     "string": "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}"
-  },
-  "wbjuR4": {
-    "string": "No webhooks found"
   },
   "wgA48T": {
     "context": "country selection",
