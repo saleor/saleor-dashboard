@@ -5,11 +5,6 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     root: {
-      [theme.breakpoints.up("lg")]: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: theme.breakpoints.width("lg"),
-      },
       [theme.breakpoints.up("sm")]: {
         padding: theme.spacing(0, 3),
       },
