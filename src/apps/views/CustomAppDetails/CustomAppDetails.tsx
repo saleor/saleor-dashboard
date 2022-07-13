@@ -145,10 +145,6 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   };
   const customApp = data?.app;
 
-  if (customApp === null) {
-    return <NotFoundPage backHref={appsListUrl()} />;
-  }
-
   const onTokenCreate = (data: AppTokenCreateMutation) => {
     if (data?.appTokenCreate?.errors.length === 0) {
       refetch();
@@ -215,6 +211,10 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   };
 
   const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
+
+  if (customApp === null) {
+    return <NotFoundPage backHref={appsListUrl()} />;
+  }
 
   return (
     <>

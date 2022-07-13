@@ -173,9 +173,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   });
 
   const collection = data?.collection;
-  if (collection === null) {
-    return <NotFoundPage backHref={collectionListUrl()} />;
-  }
   const allChannels = createCollectionChannels(
     availableChannels,
   )?.sort((channel, nextChannel) =>
@@ -260,6 +257,10 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     data?.collection?.products?.pageInfo,
     paginationState,
   );
+
+  if (collection === null) {
+    return <NotFoundPage backHref={collectionListUrl()} />;
+  }
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>

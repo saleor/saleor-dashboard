@@ -14,10 +14,6 @@ const GiftCardEnableDisableSection: React.FC = () => {
     giftCard: { id, isActive, isExpired },
   } = useGiftCardDetails();
 
-  if (isExpired) {
-    return null;
-  }
-
   const {
     giftCardActivate,
     giftCardDeactivate,
@@ -34,6 +30,10 @@ const GiftCardEnableDisableSection: React.FC = () => {
   const buttonLabel = isActive
     ? buttonMessages.disableLabel
     : buttonMessages.enableLabel;
+
+  if (isExpired) {
+    return null;
+  }
 
   return (
     <ConfirmButton

@@ -163,6 +163,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
