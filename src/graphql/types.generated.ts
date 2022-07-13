@@ -7936,7 +7936,6 @@ export type ChannelShippingZonesQuery = { __typename: 'Query', shippingZones: { 
 export type ShopSettingsUpdateMutationVariables = Exact<{
   shopSettingsInput: ShopSettingsInput;
   addressInput?: InputMaybe<AddressInput>;
-  isCloudInstance: Scalars['Boolean'];
 }>;
 
 

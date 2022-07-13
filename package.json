@@ -94,6 +94,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@babel/runtime": "^7.7.6",
     "@editorjs/embed": "^2.5.1",
+    "@editorjs/raw": "^2.3.1",
     "@formatjs/cli": "^4.5.0",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.1.1",
