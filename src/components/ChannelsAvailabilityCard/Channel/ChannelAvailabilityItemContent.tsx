@@ -12,6 +12,8 @@ import { useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
+import { availabilityItemMessages } from "./messages";
+
 export interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
@@ -19,6 +21,7 @@ export interface ChannelContentProps {
   messages: Messages;
   onChange: (id: string, data: ChannelOpts) => void;
 }
+
 const ChannelContent: React.FC<ChannelContentProps> = ({
   data,
   disabled,
@@ -58,20 +61,14 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const todayDateUTC = parsedDate.toISOString().slice(0, 10);
 
   const visibleMessage = (date: string) =>
-    intl.formatMessage(
-      {
-        id: "UjsI4o",
-        defaultMessage: "since {date}",
-        description: "date",
-      },
-      {
-        date: localizeDate(date),
-      },
-    );
+    intl.formatMessage(availabilityItemMessages.sinceDate, {
+      date: localizeDate(date),
+    });
   const formErrors = getFormErrors(
     ["availableForPurchaseDate", "publicationDate"],
     errors,
   );
+
   return (
     <div className={classes.container}>
       <RadioSwitchField
@@ -122,20 +119,13 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             className={classes.setPublicationDate}
             onClick={() => setPublicationDate(!isPublicationDate)}
           >
-            {intl.formatMessage({
-              id: "U3BQKA",
-              defaultMessage: "Set publication date",
-            })}
+            {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
           </Typography>
           {isPublicationDate && (
             <TextField
               error={!!formErrors.publicationDate}
               disabled={disabled}
-              label={intl.formatMessage({
-                id: "Jt3DwJ",
-                defaultMessage: "Publish on",
-                description: "publish on date",
-              })}
+              label={intl.formatMessage(availabilityItemMessages.publishOn)}
               name={`channel:publicationDate:${id}`}
               type="date"
               fullWidth={true}
@@ -213,11 +203,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
                   disabled={disabled}
-                  label={intl.formatMessage({
-                    id: "Y7Vy19",
-                    defaultMessage: "Set available on",
-                    description: "available on date",
-                  })}
+                  label={intl.formatMessage(
+                    availabilityItemMessages.setAvailableOn,
+                  )}
                   name={`channel:availableForPurchase:${id}`}
                   type="date"
                   fullWidth={true}
@@ -252,29 +240,24 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           <ControlledCheckbox
             className={classes.checkbox}
             name={`channel:visibleInListings:${id}`}
-            checked={visibleInListings}
+            checked={!visibleInListings}
             disabled={disabled}
             label={
               <>
                 <p className={classNames(classes.label, classes.listingLabel)}>
-                  {intl.formatMessage({
-                    id: "0cVk9I",
-                    defaultMessage: "Show in product listings",
-                  })}
+                  {intl.formatMessage(availabilityItemMessages.hideInListings)}
                 </p>
                 <span className={classes.secondLabel}>
-                  {intl.formatMessage({
-                    id: "5ukAFZ",
-                    defaultMessage:
-                      "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages.",
-                  })}
+                  {intl.formatMessage(
+                    availabilityItemMessages.hideInListingsDescription,
+                  )}
                 </span>
               </>
             }
             onChange={e =>
               onChange(id, {
                 ...formData,
-                visibleInListings: e.target.value,
+                visibleInListings: !e.target.value,
               })
             }
           />

@@ -181,13 +181,13 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
-    isAvailableForPurchase: false,
+    isAvailableForPurchase: true,
     variantsIds: [],
     isPublished: false,
     name: channel.name,
     price: "",
     publicationDate: null,
-    visibleInListings: false,
+    visibleInListings: true,
   })) || [];
 
 export const createChannelsDataWithPrice = (

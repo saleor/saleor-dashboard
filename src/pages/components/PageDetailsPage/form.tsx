@@ -113,7 +113,7 @@ export interface PageFormProps extends UsePageFormOpts {
 }
 
 const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
-  isPublished: page?.isPublished,
+  isPublished: page?.isPublished || true,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
   privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
