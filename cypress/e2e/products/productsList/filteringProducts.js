@@ -23,7 +23,7 @@ import {
   selectProductsOutOfStock,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-describe("Filtering products", () => {
+describe("As an admin I should be able to filter products", () => {
   const startsWith = "CyFilterProducts-";
   const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
@@ -89,15 +89,18 @@ describe("Filtering products", () => {
       .visit(urlList.products);
   });
 
-  // const filterProductsBy = ["category", "collection", "productType"];
-  const filterProductsBy = ["category", "productType"];
+  const filterProductsBy = [
+    { type: "category", testCase: "SALEOR_2601" },
+    { type: "productType", testCase: "SALEOR_2602" },
+    { type: "collection", testCase: "SALEOR_2603" },
+  ];
   filterProductsBy.forEach(filterBy => {
     it(
-      `should filter products by ${filterBy}`,
+      `should filter products by ${filterBy.type}. ${filterBy.testCase}`,
       { tags: ["@productsList", "@allEnv"] },
       () => {
         cy.expectSkeletonIsVisible().waitForProgressBarToNotExist();
-        selectFilterOption(filterBy, name);
+        selectFilterOption(filterBy.type, name);
         cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
           expect(product).to.includes(name);
         });
@@ -106,7 +109,7 @@ describe("Filtering products", () => {
   });
 
   it(
-    "should filter products out of stock",
+    "should filter products out of stock. SALEOR_2604",
     { tags: ["@productsList", "@allEnv"] },
     () => {
       cy.expectSkeletonIsVisible();
