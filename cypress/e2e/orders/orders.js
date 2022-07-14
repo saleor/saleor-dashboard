@@ -162,10 +162,11 @@ describe("Orders", () => {
           .should("not.exist")
           .get(ORDERS_SELECTORS.cancelFulfillment)
           .click()
-          .fillAutocompleteSelect(
-            ORDERS_SELECTORS.cancelFulfillmentSelectField,
-            warehouse.name,
-          )
+          .get(ORDERS_SELECTORS.cancelFulfillmentSelectField)
+          .click()
+          .get(BUTTON_SELECTORS.selectOption)
+          .first()
+          .click()
           .addAliasToGraphRequest("OrderFulfillmentCancel")
           .get(BUTTON_SELECTORS.submit)
           .click()
