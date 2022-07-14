@@ -106,7 +106,7 @@ describe("Orders", () => {
   });
 
   xit(
-    "should create order with selected channel",
+    "should create order with selected channel. TC: SALEOR_2104",
     { tags: ["@orders", "@allEnv"] },
     () => {
       cy.visit(urlList.orders)
@@ -124,7 +124,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should not be possible to change channel in order",
+    "should not be possible to change channel in order. TC: SALEOR_2105",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createOrder({
@@ -143,43 +143,47 @@ describe("Orders", () => {
     },
   );
 
-  it("should cancel fulfillment", { tags: ["@orders", "@allEnv"] }, () => {
-    let order;
-    createFulfilledOrder({
-      customerId: customer.id,
-      channelId: defaultChannel.id,
-      shippingMethodId: shippingMethod.id,
-      variantsList,
-      address,
-      warehouse: warehouse.id,
-    })
-      .then(({ order: orderResp }) => {
-        order = orderResp;
-        cy.visit(urlList.orders);
-        cy.expectSkeletonIsVisible();
-        cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
-        cy.get(SHARED_ELEMENTS.skeleton)
-          .should("not.exist")
-          .get(ORDERS_SELECTORS.cancelFulfillment)
-          .click()
-          .get(ORDERS_SELECTORS.cancelFulfillmentSelectField)
-          .click()
-          .get(BUTTON_SELECTORS.selectOption)
-          .first()
-          .click()
-          .addAliasToGraphRequest("OrderFulfillmentCancel")
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
-        getOrder(order.id);
+  it(
+    "should cancel fulfillment. TC: SALEOR_2106",
+    { tags: ["@orders", "@allEnv"] },
+    () => {
+      let order;
+      createFulfilledOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethodId: shippingMethod.id,
+        variantsList,
+        address,
+        warehouse: warehouse.id,
       })
-      .then(orderResp => {
-        expect(orderResp.status).to.be.eq("UNFULFILLED");
-      });
-  });
+        .then(({ order: orderResp }) => {
+          order = orderResp;
+          cy.visit(urlList.orders);
+          cy.expectSkeletonIsVisible();
+          cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+          cy.get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist")
+            .get(ORDERS_SELECTORS.cancelFulfillment)
+            .click()
+            .get(ORDERS_SELECTORS.cancelFulfillmentSelectField)
+            .click()
+            .get(BUTTON_SELECTORS.selectOption)
+            .first()
+            .click()
+            .addAliasToGraphRequest("OrderFulfillmentCancel")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
+          getOrder(order.id);
+        })
+        .then(orderResp => {
+          expect(orderResp.status).to.be.eq("UNFULFILLED");
+        });
+    },
+  );
 
   it(
-    "should make a refund",
+    "should make a refund. TC: 2107",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;
