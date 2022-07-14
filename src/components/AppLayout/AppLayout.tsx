@@ -5,8 +5,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import {
   makeStyles,
   SaleorTheme,
-  Sidebar,
-  SidebarDrawer,
   useActionBar,
   useBacklink,
   useTheme
@@ -20,6 +18,8 @@ import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
+import { Sidebar } from "../Sidebar";
+import { SidebarDrawer } from "../SidebarDrawer";
 import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
