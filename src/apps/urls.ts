@@ -22,6 +22,7 @@ export type AppListUrlQueryParams = ActiveTab &
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
   orderId?: string;
+  customerId?: string;
 }
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
