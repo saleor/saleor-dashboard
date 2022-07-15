@@ -1,4 +1,6 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { Theme } from "@glideapps/glide-data-grid";
+import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { useMemo } from "react";
 
 const useStyles = makeStyles(
   theme => {
@@ -21,6 +23,13 @@ const useStyles = makeStyles(
         justifyContent: "flex-end",
         padding: theme.spacing(1),
       },
+      btnContainer: {
+        display: "flex",
+        flexDirection: "row-reverse",
+      },
+      addBtn: {
+        marginBottom: theme.spacing(2),
+      },
       columnPicker: {
         display: "flex",
         alignItems: "center",
@@ -33,11 +42,12 @@ const useStyles = makeStyles(
         },
       },
       portal: { position: "fixed", top: 0, left: 0 },
-      root: {
-        borderTop: `1px solid ${theme.palette.divider}`,
-        borderBottom: `1px solid ${theme.palette.divider}`,
+      datagrid: {
+        // borderTop: `1px solid ${theme.palette.divider}`,
+        // borderBottom: `1px solid ${theme.palette.divider}`,
         position: "relative",
       },
+      root: {},
       rowActionBar: {
         height: "100%",
         background: theme.palette.background.default,
@@ -66,5 +76,30 @@ const useStyles = makeStyles(
   },
   { name: "Datagrid" },
 );
+
+export function useDatagridTheme() {
+  const theme = useTheme();
+  const datagridTheme = useMemo(
+    (): Partial<Theme> => ({
+      accentColor: theme.palette.saleor.main[1],
+      accentLight: theme.palette.divider,
+      accentFg: theme.palette.divider,
+      bgCell: theme.palette.background.default,
+      bgHeader: theme.palette.background.default,
+      bgHeaderHasFocus: theme.palette.background.default,
+      bgHeaderHovered: theme.palette.background.default,
+      bgBubbleSelected: theme.palette.background.default,
+      textHeader: theme.palette.saleor.main[3],
+      borderColor: theme.palette.divider,
+      fontFamily: theme.typography.fontFamily,
+      baseFontStyle: theme.typography.body1.fontSize as string,
+      headerFontStyle: theme.typography.body2.fontSize as string,
+      editorFontSize: theme.typography.body1.fontSize as string,
+    }),
+    [theme],
+  );
+
+  return datagridTheme;
+}
 
 export default useStyles;

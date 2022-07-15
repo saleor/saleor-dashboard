@@ -17,6 +17,15 @@ export function textCell(value: string): GridCell {
   };
 }
 
+export function booleanCell(value: boolean): GridCell {
+  return {
+    ...common,
+    allowOverlay: false,
+    kind: GridCellKind.Boolean,
+    data: value,
+  };
+}
+
 export function numberCell(value: number | null): NumberCell {
   return {
     ...common,
@@ -29,7 +38,7 @@ export function numberCell(value: number | null): NumberCell {
   };
 }
 
-export function moneyCell(value: number, currency: string): MoneyCell {
+export function moneyCell(value: number | null, currency: string): MoneyCell {
   return {
     ...common,
     kind: GridCellKind.Custom,
@@ -38,6 +47,6 @@ export function moneyCell(value: number, currency: string): MoneyCell {
       value,
       currency,
     },
-    copyData: value.toString(),
+    copyData: value !== null ? value.toString() : "",
   };
 }

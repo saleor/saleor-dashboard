@@ -1,11 +1,13 @@
-import { GridCell, GridCellKind, Item } from "@glideapps/glide-data-grid";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { booleanCell, moneyCell, numberCell, textCell } from "./cells";
 import Datagrid, { GetCellContentOpts } from "./Datagrid";
 import { initialData } from "./fixtures";
+import { numberCellEmptyValue } from "./NumberCell";
 
 const errors = [{ id: "9", field: "balance" }];
 
@@ -27,12 +29,11 @@ const DefaultStory: React.FC = () => {
     ): GridCell => {
       const columnId = availableColumns[column].id;
       const change = changes.current[getChangeIndex(columnId, row)]?.data;
+      const dataRow = initialData[row];
 
-      const baseProps = {
-        allowOverlay: true,
-        readonly: false,
+      const errorProps = {
         themeOverride: errors.find(
-          err => err.id === initialData[row].id && err.field === columnId,
+          err => err.id === initialData[row]?.id && err.field === columnId,
         )
           ? {
               accentColor: "#FF0000",
@@ -42,58 +43,40 @@ const DefaultStory: React.FC = () => {
       };
 
       if (columnId === "loan-active") {
-        const value = change ?? initialData[row].loan.active;
         return {
-          ...baseProps,
-          allowOverlay: false,
-          kind: GridCellKind.Boolean,
-          data: value,
+          ...errorProps,
+          ...booleanCell(change ?? dataRow?.loan.active ?? null),
         };
       }
 
       if (columnId === "loan") {
-        const value = change?.value ?? initialData[row][columnId].amount;
         return {
-          ...baseProps,
-          kind: GridCellKind.Custom,
-          data: {
-            kind: "money-cell",
-            currency: initialData[row].loan.currency,
-            value,
-          },
-          copyData: value,
+          ...errorProps,
+          ...moneyCell(
+            change?.value ?? dataRow?.loan.amount ?? null,
+            dataRow?.loan.currency ?? "USD",
+          ),
         };
       }
 
       if (columnId === "balance") {
-        const data = change ?? initialData[row][columnId];
         return {
-          ...baseProps,
-          kind: GridCellKind.Number,
-          data,
-          displayData: data?.toString(),
+          ...errorProps,
+          ...numberCell(change ?? dataRow?.balance ?? numberCellEmptyValue),
         };
       }
 
       if (columnId === "age") {
-        const value = change?.value ?? initialData[row][columnId];
         return {
-          ...baseProps,
-          kind: GridCellKind.Custom,
-          data: {
-            kind: "number-cell",
-            value,
-          },
-          copyData: value,
+          ...errorProps,
+          ...numberCell(change?.value ?? dataRow?.age ?? numberCellEmptyValue),
         };
       }
 
-      const data = change ?? initialData[row][columnId];
+      const data = change ?? dataRow ? dataRow[columnId] : "";
       return {
-        ...baseProps,
-        kind: GridCellKind.Text,
-        data,
-        displayData: data,
+        ...errorProps,
+        ...textCell(data),
       };
     },
     [],
@@ -102,6 +85,7 @@ const DefaultStory: React.FC = () => {
   return (
     <div style={{ width: 800, margin: "auto" }}>
       <Datagrid
+        addButtonLabel="Add row"
         availableColumns={availableColumns}
         getCellContent={getCellContent}
         menuItems={() => [
