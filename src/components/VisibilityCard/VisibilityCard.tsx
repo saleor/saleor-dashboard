@@ -115,7 +115,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         description: "date",
       },
       {
-        date: localizeDate(date, "L"),
+        date: localizeDate(date),
       },
     );
 

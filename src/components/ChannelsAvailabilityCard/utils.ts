@@ -29,7 +29,7 @@ export const getChannelsAvailabilityMessages = ({
                   description: "channel publication date",
                 },
                 {
-                  date: localizeDate(currVal.publicationDate, "L"),
+                  date: localizeDate(currVal.publicationDate),
                 },
               )
             : currVal.publicationDate
@@ -40,7 +40,7 @@ export const getChannelsAvailabilityMessages = ({
                   description: "channel publication date",
                 },
                 {
-                  date: localizeDate(currVal.publicationDate, "L"),
+                  date: localizeDate(currVal.publicationDate),
                 },
               )
             : currVal.isPublished
@@ -66,7 +66,7 @@ export const getChannelsAvailabilityMessages = ({
             description: "product available for purchase date",
           },
           {
-            date: localizeDate(currVal.availableForPurchase, "L"),
+            date: localizeDate(currVal.availableForPurchase),
           },
         ),
         hiddenSecondLabel: intl.formatMessage(
@@ -76,7 +76,7 @@ export const getChannelsAvailabilityMessages = ({
             description: "product publication date label",
           },
           {
-            date: localizeDate(currVal.publicationDate, "L"),
+            date: localizeDate(currVal.publicationDate),
           },
         ),
         setAvailabilityDateLabel: intl.formatMessage({
