@@ -54,7 +54,7 @@ describe("Channels", () => {
     );
   });
 
-  xit(
+  it(
     "should create new channel. TC: SALEOR_0701",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
@@ -155,7 +155,7 @@ describe("Channels", () => {
     );
   }
 
-  xit(
+  it(
     "should validate slug name. TC: SALEOR_0703",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
@@ -175,7 +175,7 @@ describe("Channels", () => {
     },
   );
 
-  xit(
+  it(
     "should validate not existing currency. TC: SALEOR_0704",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
@@ -192,7 +192,7 @@ describe("Channels", () => {
     },
   );
 
-  xit(
+  it(
     "should delete channel. TC: SALEOR_0705",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
