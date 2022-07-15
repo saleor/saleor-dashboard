@@ -7,7 +7,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   selectChannel,
-  sortProducstBy,
+  sortProductsBy,
   submitFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
@@ -39,7 +39,7 @@ describe("As an admin I should be able to sort products", () => {
       cy.get(PRODUCTS_LIST.tableHeaders.price)
         .click()
         .waitForProgressBarToNotExist();
-      sortProducstBy("price");
+      sortProductsBy("price");
     },
   );
 
@@ -50,7 +50,7 @@ describe("As an admin I should be able to sort products", () => {
       cy.get(PRODUCTS_LIST.tableHeaders.type)
         .click()
         .waitForProgressBarToNotExist();
-      sortProducstBy("type");
+      sortProductsBy("type");
     },
   );
 
@@ -58,7 +58,7 @@ describe("As an admin I should be able to sort products", () => {
     "should be able to sort products by name. TC: SALEOR_2609",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      sortProducstBy("name");
+      sortProductsBy("name");
     },
   );
 });

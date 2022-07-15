@@ -119,7 +119,7 @@ export function enterProductListPage() {
     .waitForProgressBarToNotExist();
 }
 
-export function sortProducstBy(sortBy) {
+export function sortProductsBy(sortBy) {
   expectProductsSortedBy(sortBy);
   cy.addAliasToGraphRequest("ProductList")
     .get(PRODUCTS_LIST.tableHeaders[sortBy])
