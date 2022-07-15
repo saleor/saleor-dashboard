@@ -1,7 +1,11 @@
-import { getAppDeepPathFromDashboardUrl } from "@saleor/apps/urls";
+import {
+  AppDetailsUrlQueryParams,
+  getAppDeepPathFromDashboardUrl,
+} from "@saleor/apps/urls";
 import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
+import { stringifyQs } from "@saleor/utils/urls";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router";
@@ -16,6 +20,7 @@ interface Props {
   appToken: string;
   appId: string;
   className?: string;
+  params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
   onLoad?(): void;
   onError?(): void;
@@ -28,6 +33,7 @@ export const AppFrame: React.FC<Props> = ({
   appToken,
   appId,
   className,
+  params = {},
   onLoad,
   onError,
   refetch,
@@ -100,7 +106,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(
         src,
         window.location.search,
-        `?domain=${shop.domain.host}&id=${appId}&locale=${locale}`,
+        `?${stringifyQs({ domain: shop.domain.host, id: appId, ...params })}`,
       )}
       onError={onError}
       onLoad={handleLoad}
