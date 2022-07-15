@@ -125,7 +125,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                     currentDate,
                     expiryPeriodType,
                     expiryPeriodAmount,
-                  )?.format("L")}
+                  )?.format("ll")}
                 </Typography>
               </div>
             </div>
