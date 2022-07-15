@@ -13,7 +13,8 @@ export function createChannelByView({
   currency,
   slug = name,
   shippingZone,
-  defaultCountry = "Poland"
+  defaultCountry = "Poland",
+  warehouse,
 }) {
   cy.addAliasToGraphRequest("Channel")
     .get(CHANNELS_SELECTORS.createChannelButton)
@@ -34,22 +35,38 @@ export function createChannelByView({
   });
   cy.fillAutocompleteSelect(
     ADD_CHANNEL_FORM_SELECTORS.countryAutocompleteInput,
-    defaultCountry
+    defaultCountry,
   );
   if (shippingZone) {
     addShippingZone(shippingZone);
+  }
+  if (warehouse) {
+    addWarehouse(warehouse);
   }
   cy.get(ADD_CHANNEL_FORM_SELECTORS.saveButton).click();
 }
 
 export function addShippingZone(shippingZone) {
   cy.get(BUTTON_SELECTORS.expandIcon)
+    .first()
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.addShippingZoneButton)
     .click()
     .fillAutocompleteSelect(
       ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect,
-      shippingZone
+      shippingZone,
+    );
+}
+
+export function addWarehouse(warehouse) {
+  cy.get(BUTTON_SELECTORS.expandIcon)
+    .last()
+    .click()
+    .get(ADD_CHANNEL_FORM_SELECTORS.addWarehouseButton)
+    .click()
+    .fillAutocompleteSelect(
+      ADD_CHANNEL_FORM_SELECTORS.warehouseAutocompleteSelect,
+      warehouse,
     );
 }
 
