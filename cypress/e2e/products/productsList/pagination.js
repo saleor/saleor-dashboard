@@ -16,7 +16,7 @@ describe("As an admin I should be able to manage products table", () => {
   });
 
   it(
-    "should be able go to the next page on product list. SALEOR_2605",
+    "should be able go to the next page on product list. TC: SALEOR_2605",
     { tags: ["@productsList", "@allEnv"] },
     () => {
       cy.expectSkeletonIsVisible()
@@ -52,7 +52,7 @@ describe("As an admin I should be able to manage products table", () => {
   );
 
   it(
-    "should see correct amount of products per page. SALEOR_2606",
+    "should see correct amount of products per page. TC: SALEOR_2606",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.expectSkeletonIsVisible();

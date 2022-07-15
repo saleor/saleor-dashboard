@@ -96,7 +96,7 @@ describe("As an admin I should be able to filter products", () => {
   ];
   filterProductsBy.forEach(filterBy => {
     it(
-      `should filter products by ${filterBy.type}. ${filterBy.testCase}`,
+      `should filter products by ${filterBy.type}. TC: ${filterBy.testCase}`,
       { tags: ["@productsList", "@allEnv"] },
       () => {
         cy.expectSkeletonIsVisible().waitForProgressBarToNotExist();
@@ -109,7 +109,7 @@ describe("As an admin I should be able to filter products", () => {
   });
 
   it(
-    "should filter products out of stock. SALEOR_2604",
+    "should filter products out of stock. TC: SALEOR_2604",
     { tags: ["@productsList", "@allEnv"] },
     () => {
       cy.expectSkeletonIsVisible();

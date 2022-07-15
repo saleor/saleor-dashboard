@@ -7,7 +7,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   selectChannel,
-  sortProductBy,
+  sortProducstBy,
   submitFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
@@ -32,34 +32,34 @@ describe("As an admin I should be able to sort products", () => {
   });
 
   it(
-    "should be able to sort products by price. SALEOR_2607",
+    "should be able to sort products by price. TC: SALEOR_2607",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       selectChannel(defaultChannel.slug);
       submitFilters();
-      cy.get(PRODUCTS_LIST.tableHeaders[sortByList[0]])
+      cy.get(PRODUCTS_LIST.tableHeaders.price)
         .click()
         .waitForProgressBarToNotExist();
-      sortProductBy(sortByList[0]);
+      sortProducstBy("price");
     },
   );
 
   it(
-    "should be able to sort products by type. SALEOR_2608",
+    "should be able to sort products by type. TC: SALEOR_2608",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      cy.get(PRODUCTS_LIST.tableHeaders[sortByList[1]])
+      cy.get(PRODUCTS_LIST.tableHeaders.type)
         .click()
         .waitForProgressBarToNotExist();
-      sortProductBy(sortByList[1]);
+      sortProducstBy("type");
     },
   );
 
   it(
-    "should be able to sort products by name. SALEOR_2609",
+    "should be able to sort products by name. TC: SALEOR_2609",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      sortProductBy(sortByList[2]);
+      sortProducstBy("name");
     },
   );
 });
