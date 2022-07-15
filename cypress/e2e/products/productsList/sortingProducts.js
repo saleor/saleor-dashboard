@@ -12,7 +12,6 @@ import {
 } from "../../../support/pages/catalog/products/productsListPage";
 
 describe("As an admin I should be able to sort products", () => {
-  const sortByList = ["price", "type", "name"];
   let defaultChannel;
 
   beforeEach(() => {
