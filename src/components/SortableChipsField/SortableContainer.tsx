@@ -1,5 +1,14 @@
-import { SortableContainer as SortableContainerHoc } from "react-sortable-hoc";
+import {
+  SortableContainer as SortableContainerHoc,
+  SortableContainerProps as SortableContainerHocProps,
+} from "react-sortable-hoc";
 
-const SortableContainer = SortableContainerHoc(({ children }) => children);
+interface SortableContainerProps extends SortableContainerHocProps {
+  children: React.ReactElement;
+}
+
+const SortableContainer = SortableContainerHoc(
+  ({ children }: SortableContainerProps) => children,
+);
 
 export default SortableContainer;

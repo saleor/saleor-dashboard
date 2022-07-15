@@ -15,10 +15,14 @@ export interface SortableChipProps extends SortableElementProps {
 
 const useStyles = makeStyles(
   theme => ({
+    closeButton: {
+      marginLeft: theme.spacing(),
+      background: "none",
+      border: "none",
+    },
     closeIcon: {
       cursor: "pointer",
       fontSize: 16,
-      marginLeft: theme.spacing(),
       verticalAlign: "middle",
     },
     content: {
@@ -39,10 +43,17 @@ const useStyles = makeStyles(
   { name: "SortableChip" },
 );
 
-const SortableChip = SortableElement<SortableChipProps>(props => {
+const SortableChip = SortableElement((props: SortableChipProps) => {
   const { className, label, onClose } = props;
 
   const classes = useStyles(props);
+
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <div className={classNames(classes.root, className)}>
@@ -53,11 +64,13 @@ const SortableChip = SortableElement<SortableChipProps>(props => {
         />
         <Typography data-test-id="chip-label">{label}</Typography>
         {onClose && (
-          <CloseIcon
-            className={classes.closeIcon}
-            onClick={onClose}
+          <button
+            className={classes.closeButton}
+            onClick={handleClose}
             data-test-id="button-close"
-          />
+          >
+            <CloseIcon className={classes.closeIcon} />
+          </button>
         )}
       </div>
     </div>
