@@ -11,7 +11,6 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  CountryFragment,
   TaxClassRateInput,
   TaxCountryConfigurationFragment
 } from "@saleor/graphql";

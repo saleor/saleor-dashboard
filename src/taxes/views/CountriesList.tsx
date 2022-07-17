@@ -1,8 +1,6 @@
 import {
-  CountryCode,
   TaxCountryConfigurationFragment,
   useTaxClassesListQuery,
-  useTaxClassUpdateMutation,
   useTaxCountriesListQuery,
   useTaxCountryConfigurationUpdateMutation
 } from "@saleor/graphql";
@@ -14,7 +12,6 @@ import React from "react";
 
 import TaxCountryDialog from "../components/TaxCountryDialog";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
-import { taxCountriesList } from "../queries";
 import {
   taxCountriesListUrl,
   TaxesUrlDialog,
