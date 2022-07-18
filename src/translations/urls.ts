@@ -14,6 +14,7 @@ export enum TranslatableEntities {
   pages = "pages",
   attributes = "attributes",
   shippingMethods = "shippingMethods",
+  menuItems = "menuItems",
 }
 
 const translationsSection = "/translations/";

@@ -1483,6 +1483,9 @@
     "context": "section header",
     "string": "Eligible Categories"
   },
+  "AcMzwj": {
+    "string": "Menu items"
+  },
   "AdmPca": {
     "context": "error message",
     "string": "Max value cannot be less than min value"
@@ -2551,6 +2554,10 @@
   "INNPVX": {
     "context": "payment status",
     "string": "Partially paid"
+  },
+  "IOshTA": {
+    "context": "header",
+    "string": "Translation MenuItem \"{menuItemName}\" - {languageCode}"
   },
   "IUeGzv": {
     "context": "plugin name",
