@@ -7,6 +7,7 @@ import {
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
@@ -89,88 +90,101 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   );
 
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
-      <PageTabs value="countries" onChange={handleTabChange}>
-        <PageTab
-          label={intl.formatMessage(taxesMessages.channelsSection)}
-          value="channels"
-        />
-        <PageTab
-          label={intl.formatMessage(taxesMessages.countriesSection)}
-          value="countries"
-        />
-        <PageTab
-          label={intl.formatMessage(taxesMessages.taxClassesSection)}
-          value="tax-classes"
-        />
-      </PageTabs>
-      <VerticalSpacer spacing={2} />
-      <Grid variant="inverted">
-        <TaxCountriesMenu
-          configurations={countryTaxesData}
-          selectedCountryId={selectedCountryId}
-          onCountryDelete={() => null}
-          onCountryAdd={() => openDialog("add-country")}
-        />
-        <Card>
-          <CardTitle
-            title={intl.formatMessage(taxesMessages.taxClassRatesHeader)}
-          />
-          {countryTaxesData?.length === 0 ? (
-            <CardContent className={classes.greyText}>
-              <FormattedMessage {...taxesMessages.addCountryToAccessClass} />
-            </CardContent>
-          ) : (
-            <>
-              <CardContent>
-                <TextField
-                  value={query}
-                  variant="outlined"
-                  onChange={e => setQuery(e.target.value)}
-                  placeholder={intl.formatMessage(
-                    taxesMessages.searchTaxClasses
-                  )}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                  inputProps={{ className: classes.inputPadding }}
+    <Form confirmLeave initial={currentCountry?.taxClassCountryRates ?? []}>
+      {({ data, change, submit }) => {
+        const a = 2;
+        return (
+          <Container>
+            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageTabs value="countries" onChange={handleTabChange}>
+              <PageTab
+                label={intl.formatMessage(taxesMessages.channelsSection)}
+                value="channels"
+              />
+              <PageTab
+                label={intl.formatMessage(taxesMessages.countriesSection)}
+                value="countries"
+              />
+              <PageTab
+                label={intl.formatMessage(taxesMessages.taxClassesSection)}
+                value="tax-classes"
+              />
+            </PageTabs>
+            <VerticalSpacer spacing={2} />
+            <Grid variant="inverted">
+              <TaxCountriesMenu
+                configurations={countryTaxesData}
+                selectedCountryId={selectedCountryId}
+                onCountryDelete={() => null}
+                onCountryAdd={() => openDialog("add-country")}
+              />
+              <Card>
+                <CardTitle
+                  title={intl.formatMessage(taxesMessages.taxClassRatesHeader)}
                 />
-              </CardContent>
-              <List gridTemplate={["5fr 2fr"]}>
-                <ListHeader>
-                  <ListItem>
-                    <ListItemCell>
-                      <FormattedMessage {...taxesMessages.taxNameHeader} />
-                    </ListItemCell>
-                    <ListItemCell>
-                      <FormattedMessage {...taxesMessages.taxRateHeader} />
-                    </ListItemCell>
-                  </ListItem>
-                </ListHeader>
-                {filteredRates?.map(rate => (
-                  <ListItem key={rate.taxClass.id} hover={false}>
-                    <ListItemCell>{rate.taxClass.name}</ListItemCell>
-                    <ListItemCell>
-                      <TaxInput
-                        placeholder={filteredRates[0].rate}
-                        value={(rate.rate * 100).toString()}
-                        change={() => null} // TODO: add change function from form
+                {countryTaxesData?.length === 0 ? (
+                  <CardContent className={classes.greyText}>
+                    <FormattedMessage
+                      {...taxesMessages.addCountryToAccessClass}
+                    />
+                  </CardContent>
+                ) : (
+                  <>
+                    <CardContent>
+                      <TextField
+                        value={query}
+                        variant="outlined"
+                        onChange={e => setQuery(e.target.value)}
+                        placeholder={intl.formatMessage(
+                          taxesMessages.searchTaxClasses
+                        )}
+                        fullWidth
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon />
+                            </InputAdornment>
+                          )
+                        }}
+                        inputProps={{ className: classes.inputPadding }}
                       />
-                    </ListItemCell>
-                  </ListItem>
-                )) ?? <Skeleton />}
-              </List>
-            </>
-          )}
-        </Card>
-      </Grid>
-    </Container>
+                    </CardContent>
+                    <List gridTemplate={["5fr 2fr"]}>
+                      <ListHeader>
+                        <ListItem>
+                          <ListItemCell>
+                            <FormattedMessage
+                              {...taxesMessages.taxNameHeader}
+                            />
+                          </ListItemCell>
+                          <ListItemCell>
+                            <FormattedMessage
+                              {...taxesMessages.taxRateHeader}
+                            />
+                          </ListItemCell>
+                        </ListItem>
+                      </ListHeader>
+                      {data?.map(rate => (
+                        <ListItem key={rate.taxClass.id} hover={false}>
+                          <ListItemCell>{rate.taxClass.name}</ListItemCell>
+                          <ListItemCell>
+                            <TaxInput
+                              placeholder={data[0].rate}
+                              value={(rate.rate * 100).toString()}
+                              change={change}
+                            />
+                          </ListItemCell>
+                        </ListItem>
+                      )) ?? <Skeleton />}
+                    </List>
+                  </>
+                )}
+              </Card>
+            </Grid>
+          </Container>
+        );
+      }}
+    </Form>
   );
 };
 
