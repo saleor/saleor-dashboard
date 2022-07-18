@@ -486,6 +486,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Translations",
     description: "translations section name",
   },
+  variants: {
+    id: "8GC/ah",
+    defaultMessage: "Variants",
+    description: "variants section name",
+  },
   vouchers: {
     id: "iUy2dx",
     defaultMessage: "Vouchers",

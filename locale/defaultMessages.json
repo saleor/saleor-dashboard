@@ -1225,6 +1225,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8GC/ah": {
+    "context": "variants section name",
+    "string": "Variants"
+  },
   "8HRy+U": {
     "string": "Category Description"
   },
@@ -2601,6 +2605,10 @@
   },
   "IoDlcd": {
     "string": "Slug"
+  },
+  "IqRBql": {
+    "context": "variant name",
+    "string": "New variant"
   },
   "Irflxf": {
     "context": "window title",
@@ -5574,10 +5582,6 @@
   "gAqkrG": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
-  },
-  "gF7hbK": {
-    "context": "variant name",
-    "string": "New Variant"
   },
   "gKdGxP": {
     "context": "error message",

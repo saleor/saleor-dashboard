@@ -1,5 +1,4 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -13,7 +12,7 @@ import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery,
 } from "@saleor/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
+import { sectionNames } from "@saleor/intl";
 import {
   productVariantAddUrl,
   productVariantEditUrl,
@@ -24,48 +23,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
-
-const useStyles = makeStyles(
-  theme => ({
-    colAvatar: {
-      width: 64,
-    },
-    colName: {
-      paddingLeft: 0,
-    },
-    defaultVariant: {
-      color: fade(theme.palette.text.secondary, 0.6),
-      display: "block",
-    },
-    firstVariant: {
-      width: 104,
-    },
-    link: {
-      cursor: "pointer",
-    },
-    noHandle: {
-      "&&&": {
-        paddingRight: theme.spacing(3),
-      },
-      textAlign: "right",
-    },
-    tabActive: {
-      "& > td:first-child": {
-        "&:before": {
-          background: theme.palette.primary.main,
-          content: '""',
-          height: "100%",
-          left: 0,
-          position: "absolute",
-          top: 0,
-          width: 2,
-        },
-        position: "relative",
-      },
-    },
-  }),
-  { name: "ProductVariantNavigation" },
-);
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface ProductVariantNavigationProps {
   current?: string;
@@ -95,13 +54,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "1kdQdO",
-          defaultMessage: "Variants",
-          description: "section header",
-        })}
-      />
+      <CardTitle title={intl.formatMessage(sectionNames.variants)} />
       <ResponsiveTable>
         <SortableTableBody onSortEnd={onReorder}>
           {renderCollection(variants, (variant, variantIndex) => {
@@ -117,7 +70,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 key={variant ? variant.id : "skeleton"}
                 index={variantIndex || 0}
                 className={classNames(classes.link, {
-                  [classes.tabActive]: isActive,
+                  [classes.rowActive]: isActive,
                 })}
                 href={
                   variant
@@ -133,11 +86,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                   {variant ? variant.name || variant.sku : <Skeleton />}
                   {isDefault && (
                     <span className={classes.defaultVariant}>
-                      {intl.formatMessage({
-                        id: "vZMs8f",
-                        defaultMessage: "Default",
-                        description: "default product variant indicator",
-                      })}
+                      {intl.formatMessage(messages.defaultVariant)}
                     </span>
                   )}
                 </TableCell>
@@ -145,17 +94,13 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             );
           })}
           {!isCreate ? (
-            <TableRow>
+            <TableRow className={classes.rowNew}>
               <TableCell colSpan={3}>
                 <Button
                   href={productVariantAddUrl(productId)}
                   data-test-id="button-add-variant"
                 >
-                  <FormattedMessage
-                    id="3C3Nj5"
-                    defaultMessage="Add variant"
-                    description="button"
-                  />
+                  <FormattedMessage {...messages.addVariant} />
                 </Button>
               </TableCell>
             </TableRow>
@@ -165,7 +110,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 alignRight
                 className={classNames(
                   classes.colAvatar,
-                  classes.tabActive,
+                  classes.rowActive,
                   classes.noHandle,
                   {
                     [classes.firstVariant]: variants?.length === 0,
@@ -175,11 +120,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 colSpan={2}
               />
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="gF7hbK"
-                  defaultMessage="New Variant"
-                  description="variant name"
-                />
+                <FormattedMessage {...messages.newVariant} />
               </TableCell>
             </TableRow>
           )}
