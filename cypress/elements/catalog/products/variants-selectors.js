@@ -1,8 +1,4 @@
 export const VARIANTS_SELECTORS = {
-  attributeCheckbox: "[name*='value:']",
-  valueContainer: "[data-test-id='value-container']",
-  nextButton: "[class*='MuiButton-containedPrimary']",
-  warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "[ name='sku']",
   attributeOption:
     "[data-test-type='option'], [data-test-id='multi-autocomplete-select-option']",
@@ -20,5 +16,5 @@ export const VARIANTS_SELECTORS = {
   preorderEndTimeInput: "[name='preorderEndDateTime:time']",
   globalThresholdInput: "[name='globalThreshold']",
   stockInput: "[data-test-id='stock-input']",
-  selectOption: "[data-test-id='multi-autocomplete-select-option']"
+  selectOption: "[data-test-id='multi-autocomplete-select-option']",
 };
