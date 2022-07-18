@@ -13,7 +13,10 @@ const props = {
   allCountries: castedCountries,
   isDialogOpen: false,
   openDialog: () => null,
-  closeDialog: () => null
+  closeDialog: () => null,
+  onSubmit: () => null,
+  savebarState: "default" as const,
+  disabled: false
 };
 
 storiesOf("Views / Taxes / Countries view", module)

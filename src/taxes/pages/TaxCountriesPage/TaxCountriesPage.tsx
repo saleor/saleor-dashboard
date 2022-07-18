@@ -10,11 +10,14 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import { configurationMenuUrl } from "@saleor/configuration";
 import {
   TaxClassRateInput,
   TaxCountryConfigurationFragment
 } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import {
   ConfirmButtonTransitionState,
@@ -69,6 +72,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
 
   const [query, setQuery] = React.useState("");
 
@@ -80,19 +84,28 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     [selectedCountryId, countryTaxesData],
   );
 
-  const filteredRates = React.useMemo(
-    () =>
-      currentCountry?.taxClassCountryRates.filter(
-        rate =>
-          rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0,
-      ),
-    [currentCountry, query],
-  );
+  const handleSubmit = (
+    data: TaxCountryConfigurationFragment["taxClassCountryRates"]
+  ) => {
+    const submitData: TaxClassRateInput[] = data.map(item => ({
+      taxClassId: item.taxClass.id,
+      country: selectedCountryId,
+      rate: item.rate
+    }));
+    onSubmit(submitData);
+  };
 
   return (
-    <Form confirmLeave initial={currentCountry?.taxClassCountryRates ?? []}>
+    <Form
+      confirmLeave
+      initial={currentCountry?.taxClassCountryRates ?? []}
+      onSubmit={handleSubmit}
+    >
       {({ data, change, submit }) => {
-        const a = 2;
+        const filteredRates = data?.filter(
+          rate =>
+            rate.taxClass.name.search(new RegExp(parseQuery(query), "i")) >= 0
+        );
         return (
           <Container>
             <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
@@ -164,7 +177,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
-                      {data?.map(rate => (
+                      {filteredRates?.map(rate => (
                         <ListItem key={rate.taxClass.id} hover={false}>
                           <ListItemCell>{rate.taxClass.name}</ListItemCell>
                           <ListItemCell>
@@ -181,6 +194,12 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                 )}
               </Card>
             </Grid>
+            <Savebar
+              state={savebarState}
+              disabled={disabled}
+              onSubmit={submit}
+              onCancel={() => navigate(configurationMenuUrl)}
+            />
           </Container>
         );
       }}

@@ -1,4 +1,5 @@
 import {
+  CountryCode,
   TaxCountryConfigurationFragment,
   useTaxClassesListQuery,
   useTaxCountriesListQuery,
@@ -91,7 +92,14 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
         selectedCountryId={id!}
         handleTabChange={handleTabChange}
         openDialog={openDialog}
-        onSubmit={() => null}
+        onSubmit={data =>
+          taxCountryConfigurationUpdateMutation({
+            variables: {
+              countryCode: id as CountryCode,
+              updateTaxClassRates: data
+            }
+          })
+        }
         savebarState={mutationStatus}
         disabled={mutationInProgress}
       />
