@@ -257,24 +257,3 @@ export const gridAttributes = gql`
     }
   }
 `;
-
-export const createMultipleVariantsData = gql`
-  query CreateMultipleVariantsData(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
-    product(id: $id) {
-      ...ProductVariantAttributes
-    }
-    warehouses(first: 20) {
-      edges {
-        node {
-          ...Warehouse
-        }
-      }
-    }
-  }
-`;

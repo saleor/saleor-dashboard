@@ -382,19 +382,6 @@ export const productBulkDeleteMutation = gql`
   }
 `;
 
-export const ProductVariantBulkCreateMutation = gql`
-  mutation ProductVariantBulkCreate(
-    $id: ID!
-    $inputs: [ProductVariantBulkCreateInput!]!
-  ) {
-    productVariantBulkCreate(product: $id, variants: $inputs) {
-      errors {
-        ...BulkProductError
-      }
-    }
-  }
-`;
-
 export const ProductVariantBulkDeleteMutation = gql`
   mutation ProductVariantBulkDelete($ids: [ID!]!) {
     productVariantBulkDelete(ids: $ids) {

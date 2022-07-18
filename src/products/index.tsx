@@ -19,7 +19,6 @@ import {
   ProductUrlQueryParams,
   productVariantAddPath,
   ProductVariantAddUrlQueryParams,
-  productVariantCreatorPath,
   productVariantEditPath,
   ProductVariantEditUrlQueryParams,
 } from "./urls";
@@ -29,7 +28,6 @@ import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
 import ProductVariantComponent from "./views/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
-import ProductVariantCreatorComponent from "./views/ProductVariantCreator";
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -113,12 +111,6 @@ const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const ProductVariantCreator: React.FC<RouteComponentProps<{
-  id: string;
-}>> = ({ match }) => (
-  <ProductVariantCreatorComponent id={decodeURIComponent(match.params.id)} />
-);
-
 const Component = () => {
   const intl = useIntl();
 
@@ -128,10 +120,6 @@ const Component = () => {
       <Switch>
         <Route exact path={productListPath} component={ProductList} />
         <Route exact path={productAddPath} component={ProductCreate} />
-        <Route
-          path={productVariantCreatorPath(":id")}
-          component={ProductVariantCreator}
-        />
         <Route
           exact
           path={productVariantAddPath(":id")}

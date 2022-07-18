@@ -11693,42 +11693,6 @@ export function useProductBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
-export const ProductVariantBulkCreateDocument = gql`
-    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
-  productVariantBulkCreate(product: $id, variants: $inputs) {
-    errors {
-      ...BulkProductError
-    }
-  }
-}
-    ${BulkProductErrorFragmentDoc}`;
-export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
-
-/**
- * __useProductVariantBulkCreateMutation__
- *
- * To run a mutation, you first call `useProductVariantBulkCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useProductVariantBulkCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [productVariantBulkCreateMutation, { data, loading, error }] = useProductVariantBulkCreateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      inputs: // value for 'inputs'
- *   },
- * });
- */
-export function useProductVariantBulkCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>(ProductVariantBulkCreateDocument, options);
-      }
-export type ProductVariantBulkCreateMutationHookResult = ReturnType<typeof useProductVariantBulkCreateMutation>;
-export type ProductVariantBulkCreateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkCreateMutation>;
-export type ProductVariantBulkCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
 export const ProductVariantBulkDeleteDocument = gql`
     mutation ProductVariantBulkDelete($ids: [ID!]!) {
   productVariantBulkDelete(ids: $ids) {
@@ -12565,53 +12529,6 @@ export function useGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridAttributesQueryHookResult = ReturnType<typeof useGridAttributesQuery>;
 export type GridAttributesLazyQueryHookResult = ReturnType<typeof useGridAttributesLazyQuery>;
 export type GridAttributesQueryResult = Apollo.QueryResult<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>;
-export const CreateMultipleVariantsDataDocument = gql`
-    query CreateMultipleVariantsData($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  product(id: $id) {
-    ...ProductVariantAttributes
-  }
-  warehouses(first: 20) {
-    edges {
-      node {
-        ...Warehouse
-      }
-    }
-  }
-}
-    ${ProductVariantAttributesFragmentDoc}
-${WarehouseFragmentDoc}`;
-
-/**
- * __useCreateMultipleVariantsDataQuery__
- *
- * To run a query within a React component, call `useCreateMultipleVariantsDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useCreateMultipleVariantsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCreateMultipleVariantsDataQuery({
- *   variables: {
- *      id: // value for 'id'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
- *   },
- * });
- */
-export function useCreateMultipleVariantsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CreateMultipleVariantsDataQuery, Types.CreateMultipleVariantsDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CreateMultipleVariantsDataQuery, Types.CreateMultipleVariantsDataQueryVariables>(CreateMultipleVariantsDataDocument, options);
-      }
-export function useCreateMultipleVariantsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CreateMultipleVariantsDataQuery, Types.CreateMultipleVariantsDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CreateMultipleVariantsDataQuery, Types.CreateMultipleVariantsDataQueryVariables>(CreateMultipleVariantsDataDocument, options);
-        }
-export type CreateMultipleVariantsDataQueryHookResult = ReturnType<typeof useCreateMultipleVariantsDataQuery>;
-export type CreateMultipleVariantsDataLazyQueryHookResult = ReturnType<typeof useCreateMultipleVariantsDataLazyQuery>;
-export type CreateMultipleVariantsDataQueryResult = Apollo.QueryResult<Types.CreateMultipleVariantsDataQuery, Types.CreateMultipleVariantsDataQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
