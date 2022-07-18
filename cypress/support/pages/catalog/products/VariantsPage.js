@@ -3,54 +3,12 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
-import { fillUpPriceList } from "./priceListComponent";
 
 export function variantsShouldBeVisible({ price }) {
   cy.get(PRODUCT_DETAILS.variantRow).should("be.visible");
   cy.contains(PRODUCT_DETAILS.variantPrice, price);
-}
-
-export function createFirstVariant({
-  sku,
-  warehouseId,
-  price,
-  attribute,
-  quantity = 1
-}) {
-  cy.get(PRODUCT_DETAILS.addVariantsButton).click();
-  cy.get(PRODUCT_DETAILS.addVariantsOptionDialog.optionMultiple).click();
-  cy.get(BUTTON_SELECTORS.submit).click();
-  cy.get(VARIANTS_SELECTORS.valueContainer).click();
-  cy.contains(VARIANTS_SELECTORS.selectOption, attribute)
-    .click()
-    .get(VARIANTS_SELECTORS.nextButton)
-    .click();
-  fillUpPriceList(price);
-  if (warehouseId) {
-    cy.get(`[name*='${warehouseId}']`).click();
-  } else {
-    cy.get(VARIANTS_SELECTORS.warehouseCheckboxes)
-      .first()
-      .click();
-  }
-  cy.get(VARIANTS_SELECTORS.stockInput)
-    .type(quantity)
-    .get(VARIANTS_SELECTORS.nextButton)
-    .click();
-  if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuInput).type(sku);
-  }
-  cy.addAliasToGraphRequest("ProductVariantBulkCreate")
-    .get(VARIANTS_SELECTORS.nextButton)
-    .click()
-    .confirmationMessageShouldAppear()
-    .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
-    .waitForProgressBarToNotBeVisible()
-    .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
-    .should("be.visible");
 }
 
 export function createVariant({
@@ -60,9 +18,9 @@ export function createVariant({
   price,
   costPrice = price,
   channelName,
-  quantity = 10
+  quantity = 10,
 }) {
-  cy.get(PRODUCT_DETAILS.addVariantsButton).click();
+  cy.get(PRODUCT_DETAILS.addVariantButton).click();
   fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
@@ -76,7 +34,7 @@ export function createVariant({
     channelName,
     variantName: attributeName,
     price,
-    costPrice
+    costPrice,
   });
 }
 
@@ -84,13 +42,13 @@ export function fillUpGeneralVariantInputs({
   attributeName,
   warehouseName,
   sku,
-  quantity
+  quantity,
 }) {
   fillUpVariantAttributeAndSku({ attributeName, sku });
   cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
   if (warehouseName) {
     cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
-      force: true
+      force: true,
     });
   } else {
     cy.get(VARIANTS_SELECTORS.warehouseOption)
@@ -105,7 +63,7 @@ export function fillUpVariantDetails({
   attributeType = "DROPDOWN",
   sku,
   warehouseName,
-  quantity
+  quantity,
 }) {
   selectAttributeWithType({ attributeType, attributeName });
   if (sku) {
@@ -115,7 +73,7 @@ export function fillUpVariantDetails({
     cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
     cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName)
       .click({
-        force: true
+        force: true,
       })
       .get(VARIANTS_SELECTORS.stockInput)
       .type(quantity);
@@ -138,10 +96,10 @@ export function selectChannelForVariantAndFillUpPrices({
   channelName,
   variantName,
   price,
-  costPrice = price
+  costPrice = price,
 }) {
   cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest(
-    "ProductChannelListingUpdate"
+    "ProductChannelListingUpdate",
   );
   selectChannelVariantInDetailsPage(channelName, variantName);
   cy.get(BUTTON_SELECTORS.confirm)
