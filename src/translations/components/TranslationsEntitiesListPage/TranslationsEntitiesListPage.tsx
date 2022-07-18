@@ -40,6 +40,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "pages",
   "attributes",
   "shippingMethods",
+  "menuItems",
 ];
 
 const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
