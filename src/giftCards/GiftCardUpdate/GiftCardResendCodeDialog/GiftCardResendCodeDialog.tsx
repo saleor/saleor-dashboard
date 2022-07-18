@@ -8,7 +8,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import { useChannelsQuery, useGiftCardResendMutation } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
+import { getBySlug } from "@saleor/misc";
 import { DialogProps } from "@saleor/types";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { mapSlugNodeToChoice } from "@saleor/utils/maps";
