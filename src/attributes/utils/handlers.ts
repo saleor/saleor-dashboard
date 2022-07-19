@@ -220,7 +220,7 @@ export const prepareAttributesInput = ({
 }: AttributesArgs): AttributeValueInput[] => {
   const prevAttributesMap = getAttributesMap(prevAttributes);
 
-  return attributes.reduce((attrInput, attr) => {
+  return attributes.reduce((attrInput: AttributeValueInput[], attr) => {
     const prevAttrValue = prevAttributesMap.get(attr.id);
     if (isEqual(attr.value, prevAttrValue)) {
       return attrInput;
@@ -242,6 +242,13 @@ export const prepareAttributesInput = ({
       }
 
       attrInput.push(booleanInput);
+      return attrInput;
+    }
+    if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
+      attrInput.push({
+        id: attr.id,
+        plainText: attr.value[0],
+      });
       return attrInput;
     }
     if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
