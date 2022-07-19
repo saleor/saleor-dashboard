@@ -219,6 +219,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             slug: slugify(value.name).toLowerCase(),
             sortOrder: valueIndex,
             value: null,
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,

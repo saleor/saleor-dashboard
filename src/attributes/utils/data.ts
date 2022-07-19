@@ -178,6 +178,9 @@ export function getSelectedAttributeValues(
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
 
+    case AttributeInputTypeEnum.PLAIN_TEXT:
+      return [attribute.values[0]?.plainText];
+
     case AttributeInputTypeEnum.RICH_TEXT:
       return [attribute.values[0]?.richText];
 
