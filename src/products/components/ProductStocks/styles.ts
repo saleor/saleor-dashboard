@@ -40,6 +40,8 @@ export const useStyles = makeStyles(
     popper: {
       marginTop: theme.spacing(1),
       zIndex: 2,
+      maxHeight: 400,
+      overflow: "scroll",
     },
     quantityContainer: {
       paddingTop: theme.spacing(),
@@ -75,6 +77,15 @@ export const useStyles = makeStyles(
     thresholdInput: {
       maxWidth: 400,
     },
+    addRow: {
+      "&:hover": {
+        cursor: "pointer",
+        "& $actionableText": {
+          color: theme.palette.primary.main,
+        },
+      },
+    },
+    actionableText: {},
     preorderItemsLeftCount: {
       fontSize: 14,
       paddingTop: theme.spacing(2),
