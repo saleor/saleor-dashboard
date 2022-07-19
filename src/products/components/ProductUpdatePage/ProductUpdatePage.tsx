@@ -44,12 +44,11 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import { productImageUrl, productListUrl } from "@saleor/products/urls";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
+import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelsWithVariantsAvailabilityCard from "../../../channels/ChannelsWithVariantsAvailabilityCard/ChannelsWithVariantsAvailabilityCard";
 import { getChoices } from "../../utils/data";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
@@ -65,14 +64,13 @@ import ProductUpdateForm, {
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
-  channelsWithVariantsData: ChannelsWithVariantsData;
   setChannelsData: (data: ChannelData[]) => void;
   onChannelsChange: (data: ChannelData[]) => void;
   channelsData: ChannelData[];
   currentChannels: ChannelData[];
   allChannelsCount: number;
   channelsErrors: ProductChannelListingErrorFragment[];
-  errors: ProductErrorWithAttributesFragment[];
+  errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
@@ -164,7 +162,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onCloseDialog,
-  channelsWithVariantsData,
   onChannelsChange,
   onAttributeSelectBlur,
 }) => {
@@ -218,6 +215,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     extensionMountPoints.PRODUCT_DETAILS,
   );
 
+  const productErrors = React.useMemo(
+    () =>
+      errors.filter(
+        error => error.__typename === "ProductError",
+      ) as ProductErrorWithAttributesFragment[],
+    [errors],
+  );
+
   const extensionMenuItems = mapToMenuItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
@@ -233,7 +238,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       product={product}
       categories={categories}
       collections={collections}
-      channelsWithVariants={channelsWithVariantsData}
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
@@ -300,7 +304,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <ProductDetailsForm
                     data={data}
                     disabled={disabled}
-                    errors={errors}
+                    errors={productErrors}
                     onChange={change}
                   />
                   <CardSpacer />
@@ -320,7 +324,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <Attributes
                       attributes={data.attributes}
                       attributeValues={attributeValues}
-                      errors={errors}
+                      errors={productErrors}
                       loading={disabled}
                       disabled={disabled}
                       onChange={handlers.selectAttribute}
@@ -346,7 +350,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                   <CardSpacer />
                   <SeoForm
-                    errors={errors}
+                    errors={productErrors}
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
                     description={data.seoDescription}
@@ -374,7 +378,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     collectionsInputDisplayValue={selectedCollections}
                     data={data}
                     disabled={disabled}
-                    errors={errors}
+                    errors={productErrors}
                     fetchCategories={fetchCategories}
                     fetchCollections={fetchCollections}
                     fetchMoreCategories={fetchMoreCategories}
@@ -384,39 +388,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handlers.selectCollection}
                   />
                   <CardSpacer />
-                  {isSimpleProduct ? (
-                    <ChannelsAvailabilityCard
-                      {...availabilityCommonProps}
-                      channels={data.channelListings}
-                    />
-                  ) : product?.variants.length === 0 ? (
-                    <ChannelsAvailabilityCard
-                      {...availabilityCommonProps}
-                      channelsList={data.channelListings}
-                    />
-                  ) : (
-                    <ChannelsWithVariantsAvailabilityCard
-                      messages={{
-                        hiddenLabel: intl.formatMessage({
-                          id: "saKXY3",
-                          defaultMessage: "Not published",
-                          description: "product label",
-                        }),
-
-                        visibleLabel: intl.formatMessage({
-                          id: "qJedl0",
-                          defaultMessage: "Published",
-                          description: "product label",
-                        }),
-                      }}
-                      errors={channelsErrors}
-                      channels={data.channelsData}
-                      channelsWithVariantsData={channelsWithVariantsData}
-                      variants={variants}
-                      onChange={handlers.changeChannels}
-                      openModal={openChannelsModal}
-                    />
-                  )}
+                  <ChannelsAvailabilityCard
+                    {...availabilityCommonProps}
+                    channels={data.channelListings}
+                  />
                   <CardSpacer />
                   <ProductTaxes
                     data={data}

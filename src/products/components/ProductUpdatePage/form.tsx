@@ -50,7 +50,6 @@ import {
   validatePrice,
 } from "@saleor/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -65,7 +64,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
   channelsData: ChannelData[];
-  channelsWithVariants: ChannelsWithVariantsData;
   channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
@@ -174,7 +172,6 @@ export interface UseProductUpdateFormOpts
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  channelsWithVariants: ChannelsWithVariantsData;
   isSimpleProduct: boolean;
 }
 
@@ -198,14 +195,8 @@ function useProductUpdateForm(
         product?.variants,
         opts.currentChannels,
         opts.channelsData,
-        opts.channelsWithVariants,
       ),
-    [
-      product,
-      opts.currentChannels,
-      opts.channelsData,
-      opts.channelsWithVariants,
-    ],
+    [product, opts.currentChannels, opts.channelsData],
   );
 
   const form = useForm(initial, undefined, {

@@ -45,9 +45,10 @@ const useStyles = makeStyles(
       datagrid: {
         // borderTop: `1px solid ${theme.palette.divider}`,
         // borderBottom: `1px solid ${theme.palette.divider}`,
+      },
+      root: {
         position: "relative",
       },
-      root: {},
       rowActionBar: {
         height: "100%",
         background: theme.palette.background.default,

@@ -26,7 +26,6 @@ import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateFormData } from "../components/ProductUpdatePage/form";
-import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
 
 export interface Collection {
   id: string;
@@ -200,12 +199,10 @@ export function getProductUpdatePageFormData(
   variants: ProductDetailsVariantFragment[],
   currentChannels: ChannelData[],
   channelsData: ChannelData[],
-  channelsWithVariants: ChannelsWithVariantsData,
 ): ProductUpdateFormData {
   const variant = product?.variants[0];
 
   return {
-    channelsWithVariants,
     channelsData,
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,

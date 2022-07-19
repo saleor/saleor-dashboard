@@ -1,9 +1,21 @@
-import { ChannelData } from "@saleor/channels/utils";
+import { FetchResult } from "@apollo/client";
 import {
+  mergeAttributeValueDeleteErrors,
+  mergeFileUploadErrors,
+} from "@saleor/attributes/utils/data";
+import {
+  handleDeleteMultipleAttributeValues,
+  handleUploadMultipleFiles,
+} from "@saleor/attributes/utils/handlers";
+import {
+  AttributeErrorFragment,
+  BulkStockErrorFragment,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
+  StockErrorFragment,
+  UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
@@ -11,37 +23,33 @@ import {
   useProductVariantChannelListingUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-  useVariantCreateMutation,
   useVariantDatagridStockUpdateMutation,
   useVariantDatagridUpdateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import {
+  getStocks,
+  getVariantInputs,
+} from "@saleor/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { useIntl } from "react-intl";
 
-import {
-  createSimpleProductUpdateHandler,
-  SimpleProductUpdateError,
-} from "./simple";
-import {
-  createProductWithVariantsUpdateHandler,
-  ProductWithVariantsUpdateError,
-} from "./withVariants";
+import { getChannelsVariables, getProductUpdateVariables } from "./utils";
 
-export type UseProductUpdateHandlerError = ProductErrorWithAttributesFragment;
+export type UseProductUpdateHandlerError =
+  | ProductErrorWithAttributesFragment
+  | AttributeErrorFragment
+  | UploadErrorFragment
+  | StockErrorFragment
+  | BulkStockErrorFragment;
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
-) => Promise<
-  Array<
-    | SimpleProductUpdateError
-    | ProductWithVariantsUpdateError
-    | MetadataErrorFragment
-  >
->;
+) => Promise<Array<UseProductUpdateHandlerError | MetadataErrorFragment>>;
 interface UseProductUpdateHandlerOpts {
   called: boolean;
   loading: boolean;
@@ -51,7 +59,6 @@ interface UseProductUpdateHandlerOpts {
 
 export function useProductUpdateHandler(
   product: ProductFragment,
-  allChannels: ChannelData[],
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -61,10 +68,6 @@ export function useProductUpdateHandler(
     updatePrivateMetadata,
     updatePrivateMetadataOpts,
   ] = useUpdatePrivateMetadataMutation({});
-  const [
-    productVariantCreate,
-    productVariantCreateOpts,
-  ] = useVariantCreateMutation({});
   const [
     updateStocks,
     updateStocksOpts,
@@ -102,27 +105,52 @@ export function useProductUpdateHandler(
 
   const sendMutations = createMetadataUpdateHandler(
     product,
-    product?.productType.hasVariants
-      ? createProductWithVariantsUpdateHandler(
-          product,
-          allChannels,
-          uploadFile,
-          updateProduct,
-          updateChannels,
-          variables => deleteAttributeValue({ variables }),
-          updateVariant,
-          updateStocks,
-        )
-      : createSimpleProductUpdateHandler(
-          product,
-          allChannels,
-          variables => uploadFile({ variables }),
-          updateProduct,
-          updateChannels,
-          updateVariantChannels,
-          productVariantCreate,
-          variables => deleteAttributeValue({ variables }),
+    async (data: ProductUpdateSubmitData) => {
+      let errors: UseProductUpdateHandlerError[] = [];
+
+      const uploadFilesResult = await handleUploadMultipleFiles(
+        data.attributesWithNewFileValue,
+        variables => uploadFile({ variables }),
+      );
+
+      const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+        data.attributesWithNewFileValue,
+        product?.attributes,
+        variables => deleteAttributeValue({ variables }),
+      );
+
+      errors = [
+        ...errors,
+        ...mergeFileUploadErrors(uploadFilesResult),
+        ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+      ];
+
+      const result = await updateProduct({
+        variables: getProductUpdateVariables(product, data, uploadFilesResult),
+      });
+      errors = [...errors, ...result.data.productUpdate.errors];
+
+      const variantUpdateResult = await Promise.all<FetchResult>([
+        ...getStocks(product.variants, data.variants).map(variables =>
+          updateStocks({ variables }),
         ),
+        ...getVariantInputs(product.variants, data.variants).map(variables =>
+          updateVariant({ variables }),
+        ),
+      ]);
+      errors = [
+        ...errors,
+        ...(variantUpdateResult.flatMap(getMutationErrors) as Array<
+          StockErrorFragment | BulkStockErrorFragment
+        >),
+      ];
+
+      await updateChannels({
+        variables: getChannelsVariables(product, data),
+      });
+
+      return errors;
+    },
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
@@ -143,7 +171,6 @@ export function useProductUpdateHandler(
   const called =
     updateMetadataOpts.called ||
     updatePrivateMetadataOpts.called ||
-    productVariantCreateOpts.called ||
     uploadFileOpts.called ||
     updateProductOpts.called ||
     updateChannelsOpts.called ||
@@ -154,7 +181,6 @@ export function useProductUpdateHandler(
   const loading =
     updateMetadataOpts.loading ||
     updatePrivateMetadataOpts.loading ||
-    productVariantCreateOpts.loading ||
     uploadFileOpts.loading ||
     updateProductOpts.loading ||
     updateChannelsOpts.loading ||
@@ -163,10 +189,7 @@ export function useProductUpdateHandler(
     updateStocksOpts.loading ||
     updateVariantOpts.loading;
 
-  const errors = [
-    ...(updateProductOpts.data?.productUpdate.errors ?? []),
-    ...(productVariantCreateOpts.data?.productVariantCreate.errors ?? []),
-  ];
+  const errors = updateProductOpts.data?.productUpdate.errors ?? [];
 
   const channelsErrors = [
     ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? []),

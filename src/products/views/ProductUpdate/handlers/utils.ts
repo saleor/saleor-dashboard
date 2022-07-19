@@ -1,10 +1,7 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
 import { prepareAttributesInput } from "@saleor/attributes/utils/handlers";
-import {
-  ChannelData,
-  createSortedChannelsDataFromProduct,
-} from "@saleor/channels/utils";
+import { createSortedChannelsDataFromProduct } from "@saleor/channels/utils";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   FileUploadMutation,
@@ -15,17 +12,11 @@ import {
   ProductUpdateMutationVariables,
 } from "@saleor/graphql";
 import { weight } from "@saleor/misc";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { arrayDiff } from "@saleor/utils/arrays";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import isEqual from "lodash/isEqual";
 import pick from "lodash/pick";
-
-import { ChannelWithVariantData } from "../types";
-import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
   productVariables: ProductUpdateMutationVariables,
@@ -61,35 +52,6 @@ const isRemovingAllVariants = (
   allVariants: ProductDetailsVariantFragment[],
   removeVariants: string[],
 ) => !!removeVariants.length && removeVariants.length === allVariants.length;
-
-const shouldUpdateChannel = (
-  initialChannelWithVariantData: Record<string, ChannelWithVariantData>,
-  allVariants: ProductDetailsVariantFragment[],
-  allChannels: ChannelData[],
-) => ({
-  removeVariants,
-  addVariants,
-  channelId,
-  ...rest
-}: ProductChannelListingAddInput) => {
-  const initialChannelData = allChannels.find(getById(channelId));
-  const initialDataInput = {
-    ...initialChannelData,
-    channelId,
-    addVariants: initialChannelWithVariantData[channelId].variantsIdsToAdd,
-    removeVariants:
-      initialChannelWithVariantData[channelId].variantsIdsToRemove,
-  };
-
-  const hasDataChanged = !isEqual(
-    { removeVariants, addVariants, channelId, ...rest },
-    initialDataInput,
-  );
-
-  const isRemovingChannel = isRemovingAllVariants(allVariants, removeVariants);
-
-  return hasDataChanged && !isRemovingChannel;
-};
 
 export function getProductUpdateVariables(
   product: ProductFragment,
@@ -128,45 +90,30 @@ export function getProductUpdateVariables(
 
 export const getChannelsVariables = (
   { id, variants }: Pick<ProductFragment, "id" | "variants">,
-  allChannels: ChannelData[],
-  {
-    channelsWithVariants,
-    channelsData,
-  }: Pick<ProductUpdateSubmitData, "channelsWithVariants" | "channelsData">,
+  { channelsData }: Pick<ProductUpdateSubmitData, "channelsData">,
 ): ProductChannelListingUpdateMutationVariables => {
-  const initialChannelWithVariants = getParsedChannelsWithVariantsDataFromChannels(
-    channelsData,
-  );
-
   const listings = channelsData.map(
     ({ id, availableForPurchase, ...rest }) => ({
       ...rest,
       channelId: id,
       availableForPurchaseDate: availableForPurchase,
-      addVariants: arrayDiff(
-        initialChannelWithVariants[id].availableVariants,
-        channelsWithVariants[id].variantsIdsToAdd,
-      ).added,
-      removeVariants: channelsWithVariants[id].variantsIdsToRemove,
+      addVariants: null,
+      removeVariants: null,
     }),
   );
 
-  const channelsToBeUpdated = listings
-    .filter(
-      shouldUpdateChannel(initialChannelWithVariants, variants, allChannels),
-    )
-    .map(input =>
-      pick(input, [
-        "availableForPurchaseDate",
-        "isAvailableForPurchase",
-        "isPublished",
-        "publicationDate",
-        "channelId",
-        "visibleInListings",
-        "addVariants",
-        "removeVariants",
-      ]),
-    );
+  const channelsToBeUpdated = listings.map(input =>
+    pick(input, [
+      "availableForPurchaseDate",
+      "isAvailableForPurchase",
+      "isPublished",
+      "publicationDate",
+      "channelId",
+      "visibleInListings",
+      "addVariants",
+      "removeVariants",
+    ]),
+  );
 
   const channelsIdsToBeRemoved = listings
     .filter(shouldRemoveChannel(variants))
