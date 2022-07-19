@@ -75,7 +75,7 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     cleanupFn: reset,
   });
 
-  const filterStrucutre = createFilterStructure(intl, filterOpts);
+  const filterStructure = createFilterStructure(intl, filterOpts);
 
   const { open: openModal, close: closeModal } = actionDialogOpts;
 
@@ -105,7 +105,7 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
   return (
     <>
       <FilterBar
-        filterStructure={filterStrucutre}
+        filterStructure={filterStructure}
         initialSearch={""}
         onAll={resetFilters}
         onFilterChange={changeFilters}
