@@ -9,7 +9,6 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { FormSpacer } from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -172,7 +171,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         <FormSpacer />
         {variant === "update" && (
           <>
-            <Hr className={classes.hr} />
             <RadioGroupField
               choices={voucherTypeChoices}
               disabled={disabled}
