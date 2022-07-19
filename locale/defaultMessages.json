@@ -2932,10 +2932,6 @@
     "context": "channel select label",
     "string": "Channel"
   },
-  "LATpSE": {
-    "context": "marketplace content",
-    "string": "Discover great free and paid apps in our Saleor Marketplace."
-  },
   "LEZZkK": {
     "context": "WarehouseSettings all warehouses description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
@@ -3239,10 +3235,6 @@
   "NsgWhZ": {
     "context": "placeholder",
     "string": "Search by value name, etc..."
-  },
-  "NskBjH": {
-    "context": "marketplace content",
-    "string": "Marketplace is coming soon"
   },
   "NtFVFS": {
     "context": "weight",
@@ -3903,10 +3895,6 @@
   "SqhC7g": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
-  },
-  "SwISVH": {
-    "context": "section header",
-    "string": "Saleor Marketplace"
   },
   "Sx7QVu": {
     "context": "variant creation step",
@@ -7599,10 +7587,6 @@
   "wpli4O": {
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
-  },
-  "wxFwUW": {
-    "context": "marketplace button",
-    "string": "Visit Marketplace"
   },
   "wyvzh9": {
     "context": "dialog header",
