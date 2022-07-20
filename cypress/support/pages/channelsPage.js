@@ -91,13 +91,18 @@ export function selectChannelInDetailsPages(channelName) {
 
 export function selectChannelVariantInDetailsPage(channelName, attributeName) {
   cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton).click();
-  cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, channelName)
-    .find(BUTTON_SELECTORS.expandIcon)
-    .click();
-  cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, channelName)
-    .contains(SELECT_CHANNELS_TO_ASSIGN.channelVariantRow, attributeName)
-    .find(BUTTON_SELECTORS.checkbox)
-    .click();
+  const channelsNames = Array.isArray(channelName)
+    ? channelName
+    : [channelName];
+  channelsNames.forEach(name => {
+    cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, name)
+      .find(BUTTON_SELECTORS.expandIcon)
+      .click();
+    cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, name)
+      .contains(SELECT_CHANNELS_TO_ASSIGN.channelVariantRow, attributeName)
+      .find(BUTTON_SELECTORS.checkbox)
+      .click();
+  });
   cy.get(SELECT_CHANNELS_TO_ASSIGN.selectChannelsForm)
     .find(BUTTON_SELECTORS.submit)
     .click({ force: true });

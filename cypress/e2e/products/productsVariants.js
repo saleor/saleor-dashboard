@@ -13,7 +13,6 @@ import {
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
-  createFirstVariant,
   createVariant,
   variantsShouldBeVisible,
 } from "../../support/pages/catalog/products/VariantsPage";
@@ -82,6 +81,7 @@ describe("As an admin I should be able to create variant", () => {
           });
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createVariant({
+            channelName: [defaultChannel.name, newChannel.name],
             sku: name,
             price,
             attributeName: attributeValues[0],
