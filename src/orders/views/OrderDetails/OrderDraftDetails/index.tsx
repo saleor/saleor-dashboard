@@ -9,6 +9,7 @@ import {
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
   StockAvailability,
+  useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -97,6 +98,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 }) => {
   const order = data.order;
   const navigate = useNavigator();
+
+  const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
+    variables: {
+      channel: order.channel.slug,
+    },
+  });
 
   const {
     loadMore,
@@ -222,6 +229,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             order={order}
+            channelUsabilityData={channelUsabilityData}
             onProductClick={id => () =>
               navigate(productUrl(encodeURIComponent(id)))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}

@@ -6,7 +6,11 @@ import React from "react";
 import OrderDraftPageComponent, {
   OrderDraftPageProps,
 } from "../../../../orders/components/OrderDraftPage";
-import { clients, draftOrder } from "../../../../orders/fixtures";
+import {
+  channelUsabilityData,
+  clients,
+  draftOrder,
+} from "../../../../orders/fixtures";
 import Decorator from "../../../Decorator";
 import { MockedUserProvider } from "../../customers/MockedUserProvider";
 import { getDiscountsProvidersWrapper } from "./utils";
@@ -30,6 +34,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onShippingMethodEdit: undefined,
   order,
+  channelUsabilityData,
   saveButtonBarState: "default",
   users: clients,
   usersLoading: false,
