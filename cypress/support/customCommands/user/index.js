@@ -1,3 +1,5 @@
+import "../../api/requests/utils/index";
+
 import { LOGIN_SELECTORS } from "../../../elements/account/login-selectors";
 import { TEST_ADMIN_USER } from "../../../fixtures/users";
 
@@ -8,7 +10,7 @@ Cypress.Commands.add("loginUser", () =>
     .get(LOGIN_SELECTORS.emailPasswordInput)
     .type(Cypress.env("USER_PASSWORD"), { log: false })
     .get(LOGIN_SELECTORS.signInButton)
-    .click()
+    .click(),
 );
 
 Cypress.Commands.add("loginInShop", () => {
@@ -36,12 +38,12 @@ Cypress.Commands.add(
     return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
       window.localStorage.setItem(
         "_saleorCSRFToken",
-        resp.body.data.tokenCreate.csrfToken
+        resp.body.data.tokenCreate.csrfToken,
       );
       window.sessionStorage.setItem(
         authorization,
-        resp.body.data.tokenCreate.token
+        resp.body.data.tokenCreate.token,
       );
     });
-  }
+  },
 );
