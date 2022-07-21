@@ -22,6 +22,7 @@ export interface ChannelsAvailability
     "children" | "selectedChannelsCount"
   > {
   channels: ChannelData[];
+  /** Channels that have no settings */
   channelsList: ChannelList[];
   errors?: ChannelsAvailabilityError[];
   disabled?: boolean;

@@ -17,12 +17,14 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  ProductChannelListingUpdateInput,
   ProductFragment,
   SearchPagesQuery,
   SearchProductsQuery,
@@ -40,15 +42,11 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
 } from "@saleor/products/utils/data";
-import { createChannelsChangeHandler } from "@saleor/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-} from "@saleor/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -63,8 +61,6 @@ import React, { useEffect, useMemo, useRef } from "react";
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
-  channelsData: ChannelData[];
-  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -97,11 +93,13 @@ export interface FileAttributesSubmitData {
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
+  channels: ProductChannelListingUpdateInput;
   description: OutputData;
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
+  channels: ProductChannelListingUpdateInput;
   collections: string[];
   description: OutputData;
   variants: DatagridChangeOpts;
@@ -118,17 +116,11 @@ export interface ProductUpdateHandlers
     Record<
       "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
-    >,
-    Record<
-      "changeChannels",
-      (
-        id: string,
-        data: Omit<ChannelData, "name" | "price" | "currency" | "id">,
-      ) => void
-    >,
-    Record<"selectAttributeReference", FormsetChange<string[]>>,
-    Record<"selectAttributeFile", FormsetChange<File>>,
-    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>> {
+    > {
+  changeChannels: (id: string, data: ChannelOpts) => void;
+  selectAttributeReference: FormsetChange<string[]>;
+  selectAttributeFile: FormsetChange<File>;
+  reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -160,11 +152,7 @@ export interface UseProductUpdateFormOpts
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  channelsData: ChannelData[];
   hasVariants: boolean;
-  currentChannels: ChannelData[];
-  setChannels: (data: ChannelData[]) => void;
-  setChannelsData: (data: ChannelData[]) => void;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
@@ -189,14 +177,8 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
   const initial = useMemo(
-    () =>
-      getProductUpdatePageFormData(
-        product,
-        product?.variants,
-        opts.currentChannels,
-        opts.channelsData,
-      ),
-    [product, opts.currentChannels, opts.channelsData],
+    () => getProductUpdatePageFormData(product, product?.variants, []),
+    [product],
   );
 
   const form = useForm(initial, undefined, {
@@ -245,6 +227,31 @@ function useProductUpdateForm(
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
+
+  const [channels, setChannels] = useStateFromProps<
+    ProductChannelListingUpdateInput
+  >({
+    removeChannels: [],
+    updateChannels:
+      product?.channelListings.map(listing => ({
+        channelId: listing.channel.id,
+        ...listing,
+      })) ?? [],
+  });
+
+  const handleChannelChange = React.useCallback(
+    (id: string, data: ChannelOpts) => {
+      setChannels(prevData => ({
+        ...prevData,
+        updateChannels: prevData.updateChannels.map(prevListing =>
+          prevListing.channelId === id
+            ? { ...prevListing, ...data }
+            : prevListing,
+        ),
+      }));
+    },
+    [],
+  );
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
@@ -301,22 +308,15 @@ function useProductUpdateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const handleChannelsChange = createChannelsChangeHandler(
-    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
-    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange,
-  );
-
   const data: ProductUpdateData = {
     ...formData,
-    channelListings: opts.currentChannels,
-    channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
     ),
+    channels,
     description: null,
   };
 
@@ -331,6 +331,7 @@ function useProductUpdateForm(
       ),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
+    channels,
     description: await richText.getValue(),
     variants: variants.current,
   });
@@ -367,18 +368,6 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (opts.hasVariants) {
-      return true;
-    }
-
-    const hasInvalidChannelListingPrices = data.channelListings.some(
-      channel =>
-        validatePrice(channel.price) || validateCostPrice(channel.costPrice),
-    );
-
-    if (hasInvalidChannelListingPrices) {
-      return false;
-    }
     return true;
   };
 
@@ -393,7 +382,7 @@ function useProductUpdateForm(
     data,
     formErrors: form.errors,
     handlers: {
-      changeChannels: handleChannelsChange,
+      changeChannels: handleChannelChange,
       changeMetadata,
       changeVariants: handleVariantChange,
       fetchMoreReferences: handleFetchMoreReferences,

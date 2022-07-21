@@ -38,7 +38,7 @@ import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { useIntl } from "react-intl";
 
-import { getChannelsVariables, getProductUpdateVariables } from "./utils";
+import { getProductUpdateVariables } from "./utils";
 
 export type UseProductUpdateHandlerError =
   | ProductErrorWithAttributesFragment
@@ -145,9 +145,9 @@ export function useProductUpdateHandler(
         >),
       ];
 
-      await updateChannels({
-        variables: getChannelsVariables(product, data),
-      });
+      // await updateChannels({
+      //   variables: getChannelsVariables(product, data),
+      // });
 
       return errors;
     },

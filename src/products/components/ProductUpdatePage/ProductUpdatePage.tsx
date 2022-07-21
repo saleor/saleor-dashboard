@@ -7,13 +7,13 @@ import {
   getAttributeValuesFromReferences,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
-import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
@@ -64,11 +64,6 @@ import ProductUpdateForm, {
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
-  setChannelsData: (data: ChannelData[]) => void;
-  onChannelsChange: (data: ChannelData[]) => void;
-  channelsData: ChannelData[];
-  currentChannels: ChannelData[];
-  allChannelsCount: number;
   channelsErrors: ProductChannelListingErrorFragment[];
   errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
@@ -106,7 +101,6 @@ export interface ProductUpdatePageProps {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
-  openChannelsModal: () => void;
   onAttributeSelectBlur: () => void;
   onDelete();
   onImageReorder?(event: { oldIndex: number; newIndex: number });
@@ -119,6 +113,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   productId,
   disabled,
   categories: categoryChoiceList,
+  channels,
   channelsErrors,
   collections: collectionChoiceList,
   attributeValues,
@@ -136,22 +131,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   warehouses,
-  setChannelsData,
   taxTypes,
   referencePages = [],
   referenceProducts = [],
   onDelete,
-  allChannelsCount,
-  currentChannels,
   onImageDelete,
   onImageReorder,
   onImageUpload,
   onMediaUrlUpload,
   onVariantShow,
-  openChannelsModal,
   onSeoClick,
   onSubmit,
-  channelsData,
   isMediaUrlModalVisible,
   assignReferencesAttributeId,
   onAssignReferencesClick,
@@ -162,7 +152,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onCloseDialog,
-  onChannelsChange,
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
@@ -231,9 +220,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
-      currentChannels={currentChannels}
-      channelsData={channelsData}
-      setChannelsData={setChannelsData}
       onSubmit={onSubmit}
       product={product}
       categories={categories}
@@ -242,7 +228,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
-      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       hasVariants={hasVariants}
@@ -279,10 +264,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             }),
           },
           errors: channelsErrors,
-          allChannelsCount,
+          allChannelsCount: channels?.length,
           disabled,
           onChange: handlers.changeChannels,
-          openModal: openChannelsModal,
+          openModal: () => undefined,
         };
 
         return (
@@ -390,7 +375,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <CardSpacer />
                   <ChannelsAvailabilityCard
                     {...availabilityCommonProps}
-                    channels={data.channelListings}
+                    channels={data.channels.updateChannels.map(listing => ({
+                      id: listing.channelId,
+                      ...channels?.find(ac => ac.id === listing.channelId),
+                      ...listing,
+                    }))}
                   />
                   <CardSpacer />
                   <ProductTaxes
@@ -440,6 +429,21 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}
               />
+              {/* <ChannelsAvailabilityDialog
+          isSelected={isChannelSelected}
+          channels={availableChannels}
+          onChange={channelsToggle}
+          onClose={handleChannelsModalClose}
+          open={isChannelsModalOpen}
+          title={intl.formatMessage({
+            id: "Eau5AV",
+            defaultMessage: "Manage Products Channel Availability",
+          })}
+          confirmButtonState="default"
+          selected={channelListElements.length}
+          onConfirm={handleChannelsConfirm}
+          toggleAll={toggleAllChannels}
+        /> */}
             </Container>
           </>
         );
