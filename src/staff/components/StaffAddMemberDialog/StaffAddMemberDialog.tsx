@@ -19,7 +19,6 @@ import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
-import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
