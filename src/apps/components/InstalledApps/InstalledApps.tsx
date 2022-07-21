@@ -3,6 +3,7 @@ import {
   Switch,
   TableBody,
   TableCell,
+  TableFooter,
   TableRow,
   Typography,
 } from "@material-ui/core";
@@ -11,6 +12,7 @@ import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
+import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
@@ -59,6 +61,19 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
         })}
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colAction} />
+        </colgroup>
+        <TableFooter>
+          <TableRow>
+            <TablePaginationWithContext
+              colSpan={2}
+              onUpdateListSettings={onUpdateListSettings}
+            />
+          </TableRow>
+        </TableFooter>
         <TableBody>
           {renderCollection(
             appsList,
