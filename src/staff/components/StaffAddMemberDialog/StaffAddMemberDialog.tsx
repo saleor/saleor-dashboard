@@ -81,6 +81,14 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
     dialogErrors,
   );
 
+  const getFieldProps = (name: string) => ({
+    disabled: props.disabled,
+    error: !!formErrors[name],
+    helperText: formErrors[name]?.message,
+    label: intl.formatMessage(commonMessages[name]),
+    name,
+  });
+
   return (
     <Dialog onClose={onClose} open={open}>
       <Form initial={initialForm} onSubmit={onConfirm}>
@@ -96,25 +104,13 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
             <DialogContent>
               <div className={classes.textFieldGrid}>
                 <TextField
-                  error={!!formErrors.firstName}
-                  helperText={
-                    !!formErrors.firstName &&
-                    getStaffErrorMessage(formErrors.firstName, intl)
-                  }
-                  label={intl.formatMessage(commonMessages.firstName)}
-                  name="firstName"
+                  {...getFieldProps("firstName")}
                   type="text"
                   value={formData.firstName}
                   onChange={change}
                 />
                 <TextField
-                  error={!!formErrors.lastName}
-                  helperText={
-                    !!formErrors.lastName &&
-                    getStaffErrorMessage(formErrors.lastName, intl)
-                  }
-                  label={intl.formatMessage(commonMessages.lastName)}
-                  name="lastName"
+                  {...getFieldProps("lastName")}
                   type="text"
                   value={formData.lastName}
                   onChange={change}
@@ -122,14 +118,8 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               </div>
               <FormSpacer />
               <TextField
-                error={!!formErrors.email}
                 fullWidth
-                helperText={
-                  !!formErrors.email &&
-                  getStaffErrorMessage(formErrors.email, intl)
-                }
-                label={intl.formatMessage(commonMessages.email)}
-                name="email"
+                {...getFieldProps("email")}
                 type="email"
                 value={formData.email}
                 onChange={change}
