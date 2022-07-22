@@ -97,63 +97,60 @@ describe("Channels", () => {
         .contains(randomChannel);
     },
   );
+  it(
+    "should create channel with shippingZone and warehouse TC: SALEOR_0712",
+    { tags: ["@channel", "@allEnv"] },
+    () => {
+      // remove login after fixing SALEOR-3162
+      cy.clearSessionData().loginUserViaRequest();
 
-  if (returnValueDependsOnShopVersion("3.5", true, false)) {
-    it(
-      "should create channel with shippingZone and warehouse TC: SALEOR_0712",
-      { tags: ["@channel", "@allEnv"] },
-      () => {
-        // remove login after fixing SALEOR-3162
-        cy.clearSessionData().loginUserViaRequest();
+      const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
+      cy.addAliasToGraphRequest("Channels");
+      cy.visit(urlList.channels);
+      cy.expectSkeletonIsVisible();
+      cy.wait("@Channels");
+      createChannelByView({
+        name: randomChannel,
+        currency,
+        shippingZone: shippingZone.name,
+        warehouse: randomName,
+      });
+      cy.waitForRequestAndCheckIfNoErrors("@Channel");
+      getShippingZone(shippingZone.id).then(shippingZoneResp => {
+        const assignedChannel = shippingZoneResp.channels.find(
+          channel => channel.name === randomChannel,
+        );
+        expect(assignedChannel).to.be.ok;
+      });
+    },
+  );
+  xit(
+    // test deprecated for 3.5+
+    "should create channel with shippingZone. TC: SALEOR_0702",
+    { tags: ["@channel", "@allEnv"] },
+    () => {
+      // remove login after fixing SALEOR-3162
+      cy.clearSessionData().loginUserViaRequest();
 
-        const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
-        cy.addAliasToGraphRequest("Channels");
-        cy.visit(urlList.channels);
-        cy.expectSkeletonIsVisible();
-        cy.wait("@Channels");
-        createChannelByView({
-          name: randomChannel,
-          currency,
-          shippingZone: shippingZone.name,
-          warehouse: randomName,
-        });
-        cy.waitForRequestAndCheckIfNoErrors("@Channel");
-        getShippingZone(shippingZone.id).then(shippingZoneResp => {
-          const assignedChannel = shippingZoneResp.channels.find(
-            channel => channel.name === randomChannel,
-          );
-          expect(assignedChannel).to.be.ok;
-        });
-      },
-    );
-  } else {
-    it(
-      "should create channel with shippingZone. TC: SALEOR_0702",
-      { tags: ["@channel", "@allEnv"] },
-      () => {
-        // remove login after fixing SALEOR-3162
-        cy.clearSessionData().loginUserViaRequest();
-
-        const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
-        cy.addAliasToGraphRequest("Channels");
-        cy.visit(urlList.channels);
-        cy.expectSkeletonIsVisible();
-        cy.wait("@Channels");
-        createChannelByView({
-          name: randomChannel,
-          currency,
-          shippingZone: shippingZone.name,
-        });
-        cy.waitForRequestAndCheckIfNoErrors("@Channel");
-        getShippingZone(shippingZone.id).then(shippingZoneResp => {
-          const assignedChannel = shippingZoneResp.channels.find(
-            channel => channel.name === randomChannel,
-          );
-          expect(assignedChannel).to.be.ok;
-        });
-      },
-    );
-  }
+      const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
+      cy.addAliasToGraphRequest("Channels");
+      cy.visit(urlList.channels);
+      cy.expectSkeletonIsVisible();
+      cy.wait("@Channels");
+      createChannelByView({
+        name: randomChannel,
+        currency,
+        shippingZone: shippingZone.name,
+      });
+      cy.waitForRequestAndCheckIfNoErrors("@Channel");
+      getShippingZone(shippingZone.id).then(shippingZoneResp => {
+        const assignedChannel = shippingZoneResp.channels.find(
+          channel => channel.name === randomChannel,
+        );
+        expect(assignedChannel).to.be.ok;
+      });
+    },
+  );
 
   it(
     "should validate slug name. TC: SALEOR_0703",

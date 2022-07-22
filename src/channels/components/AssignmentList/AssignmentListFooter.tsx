@@ -77,8 +77,8 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
         itemsName,
       })}
       testIds={{
-        link: `add-${dataTestId}-zone-link`,
-        button: `add-${dataTestId}-zone-button`,
+        link: `${dataTestId}-add-link`,
+        button: `${dataTestId}-add-button`,
       }}
     />
   );
