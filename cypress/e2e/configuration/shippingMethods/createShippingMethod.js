@@ -5,6 +5,7 @@ import faker from "faker";
 
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
@@ -44,14 +45,18 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+
         cy.fixture("addresses");
       })
       .then(addresses => {
         address = addresses.usAddress;
+
         createWarehouse({ name, address });
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
+
+        updateChannelWarehouses(defaultChannel.id, warehouse.id);
         productsUtils.createTypeAttributeAndCategoryForProduct({
           name: startsWith,
         });
@@ -103,7 +108,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
 
   it(
     "should be able to create price based shipping method. TC: SALEOR_0803",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
@@ -153,7 +158,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
 
   it(
     "should be able to create weight based shipping method. TC: SALEOR_0804",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
