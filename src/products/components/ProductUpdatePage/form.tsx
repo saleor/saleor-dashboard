@@ -233,6 +233,7 @@ function useProductUpdateForm(
     channels,
     handleChannelChange,
     handleChannelToggle,
+    touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
@@ -313,7 +314,12 @@ function useProductUpdateForm(
       ),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
-    channels,
+    channels: {
+      ...channels,
+      updateChannels: channels.updateChannels.filter(listing =>
+        touchedChannels.current.includes(listing.channelId),
+      ),
+    },
     description: await richText.getValue(),
     variants: variants.current,
   });

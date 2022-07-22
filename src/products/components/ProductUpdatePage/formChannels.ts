@@ -5,7 +5,8 @@ import {
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { toggle } from "@saleor/utils/lists";
-import { useCallback } from "react";
+import uniq from "lodash/uniq";
+import { useCallback, useRef } from "react";
 
 const emptyListing = {
   availableForPurchaseDate: null,
@@ -30,6 +31,11 @@ export function useProductChannelListingsForm(
         ...listing,
       })) ?? [],
   });
+  const touched = useRef<string[]>([]);
+
+  const touch = (id: string) => {
+    touched.current = uniq([...touched.current, id]);
+  };
 
   const handleChannelChange = useCallback((id: string, data: ChannelOpts) => {
     setChannels(prevData => ({
@@ -41,6 +47,7 @@ export function useProductChannelListingsForm(
       ),
     }));
     triggerChange();
+    touch(id);
   }, []);
 
   const handleChannelToggle = useCallback(
@@ -64,6 +71,7 @@ export function useProductChannelListingsForm(
         ),
       }));
       triggerChange();
+      touch(id);
     },
     [product],
   );
@@ -72,5 +80,6 @@ export function useProductChannelListingsForm(
     channels,
     handleChannelChange,
     handleChannelToggle,
+    touched,
   };
 }
