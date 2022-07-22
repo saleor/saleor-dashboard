@@ -41,7 +41,6 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -50,13 +49,14 @@ import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/con
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { toggle } from "@saleor/utils/lists";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo, useRef } from "react";
+
+import { useProductChannelListingsForm } from "./formChannels";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -229,60 +229,11 @@ function useProductUpdateForm(
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
-  const [channels, setChannels] = useStateFromProps<
-    ProductChannelListingUpdateInput
-  >({
-    removeChannels: [],
-    updateChannels:
-      product?.channelListings.map(listing => ({
-        channelId: listing.channel.id,
-        ...listing,
-        availableForPurchaseDate: listing.availableForPurchase,
-      })) ?? [],
-  });
-
-  const handleChannelChange = React.useCallback(
-    (id: string, data: ChannelOpts) => {
-      setChannels(prevData => ({
-        ...prevData,
-        updateChannels: prevData.updateChannels.map(prevListing =>
-          prevListing.channelId === id
-            ? { ...prevListing, ...data }
-            : prevListing,
-        ),
-      }));
-      triggerChange();
-    },
-    [],
-  );
-  const handleChannelToggle = React.useCallback(
-    (id: string) => {
-      setChannels(prevData => ({
-        ...prevData,
-        updateChannels: toggle(
-          {
-            channelId: id,
-            availableForPurchaseDate: null,
-            isAvailableForPurchase: false,
-            isPublished: false,
-            publicationDate: null,
-            visibleInListings: false,
-          },
-          prevData.updateChannels,
-          (a, b) => a.channelId === b.channelId,
-        ),
-        removeChannels: toggle(
-          id,
-          prevData.removeChannels,
-          (a, b) => a === b,
-        ).filter(id =>
-          product.channelListings.find(listing => listing.channel.id === id),
-        ),
-      }));
-      triggerChange();
-    },
-    [product],
-  );
+  const {
+    channels,
+    handleChannelChange,
+    handleChannelToggle,
+  } = useProductChannelListingsForm(product, triggerChange);
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
