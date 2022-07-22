@@ -14,7 +14,6 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
@@ -61,6 +60,7 @@ import ProductUpdateForm, {
   ProductUpdateHandlers,
   ProductUpdateSubmitData,
 } from "./form";
+import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -434,23 +434,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}
               />
-              <ChannelsAvailabilityDialog
-                isSelected={({ id }) =>
-                  !!data.channels.updateChannels.find(
-                    listing => listing.channelId === id,
-                  )
-                }
+              <ProductChannelsListingsDialog
                 channels={channels}
-                onChange={({ id }) => handlers.toggleChannel(id)}
+                data={data}
                 onClose={() => setChannelPickerOpen(false)}
                 open={channelPickerOpen}
-                title={intl.formatMessage({
-                  id: "Eau5AV",
-                  defaultMessage: "Manage Products Channel Availability",
-                })}
-                confirmButtonState="default"
-                selected={data.channels.updateChannels.length}
-                onConfirm={() => setChannelPickerOpen(false)}
+                onConfirm={handlers.updateChannelList}
               />
             </Container>
           </>

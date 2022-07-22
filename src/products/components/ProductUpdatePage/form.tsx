@@ -57,6 +57,7 @@ import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo, useRef } from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
+import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -124,7 +125,7 @@ export interface ProductUpdateHandlers
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
-  toggleChannel: (id: string) => void;
+  updateChannelList: ProductChannelsListingDialogSubmit;
 }
 
 export interface UseProductUpdateFormOutput
@@ -232,7 +233,7 @@ function useProductUpdateForm(
   const {
     channels,
     handleChannelChange,
-    handleChannelToggle,
+    handleChannelListUpdate,
     touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
 
@@ -383,7 +384,7 @@ function useProductUpdateForm(
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect,
-      toggleChannel: handleChannelToggle,
+      updateChannelList: handleChannelListUpdate,
     },
     submit,
     isSaveDisabled,

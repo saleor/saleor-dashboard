@@ -4,9 +4,11 @@ import {
   ProductFragment,
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { toggle } from "@saleor/utils/lists";
 import uniq from "lodash/uniq";
+import uniqBy from "lodash/uniqBy";
 import { useCallback, useRef } from "react";
+
+import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 const emptyListing = {
   availableForPurchaseDate: null,
@@ -50,28 +52,26 @@ export function useProductChannelListingsForm(
     touch(id);
   }, []);
 
-  const handleChannelToggle = useCallback(
-    (id: string) => {
+  const handleChannelListUpdate: ProductChannelsListingDialogSubmit = useCallback(
+    ({ added, removed }) => {
       setChannels(prevData => ({
         ...prevData,
-        updateChannels: toggle(
-          {
-            channelId: id,
-            ...emptyListing,
-          },
-          prevData.updateChannels,
-          (a, b) => a.channelId === b.channelId,
-        ),
-        removeChannels: toggle(
-          id,
-          prevData.removeChannels,
-          (a, b) => a === b,
-        ).filter(id =>
-          product.channelListings.find(listing => listing.channel.id === id),
+        updateChannels: uniqBy(
+          [
+            ...prevData.updateChannels,
+            ...added.map(id => ({
+              channelId: id,
+              ...emptyListing,
+            })),
+          ],
+          "channelId",
+        ).filter(({ channelId }) => !removed.includes(channelId)),
+        removeChannels: uniq([...prevData.removeChannels, ...removed]).filter(
+          id => !added.includes(id),
         ),
       }));
       triggerChange();
-      touch(id);
+      added.forEach(id => touch(id));
     },
     [product],
   );
@@ -79,7 +79,7 @@ export function useProductChannelListingsForm(
   return {
     channels,
     handleChannelChange,
-    handleChannelToggle,
+    handleChannelListUpdate,
     touched,
   };
 }
