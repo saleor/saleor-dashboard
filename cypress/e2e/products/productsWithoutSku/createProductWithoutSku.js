@@ -22,6 +22,7 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+// import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   createFirstVariant,
   createVariant,
@@ -45,7 +46,7 @@ describe("Creating variants", () => {
     cy.clearSessionData().loginUserViaRequest();
     shippingUtils.deleteShippingStartsWith(startsWith);
     productUtils.deleteProductsStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
+    // deleteChannelsStartsWith(startsWith);
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
@@ -193,7 +194,7 @@ describe("Creating variants", () => {
   );
 
   it(
-    "should create simple product without sku",
+    "should create simple product without sku SALEOR_2806",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -208,15 +209,21 @@ describe("Creating variants", () => {
         )
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
-      cy.get(PRODUCT_DETAILS.addWarehouseButton).click();
+      cy.get(PRODUCT_DETAILS.costPriceInput)
+        .type(10)
+        .get(PRODUCT_DETAILS.sellingPriceInput)
+        .type(10)
+        .addAliasToGraphRequest("VariantCreate")
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationMessageShouldDisappear()
+        .wait("@VariantCreate")
+        .get(PRODUCT_DETAILS.addWarehouseButton)
+        .click();
       cy.contains(PRODUCT_DETAILS.warehouseOption, warehouse.name)
         .click()
         .get(PRODUCT_DETAILS.stockInput)
         .clearAndType(10)
-        .get(PRODUCT_DETAILS.costPriceInput)
-        .type(10)
-        .get(PRODUCT_DETAILS.sellingPriceInput)
-        .type(10)
         .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
         .click()
         .get(
@@ -227,15 +234,13 @@ describe("Creating variants", () => {
           `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
         )
         .click()
-        .addAliasToGraphRequest("VariantCreate")
+        .addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .confirmationMessageShouldDisappear()
-        .wait("@VariantCreate")
+        .reload()
+        .wait("@ProductDetails")
         .then(({ response }) => {
-          const variants = [
-            response.body.data.productVariantCreate.productVariant,
-          ];
+          const variants = [response.body.data.product.variants[0]];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
