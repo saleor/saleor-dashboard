@@ -45,6 +45,7 @@ describe("Creating variants", () => {
     cy.clearSessionData().loginUserViaRequest();
     shippingUtils.deleteShippingStartsWith(startsWith);
     productUtils.deleteProductsStartsWith(startsWith);
+    deleteChannelsStartsWith(startsWith);
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
