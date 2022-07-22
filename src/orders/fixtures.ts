@@ -1133,6 +1133,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                channelListings: [],
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1242,6 +1247,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                channelListings: [],
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1359,6 +1369,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1454,6 +1469,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1687,6 +1707,11 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1781,6 +1806,11 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",

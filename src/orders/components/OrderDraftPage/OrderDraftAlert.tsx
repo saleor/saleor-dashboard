@@ -10,12 +10,12 @@ import { alertMessages } from "./messages";
 import { useAlertStyles } from "./styles";
 
 const getAlerts = (
-  order: OrderDetailsFragment,
+  order?: OrderDetailsFragment,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
-  const inactiveChannel = !order.channel.isActive;
+  const inactiveChannel = !order?.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
-  const noShippingMethodsInChannel = order.shippingMethods.length === 0;
+  const noShippingMethodsInChannel = order?.shippingMethods.length === 0;
 
   let alerts: MessageDescriptor[] = [];
 
@@ -33,7 +33,7 @@ const getAlerts = (
 };
 
 export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
-  order: OrderDetailsFragment;
+  order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
 };
 

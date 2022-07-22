@@ -55,7 +55,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         }
       />
       <OrderDraftDetailsProducts
-        lines={maybe(() => order.lines)}
+        order={order}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
       />

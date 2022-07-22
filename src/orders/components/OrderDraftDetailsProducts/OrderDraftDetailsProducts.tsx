@@ -1,7 +1,6 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { OrderLineFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
@@ -10,7 +9,7 @@ import {
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import TableLine from "./TableLine";
 
 export interface FormData {
@@ -20,60 +19,52 @@ export interface FormData {
 const useStyles = makeStyles(
   theme => ({
     colAction: {
-      "&:last-child": {
-        paddingRight: 0,
-      },
       width: theme.spacing(10),
     },
     colName: {
       width: "auto",
     },
-    colNameLabel: {
-      marginLeft: AVATAR_MARGIN,
-    },
-    colPrice: {
-      textAlign: "right",
-    },
-    colQuantity: {
-      textAlign: "right",
-    },
-    colTotal: {
-      textAlign: "right",
-    },
+    colNameLabel: {},
+    colPrice: {},
+    colQuantity: {},
+    colTotal: {},
     errorInfo: {
       color: theme.palette.error.main,
     },
     quantityField: {
       "& input": {
         padding: "12px 12px 10px",
-        textAlign: "right",
       },
       width: 60,
     },
     table: {
-      tableLayout: "fixed",
+      [theme.breakpoints.up("md")]: {
+        tableLayout: "auto",
+      },
+      tableLayout: "auto",
     },
   }),
   { name: "OrderDraftDetailsProducts" },
 );
 
 interface OrderDraftDetailsProductsProps {
-  lines: OrderLineFragment[];
+  order?: OrderDetailsFragment;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }
 
 const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = props => {
-  const { lines, onOrderLineChange, onOrderLineRemove } = props;
+  const { order, onOrderLineChange, onOrderLineRemove } = props;
+  const lines = order?.lines ?? [];
 
   const classes = useStyles(props);
 
   return (
     <ResponsiveTable className={classes.table}>
-      {maybe(() => !!lines.length) && (
+      {!!lines.length && (
         <TableHead>
           <TableRow>
-            <TableCell className={classes.colName}>
+            <TableCell className={classes.colName} colSpan={2}>
               <span className={classes.colNameLabel}>
                 <FormattedMessage id="x/ZVlU" defaultMessage="Product" />
               </span>
@@ -104,7 +95,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         </TableHead>
       )}
       <TableBody>
-        {!!lines?.length ? (
+        {!!lines.length ? (
           renderCollection(lines, line => (
             <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
               {(
@@ -113,6 +104,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                 <TableLine
                   {...orderLineDiscountProps}
                   line={line}
+                  channelId={order.channel.id}
                   onOrderLineChange={onOrderLineChange}
                   onOrderLineRemove={onOrderLineRemove}
                 />

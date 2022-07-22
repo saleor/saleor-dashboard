@@ -32,7 +32,7 @@ import { usePageStyles } from "./styles";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
-  order: OrderDetailsFragment;
+  order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   users: RelayToFlat<SearchCustomersQuery["search"]>;
   usersLoading: boolean;

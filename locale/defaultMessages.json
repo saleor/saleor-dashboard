@@ -741,6 +741,10 @@
     "context": "notification",
     "string": "Removed pages"
   },
+  "43AOvZ": {
+    "context": "alert group message",
+    "string": "You will not be able to finalize this draft because:"
+  },
   "43Nlay": {
     "context": "warehouse",
     "string": "Address Information"
@@ -1658,6 +1662,10 @@
   },
   "BtErCZ": {
     "string": "Search Plugins..."
+  },
+  "BvRyoX": {
+    "context": "alert message",
+    "string": "There are no available shipping methods in this channel."
   },
   "BvmnJq": {
     "context": "section header",
@@ -3298,6 +3306,10 @@
     "context": "deletion error message",
     "string": "Cant's delete group which is out of your permission scope"
   },
+  "O4QNFx": {
+    "context": "alert message",
+    "string": "There are no available products in this channel."
+  },
   "O95R3Z": {
     "string": "Phone"
   },
@@ -3343,6 +3355,10 @@
   "OaKyz4": {
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
+  },
+  "Oad+ES": {
+    "context": "alert message",
+    "string": "This product is not published in this channel."
   },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
@@ -3863,6 +3879,10 @@
   "SPBLzT": {
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+  },
+  "SPp3cx": {
+    "context": "alert message",
+    "string": "Orders cannot be placed in an inactive channel."
   },
   "SSWFo8": {
     "context": "window title",
@@ -7880,6 +7900,10 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
+  },
+  "zO+l0L": {
+    "context": "alert message",
+    "string": "This product is not available for sale in this channel."
   },
   "zQX6xO": {
     "context": "dialog header",

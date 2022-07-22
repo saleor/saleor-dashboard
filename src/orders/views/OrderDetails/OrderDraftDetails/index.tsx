@@ -4,6 +4,8 @@ import {
   OrderDetailsQuery,
   OrderDraftCancelMutation,
   OrderDraftCancelMutationVariables,
+  OrderDraftFinalizeMutation,
+  OrderDraftFinalizeMutationVariables,
   OrderDraftUpdateMutation,
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
@@ -68,7 +70,10 @@ interface OrderDraftDetailsProps {
     OrderDraftCancelMutation,
     OrderDraftCancelMutationVariables
   >;
-  orderDraftFinalize: any;
+  orderDraftFinalize: PartialMutationProviderOutput<
+    OrderDraftFinalizeMutation,
+    OrderDraftFinalizeMutationVariables
+  >;
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
