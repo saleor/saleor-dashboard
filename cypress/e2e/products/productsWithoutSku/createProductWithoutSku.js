@@ -22,7 +22,6 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-// import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   createFirstVariant,
   createVariant,
@@ -46,7 +45,6 @@ describe("Creating variants", () => {
     cy.clearSessionData().loginUserViaRequest();
     shippingUtils.deleteShippingStartsWith(startsWith);
     productUtils.deleteProductsStartsWith(startsWith);
-    // deleteChannelsStartsWith(startsWith);
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
@@ -237,7 +235,7 @@ describe("Creating variants", () => {
         .addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .reload()
+        .confirmationMessageShouldDisappear()
         .wait("@ProductDetails")
         .then(({ response }) => {
           const variants = [response.body.data.product.variants[0]];
