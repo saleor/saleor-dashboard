@@ -15,7 +15,6 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
-import { ChannelData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
@@ -51,6 +50,7 @@ import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/con
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { toggle } from "@saleor/utils/lists";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@saleor/utils/richText/context";
@@ -124,6 +124,7 @@ export interface ProductUpdateHandlers
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
+  toggleChannel: (id: string) => void;
 }
 
 export interface UseProductUpdateFormOutput
@@ -177,7 +178,7 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
   const initial = useMemo(
-    () => getProductUpdatePageFormData(product, product?.variants, []),
+    () => getProductUpdatePageFormData(product, product?.variants),
     [product],
   );
 
@@ -236,6 +237,7 @@ function useProductUpdateForm(
       product?.channelListings.map(listing => ({
         channelId: listing.channel.id,
         ...listing,
+        availableForPurchaseDate: listing.availableForPurchase,
       })) ?? [],
   });
 
@@ -249,8 +251,37 @@ function useProductUpdateForm(
             : prevListing,
         ),
       }));
+      triggerChange();
     },
     [],
+  );
+  const handleChannelToggle = React.useCallback(
+    (id: string) => {
+      setChannels(prevData => ({
+        ...prevData,
+        updateChannels: toggle(
+          {
+            channelId: id,
+            availableForPurchaseDate: null,
+            isAvailableForPurchase: false,
+            isPublished: false,
+            publicationDate: null,
+            visibleInListings: false,
+          },
+          prevData.updateChannels,
+          (a, b) => a.channelId === b.channelId,
+        ),
+        removeChannels: toggle(
+          id,
+          prevData.removeChannels,
+          (a, b) => a === b,
+        ).filter(id =>
+          product.channelListings.find(listing => listing.channel.id === id),
+        ),
+      }));
+      triggerChange();
+    },
+    [product],
   );
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
@@ -395,6 +426,7 @@ function useProductUpdateForm(
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect,
+      toggleChannel: handleChannelToggle,
     },
     submit,
     isSaveDisabled,

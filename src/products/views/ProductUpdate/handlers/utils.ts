@@ -4,6 +4,8 @@ import { prepareAttributesInput } from "@saleor/attributes/utils/handlers";
 import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   FileUploadMutation,
+  ProductChannelListingAddInput,
+  ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductUpdateMutationVariables,
 } from "@saleor/graphql";
@@ -11,6 +13,7 @@ import { weight } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+import pick from "lodash/pick";
 
 export const getSimpleProductVariables = (
   productVariables: ProductUpdateMutationVariables,
@@ -69,5 +72,39 @@ export function getProductUpdateVariables(
       taxCode: data.changeTaxCode ? data.taxCode : null,
     },
     firstValues: VALUES_PAGINATE_BY,
+  };
+}
+
+export function getProductChannelsUpdateVariables(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+): ProductChannelListingUpdateMutationVariables {
+  return {
+    id: product.id,
+    input: {
+      ...data.channels,
+      updateChannels: data.channels.updateChannels.map(channel =>
+        pick(
+          {
+            ...channel,
+            addVariants: [],
+            removeVariants: [],
+          },
+          // Filtering it here so we send only fields defined in input schema
+          [
+            "addVariants",
+            "availableForPurchaseAt",
+            "availableForPurchaseDate",
+            "channelId",
+            "isAvailableForPurchase",
+            "isPublished",
+            "publicationDate",
+            "publishedAt",
+            "removeVariants",
+            "visibleInListings",
+          ] as Array<keyof ProductChannelListingAddInput>,
+        ),
+      ),
+    },
   };
 }
