@@ -587,6 +587,7 @@ export const OrderErrorFragmentDoc = gql`
   field
   addressType
   message
+  orderLines
 }
     `;
 export const OrderSettingsErrorFragmentDoc = gql`
@@ -8884,7 +8885,6 @@ export const FulfillOrderDocument = gql`
     errors {
       ...OrderError
       warehouse
-      orderLines
     }
     order {
       ...OrderDetails

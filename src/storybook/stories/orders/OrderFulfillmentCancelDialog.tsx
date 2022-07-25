@@ -30,6 +30,7 @@ storiesOf("Orders / OrderFulfillmentCancelDialog", module)
           field: null,
           addressType: null,
           message: "Graphql Error",
+          orderLines: null,
         },
       ]}
     />

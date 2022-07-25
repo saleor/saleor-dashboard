@@ -13,7 +13,6 @@ import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -75,7 +74,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const formErrors = getFormErrors(["lines"], errors);
+  const formErrors = errors.filter(error => error.field === "lines"); // getFormErrors(["lines"], errors);
 
   if (order === undefined) {
     return <Skeleton className={classes.skeleton} />;
@@ -127,6 +126,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                   {...orderLineDiscountProps}
                   line={line}
                   channelId={order.channel.id}
+                  error={formErrors.find(error =>
+                    error.orderLines.some(id => id === line.id),
+                  )}
                   onOrderLineChange={onOrderLineChange}
                   onOrderLineRemove={onOrderLineRemove}
                 />
@@ -141,9 +143,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                   id="UD7/q8"
                   defaultMessage="No Products added to Order"
                 />
-                {formErrors.lines && (
+                {!!formErrors.length && (
                   <Typography variant="body2" className={classes.errorInfo}>
-                    {getOrderErrorMessage(formErrors.lines, intl)}
+                    {getOrderErrorMessage(formErrors[0], intl)}
                   </Typography>
                 )}
               </TableCell>

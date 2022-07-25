@@ -29,6 +29,7 @@ storiesOf("Orders / OrderFulfillmentTrackingDialog", module)
           field: null,
           addressType: null,
           message: "Graphql Error",
+          orderLines: null,
         },
         {
           __typename: "OrderError",
@@ -36,6 +37,7 @@ storiesOf("Orders / OrderFulfillmentTrackingDialog", module)
           field: "trackingNumber",
           addressType: null,
           message: "Tracking number field invalid",
+          orderLines: null,
         },
       ]}
     />

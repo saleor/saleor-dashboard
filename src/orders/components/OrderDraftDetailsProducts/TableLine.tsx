@@ -3,25 +3,22 @@ import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { OrderLineFragment, OrderLineInput } from "@saleor/graphql";
 import {
-  DeleteIcon,
-  IconButton,
-  IndicatorOutlined,
-  makeStyles,
-  Tooltip,
-  TooltipMountWrapper,
-} from "@saleor/macaw-ui";
+  OrderErrorFragment,
+  OrderLineFragment,
+  OrderLineInput,
+} from "@saleor/graphql";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import classNames from "classnames";
 import React, { useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import { lineAlertMessages } from "./mssages";
+import TableLineAlert from "./TableLineAlert";
 import TableLineForm from "./TableLineForm";
+import useLineAlerts from "./useLineAlerts";
 
 const useStyles = makeStyles(
   theme => ({
@@ -59,6 +56,7 @@ const useStyles = makeStyles(
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
   line: OrderLineFragment;
   channelId: string;
+  error?: OrderErrorFragment;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
 }
@@ -66,6 +64,7 @@ interface TableLineProps extends OrderLineDiscountContextConsumerProps {
 const TableLine: React.FC<TableLineProps> = ({
   line,
   channelId,
+  error,
   onOrderLineChange,
   onOrderLineRemove,
   orderLineDiscount,
@@ -80,24 +79,14 @@ const TableLine: React.FC<TableLineProps> = ({
   orderLineDiscountUpdateStatus,
 }) => {
   const classes = useStyles();
-  const intl = useIntl();
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
-  const {
-    id,
-    thumbnail,
-    productName,
-    productSku,
-    quantity,
-    variant: {
-      product: { channelListings },
-    },
-  } = line;
+  const { id, thumbnail, productName, productSku, quantity } = line;
 
-  const channelListing = channelListings.find(
-    channelListing => channelListing.channel.id === channelId,
-  );
-  const isPublished = channelListing?.isPublished;
-  const isAvailable = channelListing?.isAvailableForPurchase;
+  const alerts = useLineAlerts({
+    line,
+    channelId,
+    error,
+  });
 
   const getUnitPriceLabel = () => {
     const money = <Money money={undiscountedPrice} />;
@@ -116,42 +105,14 @@ const TableLine: React.FC<TableLineProps> = ({
     return <Link onClick={openDialog}>{money}</Link>;
   };
 
-  const getAlert = () => {
-    if (!isPublished && !isAvailable) {
-      return (
-        <ul>
-          <li>
-            <FormattedMessage {...lineAlertMessages.notPublished} />
-          </li>
-          <li>
-            <FormattedMessage {...lineAlertMessages.notAvailable} />
-          </li>
-        </ul>
-      );
-    }
-    if (!isPublished) {
-      return intl.formatMessage(lineAlertMessages.notPublished);
-    }
-    if (!isAvailable) {
-      return intl.formatMessage(lineAlertMessages.notAvailable);
-    }
-    return "";
-  };
-
   return (
     <TableRow key={id}>
       <TableCell
         className={classNames({
-          [classes.colStatusEmpty]: isPublished && isAvailable,
+          [classes.colStatusEmpty]: !!alerts.length,
         })}
       >
-        {(!isPublished || !isAvailable) && (
-          <Tooltip title={getAlert()} variant="warning">
-            <TooltipMountWrapper>
-              <IndicatorOutlined icon="warning" />
-            </TooltipMountWrapper>
-          </Tooltip>
-        )}
+        {!!alerts.length && <TableLineAlert alerts={alerts} />}
       </TableCell>
       <TableCellAvatar
         className={classes.colName}

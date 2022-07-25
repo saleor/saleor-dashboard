@@ -22,6 +22,7 @@ const finalizeErrors: OrderErrorFragment[] = [
     field: "order",
     addressType: null,
     message: "Can't finalize draft with no billing address.",
+    orderLines: null,
     __typename: "OrderError",
   },
   {
@@ -29,6 +30,7 @@ const finalizeErrors: OrderErrorFragment[] = [
     field: "order",
     addressType: null,
     message: "Can't finalize draft with no shipping address.",
+    orderLines: null,
     __typename: "OrderError",
   },
   {
@@ -36,6 +38,7 @@ const finalizeErrors: OrderErrorFragment[] = [
     field: "shipping",
     addressType: null,
     message: "Shipping method is required.",
+    orderLines: null,
     __typename: "OrderError",
   },
 ];

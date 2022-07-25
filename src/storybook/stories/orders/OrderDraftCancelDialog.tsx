@@ -29,6 +29,7 @@ storiesOf("Orders / OrderDraftCancelDialog", module)
           field: null,
           addressType: null,
           message: "Graphql Error",
+          orderLines: null,
         },
       ]}
     />

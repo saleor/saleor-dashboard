@@ -30,6 +30,7 @@ storiesOf("Orders / OrderMarkAsPaidDialog", module)
           field: null,
           addressType: null,
           message: "Graphql error",
+          orderLines: null,
         },
       ]}
     />
