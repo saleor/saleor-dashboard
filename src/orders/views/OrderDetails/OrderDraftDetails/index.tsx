@@ -196,6 +196,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     return errors;
   };
 
+  const errors = orderDraftFinalize.opts.data?.draftOrderComplete.errors || [];
+
   return (
     <>
       <WindowTitle
@@ -215,6 +217,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         <OrderLineDiscountProvider order={order}>
           <OrderDraftPage
             disabled={loading}
+            errors={errors}
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({

@@ -18,6 +18,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderErrorFragment,
   OrderStatus,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -69,6 +70,7 @@ export interface OrderDetailsPageProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (
     id: string,
@@ -121,6 +123,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order,
     shop,
     saveButtonBarState,
+    errors,
     onBillingAddressEdit,
     onFulfillmentApprove,
     onFulfillmentCancel,
@@ -268,6 +271,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   <>
                     <OrderDraftDetails
                       order={order}
+                      errors={errors}
                       onOrderLineAdd={onOrderLineAdd}
                       onOrderLineChange={onOrderLineChange}
                       onOrderLineRemove={onOrderLineRemove}
@@ -319,6 +323,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
                   order={order}
+                  errors={errors}
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}
                   onProfileView={onProfileView}

@@ -1,7 +1,11 @@
 import { Card, CardContent } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
-import { OrderDetailsFragment, OrderLineInput } from "@saleor/graphql";
+import {
+  OrderDetailsFragment,
+  OrderErrorFragment,
+  OrderLineInput,
+} from "@saleor/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
@@ -15,6 +19,7 @@ import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
+  errors: OrderErrorFragment[];
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -23,6 +28,7 @@ interface OrderDraftDetailsProps {
 
 const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   order,
+  errors,
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
@@ -56,6 +62,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       />
       <OrderDraftDetailsProducts
         order={order}
+        errors={errors}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
       />
@@ -65,6 +72,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             {(orderDiscountProps: OrderDiscountContextConsumerProps) => (
               <OrderDraftDetailsSummary
                 order={order}
+                errors={errors}
                 onShippingMethodEdit={onShippingMethodEdit}
                 {...orderDiscountProps}
               />

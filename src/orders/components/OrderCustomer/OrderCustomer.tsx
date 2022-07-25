@@ -11,45 +11,25 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
+  OrderErrorCode,
+  OrderErrorFragment,
   PermissionEnum,
   SearchCustomersQuery,
   WarehouseClickAndCollectOptionEnum,
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
 import { maybe } from "../../../misc";
+import { AddressFields } from "./AddressFields";
 import messages from "./messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    sectionHeader: {
-      alignItems: "center",
-      display: "flex",
-      marginBottom: theme.spacing(3),
-    },
-    sectionHeaderTitle: {
-      flex: 1,
-      fontWeight: 600 as 600,
-      lineHeight: 1,
-      textTransform: "uppercase",
-    },
-    sectionHeaderToolbar: {
-      marginRight: theme.spacing(-2),
-    },
-    userEmail: {
-      fontWeight: 600 as 600,
-      marginBottom: theme.spacing(1),
-    },
-  }),
-  { name: "OrderCustomer" },
-);
+import { useStyles } from "./styles";
 
 export interface CustomerEditData {
   user?: string;
@@ -62,6 +42,7 @@ export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   order: OrderDetailsFragment;
   users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
+  errors: OrderErrorFragment[];
   canEditAddresses: boolean;
   canEditCustomer: boolean;
   fetchUsers?: (query: string) => void;
@@ -78,6 +59,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     fetchUsers,
     hasMore: hasMoreUsers,
     loading,
+    errors = [],
     order,
     users,
     onCustomerEdit,
@@ -102,7 +84,14 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
 
-  const pickupAnnotation = order => {
+  const noBillingAddressError = errors.find(
+    error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET,
+  );
+  const noShippingAddressError = errors.find(
+    error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS,
+  );
+
+  const pickupAnnotation = (order?: OrderDetailsFragment) => {
     if (order?.deliveryMethod?.__typename === "Warehouse") {
       return (
         <>
@@ -120,6 +109,15 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     }
     return "";
   };
+
+  const addressTextError = (orderError: OrderErrorFragment) => (
+    <>
+      <Typography variant="body2" className={classes.textError}>
+        {getOrderErrorMessage(orderError, intl)}
+      </Typography>
+      <FormSpacer />
+    </>
+  );
 
   return (
     <Card>
@@ -295,40 +293,23 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         </div>
         {shippingAddress === undefined ? (
           <Skeleton />
-        ) : shippingAddress === null ? (
-          <Typography>
-            <FormattedMessage
-              id="e7yOai"
-              defaultMessage="Not set"
-              description="shipping address is not set in draft order"
-            />
-          </Typography>
         ) : (
           <>
-            {shippingAddress.companyName && (
-              <Typography>{shippingAddress.companyName}</Typography>
+            {noShippingAddressError && addressTextError(noShippingAddressError)}
+            {shippingAddress === null ? (
+              <Typography>
+                <FormattedMessage
+                  id="e7yOai"
+                  defaultMessage="Not set"
+                  description="shipping address is not set in draft order"
+                />
+              </Typography>
+            ) : (
+              <>
+                <AddressFields address={shippingAddress} />
+                {pickupAnnotation(order)}
+              </>
             )}
-            <Typography>
-              {shippingAddress.firstName} {shippingAddress.lastName}
-            </Typography>
-            <Typography>
-              {shippingAddress.streetAddress1}
-              <br />
-              {shippingAddress.streetAddress2}
-            </Typography>
-            <Typography>
-              {shippingAddress.postalCode} {shippingAddress.city}
-              {shippingAddress.cityArea ? ", " + shippingAddress.cityArea : ""}
-            </Typography>
-            <Typography>
-              {shippingAddress.countryArea
-                ? shippingAddress.countryArea +
-                  ", " +
-                  shippingAddress.country.country
-                : shippingAddress.country.country}
-            </Typography>
-            <Typography>{shippingAddress.phone}</Typography>
-            {pickupAnnotation(order)}
           </>
         )}
       </CardContent>
@@ -353,47 +334,28 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         </div>
         {billingAddress === undefined ? (
           <Skeleton />
-        ) : billingAddress === null ? (
-          <Typography>
-            <FormattedMessage
-              id="YI6Fhj"
-              defaultMessage="Not set"
-              description="no address is set in draft order"
-            />
-          </Typography>
-        ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
-          <Typography>
-            <FormattedMessage
-              id="GLX9II"
-              defaultMessage="Same as shipping address"
-              description="billing address"
-            />
-          </Typography>
         ) : (
           <>
-            {billingAddress.companyName && (
-              <Typography>{billingAddress.companyName}</Typography>
+            {noBillingAddressError && addressTextError(noBillingAddressError)}
+            {billingAddress === null ? (
+              <Typography>
+                <FormattedMessage
+                  id="YI6Fhj"
+                  defaultMessage="Not set"
+                  description="no address is set in draft order"
+                />
+              </Typography>
+            ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
+              <Typography>
+                <FormattedMessage
+                  id="GLX9II"
+                  defaultMessage="Same as shipping address"
+                  description="billing address"
+                />
+              </Typography>
+            ) : (
+              <AddressFields address={billingAddress} />
             )}
-            <Typography>
-              {billingAddress.firstName} {billingAddress.lastName}
-            </Typography>
-            <Typography>
-              {billingAddress.streetAddress1}
-              <br />
-              {billingAddress.streetAddress2}
-            </Typography>
-            <Typography>
-              {billingAddress.postalCode} {billingAddress.city}
-              {billingAddress.cityArea ? ", " + billingAddress.cityArea : ""}
-            </Typography>
-            <Typography>
-              {billingAddress.countryArea
-                ? billingAddress.countryArea +
-                  ", " +
-                  billingAddress.country.country
-                : billingAddress.country.country}
-            </Typography>
-            <Typography>{billingAddress.phone}</Typography>
           </>
         )}
       </CardContent>

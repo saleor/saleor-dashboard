@@ -1,13 +1,22 @@
-import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import Skeleton from "@saleor/components/Skeleton";
+import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { getFormErrors } from "@saleor/utils/errors";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
 import TableLine from "./TableLine";
@@ -28,8 +37,13 @@ const useStyles = makeStyles(
     colPrice: {},
     colQuantity: {},
     colTotal: {},
+    skeleton: {
+      margin: theme.spacing(0, 4),
+    },
     errorInfo: {
       color: theme.palette.error.main,
+      marginLeft: theme.spacing(1.5),
+      display: "inline",
     },
     quantityField: {
       "& input": {
@@ -49,15 +63,23 @@ const useStyles = makeStyles(
 
 interface OrderDraftDetailsProductsProps {
   order?: OrderDetailsFragment;
+  errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }
 
 const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = props => {
-  const { order, onOrderLineChange, onOrderLineRemove } = props;
+  const { order, errors, onOrderLineChange, onOrderLineRemove } = props;
   const lines = order?.lines ?? [];
 
+  const intl = useIntl();
   const classes = useStyles(props);
+
+  const formErrors = getFormErrors(["lines"], errors);
+
+  if (order === undefined) {
+    return <Skeleton className={classes.skeleton} />;
+  }
 
   return (
     <ResponsiveTable className={classes.table}>
@@ -112,14 +134,21 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
             </OrderLineDiscountConsumer>
           ))
         ) : (
-          <TableRow>
-            <TableCell colSpan={5}>
-              <FormattedMessage
-                id="UD7/q8"
-                defaultMessage="No Products added to Order"
-              />
-            </TableCell>
-          </TableRow>
+          <>
+            <TableRow>
+              <TableCell colSpan={5}>
+                <FormattedMessage
+                  id="UD7/q8"
+                  defaultMessage="No Products added to Order"
+                />
+                {formErrors.lines && (
+                  <Typography variant="body2" className={classes.errorInfo}>
+                    {getOrderErrorMessage(formErrors.lines, intl)}
+                  </Typography>
+                )}
+              </TableCell>
+            </TableRow>
+          </>
         )}
       </TableBody>
     </ResponsiveTable>

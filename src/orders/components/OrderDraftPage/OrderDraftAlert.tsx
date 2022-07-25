@@ -13,7 +13,7 @@ const getAlerts = (
   order?: OrderDetailsFragment,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
-  const inactiveChannel = !order?.channel.isActive;
+  const inactiveChannel = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
   const noShippingMethodsInChannel = order?.shippingMethods.length === 0;
 

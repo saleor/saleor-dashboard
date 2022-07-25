@@ -11,6 +11,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
+  OrderErrorFragment,
   OrderLineInput,
   SearchCustomersQuery,
 } from "@saleor/graphql";
@@ -36,6 +37,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   channelUsabilityData?: ChannelUsabilityDataQuery;
   users: RelayToFlat<SearchCustomersQuery["search"]>;
   usersLoading: boolean;
+  errors: OrderErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchUsers: (query: string) => void;
   onBillingAddressEdit: () => void;
@@ -74,6 +76,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     channelUsabilityData,
     users,
     usersLoading,
+    errors,
   } = props;
   const classes = usePageStyles(props);
   const navigate = useNavigator();
@@ -120,6 +123,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           />
           <OrderDraftDetails
             order={order}
+            errors={errors}
             onOrderLineAdd={onOrderLineAdd}
             onOrderLineChange={onOrderLineChange}
             onOrderLineRemove={onOrderLineRemove}
@@ -138,6 +142,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             fetchUsers={fetchUsers}
             hasMore={hasMore}
             loading={usersLoading}
+            errors={errors}
             order={order}
             users={users}
             onBillingAddressEdit={onBillingAddressEdit}
@@ -152,7 +157,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </Grid>
       <Savebar
         state={saveButtonBarState}
-        disabled={disabled || !order?.canFinalize}
+        disabled={disabled}
         onCancel={() => navigate(orderDraftListUrl())}
         onSubmit={onDraftFinalize}
         labels={{
