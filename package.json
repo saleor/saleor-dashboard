@@ -47,6 +47,7 @@
     "editorjs-undo": "^0.1.4",
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
+    "find-test-names": "^1.17.2",
     "fuzzaldrin": "^2.1.0",
     "graphql": "^15.4.0",
     "hotkeys-js": "^3.8.1",
