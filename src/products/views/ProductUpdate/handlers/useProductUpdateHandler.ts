@@ -20,9 +20,9 @@ import {
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
-  useProductVariantChannelListingUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
+  useVariantDatagridChannelListingUpdateMutation,
   useVariantDatagridStockUpdateMutation,
   useVariantDatagridUpdateMutation,
 } from "@saleor/graphql";
@@ -31,7 +31,9 @@ import { commonMessages } from "@saleor/intl";
 import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import {
+  getColumnChannel,
   getStocks,
+  getVariantChannels,
   getVariantInputs,
 } from "@saleor/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -99,7 +101,7 @@ export function useProductUpdateHandler(
   const [
     updateVariantChannels,
     updateVariantChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation();
+  ] = useVariantDatagridChannelListingUpdateMutation();
 
   const [
     deleteAttributeValue,
@@ -133,6 +135,10 @@ export function useProductUpdateHandler(
       });
       errors = [...errors, ...result.data.productUpdate.errors];
 
+      await updateChannels({
+        variables: getProductChannelsUpdateVariables(product, data),
+      });
+
       const variantUpdateResult = await Promise.all<FetchResult>([
         ...getStocks(product.variants, data.variants).map(variables =>
           updateStocks({ variables }),
@@ -140,17 +146,19 @@ export function useProductUpdateHandler(
         ...getVariantInputs(product.variants, data.variants).map(variables =>
           updateVariant({ variables }),
         ),
+        ...getVariantChannels(product.variants, data.variants).map(variables =>
+          updateVariantChannels({
+            variables,
+          }),
+        ),
       ]);
+
       errors = [
         ...errors,
         ...(variantUpdateResult.flatMap(getMutationErrors) as Array<
           StockErrorFragment | BulkStockErrorFragment
         >),
       ];
-
-      await updateChannels({
-        variables: getProductChannelsUpdateVariables(product, data),
-      });
 
       return errors;
     },

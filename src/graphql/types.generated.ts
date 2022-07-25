@@ -7394,6 +7394,14 @@ export type VariantDatagridStockUpdateMutationVariables = Exact<{
 
 export type VariantDatagridStockUpdateMutation = { __typename: 'Mutation', productVariantStocksDelete: { __typename: 'ProductVariantStocksDelete', errors: Array<{ __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null }> } | null, productVariantStocksUpdate: { __typename: 'ProductVariantStocksUpdate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }> } | null };
 
+export type VariantDatagridChannelListingUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<ProductVariantChannelListingAddInput> | ProductVariantChannelListingAddInput;
+}>;
+
+
+export type VariantDatagridChannelListingUpdateMutation = { __typename: 'Mutation', productVariantChannelListingUpdate: { __typename: 'ProductVariantChannelListingUpdate', errors: Array<{ __typename: 'ProductChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null }> } | null };
+
 export type VariantUpdateMutationVariables = Exact<{
   addStocks: Array<StockInput> | StockInput;
   removeStocks: Array<Scalars['ID']> | Scalars['ID'];

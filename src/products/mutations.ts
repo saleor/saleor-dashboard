@@ -156,6 +156,19 @@ export const variantDatagridStockUpdateMutation = gql`
   }
 `;
 
+export const variantDatagridChannelListingUpdateMutation = gql`
+  mutation VariantDatagridChannelListingUpdate(
+    $id: ID!
+    $input: [ProductVariantChannelListingAddInput!]!
+  ) {
+    productVariantChannelListingUpdate(id: $id, input: $input) {
+      errors {
+        ...ProductChannelListingError
+      }
+    }
+  }
+`;
+
 export const variantUpdateMutation = gql`
   mutation VariantUpdate(
     $addStocks: [StockInput!]!

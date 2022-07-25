@@ -14,6 +14,8 @@ import {
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
+  ProductVariantChannelListingAddInput,
+  VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
@@ -117,6 +119,37 @@ export function getStocks(
       variables =>
         variables.removeStocks.length > 0 || variables.stocks.length > 0,
     );
+}
+
+export function getVariantChannels(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridChannelListingUpdateMutationVariables[] {
+  const channelChanges = data.updates.filter(change =>
+    getColumnChannel(change.column),
+  );
+
+  return variants
+    .map((variant, variantIndex) => {
+      const variantChanges = channelChanges
+        .filter(
+          change =>
+            change.row ===
+            variantIndex + data.removed.filter(r => r <= variantIndex).length,
+        )
+        .map<ProductVariantChannelListingAddInput>(change => ({
+          channelId: getColumnChannel(change.column),
+          price: change.data.value,
+        }));
+
+      return {
+        id: variant.id,
+        input: variantChanges.filter(
+          change => change.price !== numberCellEmptyValue,
+        ),
+      };
+    })
+    .filter(({ input }) => input.length > 0);
 }
 
 interface GetData {
