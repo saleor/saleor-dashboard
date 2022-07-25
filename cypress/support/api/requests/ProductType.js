@@ -66,7 +66,7 @@ export function getProductTypes(first, search) {
 export function deleteProductType(productTypeId) {
   const mutation = `mutation{
     productTypeDelete(id:"${productTypeId}"){
-      productErrors{
+      errors{
         field
         message
       }
@@ -78,7 +78,7 @@ export function deleteProductType(productTypeId) {
 export function productAttributeAssignmentUpdate({
   productTypeId,
   attributeId,
-  variantSelection = true
+  variantSelection = false
 }) {
   const mutation = `mutation {
     productAttributeAssignmentUpdate(

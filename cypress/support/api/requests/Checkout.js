@@ -33,7 +33,6 @@ export function createCheckout({
   );
 
   const emailLine = getValueWithDefault(email, `email: "${email}"`);
-
   const mutation = `mutation{
     checkoutCreate(input:{
       channel:"${channelSlug}"
@@ -127,7 +126,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       ${amountLine}
       returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
-      paymentErrors{
+      errors{
         field
         message
       }
