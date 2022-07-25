@@ -109,7 +109,7 @@ const TableLine: React.FC<TableLineProps> = ({
     <TableRow key={id}>
       <TableCell
         className={classNames({
-          [classes.colStatusEmpty]: !!alerts.length,
+          [classes.colStatusEmpty]: !alerts.length,
         })}
       >
         {!!alerts.length && (
