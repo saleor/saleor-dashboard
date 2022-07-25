@@ -187,15 +187,6 @@ function useProductUpdateForm(
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
-  const variants = useRef<DatagridChangeOpts>({
-    added: [],
-    removed: [],
-    updates: [],
-  });
-  const handleVariantChange = React.useCallback(
-    (data: DatagridChangeOpts) => (variants.current = data),
-    [],
-  );
 
   const {
     handleChange,
@@ -204,6 +195,16 @@ function useProductUpdateForm(
     data: formData,
     setIsSubmitDisabled,
   } = form;
+
+  const variants = useRef<DatagridChangeOpts>({
+    added: [],
+    removed: [],
+    updates: [],
+  });
+  const handleVariantChange = React.useCallback((data: DatagridChangeOpts) => {
+    variants.current = data;
+    triggerChange();
+  }, []);
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const {

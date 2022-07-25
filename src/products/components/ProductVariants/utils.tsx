@@ -1,5 +1,10 @@
 import { GridCell } from "@glideapps/glide-data-grid";
-import { numberCell, textCell } from "@saleor/components/Datagrid/cells";
+import { ChannelData } from "@saleor/channels/utils";
+import {
+  moneyCell,
+  numberCell,
+  textCell,
+} from "@saleor/components/Datagrid/cells";
 import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import {
@@ -19,8 +24,16 @@ import { IntlShape } from "react-intl";
 import messages from "./messages";
 
 const isStockColumn = /^stock:(.*)/;
-// const isChannelColumn = /^channel:(.*)/;
+const isChannelColumn = /^channel:(.*)/;
 const isAttributeColumn = /^attribute:(.*)/;
+
+export function getColumnChannel(column: string): string | null {
+  if (!isChannelColumn.test(column)) {
+    return null;
+  }
+
+  return column.match(isChannelColumn)[1];
+}
 
 export function getVariantInputs(
   variants: ProductFragment["variants"],
@@ -112,6 +125,7 @@ interface GetData {
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
+  channels: ChannelData[];
   added: number[];
   removed: number[];
   getChangeIndex: (column: string, row: number) => number;
@@ -125,8 +139,14 @@ export function getData({
   column,
   getChangeIndex,
   row,
+  channels,
   variants,
 }: GetData): GridCell {
+  // For some reason it happens when user deselects channel
+  if (column === -1) {
+    return textCell("");
+  }
+
   const columnId = availableColumns[column].id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
@@ -151,18 +171,17 @@ export function getData({
     return numberCell(value);
   }
 
-  // TODO: We'll add channels later
-  // if (isChannelColumn.test(columnId)) {
-  //   const channelId = columnId.match(isChannelColumn)[1];
-  //   const listing = dataRow?.channelListings.find(
-  //     listing => listing.channel.id === channelId,
-  //   );
-  //   const currency = channels.find(channel => channelId === channel.id)
-  //     ?.currencyCode;
-  //   const value = change?.value ?? listing?.price?.amount ?? 0;
+  if (getColumnChannel(columnId)) {
+    const channelId = getColumnChannel(columnId);
+    const listing = dataRow?.channelListings.find(
+      listing => listing.channel.id === channelId,
+    );
+    const currency = channels.find(channel => channelId === channel.id)
+      ?.currency;
+    const value = change?.value ?? listing?.price?.amount ?? 0;
 
-  //   return moneyCell(value, currency);
-  // }
+    return moneyCell(value, currency);
+  }
 
   if (isAttributeColumn.test(columnId)) {
     const value =
@@ -182,7 +201,7 @@ export function getData({
 
 export function getColumnData(
   name: string,
-  // channels: ChannelData[],
+  channels: ChannelData[],
   warehouses: WarehouseFragment[],
   variantAttributes: ProductFragment["productType"]["variantAttributes"],
   intl: IntlShape,
@@ -209,16 +228,16 @@ export function getColumnData(
     };
   }
 
-  // if (isChannelColumn.test(name)) {
-  //   const channel = channels.find(
-  //     channel => channel.id === name.match(isChannelColumn)[1],
-  //   );
-  //   return {
-  //     ...common,
-  //     width: 150,
-  //     title: `${channel?.name} [${channel.currency}]`,
-  //   };
-  // }
+  if (getColumnChannel(name)) {
+    const channel = channels.find(
+      channel => channel.id === getColumnChannel(name),
+    );
+    return {
+      ...common,
+      width: 150,
+      title: `${channel?.name} [${channel.currency}]`,
+    };
+  }
 
   if (isAttributeColumn.test(name)) {
     return {

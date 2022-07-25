@@ -272,6 +272,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           openModal: () => setChannelPickerOpen(true),
         };
 
+        const listings = data.channels.updateChannels.map<ChannelData>(
+          listing => {
+            const channel = channels?.find(ac => ac.id === listing.channelId);
+            return {
+              id: listing.channelId,
+              ...channel,
+              ...listing,
+              availableForPurchase: listing.availableForPurchaseDate,
+              currency: channel.currencyCode,
+            };
+          },
+        );
+
         return (
           <>
             <Container>
@@ -328,6 +341,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <ProductVariants
+                    channels={listings}
                     limits={limits}
                     variants={variants}
                     variantAttributes={product?.productType.variantAttributes}
@@ -377,14 +391,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <CardSpacer />
                   <ChannelsAvailabilityCard
                     {...availabilityCommonProps}
-                    channels={data.channels.updateChannels.map<ChannelData>(
-                      listing => ({
-                        id: listing.channelId,
-                        ...channels?.find(ac => ac.id === listing.channelId),
-                        ...listing,
-                        availableForPurchase: listing.availableForPurchaseDate,
-                      }),
-                    )}
+                    channels={listings}
                   />
                   <CardSpacer />
                   <ProductTaxes
