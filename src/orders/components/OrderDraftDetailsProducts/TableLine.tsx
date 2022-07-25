@@ -112,7 +112,12 @@ const TableLine: React.FC<TableLineProps> = ({
           [classes.colStatusEmpty]: !!alerts.length,
         })}
       >
-        {!!alerts.length && <TableLineAlert alerts={alerts} />}
+        {!!alerts.length && (
+          <TableLineAlert
+            alerts={alerts}
+            variant={!!error ? "error" : "warning"}
+          />
+        )}
       </TableCell>
       <TableCellAvatar
         className={classes.colName}

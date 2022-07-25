@@ -7,9 +7,10 @@ import React from "react";
 
 interface TableLineAlertProps {
   alerts?: string[];
+  variant: "warning" | "error";
 }
 
-const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts }) => {
+const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts, variant }) => {
   if (!alerts.length) {
     return null;
   }
@@ -26,9 +27,9 @@ const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts }) => {
     );
 
   return (
-    <Tooltip title={title} variant="warning">
+    <Tooltip title={title} variant={variant}>
       <TooltipMountWrapper>
-        <IndicatorOutlined icon="warning" />
+        <IndicatorOutlined icon={variant} />
       </TooltipMountWrapper>
     </Tooltip>
   );
