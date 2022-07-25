@@ -108,9 +108,13 @@ export function selectChannelForVariantAndFillUpPrices({
   cy.contains(PRODUCT_DETAILS.variantRow, variantName)
     .click()
     .get(PRICE_LIST.priceInput)
-    .type(price)
+    .each(input => {
+      cy.wrap(input).type(price);
+    })
     .get(PRICE_LIST.costPriceInput)
-    .type(costPrice)
+    .each(input => {
+      cy.wrap(input).type(costPrice);
+    })
     .addAliasToGraphRequest("ProductVariantChannelListingUpdate")
     .get(VARIANTS_SELECTORS.saveButton)
     .click()
