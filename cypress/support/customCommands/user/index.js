@@ -1,3 +1,5 @@
+import "../../api/requests/utils/index";
+
 import { LOGIN_SELECTORS } from "../../../elements/account/login-selectors";
 import { TEST_ADMIN_USER } from "../../../fixtures/users";
 
