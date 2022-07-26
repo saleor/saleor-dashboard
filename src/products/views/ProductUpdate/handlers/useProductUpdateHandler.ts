@@ -31,7 +31,6 @@ import { commonMessages } from "@saleor/intl";
 import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import {
-  getColumnChannel,
   getStocks,
   getVariantChannels,
   getVariantInputs,

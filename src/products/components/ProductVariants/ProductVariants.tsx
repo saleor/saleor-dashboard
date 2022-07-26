@@ -46,7 +46,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         ? [
             "name",
             "sku",
-            ...channels?.map(channel => `channel:${channel.id}`),
+            ...channels?.flatMap(channel => [
+              `availableInChannel:${channel.id}`,
+              `channel:${channel.id}`,
+            ]),
             ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
             ...variantAttributes
               .filter(attribute =>

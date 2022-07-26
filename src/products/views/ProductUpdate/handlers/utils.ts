@@ -7,38 +7,13 @@ import {
   ProductChannelListingAddInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
-  ProductUpdateMutationVariables,
 } from "@saleor/graphql";
-import { weight } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/utils";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import pick from "lodash/pick";
-
-export const getSimpleProductVariables = (
-  productVariables: ProductUpdateMutationVariables,
-  data: ProductUpdateSubmitData,
-  productId: string,
-) => ({
-  ...productVariables,
-  input: {
-    ...productVariables.input,
-    weight: weight(data.weight),
-  },
-  productVariantId: productId,
-  productVariantInput: {
-    sku: data.sku,
-    trackInventory: data.trackInventory,
-    preorder: data.isPreorder
-      ? {
-          globalThreshold: data.globalThreshold
-            ? parseInt(data.globalThreshold, 10)
-            : null,
-          endDate: data.preorderEndDateTime,
-        }
-      : undefined,
-  },
-});
+import uniq from "lodash/uniq";
 
 export function getProductUpdateVariables(
   product: ProductFragment,
@@ -79,32 +54,70 @@ export function getProductChannelsUpdateVariables(
   product: ProductFragment,
   data: ProductUpdateSubmitData,
 ): ProductChannelListingUpdateMutationVariables {
+  const channels = uniq([
+    ...product.channelListings.map(listing => listing.channel.id),
+    ...data.channels.updateChannels.map(listing => listing.channelId),
+  ]);
+
+  const dataUpdated = new Map<string, ProductChannelListingAddInput>();
+  data.channels.updateChannels
+    .map(listing =>
+      pick(
+        listing,
+        // Filtering it here so we send only fields defined in input schema
+        [
+          "availableForPurchaseAt",
+          "availableForPurchaseDate",
+          "channelId",
+          "isAvailableForPurchase",
+          "isPublished",
+          "publicationDate",
+          "publishedAt",
+          "visibleInListings",
+        ] as Array<keyof ProductChannelListingAddInput>,
+      ),
+    )
+    .forEach(listing => dataUpdated.set(listing.channelId, listing));
+
+  const variantsUpdates = new Map<string, ProductChannelListingAddInput>();
+  channels
+    .map(channelId => ({
+      channelId,
+      addVariants: data.variants.updates
+        .filter(
+          change =>
+            channelId === getColumnChannelAvailability(change.column) &&
+            change.data,
+        )
+        .map(change => product.variants[change.row].id),
+      removeVariants: data.variants.updates
+        .filter(
+          change =>
+            channelId === getColumnChannelAvailability(change.column) &&
+            !change.data,
+        )
+        .map(change => product.variants[change.row].id),
+    }))
+    .filter(
+      listing =>
+        listing.addVariants.length > 0 || listing.removeVariants.length > 0,
+    )
+    .forEach(listing => variantsUpdates.set(listing.channelId, listing));
+
+  const updateChannels = channels
+    .filter(
+      channelId => dataUpdated.has(channelId) || variantsUpdates.has(channelId),
+    )
+    .map(channelId => ({
+      ...variantsUpdates.get(channelId),
+      ...variantsUpdates.get(channelId),
+    }));
+
   return {
     id: product.id,
     input: {
       ...data.channels,
-      updateChannels: data.channels.updateChannels.map(channel =>
-        pick(
-          {
-            ...channel,
-            addVariants: [],
-            removeVariants: [],
-          },
-          // Filtering it here so we send only fields defined in input schema
-          [
-            "addVariants",
-            "availableForPurchaseAt",
-            "availableForPurchaseDate",
-            "channelId",
-            "isAvailableForPurchase",
-            "isPublished",
-            "publicationDate",
-            "publishedAt",
-            "removeVariants",
-            "visibleInListings",
-          ] as Array<keyof ProductChannelListingAddInput>,
-        ),
-      ),
+      updateChannels,
     },
   };
 }

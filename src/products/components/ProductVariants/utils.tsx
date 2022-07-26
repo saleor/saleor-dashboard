@@ -1,6 +1,7 @@
 import { GridCell } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
+  booleanCell,
   moneyCell,
   numberCell,
   textCell,
@@ -25,24 +26,31 @@ import { IntlShape } from "react-intl";
 
 import messages from "./messages";
 
-const isStockColumn = /^stock:(.*)/;
-const isChannelColumn = /^channel:(.*)/;
-const isAttributeColumn = /^attribute:(.*)/;
+export function makeGetColumnData(
+  regexp: RegExp,
+): (column: string) => string | null {
+  return column => {
+    if (!regexp.test(column)) {
+      return null;
+    }
 
-export function getColumnChannel(column: string): string | null {
-  if (!isChannelColumn.test(column)) {
-    return null;
-  }
-
-  return column.match(isChannelColumn)[1];
+    return column.match(regexp)[1];
+  };
 }
+
+export const getColumnAttribute = makeGetColumnData(/^attribute:(.*)/);
+export const getColumnChannel = makeGetColumnData(/^channel:(.*)/);
+export const getColumnChannelAvailability = makeGetColumnData(
+  /^availableInChannel:(.*)/,
+);
+export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
 export function getVariantInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): VariantDatagridUpdateMutationVariables[] {
   const attributeChanges = data.updates.filter(change =>
-    isAttributeColumn.test(change.column),
+    getColumnAttribute(change.column),
   );
   const skuChanges = data.updates.filter(change => change.column === "sku");
 
@@ -62,7 +70,7 @@ export function getVariantInputs(
               variantIndex + data.removed.filter(r => r <= variantIndex).length,
           )
           .map(change => {
-            const attributeId = change.column.match(isAttributeColumn)[1];
+            const attributeId = getColumnAttribute(change.column);
 
             return {
               id: attributeId,
@@ -89,7 +97,7 @@ export function getStocks(
   data: DatagridChangeOpts,
 ): VariantDatagridStockUpdateMutationVariables[] {
   const stockChanges = data.updates.filter(change =>
-    isStockColumn.test(change.column),
+    getColumnStock(change.column),
   );
 
   return variants
@@ -101,7 +109,7 @@ export function getStocks(
             variantIndex + data.removed.filter(r => r <= variantIndex).length,
         )
         .map(change => ({
-          warehouse: change.column.match(isStockColumn)[1],
+          warehouse: getColumnStock(change.column),
           quantity: change.data.value,
         }));
 
@@ -193,11 +201,11 @@ export function getData({
       return textCell(value || "");
   }
 
-  if (isStockColumn.test(columnId)) {
+  if (getColumnStock(columnId)) {
     const value =
       change?.value ??
       dataRow?.stocks.find(
-        stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
+        stock => stock.warehouse.id === getColumnStock(columnId),
       )?.quantity ??
       numberCellEmptyValue;
 
@@ -209,6 +217,18 @@ export function getData({
     const listing = dataRow?.channelListings.find(
       listing => listing.channel.id === channelId,
     );
+    const available =
+      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]
+        ?.data ?? !!listing;
+
+    if (!available) {
+      return {
+        ...numberCell(numberCellEmptyValue),
+        readonly: true,
+        allowOverlay: false,
+      };
+    }
+
     const currency = channels.find(channel => channelId === channel.id)
       ?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
@@ -216,13 +236,22 @@ export function getData({
     return moneyCell(value, currency);
   }
 
-  if (isAttributeColumn.test(columnId)) {
+  if (getColumnChannelAvailability(columnId)) {
+    const channelId = getColumnChannelAvailability(columnId);
+    const listing = dataRow?.channelListings.find(
+      listing => listing.channel.id === channelId,
+    );
+    const value = change ?? !!listing;
+
+    return booleanCell(value);
+  }
+
+  if (getColumnAttribute(columnId)) {
     const value =
       change ??
       dataRow?.attributes
         .find(
-          attribute =>
-            attribute.attribute.id === columnId.match(isAttributeColumn)[1],
+          attribute => attribute.attribute.id === getColumnAttribute(columnId),
         )
         ?.values.map(v => v.name)
         .join(", ") ??
@@ -251,13 +280,12 @@ export function getColumnData(
     };
   }
 
-  if (isStockColumn.test(name)) {
+  if (getColumnStock(name)) {
     return {
       ...common,
       width: 100,
-      title: warehouses.find(
-        warehouse => warehouse.id === name.match(isStockColumn)[1],
-      )?.name,
+      title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))
+        ?.name,
     };
   }
 
@@ -272,11 +300,22 @@ export function getColumnData(
     };
   }
 
-  if (isAttributeColumn.test(name)) {
+  if (getColumnChannelAvailability(name)) {
+    const channel = channels.find(
+      channel => channel.id === getColumnChannelAvailability(name),
+    );
+    return {
+      ...common,
+      width: 80,
+      title: `Available in ${channel?.name}`,
+    };
+  }
+
+  if (getColumnAttribute(name)) {
     return {
       ...common,
       title: variantAttributes.find(
-        attribute => attribute.id === name.match(isAttributeColumn)[1],
+        attribute => attribute.id === getColumnAttribute(name),
       )?.name,
     };
   }

@@ -1,5 +1,8 @@
 import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
-import { NumberCell } from "@saleor/components/Datagrid/NumberCell";
+import {
+  NumberCell,
+  numberCellEmptyValue,
+} from "@saleor/components/Datagrid/NumberCell";
 
 import { MoneyCell } from "./MoneyCell";
 
@@ -26,7 +29,9 @@ export function booleanCell(value: boolean): GridCell {
   };
 }
 
-export function numberCell(value: number | null): NumberCell {
+export function numberCell(
+  value: number | typeof numberCellEmptyValue,
+): NumberCell {
   return {
     ...common,
     data: {
@@ -34,7 +39,7 @@ export function numberCell(value: number | null): NumberCell {
       value,
     },
     kind: GridCellKind.Custom,
-    copyData: value !== null ? value.toString() : "",
+    copyData: value !== numberCellEmptyValue ? value.toString() : "",
   };
 }
 
