@@ -25,7 +25,6 @@ module.exports = async (on, config) => {
   // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
   config.env.API_URI = process.env.API_URI;
   config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
-  config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;

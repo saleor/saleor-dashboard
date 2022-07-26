@@ -1,3 +1,5 @@
+import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
+import { updateChannelWarehouses } from "../requests/Channels";
 import * as shippingMethodRequest from "../requests/ShippingMethod";
 import * as warehouseRequest from "../requests/Warehouse";
 import { getDefaultChannel } from "./channelsUtils";
@@ -25,6 +27,9 @@ export function createShipping({
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
+      if (returnValueDependsOnShopVersion("3.5", true, false)) {
+        updateChannelWarehouses(channelId, warehouse.id);
+      }
       shippingMethodRequest.createShippingRate({
         name,
         shippingZone: shippingZone.id
@@ -81,4 +86,27 @@ export function deleteShippingStartsWith(startsWith) {
     warehouseRequest.getWarehouses,
     startsWith
   );
+}
+
+export function createShippingWithDefaultChannel(name, price) {
+  let defaultChannel;
+
+  return getDefaultChannel()
+    .then(channel => {
+      defaultChannel = channel;
+      cy.fixture("addresses");
+    })
+    .then(addresses => {
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: addresses.usAddress,
+        price
+      });
+    })
+    .then(({ shippingMethod, shippingZone }) => ({
+      shippingMethod,
+      shippingZone,
+      defaultChannel
+    }));
 }

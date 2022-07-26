@@ -1,6 +1,7 @@
 import { returnValueDependsOnShopVersion } from "../../../formatData/dataDependingOnVersion";
 import * as attributeRequest from "../../requests/Attribute";
 import * as categoryRequest from "../../requests/Category";
+import { createChannel } from "../../requests/Channels";
 import { createCollection } from "../../requests/Collections";
 import * as productRequest from "../../requests/Product";
 import {
@@ -92,7 +93,8 @@ export function createTypeAttributeAndCategoryForProduct({
       if (updateAssign) {
         productAttributeAssignmentUpdate({
           productTypeId: productType.id,
-          attributeId: attribute.id
+          attributeId: attribute.id,
+          variantSelection: true
         });
       }
       categoryRequest.createCategory({ name });
@@ -127,17 +129,36 @@ export function createNewProductWithNewDataAndDefaultChannel({
   sku = name,
   productPrice = 10
 }) {
-  let defaultChannel;
+  return getDefaultChannel().then(channel => {
+    createNewProductWithNewDataAndChannel({
+      name,
+      description,
+      warehouseId,
+      preorder,
+      attributeValues,
+      sku,
+      productPrice,
+      defaultChannel: channel
+    });
+  });
+}
+
+export function createNewProductWithNewDataAndChannel({
+  name,
+  description = name,
+  warehouseId,
+  preorder,
+  attributeValues = ["value"],
+  sku = name,
+  productPrice = 10,
+  defaultChannel
+}) {
   let collection;
   let attribute;
   let category;
   let productType;
 
-  return getDefaultChannel()
-    .then(channel => {
-      defaultChannel = channel;
-      createCollection(name);
-    })
+  return createCollection(name)
     .then(collectionResp => {
       collection = collectionResp;
       createTypeAttributeAndCategoryForProduct({ name, attributeValues });
@@ -181,7 +202,8 @@ export function createProductWithShipping({
   sku = name,
   productPrice = 10,
   shippingPrice = 10,
-  preorder
+  preorder,
+  newChannel = false
 }) {
   let address;
   let warehouse;
@@ -193,7 +215,11 @@ export function createProductWithShipping({
     .fixture("addresses")
     .then(addresses => {
       address = addresses.usAddress;
-      getDefaultChannel();
+      if (!newChannel) {
+        getDefaultChannel();
+      } else {
+        createChannel({ name });
+      }
     })
     .then(channelResp => {
       defaultChannel = channelResp;
@@ -213,13 +239,14 @@ export function createProductWithShipping({
         warehouse = warehouseResp;
         shippingMethod = shippingMethodResp;
         shippingZone = shippingZoneResp;
-        createNewProductWithNewDataAndDefaultChannel({
+        createNewProductWithNewDataAndChannel({
           name,
           warehouseId: warehouse.id,
           productPrice,
           preorder,
           attributeValues,
-          sku
+          sku,
+          defaultChannel
         });
       }
     )

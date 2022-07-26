@@ -46,6 +46,7 @@ export function createFirstVariant({
   cy.addAliasToGraphRequest("ProductVariantBulkCreate")
     .get(VARIANTS_SELECTORS.nextButton)
     .click()
+    .confirmationMessageShouldAppear()
     .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
@@ -68,10 +69,12 @@ export function createVariant({
     .get(VARIANTS_SELECTORS.skuInput)
     .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
-    .click();
+    .click()
+    .get(PRODUCT_DETAILS.productNameInput)
+    .should("be.enabled");
   selectChannelForVariantAndFillUpPrices({
     channelName,
-    attributeName,
+    variantName: attributeName,
     price,
     costPrice
   });
@@ -133,18 +136,18 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
 
 export function selectChannelForVariantAndFillUpPrices({
   channelName,
-  attributeName,
+  variantName,
   price,
   costPrice = price
 }) {
   cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest(
     "ProductChannelListingUpdate"
   );
-  selectChannelVariantInDetailsPage(channelName, attributeName);
+  selectChannelVariantInDetailsPage(channelName, variantName);
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
     .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
-  cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
+  cy.contains(PRODUCT_DETAILS.variantRow, variantName)
     .click()
     .get(PRICE_LIST.priceInput)
     .type(price)

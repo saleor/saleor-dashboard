@@ -55,7 +55,9 @@ Cypress.Commands.add(
         if (counter === elementsIds.length) {
           return;
         }
-        cy.get(BUTTON_SELECTORS.nextPaginationButton)
+        cy.get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(BUTTON_SELECTORS.nextPaginationButton)
           .click()
           .findElementsAndMakeActionOnTable({
             elementsIds: notSelectedElements,
