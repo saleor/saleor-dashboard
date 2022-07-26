@@ -1,4 +1,3 @@
-import { returnValueDependsOnShopVersion } from "../../../formatData/dataDependingOnVersion";
 import * as attributeRequest from "../../requests/Attribute";
 import * as categoryRequest from "../../requests/Category";
 import { createChannel } from "../../requests/Channels";
@@ -89,14 +88,11 @@ export function createTypeAttributeAndCategoryForProduct({
     })
     .then(productTypeResp => {
       productType = productTypeResp;
-      const updateAssign = returnValueDependsOnShopVersion("3.1", true, false);
-      if (updateAssign) {
-        productAttributeAssignmentUpdate({
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          variantSelection: true
-        });
-      }
+      productAttributeAssignmentUpdate({
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        variantSelection: true
+      });
       categoryRequest.createCategory({ name });
     })
     .then(categoryResp => {

@@ -17,7 +17,6 @@ import {
 } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../../support/api/utils/storeFront/checkoutUtils";
-import { returnValueDependsOnShopVersion } from "../../../../support/formatData/dataDependingOnVersion";
 import {
   createShippingRate,
   rateOptions
@@ -59,9 +58,6 @@ describe("As a staff user I want to manage shipping weights", () => {
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
-        if (returnValueDependsOnShopVersion("3.5", true, false)) {
-          updateChannelWarehouses(defaultChannel.id, warehouse.id);
-        }
         createTypeAttributeAndCategoryForProduct({ name });
       })
       .then(({ attribute, productType, category }) => {
