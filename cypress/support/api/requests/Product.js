@@ -1,5 +1,4 @@
 import { stringify } from "../.././formatData/formatJson";
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import {
   getDataForDescriptionInVariables,
   getValueWithDefault,
@@ -248,14 +247,11 @@ export function getVariants(variantsList) {
 }
 
 export function getVariant(id, channelSlug, auth = "auth") {
-  const preorder = returnValueDependsOnShopVersion(
-    "3.1",
-    `preorder{
+  const preorder = `preorder{
     globalThreshold
     globalSoldUnits
     endDate
-  }`
-  );
+  }`;
 
   const query = `query{
     productVariant(id:"${id}" channel:"${channelSlug}"){
