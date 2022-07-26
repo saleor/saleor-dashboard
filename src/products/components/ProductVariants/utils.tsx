@@ -295,8 +295,9 @@ export function getColumnData(
     );
     return {
       ...common,
+      group: channel.name,
       width: 150,
-      title: `${channel?.name} [${channel.currency}]`,
+      title: `Price [${channel.currency}]`,
     };
   }
 
@@ -306,8 +307,9 @@ export function getColumnData(
     );
     return {
       ...common,
+      group: channel.name,
       width: 80,
-      title: `Available in ${channel?.name}`,
+      title: "Available",
     };
   }
 

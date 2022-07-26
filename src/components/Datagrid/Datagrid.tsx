@@ -185,6 +185,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   query={picker.query}
                 />
               </div>
+              {columns.some(col => col.group) && (
+                <div className={classes.rowAction} />
+              )}
               {Array(rows - removed.length)
                 .fill(0)
                 .map((_, index) => (
