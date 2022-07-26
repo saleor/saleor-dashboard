@@ -35,7 +35,7 @@ const TranslationsMenuItemList: React.FC<TranslationsEntityListProps> = ({
             node.__typename === "MenuItemTranslatableContent" && {
               completion: {
                 current: sumCompleted([node.translation?.name]),
-                max: 2,
+                max: 1,
               },
               id: node?.menuItem.id,
               name: node?.menuItem.name,
