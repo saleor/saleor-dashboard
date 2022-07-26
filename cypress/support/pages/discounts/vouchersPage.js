@@ -100,7 +100,7 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
     .visit(urlList.vouchers);
-  cy.softExpectSkeletonIsVisible();
+  cy.expectSkeletonIsVisible();
   createVoucher({
     voucherCode,
     voucherValue,

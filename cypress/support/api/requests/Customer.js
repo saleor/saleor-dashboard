@@ -23,7 +23,7 @@ export function createCustomer(email, customerName, address, isActive = false) {
         id
         email
       }
-      accountErrors{
+      errors{
         code
         message
       }
@@ -48,7 +48,7 @@ export function deleteCustomersStartsWith(startsWith) {
 export function deleteCustomer(customerId) {
   const mutation = `mutation{
     customerDelete(id:"${customerId}"){
-      accountErrors{
+      errors{
         code
         message
       }

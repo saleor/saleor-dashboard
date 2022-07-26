@@ -126,7 +126,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       ${amountLine}
       returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
-      paymentErrors{
+      errors{
         field
         message
       }
