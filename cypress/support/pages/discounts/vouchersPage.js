@@ -1,7 +1,6 @@
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { voucherDetailsUrl } from "../../../fixtures/urlList";
-import { urlList } from "../../../fixtures/urlList";
+import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createCheckoutWithVoucher } from "../../api/utils/ordersUtils";
 import { selectChannelInDetailsPages } from "../channelsPage";
@@ -57,7 +56,7 @@ export function createVoucher({
   }
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
-    .confirmationMessageShouldDisappear();
+    .confirmationMessageShouldAppear();
 }
 
 export function setVoucherDate({
@@ -101,7 +100,7 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
     .visit(urlList.vouchers);
-  cy.softExpectSkeletonIsVisible();
+  cy.expectSkeletonIsVisible();
   createVoucher({
     voucherCode,
     voucherValue,

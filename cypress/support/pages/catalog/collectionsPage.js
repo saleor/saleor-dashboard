@@ -39,15 +39,11 @@ export function saveCollection(alias = "CreateCollection") {
 }
 
 export function updateCollection({ name, description }) {
-  cy.get(COLLECTION_SELECTORS.descriptionInput)
-    .find(SHARED_ELEMENTS.contentEditable)
-    .should("be.visible")
+  cy.get(COLLECTION_SELECTORS.nameInput)
+    .should("be.enabled")
     .get(COLLECTION_SELECTORS.descriptionInput)
-    .click()
-    .get(COLLECTION_SELECTORS.descriptionInput)
-    .find(SHARED_ELEMENTS.contentEditable)
-    .get(COLLECTION_SELECTORS.descriptionInput)
-    .clearAndType(description)
+    .find(COLLECTION_SELECTORS.placeholder)
+    .type(description)
     .get(COLLECTION_SELECTORS.nameInput)
     .clearAndType(name);
   return saveCollection("CollectionUpdate");
@@ -66,4 +62,14 @@ export function assignProductsToCollection(productName) {
   cy.addAliasToGraphRequest("CollectionAssignProduct");
   cy.get(ASSIGN_ELEMENTS_SELECTORS.submitButton).click();
   cy.waitForRequestAndCheckIfNoErrors("@CollectionAssignProduct");
+}
+
+export function removeProductsFromCollection(productName) {
+  cy.contains(ASSIGN_ELEMENTS_SELECTORS.tableRow, productName)
+    .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+    .click()
+    .addAliasToGraphRequest("UnassignCollectionProduct")
+    .get(BUTTON_SELECTORS.deleteIcon)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@UnassignCollectionProduct");
 }
