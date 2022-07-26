@@ -24,6 +24,7 @@ const props: TranslationsEntitiesListPageProps = {
     onSalesTabClick: () => undefined,
     onShippingMethodsTabClick: () => undefined,
     onVouchersTabClick: () => undefined,
+    onMenuItemsTabClick: () => undefined,
   },
   language: {
     __typename: "LanguageDisplay",

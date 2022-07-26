@@ -23,6 +23,7 @@ import TranslationsCollectionsComponent, {
 } from "./views/TranslationsCollections";
 import TranslationsEntitiesComponent from "./views/TranslationsEntities";
 import TranslationsLanguageList from "./views/TranslationsLanguageList";
+import TranslationsMenuItemComponent from "./views/TranslationsMenuItem";
 import TranslationsPagesComponent, {
   TranslationsPagesQueryParams,
 } from "./views/TranslationsPages";
@@ -212,6 +213,22 @@ const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
     />
   );
 };
+const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({
+  location,
+  match,
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: TranslationsShippingMethodQueryParams = {
+    activeField: qs.activeField,
+  };
+  return (
+    <TranslationsMenuItemComponent
+      id={decodeURIComponent(match.params.id)}
+      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      params={params}
+    />
+  );
+};
 
 const TranslationsRouter: React.FC = () => {
   const intl = useIntl();
@@ -312,6 +329,15 @@ const TranslationsRouter: React.FC = () => {
             ":id",
           )}
           component={TranslationsShippingMethod}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.menuItems,
+            ":id",
+          )}
+          component={TranslationsMenuItem}
         />
       </Switch>
     </>
