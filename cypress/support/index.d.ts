@@ -13,7 +13,6 @@ declare namespace Cypress {
       startsWith: string,
       name? = string
     ): Chainable<any>;
-    softExpectSkeletonIsVisible(): Chainable<any>;
     expectCorrectFullAddress(
       responseAddress: string,
       expectedAddress: string
@@ -22,8 +21,6 @@ declare namespace Cypress {
       responseAddress: string,
       expectedAddress: string
     ): Chainable<any>;
-    softAssertVisibility(selector: string): Chainable<any>;
-    softAssertMatch(selector: string, regexp: string): Chainable<any>;
     getTextFromElement(element: {}): Chainable<any>;
     clearAndType(subject: {}, text: string): Chainable<any>;
     loginUser(): Chainable<any>;

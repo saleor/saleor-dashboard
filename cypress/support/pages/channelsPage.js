@@ -64,8 +64,9 @@ export function selectChannelInPicker(channelName) {
 export function selectChannelInHeader(channelName) {
   cy.get(HEADER_SELECTORS.channelSelect).click();
   cy.contains(SHARED_ELEMENTS.selectOption, channelName)
-    .scrollIntoView()
-    .click();
+    .click({ force: true })
+    .get(SHARED_ELEMENTS.selectOption)
+    .should("not.exist");
 }
 
 export function selectChannelInDetailsPages(channelName) {

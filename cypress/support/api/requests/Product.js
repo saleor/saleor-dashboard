@@ -33,7 +33,7 @@ export function getFirstProducts(first, search) {
 export function updateProduct(productId, input) {
   const mutation = `mutation {
     productUpdate(id:"${productId}", input:${stringify(input)} ){
-      productErrors{
+      errors{
         field
         message
       }
@@ -85,7 +85,7 @@ export function updateChannelPriceInVariant(variantId, channelId) {
       price: 10
       costPrice: 10
     }){
-      productChannelListingErrors{
+      errors{
         message
       }
     }
@@ -133,7 +133,7 @@ export function createProduct({
         id
         name
       }
-      productErrors{
+      errors{
         field
         message
       }
@@ -218,7 +218,7 @@ export function createVariant({
 export function deleteProduct(productId) {
   const mutation = `mutation{
     productDelete(id: "${productId}"){
-      productErrors{
+      errors{
         field
         message
       }

@@ -2,8 +2,16 @@ name: Execute nightly tests
 
 on:
   workflow_dispatch:
-    branches: ["main"]
     inputs:
+      tags:
+        required: true 
+        description: 'Select tests to run'
+        default: '@allEnv'
+        type: choice
+        options:
+        - '@allEnv'
+        - '@critical'
+        - '@stable'
       environment:
         required: true 
         description: 'Environment to run tests against'
@@ -14,14 +22,25 @@ on:
         - https://master.staging.saleor.cloud/
         - https://latest.staging.saleor.cloud/
         - https://qa.staging.saleor.cloud/
+        - Other
+      otherEnvironment:
+        required: false
+        description: 'Type env if "Other" option is selected'
+        type: string
+        default: 'https://vXX.staging.saleor.cloud/' 
+
   schedule:
     - cron: '00 2 * * 1-5'
+
+  repository_dispatch:
+    types: [automation-tests-event]
 
 jobs:
 
   revert-automation-env-to-snap:
-    if: github.event.inputs.environment == null
+    if: ${{ github.event.inputs.environment == null && github.event_name != 'repository_dispatch' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
 
       - name: Setup Node
@@ -31,7 +50,7 @@ jobs:
 
       - name: Install saleor cli
         id: install-saleor-cli
-        run: npm i -g saleor-cli
+        run: npm i -g saleor-cli@next
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -44,21 +63,31 @@ jobs:
             ${{ runner.os }}-qa-${{ env.cache-name }}-
             ${{ runner.os }}-qa-
             ${{ runner.os }}-
-
       - name: Write config file
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
         run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
-      
+
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore MbdG5UXd
+        run: npx saleor backup restore 6tOoEwCh --skip-webhooks-update
+
+      - name: Notify Slack
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_SNAP_RESTORE }}
+          SLACK_USERNAME: RevertSnapshotBot
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "Revert to snapshot job failed"
+          SLACK_MESSAGE: "https://github.com/saleor/saleor-dashboard/actions/workflows/tests-nightly.yml"
+          MSG_MINIMAL: true
 
   run-tests-in-parallel:
     needs: revert-automation-env-to-snap
-    if: always() #Wait for revert-automation-env-to-snap, bot run always, even if skipped
+    if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
@@ -70,20 +99,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Check if other env
+        id: get-typed-env-uri
+        if: ${{ github.event.inputs.environment == 'Other' }}
+        run: |
+          echo "::set-output name=ENV_URI::${{github.event.inputs.otherEnvironment}}"
       - name: Get env
         id: get-env-uri
         env:
           DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          TYPED_ENV_URI: ''
         run: |
-          echo "::set-output name=ENV_URI::${{ github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
-
+          echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 14
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -94,10 +129,54 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
+          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          CYPRESS_grepTags: ${{ github.event.inputs.tags }}
         with:
           parallel: true
           group: 'UI - Chrome'
-          command: npm run cy:run:allEnv:parallel
+          record: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
-
-
+  run-tests-on-release:
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE'}}
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2, 3, 4]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Get formatted version
+        id: version
+        env:
+          version: ${{github.event.client_payload.version}}
+        run: |
+              echo "::set-output name=formatted_version::$(echo $version | grep -ohE "[0-9]\.[0-9]+" | sed s/\\.// )" 
+              
+      - name: Cypress run - automatically
+        uses: cypress-io/github-action@v4
+        env:
+          API_URI: https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud/graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud/dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
+          COMMIT_INFO_MESSAGE: Critical triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
+          CYPRESS_grepTags: '@stable'
+        with:
+          parallel: true
+          group: 'UI - Chrome'
+          record: true
+          tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
