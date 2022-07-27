@@ -1,6 +1,5 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits, limitsReached } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
@@ -17,25 +16,12 @@ import Decorator from "../../Decorator";
 import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture(placeholderImage);
-const channels = createChannelsData(channelsList);
 
 const props: ProductUpdatePageProps = {
   channels: channelsList,
   productId: "123",
-  allChannelsCount: 5,
-  onChannelsChange: () => undefined,
-  currentChannels: [],
   isSimpleProduct: false,
   categories: [product.category],
-  channelsWithVariantsData: {
-    channel1: {
-      availableVariants: ["variantA"],
-      variantsIdsToRemove: ["variantB"],
-      variantsIdsToAdd: [],
-    },
-  },
-  setChannelsData: () => undefined,
-  channelsData: channels,
   channelsErrors: [],
   collections,
   disabled: false,
@@ -58,7 +44,6 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSubmit: () => undefined,
   onVariantShow: () => undefined,
-  openChannelsModal: () => undefined,
   placeholderImage,
   product,
   referencePages: [],
@@ -179,9 +164,6 @@ storiesOf("Views / Products / Product edit", module)
         message: "Attributes invalid",
       }))}
     />
-  ))
-  .add("with channels", () => (
-    <ProductUpdatePage {...props} currentChannels={channels} />
   ))
   .add("no limits", () => <ProductUpdatePage {...props} limits={undefined} />)
   .add("limits reached", () => (
