@@ -74,7 +74,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const formErrors = errors.filter(error => error.field === "lines"); // getFormErrors(["lines"], errors);
+  const formErrors = errors.filter(error => error.field === "lines");
 
   if (order === undefined) {
     return <Skeleton className={classes.skeleton} />;
