@@ -26,6 +26,7 @@ export interface TranslationsEntitiesFilters {
   onPagesTabClick: () => void;
   onAttributesTabClick: () => void;
   onShippingMethodsTabClick: () => void;
+  onMenuItemsTabClick: () => void;
 }
 
 export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
@@ -39,6 +40,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "pages",
   "attributes",
   "shippingMethods",
+  "menuItems",
 ];
 
 const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
@@ -125,6 +127,13 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
               defaultMessage: "Shipping methods",
             })}
             onClick={filters.onShippingMethodsTabClick}
+          />
+          <FilterTab
+            label={intl.formatMessage({
+              id: "AcMzwj",
+              defaultMessage: "Menu items",
+            })}
+            onClick={filters.onMenuItemsTabClick}
           />
         </FilterTabs>
         {children}

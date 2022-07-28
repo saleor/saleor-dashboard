@@ -216,6 +216,33 @@ export const shippingMethodTranslations = gql`
   }
 `;
 
+export const menuItemTranslations = gql`
+  query MenuItemTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    translations(
+      kind: MENU_ITEM
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      edges {
+        node {
+          ...MenuItemTranslation
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+
 export const productTranslationDetails = gql`
   query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: PRODUCT, id: $id) {
@@ -310,6 +337,14 @@ export const shippingMethodTranslationDetails = gql`
   ) {
     translation(kind: SHIPPING_METHOD, id: $id) {
       ...ShippingMethodTranslation
+    }
+  }
+`;
+
+export const menuItemTranslationDetails = gql`
+  query MenuItemTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
+    translation(kind: MENU_ITEM, id: $id) {
+      ...MenuItemTranslation
     }
   }
 `;

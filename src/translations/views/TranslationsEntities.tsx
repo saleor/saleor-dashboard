@@ -11,6 +11,7 @@ import { LanguageEntitiesUrlQueryParams, TranslatableEntities } from "../urls";
 import TranslationsAttributeList from "./EntityLists/TranslationsAttributeList";
 import TranslationsCategoryList from "./EntityLists/TranslationsCategoryList";
 import TranslationsCollectionList from "./EntityLists/TranslationsCollectionList";
+import TranslationsMenuItemList from "./EntityLists/TranslationsMenuItemList";
 import TranslationsPageList from "./EntityLists/TranslationsPageList";
 import TranslationsProductList from "./EntityLists/TranslationsProductList";
 import TranslationsSaleList from "./EntityLists/TranslationsSaleList";
@@ -96,6 +97,13 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             tab: TranslatableEntities.vouchers,
           }),
       ),
+    onMenuItemsTabClick: () =>
+      navigate(
+        "?" +
+          stringifyQs({
+            tab: TranslatableEntities.menuItems,
+          }),
+      ),
   };
   const lang = maybe(() =>
     shop.languages.find(languageFromList => languageFromList.code === language),
@@ -138,6 +146,8 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           params={params}
           variables={queryVariables}
         />
+      ) : params.tab === "menuItems" ? (
+        <TranslationsMenuItemList params={params} variables={queryVariables} />
       ) : null}
     </TranslationsEntitiesListPage>
   );

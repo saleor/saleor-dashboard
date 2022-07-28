@@ -6568,6 +6568,8 @@ export type AttributeTranslationDetailsFragment = { __typename: 'AttributeTransl
 
 export type AttributeValueTranslatableContentFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: any | null } | null } }> } | null } | null };
 
+export type MenuItemTranslationFragment = { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null };
+
 export type WarehouseFragment = { __typename: 'Warehouse', id: string, name: string };
 
 export type WarehouseWithShippingFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
@@ -8203,6 +8205,15 @@ export type UpdateShippingMethodTranslationsMutationVariables = Exact<{
 
 export type UpdateShippingMethodTranslationsMutation = { __typename: 'Mutation', shippingPriceTranslate: { __typename: 'ShippingPriceTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, shippingMethod: { __typename: 'ShippingMethodType', id: string, name: string, description: any | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
+export type UpdateMenuItemTranslationsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: NameTranslationInput;
+  language: LanguageCodeEnum;
+}>;
+
+
+export type UpdateMenuItemTranslationsMutation = { __typename: 'Mutation', menuItemTranslate: { __typename: 'MenuItemTranslate', errors: Array<{ __typename: 'TranslationError', field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', id: string, name: string, translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
+
 export type CategoryTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
   first?: InputMaybe<Scalars['Int']>;
@@ -8291,6 +8302,17 @@ export type ShippingMethodTranslationsQueryVariables = Exact<{
 
 export type ShippingMethodTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'ProductTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'SaleTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
+export type MenuItemTranslationsQueryVariables = Exact<{
+  language: LanguageCodeEnum;
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type MenuItemTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'ProductTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
 export type ProductTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   language: LanguageCodeEnum;
@@ -8373,6 +8395,14 @@ export type ShippingMethodTranslationDetailsQueryVariables = Exact<{
 
 
 export type ShippingMethodTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'ProductTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'SaleTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | null };
+
+export type MenuItemTranslationDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+  language: LanguageCodeEnum;
+}>;
+
+
+export type MenuItemTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'ProductTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null } | null };
 
 export type UpdateMetadataMutationVariables = Exact<{
   id: Scalars['ID'];
