@@ -11,7 +11,7 @@ export function createApp(name, permission) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation).its("body.data.appCreate.app");
+  return cy.sendRequestWithQuery(mutation).its("body.data.appCreate");
 }
 
 export function getApps(first, search) {
@@ -60,4 +60,20 @@ export function getApp(appId) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.app");
+}
+
+export function updateApp(appId, permission) {
+  const mutation = `mutation{
+    appUpdate(id:"${appId}" input:{permissions: [${permission}]}){
+      errors{
+        code
+      }
+      app{
+        permissions{
+          name
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
 }

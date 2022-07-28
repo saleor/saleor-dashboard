@@ -1,4 +1,5 @@
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
+
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
   return cy
@@ -16,6 +17,7 @@ export function getDisplayedColumnArray(columnName) {
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
   let sortedProductsArray;
   let productsArray;
+
   cy.get(PRODUCTS_LIST.emptyProductRow).should("not.exist");
   getDisplayedColumnArray(columnName)
     .then(productsArrayResp => {
@@ -33,6 +35,9 @@ export function expectProductsSortedBy(columnName, inAscOrder = true) {
           sortedProductsArray,
           inAscOrder
         );
+        if (!inAscOrder) {
+          sortedProductsArray.reverse();
+        }
       }
     })
     .then(() => {

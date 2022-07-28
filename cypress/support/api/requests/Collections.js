@@ -4,7 +4,7 @@ export function createCollection(name, slug = name) {
       name:"${name}",
       slug:"${name}"
     }){
-      collectionErrors{
+      errors{
         field
         message
       }
@@ -46,8 +46,22 @@ export function deleteCollection(collectionId) {
       collection{
         id
       }
-      collectionErrors{
+      errors{
         field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function addProductToCollection({ collectionId, productId }) {
+  const mutation = `mutation addProduct {
+    collectionAddProducts(
+      collectionId: "${collectionId}"
+      products: ["${productId}"]
+    ) {
+      errors {
         message
       }
     }

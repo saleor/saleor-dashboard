@@ -1,5 +1,5 @@
 export const CHANNEL_FORM_SELECTORS = {
-  channelSelect: "[id='mui-component-select-channels']",
+  channelSelect: "[data-test-id='channel-autocomplete']",
   channelOption: "[data-test-id*='select-field-option']",
   confirmButton: "[data-test-id='submit']"
 };

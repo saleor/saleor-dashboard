@@ -147,13 +147,12 @@ jobs:
             ${{ runner.os }}-qa-${{ env.cache-name }}-
             ${{ runner.os }}-qa-
             ${{ runner.os }}-
-
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
 
       - name: Cypress run critical
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -163,9 +162,8 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ github.ref_name }}
+          CYPRESS_grepTags: '@critical'
         with:
-          command: npm run cy:run:critical
-      - uses: actions/upload-artifact@v1
-        with:
-          name: cypress-videos
-          path: cypress/videos
+          record: true
+          tag: Critical, ${{github.event.action}}
