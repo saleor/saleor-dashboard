@@ -4,7 +4,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
@@ -53,7 +52,6 @@ import { useStyles } from "./styles";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
-  trackingNumber: string;
   allowStockToBeExceeded: boolean;
 }
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
@@ -76,7 +74,6 @@ export interface OrderFulfillPageProps {
 
 const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
-  trackingNumber: "",
   allowStockToBeExceeded: false,
 };
 
@@ -286,26 +283,19 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                   )}
                 </Card>
 
-                <Card className={classes.shipmentInformationCard}>
-                  <Typography className={classes.supportHeader}>
-                    <FormattedMessage {...messages.shipmentInformation} />
-                  </Typography>
-                  <TextField
-                    value={data.trackingNumber}
-                    name="trackingNumber"
-                    label={intl.formatMessage(messages.trackingNumber)}
-                    fullWidth
-                    onChange={change}
-                  />
-                  {shopSettings?.fulfillmentAutoApprove && (
+                {shopSettings?.fulfillmentAutoApprove && (
+                  <Card className={classes.shipmentInformationCard}>
+                    <Typography className={classes.supportHeader}>
+                      <FormattedMessage {...messages.shipmentInformation} />
+                    </Typography>
                     <ControlledCheckbox
                       checked={data.sendInfo}
                       label={intl.formatMessage(messages.sentShipmentDetails)}
                       name="sendInfo"
                       onChange={change}
                     />
-                  )}
-                </Card>
+                  </Card>
+                )}
               </Grid>
 
               <Savebar

@@ -2,7 +2,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
-  useOrderFulfillmentUpdateTrackingMutation,
   useOrderFulfillSettingsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -48,8 +47,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
     },
   });
 
-  const [updateTracking] = useOrderFulfillmentUpdateTrackingMutation();
-
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
@@ -93,22 +90,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
-          // console.log("onSubmit", {
-          //   variables: {
-          //     input: {
-          //       lines: formData.items
-          //         .filter(line => !!line?.value)
-          //         .map(line => ({
-          //           orderLineId: line.id,
-          //           stocks: line.value,
-          //         })),
-          //       notifyCustomer:
-          //         settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
-          //       allowStockToBeExceeded: formData.allowStockToBeExceeded,
-          //     },
-          //     orderId,
-          //   },
-          // });
           const res = await fulfillOrder({
             variables: {
               input: {
@@ -126,21 +107,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
             },
           });
 
-          const fulfillments = res?.data?.orderFulfill?.order?.fulfillments;
-          if (fulfillments && formData.trackingNumber) {
-            updateTracking({
-              variables: {
-                id: fulfillments[fulfillments.length - 1].id,
-                input: {
-                  ...(formData?.trackingNumber && {
-                    trackingNumber: formData.trackingNumber,
-                  }),
-                  notifyCustomer:
-                    settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
-                },
-              },
-            });
-          }
           return getMutationErrors(res);
         }}
         order={data?.order}
