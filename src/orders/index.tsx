@@ -11,7 +11,6 @@ import {
   OrderDraftListUrlQueryParams,
   OrderDraftListUrlSortField,
   orderFulfillPath,
-  OrderFulfillUrlQueryParams,
   orderListPath,
   OrderListUrlQueryParams,
   OrderListUrlSortField,
@@ -62,19 +61,9 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
 };
 
-const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
-  location,
-  match,
-}) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: OrderFulfillUrlQueryParams = qs;
-  return (
-    <OrderFulfillComponent
-      orderId={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
-};
+const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} />
+);
 
 const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />

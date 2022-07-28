@@ -24,7 +24,6 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-  WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
@@ -36,6 +35,7 @@ import { orderUrl } from "@saleor/orders/urls";
 import {
   getAttributesCaption,
   getToFulfillOrderLines,
+  OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
@@ -59,7 +59,6 @@ export interface OrderFulfillPageProps {
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
   order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
-  warehouse: WarehouseFragment;
   shopSettings?: ShopOrderSettingsFragment;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
@@ -76,7 +75,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     errors,
     order,
     saveButtonBar,
-    warehouse,
     shopSettings,
     onSubmit,
   } = props;
@@ -87,22 +85,37 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
-    OrderFulfillStockInput[]
+    OrderFulfillLineFormData[]
   >(
     (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
-      line => ({
-        data: null,
-        id: line.id,
-        label: getAttributesCaption(line?.variant?.attributes),
-        value: line?.variant?.preorder
-          ? null
-          : [
-              {
-                quantity: line.quantityToFulfill,
-                warehouse: warehouse?.id,
-              },
-            ],
-      }),
+      line => {
+        const highestQuantityAllocation = line.allocations.reduce(
+          (prevAllocation, allocation) => {
+            if (
+              !prevAllocation ||
+              prevAllocation.quantity < allocation.quantity
+            ) {
+              return allocation;
+            }
+            return prevAllocation;
+          },
+          null,
+        );
+
+        return {
+          data: null,
+          id: line.id,
+          label: getAttributesCaption(line?.variant?.attributes),
+          value: line?.variant?.preorder
+            ? null
+            : [
+                {
+                  quantity: line.quantityToFulfill,
+                  warehouse: highestQuantityAllocation?.warehouse,
+                },
+              ],
+        };
+      },
     ),
   );
 
@@ -122,7 +135,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
-      items: formsetData.filter(item => !!item.value),
+      items: formsetData
+        .filter(item => !!item.value)
+        .map(item => ({
+          ...item,
+          value: item.value.map(value => ({
+            quantity: value.quantity,
+            warehouse: value.warehouse.id,
+          })),
+        })),
     });
   };
   React.useEffect(() => {
@@ -179,12 +200,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           orderNumber: order?.number,
         })}
       />
-      <Typography className={classes.warehouseLabel}>
-        <FormattedMessage
-          {...messages.fulfillingFrom}
-          values={{ warehouseName: warehouse?.name }}
-        />
-      </Typography>
       <Form
         confirmLeave
         initial={initialFormData}
@@ -202,7 +217,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <CardTitle
                   title={intl.formatMessage(messages.itemsReadyToShip)}
                 />
-                {warehouse ? (
+                {order ? (
                   <ResponsiveTable className={classes.table}>
                     <TableHead>
                       <TableRow>
@@ -223,17 +238,19 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         <TableCell className={classes.colStock}>
                           <FormattedMessage {...messages.stock} />
                         </TableCell>
+                        <TableCell className={classes.colWarehouse}>
+                          <FormattedMessage {...messages.warehouse} />
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {renderCollection(
-                        getToFulfillOrderLines(order?.lines),
+                        getToFulfillOrderLines(order.lines),
                         (line: OrderFulfillLineFragment, lineIndex) => (
                           <OrderFulfillLine
                             key={line.id}
                             line={line}
                             lineIndex={lineIndex}
-                            warehouseId={warehouse?.id}
                             formsetData={formsetData}
                             formsetChange={formsetChange}
                           />
@@ -288,7 +305,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               open={displayStockExceededDialog}
               lines={order?.lines}
               formsetData={formsetData}
-              warehouseId={warehouse?.id}
               confirmButtonState={saveButtonBar}
               onSubmit={submit}
               onClose={() => setDisplayStockExceededDialog(false)}

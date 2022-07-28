@@ -9,17 +9,15 @@ import {
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
-  WarehouseFragment,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
-import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { transformFuflillmentLinesToStockInputFormsetData } from "@saleor/orders/utils/data";
+import { transformFuflillmentLinesToStockFormsetData } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -48,7 +46,6 @@ import {
   OrderUrlQueryParams,
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
-import { useDefaultWarehouse } from "./useDefaultWarehouse";
 
 interface OrderNormalDetailsProps {
   id: string;
@@ -107,10 +104,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const shop = data?.shop;
   const navigate = useNavigator();
 
-  const {
-    data: warehousesData,
-    loading: warehousesLoading,
-  } = useWarehouseListQuery({
+  const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 30,
@@ -118,15 +112,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   });
 
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
-
-  const [fulfillmentWarehouse, setFulfillmentWarehouse] = React.useState<
-    WarehouseFragment
-  >(null);
-
-  useDefaultWarehouse({ warehouses, order, setter: setFulfillmentWarehouse }, [
-    warehousesData,
-    warehousesLoading,
-  ]);
 
   const {
     data: customerAddresses,
@@ -206,11 +191,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           ],
         )}
         shippingMethods={data?.order?.shippingMethods || []}
-        selectedWarehouse={fulfillmentWarehouse}
         onOrderCancel={() => openModal("cancel")}
-        onOrderFulfill={() =>
-          navigate(orderFulfillUrl(id, { warehouse: fulfillmentWarehouse?.id }))
-        }
+        onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
             orderUrl(id, {
@@ -255,7 +237,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
-        onWarehouseChange={() => openModal("change-warehouse")}
         onSubmit={handleSubmit}
       />
       <OrderCannotCancelOrderDialog
@@ -336,12 +317,11 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderFulfillStockExceededDialog
         lines={currentApproval?.fulfillment.lines}
-        formsetData={transformFuflillmentLinesToStockInputFormsetData(
+        formsetData={transformFuflillmentLinesToStockFormsetData(
           currentApproval?.fulfillment.lines,
-          currentApproval?.fulfillment.warehouse?.id,
+          currentApproval?.fulfillment.warehouse,
         )}
         open={stockExceeded}
-        warehouseId={currentApproval?.fulfillment.warehouse?.id}
         onClose={() => setStockExceeded(false)}
         confirmButtonState="default"
         onSubmit={() => {
@@ -391,13 +371,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         onClose={closeModal}
       />
-      <OrderChangeWarehouseDialog
+      {/* <OrderChangeWarehouseDialog
         open={params.action === "change-warehouse"}
         lines={order?.lines}
         currentWarehouse={fulfillmentWarehouse}
         onConfirm={warehouse => setFulfillmentWarehouse(warehouse)}
         onClose={closeModal}
-      />
+      /> */}
       <OrderInvoiceEmailSendDialog
         confirmButtonState={orderInvoiceSend.opts.status}
         errors={orderInvoiceSend.opts.data?.invoiceSendEmail.errors || []}

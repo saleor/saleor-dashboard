@@ -4,7 +4,6 @@ import {
   useOrderFulfillDataQuery,
   useOrderFulfillmentUpdateTrackingMutation,
   useOrderFulfillSettingsQuery,
-  useWarehouseDetailsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -12,16 +11,15 @@ import { getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage, {
   OrderFulfillSubmitData,
 } from "@saleor/orders/components/OrderFulfillPage";
-import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
-  params: OrderFulfillUrlQueryParams;
 }
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
+const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -56,12 +54,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
     },
   });
 
-  const { data: warehouseData } = useWarehouseDetailsQuery({
-    variables: {
-      id: params?.warehouse,
-    },
-  });
-
   return (
     <>
       <WindowTitle
@@ -88,6 +80,22 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
+          // console.log("onSubmit", {
+          //   variables: {
+          //     input: {
+          //       lines: formData.items
+          //         .filter(line => !!line?.value)
+          //         .map(line => ({
+          //           orderLineId: line.id,
+          //           stocks: line.value,
+          //         })),
+          //       notifyCustomer:
+          //         settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
+          //       allowStockToBeExceeded: formData.allowStockToBeExceeded,
+          //     },
+          //     orderId,
+          //   },
+          // });
           const res = await fulfillOrder({
             variables: {
               input: {
@@ -124,7 +132,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         }}
         order={data?.order}
         saveButtonBar={fulfillOrderOpts.status}
-        warehouse={warehouseData?.warehouse}
         shopSettings={settings?.shop}
       />
     </>

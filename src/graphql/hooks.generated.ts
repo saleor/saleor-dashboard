@@ -1227,6 +1227,7 @@ export const OrderLineFragmentDoc = gql`
     quantity
     warehouse {
       id
+      name
     }
   }
   variant {
@@ -1477,6 +1478,7 @@ export const OrderFulfillLineFragmentDoc = gql`
     quantity
     warehouse {
       id
+      name
     }
   }
   quantityFulfilled

@@ -76,9 +76,9 @@ export const messages = defineMessages({
     id: "zbrHAw",
     description: "Tracking number input label",
   },
-  fulfillingFrom: {
-    defaultMessage: "Fulfilling from {warehouseName}",
-    id: "oiaUni",
-    description: "Support text under page header",
+  warehouse: {
+    defaultMessage: "Warehouse",
+    id: "J0lNnk",
+    description: "column label",
   },
 });

@@ -13,19 +13,13 @@ const props: OrderFulfillPageProps = {
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouse: warehouseList[0],
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
   .addDecorator(Decorator)
   .add("default", () => <OrderFulfillPage {...props} />)
   .add("loading", () => (
-    <OrderFulfillPage
-      {...props}
-      loading={true}
-      order={undefined}
-      warehouse={undefined}
-    />
+    <OrderFulfillPage {...props} loading={true} order={undefined} />
   ))
   .add("error", () => (
     <OrderFulfillPage

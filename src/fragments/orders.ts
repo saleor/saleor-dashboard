@@ -79,6 +79,7 @@ export const fragmentOrderLine = gql`
       quantity
       warehouse {
         id
+        name
       }
     }
     variant {
@@ -345,6 +346,7 @@ export const fragmentOrderFulfillLine = gql`
       quantity
       warehouse {
         id
+        name
       }
     }
     quantityFulfilled

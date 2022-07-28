@@ -7,7 +7,6 @@ import {
   FulfillmentStatus,
   OrderDetailsFragment,
   OrderFulfillLineFragment,
-  OrderFulfillStockInput,
   OrderLineFragment,
   OrderLineStockDataFragment,
   OrderRefundDataQuery,
@@ -328,12 +327,17 @@ export const getOrderLineAvailableQuantity = (
   return availableQuantity;
 };
 
-export type OrderFulfillStockInputFormsetData = Array<
-  Pick<FormsetData<null, OrderFulfillStockInput[]>[0], "id" | "value">
+export interface OrderFulfillLineFormData {
+  quantity: number;
+  warehouse: WarehouseFragment;
+}
+
+export type OrderFulfillStockFormsetData = Array<
+  Pick<FormsetData<null, OrderFulfillLineFormData[]>[0], "id" | "value">
 >;
 
 export const getFulfillmentFormsetQuantity = (
-  formsetData: OrderFulfillStockInputFormsetData,
+  formsetData: OrderFulfillStockFormsetData,
   line: OrderLineStockDataFragment,
 ) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
 
@@ -356,17 +360,35 @@ export const isLineAvailableInWarehouse = (
   return false;
 };
 
-export const transformFuflillmentLinesToStockInputFormsetData = (
+export const getWarehouseWithHighestAvailableQuantity = (
+  lines?: OrderLineFragment[],
+) => {
+  let highestAvailableQuantity = 0;
+
+  return lines?.reduce(
+    (selectedWarehouse, line) =>
+      line.allocations.reduce((warehouse, allocation) => {
+        if (allocation.quantity > highestAvailableQuantity) {
+          highestAvailableQuantity = allocation.quantity;
+          return allocation.warehouse;
+        }
+        return warehouse;
+      }, selectedWarehouse),
+    null as WarehouseFragment,
+  );
+};
+
+export const transformFuflillmentLinesToStockFormsetData = (
   lines: FulfillmentFragment["lines"],
-  warehouseId: string,
-): OrderFulfillStockInputFormsetData =>
+  warehouse: WarehouseFragment,
+): OrderFulfillStockFormsetData =>
   lines?.map(line => ({
     data: null,
     id: line.orderLine.id,
     value: [
       {
         quantity: line.quantity,
-        warehouse: warehouseId,
+        warehouse,
       },
     ],
   }));

@@ -1078,6 +1078,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               {
                 id: "allocation_test_id",
                 warehouse: {
+                  name: "US Warehouse",
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
@@ -1186,6 +1187,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               {
                 id: "allocation_test_id",
                 warehouse: {
+                  name: "US Warehouse",
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
@@ -1302,6 +1304,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1395,6 +1398,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1628,6 +1632,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1721,6 +1726,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",

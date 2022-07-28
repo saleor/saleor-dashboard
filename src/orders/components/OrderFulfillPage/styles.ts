@@ -21,6 +21,10 @@ export const useStyles = makeStyles(
       textOverflow: "ellipsis",
       width: 150,
     },
+    colWarehouse: {
+      textAlign: "right",
+      width: 300,
+    },
     table: {
       "&&": {
         tableLayout: "fixed",
@@ -40,9 +44,6 @@ export const useStyles = makeStyles(
       fontSize: "12px",
       lineHeight: "160%",
       marginBottom: theme.spacing(2),
-    },
-    warehouseLabel: {
-      marginBottom: theme.spacing(4),
     },
   }),
   { name: "OrderFulfillPage" },

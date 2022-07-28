@@ -5,7 +5,7 @@ import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockInputFormsetData,
+  OrderFulfillStockFormsetData,
 } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -14,13 +14,17 @@ import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 export interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
-  formsetData: OrderFulfillStockInputFormsetData;
+  formsetData: OrderFulfillStockFormsetData;
 }
 
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
   const { line: genericLine, warehouseId, formsetData } = props;
 
-  const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
+  const line = genericLine
+    ? "orderLine" in genericLine
+      ? genericLine.orderLine
+      : genericLine
+    : null;
   const classes = useStyles(props);
 
   const stock = line?.variant?.stocks.find(

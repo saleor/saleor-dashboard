@@ -18,6 +18,9 @@ export const useStyles = makeStyles(
       textOverflow: "ellipsis",
       width: 150,
     },
+    colWarehouse: {
+      width: 300,
+    },
     warningIcon: {
       color: theme.palette.saleor.warning.mid,
       marginRight: theme.spacing(2),
