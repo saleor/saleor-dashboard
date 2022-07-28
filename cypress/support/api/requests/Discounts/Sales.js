@@ -29,7 +29,7 @@ export function getSales(first, searchQuery) {
 export function deleteSale(saleId) {
   const mutation = `mutation{
     saleDelete(id:"${saleId}"){
-      discountErrors{
+      errors{
         field
         message
       }

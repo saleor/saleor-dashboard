@@ -100,7 +100,7 @@ export function createSaleWithNewProduct({
       */
 
     cy.visit(urlList.sales);
-    cy.softExpectSkeletonIsVisible();
+    cy.expectSkeletonIsVisible();
     const product = productResp;
     createSale({
       saleName: name,
@@ -138,7 +138,7 @@ export function createSaleWithNewVariant({
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
     cy.visit(urlList.sales);
-    cy.softExpectSkeletonIsVisible();
+    cy.expectSkeletonIsVisible();
     const variant = variantsListResp[0];
     createSale({
       saleName: name,

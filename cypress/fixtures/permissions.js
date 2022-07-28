@@ -7,9 +7,6 @@ const configurationAsParent = {
 };
 
 export const PERMISSIONS = {
-  app: {
-    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.app]
-  },
   channel: {
     parent: configurationAsParent,
     permissionSelectors: [CONFIGURATION_SELECTORS.channels]

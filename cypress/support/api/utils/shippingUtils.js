@@ -1,3 +1,4 @@
+import { updateChannelWarehouses } from "../requests/Channels";
 import * as shippingMethodRequest from "../requests/ShippingMethod";
 import * as warehouseRequest from "../requests/Warehouse";
 import { getDefaultChannel } from "./channelsUtils";

@@ -1,5 +1,4 @@
 import { stringify } from "../.././formatData/formatJson";
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import {
   getDataForDescriptionInVariables,
   getValueWithDefault,
@@ -33,7 +32,7 @@ export function getFirstProducts(first, search) {
 export function updateProduct(productId, input) {
   const mutation = `mutation {
     productUpdate(id:"${productId}", input:${stringify(input)} ){
-      productErrors{
+      errors{
         field
         message
       }
@@ -85,7 +84,7 @@ export function updateChannelPriceInVariant(variantId, channelId) {
       price: 10
       costPrice: 10
     }){
-      productChannelListingErrors{
+      errors{
         message
       }
     }
@@ -133,7 +132,7 @@ export function createProduct({
         id
         name
       }
-      productErrors{
+      errors{
         field
         message
       }
@@ -218,7 +217,7 @@ export function createVariant({
 export function deleteProduct(productId) {
   const mutation = `mutation{
     productDelete(id: "${productId}"){
-      productErrors{
+      errors{
         field
         message
       }
@@ -248,14 +247,11 @@ export function getVariants(variantsList) {
 }
 
 export function getVariant(id, channelSlug, auth = "auth") {
-  const preorder = returnValueDependsOnShopVersion(
-    "3.1",
-    `preorder{
+  const preorder = `preorder{
     globalThreshold
     globalSoldUnits
     endDate
-  }`
-  );
+  }`;
 
   const query = `query{
     productVariant(id:"${id}" channel:"${channelSlug}"){
