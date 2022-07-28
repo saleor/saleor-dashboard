@@ -148,8 +148,18 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4]
     steps:
+
+      - name: Get branch
+        id: branch
+        env:
+          version: ${{github.event.client_payload.version}}
+        run: |
+              echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )" 
+
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.branch.outputs.ref }}
       
       - name: Get formatted version
         id: version
