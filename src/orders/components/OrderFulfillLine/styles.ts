@@ -19,7 +19,8 @@ export const useStyles = makeStyles(
       width: 150,
     },
     colWarehouse: {
-      width: 300,
+      width: 250,
+      textAlign: "right",
     },
     warningIcon: {
       color: theme.palette.saleor.warning.mid,
@@ -44,6 +45,15 @@ export const useStyles = makeStyles(
       paddingTop: theme.spacing(2),
       color: theme.palette.text.secondary,
       whiteSpace: "nowrap",
+    },
+    warehouseButton: {
+      border: 0,
+    },
+    warehouseButtonContent: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      cursor: "pointer",
     },
   }),
   { name: "OrderFulfillLine" },

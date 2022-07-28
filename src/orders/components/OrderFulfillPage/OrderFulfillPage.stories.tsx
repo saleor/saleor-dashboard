@@ -8,11 +8,14 @@ import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
 const props: OrderFulfillPageProps = {
+  params: {},
   errors: [],
   loading: false,
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
+  openModal: () => undefined,
+  closeModal: () => undefined,
 };
 
 storiesOf("Views / Orders / Fulfill order", module)

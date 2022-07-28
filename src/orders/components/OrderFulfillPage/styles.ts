@@ -23,7 +23,7 @@ export const useStyles = makeStyles(
     },
     colWarehouse: {
       textAlign: "right",
-      width: 300,
+      width: 250,
     },
     table: {
       "&&": {
@@ -44,6 +44,9 @@ export const useStyles = makeStyles(
       fontSize: "12px",
       lineHeight: "160%",
       marginBottom: theme.spacing(2),
+    },
+    skeleton: {
+      margin: theme.spacing(0, 4),
     },
   }),
   { name: "OrderFulfillPage" },

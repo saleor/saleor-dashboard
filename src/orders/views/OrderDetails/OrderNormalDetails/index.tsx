@@ -371,13 +371,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         onClose={closeModal}
       />
-      {/* <OrderChangeWarehouseDialog
-        open={params.action === "change-warehouse"}
-        lines={order?.lines}
-        currentWarehouse={fulfillmentWarehouse}
-        onConfirm={warehouse => setFulfillmentWarehouse(warehouse)}
-        onClose={closeModal}
-      /> */}
       <OrderInvoiceEmailSendDialog
         confirmButtonState={orderInvoiceSend.opts.status}
         errors={orderInvoiceSend.opts.data?.invoiceSendEmail.errors || []}

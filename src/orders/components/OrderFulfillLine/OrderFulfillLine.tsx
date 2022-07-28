@@ -1,19 +1,20 @@
 import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
-import Debounce from "@saleor/components/Debounce";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderFulfillLineFragment } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import {
+  ChevronIcon,
+  IconButton,
+  Tooltip,
+  WarningIcon,
+} from "@saleor/macaw-ui";
 import {
   getAttributesCaption,
   getOrderLineAvailableQuantity,
   getWarehouseStock,
   OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -26,10 +27,17 @@ interface OrderFulfillLineProps {
   lineIndex: number;
   formsetData: FormsetData<null, OrderFulfillLineFormData[]>;
   formsetChange: FormsetChange<OrderFulfillLineFormData[]>;
+  onWarehouseChange: () => void;
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const { line, lineIndex, formsetData, formsetChange } = props;
+  const {
+    line,
+    lineIndex,
+    formsetData,
+    formsetChange,
+    onWarehouseChange,
+  } = props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -42,8 +50,6 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
 
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
 
-  // const [selectedWarehouse, setSelectedWarehouse] = React.useState(lineFormWarehouse);
-
   const warehouseStock = getWarehouseStock(
     line?.variant?.stocks,
     lineFormWarehouse?.id,
@@ -51,24 +57,6 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const availableQuantity = getOrderLineAvailableQuantity(line, warehouseStock);
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
-
-  const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
-    variables: {
-      after: null,
-      first: 20,
-      query: "",
-    },
-  });
-
-  const filteredWarehouses =
-    mapEdgesToItems(warehousesOpts?.data?.search) || [];
-  const warehouses =
-    !lineFormWarehouse ||
-    filteredWarehouses.some(warehouse => warehouse.id === lineFormWarehouse.id)
-      ? filteredWarehouses
-      : [lineFormWarehouse, ...filteredWarehouses];
-
-  const warehousesOptions = mapNodeToChoice(warehouses);
 
   if (!line || !lineFormWarehouse) {
     return (
@@ -171,33 +159,16 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         {isPreorder || isDeletedVariant ? undefined : availableQuantity}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
-        <Debounce debounceFn={search}>
-          {debounceSearchChange => (
-            <SingleAutocompleteSelectField
-              data-test-id="address-edit-country-select-field"
-              displayValue={lineFormWarehouse.name}
-              // error={!!formErrors.country}
-              // helperText={getErrorMessage(formErrors.country, intl)}
-              label={intl.formatMessage(messages.warehouse)}
-              name="warehouse"
-              onChange={event =>
-                formsetChange(line.id, [
-                  {
-                    quantity: lineFormQuantity,
-                    warehouse: warehouses.find(
-                      ({ id }) => id === event.target.value,
-                    ),
-                  },
-                ])
-              }
-              value={lineFormWarehouse.id}
-              fetchChoices={debounceSearchChange}
-              choices={warehousesOptions}
-              hasMore={warehousesOpts.data?.search.pageInfo.hasNextPage}
-              onFetchMore={loadMore}
-            />
-          )}
-        </Debounce>
+        <IconButton
+          onClick={onWarehouseChange}
+          className={classes.warehouseButton}
+          data-test-id="select-warehouse-button"
+        >
+          <div className={classes.warehouseButtonContent}>
+            <div>{lineFormWarehouse.name ?? <Skeleton />}</div>
+            <ChevronIcon />
+          </div>
+        </IconButton>
       </TableCell>
     </TableRow>
   );

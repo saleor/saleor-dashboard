@@ -347,7 +347,7 @@ export const getWarehouseStock = (
 ) => stocks?.find(stock => stock.warehouse.id === warehouseId);
 
 export const isLineAvailableInWarehouse = (
-  line: OrderLineStockDataFragment,
+  line: OrderFulfillLineFragment | OrderLineStockDataFragment,
   warehouse: WarehouseFragment,
 ) => {
   if (!line?.variant?.stocks) {
@@ -358,6 +358,20 @@ export const isLineAvailableInWarehouse = (
     return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
   }
   return false;
+};
+
+export const getLineAvailableQuantityInWarehouse = (
+  line: OrderFulfillLineFragment,
+  warehouse: WarehouseFragment,
+) => {
+  if (!line?.variant?.stocks) {
+    return 0;
+  }
+  const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+  if (stock) {
+    return getOrderLineAvailableQuantity(line, stock);
+  }
+  return 0;
 };
 
 export const getWarehouseWithHighestAvailableQuantity = (

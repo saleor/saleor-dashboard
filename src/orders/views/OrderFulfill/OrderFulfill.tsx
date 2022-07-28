@@ -11,18 +11,30 @@ import { getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage, {
   OrderFulfillSubmitData,
 } from "@saleor/orders/components/OrderFulfillPage";
-import { orderUrl } from "@saleor/orders/urls";
+import {
+  orderFulfillUrl,
+  OrderFulfillUrlDialog,
+  OrderFulfillUrlQueryParams,
+  orderUrl,
+} from "@saleor/orders/urls";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
+  params: OrderFulfillUrlQueryParams;
 }
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
+const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    OrderFulfillUrlDialog,
+    OrderFulfillUrlQueryParams
+  >(navigate, params => orderFulfillUrl(orderId, params), params);
 
   const {
     data: settings,
@@ -77,6 +89,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
       />
       <OrderFulfillPage
+        params={params}
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
@@ -133,6 +146,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         order={data?.order}
         saveButtonBar={fulfillOrderOpts.status}
         shopSettings={settings?.shop}
+        openModal={openModal}
+        closeModal={closeModal}
       />
     </>
   );

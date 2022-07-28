@@ -7,8 +7,8 @@ export const changeWarehouseDialogMessages = defineMessages({
     description: "change warehouse dialog title",
   },
   dialogDescription: {
-    defaultMessage: "Choose warehouse you want to fulfill this order from",
-    id: "QWCh6/",
+    defaultMessage: "Choose warehouse from you want to fulfill {productName}",
+    id: "j5hYcn",
     description: "change warehouse dialog description",
   },
   searchFieldPlaceholder: {
@@ -21,15 +21,10 @@ export const changeWarehouseDialogMessages = defineMessages({
     id: "Epm41J",
     description: "change warehouse dialog warehouse list label",
   },
-  productUnavailable: {
-    defaultMessage: "{productName} is unavailable at this location",
-    id: "x4WAC7",
-    description: "warehouse label when one product is unavailable",
-  },
-  multipleProductsUnavailable: {
-    defaultMessage: "{productCount} products are unavailable at this location",
-    id: "QfKQx3",
-    description: "warehouse label when multiple products are unavailable",
+  productAvailability: {
+    defaultMessage: "{productCount} available at this location",
+    id: "hLSgWj",
+    description: "warehouse label number available of products",
   },
   currentSelection: {
     defaultMessage: "currently selected",
