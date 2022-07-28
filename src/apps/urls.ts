@@ -19,14 +19,20 @@ export type AppListUrlQueryParams = ActiveTab &
   SingleAction &
   Pagination;
 
+export interface AppDetailsUrlMountQueryParams {
+  productId?: string;
+  orderId?: string;
+}
+
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
-  SingleAction;
+  SingleAction &
+  AppDetailsUrlMountQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
 export enum AppListUrlSortField {
   name = "name",
-  active = "active"
+  active = "active",
 }
 
 export type CustomAppUrlDialog =
@@ -43,8 +49,6 @@ export const appsListPath = appsSection;
 export const customAppListPath = "/apps/custom/";
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
-export const appSettingsPath = (id: string) =>
-  urlJoin(appsSection, id, "settings");
 export const appPath = (id: string) => urlJoin(appsSection, id, "app");
 export const appDeepPath = (id: string, subPath: string) =>
   urlJoin(appPath(id), subPath);
@@ -60,20 +64,30 @@ export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
 export const appDeepUrl = (
   id: string,
   subPath: string,
-  params?: AppDetailsUrlQueryParams
+  params?: AppDetailsUrlQueryParams,
 ) => appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
 
+export const getAppDeepPathFromDashboardUrl = (
+  dashboardUrl: string,
+  appId: string,
+) => {
+  const deepSubPath = dashboardUrl.replace(
+    appPath(encodeURIComponent(appId)),
+    "",
+  );
+  return deepSubPath || "/";
+};
 export const getAppCompleteUrlFromDashboardUrl = (
   dashboardUrl: string,
   appUrl?: string,
-  appId?: string
+  appId?: string,
 ) => {
   if (!appUrl || !appId) {
     return appUrl;
   }
   const deepSubPath = dashboardUrl.replace(
     appPath(encodeURIComponent(appId)),
-    ""
+    "",
   );
   const appCompleteUrl = urlJoin(appUrl, deepSubPath);
   return appCompleteUrl;
@@ -81,7 +95,7 @@ export const getAppCompleteUrlFromDashboardUrl = (
 export const getDashboardUrFromAppCompleteUrl = (
   appCompleteUrl: string,
   appUrl?: string,
-  appId?: string
+  appId?: string,
 ) => {
   if (!appUrl || !appId) {
     return appUrl;

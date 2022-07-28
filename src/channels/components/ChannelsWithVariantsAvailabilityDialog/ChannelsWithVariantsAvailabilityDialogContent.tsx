@@ -3,7 +3,7 @@ import {
   Accordion,
   AccordionSummary,
   Divider,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import { ProductDetailsVariantFragment } from "@saleor/graphql";
@@ -14,7 +14,7 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAllChannelVariantsSelected,
-  channelVariantListingDiffToDict
+  channelVariantListingDiffToDict,
 } from "@saleor/products/views/ProductUpdate/utils";
 import map from "lodash/map";
 import React, { ChangeEvent } from "react";
@@ -26,26 +26,26 @@ import Avatar from "../../../components/TableCellAvatar/Avatar";
 const useStyles = makeStyles(
   theme => ({
     variantContainer: {
-      padding: theme.spacing(2, 0, 2, 4)
+      padding: theme.spacing(2, 0, 2, 4),
     },
     channelContainer: {
-      width: "100%"
+      width: "100%",
     },
     channelCheckboxContainer: {
       width: "100%",
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
     },
     channelTitleContainer: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
     },
     variantTitleContainer: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "center"
-    }
+      alignItems: "center",
+    },
   }),
-  { name: "ChannelsWithVariantsAvailabilityDialogContent" }
+  { name: "ChannelsWithVariantsAvailabilityDialogContent" },
 );
 
 const useExpanderStyles = makeStyles(
@@ -55,16 +55,16 @@ const useExpanderStyles = makeStyles(
       boxShadow: "none",
 
       "&:before": {
-        content: "none"
+        content: "none",
       },
 
       "&$expanded": {
         margin: 0,
-        border: "none"
-      }
-    }
+        border: "none",
+      },
+    },
   }),
-  { name: "ChannelsWithVariantsAvailabilityExpander" }
+  { name: "ChannelsWithVariantsAvailabilityExpander" },
 );
 
 const useSummaryStyles = makeStyles(
@@ -77,21 +77,21 @@ const useSummaryStyles = makeStyles(
       padding: 0,
       margin: 0,
       minHeight: 0,
-      paddingRight: theme.spacing(2.5)
+      paddingRight: theme.spacing(2.5),
     },
     content: {
-      margin: 0
-    }
+      margin: 0,
+    },
   }),
-  { name: "ChannelsWithVariantsAvailabilityChannelSummary" }
+  { name: "ChannelsWithVariantsAvailabilityChannelSummary" },
 );
 
 const messages = defineMessages({
   variantsSelectedLabel: {
     id: "yHaQWG",
     defaultMessage: "{variantsAmount} variants selected",
-    description: "variants selected label"
-  }
+    description: "variants selected label",
+  },
 });
 
 interface ChannelsWithVariantsAvailabilityDialogContentProps {
@@ -111,7 +111,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   toggleAllChannelVariants,
   isChannelSelected,
   channels,
-  allVariants
+  allVariants,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -119,7 +119,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   const summaryClasses = useSummaryStyles({});
 
   const handleVariantChange = (channelId: string, variantId: string) => (
-    event: ChangeEvent<any>
+    event: ChangeEvent<any>,
   ) =>
     event.target.value
       ? addVariantToChannel(channelId, variantId)
@@ -127,7 +127,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
 
   const isChannelPartiallySelected = (channelId: string) => {
     const selectedVariants = channelVariantListingDiffToDict(
-      channelsWithVariants
+      channelsWithVariants,
     )[channelId];
 
     if (selectedVariants.length === 0) {
@@ -135,7 +135,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
     }
     return !areAllChannelVariantsSelected(
       allVariants?.map(variant => variant.id),
-      selectedVariants
+      selectedVariants,
     );
   };
 
@@ -184,8 +184,8 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                           text={intl.formatMessage(
                             messages.variantsSelectedLabel,
                             {
-                              variantsAmount: selectedVariantsIds.length
-                            }
+                              variantsAmount: selectedVariantsIds.length,
+                            },
                           )}
                         />
                       </div>

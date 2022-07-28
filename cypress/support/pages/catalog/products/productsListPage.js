@@ -2,12 +2,14 @@ import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-li
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
 import {
   getElementByDataTestId,
-  SHARED_ELEMENTS
+  SHARED_ELEMENTS,
 } from "../../../../elements/shared/sharedElements";
 import { urlList } from "../../../../fixtures/urlList";
+import { expectProductsSortedBy } from "../../../api/utils/products/productsListUtils";
 
 export function isNumberOfProductsSameAsInSelectResultsOnPage() {
   let numberOfResults;
+
   return cy
     .get(PRODUCTS_LIST.productsList)
     .should("be.visible")
@@ -21,12 +23,13 @@ export function isNumberOfProductsSameAsInSelectResultsOnPage() {
       getDisplayedColumnArray("name");
     })
     .then(
-      productsList => productsList.length === parseInt(numberOfResults, 10)
+      productsList => productsList.length === parseInt(numberOfResults, 10),
     );
 }
 
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
+
   return cy
     .get(PRODUCTS_LIST.productsList)
     .each($product => {
@@ -57,7 +60,7 @@ export function selectAttributeFilter(attributeSlug, attributeValue) {
   cy.get(
     `${getElementByDataTestId(attributeSlug)}${
       PRODUCTS_LIST.filters.filterField.filterField
-    }`
+    }`,
   )
     .find(PRODUCTS_LIST.filters.filterOption)
     .should("be.visible")
@@ -87,7 +90,7 @@ export function selectFilterByAttribute(attributeSlug) {
     .get(
       `${getElementByDataTestId(attributeSlug)}${
         SHARED_ELEMENTS.filters.filterGroupActivateCheckbox
-      }`
+      }`,
     )
     .click();
 }
@@ -97,11 +100,12 @@ export function showFilters() {
 }
 
 export function selectChannel(channelSlug) {
+  cy.waitForProgressBarToNotExist();
   selectFilterBy("channel");
   cy.get(getElementByDataTestId(channelSlug)).click();
 }
 
-function submitFilters() {
+export function submitFilters() {
   cy.get(BUTTON_SELECTORS.submit)
     .click()
     .waitForProgressBarToNotExist()
@@ -111,6 +115,16 @@ function submitFilters() {
 
 export function enterProductListPage() {
   cy.visit(urlList.products)
-    .softExpectSkeletonIsVisible()
+    .expectSkeletonIsVisible()
     .waitForProgressBarToNotExist();
+}
+
+export function sortProductsBy(sortBy) {
+  expectProductsSortedBy(sortBy);
+  cy.addAliasToGraphRequest("ProductList")
+    .get(PRODUCTS_LIST.tableHeaders[sortBy])
+    .click()
+    .waitForProgressBarToNotExist()
+    .waitForRequestAndCheckIfNoErrors("@ProductList");
+  expectProductsSortedBy(sortBy, false);
 }

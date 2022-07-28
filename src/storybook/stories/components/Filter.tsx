@@ -4,7 +4,7 @@ import {
   createDateField,
   createKeyValueField,
   createOptionsField,
-  createPriceField
+  createPriceField,
 } from "@saleor/utils/filters/fields";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -14,31 +14,31 @@ import Decorator from "../../Decorator";
 const filtersData = [
   createPriceField("price", "Price", {
     max: "100.00",
-    min: "20.00"
+    min: "20.00",
   }),
   {
     ...createDateField("createdAt", "Created At", {
       max: "2019-10-23",
-      min: "2019-09-09"
+      min: "2019-09-09",
     }),
-    active: true
+    active: true,
   },
   {
     ...createOptionsField("status", "Status", ["val1"], false, [
       {
         label: "Value 1",
-        value: "val1"
+        value: "val1",
       },
       {
         label: "Value 2",
-        value: "val2"
+        value: "val2",
       },
       {
         label: "Value 3",
-        value: "val3"
-      }
+        value: "val3",
+      },
     ]),
-    active: true
+    active: true,
   },
   {
     ...createOptionsField(
@@ -49,25 +49,25 @@ const filtersData = [
       [
         {
           label: "Value 1",
-          value: "val1"
+          value: "val1",
         },
         {
           label: "Value 2",
-          value: "val2"
+          value: "val2",
         },
         {
           label: "Value 3",
-          value: "val3"
-        }
-      ]
+          value: "val3",
+        },
+      ],
     ),
-    active: false
+    active: false,
   },
   {
     ...createKeyValueField("metadata", "Metadata", [
-      { key: "123", value: "123" }
-    ])
-  }
+      { key: "123", value: "123" },
+    ]),
+  },
 ];
 
 const props: FilterContentProps = {
@@ -75,7 +75,7 @@ const props: FilterContentProps = {
   dataStructure: filtersData,
   onClear: () => undefined,
   onFilterPropertyChange: () => undefined,
-  onSubmit: () => undefined
+  onSubmit: () => undefined,
 };
 
 const InteractiveStory: React.FC = () => {

@@ -22,7 +22,7 @@ const VoucherTypes = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }: VoucherTypesProps) => {
   const intl = useIntl();
 
@@ -33,26 +33,26 @@ const VoucherTypes = ({
       label: intl.formatMessage({
         id: "vXFPD6",
         defaultMessage: "Fixed Amount",
-        description: "voucher discount type"
+        description: "voucher discount type",
       }),
-      value: DiscountTypeEnum.VALUE_FIXED
+      value: DiscountTypeEnum.VALUE_FIXED,
     },
     {
       label: intl.formatMessage({
         id: "fEfCtO",
         defaultMessage: "Percentage",
-        description: "voucher discount type"
+        description: "voucher discount type",
       }),
-      value: DiscountTypeEnum.VALUE_PERCENTAGE
+      value: DiscountTypeEnum.VALUE_PERCENTAGE,
     },
     {
       label: intl.formatMessage({
         id: "sS5aVm",
         defaultMessage: "Free Shipping",
-        description: "voucher discount type"
+        description: "voucher discount type",
       }),
-      value: DiscountTypeEnum.SHIPPING
-    }
+      value: DiscountTypeEnum.SHIPPING,
+    },
   ];
 
   return (
@@ -61,7 +61,7 @@ const VoucherTypes = ({
         title={intl.formatMessage({
           id: "6cq+c+",
           defaultMessage: "Discount Type",
-          description: "header"
+          description: "header",
         })}
       />
       <CardContent>

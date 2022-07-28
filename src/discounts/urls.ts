@@ -10,7 +10,7 @@ import {
   FiltersWithMultipleValues,
   Pagination,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const discountSection = "/discounts/";
@@ -22,10 +22,10 @@ export enum SaleListUrlFiltersEnum {
   startedFrom = "startedFrom",
   startedTo = "startedTo",
   query = "query",
-  channel = "channel"
+  channel = "channel",
 }
 export enum SaleListUrlFiltersWithMultipleValues {
-  status = "status"
+  status = "status",
 }
 export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
   FiltersWithMultipleValues<SaleListUrlFiltersWithMultipleValues>;
@@ -35,7 +35,7 @@ export enum SaleListUrlSortField {
   endDate = "end-date",
   startDate = "start-date",
   type = "type",
-  value = "value"
+  value = "value",
 }
 export type SaleListUrlSort = Sort<SaleListUrlSortField>;
 export type SaleListUrlQueryParams = ActiveTab &
@@ -74,11 +74,11 @@ export enum VoucherListUrlFiltersEnum {
   timesUsedFrom = "timesUsedFrom",
   timesUsedTo = "timesUsedTo",
   query = "query",
-  channel = "channel"
+  channel = "channel",
 }
 export enum VoucherListUrlFiltersWithMultipleValues {
   status = "status",
-  type = "type"
+  type = "type",
 }
 export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum> &
   FiltersWithMultipleValues<VoucherListUrlFiltersWithMultipleValues>;
@@ -90,7 +90,7 @@ export enum VoucherListUrlSortField {
   minSpent = "min-spent",
   startDate = "start-date",
   type = "type",
-  value = "value"
+  value = "value",
 }
 export type VoucherListUrlSort = Sort<VoucherListUrlSortField>;
 export type VoucherListUrlQueryParams = ActiveTab &

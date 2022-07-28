@@ -2,7 +2,7 @@ import {
   AddressFragment,
   CustomerAddressesQuery,
   OrderDetailsQuery,
-  OrderErrorFragment
+  OrderErrorFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -10,11 +10,11 @@ import { transformAddressToForm } from "@saleor/misc";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog, {
-  OrderCustomerAddressesEditDialogProps
+  OrderCustomerAddressesEditDialogProps,
 } from "../OrderCustomerAddressesEditDialog";
 import {
   AddressEditDialogVariant,
-  OrderCustomerAddressesEditDialogOutput
+  OrderCustomerAddressesEditDialogOutput,
 } from "../OrderCustomerAddressesEditDialog/types";
 
 interface OrderAddressFieldsProps {
@@ -42,7 +42,7 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   confirmButtonState,
   errors,
   orderShippingAddress,
-  orderBillingAddress
+  orderBillingAddress,
 }) => {
   const addressFieldCommonProps: Omit<
     OrderCustomerAddressesEditDialogProps,
@@ -58,7 +58,7 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
     defaultShippingAddress: customer?.defaultShippingAddress,
     defaultBillingAddress: customer?.defaultBillingAddress,
     onClose,
-    onConfirm
+    onConfirm,
   };
 
   return (

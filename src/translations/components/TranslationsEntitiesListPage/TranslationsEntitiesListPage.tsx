@@ -26,6 +26,7 @@ export interface TranslationsEntitiesFilters {
   onPagesTabClick: () => void;
   onAttributesTabClick: () => void;
   onShippingMethodsTabClick: () => void;
+  onMenuItemsTabClick: () => void;
 }
 
 export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
@@ -38,7 +39,8 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "vouchers",
   "pages",
   "attributes",
-  "shippingMethods"
+  "shippingMethods",
+  "menuItems",
 ];
 
 const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
@@ -53,7 +55,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
       <Backlink href={languageListUrl}>
         {intl.formatMessage({
           id: "GsBRWL",
-          defaultMessage: "Languages"
+          defaultMessage: "Languages",
         })}
       </Backlink>
       <PageHeader
@@ -61,11 +63,11 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           {
             id: "FemBUF",
             defaultMessage: "Translations to {language}",
-            description: "header"
+            description: "header",
           },
           {
-            language: maybe(() => language.language, "...")
-          }
+            language: maybe(() => language.language, "..."),
+          },
         )}
       />
       <Card>
@@ -73,58 +75,65 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           <FilterTab
             label={intl.formatMessage({
               id: "VKb1MS",
-              defaultMessage: "Categories"
+              defaultMessage: "Categories",
             })}
             onClick={filters.onCategoriesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "ulh3kf",
-              defaultMessage: "Collections"
+              defaultMessage: "Collections",
             })}
             onClick={filters.onCollectionsTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "7NFfmz",
-              defaultMessage: "Products"
+              defaultMessage: "Products",
             })}
             onClick={filters.onProductsTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "c8nvms",
-              defaultMessage: "Sales"
+              defaultMessage: "Sales",
             })}
             onClick={filters.onSalesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "etP0+D",
-              defaultMessage: "Vouchers"
+              defaultMessage: "Vouchers",
             })}
             onClick={filters.onVouchersTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "CxfKLC",
-              defaultMessage: "Pages"
+              defaultMessage: "Pages",
             })}
             onClick={filters.onPagesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "+xTpT1",
-              defaultMessage: "Attributes"
+              defaultMessage: "Attributes",
             })}
             onClick={filters.onAttributesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
               id: "RzsKm8",
-              defaultMessage: "Shipping methods"
+              defaultMessage: "Shipping methods",
             })}
             onClick={filters.onShippingMethodsTabClick}
+          />
+          <FilterTab
+            label={intl.formatMessage({
+              id: "AcMzwj",
+              defaultMessage: "Menu items",
+            })}
+            onClick={filters.onMenuItemsTabClick}
           />
         </FilterTabs>
         {children}

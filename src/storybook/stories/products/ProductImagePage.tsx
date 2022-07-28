@@ -10,7 +10,7 @@ const mediaObj = {
   alt: "Lorem ipsum",
   id: "",
   type: ProductMediaType.IMAGE,
-  url: placeholder
+  url: placeholder,
 };
 const media = (Array(8) as any)
   .fill({ id: "img", url: placeholder, oembedData: "{}" })

@@ -1,6 +1,6 @@
 import { GiftCardErrorCode, GiftCardErrorFragment } from "@saleor/graphql";
 import commonErrorMessages, {
-  getCommonFormFieldErrorMessage
+  getCommonFormFieldErrorMessage,
 } from "@saleor/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -8,21 +8,21 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
   title: {
     id: "xPnZ0R",
     defaultMessage: "Details",
-    description: "title"
-  }
+    description: "title",
+  },
 });
 
 const giftCardErrorMessages = defineMessages({
   notFound: {
     id: "29L5Yq",
     defaultMessage: "Couldn't find gift card",
-    description: "gift card not found message"
-  }
+    description: "gift card not found message",
+  },
 });
 
 export function getGiftCardErrorMessage(
   error: Omit<GiftCardErrorFragment, "__typename" | "message"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (error) {
     switch (error.code) {

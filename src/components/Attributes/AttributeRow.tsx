@@ -11,7 +11,7 @@ import {
   getMultiDisplayValue,
   getReferenceDisplayValue,
   getSingleChoices,
-  getSingleDisplayValue
+  getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTimeField } from "@saleor/components/DateTimeField";
@@ -43,7 +43,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
-  richTextGetters
+  richTextGetters,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -62,7 +62,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onValueDelete={value =>
               onReferencesRemove(
                 attribute.id,
-                attribute.value?.filter(id => id !== value)
+                attribute.value?.filter(id => id !== value),
               )
             }
             onValueReorder={event => onReferencesReorder(attribute.id, event)}
@@ -85,7 +85,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             inputProps={{
-              name: `attribute:${attribute.label}`
+              name: `attribute:${attribute.label}`,
             }}
           />
         </BasicAttributeRow>
@@ -124,12 +124,28 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           fetchMoreAttributeValues={fetchMoreAttributeValues}
         />
       );
+    case AttributeInputTypeEnum.PLAIN_TEXT:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <TextField
+            fullWidth
+            disabled={disabled}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
+            name={`attribute:${attribute.label}`}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            type="text"
+            value={attribute.value[0]}
+          />
+        </BasicAttributeRow>
+      );
     case AttributeInputTypeEnum.RICH_TEXT:
       const {
         getShouldMount,
         getDefaultValue,
         getMountEditor,
-        getHandleChange
+        getHandleChange,
       } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
       return (
@@ -167,10 +183,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                   <InputAdornment position="end">
                     {getMeasurementUnitMessage(
                       attribute.data.unit,
-                      intl.formatMessage
+                      intl.formatMessage,
                     )}
                   </InputAdornment>
-                )
+                ),
               }
             }
           />

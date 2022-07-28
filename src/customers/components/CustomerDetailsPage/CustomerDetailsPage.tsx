@@ -13,7 +13,7 @@ import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomer
 import {
   AccountErrorFragment,
   CustomerDetailsQuery,
-  PermissionEnum
+  PermissionEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -47,7 +47,7 @@ export interface CustomerDetailsPageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onSubmit: (
-    data: CustomerDetailsPageFormData
+    data: CustomerDetailsPageFormData,
   ) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
 }
@@ -59,7 +59,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   errors,
   saveButtonBar,
   onSubmit,
-  onDelete
+  onDelete,
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -71,11 +71,11 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     lastName: customer?.lastName || "",
     metadata: customer?.metadata.map(mapMetadataItemToInput),
     note: customer?.note || "",
-    privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput)
+    privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
   };
 
   const {
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   return (
@@ -117,7 +117,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                   <CustomerOrders
                     orders={mapEdgesToItems(customer?.orders)}
                     viewAllHref={orderListUrl({
-                      customer: customer?.email
+                      customer: customer?.email,
                     })}
                   />
                   <CardSpacer />

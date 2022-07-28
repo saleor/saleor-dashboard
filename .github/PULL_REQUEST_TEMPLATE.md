@@ -26,3 +26,25 @@ Modify API_URI if you want test instance to use custom backend. CYPRESS_API_URI 
 
 API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/
 MARKETPLACE_URL=https://marketplace-gray.vercel.app/
+
+### Do you want to run more stable tests?
+
+[ ] @giftCard
+[ ] @category
+[ ] @collection
+[ ] @attribute
+[ ] @productType
+[ ] @shipping
+[ ] @customer
+[ ] @permissions
+[ ] @menuNavigation
+[ ] @pages
+[ ] @sales
+[ ] @vouchers
+[ ] @homePage
+[ ] @login
+[ ] @orders
+[ ] @products
+[ ] @app
+
+### Select tests to run from above

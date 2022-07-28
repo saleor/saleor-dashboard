@@ -11,7 +11,7 @@ import classNames from "classnames";
 import React from "react";
 
 import FilterAutocompleteField, {
-  FilterAutocompleteDisplayValues
+  FilterAutocompleteDisplayValues,
 } from "../FilterAutocompleteField";
 import { FilterKeyValueField } from "../FilterKeyValueField";
 import FilterOptionField from "../FilterOptionField";
@@ -21,25 +21,25 @@ import {
   FilterElement,
   isFilterDateType,
   isFilterNumericType,
-  isFilterType
+  isFilterType,
 } from "../types";
 
 const useStyles = makeStyles(
   theme => ({
     filterSettings: {
       background: fade(theme.palette.primary.main, 0.1),
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 3),
     },
 
     option: {
       left: -theme.spacing(0.5),
-      position: "relative"
+      position: "relative",
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
-    }
+      left: -theme.spacing(0.25),
+    },
   }),
-  { name: "FilterContentBody" }
+  { name: "FilterContentBody" },
 );
 
 const filterTestingContext = "filter-field-";
@@ -50,7 +50,7 @@ export interface FilterContentBodyProps<K extends string> {
   currencySymbol?: string;
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: <T extends FieldType>(
-    value: FilterReducerAction<K, T>
+    value: FilterReducerAction<K, T>,
   ) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
   setAutocompleteDisplayValues: React.Dispatch<
@@ -65,7 +65,7 @@ const FilterContentBody = <K extends string = string>({
   onFilterPropertyChange,
   autocompleteDisplayValues,
   setAutocompleteDisplayValues,
-  initialAutocompleteDisplayValues
+  initialAutocompleteDisplayValues,
 }: FilterContentBodyProps<K>) => {
   const classes = useStyles({});
   const commonClasses = useCommonStyles({});
@@ -89,10 +89,10 @@ const FilterContentBody = <K extends string = string>({
               payload: {
                 name: filter.name,
                 update: {
-                  value: [event.target.value, filter.value[1]]
-                }
+                  value: [event.target.value, filter.value[1]],
+                },
               },
-              type: "set-property"
+              type: "set-property",
             })
           }
         />
@@ -152,10 +152,10 @@ const FilterContentBody = <K extends string = string>({
                   payload: {
                     name: filter.name,
                     update: {
-                      value: [option.value]
-                    }
+                      value: [option.value],
+                    },
                   },
-                  type: "set-property"
+                  type: "set-property",
                 })
               }
             />

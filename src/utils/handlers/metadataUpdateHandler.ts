@@ -6,7 +6,7 @@ import {
   UpdateMetadataMutation,
   UpdateMetadataMutationVariables,
   UpdatePrivateMetadataMutation,
-  UpdatePrivateMetadataMutationVariables
+  UpdatePrivateMetadataMutationVariables,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { arrayDiff } from "@saleor/utils/arrays";
@@ -24,24 +24,24 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   initial: ObjectWithMetadata,
   update: (data: TData) => SubmitPromise<TError[]>,
   updateMetadata: (
-    variables: UpdateMetadataMutationVariables
+    variables: UpdateMetadataMutationVariables,
   ) => Promise<FetchResult<UpdateMetadataMutation>>,
   updatePrivateMetadata: (
-    variables: UpdatePrivateMetadataMutationVariables
-  ) => Promise<FetchResult<UpdatePrivateMetadataMutation>>
+    variables: UpdatePrivateMetadataMutationVariables,
+  ) => Promise<FetchResult<UpdatePrivateMetadataMutation>>,
 ) {
   return async (
-    data: TData
+    data: TData,
   ): Promise<Array<MetadataErrorFragment | TError>> => {
     const errors = await update(data);
 
     const hasMetadataChanged = !areMetadataArraysEqual(
       initial.metadata,
-      data.metadata
+      data.metadata,
     );
     const hasPrivateMetadataChanged = !areMetadataArraysEqual(
       initial.privateMetadata,
-      data.privateMetadata
+      data.privateMetadata,
     );
 
     if (errors.length > 0) {
@@ -58,12 +58,12 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const updateMetaResult = await updateMetadata({
           id: initial.id,
           input: filterMetadataArray(data.metadata),
-          keysToDelete: keyDiff.removed
+          keysToDelete: keyDiff.removed,
         });
 
         const updateMetaErrors = [
           ...(updateMetaResult.data.deleteMetadata.errors || []),
-          ...(updateMetaResult.data.updateMetadata.errors || [])
+          ...(updateMetaResult.data.updateMetadata.errors || []),
         ];
 
         if (updateMetaErrors.length > 0) {
@@ -80,12 +80,12 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const updatePrivateMetaResult = await updatePrivateMetadata({
           id: initial.id,
           input: filterMetadataArray(data.privateMetadata),
-          keysToDelete: keyDiff.removed
+          keysToDelete: keyDiff.removed,
         });
 
         const updatePrivateMetaErrors = [
           ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
-          ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || [])
+          ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || []),
         ];
 
         if (updatePrivateMetaErrors.length > 0) {

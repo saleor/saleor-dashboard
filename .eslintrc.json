@@ -14,7 +14,8 @@
     "simple-import-sort",
     "cypress",
     "chai-friendly",
-    "formatjs"
+    "formatjs",
+    "react-hooks"
   ],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -76,7 +77,7 @@
     "camelcase": "off",
     "capitalized-comments": "off",
     "chai-friendly/no-unused-expressions": "error",
-    "comma-dangle": "off",
+    "comma-dangle": ["error", "always-multiline"],
     "complexity": "off",
     "constructor-super": "error",
     "curly": "error",
@@ -171,6 +172,8 @@
     "prefer-object-spread": "error",
     "quote-props": "off",
     "radix": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "simple-import-sort/sort": ["error"],
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "sort-keys": "off",

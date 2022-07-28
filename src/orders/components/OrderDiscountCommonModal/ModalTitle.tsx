@@ -11,10 +11,10 @@ const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: theme.spacing(3, 3, 0, 3)
-    }
+      padding: theme.spacing(3, 3, 0, 3),
+    },
   }),
-  { name: "ModalTitle" }
+  { name: "ModalTitle" },
 );
 
 interface ModalTitleProps {
@@ -26,7 +26,7 @@ interface ModalTitleProps {
 const ModalTitle: React.FC<ModalTitleProps> = ({
   title,
   onClose,
-  withBorder = false
+  withBorder = false,
 }) => {
   const classes = useStyles({});
 

@@ -22,7 +22,7 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
   isPickerActive: false,
   refreshChannels: () => undefined,
   setChannel: () => undefined,
-  setPickerActive: () => undefined
+  setPickerActive: () => undefined,
 });
 
 const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
@@ -38,7 +38,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   const { authenticated } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsQuery({
-    skip: !authenticated
+    skip: !authenticated,
   });
 
   const [isPickerActive, setPickerActive] = React.useState(false);
@@ -68,7 +68,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
         isPickerActive,
         refreshChannels: refetch,
         setChannel: setSelectedChannel,
-        setPickerActive
+        setPickerActive,
       }}
     >
       {children}

@@ -25,7 +25,7 @@ export type IFlatMenu<TMenuData = {}, TValue = string> = Array<
 >;
 
 export function validateMenuOptions<TMenuData = {}, TValue = string>(
-  menu: IMenu<TMenuData, TValue>
+  menu: IMenu<TMenuData, TValue>,
 ): boolean {
   const values: TValue[] = toFlat(menu)
     .map(menuItem => menuItem.value)
@@ -36,7 +36,7 @@ export function validateMenuOptions<TMenuData = {}, TValue = string>(
 
 function _getMenuItemByPath<TMenuData = {}, TValue = string>(
   menuItem: IMenuItem<TMenuData, TValue>,
-  path: number[]
+  path: number[],
 ): IMenuItem<TMenuData, TValue> {
   if (path.length === 0) {
     return menuItem;
@@ -46,18 +46,18 @@ function _getMenuItemByPath<TMenuData = {}, TValue = string>(
 
 export function getMenuItemByPath<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
-  path: number[]
+  path: number[],
 ): IMenuItem<TMenuData, TValue> {
   return _getMenuItemByPath(menu[path[0]], path.slice(1));
 }
 
 export function getMenuItemByValue<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
-  value: TValue
+  value: TValue,
 ): IMenuItem<TMenuData, TValue> {
   const flatMenu = toFlat(menu);
   const flatMenuItem: IFlatMenuItem<TMenuData, TValue> = flatMenu.find(
-    menuItem => menuItem.value === value
+    menuItem => menuItem.value === value,
   );
 
   if (flatMenuItem === undefined) {
@@ -69,7 +69,7 @@ export function getMenuItemByValue<TMenuData = {}, TValue = string>(
 
 function _walkToMenuItem<TMenuData = {}, TValue = string>(
   menuItem: IMenuItem<TMenuData, TValue>,
-  path: number[]
+  path: number[],
 ): IMenu<TMenuData, TValue> {
   const node = menuItem.children[path[0]];
 
@@ -82,7 +82,7 @@ function _walkToMenuItem<TMenuData = {}, TValue = string>(
 
 export function walkToMenuItem<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
-  path: number[]
+  path: number[],
 ): IMenu<TMenuData, TValue> {
   const walkByNode = menu[path[0]];
   return [walkByNode, ..._walkToMenuItem(walkByNode, path.slice(1))];
@@ -90,7 +90,7 @@ export function walkToMenuItem<TMenuData = {}, TValue = string>(
 
 function _walkToRoot<TMenuData = {}, TValue = string>(
   flatMenu: IFlatMenu<TMenuData, TValue>,
-  parent: string
+  parent: string,
 ): IFlatMenu<TMenuData, TValue> {
   const menuItem = flatMenu.find(menuItem => menuItem.id === parent);
 
@@ -102,7 +102,7 @@ function _walkToRoot<TMenuData = {}, TValue = string>(
 }
 export function walkToRoot<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
-  value: TValue
+  value: TValue,
 ): IMenu<TMenuData, TValue> {
   const flatMenu = toFlat(menu);
   const menuItem = flatMenu.find(menuItem => menuItem.value === value);
@@ -116,7 +116,7 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
 function _toFlat<TMenuData = {}, TValue = string>(
   menuItem: IMenuItem<TMenuData, TValue>,
   sort: number,
-  parent: string
+  parent: string,
 ): IFlatMenu<TMenuData, TValue> {
   const id = parent ? [parent, sort].join(":") : sort.toString();
   const flatMenuItem: IFlatMenuItem<TMenuData, TValue> = {
@@ -125,7 +125,7 @@ function _toFlat<TMenuData = {}, TValue = string>(
     label: menuItem.label,
     parent,
     sort,
-    value: menuItem.value
+    value: menuItem.value,
   };
   return [
     flatMenuItem,
@@ -133,24 +133,24 @@ function _toFlat<TMenuData = {}, TValue = string>(
       .map((child, childIndex) => _toFlat(child, childIndex, id))
       .reduce(
         (acc, curr) => [...acc, ...curr],
-        [] as IFlatMenu<TMenuData, TValue>
-      )
+        [] as IFlatMenu<TMenuData, TValue>,
+      ),
   ];
 }
 export function toFlat<TMenuData = {}, TValue = string>(
-  menu: IMenu<TMenuData, TValue>
+  menu: IMenu<TMenuData, TValue>,
 ): IFlatMenu<TMenuData, TValue> {
   return menu
     .map((menuItem, menuItemIndex) => _toFlat(menuItem, menuItemIndex, null))
     .reduce(
       (acc, curr) => [...acc, ...curr],
-      [] as IFlatMenu<TMenuData, TValue>
+      [] as IFlatMenu<TMenuData, TValue>,
     );
 }
 
 function _fromFlat<TMenuData = {}, TValue = string>(
   menu: IFlatMenu<TMenuData, TValue>,
-  flatMenuItem: IFlatMenuItem<TMenuData, TValue>
+  flatMenuItem: IFlatMenuItem<TMenuData, TValue>,
 ): IMenuItem<TMenuData, TValue> {
   const children: Array<IMenuItem<TMenuData, TValue>> = menu
     .filter(menuItem => menuItem.parent === flatMenuItem.id)
@@ -160,11 +160,11 @@ function _fromFlat<TMenuData = {}, TValue = string>(
     children,
     data: flatMenuItem.data,
     label: flatMenuItem.label,
-    value: flatMenuItem.value
+    value: flatMenuItem.value,
   };
 }
 export function fromFlat<TMenuData = {}, TValue = string>(
-  menu: IFlatMenu<TMenuData, TValue>
+  menu: IFlatMenu<TMenuData, TValue>,
 ): IMenu<TMenuData, TValue> {
   return menu
     .filter(menuItem => menuItem.parent === null)
@@ -172,7 +172,7 @@ export function fromFlat<TMenuData = {}, TValue = string>(
 }
 
 export function isLeaf<TMenuData = {}, TValue = string>(
-  menuItem: IMenuItem<TMenuData, TValue>
+  menuItem: IMenuItem<TMenuData, TValue>,
 ): boolean {
   return menuItem.children.length === 0;
 }

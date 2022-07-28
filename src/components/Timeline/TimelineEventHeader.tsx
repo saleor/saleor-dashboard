@@ -13,28 +13,28 @@ const useStyles = makeStyles(
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      width: "100%"
+      width: "100%",
     },
     date: {
       color: theme.typography.caption.color,
-      paddingLeft: 24
+      paddingLeft: 24,
     },
     elementsContainer: {
       alignItems: "center",
       display: "flex",
       flexDirection: "row",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
     },
     secondaryTitle: {
       color: "#9e9e9e",
       fontSize: 14,
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     titleElement: {
-      marginRight: theme.spacing(0.5)
-    }
+      marginRight: theme.spacing(0.5),
+    },
   }),
-  { name: "TimelineEventHeader" }
+  { name: "TimelineEventHeader" },
 );
 
 export interface TitleElement {

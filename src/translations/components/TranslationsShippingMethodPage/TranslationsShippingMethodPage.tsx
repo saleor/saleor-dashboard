@@ -4,18 +4,18 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import {
   LanguageCodeEnum,
-  ShippingMethodTranslationFragment
+  ShippingMethodTranslationFragment,
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps
+  TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -37,7 +37,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   saveButtonState,
   onDiscard,
   onEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -45,7 +45,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.shippingMethods
+          tab: TranslatableEntities.shippingMethods,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -56,12 +56,12 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
             id: "1UKx20",
             defaultMessage:
               'Translation ShippingMethod "{shippingMethodName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             languageCode,
-            shippingMethodName: getStringOrPlaceholder(data?.name)
-          }
+            shippingMethodName: getStringOrPlaceholder(data?.name),
+          },
         )}
       >
         <LanguageSwitch
@@ -71,7 +71,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
             languageEntityUrl(
               lang,
               TranslatableEntities.shippingMethods,
-              translationId
+              translationId,
             )
           }
         />
@@ -86,24 +86,24 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
             displayName: intl.formatMessage({
               id: "aPCrsp",
               defaultMessage: "Name",
-              description: "shipping method name"
+              description: "shipping method name",
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.name
+            value: data?.name,
           },
           {
             displayName: intl.formatMessage({
               id: "GpqEl5",
               defaultMessage: "Description",
-              description: "shipping method description"
+              description: "shipping method description",
             }),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
             type: "rich",
-            value: data?.description
-          }
+            value: data?.description,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}

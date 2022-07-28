@@ -1,11 +1,11 @@
 import { PluginConfigurationBaseFragment } from "@saleor/graphql";
 
 export const isPluginGlobal = (
-  globalConfiguration: PluginConfigurationBaseFragment
+  globalConfiguration: PluginConfigurationBaseFragment,
 ) => !!globalConfiguration;
 
 export const getConfigByChannelId = (channelIdToCompare: string) => ({
-  channel
+  channel,
 }: {
   channel: { id: string };
 }) => channel.id === channelIdToCompare;

@@ -25,6 +25,7 @@ export const AppFragmentDoc = gql`
   type
   homepageUrl
   appUrl
+  manifestUrl
   configurationUrl
   supportUrl
   version
@@ -60,6 +61,7 @@ export const AppListItemFragmentDoc = gql`
   isActive
   type
   appUrl
+  manifestUrl
   permissions {
     ...AppPermission
   }
@@ -1570,6 +1572,7 @@ export const AttributeValueFragmentDoc = gql`
 export const AttributeValueDetailsFragmentDoc = gql`
     fragment AttributeValueDetails on AttributeValue {
   ...AttributeValue
+  plainText
   richText
 }
     ${AttributeValueFragmentDoc}`;
@@ -2654,6 +2657,21 @@ export const AttributeValueTranslatableContentFragmentDoc = gql`
   }
 }
     ${AttributeChoicesTranslationFragmentDoc}`;
+export const MenuItemTranslationFragmentDoc = gql`
+    fragment MenuItemTranslation on MenuItemTranslatableContent {
+  translation(languageCode: $language) {
+    id
+    language {
+      language
+    }
+    name
+  }
+  menuItem {
+    id
+    name
+  }
+}
+    `;
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
@@ -13493,6 +13511,7 @@ export const SearchWarehousesDocument = gql`
     sortBy: {direction: ASC, field: NAME}
     filter: {search: $query}
   ) {
+    totalCount
     edges {
       node {
         id
@@ -15235,6 +15254,55 @@ export function useUpdateShippingMethodTranslationsMutation(baseOptions?: Apollo
 export type UpdateShippingMethodTranslationsMutationHookResult = ReturnType<typeof useUpdateShippingMethodTranslationsMutation>;
 export type UpdateShippingMethodTranslationsMutationResult = Apollo.MutationResult<Types.UpdateShippingMethodTranslationsMutation>;
 export type UpdateShippingMethodTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateShippingMethodTranslationsMutation, Types.UpdateShippingMethodTranslationsMutationVariables>;
+export const UpdateMenuItemTranslationsDocument = gql`
+    mutation UpdateMenuItemTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  menuItemTranslate(id: $id, input: $input, languageCode: $language) {
+    errors {
+      field
+      message
+    }
+    menuItem {
+      id
+      name
+      translation(languageCode: $language) {
+        id
+        language {
+          language
+        }
+        name
+      }
+    }
+  }
+}
+    `;
+export type UpdateMenuItemTranslationsMutationFn = Apollo.MutationFunction<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>;
+
+/**
+ * __useUpdateMenuItemTranslationsMutation__
+ *
+ * To run a mutation, you first call `useUpdateMenuItemTranslationsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMenuItemTranslationsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMenuItemTranslationsMutation, { data, loading, error }] = useUpdateMenuItemTranslationsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useUpdateMenuItemTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>(UpdateMenuItemTranslationsDocument, options);
+      }
+export type UpdateMenuItemTranslationsMutationHookResult = ReturnType<typeof useUpdateMenuItemTranslationsMutation>;
+export type UpdateMenuItemTranslationsMutationResult = Apollo.MutationResult<Types.UpdateMenuItemTranslationsMutation>;
+export type UpdateMenuItemTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>;
 export const CategoryTranslationsDocument = gql`
     query CategoryTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
@@ -15659,6 +15727,59 @@ export function useShippingMethodTranslationsLazyQuery(baseOptions?: ApolloReact
 export type ShippingMethodTranslationsQueryHookResult = ReturnType<typeof useShippingMethodTranslationsQuery>;
 export type ShippingMethodTranslationsLazyQueryHookResult = ReturnType<typeof useShippingMethodTranslationsLazyQuery>;
 export type ShippingMethodTranslationsQueryResult = Apollo.QueryResult<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>;
+export const MenuItemTranslationsDocument = gql`
+    query MenuItemTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  translations(
+    kind: MENU_ITEM
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+  ) {
+    edges {
+      node {
+        ...MenuItemTranslation
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${MenuItemTranslationFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useMenuItemTranslationsQuery__
+ *
+ * To run a query within a React component, call `useMenuItemTranslationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuItemTranslationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuItemTranslationsQuery({
+ *   variables: {
+ *      language: // value for 'language'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useMenuItemTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsDocument, options);
+      }
+export function useMenuItemTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsDocument, options);
+        }
+export type MenuItemTranslationsQueryHookResult = ReturnType<typeof useMenuItemTranslationsQuery>;
+export type MenuItemTranslationsLazyQueryHookResult = ReturnType<typeof useMenuItemTranslationsLazyQuery>;
+export type MenuItemTranslationsQueryResult = Apollo.QueryResult<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>;
 export const ProductTranslationDetailsDocument = gql`
     query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: PRODUCT, id: $id) {
@@ -16027,6 +16148,42 @@ export function useShippingMethodTranslationDetailsLazyQuery(baseOptions?: Apoll
 export type ShippingMethodTranslationDetailsQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsQuery>;
 export type ShippingMethodTranslationDetailsLazyQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsLazyQuery>;
 export type ShippingMethodTranslationDetailsQueryResult = Apollo.QueryResult<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>;
+export const MenuItemTranslationDetailsDocument = gql`
+    query MenuItemTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
+  translation(kind: MENU_ITEM, id: $id) {
+    ...MenuItemTranslation
+  }
+}
+    ${MenuItemTranslationFragmentDoc}`;
+
+/**
+ * __useMenuItemTranslationDetailsQuery__
+ *
+ * To run a query within a React component, call `useMenuItemTranslationDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuItemTranslationDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuItemTranslationDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useMenuItemTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsDocument, options);
+      }
+export function useMenuItemTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsDocument, options);
+        }
+export type MenuItemTranslationDetailsQueryHookResult = ReturnType<typeof useMenuItemTranslationDetailsQuery>;
+export type MenuItemTranslationDetailsLazyQueryHookResult = ReturnType<typeof useMenuItemTranslationDetailsLazyQuery>;
+export type MenuItemTranslationDetailsQueryResult = Apollo.QueryResult<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>;
 export const UpdateMetadataDocument = gql`
     mutation UpdateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
   updateMetadata(id: $id, input: $input) {
@@ -16341,6 +16498,46 @@ export function useWarehouseDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type WarehouseDetailsQueryHookResult = ReturnType<typeof useWarehouseDetailsQuery>;
 export type WarehouseDetailsLazyQueryHookResult = ReturnType<typeof useWarehouseDetailsLazyQuery>;
 export type WarehouseDetailsQueryResult = Apollo.QueryResult<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>;
+export const ChannelWarehousesDocument = gql`
+    query ChannelWarehouses($filter: WarehouseFilterInput) {
+  warehouses(filter: $filter, first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelWarehousesQuery__
+ *
+ * To run a query within a React component, call `useChannelWarehousesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelWarehousesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useChannelWarehousesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
+      }
+export function useChannelWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
+        }
+export type ChannelWarehousesQueryHookResult = ReturnType<typeof useChannelWarehousesQuery>;
+export type ChannelWarehousesLazyQueryHookResult = ReturnType<typeof useChannelWarehousesLazyQuery>;
+export type ChannelWarehousesQueryResult = Apollo.QueryResult<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>;
 export const WebhookCreateDocument = gql`
     mutation WebhookCreate($input: WebhookCreateInput!) {
   webhookCreate(input: $input) {

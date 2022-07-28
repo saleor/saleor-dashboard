@@ -6,11 +6,11 @@ import {
   fetchMoreProps,
   limits,
   limitsReached,
-  listActionsProps
+  listActionsProps,
 } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
 import ProductUpdatePage, {
-  ProductUpdatePageProps
+  ProductUpdatePageProps,
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
@@ -36,8 +36,8 @@ const props: ProductUpdatePageProps = {
     channel1: {
       selectedVariantsIds: ["variantA"],
       variantsIdsToRemove: ["variantB"],
-      variantsIdsToAdd: []
-    }
+      variantsIdsToAdd: [],
+    },
   },
   setChannelsData: () => undefined,
   channelsData: channels,
@@ -78,7 +78,7 @@ const props: ProductUpdatePageProps = {
   taxTypes,
   variants: product.variants,
   warehouses: warehouseList,
-  attributeValues: []
+  attributeValues: [],
 };
 
 storiesOf("Views / Products / Product edit", module)
@@ -92,7 +92,7 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...product,
-        productType: { ...product.productType, hasVariants: false }
+        productType: { ...product.productType, hasVariants: false },
       }}
     />
   ))
@@ -115,8 +115,8 @@ storiesOf("Views / Products / Product edit", module)
         ...props.product,
         productType: {
           ...product.productType,
-          hasVariants: false
-        }
+          hasVariants: false,
+        },
       }}
     />
   ))
@@ -128,14 +128,14 @@ storiesOf("Views / Products / Product edit", module)
 
         productType: {
           ...product.productType,
-          hasVariants: false
+          hasVariants: false,
         },
         variants: [
           {
             ...product.variants[0],
-            stocks: []
-          }
-        ]
+            stocks: [],
+          },
+        ],
       }}
     />
   ))
@@ -147,14 +147,14 @@ storiesOf("Views / Products / Product edit", module)
         ...product,
         productType: {
           ...product.productType,
-          hasVariants: false
+          hasVariants: false,
         },
         variants: [
           {
             ...product.variants[0],
-            stocks: []
-          }
-        ]
+            stocks: [],
+          },
+        ],
       }}
     />
   ))
@@ -163,7 +163,7 @@ storiesOf("Views / Products / Product edit", module)
       {...props}
       product={{
         ...props.product,
-        attributes: []
+        attributes: [],
       }}
     />
   ))
@@ -180,7 +180,7 @@ storiesOf("Views / Products / Product edit", module)
         "seoDescription",
         "seoTitle",
         "sku",
-        "stockQuantity"
+        "stockQuantity",
       ] as Array<keyof ProductUpdatePageFormData | "attributes">).map(
         field => ({
           __typename: "ProductError",
@@ -190,8 +190,8 @@ storiesOf("Views / Products / Product edit", module)
               : null,
           code: ProductErrorCode.INVALID,
           field,
-          message: "Attributes invalid"
-        })
+          message: "Attributes invalid",
+        }),
       )}
     />
   ))

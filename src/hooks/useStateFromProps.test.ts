@@ -5,8 +5,8 @@ import useStateFromProps from "./useStateFromProps";
 function setupHook() {
   return renderHook(useStateFromProps, {
     initialProps: {
-      a: 0
-    }
+      a: 0,
+    },
   });
 }
 

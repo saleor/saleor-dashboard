@@ -2,7 +2,7 @@ import { PageCountQueryVariables, usePageCountQuery } from "@saleor/graphql";
 import { pageListUrl } from "@saleor/pages/urls";
 import {
   PageTypeListUrlQueryParams,
-  PageTypeUrlQueryParams
+  PageTypeUrlQueryParams,
 } from "@saleor/pageTypes/urls";
 import React from "react";
 
@@ -16,7 +16,7 @@ type UsePageTypeDeleteProps<
 function usePageTypeDelete({
   singleId,
   params,
-  selectedTypes
+  selectedTypes,
 }: UsePageTypeDeleteProps): UseTypeDeleteData {
   const pageTypes = selectedTypes || [singleId];
 
@@ -27,24 +27,24 @@ function usePageTypeDelete({
   >(
     () => ({
       filter: {
-        pageTypes
-      }
+        pageTypes,
+      },
     }),
-    [pageTypes]
+    [pageTypes],
   );
 
   const shouldSkipPageListQuery = !pageTypes.length || !isDeleteDialogOpen;
 
   const {
     data: pagesAssignedToSelectedTypesData,
-    loading: loadingPagesAssignedToSelectedTypes
+    loading: loadingPagesAssignedToSelectedTypes,
   } = usePageCountQuery({
     variables: pagesAssignedToSelectedTypesQueryVars,
-    skip: shouldSkipPageListQuery
+    skip: shouldSkipPageListQuery,
   });
 
   const selectedPagesAssignedToDeleteUrl = pageListUrl({
-    pageTypes
+    pageTypes,
   });
 
   const assignedItemsCount =
@@ -56,7 +56,7 @@ function usePageTypeDelete({
     assignedItemsCount,
     viewAssignedItemsUrl: selectedPagesAssignedToDeleteUrl,
     isLoading: loadingPagesAssignedToSelectedTypes,
-    typesToDelete: pageTypes
+    typesToDelete: pageTypes,
   };
 }
 

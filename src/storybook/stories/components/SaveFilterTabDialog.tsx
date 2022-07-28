@@ -1,5 +1,5 @@
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogProps
+  SaveFilterTabDialogProps,
 } from "@saleor/components/SaveFilterTabDialog";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -10,7 +10,7 @@ const props: SaveFilterTabDialogProps = {
   confirmButtonState: "default",
   onClose: () => undefined,
   onSubmit: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Generics / Save filter tab", module)

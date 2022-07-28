@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableFooter,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -31,29 +31,29 @@ const useStyles = makeStyles(
   theme => ({
     colActions: {
       width: `calc(76px + ${theme.spacing(1)})`,
-      marginRight: theme.spacing(-2)
+      marginRight: theme.spacing(-2),
     },
     colName: {
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPublished: {
-      width: 200
+      width: 200,
     },
     colType: {
-      width: 200
+      width: 200,
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "CollectionProducts" }
+  { name: "CollectionProducts" },
 );
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
@@ -72,7 +72,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     selected,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
   } = props;
 
   const classes = useStyles(props);
@@ -90,11 +90,11 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
               {
                 id: "/dnWE8",
                 defaultMessage: "Products in {name}",
-                description: "products in collection"
+                description: "products in collection",
               },
               {
-                name: maybe(() => collection.name, "...")
-              }
+                name: maybe(() => collection.name, "..."),
+              },
             )
           ) : (
             <Skeleton />
@@ -185,7 +185,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   <TableCell className={classes.colType}>
                     {maybe<React.ReactNode>(
                       () => product.productType.name,
-                      <Skeleton />
+                      <Skeleton />,
                     )}
                   </TableCell>
                   <TableCell className={classes.colType}>
@@ -223,7 +223,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

@@ -27,7 +27,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   selected,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
 }) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -39,15 +39,15 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
           {
             id: "+43JV5",
             defaultMessage: "Products in {categoryName}",
-            description: "header"
+            description: "header",
           },
-          { categoryName }
+          { categoryName },
         )}
         toolbar={
           <div className={classes.toolbar}>
             <InternalLink
               to={productListUrl({
-                categories: [categoryId]
+                categories: [categoryId],
               })}
             >
               <Button variant="tertiary" data-test-id="view-products">

@@ -5,7 +5,7 @@ import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers = (sort: string, asc: boolean) => (
   a: StaffMemberFragment,
-  b: StaffMemberFragment
+  b: StaffMemberFragment,
 ) => {
   let valueA;
   let valueB;

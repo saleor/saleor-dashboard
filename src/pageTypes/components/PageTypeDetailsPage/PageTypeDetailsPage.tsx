@@ -12,7 +12,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import {
   AttributeTypeEnum,
   PageErrorFragment,
-  PageTypeDetailsFragment
+  PageTypeDetailsFragment,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages, sectionNames } from "@saleor/intl";
@@ -50,12 +50,12 @@ const useStyles = makeStyles(
   theme => ({
     hr: {
       gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0)
-    }
+      margin: theme.spacing(1, 0),
+    },
   }),
   {
-    name: "PageTypeDetailsPage"
-  }
+    name: "PageTypeDetailsPage",
+  },
 );
 
 const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
@@ -70,7 +70,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     onAttributeUnassign,
     onAttributeReorder,
     onDelete,
-    onSubmit
+    onSubmit,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -79,18 +79,18 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
   const formInitialData: PageTypeForm = {
     attributes:
       pageType?.attributes?.map(attribute => ({
         label: attribute.name,
-        value: attribute.id
+        value: attribute.id,
       })) || [],
     metadata: pageType?.metadata?.map(mapMetadataItemToInput),
     name: pageType?.name || "",
-    privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput)
+    privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput),
   };
 
   const handleSubmit = (data: PageTypeForm) => {
@@ -102,7 +102,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     onSubmit({
       ...data,
       metadata,
-      privateMetadata
+      privateMetadata,
     });
   };
 

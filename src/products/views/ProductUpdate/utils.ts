@@ -6,25 +6,25 @@ import { initialChannelWithVariantData } from "./consts";
 import {
   ChannelsWithVariantsData,
   ChannelVariantListing,
-  ChannelWithVariantData
+  ChannelWithVariantData,
 } from "./types";
 
 export function createFromChannels<T>(
   channels: ChannelData[],
-  cb: (channel: ChannelData) => T
+  cb: (channel: ChannelData) => T,
 ): Record<string, T> {
   return channels?.reduce(
     (result: Record<string, T>, channel) => ({
       ...result,
-      [channel.id]: cb(channel)
+      [channel.id]: cb(channel),
     }),
-    {}
+    {},
   );
 }
 
 export function createUpdatedChannels(
   channels: ChannelData[],
-  listing: ChannelVariantListing
+  listing: ChannelVariantListing,
 ): ChannelData[] {
   return reduce(
     listing,
@@ -33,87 +33,90 @@ export function createUpdatedChannels(
       {
         id: channelId,
         name: channels.find(channel => channel.id === channelId).name,
-        variantsIds
-      } as ChannelData
+        variantsIds,
+      } as ChannelData,
     ],
-    []
+    [],
   );
 }
 
 export const getParsedChannelsWithVariantsDataFromChannels = (
-  channels: ChannelData[]
+  channels: ChannelData[],
 ): ChannelsWithVariantsData =>
   createFromChannels(
     channels,
     ({ variantsIds }) =>
       ({
         ...initialChannelWithVariantData,
-        selectedVariantsIds: variantsIds
-      } as ChannelWithVariantData)
+        selectedVariantsIds: variantsIds,
+      } as ChannelWithVariantData),
   );
 
 export const getChannelVariantToggleData = (
   variants: string[],
-  isSelected: boolean
+  isSelected: boolean,
 ): string[] => (isSelected ? [] : variants);
 
 export const areAllVariantsAtAllChannelsSelected = (
   variants: string[] = [],
-  channelsWithVariants: ChannelVariantListing = {}
+  channelsWithVariants: ChannelVariantListing = {},
 ) =>
   every(channelsWithVariants, channelWithVariantsData =>
-    areAllChannelVariantsSelected(variants, channelWithVariantsData)
+    areAllChannelVariantsSelected(variants, channelWithVariantsData),
   );
 
 export const areAllChannelVariantsSelected = (
   variants: string[] = [],
-  selectedVariants: string[]
+  selectedVariants: string[],
 ) => selectedVariants.length === variants.length;
 
 export const areAnyChannelVariantsSelected = (
-  channelsWithVariantsData: ChannelWithVariantData
+  channelsWithVariantsData: ChannelWithVariantData,
 ) => channelsWithVariantsData?.selectedVariantsIds.length > 0;
 
 export const getTotalSelectedChannelsCount = (
-  channelsWithVariantsData: ChannelsWithVariantsData
+  channelsWithVariantsData: ChannelsWithVariantsData,
 ) =>
   Object.values(channelsWithVariantsData).filter(
-    channel => channel.selectedVariantsIds.length > 0
+    channel => channel.selectedVariantsIds.length > 0,
   ).length;
 
 export const addAllVariantsToAllChannels = (
   listings: ChannelVariantListing,
-  variants: string[]
+  variants: string[],
 ): ChannelVariantListing => {
   const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,
-    listings
+    listings,
   );
 
   const updatedListing = reduce(
     listings,
     (result: ChannelVariantListing, _, channelId) => ({
       ...result,
-      [channelId]: getChannelVariantToggleData(variants, areAllChannelsSelected)
+      [channelId]: getChannelVariantToggleData(
+        variants,
+        areAllChannelsSelected,
+      ),
     }),
-    {}
+    {},
   );
 
   return updatedListing;
 };
 
 export const channelVariantListingDiffToDict = (
-  listing: ChannelsWithVariantsData
+  listing: ChannelsWithVariantsData,
 ): ChannelVariantListing =>
   reduce(
     listing,
     (
       listingDict: ChannelVariantListing,
       { selectedVariantsIds },
-      channelId
+      channelId,
     ) => ({
       ...listingDict,
-      [channelId]: selectedVariantsIds
+      [channelId]: selectedVariantsIds,
     }),
-    {}
+    {},
   );

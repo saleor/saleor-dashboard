@@ -4,12 +4,12 @@ import React from "react";
 
 export function hasPermissions(
   userPermissions: UserPermissionFragment[],
-  requiredPermissions: PermissionEnum[]
+  requiredPermissions: PermissionEnum[],
 ): boolean {
   return requiredPermissions.reduce(
     (acc, perm) =>
       acc && !!userPermissions.find(userPerm => userPerm.code === perm),
-    true
+    true,
   );
 }
 
@@ -20,7 +20,7 @@ export interface RequirePermissionsProps {
 
 const RequirePermissions: React.FC<RequirePermissionsProps> = ({
   children,
-  requiredPermissions
+  requiredPermissions,
 }) => {
   const userPermissions = useUserPermissions();
 

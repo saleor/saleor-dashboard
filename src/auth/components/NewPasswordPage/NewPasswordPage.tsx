@@ -22,7 +22,7 @@ export interface NewPasswordPageProps {
 
 const initialForm: NewPasswordPageFormData = {
   confirmPassword: "",
-  password: ""
+  password: "",
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
@@ -32,7 +32,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
   const intl = useIntl();
   const error = getAccountErrorMessage(
     errors.find(err => err.field === "password"),
-    intl
+    intl,
   );
 
   return (
@@ -65,14 +65,14 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               disabled={disabled}
               label={intl.formatMessage({
                 id: "Ev6SEF",
-                defaultMessage: "New Password"
+                defaultMessage: "New Password",
               })}
               name="password"
               onChange={handleChange}
               type="password"
               value={data.password}
               inputProps={{
-                "data-test-id": "password"
+                "data-test-id": "password",
               }}
             />
             <FormSpacer />
@@ -83,7 +83,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               disabled={disabled}
               label={intl.formatMessage({
                 id: "vfG+nh",
-                defaultMessage: "Confirm Password"
+                defaultMessage: "Confirm Password",
               })}
               name="confirmPassword"
               onChange={handleChange}
@@ -93,11 +93,11 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 passwordError &&
                 intl.formatMessage({
                   id: "7Chrsf",
-                  defaultMessage: "Passwords do not match"
+                  defaultMessage: "Passwords do not match",
                 })
               }
               inputProps={{
-                "data-test-id": "confirm-password"
+                "data-test-id": "confirm-password",
               }}
             />
             <FormSpacer />

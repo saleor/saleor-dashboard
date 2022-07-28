@@ -6,10 +6,10 @@ import React from "react";
 import {
   listActionsProps,
   pageListProps,
-  sortPageProps
+  sortPageProps,
 } from "../../../fixtures";
 import MenuListPage, {
-  MenuListPageProps
+  MenuListPageProps,
 } from "../../../navigation/components/MenuListPage";
 import { menuList } from "../../../navigation/fixtures";
 import Decorator from "../../Decorator";
@@ -22,8 +22,8 @@ const props: MenuListPageProps = {
   onDelete: () => undefined,
   sort: {
     ...sortPageProps.sort,
-    sort: MenuListUrlSortField.name
-  }
+    sort: MenuListUrlSortField.name,
+  },
 };
 
 storiesOf("Views / Navigation / Menu list", module)

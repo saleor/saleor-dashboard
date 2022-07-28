@@ -3,14 +3,14 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import {
   OrderFulfillLineFragment,
-  OrderFulfillStockInput
+  OrderFulfillStockInput,
 } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import {
   getAttributesCaption,
   getOrderLineAvailableQuantity,
-  getWarehouseStock
+  getWarehouseStock,
 } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
@@ -75,7 +75,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               title={intl.formatMessage(
                 isPreorder
                   ? messages.preorderWarning
-                  : messages.deletedVariantWarning
+                  : messages.deletedVariantWarning,
               )}
             >
               <div className={classes.warningIcon}>
@@ -105,10 +105,10 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             inputProps={{
               className: classNames(classes.quantityInnerInput, {
                 [classes.quantityInnerInputNoRemaining]: !line.variant
-                  ?.trackInventory
+                  ?.trackInventory,
               }),
               min: 0,
-              style: { textAlign: "right" }
+              style: { textAlign: "right" },
             }}
             fullWidth
             value={lineFormQuantity}
@@ -116,8 +116,8 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               formsetChange(line.id, [
                 {
                   quantity: parseInt(event.target.value, 10),
-                  warehouse: warehouseId
-                }
+                  warehouse: warehouseId,
+                },
               ])
             }
             error={overfulfill}
@@ -126,14 +126,14 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               classes: {
                 ...(isStockExceeded &&
                   !overfulfill && {
-                    notchedOutline: classes.warning
-                  })
+                    notchedOutline: classes.warning,
+                  }),
               },
               endAdornment: (
                 <div className={classes.remainingQuantity}>
                   / {line.quantityToFulfill}
                 </div>
-              )
+              ),
             }}
           />
         </TableCell>

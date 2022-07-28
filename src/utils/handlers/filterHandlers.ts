@@ -9,7 +9,7 @@ type CreateUrl = (params: RequiredParams) => string;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
   () => void,
-  (query: string) => void
+  (query: string) => void,
 ];
 
 function createFilterHandlers<
@@ -33,8 +33,8 @@ function createFilterHandlers<
       createUrl({
         ...params,
         ...getFilterQueryParams(filters, getFilterQueryParam),
-        activeTab: undefined
-      })
+        activeTab: undefined,
+      }),
     );
   };
 
@@ -46,8 +46,8 @@ function createFilterHandlers<
     navigate(
       createUrl({
         asc: params.asc,
-        sort: params.sort
-      })
+        sort: params.sort,
+      }),
     );
   };
 
@@ -62,8 +62,8 @@ function createFilterHandlers<
         after: undefined,
         before: undefined,
         activeTab: undefined,
-        query: query?.trim()
-      })
+        query: query?.trim(),
+      }),
     );
   };
 

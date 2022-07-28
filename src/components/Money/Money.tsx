@@ -6,10 +6,10 @@ const useStyles = makeStyles(
   {
     currency: {
       fontSize: "0.875em",
-      marginRight: "0.5rem"
-    }
+      marginRight: "0.5rem",
+    },
   },
-  { name: "Money" }
+  { name: "Money" },
 );
 
 export interface IMoney {
@@ -31,12 +31,12 @@ export const Money: React.FC<MoneyProps> = ({ money }) => {
 
   const currencyFractionDigits = new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: money.currency
+    currency: money.currency,
   }).resolvedOptions().maximumFractionDigits;
 
   const amount = money.amount.toLocaleString(locale, {
     maximumFractionDigits: currencyFractionDigits,
-    minimumFractionDigits: currencyFractionDigits
+    minimumFractionDigits: currencyFractionDigits,
   });
 
   return (

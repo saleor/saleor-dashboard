@@ -2,6 +2,8 @@ import { OrderSortField } from "@saleor/graphql";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
+export const DEFAULT_SORT_KEY = OrderListUrlSortField.number;
+
 export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {
   switch (sort) {
     case OrderListUrlSortField.number:
@@ -20,5 +22,5 @@ export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

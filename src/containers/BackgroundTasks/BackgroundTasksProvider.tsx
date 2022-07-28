@@ -10,7 +10,7 @@ import {
   handleTask,
   queueCustom,
   queueExport,
-  queueInvoiceGenerate
+  queueInvoiceGenerate,
 } from "./tasks";
 import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
 
@@ -19,7 +19,7 @@ export const backgroundTasksRefreshTime = 15 * 1000;
 export function useBackgroundTasks(
   apolloClient: Pick<ApolloClient<any>, "query">,
   notify: IMessageContext,
-  intl: IntlShape
+  intl: IntlShape,
 ) {
   const idCounter = React.useRef(0);
   const tasks = React.useRef<QueuedTask[]>([]);
@@ -40,12 +40,12 @@ export function useBackgroundTasks(
                 }
                 if (status !== TaskStatus.PENDING) {
                   const taskIndex = tasks.current.findIndex(
-                    t => t.id === task.id
+                    t => t.id === task.id,
                   );
                   tasks.current[taskIndex].status = status;
                 }
               }
-            })
+            }),
           );
         } catch (error) {
           throw error;
@@ -78,11 +78,11 @@ export function useBackgroundTasks(
               fetchPolicy: "network-only",
               query: checkOrderInvoicesStatus,
               variables: {
-                id: data.generateInvoice.orderId
-              }
+                id: data.generateInvoice.orderId,
+              },
             }),
           notify,
-          intl
+          intl,
         );
         break;
       case Task.EXPORT:
@@ -94,11 +94,11 @@ export function useBackgroundTasks(
               fetchPolicy: "network-only",
               query: checkExportFileStatus,
               variables: {
-                id: data.id
-              }
+                id: data.id,
+              },
             }),
           notify,
-          intl
+          intl,
         );
         break;
     }
@@ -108,7 +108,7 @@ export function useBackgroundTasks(
 
   return {
     cancel,
-    queue
+    queue,
   };
 }
 
@@ -122,7 +122,7 @@ const BackgroundTasksProvider: React.FC = ({ children }) => {
     <BackgroundTasksContext.Provider
       value={{
         cancel,
-        queue
+        queue,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useWebhookDetailsQuery,
   useWebhookUpdateMutation,
-  WebhookEventTypeAsyncEnum
+  WebhookEventTypeAsyncEnum,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -24,7 +24,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
   const intl = useIntl();
 
   const { data: webhookDetails, loading } = useWebhookDetailsQuery({
-    variables: { id }
+    variables: { id },
   });
   const [webhookUpdate, webhookUpdateOpts] = useWebhookUpdateMutation({
     onCompleted: data => {
@@ -34,10 +34,10 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
       if (errors.length === 0 && webhook) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
+          text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
-    }
+    },
   });
 
   const webhook = webhookDetails?.webhook;
@@ -55,17 +55,17 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
           input: {
             syncEvents: data.syncEvents,
             asyncEvents: data.asyncEvents.includes(
-              WebhookEventTypeAsyncEnum.ANY_EVENTS
+              WebhookEventTypeAsyncEnum.ANY_EVENTS,
             )
               ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
               : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,
             secretKey: data.secretKey,
-            targetUrl: data.targetUrl
-          }
-        }
-      })
+            targetUrl: data.targetUrl,
+          },
+        },
+      }),
     );
 
   return (

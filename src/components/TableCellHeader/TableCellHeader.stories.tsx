@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { storiesOf } from "@storybook/react";
@@ -11,7 +11,7 @@ import React from "react";
 
 import Decorator from "../../storybook/Decorator";
 import TableCellHeader, {
-  TableCellHeaderArrowDirection
+  TableCellHeaderArrowDirection,
 } from "./TableCellHeader";
 
 type Field = "name" | "type";
@@ -24,7 +24,7 @@ interface StoryProps {
 const Story: React.FC<StoryProps> = ({
   direction,
   field = "name",
-  onHeaderClick = () => undefined
+  onHeaderClick = () => undefined,
 }) => (
   <Card style={{ margin: "auto", width: 400 }}>
     <ResponsiveTable>

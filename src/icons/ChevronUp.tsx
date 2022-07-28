@@ -10,7 +10,7 @@ const ChevronUp = createSvgIcon(
       stroke-width="2"
     />
   </svg>,
-  "ChevronUp"
+  "ChevronUp",
 );
 
 export default ChevronUp;

@@ -12,7 +12,7 @@ type PluginListTableHeadProps = SortPage<PluginListUrlSortField>;
 
 const PluginListTableHead: React.FC<PluginListTableHeadProps> = ({
   sort,
-  onSort
+  onSort,
 }) => {
   const intl = useIntl();
 

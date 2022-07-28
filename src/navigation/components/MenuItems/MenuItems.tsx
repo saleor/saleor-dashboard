@@ -9,7 +9,7 @@ import {
   DeleteIcon,
   IconButton,
   makeStyles,
-  useTheme
+  useTheme,
 } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -37,37 +37,37 @@ const useStyles = makeStyles(
   theme => ({
     actions: {
       "&&": {
-        padding: theme.spacing(2, 4)
+        padding: theme.spacing(2, 4),
       },
-      flexDirection: "row"
+      flexDirection: "row",
     },
     container: {
-      background: theme.palette.grey[200]
+      background: theme.palette.grey[200],
     },
     darkContainer: {
-      background: `${theme.palette.grey[800]} !important`
+      background: `${theme.palette.grey[800]} !important`,
     },
     deleteButton: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     dragIcon: {
-      cursor: "grab"
+      cursor: "grab",
     },
     nodeTitle: {
       cursor: "pointer",
-      marginLeft: theme.spacing(7)
+      marginLeft: theme.spacing(7),
     },
     root: {
       "& .rst__collapseButton": {
-        display: "none"
+        display: "none",
       },
       "& .rst__node": {
         "&:first-of-type": {
           "& $row": {
-            borderTop: `1px ${theme.palette.divider} solid`
-          }
-        }
-      }
+            borderTop: `1px ${theme.palette.divider} solid`,
+          },
+        },
+      },
     },
     row: {
       alignItems: "center",
@@ -78,14 +78,14 @@ const useStyles = makeStyles(
       flexDirection: "row",
       height: NODE_HEIGHT,
       justifyContent: "flex-start",
-      paddingLeft: theme.spacing(3)
+      paddingLeft: theme.spacing(3),
     },
     rowContainer: {
       "& > *": {
         opacity: 1,
-        transition: `opacity ${theme.transitions.duration.standard}ms`
+        transition: `opacity ${theme.transitions.duration.standard}ms`,
       },
-      transition: `margin ${theme.transitions.duration.standard}ms`
+      transition: `margin ${theme.transitions.duration.standard}ms`,
     },
     rowContainerDragged: {
       "&$rowContainer": {
@@ -98,22 +98,22 @@ const useStyles = makeStyles(
           left: 0,
           position: "absolute",
           top: -3,
-          width: 7
+          width: 7,
         },
         borderTop: `1px solid ${theme.palette.primary.main}`,
         height: 0,
         position: "relative",
-        top: -1
-      }
+        top: -1,
+      },
     },
     rowContainerPlaceholder: {
-      opacity: 0
+      opacity: 0,
     },
     spacer: {
-      flex: 1
-    }
+      flex: 1,
+    },
   }),
-  { name: "MenuItems" }
+  { name: "MenuItems" },
 );
 
 const Placeholder: React.FC = props => {
@@ -137,18 +137,18 @@ const Node: React.FC<NodeRendererProps> = props => {
     path,
     connectDragPreview,
     connectDragSource,
-    isDragging
+    isDragging,
   } = props;
   const classes = useStyles(props);
 
   const draggedClassName = classNames(
     classes.rowContainer,
-    classes.rowContainerDragged
+    classes.rowContainerDragged,
   );
   const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
   const placeholderClassName = classNames(
     classes.rowContainer,
-    classes.rowContainerPlaceholder
+    classes.rowContainerPlaceholder,
   );
 
   const [className, setClassName] = React.useState(defaultClassName);
@@ -163,14 +163,14 @@ const Node: React.FC<NodeRendererProps> = props => {
     <div
       className={className}
       style={{
-        marginLeft: NODE_MARGIN * (path.length - 1)
+        marginLeft: NODE_MARGIN * (path.length - 1),
       }}
     >
       <Paper className={classes.row} elevation={0}>
         {connectDragSource(
           <div onDragStart={handleDragStart}>
             <Draggable className={classes.dragIcon} />
-          </div>
+          </div>,
         )}
         <Typography className={classes.nodeTitle} onClick={node.onEdit}>
           {node.title}
@@ -189,15 +189,15 @@ const Node: React.FC<NodeRendererProps> = props => {
             node.onChange([
               {
                 id: node.id,
-                type: "remove"
-              }
+                type: "remove",
+              },
             ])
           }
         >
           <DeleteIcon />
         </IconButton>
       </Paper>
-    </div>
+    </div>,
   );
 };
 
@@ -210,7 +210,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     onItemAdd,
     onItemClick,
     onItemEdit,
-    onUndo
+    onUndo,
   } = props;
   const classes = useStyles(props);
 
@@ -223,7 +223,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         title={intl.formatMessage({
           id: "dEUZg2",
           defaultMessage: "Menu Items",
-          description: "header"
+          description: "header",
         })}
         toolbar={
           <Button disabled={!canUndo} onClick={onUndo}>
@@ -233,12 +233,12 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
       />
       <div
         className={classNames(classes.container, {
-          [classes.darkContainer]: themeType === "dark"
+          [classes.darkContainer]: themeType === "dark",
         })}
         style={{
           minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,
           padding: !items && "0 24px",
-          paddingTop: !items && 20
+          paddingTop: !items && 20,
         }}
       >
         {items === undefined ? (
@@ -249,26 +249,26 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             generateNodeProps={({ path }) => ({
               className: classes.row,
               style: {
-                marginLeft: NODE_MARGIN * (path.length - 1)
-              }
+                marginLeft: NODE_MARGIN * (path.length - 1),
+              },
             })}
             maxDepth={5}
             isVirtualized={false}
             rowHeight={NODE_HEIGHT}
             treeData={items.map(item =>
-              getNodeData(item, onChange, onItemClick, onItemEdit)
+              getNodeData(item, onChange, onItemClick, onItemEdit),
             )}
             theme={{
-              nodeContentRenderer: Node as any
+              nodeContentRenderer: Node as any,
             }}
             onChange={newTree =>
               onChange(
                 getDiff(
                   items.map(item =>
-                    getNodeData(item, onChange, onItemClick, onItemEdit)
+                    getNodeData(item, onChange, onItemClick, onItemEdit),
                   ),
-                  newTree as TreeItem[]
-                )
+                  newTree as TreeItem[],
+                ),
               )
             }
             placeholderRenderer={Placeholder as any}

@@ -6,15 +6,15 @@ import messages from "./messages";
 function getHelpModeActions(
   query: string,
   intl: IntlShape,
-  setMode: (mode: QuickSearchMode) => void
+  setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchAction[] {
   if (query !== "") {
     return [
       {
         label: intl.formatMessage(messages.noResults),
         onClick: () => true,
-        type: "action"
-      }
+        type: "action",
+      },
     ];
   }
 
@@ -26,7 +26,7 @@ function getHelpModeActions(
         return true;
       },
       symbol: "...",
-      type: "action"
+      type: "action",
     },
     {
       label: intl.formatMessage(messages.helpCommandsMode),
@@ -35,7 +35,7 @@ function getHelpModeActions(
         return true;
       },
       symbol: ">",
-      type: "action"
+      type: "action",
     },
     {
       label: intl.formatMessage(messages.helpOrdersMode),
@@ -44,7 +44,7 @@ function getHelpModeActions(
         return true;
       },
       symbol: "#",
-      type: "action"
+      type: "action",
     },
     {
       label: intl.formatMessage(messages.helpCustomersMode),
@@ -53,7 +53,7 @@ function getHelpModeActions(
         return true;
       },
       symbol: "@",
-      type: "action"
+      type: "action",
     },
     {
       label: intl.formatMessage(messages.helpCatalogMode),
@@ -62,7 +62,7 @@ function getHelpModeActions(
         return true;
       },
       symbol: "$",
-      type: "action"
+      type: "action",
     },
     {
       label: intl.formatMessage(messages.helpMode),
@@ -71,8 +71,8 @@ function getHelpModeActions(
         return true;
       },
       symbol: "?",
-      type: "action"
-    }
+      type: "action",
+    },
   ];
 }
 

@@ -1,13 +1,13 @@
 import {
   ChannelData,
-  createSortedChannelsDataFromProduct
+  createSortedChannelsDataFromProduct,
 } from "@saleor/channels/utils";
 import {
   ProductChannelListingAddInput,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductUpdateMutationVariables,
-  SimpleProductUpdateMutation
+  SimpleProductUpdateMutation,
 } from "@saleor/graphql";
 import { weight } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -24,14 +24,14 @@ import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 export const getSimpleProductVariables = (
   productVariables: ProductUpdateMutationVariables,
   data: ProductUpdatePageSubmitData,
-  productId: string
+  productId: string,
 ) => ({
   ...productVariables,
   addStocks: data.addStocks.map(mapFormsetStockToStockInput),
   deleteStocks: data.removeStocks,
   input: {
     ...productVariables.input,
-    weight: weight(data.weight)
+    weight: weight(data.weight),
   },
   productVariantId: productId,
   productVariantInput: {
@@ -42,18 +42,18 @@ export const getSimpleProductVariables = (
           globalThreshold: data.globalThreshold
             ? parseInt(data.globalThreshold, 10)
             : null,
-          endDate: data.preorderEndDateTime
+          endDate: data.preorderEndDateTime,
         }
-      : undefined
+      : undefined,
   },
-  updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
+  updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
 });
 
 export const getSimpleProductErrors = (data: SimpleProductUpdateMutation) => [
   ...data.productUpdate.errors,
   ...data.productVariantStocksCreate.errors,
   ...data.productVariantStocksDelete.errors,
-  ...data.productVariantStocksUpdate.errors
+  ...data.productVariantStocksUpdate.errors,
 ];
 
 export const getChannelListingBaseInputData = ({
@@ -62,53 +62,53 @@ export const getChannelListingBaseInputData = ({
   publicationDate,
   isAvailableForPurchase,
   availableForPurchase,
-  visibleInListings
+  visibleInListings,
 }: ChannelData) => ({
   channelId,
   isPublished,
   publicationDate,
   visibleInListings,
   isAvailableForPurchase,
-  availableForPurchaseDate: availableForPurchase
+  availableForPurchaseDate: availableForPurchase,
 });
 
 export const getChannelListingUpdateInputFromData = (
   { variantsIdsToAdd, variantsIdsToRemove }: ChannelWithVariantData,
   { selectedVariantsIds: initialSelectedVariantsIds }: ChannelWithVariantData,
-  basicChannelData: ChannelData
+  basicChannelData: ChannelData,
 ) => ({
   ...getChannelListingBaseInputData(basicChannelData),
   addVariants: arrayDiff(initialSelectedVariantsIds, variantsIdsToAdd).added,
-  removeVariants: variantsIdsToRemove
+  removeVariants: variantsIdsToRemove,
 });
 
 const getParsedChannelsData = (
   channelsWithVariants: ChannelsWithVariantsData,
   initialChannelWithVariants: ChannelsWithVariantsData,
-  channelsData: ChannelData[]
+  channelsData: ChannelData[],
 ): ProductChannelListingAddInput[] =>
   channelsData.map(({ id, ...rest }) =>
     getChannelListingUpdateInputFromData(
       channelsWithVariants[id],
       initialChannelWithVariants[id],
-      { id, ...rest }
-    )
+      { id, ...rest },
+    ),
   );
 
 const shouldRemoveChannel = (allVariants: ProductDetailsVariantFragment[]) => ({
-  removeVariants
+  removeVariants,
 }: ProductChannelListingAddInput) =>
   isRemovingAllVariants(allVariants, removeVariants);
 
 const isRemovingAllVariants = (
   allVariants: ProductDetailsVariantFragment[],
-  removeVariants: string[]
+  removeVariants: string[],
 ) => !!removeVariants.length && removeVariants.length === allVariants.length;
 
 const shouldUpdateChannel = (
   initialChannelWithVariantData,
   allVariants: ProductDetailsVariantFragment[],
-  allChannels: ChannelData[]
+  allChannels: ChannelData[],
 ) => ({
   removeVariants,
   addVariants,
@@ -118,12 +118,12 @@ const shouldUpdateChannel = (
   const initialDataInput = getChannelListingUpdateInputFromData(
     initialChannelWithVariantData[channelId],
     initialChannelWithVariantData[channelId],
-    allChannels.find(getById(channelId))
+    allChannels.find(getById(channelId)),
   );
 
   const hasDataChanged = !isEqual(
     { removeVariants, addVariants, channelId, ...rest },
-    initialDataInput
+    initialDataInput,
   );
 
   const isRemovingChannel = isRemovingAllVariants(allVariants, removeVariants);
@@ -134,24 +134,24 @@ const shouldUpdateChannel = (
 export const getChannelsVariables = (
   { id, variants }: ProductFragment,
   allChannels: ChannelData[],
-  { channelsWithVariants, channelsData }: ProductUpdateSubmitData
+  { channelsWithVariants, channelsData }: ProductUpdateSubmitData,
 ) => {
   const initialChannelWithVariants = getParsedChannelsWithVariantsDataFromChannels(
-    channelsData
+    channelsData,
   );
 
   const channelsToBeUpdated = getParsedChannelsData(
     channelsWithVariants,
     initialChannelWithVariants,
-    channelsData
+    channelsData,
   ).filter(
-    shouldUpdateChannel(initialChannelWithVariants, variants, allChannels)
+    shouldUpdateChannel(initialChannelWithVariants, variants, allChannels),
   );
 
   const channelsIdsToBeRemoved = getParsedChannelsData(
     channelsWithVariants,
     initialChannelWithVariants,
-    channelsData
+    channelsData,
   )
     .filter(shouldRemoveChannel(variants))
     .map(({ channelId }) => channelId);
@@ -161,22 +161,22 @@ export const getChannelsVariables = (
       id,
       input: {
         updateChannels: channelsToBeUpdated,
-        removeChannels: channelsIdsToBeRemoved
-      }
-    }
+        removeChannels: channelsIdsToBeRemoved,
+      },
+    },
   };
 };
 
 export const getSimpleChannelsVariables = (
   data: ProductUpdatePageSubmitData,
-  product: ProductFragment
+  product: ProductFragment,
 ) => {
   const productChannels = createSortedChannelsDataFromProduct(product);
   const existingChannelIDs = productChannels.map(channel => channel.id);
   const modifiedChannelIDs = data.channelListings.map(channel => channel.id);
 
   const removedChannelIDs = existingChannelIDs.filter(
-    x => !modifiedChannelIDs.includes(x)
+    x => !modifiedChannelIDs.includes(x),
   );
 
   return {
@@ -184,18 +184,18 @@ export const getSimpleChannelsVariables = (
       id: product.id,
       input: {
         updateChannels: getAvailabilityVariables(data.channelListings),
-        removeChannels: removedChannelIDs
-      }
-    }
+        removeChannels: removedChannelIDs,
+      },
+    },
   };
 };
 
 export const getVariantChannelsInput = ({
-  channelListings
+  channelListings,
 }: ProductUpdatePageSubmitData) =>
   channelListings.map(listing => ({
     channelId: listing.id,
     costPrice: listing.costPrice || null,
     price: listing.price,
-    preorderThreshold: listing.preorderThreshold
+    preorderThreshold: listing.preorderThreshold,
   }));

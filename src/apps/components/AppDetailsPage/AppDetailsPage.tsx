@@ -33,7 +33,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   loading,
   navigateToApp,
   onAppActivateOpen,
-  onAppDeactivateOpen
+  onAppDeactivateOpen,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -105,7 +105,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           title={intl.formatMessage({
             id: "jDIRQV",
             defaultMessage: "About this app",
-            description: "section header"
+            description: "section header",
           })}
         />
         <CardContent>
@@ -118,7 +118,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           title={intl.formatMessage({
             id: "VsGcdP",
             defaultMessage: "App permissions",
-            description: "section header"
+            description: "section header",
           })}
         />
         <CardContent>
@@ -152,7 +152,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             title={intl.formatMessage({
               id: "a55zOn",
               defaultMessage: "Data privacy",
-              description: "section header"
+              description: "section header",
             })}
           />
           <CardContent>

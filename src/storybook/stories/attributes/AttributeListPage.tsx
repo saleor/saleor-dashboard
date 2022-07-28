@@ -1,5 +1,5 @@
 import AttributeListPage, {
-  AttributeListPageProps
+  AttributeListPageProps,
 } from "@saleor/attributes/components/AttributeListPage";
 import { attributes } from "@saleor/attributes/fixtures";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
@@ -9,7 +9,7 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "@saleor/fixtures";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
@@ -27,26 +27,26 @@ const props: AttributeListPageProps = {
   filterOpts: {
     filterableInStorefront: {
       active: false,
-      value: false
+      value: false,
     },
     isVariantOnly: {
       active: false,
-      value: false
+      value: false,
     },
     valueRequired: {
       active: false,
-      value: false
+      value: false,
     },
     visibleInStorefront: {
       active: false,
-      value: false
-    }
+      value: false,
+    },
   },
   onSort: () => undefined,
   sort: {
     ...sortPageProps.sort,
-    sort: AttributeListUrlSortField.name
-  }
+    sort: AttributeListUrlSortField.name,
+  },
 };
 
 storiesOf("Views / Attributes / Attribute list", module)

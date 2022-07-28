@@ -9,7 +9,7 @@ import ResetPasswordPage, { ResetPasswordPageProps } from "./ResetPasswordPage";
 const props: ResetPasswordPageProps = {
   disabled: false,
   error: undefined,
-  onSubmit: () => undefined
+  onSubmit: () => undefined,
 };
 storiesOf("Views / Authentication / Reset password", module)
   .addDecorator(CardDecorator)

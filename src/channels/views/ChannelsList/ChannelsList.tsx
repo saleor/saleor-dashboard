@@ -3,7 +3,7 @@ import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import {
   ChannelDeleteMutation,
   useChannelDeleteMutation,
-  useChannelsQuery
+  useChannelsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -17,7 +17,7 @@ import ChannelsListPage from "../../pages/ChannelsListPage";
 import {
   channelsListUrl,
   ChannelsListUrlDialog,
-  ChannelsListUrlQueryParams
+  ChannelsListUrlQueryParams,
 } from "../../urls";
 
 interface ChannelsListProps {
@@ -32,12 +32,12 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
   const { data, refetch } = useChannelsQuery({ displayLoader: true });
   const limitOpts = useShopLimitsQuery({
     variables: {
-      channels: true
-    }
+      channels: true,
+    },
   });
 
   const selectedChannel = data?.channels?.find(
-    channel => channel.id === params?.id
+    channel => channel.id === params?.id,
   );
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -52,8 +52,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         status: "success",
         text: intl.formatMessage({
           id: "AkyGP2",
-          defaultMessage: "Channel deleted"
-        })
+          defaultMessage: "Channel deleted",
+        }),
       });
       refetch();
       limitOpts.refetch();
@@ -62,20 +62,20 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       errors.map(error =>
         notify({
           status: "error",
-          text: getChannelsErrorMessage(error, intl)
-        })
+          text: getChannelsErrorMessage(error, intl),
+        }),
       );
     }
   };
 
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
-    onCompleted
+    onCompleted,
   });
 
   const channelsChoices = getChannelsCurrencyChoices(
     params.id,
     selectedChannel,
-    data?.channels
+    data?.channels,
   );
 
   const handleRemoveConfirm = (channelId?: string) => {
@@ -84,8 +84,8 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     deleteChannel({
       variables: {
         id: params.id,
-        ...inputVariables
-      }
+        ...inputVariables,
+      },
     });
   };
 
@@ -96,7 +96,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         onRemove={id =>
           openModal("remove", {
-            id
+            id,
           })
         }
       />

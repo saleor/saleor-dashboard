@@ -5,18 +5,18 @@ export const props: MetadataProps = {
     metadata: [
       {
         key: "key",
-        value: "value"
+        value: "value",
       },
       {
         key: "key2",
-        value: '{\n  "jsonValue": "some-value"\n}'
+        value: '{\n  "jsonValue": "some-value"\n}',
       },
       {
         key: "key3",
-        value: "some-value"
-      }
+        value: "some-value",
+      },
     ],
-    privateMetadata: []
+    privateMetadata: [],
   },
-  onChange: () => undefined
+  onChange: () => undefined,
 };

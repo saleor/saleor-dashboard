@@ -8,7 +8,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   SortableTableBody,
-  SortableTableRow
+  SortableTableRow,
 } from "@saleor/components/SortableTable";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
@@ -24,41 +24,41 @@ const useStyles = makeStyles(
   {
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: 80
+      width: 80,
     },
     colGrab: {
-      width: 60
+      width: 60,
     },
     colName: {
-      width: 200
+      width: 200,
     },
     colSlug: {
-      width: 200
+      width: 200,
     },
     colVariant: {
-      width: 150
+      width: 150,
     },
     colVariantContent: {
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
     },
     colVariantDisabled: {
       fill: "#28234A",
       fillOpacity: 0.6,
       "&:hover": {
-        fillOpacity: 1
-      }
+        fillOpacity: 1,
+      },
     },
     link: {
-      cursor: "pointer"
+      cursor: "pointer",
     },
     textLeft: {
-      textAlign: "left"
-    }
+      textAlign: "left",
+    },
   },
-  { name: "ProductTypeAttributes" }
+  { name: "ProductTypeAttributes" },
 );
 
 interface ProductTypeVariantAttributesProps extends ListActions {
@@ -77,13 +77,13 @@ function handleContainerAssign(
   variantID: string,
   isSelected: boolean,
   selectedAttributes: string[],
-  setSelectedAttributes: (data: string[]) => void
+  setSelectedAttributes: (data: string[]) => void,
 ) {
   if (isSelected) {
     setSelectedAttributes(
       selectedAttributes.filter(
-        selectedContainer => selectedContainer !== variantID
-      )
+        selectedContainer => selectedContainer !== variantID,
+      ),
     );
   } else {
     setSelectedAttributes([...selectedAttributes, variantID]);
@@ -107,7 +107,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     onAttributeReorder,
     onAttributeUnassign,
     setSelectedVariantAttributes,
-    selectedVariantAttributes
+    selectedVariantAttributes,
   } = props;
   const classes = useStyles(props);
 
@@ -118,7 +118,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     setSelectedVariantAttributes(
       assignedVariantAttributes
         .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
-        .filter(Boolean) || []
+        .filter(Boolean) || [],
     );
   }, []);
 
@@ -128,7 +128,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
         title={intl.formatMessage({
           id: "skEK/i",
           defaultMessage: "Variant Attributes",
-          description: "section header"
+          description: "section header",
         })}
         toolbar={
           <Button
@@ -160,7 +160,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             dragRows
             selected={selected}
             items={assignedVariantAttributes?.map(
-              selectedAttribute => selectedAttribute.attribute
+              selectedAttribute => selectedAttribute.attribute,
             )}
             toggleAll={toggleAll}
             toolbar={toolbar}
@@ -194,16 +194,16 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                 ? isChecked(attribute.id)
                 : false;
               const isSelected = !!selectedVariantAttributes.find(
-                selectedAttribute => selectedAttribute === attribute.id
+                selectedAttribute => selectedAttribute === attribute.id,
               );
               const variantSelectionDisabled = ![
                 "DROPDOWN",
                 "BOOLEAN",
                 "SWATCH",
-                "NUMERIC"
+                "NUMERIC",
               ].includes(attribute.inputType);
               const readableAttributeInputType = capitalize(
-                attribute.inputType.split("_").join(" ")
+                attribute.inputType.split("_").join(" "),
               );
 
               return (
@@ -249,7 +249,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                             attribute.id,
                             isSelected,
                             selectedVariantAttributes,
-                            setSelectedVariantAttributes
+                            setSelectedVariantAttributes,
                           )
                         }
                       />
@@ -290,7 +290,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                   />
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </SortableTableBody>
       </ResponsiveTable>

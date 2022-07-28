@@ -16,9 +16,13 @@ import "cypress-file-upload";
 import "cypress-mochawesome-reporter/register";
 
 import { commandTimings } from "cypress-timings";
+
+import cypressGrep from "../support/cypress-grep/support";
 commandTimings();
 
 import { urlList } from "../fixtures/urlList";
+
+cypressGrep();
 
 Cypress.Commands.add("clearSessionData", () => {
   cy.clearCookies();
@@ -43,33 +47,10 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   });
 });
 
-Cypress.Commands.add(
-  "sendRequestWithQuery",
-  (query, authorization = "auth", variables = "") =>
-    cy
-      .request({
-        body: {
-          variables,
-          query
-        },
-        headers: {
-          Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`
-        },
-        method: "POST",
-        url: urlList.apiUri,
-        log: true
-      })
-      .then(response => {
-        const respInSting = JSON.stringify(response.body);
-        if (respInSting.includes(`"errors":[{`)) {
-          cy.log(query).log(JSON.stringify(response.body));
-        }
-      })
-);
 Cypress.on(
   "uncaught:exception",
   (err, runnable) =>
     // returning false here prevents Cypress from
     // failing the test
-    false
+    false,
 );

@@ -22,7 +22,7 @@ storiesOf("Views / Authentication / Set up a new password", module)
         code: AccountErrorCode.PASSWORD_TOO_SHORT,
         field,
         addressType: null,
-        message: null
+        message: null,
       }))}
       disabled={false}
       onSubmit={() => undefined}

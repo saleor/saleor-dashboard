@@ -3,12 +3,12 @@ import {
   CircularProgress,
   MenuItem,
   Paper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {
-  isScrolledToBottom
+  isScrolledToBottom,
 } from "@saleor/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
@@ -52,15 +52,15 @@ const useStyles = makeStyles(
       borderRadius: "100%",
       height: 24,
       margin: theme.spacing(),
-      width: 24
+      width: 24,
     },
     addIcon: {
       height: 24,
       margin: 9,
-      width: 20
+      width: 20,
     },
     arrowContainer: {
-      position: "relative"
+      position: "relative",
     },
     arrowInnerContainer: {
       alignItems: "center",
@@ -75,42 +75,42 @@ const useStyles = makeStyles(
       opacity: 1,
       position: "absolute",
       transition: theme.transitions.duration.short + "ms",
-      width: "100%"
+      width: "100%",
     },
     checkbox: {
       height: 24,
-      width: 20
+      width: 20,
     },
     content: {
       maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
-        2
+        2,
       )})`,
       overflowY: "scroll",
-      padding: 8
+      padding: 8,
     },
     hide: {
       opacity: 0,
-      zIndex: -1
+      zIndex: -1,
     },
     hr: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     menuItem: {
       "&:focus": {
         backgroundColor: [
           theme.palette.background.default,
-          "!important"
+          "!important",
         ] as any,
         color: theme.palette.primary.main,
-        fontWeight: 400
+        fontWeight: 400,
       },
       "&:hover": {
         backgroundColor: [
           theme.palette.background.default,
-          "!important"
+          "!important",
         ] as any,
         color: theme.palette.primary.main,
-        fontWeight: 700
+        fontWeight: 700,
       },
       paddingLeft: theme.spacing(1.5),
       borderRadius: 4,
@@ -120,35 +120,35 @@ const useStyles = makeStyles(
       height: "auto",
       marginBottom: theme.spacing(0.5),
       padding: 0,
-      whiteSpace: "normal"
+      whiteSpace: "normal",
     },
     menuItemLabel: {
-      overflowWrap: "break-word"
+      overflowWrap: "break-word",
     },
     progress: {},
     progressContainer: {
       display: "flex",
       justifyContent: "center",
-      padding: theme.spacing(1, 0)
+      padding: theme.spacing(1, 0),
     },
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
       margin: theme.spacing(1, 0),
       overflow: "hidden",
-      zIndex: 22
-    }
+      zIndex: 22,
+    },
   }),
   {
-    name: "MultiAutocompleteSelectFieldContent"
-  }
+    name: "MultiAutocompleteSelectFieldContent",
+  },
 );
 
 function getChoiceIndex(
   index: number,
   displayValues: MultiAutocompleteChoiceType[],
   displayCustomValue: boolean,
-  add: boolean
+  add: boolean,
 ) {
   let choiceIndex = index;
   if (add || displayCustomValue) {
@@ -172,7 +172,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     highlightedIndex,
     loading,
     inputValue,
-    onFetchMore
+    onFetchMore,
   } = props;
   if (!!add && !!displayCustomValue) {
     throw new Error("Add and custom value cannot be displayed simultaneously");
@@ -214,7 +214,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 className={classes.menuItem}
                 component="div"
                 {...getItemProps({
-                  item: inputValue
+                  item: inputValue,
                 })}
                 data-test-id="multi-autocomplete-select-option-add"
                 onClick={add.onClick}
@@ -229,7 +229,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 key="customValue"
                 component="div"
                 {...getItemProps({
-                  item: inputValue
+                  item: inputValue,
                 })}
                 data-test-id="multi-autocomplete-select-option-custom"
               >
@@ -239,7 +239,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                   defaultMessage="Add new value: {value}"
                   description="add custom select input option"
                   values={{
-                    value: inputValue
+                    value: inputValue,
                   }}
                 />
               </MenuItem>
@@ -254,7 +254,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 disabled={value.disabled}
                 component="div"
                 {...getItemProps({
-                  item: value.value
+                  item: value.value,
                 })}
                 data-test-id="multi-autocomplete-select-option"
               >
@@ -275,7 +275,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 index,
                 displayValues,
                 displayCustomValue,
-                !!add
+                !!add,
               );
 
               return (
@@ -287,7 +287,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                   component="div"
                   {...getItemProps({
                     index: choiceIndex,
-                    item: suggestion.value
+                    item: suggestion.value,
                   })}
                   data-test-id="multi-autocomplete-select-option"
                 >
@@ -329,7 +329,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
             className={classNames(classes.arrowInnerContainer, {
               // Needs to be explicitely compared to false because
               // scrolledToBottom can be either true, false or undefined
-              [classes.hide]: scrolledToBottom !== false
+              [classes.hide]: scrolledToBottom !== false,
             })}
           >
             <SVG src={chevronDown} />

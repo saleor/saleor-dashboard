@@ -1,7 +1,7 @@
 import { FetchResult } from "@apollo/client";
 import {
   ChannelSaleFormData,
-  SaleDetailsPageFormData
+  SaleDetailsPageFormData,
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
@@ -9,7 +9,7 @@ import {
   SaleDetailsFragment,
   SaleType,
   SaleUpdateMutation,
-  SaleUpdateMutationVariables
+  SaleUpdateMutationVariables,
 } from "@saleor/graphql";
 import { joinDateTime } from "@saleor/misc";
 
@@ -23,8 +23,8 @@ export function createUpdateHandler(
   sale: SaleDetailsFragment,
   saleChannelsChoices: ChannelSaleFormData[],
   updateSale: (
-    variables: SaleUpdateMutationVariables
-  ) => Promise<FetchResult<SaleUpdateMutation>>
+    variables: SaleUpdateMutationVariables,
+  ) => Promise<FetchResult<SaleUpdateMutation>>,
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
@@ -37,14 +37,14 @@ export function createUpdateHandler(
             : null,
           name: formData.name,
           startDate: joinDateTime(formData.startDate, formData.startTime),
-          type: discountValueTypeEnum(formData.type)
+          type: discountValueTypeEnum(formData.type),
         },
         channelInput: getSaleChannelsVariables(
           id,
           formData,
-          saleChannelsChoices.map(channel => channel.id)
-        ).input
-      }).then(({ data }) => data?.saleUpdate.errors ?? [])
+          saleChannelsChoices.map(channel => channel.id),
+        ).input,
+      }).then(({ data }) => data?.saleUpdate.errors ?? []),
     ]);
 
     return errors.flat();

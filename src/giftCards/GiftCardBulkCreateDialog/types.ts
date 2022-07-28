@@ -18,7 +18,7 @@ export const giftCardBulkCreateErrorKeys: GiftCardErrorKey[] = [
   "currency",
   "amount",
   "balance",
-  "count"
+  "count",
 ];
 
 export interface GiftCardBulkCreateFormData

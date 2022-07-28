@@ -7,7 +7,7 @@ import {
   checkoutShippingAddressUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
-  createCheckout
+  createCheckout,
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
 import {
@@ -15,81 +15,90 @@ import {
   createAndCompleteCheckoutWithoutShipping,
   createWaitingForCaptureOrder,
   getShippingMethodIdFromCheckout,
-  updateShippingInCheckout
+  updateShippingInCheckout,
 } from "../../support/api/utils/ordersUtils";
 import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all", "refactored"] }, () => {
-  describe("As an unlogged customer I want to order physical and digital products", () => {
-    const startsWith = `CyPurchaseByType`;
-    const email = `${startsWith}@example.com`;
-    const testsMessage = "Check order status";
-    const digitalName = `${startsWith}${faker.datatype.number()}`;
-    const physicalName = `${startsWith}${faker.datatype.number()}`;
-    const { softExpect } = chai;
+describe("As an unlogged customer I want to order physical and digital products", () => {
+  const startsWith = `CyPurchaseByType`;
+  const email = `${startsWith}@example.com`;
+  const testsMessage = "Check order status";
+  const digitalName = `${startsWith}${faker.datatype.number()}`;
+  const physicalName = `${startsWith}${faker.datatype.number()}`;
 
-    let defaultChannel;
-    let address;
-    let shippingMethod;
-    let digitalVariants;
-    let physicalVariants;
+  let defaultChannel;
+  let address;
+  let shippingMethod;
+  let digitalVariants;
+  let physicalVariants;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
-        physicalProductName: physicalName,
-        digitalProductName: digitalName
-      }).then(resp => {
-        defaultChannel = resp.defaultChannel;
-        address = resp.address;
-        shippingMethod = resp.shippingMethod;
-        digitalVariants = resp.digitalVariants;
-        physicalVariants = resp.physicalVariants;
-      });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
+      physicalProductName: physicalName,
+      digitalProductName: digitalName,
+    }).then(resp => {
+      defaultChannel = resp.defaultChannel;
+      address = resp.address;
+      shippingMethod = resp.shippingMethod;
+      digitalVariants = resp.digitalVariants;
+      physicalVariants = resp.physicalVariants;
+      cy.clearSessionData();
     });
+  });
 
-    it("should purchase digital product as unlogged customer. TC: SALEOR_0402", () => {
+  it(
+    "should purchase digital product as unlogged customer. TC: SALEOR_0402",
+    { tags: ["@checkout", "@allEnv", "@stable"] },
+    () => {
       createAndCompleteCheckoutWithoutShipping({
         channelSlug: defaultChannel.slug,
         email,
         billingAddress: address,
         variantsList: digitalVariants,
-        auth: "token"
+        auth: "token",
       })
         .then(({ order }) => {
           getOrder(order.id);
         })
         .then(order => {
-          softExpect(
+          expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(false);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    });
+    },
+  );
 
-    it("should purchase physical product as unlogged customer. TC: SALEOR_0403", () => {
+  it(
+    "should purchase physical product as unlogged customer. TC: SALEOR_0403",
+    { tags: ["@checkout", "@allEnv", "@stable"] },
+    () => {
       createWaitingForCaptureOrder({
         channelSlug: defaultChannel.slug,
         email,
         variantsList: physicalVariants,
         shippingMethodName: shippingMethod.name,
-        address
+        address,
       })
         .then(({ order }) => {
           getOrder(order.id);
         })
         .then(order => {
-          softExpect(
+          expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(true);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    });
+    },
+  );
 
-    it("should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404", () => {
+  it(
+    "should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404",
+    { tags: ["@checkout", "@allEnv"] },
+    () => {
       let checkout;
 
       createCheckout({
@@ -97,7 +106,7 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
         email,
         variantsList: digitalVariants,
         billingAddress: address,
-        auth: "token"
+        auth: "token",
       })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
@@ -109,11 +118,11 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
         .then(() => {
           const shippingMethodId = getShippingMethodIdFromCheckout(
             checkout,
-            shippingMethod.name
+            shippingMethod.name,
           );
           expect(
             shippingMethodId,
-            "Should be not possible to add shipping method without shipping address"
+            "Should be not possible to add shipping method without shipping address",
           ).to.not.be.ok;
           checkoutShippingAddressUpdate(checkout.id, address);
         })
@@ -123,7 +132,7 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
         .then(({ errors }) => {
           expect(
             errors,
-            "Should be not possible to add payment without shipping"
+            "Should be not possible to add payment without shipping",
           ).to.have.lengthOf(1);
           updateShippingInCheckout(checkout.token, shippingMethod.name);
         })
@@ -137,12 +146,12 @@ filterTests({ definedTags: ["all", "refactored"] }, () => {
           getOrder(order.id);
         })
         .then(order => {
-          softExpect(
+          expect(
             order.isShippingRequired,
-            "Check if is shipping required in order"
+            "Check if is shipping required in order",
           ).to.eq(true);
           expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
         });
-    });
-  });
+    },
+  );
 });

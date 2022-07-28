@@ -5,29 +5,24 @@ export const useStyles = makeStyles(
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
     },
     colPrice: {
-      minWidth: 300
+      minWidth: 300,
     },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 300
-    },
-    hr: {
-      margin: theme.spacing(2, -3),
-      width: `calc(100% + ${theme.spacing(6)}px)`
+      width: 300,
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableContainer: {
-      margin: theme.spacing(0, -3),
-      width: `calc(100% + ${theme.spacing(6)}px)`
-    }
+      margin: theme.spacing(0, -4),
+    },
   }),
   {
-    name: "VoucherValue"
-  }
+    name: "VoucherValue",
+  },
 );

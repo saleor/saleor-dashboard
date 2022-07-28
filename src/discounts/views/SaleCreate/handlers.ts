@@ -7,13 +7,13 @@ import {
   SaleChannelListingUpdateMutationVariables,
   SaleCreateMutation,
   SaleCreateMutationVariables,
-  SaleType
+  SaleType,
 } from "@saleor/graphql";
 import {
   decimal,
   extractMutationErrors,
   getMutationErrors,
-  joinDateTime
+  joinDateTime,
 } from "@saleor/misc";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
@@ -24,11 +24,11 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 
 export function createHandler(
   createSale: (
-    variables: SaleCreateMutationVariables
+    variables: SaleCreateMutationVariables,
   ) => Promise<FetchResult<SaleCreateMutation>>,
   updateChannels: (options: {
     variables: SaleChannelListingUpdateMutationVariables;
-  }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>
+  }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>,
 ) {
   return async (formData: FormData) => {
     const response = await createSale({
@@ -39,8 +39,8 @@ export function createHandler(
         name: formData.name,
         startDate: joinDateTime(formData.startDate, formData.startTime),
         type: discountValueTypeEnum(formData.type),
-        value: decimal(formData.value)
-      }
+        value: decimal(formData.value),
+      },
     });
 
     const errors = getMutationErrors(response);
@@ -53,9 +53,9 @@ export function createHandler(
       updateChannels({
         variables: getSaleChannelsVariables(
           response.data.saleCreate.sale.id,
-          formData
-        )
-      })
+          formData,
+        ),
+      }),
     );
 
     if (updateChannelsErrors.length > 0) {

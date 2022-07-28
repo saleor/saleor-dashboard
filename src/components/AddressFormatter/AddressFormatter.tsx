@@ -15,7 +15,7 @@ const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
   return (
     <address
       style={{
-        fontStyle: "inherit"
+        fontStyle: "inherit",
       }}
     >
       <Typography component="p">

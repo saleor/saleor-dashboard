@@ -59,8 +59,8 @@ describe("useLocalStorage", () => {
   it("properly inits from callback if value is not found", () => {
     const { result } = renderHook(() =>
       useLocalStorage(key, storedValue =>
-        storedValue ? storedValue + postfix : initialValue
-      )
+        storedValue ? storedValue + postfix : initialValue,
+      ),
     );
 
     expect(result.current[0]).toBe(initialValue);
@@ -71,8 +71,8 @@ describe("useLocalStorage", () => {
 
     const { result } = renderHook(() =>
       useLocalStorage(key, storedValue =>
-        storedValue ? storedValue + postfix : initialValue
-      )
+        storedValue ? storedValue + postfix : initialValue,
+      ),
     );
 
     expect(result.current[0]).toBe(savedValue + postfix);
@@ -87,17 +87,17 @@ describe("useLocalStorage", () => {
         if (typeof storedValue === "object") {
           return {
             ...storedValue,
-            bar: "baz"
+            bar: "baz",
           };
         }
 
         return objectValue;
-      })
+      }),
     );
 
     const newValue = {
       foo: numberValue,
-      bar: "baz"
+      bar: "baz",
     };
     expect(result.current[0]).toStrictEqual(newValue);
     expect(localStorage.getItem(key)).toBe(JSON.stringify(newValue));

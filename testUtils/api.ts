@@ -23,24 +23,24 @@ function setupApi() {
         port: false,
         protocol: false,
         query: false,
-        username: false
-      }
+        username: false,
+      },
     },
     persister: "fs",
     persisterOptions: {
       fs: {
-        recordingsDir: path.resolve(__dirname, "../recordings")
-      }
-    }
+        recordingsDir: path.resolve(__dirname, "../recordings"),
+      },
+    },
   });
   const cache = new InMemoryCache();
   const link = new BatchHttpLink({
     fetch: createFetch(),
-    uri: process.env.API_URI || "http://localhost:8000/graphql/"
+    uri: process.env.API_URI || "http://localhost:8000/graphql/",
   });
   const apolloClient = new ApolloClient({
     cache,
-    link
+    link,
   });
 
   return apolloClient;

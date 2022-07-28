@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { customAppAddUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
@@ -30,7 +30,7 @@ export interface CustomAppsProps {
 const CustomApps: React.FC<CustomAppsProps> = ({
   appsList,
   onRemove,
-  getCustomAppHref
+  getCustomAppHref,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -101,7 +101,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                   </Typography>
                 </TableCell>
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </ResponsiveTable>

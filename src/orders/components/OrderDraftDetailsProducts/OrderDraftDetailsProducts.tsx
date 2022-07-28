@@ -5,7 +5,7 @@ import { OrderLineFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
-  OrderLineDiscountContextConsumerProps
+  OrderLineDiscountContextConsumerProps,
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -21,40 +21,40 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: 0,
       },
-      width: theme.spacing(10)
+      width: theme.spacing(10),
     },
     colName: {
-      width: "auto"
+      width: "auto",
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN
+      marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colTotal: {
-      textAlign: "right"
+      textAlign: "right",
     },
     errorInfo: {
-      color: theme.palette.error.main
+      color: theme.palette.error.main,
     },
     quantityField: {
       "& input": {
         padding: "12px 12px 10px",
-        textAlign: "right"
+        textAlign: "right",
       },
-      width: 60
+      width: 60,
     },
     table: {
-      tableLayout: "fixed"
-    }
+      tableLayout: "fixed",
+    },
   }),
-  { name: "OrderDraftDetailsProducts" }
+  { name: "OrderDraftDetailsProducts" },
 );
 
 interface OrderDraftDetailsProductsProps {
@@ -108,7 +108,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
           renderCollection(lines, line => (
             <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
               {(
-                orderLineDiscountProps: OrderLineDiscountContextConsumerProps
+                orderLineDiscountProps: OrderLineDiscountContextConsumerProps,
               ) => (
                 <TableLine
                   {...orderLineDiscountProps}

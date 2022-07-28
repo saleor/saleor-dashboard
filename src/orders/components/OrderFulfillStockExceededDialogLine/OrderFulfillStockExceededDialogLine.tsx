@@ -5,7 +5,7 @@ import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockInputFormsetData
+  OrderFulfillStockInputFormsetData,
 } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -20,16 +20,16 @@ export interface OrderFulfillStockExceededDialogLineProps {
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
   const { line: genericLine, warehouseId, formsetData } = props;
 
-  if (!genericLine) {
-    return null;
-  }
-
   const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
   const classes = useStyles(props);
 
   const stock = line?.variant?.stocks.find(
-    stock => stock.warehouse.id === warehouseId
+    stock => stock.warehouse.id === warehouseId,
   );
+
+  if (!genericLine) {
+    return null;
+  }
 
   return (
     <TableRow key={line?.id}>
@@ -38,7 +38,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
         thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
-        {"attributes" in line.variant && (
+        {line.variant && "attributes" in line.variant && (
           <Typography color="textSecondary" variant="caption">
             {getAttributesCaption(line.variant?.attributes)}
           </Typography>

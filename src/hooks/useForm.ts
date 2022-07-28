@@ -2,7 +2,7 @@ import { CheckIfSaveIsDisabledFnType } from "@saleor/components/Form";
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import {
   useExitFormDialog,
-  UseExitFormDialogResult
+  UseExitFormDialogResult,
 } from "@saleor/components/Form/useExitFormDialog";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
@@ -22,7 +22,7 @@ export type SubmitPromise<TData = any> = Promise<TData>;
 
 export type FormChange<T = any> = (
   event: ChangeEvent<T>,
-  cb?: () => void
+  cb?: () => void,
 ) => void;
 
 export type FormErrors<T> = {
@@ -73,24 +73,24 @@ function merge<T extends FormData>(prevData: T, prevState: T, data: T): T {
 
       return acc;
     },
-    { ...prevState }
+    { ...prevState },
   );
 }
 
 function useForm<T extends FormData, TErrors>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
-  opts: UseFormOpts<T> = { confirmLeave: false, formId: undefined }
+  opts: UseFormOpts<T> = { confirmLeave: false, formId: undefined },
 ): UseFormResult<T> {
   const {
     confirmLeave,
     formId: propsFormId,
     checkIfSaveIsDisabled,
-    disabled
+    disabled,
   } = opts;
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
-    mergeFunc: merge
+    mergeFunc: merge,
   });
 
   const isSaveDisabled = () => {
@@ -106,15 +106,15 @@ function useForm<T extends FormData, TErrors>(
     setExitDialogSubmitRef,
     setEnableExitDialog,
     setIsSubmitDisabled,
-    formId
+    formId,
   } = useExitFormDialog({
     formId: propsFormId,
-    isDisabled: isSaveDisabled()
+    isDisabled: isSaveDisabled(),
   });
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit
+    onSubmit,
   });
 
   const handleSetChanged = (value: boolean = true) => {
@@ -144,7 +144,7 @@ function useForm<T extends FormData, TErrors>(
 
       setData({
         ...data,
-        [name]: toggle(value, field, isEqual)
+        [name]: toggle(value, field, isEqual),
       });
     }
 
@@ -170,7 +170,7 @@ function useForm<T extends FormData, TErrors>(
       }
       setData(data => ({
         ...data,
-        [name]: value
+        [name]: value,
       }));
     }
   }
@@ -182,7 +182,7 @@ function useForm<T extends FormData, TErrors>(
   function set(newData: Partial<T>) {
     setData(data => ({
       ...data,
-      ...newData
+      ...newData,
     }));
   }
 
@@ -202,7 +202,7 @@ function useForm<T extends FormData, TErrors>(
       setErrors({});
     } else {
       setErrors(errors =>
-        omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field])
+        omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field]),
       );
     }
   };
@@ -221,7 +221,7 @@ function useForm<T extends FormData, TErrors>(
     handleChange,
     triggerChange: handleSetChanged,
     setIsSubmitDisabled,
-    isSaveDisabled: isSaveDisabled()
+    isSaveDisabled: isSaveDisabled(),
   };
 }
 

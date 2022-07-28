@@ -3,7 +3,7 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
 import { DateTime } from "@saleor/components/Date";
@@ -19,7 +19,7 @@ import {
   maybe,
   renderCollection,
   transformOrderStatus,
-  transformPaymentStatus
+  transformPaymentStatus,
 } from "@saleor/misc";
 import { OrderListUrlSortField, orderUrl } from "@saleor/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
@@ -31,29 +31,29 @@ const useStyles = makeStyles(
   theme => {
     const overflowing: CSSProperties = {
       overflow: "hidden",
-      textOverflow: "ellipsis"
+      textOverflow: "ellipsis",
     };
 
     return {
       [theme.breakpoints.up("lg")]: {
         colCustomer: {
-          width: 220
+          width: 220,
         },
         colDate: {},
         colFulfillment: {
-          width: 230
+          width: 230,
         },
         colNumber: {
-          width: 120
+          width: 120,
         },
         colPayment: {
-          width: 220
+          width: 220,
         },
-        colTotal: {}
+        colTotal: {},
       },
       pill: {
         maxWidth: "100%",
-        ...overflowing
+        ...overflowing,
       },
       colCustomer: overflowing,
       colDate: {},
@@ -61,14 +61,14 @@ const useStyles = makeStyles(
       colNumber: {},
       colPayment: {},
       colTotal: {
-        textAlign: "right"
+        textAlign: "right",
       },
       link: {
-        cursor: "pointer"
-      }
+        cursor: "pointer",
+      },
     };
   },
-  { name: "OrderList" }
+  { name: "OrderList" },
 );
 
 interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
@@ -84,7 +84,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
     orders,
     onUpdateListSettings,
     onSort,
-    sort
+    sort,
   } = props;
   const classes = useStyles(props);
 
@@ -94,7 +94,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
     ? orders.map(order => ({
         ...order,
         paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
-        status: transformOrderStatus(order.status, intl)
+        status: transformOrderStatus(order.status, intl),
       }))
     : undefined;
   return (
@@ -264,7 +264,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

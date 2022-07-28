@@ -3,7 +3,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import { buttonMessages } from "@saleor/intl";
@@ -15,17 +15,17 @@ import { FormattedMessage } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     button: {
-      backgroundColor: theme.palette.error.main
-    }
+      backgroundColor: theme.palette.error.main,
+    },
   }),
   {
-    name: "OrderCannotCancelOrderDialog"
-  }
+    name: "OrderCannotCancelOrderDialog",
+  },
 );
 
 const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
   open,
-  onClose
+  onClose,
 }) => {
   const classes = useStyles({});
 

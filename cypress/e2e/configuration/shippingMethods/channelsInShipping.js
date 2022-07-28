@@ -9,29 +9,30 @@ import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
   addChannelToShippingMethod,
-  addChannelToShippingZone
+  addChannelToShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
   enterAndSelectShippings,
-  enterShippingZone
+  enterShippingZone,
 } from "../../../support/pages/shippingZones";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As a staff user I want have different shipping method prices for each channel", () => {
-    const startsWith = "ChannelShippingMethod";
-    let defaultChannel;
+describe("As a staff user I want have different shipping method prices for each channel", () => {
+  const startsWith = "ChannelShippingMethod";
+  let defaultChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      shippingUtils.deleteShippingStartsWith(startsWith);
-      channelsUtils.deleteChannelsStartsWith(startsWith);
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
+  });
 
-    it("should be able to display different price for each channel. TC: SALEOR_0805", () => {
+  it(
+    "should be able to display different price for each channel. TC: SALEOR_0805",
+    { tags: ["@shipping", "@allEnv"] },
+    () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       const defaultChannelPrice = 11;
       const createdChannelPrice = 7;
@@ -45,7 +46,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
       createChannel({
         name: shippingName,
-        currencyCode: createdChannelCurrency
+        currencyCode: createdChannelCurrency,
       }).then(channel => {
         createdChannel = channel;
       });
@@ -56,7 +57,7 @@ filterTests({ definedTags: ["all"] }, () => {
           ({
             shippingMethod: shippingMethodResp,
             shippingZone: shippingZoneResp,
-            defaultChannel: defaultChannelResp
+            defaultChannel: defaultChannelResp,
           }) => {
             shippingZone = shippingZoneResp;
             shippingMethod = shippingMethodResp;
@@ -67,16 +68,16 @@ filterTests({ definedTags: ["all"] }, () => {
                 addChannelToShippingMethod(
                   shippingMethod.id,
                   createdChannel.id,
-                  createdChannelPrice
+                  createdChannelPrice,
                 );
-              }
+              },
             );
-          }
+          },
         )
         .then(() => {
           cy.clearSessionData().loginUserViaRequest(
             "auth",
-            ONE_PERMISSION_USERS.shipping
+            ONE_PERMISSION_USERS.shipping,
           );
           enterAndSelectShippings(shippingZone.id, enterShippingZone);
           selectChannelInHeader(defaultChannel.name);
@@ -84,7 +85,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .getTextFromElement(
-              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
             )
             .then(text => {
               const value = defaultChannelPrice
@@ -101,7 +102,7 @@ filterTests({ definedTags: ["all"] }, () => {
             })
             .then(() => {
               cy.getTextFromElement(
-                SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+                SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
               );
             })
             .then(text => {
@@ -114,6 +115,6 @@ filterTests({ definedTags: ["all"] }, () => {
               expect(text).to.includes(createdChannelCurrency);
             });
         });
-    });
-  });
+    },
+  );
 });

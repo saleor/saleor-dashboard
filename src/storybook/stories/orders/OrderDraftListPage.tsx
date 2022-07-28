@@ -11,10 +11,10 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps
+  tabPageProps,
 } from "../../../fixtures";
 import OrderDraftListPage, {
-  OrderDraftListPageProps
+  OrderDraftListPageProps,
 } from "../../../orders/components/OrderDraftListPage";
 import { orders } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
@@ -31,21 +31,21 @@ const props: OrderDraftListPageProps = {
       active: false,
       value: {
         max: undefined,
-        min: undefined
-      }
+        min: undefined,
+      },
     },
     customer: {
       active: false,
-      value: undefined
-    }
+      value: undefined,
+    },
   },
   limits,
   onAdd: () => undefined,
   orders,
   sort: {
     ...sortPageProps.sort,
-    sort: OrderDraftListUrlSortField.number
-  }
+    sort: OrderDraftListUrlSortField.number,
+  },
 };
 
 storiesOf("Views / Orders / Draft order list", module)

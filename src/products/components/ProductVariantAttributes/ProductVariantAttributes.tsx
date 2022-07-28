@@ -3,12 +3,12 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType
+  SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import {
   ProductErrorWithAttributesFragment,
-  ProductVariantFragment
+  ProductVariantFragment,
 } from "@saleor/graphql";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
@@ -37,11 +37,11 @@ interface ProductVariantAttributesProps {
 function getAttributeDisplayValue(
   id: string,
   slug: string,
-  attributes: VariantAttributeInput[]
+  attributes: VariantAttributeInput[],
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
   const attributeValue = attribute.data.values.find(
-    value => value.node.slug === slug
+    value => value.node.slug === slug,
   );
   if (!!attributeValue) {
     return attributeValue.node.name;
@@ -52,7 +52,7 @@ function getAttributeDisplayValue(
 
 function getAttributeValue(
   id: string,
-  attributes: VariantAttributeInput[]
+  attributes: VariantAttributeInput[],
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
   return attribute?.value === null ? undefined : attribute.value;
@@ -60,12 +60,12 @@ function getAttributeValue(
 
 function getAttributeValueChoices(
   id: string,
-  attributes: VariantAttributeInput[]
+  attributes: VariantAttributeInput[],
 ): SingleAutocompleteChoiceType[] {
   const attribute = attributes.find(attr => attr.id === id);
   return attribute.data.values.map(attributeValue => ({
     label: attributeValue.node.name,
-    value: attributeValue.node.slug
+    value: attributeValue.node.slug,
   }));
 }
 
@@ -73,7 +73,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   attributes,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -89,7 +89,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
           ) : (
             attributes.map(attribute => {
               const error = errors.find(err =>
-                err.attributes?.includes(attribute.id)
+                err.attributes?.includes(attribute.id),
               );
 
               return (
@@ -99,12 +99,12 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
                   displayValue={getAttributeDisplayValue(
                     attribute.id,
                     attribute.value,
-                    attributes
+                    attributes,
                   )}
                   error={!!error}
                   helperText={getProductVariantAttributeErrorMessage(
                     error,
-                    intl
+                    intl,
                   )}
                   label={attribute.label}
                   name={`attribute:${attribute.id}`}
@@ -124,7 +124,7 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
             {errors
               .filter(
                 error =>
-                  error.field === "attributes" && error.attributes === null
+                  error.field === "attributes" && error.attributes === null,
               )
               .map(error => (
                 <Typography color="error" key={error.code}>

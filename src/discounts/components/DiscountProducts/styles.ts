@@ -4,30 +4,30 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     colActions: {
-      width: `calc(76px + ${theme.spacing(1)})`
+      width: `calc(76px + ${theme.spacing(1)})`,
     },
     colName: {
       paddingLeft: 0,
       width: "auto",
-      minWidth: 200
+      minWidth: 200,
     },
     colNameLabel: {
-      marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
+      marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`,
     },
     colPublished: {
       width: "auto",
-      minWidth: 150
+      minWidth: 150,
     },
     colType: {
       width: "auto",
-      minWidth: 150
+      minWidth: 150,
     },
     table: {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "DiscountProducts" }
+  { name: "DiscountProducts" },
 );

@@ -9,7 +9,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
@@ -23,7 +23,7 @@ import {
   isScrolledToTop,
   ScrollShadow,
   SearchIcon,
-  useElementScroll
+  useElementScroll,
 } from "@saleor/macaw-ui";
 import { isLineAvailableInWarehouse } from "@saleor/orders/utils/data";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
@@ -48,7 +48,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   lines,
   currentWarehouse,
   onConfirm,
-  onClose
+  onClose,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -72,13 +72,13 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     variables: {
       after: null,
       first: 20,
-      query: ""
-    }
+      query: "",
+    },
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
 
   const selectedWarehouse = filteredWarehouses?.find(
-    getById(selectedWarehouseId ?? "")
+    getById(selectedWarehouseId ?? ""),
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +107,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           <Debounce debounceFn={search}>
             {debounceSearchChange => {
               const handleSearchChange = (
-                event: React.ChangeEvent<HTMLInputElement>
+                event: React.ChangeEvent<HTMLInputElement>,
               ) => {
                 const value = event.target.value;
                 setQuery(value);
@@ -120,7 +120,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                   variant="outlined"
                   onChange={handleSearchChange}
                   placeholder={intl.formatMessage(
-                    messages.searchFieldPlaceholder
+                    messages.searchFieldPlaceholder,
                   )}
                   fullWidth
                   InputProps={{
@@ -128,7 +128,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                       <InputAdornment position="start">
                         <SearchIcon />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                   inputProps={{ className: classes.searchInput }}
                 />
@@ -147,7 +147,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
           <RadioGroup value={selectedWarehouseId} onChange={handleChange}>
             {filteredWarehouses.map(warehouse => {
               const unavailableLines = lines?.filter(
-                line => !isLineAvailableInWarehouse(line, warehouse)
+                line => !isLineAvailableInWarehouse(line, warehouse),
               );
               const someLinesUnavailable = unavailableLines?.length > 0;
               return (
@@ -168,12 +168,12 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                                     messages.productUnavailable,
                                     {
                                       productName:
-                                        unavailableLines[0].productName
-                                    }
+                                        unavailableLines[0].productName,
+                                    },
                                   )
                                 : intl.formatMessage(
                                     messages.multipleProductsUnavailable,
-                                    { productCount: unavailableLines.length }
+                                    { productCount: unavailableLines.length },
                                   )}
                             </Typography>
                           )}

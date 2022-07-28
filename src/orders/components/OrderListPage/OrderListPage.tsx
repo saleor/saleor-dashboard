@@ -2,7 +2,7 @@ import { Card } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItems,
-  useExtensions
+  useExtensions,
 } from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
@@ -17,7 +17,7 @@ import {
   FilterPageProps,
   PageListProps,
   RelayToFlat,
-  SortPage
+  SortPage,
 } from "@saleor/types";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -28,7 +28,7 @@ import OrderList from "../OrderList";
 import {
   createFilterStructure,
   OrderFilterKeys,
-  OrderListFilterOpts
+  OrderListFilterOpts,
 } from "./filters";
 
 export interface OrderListPageProps
@@ -44,10 +44,10 @@ export interface OrderListPageProps
 const useStyles = makeStyles(
   theme => ({
     settings: {
-      marginRight: theme.spacing(2)
-    }
+      marginRight: theme.spacing(2),
+    },
   }),
-  { name: "OrderListPage" }
+  { name: "OrderListPage" },
 );
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
@@ -72,7 +72,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const limitsReached = isLimitReached(limits, "orders");
 
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.ORDER_LIST
+    extensionMountPoints.ORDER_LIST,
   );
   const extensionMenuItems = mapToMenuItems(ORDER_OVERVIEW_MORE_ACTIONS);
   const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
@@ -87,12 +87,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             {
               id: "zyceue",
               defaultMessage: "{count}/{max} orders",
-              description: "placed order counter"
+              description: "placed order counter",
             },
             {
               count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders
-            }
+              max: limits.allowedUsage.orders,
+            },
           )
         }
         cardMenu={
@@ -104,11 +104,11 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                   label: intl.formatMessage({
                     id: "WbV1Xm",
                     defaultMessage: "Order Settings",
-                    description: "button"
+                    description: "button",
                   }),
-                  onSelect: onSettingsOpen
+                  onSelect: onSettingsOpen,
                 },
-                ...extensionMenuItems
+                ...extensionMenuItems,
               ]}
             />
           )
@@ -142,12 +142,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           allTabLabel={intl.formatMessage({
             id: "WRkCFt",
             defaultMessage: "All Orders",
-            description: "tab name"
+            description: "tab name",
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "wTHjt3",
-            defaultMessage: "Search Orders..."
+            defaultMessage: "Search Orders...",
           })}
         />
         <OrderList {...listProps} />

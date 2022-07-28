@@ -5,18 +5,18 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import {
   CollectionTranslationFragment,
-  LanguageCodeEnum
+  LanguageCodeEnum,
 } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps
+  TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -38,7 +38,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
   saveButtonState,
   onDiscard,
   onEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -46,7 +46,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.collections
+          tab: TranslatableEntities.collections,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -57,12 +57,12 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
             id: "Bphmwe",
             defaultMessage:
               'Translation Collection "{collectionName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             collectionName: getStringOrPlaceholder(data?.collection?.name),
-            languageCode
-          }
+            languageCode,
+          },
         )}
       >
         <LanguageSwitch
@@ -72,7 +72,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
             languageEntityUrl(
               lang,
               TranslatableEntities.collections,
-              translationId
+              translationId,
             )
           }
         />
@@ -86,20 +86,20 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           {
             displayName: intl.formatMessage({
               id: "VZsE96",
-              defaultMessage: "Collection Name"
+              defaultMessage: "Collection Name",
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.collection?.name
+            value: data?.collection?.name,
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
             type: "rich" as "rich",
-            value: data?.collection?.description
-          }
+            value: data?.collection?.description,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}
@@ -114,29 +114,29 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         initialState={true}
         title={intl.formatMessage({
           id: "TGX4T1",
-          defaultMessage: "Search Engine Preview"
+          defaultMessage: "Search Engine Preview",
         })}
         fields={[
           {
             displayName: intl.formatMessage({
               id: "HlEpii",
-              defaultMessage: "Search Engine Title"
+              defaultMessage: "Search Engine Title",
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
             type: "short" as "short",
-            value: data?.collection?.seoTitle
+            value: data?.collection?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
               id: "US3IPU",
-              defaultMessage: "Search Engine Description"
+              defaultMessage: "Search Engine Description",
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
             type: "long" as "long",
-            value: data?.collection?.seoDescription
-          }
+            value: data?.collection?.seoDescription,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}

@@ -9,7 +9,7 @@ interface CollectionWithDividersProps<T> {
   renderItem: (
     item: T | undefined,
     index: number | undefined,
-    collection: T[]
+    collection: T[],
   ) => any;
 }
 
@@ -35,7 +35,7 @@ function CollectionWithDividers<T>({
   collection,
   renderItem,
   DividerComponent,
-  renderEmpty
+  renderEmpty,
 }: CollectionWithDividersProps<T>) {
   const hasNoItemsAndPlaceholder = !renderEmpty && !collection.length;
 

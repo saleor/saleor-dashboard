@@ -6,10 +6,10 @@ import React from "react";
 import {
   listActionsProps,
   pageListProps,
-  sortPageProps
+  sortPageProps,
 } from "../../../fixtures";
 import PageListPage, {
-  PageListPageProps
+  PageListPageProps,
 } from "../../../pages/components/PageListPage";
 import { pageList } from "../../../pages/fixtures";
 import Decorator from "../../Decorator";
@@ -21,15 +21,15 @@ const props: PageListPageProps = {
   pages: pageList,
   sort: {
     ...sortPageProps.sort,
-    sort: PageListUrlSortField.title
+    sort: PageListUrlSortField.title,
   },
   actionDialogOpts: {
     open: () => undefined,
-    close: () => undefined
+    close: () => undefined,
   },
   params: {
-    ids: []
-  }
+    ids: [],
+  },
 };
 
 storiesOf("Views / Pages / Page list", module)

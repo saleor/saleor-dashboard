@@ -6,7 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
   OrderSettingsFragment,
-  ShopOrderSettingsFragment
+  ShopOrderSettingsFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -50,7 +50,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
             title={intl.formatMessage({
               id: "Vu9nol",
               defaultMessage: "Order settings",
-              description: "header"
+              description: "header",
             })}
             underline={true}
           />

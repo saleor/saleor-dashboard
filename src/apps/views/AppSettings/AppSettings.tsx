@@ -13,9 +13,9 @@ interface AppSettingsProps {
 }
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
-  const { data } = useAppQuery({
+  const { data, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const appExists = data?.app !== null;
@@ -32,10 +32,11 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
       data={data?.app}
       url={data?.app.configurationUrl}
       aboutHref={appDetailsUrl(id)}
+      refetch={refetch}
       onError={() =>
         notify({
           status: "error",
-          text: intl.formatMessage(appMessages.failedToFetchAppSettings)
+          text: intl.formatMessage(appMessages.failedToFetchAppSettings),
         })
       }
     />

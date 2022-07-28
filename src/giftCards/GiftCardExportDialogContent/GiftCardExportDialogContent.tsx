@@ -2,13 +2,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import {
   useExportGiftCardsMutation,
-  useGiftCardTotalCountQuery
+  useGiftCardTotalCountQuery,
 } from "@saleor/graphql";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useForm from "@saleor/hooks/useForm";
@@ -17,7 +17,7 @@ import ExportDialogSettings from "@saleor/products/components/ProductExportDialo
 import {
   ExportSettingsFormData,
   exportSettingsInitialFormData,
-  exportSettingsInitialFormDataWithIds
+  exportSettingsInitialFormDataWithIds,
 } from "@saleor/products/components/ProductExportDialog/types";
 import { DialogProps } from "@saleor/types";
 import React from "react";
@@ -42,14 +42,14 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
   const {
     loading: loadingGiftCardList,
     totalCount: filteredGiftCardsCount,
-    listElements
+    listElements,
   } = useGiftCardList();
 
   const selectedIds = idsToExport ?? listElements;
 
   const {
     data: allGiftCardsCountData,
-    loading: loadingGiftCardCount
+    loading: loadingGiftCardCount,
   } = useGiftCardTotalCountQuery();
 
   const loading = loadingGiftCardList || loadingGiftCardCount;
@@ -61,16 +61,16 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
       if (!errors.length) {
         notify({
           text: intl.formatMessage(messages.successAlertDescription),
-          title: intl.formatMessage(messages.successAlertTitle)
+          title: intl.formatMessage(messages.successAlertTitle),
         });
 
         queue(Task.EXPORT, {
-          id: data.exportGiftCards.exportFile.id
+          id: data.exportGiftCards.exportFile.id,
         });
 
         onClose();
       }
-    }
+    },
   });
 
   const handleSubmit = (data: ExportSettingsFormData) => {
@@ -78,9 +78,9 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
       variables: {
         input: getExportGiftCardsInput({
           data,
-          ids: selectedIds
-        })
-      }
+          ids: selectedIds,
+        }),
+      },
     });
   };
 
@@ -88,7 +88,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
     hasIdsToExport
       ? exportSettingsInitialFormDataWithIds
       : exportSettingsInitialFormData,
-    handleSubmit
+    handleSubmit,
   );
   const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
 
@@ -97,22 +97,22 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
       {
         id: "uQk8gB",
         defaultMessage: "All gift cards ({number})",
-        description: "export all items to csv file"
+        description: "export all items to csv file",
       },
       {
-        number: allGiftCardsCount || "..."
-      }
+        number: allGiftCardsCount || "...",
+      },
     ),
     selectedItems: intl.formatMessage(
       {
         id: "n97Ii0",
         defaultMessage: "Selected giftCards ({number})",
-        description: "export selected items to csv file"
+        description: "export selected items to csv file",
       },
       {
-        number: listElements.length
-      }
-    )
+        number: listElements.length,
+      },
+    ),
   };
 
   return (
@@ -133,7 +133,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
                 allowScopeSelection={!hasIdsToExport}
                 itemsQuantity={{
                   filter: filteredGiftCardsCount,
-                  all: allGiftCardsCount
+                  all: allGiftCardsCount,
                 }}
               />
               <Typography className={classes.note} variant="body2">

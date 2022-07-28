@@ -1,21 +1,18 @@
 import { Divider, Typography } from "@material-ui/core";
-import { ChannelShippingZone } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import DeletableItem from "@saleor/components/DeletableItem";
 import React from "react";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
+import { AssignItem } from "./types";
 
-interface ShippingZoneItemProps {
-  zone: ChannelShippingZone;
+interface ItemProps {
+  item: AssignItem;
   onDelete: (id: string) => void;
 }
 
-const ShippingZoneItem: React.FC<ShippingZoneItemProps> = ({
-  zone,
-  onDelete
-}) => {
-  const { id, name } = zone;
-  const classes = useStyles({});
+const Item: React.FC<ItemProps> = ({ item, onDelete }) => {
+  const { id, name } = item;
+  const classes = useStyles();
 
   return (
     <>
@@ -28,4 +25,4 @@ const ShippingZoneItem: React.FC<ShippingZoneItemProps> = ({
   );
 };
 
-export default ShippingZoneItem;
+export default Item;

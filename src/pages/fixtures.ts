@@ -1,7 +1,7 @@
 import {
   AttributeInputTypeEnum,
   PageDetailsFragment,
-  PageFragment
+  PageFragment,
 } from "@saleor/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
@@ -14,29 +14,29 @@ export const pageList: PageFragment[] = [
     id: "Jzx123sEt==",
     isPublished: true,
     slug: "about",
-    title: "About"
+    title: "About",
   },
   {
     __typename: "Page",
     id: "Jzx123sEx==",
     isPublished: false,
     slug: "about",
-    title: "About"
+    title: "About",
   },
   {
     __typename: "Page",
     id: "Jzx123sEu==",
     isPublished: true,
     slug: "about",
-    title: "About"
+    title: "About",
   },
   {
     __typename: "Page",
     id: "Jzx123sEm==",
     isPublished: true,
     slug: "about",
-    title: "About"
-  }
+    title: "About",
+  },
 ];
 export const page: PageDetailsFragment = {
   __typename: "Page",
@@ -57,7 +57,7 @@ export const page: PageDetailsFragment = {
             endCursor: "",
             hasNextPage: false,
             hasPreviousPage: false,
-            startCursor: ""
+            startCursor: "",
           },
           edges: [
             {
@@ -70,12 +70,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -87,12 +88,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -104,16 +106,17 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
+                value: null,
+              },
+            },
+          ],
         },
-        __typename: "Attribute"
+        __typename: "Attribute",
       },
       values: [
         {
@@ -123,14 +126,15 @@ export const page: PageDetailsFragment = {
           reference: null,
           __typename: "AttributeValue",
           file: null,
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
+          value: null,
+        },
       ],
-      __typename: "SelectedAttribute"
+      __typename: "SelectedAttribute",
     },
     {
       attribute: {
@@ -148,7 +152,7 @@ export const page: PageDetailsFragment = {
             endCursor: "",
             hasNextPage: false,
             hasPreviousPage: false,
-            startCursor: ""
+            startCursor: "",
           },
           edges: [
             {
@@ -161,12 +165,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -178,12 +183,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -195,12 +201,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -212,16 +219,17 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
+                value: null,
+              },
+            },
+          ],
         },
-        __typename: "Attribute"
+        __typename: "Attribute",
       },
       values: [
         {
@@ -231,15 +239,16 @@ export const page: PageDetailsFragment = {
           reference: null,
           __typename: "AttributeValue",
           file: null,
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
+          value: null,
+        },
       ],
-      __typename: "SelectedAttribute"
-    }
+      __typename: "SelectedAttribute",
+    },
   ],
   content: JSON.stringify(content),
   id: "Kzx152sEm==",
@@ -248,8 +257,8 @@ export const page: PageDetailsFragment = {
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   pageType: {
     __typename: "PageType",
@@ -269,7 +278,7 @@ export const page: PageDetailsFragment = {
             endCursor: "",
             hasNextPage: false,
             hasPreviousPage: false,
-            startCursor: ""
+            startCursor: "",
           },
           edges: [
             {
@@ -282,12 +291,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -299,12 +309,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -316,16 +327,17 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
+                value: null,
+              },
+            },
+          ],
         },
-        __typename: "Attribute"
+        __typename: "Attribute",
       },
       {
         id: "QXR0cmlidXRlOjI5",
@@ -340,7 +352,7 @@ export const page: PageDetailsFragment = {
             endCursor: "",
             hasNextPage: false,
             hasPreviousPage: false,
-            startCursor: ""
+            startCursor: "",
           },
           edges: [
             {
@@ -353,12 +365,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -370,12 +383,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -387,12 +401,13 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
+                value: null,
+              },
             },
             {
               __typename: "AttributeValueCountableEdge",
@@ -404,23 +419,24 @@ export const page: PageDetailsFragment = {
                 reference: null,
                 __typename: "AttributeValue",
                 file: null,
+                plainText: null,
                 richText: null,
                 boolean: null,
                 date: null,
                 dateTime: null,
-                value: null
-              }
-            }
-          ]
+                value: null,
+              },
+            },
+          ],
         },
-        __typename: "Attribute"
-      }
-    ]
+        __typename: "Attribute",
+      },
+    ],
   },
   privateMetadata: [],
   publicationDate: "",
   seoDescription: "About",
   seoTitle: "About",
   slug: "about",
-  title: "About"
+  title: "About",
 };

@@ -3,11 +3,11 @@ import { MetadataInput } from "@saleor/graphql";
 export enum EventDataAction {
   add = "add",
   delete = "delete",
-  update = "update"
+  update = "update",
 }
 export enum EventDataField {
   name = "name",
-  value = "value"
+  value = "value",
 }
 export interface EventData {
   action: EventDataAction;

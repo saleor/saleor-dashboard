@@ -1,6 +1,6 @@
 import {
   GiftCardSettingsExpiryTypeEnum,
-  GiftCardSettingsUpdateInput
+  GiftCardSettingsUpdateInput,
 } from "@saleor/graphql";
 
 import { GiftCardSettingsFormData } from "./types";
@@ -8,7 +8,7 @@ import { GiftCardSettingsFormData } from "./types";
 export const getGiftCardSettingsInputData = ({
   expiryPeriodActive,
   expiryPeriodType,
-  expiryPeriodAmount
+  expiryPeriodAmount,
 }: Pick<
   GiftCardSettingsFormData,
   "expiryPeriodActive" | "expiryPeriodType" | "expiryPeriodAmount"
@@ -21,12 +21,12 @@ export const getGiftCardSettingsInputData = ({
     expiryPeriodActive && expiryPeriodType && expiryPeriodAmount
       ? {
           type: expiryPeriodType,
-          amount: expiryPeriodAmount
+          amount: expiryPeriodAmount,
         }
       : undefined;
 
   return {
     expiryType,
-    expiryPeriod
+    expiryPeriod,
   };
 };

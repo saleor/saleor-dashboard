@@ -19,24 +19,24 @@ const useStyles = makeStyles(
       cursor: "pointer",
       fontSize: 16,
       marginLeft: theme.spacing(),
-      verticalAlign: "middle"
+      verticalAlign: "middle",
     },
     content: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     root: {
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 18,
       display: "inline-block",
       marginRight: theme.spacing(2),
-      padding: "6px 12px"
+      padding: "6px 12px",
     },
     sortableHandle: {
-      marginRight: theme.spacing(1)
-    }
+      marginRight: theme.spacing(1),
+    },
   }),
-  { name: "SortableChip" }
+  { name: "SortableChip" },
 );
 
 const SortableChip = SortableElement<SortableChipProps>(props => {

@@ -8,7 +8,7 @@ import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";
 import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";
 import {
   GiftCardUpdatePageActionParamsEnum,
-  GiftCardUpdatePageUrlQueryParams
+  GiftCardUpdatePageUrlQueryParams,
 } from "../../types";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
@@ -32,7 +32,7 @@ export const GiftCardUpdateDialogsContext = createContext<
 const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps> = ({
   children,
   params,
-  id
+  id,
 }) => {
   const navigate = useNavigator();
 
@@ -41,7 +41,7 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
   const {
     SET_BALANCE,
     DELETE,
-    RESEND_CODE
+    RESEND_CODE,
   } = GiftCardUpdatePageActionParamsEnum;
 
   const [openDialog, onClose] = createDialogActionHandlers<
@@ -58,7 +58,7 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
     openSetBalanceDialog: () => openDialog(SET_BALANCE),
     openDeleteDialog: () => openDialog(DELETE),
     openResendCodeDialog: () => openDialog(RESEND_CODE),
-    onClose
+    onClose,
   };
 
   return (

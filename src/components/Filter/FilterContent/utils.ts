@@ -10,56 +10,56 @@ export const filterTestingContext = "filter-field-";
 export const useCommonStyles = makeStyles(
   theme => ({
     andLabel: {
-      margin: theme.spacing(1, 2, 1, 0)
+      margin: theme.spacing(1, 2, 1, 0),
     },
     arrow: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     input: {
-      padding: "12px 0 9px 12px"
+      padding: "12px 0 9px 12px",
     },
     inputRange: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
     },
     inputTime: {
       marginLeft: theme.spacing(1),
-      width: "150px"
+      width: "150px",
     },
     spacer: {
-      paddingRight: theme.spacing(4)
-    }
+      paddingRight: theme.spacing(4),
+    },
   }),
-  { name: "FilterContentBodyCommon" }
+  { name: "FilterContentBodyCommon" },
 );
 
 export function getIsFilterMultipleChoices(
-  intl: IntlShape
+  intl: IntlShape,
 ): SingleAutocompleteChoiceType[] {
   return [
     {
       label: intl.formatMessage({
         id: "I+UwqI",
         defaultMessage: "equal to",
-        description: "is filter range or value"
+        description: "is filter range or value",
       }),
-      value: FilterType.SINGULAR
+      value: FilterType.SINGULAR,
     },
     {
       label: intl.formatMessage({
         id: "QBxN6z",
         defaultMessage: "between",
-        description: "is filter range or value"
+        description: "is filter range or value",
       }),
-      value: FilterType.MULTIPLE
-    }
+      value: FilterType.MULTIPLE,
+    },
   ];
 }
 
 export const getDateFilterValue = (
   dateTime: string,
   dateTimeString: string | null,
-  dateTimeFormat: boolean
+  dateTimeFormat: boolean,
 ) => {
   const { date } = splitDateTime(dateTime);
   if (!dateTimeFormat) {
@@ -71,7 +71,7 @@ export const getDateFilterValue = (
 
 export const getDateTimeFilterValue = (
   dateTimeString: string | null,
-  timeString: string
+  timeString: string,
 ) => {
   const { date } = splitDateTime(dateTimeString || new Date().toISOString());
   return joinDateTime(date, timeString);

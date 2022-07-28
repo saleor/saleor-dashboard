@@ -16,7 +16,8 @@ import {
   useChannelQuery,
   useChannelShippingZonesQuery,
   useChannelsQuery,
-  useChannelUpdateMutation
+  useChannelUpdateMutation,
+  useChannelWarehousesQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,6 +27,7 @@ import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -36,7 +38,7 @@ import {
   channelsListUrl,
   channelUrl,
   ChannelUrlDialog,
-  ChannelUrlQueryParams
+  ChannelUrlQueryParams,
 } from "../../urls";
 
 interface ChannelDetailsProps {
@@ -46,7 +48,7 @@ interface ChannelDetailsProps {
 
 export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   id,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -62,18 +64,18 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl))
+      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
   const { data, loading } = useChannelQuery({
     displayLoader: true,
-    variables: { id }
+    variables: { id },
   });
 
   const handleError = (error: ChannelErrorFragment) => {
     notify({
       status: "error",
-      text: getChannelsErrorMessage(error, intl)
+      text: getChannelsErrorMessage(error, intl),
     });
   };
 
@@ -83,19 +85,19 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
-    }
+    },
   });
 
   const [
     deactivateChannel,
-    deactivateChannelOpts
+    deactivateChannelOpts,
   ] = useChannelDeactivateMutation({
     onCompleted: data => {
       const errors = data.channelDeactivate.errors;
       if (errors.length) {
         errors.forEach(error => handleError(error));
       }
-    }
+    },
   });
 
   const handleSubmit = ({
@@ -103,7 +105,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     slug,
     shippingZonesIdsToRemove,
     shippingZonesIdsToAdd,
-    defaultCountry
+    warehousesIdsToRemove,
+    warehousesIdsToAdd,
+    defaultCountry,
   }: FormData) =>
     extractMutationErrors(
       updateChannel({
@@ -114,10 +118,12 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             slug,
             defaultCountry,
             addShippingZones: shippingZonesIdsToAdd,
-            removeShippingZones: shippingZonesIdsToRemove
-          }
-        }
-      })
+            removeShippingZones: shippingZonesIdsToRemove,
+            addWarehouses: warehousesIdsToAdd,
+            removeWarehouses: warehousesIdsToRemove,
+          },
+        },
+      }),
     );
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
@@ -127,8 +133,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         status: "success",
         text: intl.formatMessage({
           id: "AkyGP2",
-          defaultMessage: "Channel deleted"
-        })
+          defaultMessage: "Channel deleted",
+        }),
       });
       closeModal();
       navigate(channelsListUrl());
@@ -136,20 +142,20 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       errors.map(error =>
         notify({
           status: "error",
-          text: getChannelsErrorMessage(error, intl)
-        })
+          text: getChannelsErrorMessage(error, intl),
+        }),
       );
     }
   };
 
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
-    onCompleted: onDeleteCompleted
+    onCompleted: onDeleteCompleted,
   });
 
   const channelsChoices = getChannelsCurrencyChoices(
     id,
     data?.channel,
-    channelsListData?.data?.channels
+    channelsListData?.data?.channels,
   );
 
   const handleRemoveConfirm = (channelId?: string) => {
@@ -159,21 +165,40 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
 
   const {
     data: channelShippingZonesData,
-    loading: channelsShippingZonesLoading
+    loading: channelsShippingZonesLoading,
   } = useChannelShippingZonesQuery({
     variables: {
       filter: {
-        channels: [id]
-      }
-    }
+        channels: [id],
+      },
+    },
   });
 
   const {
     loadMore: fetchMoreShippingZones,
     search: searchShippingZones,
-    result: searchShippingZonesResult
+    result: searchShippingZonesResult,
   } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const {
+    data: channelWarehousesData,
+    loading: channelsWarehousesLoading,
+  } = useChannelWarehousesQuery({
+    variables: {
+      filter: {
+        channels: [id],
+      },
+    },
+  });
+
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   return (
@@ -182,7 +207,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         title={intl.formatMessage({
           id: "D9Rg+F",
           defaultMessage: "Channel details",
-          description: "window title"
+          description: "window title",
         })}
       />
       <Container>
@@ -192,17 +217,29 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
           channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
-            ({ node }) => node
+            ({ node }) => node,
           )}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
-            fetchMoreShippingZones
+            fetchMoreShippingZones,
+          )}
+          channelWarehouses={channelWarehousesData?.warehouses?.edges?.map(
+            ({ node }) => node,
+          )}
+          searchWarehouses={searchWarehouses}
+          searchWarehousesData={searchWarehousesResult.data}
+          fetchMoreWarehouses={getSearchFetchMoreProps(
+            searchWarehousesResult,
+            fetchMoreWarehouses,
           )}
           channel={data?.channel}
           disabled={
-            updateChannelOpts.loading || loading || channelsShippingZonesLoading
+            updateChannelOpts.loading ||
+            loading ||
+            channelsShippingZonesLoading ||
+            channelsWarehousesLoading
           }
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading

@@ -6,7 +6,7 @@ import {
   MenuList,
   Paper,
   Popper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { makeStyles, MoreIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -37,19 +37,19 @@ export interface CardMenuProps {
 const useStyles = makeStyles(
   theme => ({
     container: {
-      zIndex: 1
+      zIndex: 1,
     },
     iconButton: {
       background: theme.palette.background.paper,
       borderRadius: "100%",
       height: 32,
       padding: 0,
-      width: 32
+      width: 32,
     },
     paper: {
       marginTop: theme.spacing(2),
       maxHeight: ITEM_HEIGHT * 4.5,
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     loadingContent: {
       width: "100%",
@@ -57,10 +57,10 @@ const useStyles = makeStyles(
       gridTemplateColumns: "1fr 24px",
       gap: theme.spacing(2),
       alignItems: "center",
-      justifyContent: "flex-end"
-    }
+      justifyContent: "flex-end",
+    },
   }),
-  { name: "CardMenu" }
+  { name: "CardMenu" },
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
@@ -149,7 +149,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
             style={{
               transformOrigin:
                 placement === "bottom" ? "right top" : "right bottom",
-              overflowY: "auto"
+              overflowY: "auto",
             }}
           >
             <Paper className={classes.paper} elevation={8}>
@@ -169,7 +169,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                     >
                       <div
                         className={classNames(className, {
-                          [classes.loadingContent]: isWithLoading
+                          [classes.loadingContent]: isWithLoading,
                         })}
                       >
                         {menuItem.loading ? (

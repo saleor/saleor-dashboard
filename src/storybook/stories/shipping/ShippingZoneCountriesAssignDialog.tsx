@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneCountriesAssignDialog, {
-  ShippingZoneCountriesAssignDialogProps
+  ShippingZoneCountriesAssignDialogProps,
 } from "../../../shipping/components/ShippingZoneCountriesAssignDialog";
 import Decorator from "../../Decorator";
 import { countries } from "../taxes/fixtures";
@@ -14,12 +14,12 @@ const props: ShippingZoneCountriesAssignDialogProps = {
   confirmButtonState: "default",
   countries,
   restWorldCountries: mapCountriesToCountriesCodes(countries).filter(
-    countryCode => !initialCountries.includes(countryCode)
+    countryCode => !initialCountries.includes(countryCode),
   ),
   initial: initialCountries,
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Shipping / Assign countries", module)

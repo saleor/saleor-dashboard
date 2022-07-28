@@ -37,45 +37,45 @@ const useStyles = makeStyles(
   theme => ({
     configurationCategory: {
       [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr"
+        gridTemplateColumns: "1fr",
       },
       borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
-      padding: theme.spacing(4, 0)
+      padding: theme.spacing(4, 0),
     },
     configurationItem: {
       [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr"
+        gridTemplateColumns: "1fr",
       },
       display: "grid",
       gap: theme.spacing(4),
-      gridTemplateColumns: "1fr 1fr"
+      gridTemplateColumns: "1fr 1fr",
     },
     configurationLabel: {
-      paddingBottom: 20
+      paddingBottom: 20,
     },
     header: {
-      margin: 0
+      margin: 0,
     },
     link: {
       display: "contents",
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
     },
     icon: {
       "& path": {
-        fill: theme.palette.primary.main
+        fill: theme.palette.primary.main,
       },
-      fontSize: 48
+      fontSize: 48,
     },
     sectionDescription: {},
     sectionTitle: {
       fontSize: 20,
-      fontWeight: 600 as 600
-    }
+      fontWeight: 600 as 600,
+    },
   }),
-  { name: "ConfigurationPage" }
+  { name: "ConfigurationPage" },
 );
 
 export interface ConfigurationPageProps {
@@ -88,7 +88,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const {
     menu: menus,
     user,
-    versionInfo: { dashboardVersion, coreVersion }
+    versionInfo: { dashboardVersion, coreVersion },
   } = props;
   const classes = useStyles(props);
   const theme = useTheme();
@@ -115,8 +115,8 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
-            hasAnyPermissions(menuItem.permissions, user)
-          )
+            hasAnyPermissions(menuItem.permissions, user),
+          ),
         )
         .map((menu, menuIndex) => (
           <div className={classes.configurationCategory} key={menuIndex}>
@@ -126,7 +126,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             <div className={classes.configurationItem}>
               {menu.menuItems
                 .filter(menuItem =>
-                  hasAnyPermissions(menuItem.permissions, user)
+                  hasAnyPermissions(menuItem.permissions, user),
                 )
                 .map((item, itemIndex) => (
                   <Link className={classes.link} to={item.url}>

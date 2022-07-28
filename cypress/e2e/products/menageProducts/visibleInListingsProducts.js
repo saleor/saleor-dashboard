@@ -8,48 +8,49 @@ import { searchInShop } from "../../../support/api/requests/storeFront/Search";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { isProductVisibleInSearchResult } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../../support/filterTests";
 import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("Products displayed in listings", () => {
-    const startsWith = "CyVisibleInListings-";
-    const name = `${startsWith}${faker.datatype.number()}`;
-    let productType;
-    let attribute;
-    let category;
-    let defaultChannel;
+describe("Products displayed in listings", () => {
+  const startsWith = "CyVisibleInListings-";
+  const name = `${startsWith}${faker.datatype.number()}`;
+  let productType;
+  let attribute;
+  let category;
+  let defaultChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      productsUtils.deleteProductsStartsWith(startsWith);
-      productsUtils
-        .createTypeAttributeAndCategoryForProduct({ name })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            productType = productTypeResp;
-            attribute = attributeResp;
-            category = categoryResp;
-            getDefaultChannel();
-          }
-        )
-        .then(channel => {
-          defaultChannel = channel;
-        });
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    productsUtils.deleteProductsStartsWith(startsWith);
+    productsUtils
+      .createTypeAttributeAndCategoryForProduct({ name })
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp,
+        }) => {
+          productType = productTypeResp;
+          attribute = attributeResp;
+          category = categoryResp;
+          getDefaultChannel();
+        },
+      )
+      .then(channel => {
+        defaultChannel = channel;
+      });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.product
-      );
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product,
+    );
+  });
 
-    it("should update product to visible in listings", () => {
+  it(
+    "should update product to visible in listings",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       productsUtils
@@ -60,7 +61,7 @@ filterTests({ definedTags: ["all"] }, () => {
           attributeId: attribute.id,
           categoryId: category.id,
           visibleInListings: false,
-          isAvailableForPurchase: false
+          isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
           const product = productResp;
@@ -71,13 +72,17 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(resp => {
           const isProductVisible = isProductVisibleInSearchResult(
             resp,
-            productName
+            productName,
           );
           expect(isProductVisible).to.be.eq(true);
         });
-    });
+    },
+  );
 
-    it("should update product to not visible in listings", () => {
+  it(
+    "should update product to not visible in listings",
+    { tags: ["@products", "@allEnv"] },
+    () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
       productsUtils
@@ -87,7 +92,7 @@ filterTests({ definedTags: ["all"] }, () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          visibleInListings: true
+          visibleInListings: true,
         })
         .then(({ product: productResp }) => {
           const product = productResp;
@@ -97,7 +102,7 @@ filterTests({ definedTags: ["all"] }, () => {
           searchInShop(productName).then(resp => {
             const isProductVisible = isProductVisibleInSearchResult(
               resp,
-              productName
+              productName,
             );
             expect(isProductVisible).to.be.eq(false);
           });
@@ -109,10 +114,10 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(resp => {
           const isProductVisible = isProductVisibleInSearchResult(
             resp,
-            productName
+            productName,
           );
           expect(isProductVisible).to.be.eq(true);
         });
-    });
-  });
+    },
+  );
 });

@@ -20,7 +20,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
   data,
   disabled,
   errors,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -32,7 +32,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
         title={intl.formatMessage({
           id: "imYxM9",
           defaultMessage: "App Information",
-          description: "header"
+          description: "header",
         })}
       />
       <CardContent>
@@ -42,7 +42,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
           label={intl.formatMessage({
             id: "foNlhn",
             defaultMessage: "App Name",
-            description: "custom app name"
+            description: "custom app name",
           })}
           helperText={getAppErrorMessage(formErrors.name, intl)}
           fullWidth

@@ -312,3 +312,19 @@ export const attributeValueTranslatableContentFragment = gql`
     }
   }
 `;
+
+export const menuItemTranslationFragment = gql`
+  fragment MenuItemTranslation on MenuItemTranslatableContent {
+    translation(languageCode: $language) {
+      id
+      language {
+        language
+      }
+      name
+    }
+    menuItem {
+      id
+      name
+    }
+  }
+`;

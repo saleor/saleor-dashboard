@@ -10,45 +10,45 @@ const useStyles = makeStyles(
   theme => ({
     dark: {
       "& svg": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
       },
       "&$disabled": {
         "& svg": {
-          color: fade(theme.palette.primary.main, 0.2)
-        }
+          color: fade(theme.palette.primary.main, 0.2),
+        },
       },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
-          backgroundColor: fade(theme.palette.primary.main, 0.2)
-        }
-      }
+          backgroundColor: fade(theme.palette.primary.main, 0.2),
+        },
+      },
     },
     disabled: {},
     iconButton: {
       "& > span:first-of-type": {
         backgroundColor: theme.palette.background.default,
         borderRadius: "100%",
-        transition: theme.transitions.duration.standard + "ms"
+        transition: theme.transitions.duration.standard + "ms",
       },
       "& svg": {
         border: `solid 1px #BDBDBD`,
-        borderRadius: "50%"
+        borderRadius: "50%",
       },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
-          backgroundColor: fade(theme.palette.primary.main, 0.2)
+          backgroundColor: fade(theme.palette.primary.main, 0.2),
         },
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
       },
-      padding: 6
+      padding: 6,
     },
     root: {
       color: theme.palette.text.secondary,
       flexShrink: 0,
-      margin: theme.spacing(0, 2.5)
-    }
+      margin: theme.spacing(0, 2.5),
+    },
   }),
-  { name: "TablePaginationActions" }
+  { name: "TablePaginationActions" },
 );
 
 export interface TablePaginationActionsProps {
@@ -84,7 +84,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         variant="secondary"
         className={classNames(classes.iconButton, {
           [classes.dark]: isDark,
-          [classes.disabled]: !hasPreviousPage
+          [classes.disabled]: !hasPreviousPage,
         })}
         onClick={onPreviousPage}
         disabled={!hasPreviousPage}
@@ -96,7 +96,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
       <IconButton
         className={classNames(classes.iconButton, {
           [classes.dark]: isDark,
-          [classes.disabled]: !hasNextPage
+          [classes.disabled]: !hasNextPage,
         })}
         onClick={onNextPage}
         disabled={!hasNextPage}

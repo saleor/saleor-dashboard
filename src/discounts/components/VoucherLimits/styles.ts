@@ -4,13 +4,13 @@ export const useStyles = makeStyles(
   () => ({
     cardContent: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
     },
     usesLeftLabelWrapper: {
       display: "flex",
       flexDirection: "column",
-      flex: 1
-    }
+      flex: 1,
+    },
   }),
-  { name: "VoucherLimits" }
+  { name: "VoucherLimits" },
 );

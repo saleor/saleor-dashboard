@@ -1,12 +1,12 @@
 import Hr from "@saleor/components/Hr";
 import RadioGroupField, {
-  RadioGroupFieldChoice
+  RadioGroupFieldChoice,
 } from "@saleor/components/RadioGroupField";
 import {
   ExportErrorFragment,
   ExportProductsInput,
   ExportScope,
-  FileTypesEnum
+  FileTypesEnum,
 } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -21,12 +21,12 @@ const useStyles = makeStyles(
   theme => ({
     hr: {
       marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(3)
-    }
+      marginTop: theme.spacing(3),
+    },
   }),
   {
-    name: "ExportDialogSettings"
-  }
+    name: "ExportDialogSettings",
+  },
 );
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
@@ -55,7 +55,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   selectedItems,
   itemsQuantity,
   exportScopeLabels,
-  allowScopeSelection = true
+  allowScopeSelection = true,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -69,43 +69,43 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
       label: intl.formatMessage({
         id: "9Tl/bT",
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
-        description: "export items as spreadsheet"
+        description: "export items as spreadsheet",
       }),
-      value: FileTypesEnum.XLSX
+      value: FileTypesEnum.XLSX,
     },
     {
       label: intl.formatMessage({
         id: "li1BBk",
         defaultMessage: "Plain CSV file",
-        description: "export items as csv file"
+        description: "export items as csv file",
       }),
-      value: FileTypesEnum.CSV
-    }
+      value: FileTypesEnum.CSV,
+    },
   ];
 
   const exportScopeChoices = [
     {
       label: exportScopeLabels.allItems,
-      value: ExportScope.ALL
+      value: ExportScope.ALL,
     },
     {
       disabled: selectedItems === 0,
       label: exportScopeLabels.selectedItems,
-      value: ExportScope.IDS
+      value: ExportScope.IDS,
     },
     {
       label: intl.formatMessage(
         {
           id: "SZt9kC",
           defaultMessage: "Current search ({number})",
-          description: "export filtered items to csv file"
+          description: "export filtered items to csv file",
         },
         {
-          number: itemsQuantity.filter || "..."
-        }
+          number: itemsQuantity.filter || "...",
+        },
       ),
-      value: ExportScope.FILTER
-    }
+      value: ExportScope.FILTER,
+    },
   ];
 
   return (
@@ -119,7 +119,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
             label={intl.formatMessage({
               id: "g6yuk2",
               defaultMessage: "Export information for:",
-              description: "export items to csv file, choice field label"
+              description: "export items to csv file, choice field label",
             })}
             name={"scope" as keyof ExportProductsInput}
             onChange={onChange}
@@ -135,7 +135,7 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
         label={intl.formatMessage({
           id: "z1puMb",
           defaultMessage: "Export as:",
-          description: "export items as csv or spreadsheet file"
+          description: "export items as csv or spreadsheet file",
         })}
         name={"fileType" as keyof ExportProductsInput}
         onChange={onChange}

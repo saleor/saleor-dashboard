@@ -1,3 +1,5 @@
+import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
+import { updateChannelWarehouses } from "../requests/Channels";
 import * as shippingMethodRequest from "../requests/ShippingMethod";
 import * as warehouseRequest from "../requests/Warehouse";
 import { getDefaultChannel } from "./channelsUtils";
@@ -7,7 +9,7 @@ export function createShipping({
   name,
   address,
   price = 1,
-  minProductPrice = 0
+  minProductPrice = 0,
 }) {
   let shippingMethod;
   let shippingZone;
@@ -20,14 +22,17 @@ export function createShipping({
       warehouseRequest.createWarehouse({
         name,
         shippingZone: shippingZone.id,
-        address
+        address,
       });
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
+      if (returnValueDependsOnShopVersion("3.5", true, false)) {
+        updateChannelWarehouses(channelId, warehouse.id);
+      }
       shippingMethodRequest.createShippingRate({
         name,
-        shippingZone: shippingZone.id
+        shippingZone: shippingZone.id,
       });
     })
     .then(({ shippingMethod: sippingMethodResp }) => {
@@ -36,7 +41,7 @@ export function createShipping({
         shippingMethod.id,
         channelId,
         price,
-        minProductPrice
+        minProductPrice,
       );
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
@@ -54,14 +59,14 @@ export function createShippingWithDefaultChannelAndAddress(name) {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: fixtureAddresses.plAddress
-      })
+        address: fixtureAddresses.plAddress,
+      }),
     )
     .then(({ shippingMethod, shippingZone, warehouse }) => ({
       shippingMethod,
       shippingZone,
       warehouse,
-      defaultChannel
+      defaultChannel,
     }));
 }
 
@@ -75,11 +80,11 @@ export function deleteShippingStartsWith(startsWith) {
   cy.deleteElementsStartsWith(
     shippingMethodRequest.deleteShippingZone,
     shippingMethodRequest.getShippingZones,
-    startsWith
+    startsWith,
   ).deleteElementsStartsWith(
     warehouseRequest.deleteWarehouse,
     warehouseRequest.getWarehouses,
-    startsWith
+    startsWith,
   );
 }
 
@@ -96,12 +101,12 @@ export function createShippingWithDefaultChannel(name, price) {
         channelId: defaultChannel.id,
         name,
         address: addresses.usAddress,
-        price
+        price,
       });
     })
     .then(({ shippingMethod, shippingZone }) => ({
       shippingMethod,
       shippingZone,
-      defaultChannel
+      defaultChannel,
     }));
 }

@@ -8,14 +8,14 @@ const messages = defineMessages({
   title: {
     id: "CT5PAn",
     defaultMessage: "Availability",
-    description: "CannotDefineChannelsAvailabilityCard title"
+    description: "CannotDefineChannelsAvailabilityCard title",
   },
   subtitle: {
     id: "8qL/tV",
     defaultMessage:
       "You will be able to define availability of product after creating variants.",
-    description: "CannotDefineChannelsAvailabilityCard subtitle"
-  }
+    description: "CannotDefineChannelsAvailabilityCard subtitle",
+  },
 });
 
 const CannotDefineChannelsAvailabilityCard: React.FC = () => (

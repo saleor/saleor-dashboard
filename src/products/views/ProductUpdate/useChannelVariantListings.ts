@@ -9,12 +9,12 @@ import { createFromChannels, createUpdatedChannels } from "./utils";
 function useChannelVariantListings(channels: ChannelData[]) {
   const initialChannelVariantListing = useMemo(
     () => createFromChannels(channels, ({ variantsIds }) => variantsIds),
-    [channels]
+    [channels],
   );
 
   const [
     updatedChannelVariantListing,
-    setUpdatedChannelVariantListing
+    setUpdatedChannelVariantListing,
   ] = useStateFromProps(initialChannelVariantListing);
 
   const channelsWithVariantsData = useMemo<ChannelsWithVariantsData>(
@@ -22,16 +22,16 @@ function useChannelVariantListings(channels: ChannelData[]) {
       createFromChannels(channels, channel => {
         const diff = arrayDiff(
           initialChannelVariantListing[channel.id],
-          updatedChannelVariantListing[channel.id]
+          updatedChannelVariantListing[channel.id],
         );
 
         return {
           selectedVariantsIds: updatedChannelVariantListing[channel.id],
           variantsIdsToAdd: diff.added,
-          variantsIdsToRemove: diff.removed
+          variantsIdsToRemove: diff.removed,
         };
       }),
-    [updatedChannelVariantListing]
+    [updatedChannelVariantListing],
   );
 
   const reset = () =>
@@ -39,7 +39,7 @@ function useChannelVariantListings(channels: ChannelData[]) {
 
   const updatedChannels: ChannelData[] = useMemo(
     () => createUpdatedChannels(channels, updatedChannelVariantListing),
-    [channels, updatedChannelVariantListing]
+    [channels, updatedChannelVariantListing],
   );
 
   return {
@@ -47,7 +47,7 @@ function useChannelVariantListings(channels: ChannelData[]) {
     channelsWithVariantsData,
     channelVariantListing: updatedChannelVariantListing,
     setChannelVariantListing: setUpdatedChannelVariantListing,
-    reset
+    reset,
   };
 }
 

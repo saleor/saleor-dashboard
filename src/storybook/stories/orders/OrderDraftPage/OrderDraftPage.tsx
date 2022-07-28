@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDraftPageComponent, {
-  OrderDraftPageProps
+  OrderDraftPageProps,
 } from "../../../../orders/components/OrderDraftPage";
 import { clients, draftOrder } from "../../../../orders/fixtures";
 import Decorator from "../../../Decorator";
@@ -32,7 +32,7 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   order,
   saveButtonBarState: "default",
   users: clients,
-  usersLoading: false
+  usersLoading: false,
 };
 
 const DiscountsDecorator = getDiscountsProvidersWrapper(order);

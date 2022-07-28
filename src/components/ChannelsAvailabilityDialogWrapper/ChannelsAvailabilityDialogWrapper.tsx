@@ -12,28 +12,28 @@ export const useStyles = makeStyles(
       "& hr": {
         left: -24,
         position: "relative",
-        width: "calc(100% + 48px)"
-      }
+        width: "calc(100% + 48px)",
+      },
     },
     contentTitle: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     dialog: {
       marginBottom: -30,
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     input: {
       "& label": {
-        overflowX: "inherit"
-      }
+        overflowX: "inherit",
+      },
     },
     notFound: {
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
     scrollArea: {
       maxHeight: "calc(100vh - 400px)",
       "@media (min-height: 800px)": {
-        maxHeight: 400
+        maxHeight: 400,
       },
       overflowY: "scroll",
       overflowX: "hidden",
@@ -42,13 +42,13 @@ export const useStyles = makeStyles(
       marginLeft: -15,
       paddingLeft: 15,
 
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     text: {
-      marginBottom: 5
-    }
+      marginBottom: 5,
+    },
   }),
-  { name: "ChannelsAvailabilityContent" }
+  { name: "ChannelsAvailabilityContent" },
 );
 
 const messages = defineMessages({
@@ -56,23 +56,23 @@ const messages = defineMessages({
     id: "7scATx",
     defaultMessage:
       "Select channels you want for {contentType} to be available on",
-    description: "select title"
+    description: "select title",
   },
   selectAllChannelsLabel: {
     id: "zR9Ozi",
     defaultMessage: "Select All Channels",
-    description: "select all channels label"
+    description: "select all channels label",
   },
   channelsAlphabeticallyTitle: {
     id: "/lBLBI",
     defaultMessage: "Channels from A to Z",
-    description: "channels alphabetically title"
+    description: "channels alphabetically title",
   },
   notFoundTitle: {
     id: "PctLol",
     defaultMessage: "No Channels Found",
-    description: "no channels found title"
-  }
+    description: "no channels found title",
+  },
 });
 
 export interface ChannelsAvailabilityContentProps {
@@ -94,13 +94,13 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   hasAnyChannelsToDisplay,
   query,
   onQueryChange,
-  hasAllSelected
+  hasAllSelected,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
     id: "ybaLoZ",
-    defaultMessage: "Search through channels"
+    defaultMessage: "Search through channels",
   });
 
   return (

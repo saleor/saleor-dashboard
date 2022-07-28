@@ -1,82 +1,87 @@
 import { ClickAwayListener } from "@material-ui/core";
-import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useRef, useState } from "react";
-import { defineMessages } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
-import useStyles from "./styles";
-import { ShippingZonesProps } from "./types";
+import { useStyles } from "./styles";
+import { AssignItem, AssignmentListProps } from "./types";
 
 const messages = defineMessages({
-  addZoneTitle: {
-    id: "8CbACQ",
-    defaultMessage: "Add Shipping Zones",
-    description: "add shipping zone title"
-  }
+  addItemTitle: {
+    id: "EuOXmr",
+    defaultMessage: "Add {itemsName}",
+    description: "add items title",
+  },
 });
 
-type ShippingZonesCardListFooterProps = ShippingZonesProps;
+type AssignmentListFooterProps = AssignmentListProps;
 
-const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = ({
-  shippingZonesChoices,
-  searchShippingZones,
-  fetchMoreShippingZones,
-  addShippingZone,
-  shippingZones
+const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
+  items,
+  itemsChoices,
+  itemsName,
+  inputName,
+  dataTestId,
+  addItem,
+  searchItems,
+  fetchMoreItems,
 }) => {
+  const intl = useIntl();
   const classes = useStyles();
 
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
-  const shippingZonesRef = useRef<ChannelShippingZones>(shippingZones);
+  const itemsRef = useRef<AssignItem[]>(items);
 
   // select holds value and displays it so it needs remounting
   // to display empty input after adding new zone
   useEffect(() => {
-    if (shippingZones.length > shippingZonesRef.current.length) {
+    if (items.length > itemsRef.current.length) {
       setIsChoicesSelectShown(true);
     }
 
-    shippingZonesRef.current = shippingZones;
-  }, [shippingZones]);
+    itemsRef.current = items;
+  }, [items]);
 
   const handleChoice = ({ target }) => {
     setIsChoicesSelectShown(false);
-    addShippingZone(target.value);
+    addItem(target.value);
   };
 
   const handleFooterClickAway = () => {
     setIsChoicesSelectShown(false);
-    searchShippingZones("");
+    searchItems("");
   };
 
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
       <div className={classes.root}>
         <SingleAutocompleteSelectField
-          data-test-id="shipping-auto-complete-select"
+          data-test-id={`${dataTestId}-auto-complete-select`}
           value=""
           displayValue=""
           nakedInput
-          name="shippingZone"
-          choices={mapNodeToChoice(shippingZonesChoices)}
-          fetchChoices={searchShippingZones}
+          name={inputName}
+          choices={mapNodeToChoice(itemsChoices)}
+          fetchChoices={searchItems}
           onChange={handleChoice}
-          {...fetchMoreShippingZones}
+          {...fetchMoreItems}
         />
       </div>
     </ClickAwayListener>
   ) : (
     <CardAddItemsFooter
       onAdd={() => setIsChoicesSelectShown(true)}
-      title={messages.addZoneTitle}
+      title={intl.formatMessage(messages.addItemTitle, {
+        itemsName,
+      })}
       testIds={{
-        link: "add-shipping-zone-link",
-        button: "add-shipping-zone-button"
+        link: `${dataTestId}-add-link`,
+        button: `${dataTestId}-add-button`,
       }}
     />
   );
 };
 
-export default ShippingZonesCardListFooter;
+export default AssignmentListFooter;

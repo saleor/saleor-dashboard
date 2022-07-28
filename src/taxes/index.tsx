@@ -7,11 +7,11 @@ import { WindowTitle } from "../components/WindowTitle";
 import { countryListPath, countryTaxRatesPath } from "./urls";
 import CountryList from "./views/CountryList";
 import CountryTaxesComponent, {
-  CountryTaxesParams
+  CountryTaxesParams,
 } from "./views/CountryTaxes";
 
 const CountryTaxes: React.FC<RouteComponentProps<CountryTaxesParams>> = ({
-  match
+  match,
 }) => <CountryTaxesComponent code={match.params.code} />;
 
 const Component = () => {

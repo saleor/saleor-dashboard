@@ -10,13 +10,13 @@ const useStyles = makeStyles(
       height: "100%",
       objectFit: "contain",
       userSelect: "none",
-      width: "100%"
+      width: "100%",
     },
     mediaContainer: {
       "&:hover, &.dragged": {
         "& $mediaOverlay": {
-          display: "block"
-        }
+          display: "block",
+        },
       },
       background: theme.palette.background.paper,
       border: `1px solid ${theme.palette.divider}`,
@@ -25,7 +25,7 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(2),
       position: "relative",
-      width: 148
+      width: 148,
     },
     mediaOverlay: {
       background: theme.palette.background.default,
@@ -36,18 +36,18 @@ const useStyles = makeStyles(
       left: 0,
       position: "absolute",
       top: 0,
-      width: 148
+      width: 148,
     },
     mediaOverlayShadow: {
       "&mediaOverlay": {
         alignItems: "center",
         display: "flex",
-        justifyContent: "center"
-      }
+        justifyContent: "center",
+      },
     },
     mediaOverlayToolbar: {
       display: "flex",
-      justifyContent: "flex-end"
+      justifyContent: "flex-end",
     },
     controlButton: {
       color: theme.palette.saleor.main[1],
@@ -58,14 +58,14 @@ const useStyles = makeStyles(
       padding: 0,
 
       "&:hover": {
-        color: theme.palette.saleor.active[1]
+        color: theme.palette.saleor.active[1],
       },
       "&:first-child": {
-        marginRight: 0
-      }
-    }
+        marginRight: 0,
+      },
+    },
   }),
-  { name: "MediaTile" }
+  { name: "MediaTile" },
 );
 
 interface MediaTileBaseProps {
@@ -104,7 +104,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
     <div className={classes.mediaContainer} data-test-id="product-image">
       <div
         className={classNames(classes.mediaOverlay, {
-          [classes.mediaOverlayShadow]: loading
+          [classes.mediaOverlayShadow]: loading,
         })}
       >
         {loading ? (

@@ -6,7 +6,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelCreateMutation,
-  useChannelCreateMutation
+  useChannelCreateMutation,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -16,6 +16,7 @@ import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -31,19 +32,21 @@ export const ChannelCreateView = ({}) => {
 
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({
-      channelCreate: { errors, channel }
+      channelCreate: { errors, channel },
     }: ChannelCreateMutation) => {
       notify(getDefaultNotifierSuccessErrorData(errors, intl));
 
       if (!errors.length) {
         navigate(channelPath(channel.id));
       }
-    }
+    },
   });
 
   const handleSubmit = ({
     shippingZonesIdsToAdd,
     shippingZonesIdsToRemove,
+    warehousesIdsToAdd,
+    warehousesIdsToRemove,
     currencyCode,
     ...rest
   }: FormData) =>
@@ -53,18 +56,27 @@ export const ChannelCreateView = ({}) => {
           input: {
             ...rest,
             currencyCode: currencyCode.toUpperCase(),
-            addShippingZones: shippingZonesIdsToAdd
-          }
-        }
-      })
+            addShippingZones: shippingZonesIdsToAdd,
+            addWarehouses: warehousesIdsToAdd,
+          },
+        },
+      }),
     );
 
   const {
     loadMore: fetchMoreShippingZones,
     search: searchShippingZones,
-    result: searchShippingZonesResult
+    result: searchShippingZonesResult,
   } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
@@ -72,14 +84,14 @@ export const ChannelCreateView = ({}) => {
       {
         id: "J7mFhU",
         defaultMessage: "{code} - {countries}",
-        description: "currency code select"
+        description: "currency code select",
       },
       {
         code: currencyData.code,
-        countries: currencyData.countries.join(",")
-      }
+        countries: currencyData.countries.join(","),
+      },
     ),
-    value: currencyData.code
+    value: currencyData.code,
   }));
 
   return (
@@ -88,7 +100,7 @@ export const ChannelCreateView = ({}) => {
         title={intl.formatMessage({
           id: "OrMr/k",
           defaultMessage: "Create Channel",
-          description: "window title"
+          description: "window title",
         })}
       />
       <Container>
@@ -99,7 +111,7 @@ export const ChannelCreateView = ({}) => {
           title={intl.formatMessage({
             id: "DnghuS",
             defaultMessage: "New Channel",
-            description: "channel create"
+            description: "channel create",
           })}
         />
         <ChannelDetailsPage
@@ -107,7 +119,13 @@ export const ChannelCreateView = ({}) => {
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
-            fetchMoreShippingZones
+            fetchMoreShippingZones,
+          )}
+          searchWarehouses={searchWarehouses}
+          searchWarehousesData={searchWarehousesResult.data}
+          fetchMoreWarehouses={getSearchFetchMoreProps(
+            searchWarehousesResult,
+            fetchMoreWarehouses,
           )}
           disabled={createChannelOpts.loading}
           errors={createChannelOpts?.data?.channelCreate?.errors || []}

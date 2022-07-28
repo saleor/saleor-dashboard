@@ -5,11 +5,11 @@ interface PublicationData {
 
 function getPublicationData({
   publicationDate,
-  isPublished
+  isPublished,
 }: PublicationData): PublicationData {
   return {
     isPublished: !!publicationDate || isPublished,
-    publicationDate: publicationDate || null
+    publicationDate: publicationDate || null,
   };
 }
 

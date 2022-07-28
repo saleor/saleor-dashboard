@@ -3,72 +3,78 @@
 
 import {
   getElementByDataTestId,
-  SHARED_ELEMENTS
+  SHARED_ELEMENTS,
 } from "../../../elements/shared/sharedElements";
 import { updateAttribute } from "../../../support/api/requests/Attribute";
 import { createProduct } from "../../../support/api/requests/Product";
 import {
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
 import { enterAttributeAndChanegeIsFilterableInDashbord } from "../../../support/pages/attributesPage";
 import {
   enterProductListPage,
   selectAttributeFilter,
-  showFilters
+  showFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  xdescribe("Tests for using attributes in filters", () => {
-    const startsWith = "AttrFilter";
+xdescribe("Tests for using attributes in filters", () => {
+  const startsWith = "AttrFilter";
 
-    let attribute;
+  let attribute;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      createTypeAttributeAndCategoryForProduct({
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    createTypeAttributeAndCategoryForProduct({
+      name: startsWith,
+      attributeValues: [startsWith],
+    }).then(({ attribute: attributeResp, category, productType }) => {
+      attribute = attributeResp;
+      createProduct({
+        attributeId: attribute.id,
+        attributeValue: startsWith,
+        categoryId: category.id,
+        productTypeId: productType.id,
         name: startsWith,
-        attributeValues: [startsWith]
-      }).then(({ attribute: attributeResp, category, productType }) => {
-        attribute = attributeResp;
-        createProduct({
-          attributeId: attribute.id,
-          attributeValue: startsWith,
-          categoryId: category.id,
-          productTypeId: productType.id,
-          name: startsWith
-        });
       });
     });
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should use attribute as filter", () => {
+  it(
+    "should use attribute as filter",
+    { tags: ["@attribute", "@allEnv"] },
+    () => {
       updateAttribute({
         attributeId: attribute.id,
-        filterableInDashboard: false
+        filterableInDashboard: false,
       });
       enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
       enterProductListPage();
       selectAttributeFilter(attribute.slug, attribute.name);
       cy.contains(SHARED_ELEMENTS.tableRow, attribute.name).should(
-        "be.visible"
+        "be.visible",
       );
-    });
+    },
+  );
 
-    it("should remove attribute from filters", () => {
+  it(
+    "should remove attribute from filters",
+    { tags: ["@attribute", "@allEnv"] },
+    () => {
       updateAttribute({
         attributeId: attribute.id,
-        filterableInDashboard: true
+        filterableInDashboard: true,
       });
       enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
       enterProductListPage();
       showFilters();
       cy.get(getElementByDataTestId(attribute.name)).should("not.exist");
-    });
-  });
+    },
+  );
 });

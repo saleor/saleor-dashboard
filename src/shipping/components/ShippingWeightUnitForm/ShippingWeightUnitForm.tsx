@@ -22,11 +22,11 @@ export interface ShippingWeightUnitFormProps {
 const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
   defaultWeightUnit,
   disabled,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const initialForm: FormData = {
-    unit: defaultWeightUnit
+    unit: defaultWeightUnit,
   };
   return (
     <Form
@@ -42,16 +42,16 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
               disabled={disabled}
               choices={Object.keys(WeightUnitsEnum).map(unit => ({
                 label: WeightUnitsEnum[unit],
-                value: WeightUnitsEnum[unit]
+                value: WeightUnitsEnum[unit],
               }))}
               label={intl.formatMessage({
                 id: "Rp/Okl",
-                defaultMessage: "Shipping Weight Unit"
+                defaultMessage: "Shipping Weight Unit",
               })}
               hint={intl.formatMessage({
                 id: "4Kq3O6",
                 defaultMessage:
-                  "This unit will be used as default shipping weight"
+                  "This unit will be used as default shipping weight",
               })}
               name={"unit" as keyof FormData}
               value={data.unit}

@@ -5,7 +5,7 @@ import React from "react";
 
 import { channelsList } from "../../fixtures";
 import ChannelPickerDialog, {
-  ChannelPickerDialogProps
+  ChannelPickerDialogProps,
 } from "./ChannelPickerDialog";
 
 const channelsChoices = mapNodeToChoice(channelsList);
@@ -16,7 +16,7 @@ const props: ChannelPickerDialogProps = {
   defaultChoice: channelsChoices[0]?.value,
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Channels / Settings dialog", module)

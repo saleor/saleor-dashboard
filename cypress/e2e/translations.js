@@ -6,33 +6,34 @@ import faker from "faker";
 import {
   createCategory,
   getCategory,
-  updateCategoryTranslation
+  updateCategoryTranslation,
 } from "../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
-import filterTests from "../support/filterTests";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
-filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
-  xdescribe("As an admin I want to manage translations", () => {
-    const startsWith = "TestTranslations";
-    const randomNumber = faker.datatype.number();
-    const name = `${startsWith}${randomNumber}`;
+xdescribe("As an admin I want to manage translations", () => {
+  const startsWith = "TestTranslations";
+  const randomNumber = faker.datatype.number();
+  const name = `${startsWith}${randomNumber}`;
 
-    let category;
+  let category;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteCategoriesStartsWith(startsWith);
-      createCategory({ name: startsWith }).then(
-        categoryResp => (category = categoryResp)
-      );
-    });
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteCategoriesStartsWith(startsWith);
+    createCategory({ name: startsWith }).then(
+      categoryResp => (category = categoryResp),
+    );
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should be able to create new translation. TC:SALEOR_1701", () => {
+  it(
+    "should be able to create new translation. TC:SALEOR_1701",
+    { tags: ["@translations", "@stagedOnly"] },
+    () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -43,21 +44,25 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
         translatedName,
         translatedDescription,
         translatedSeoTitle,
-        translatedSeoDescription
+        translatedSeoDescription,
       });
       getCategory(category.id, "PL").then(({ translation }) => {
         expect(translation.name).to.eq(`TranslatedName${randomNumber}`);
         expect(translation.description).to.includes(
-          `TranslatedDescription${randomNumber}`
+          `TranslatedDescription${randomNumber}`,
         );
         expect(translation.seoTitle).to.eq(`TranslatedSeoTitle${randomNumber}`);
         expect(translation.seoDescription).to.eq(
-          `TranslatedSeoDescription${randomNumber}`
+          `TranslatedSeoDescription${randomNumber}`,
         );
       });
-    });
+    },
+  );
 
-    it("should be able to update translation. TC:SALEOR_1702", () => {
+  it(
+    "should be able to update translation. TC:SALEOR_1702",
+    { tags: ["@translations", "@stagedOnly"] },
+    () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
@@ -71,7 +76,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
         seoTitle: "test",
         seoDescription: "test",
         name: "test",
-        description: "test"
+        description: "test",
       })
         .then(() => {
           updateTranslationToCategory({
@@ -79,7 +84,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
             translatedName: nameUpdate,
             translatedDescription: descriptionUpdate,
             translatedSeoTitle: seoTitleUpdate,
-            translatedSeoDescription: seoDescriptionUpdate
+            translatedSeoDescription: seoDescriptionUpdate,
           });
           getCategory(category.id, "PL");
         })
@@ -89,6 +94,6 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
           expect(translation.seoTitle).to.eq(seoTitleUpdate);
           expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
         });
-    });
-  });
+    },
+  );
 });

@@ -1,7 +1,7 @@
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import FilterBar from "@saleor/components/FilterBar";
 import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData
+  SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
@@ -29,11 +29,11 @@ import {
   getFilterQueryParam,
   getFiltersCurrentTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } from "./filters";
 import {
   giftCardListFilterErrorMessages as errorMessages,
-  giftCardListSearchAndFiltersMessages as messages
+  giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
@@ -45,62 +45,62 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const {
     onClose,
     openSearchDeleteDialog,
-    openSearchSaveDialog
+    openSearchSaveDialog,
   } = useGiftCardListDialogs();
 
   const defaultSearchVariables = {
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 }
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
   };
 
   const {
     loadMore: fetchMoreCustomers,
     search: searchCustomers,
-    result: searchCustomersResult
+    result: searchCustomersResult,
   } = useCustomerSearch(defaultSearchVariables);
 
   const {
     loadMore: fetchMoreProducts,
     search: searchProducts,
-    result: searchProductsResult
+    result: searchProductsResult,
   } = useProductSearch(defaultSearchVariables);
 
   const {
     loadMore: fetchMoreGiftCardTags,
     search: searchGiftCardTags,
-    result: searchGiftCardTagsResult
+    result: searchGiftCardTagsResult,
   } = useGiftCardTagsSearch(defaultSearchVariables);
 
   const {
     data: giftCardCurrenciesData,
-    loading: loadingGiftCardCurrencies
+    loading: loadingGiftCardCurrencies,
   } = useGiftCardCurrenciesQuery();
 
   const filterOpts = getFilterOpts({
     params,
     productSearchProps: {
       ...getSearchFetchMoreProps(searchProductsResult, fetchMoreProducts),
-      onSearchChange: searchProducts
+      onSearchChange: searchProducts,
     },
     products: mapEdgesToItems(searchProductsResult?.data?.search),
     currencies: giftCardCurrenciesData?.giftCardCurrencies,
     loadingCurrencies: loadingGiftCardCurrencies,
     customerSearchProps: {
       ...getSearchFetchMoreProps(searchCustomersResult, fetchMoreCustomers),
-      onSearchChange: searchCustomers
+      onSearchChange: searchCustomers,
     },
     customers: mapEdgesToItems(searchCustomersResult?.data?.search),
     tagSearchProps: {
       ...getSearchFetchMoreProps(
         searchGiftCardTagsResult,
-        fetchMoreGiftCardTags
+        fetchMoreGiftCardTags,
       ),
-      onSearchChange: searchGiftCardTags
+      onSearchChange: searchGiftCardTags,
     },
     tags: compact(
       mapEdgesToItems(searchGiftCardTagsResult?.data?.search)?.map(
-        ({ name }) => name
-      )
-    )
+        ({ name }) => name,
+      ),
+    ),
   });
 
   const filterStructure = createFilterStructure(intl, filterOpts);
@@ -111,13 +111,13 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const [
     changeFilters,
     resetFilters,
-    handleSearchChange
+    handleSearchChange,
   ] = createFilterHandlers({
     createUrl: giftCardListUrl,
     getFilterQueryParam,
     navigate,
     params,
-    cleanupFn: reset
+    cleanupFn: reset,
   });
 
   const handleTabChange = (tab: number) => {
@@ -125,8 +125,8 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     navigate(
       giftCardListUrl({
         activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
+        ...getFilterTabs()[tab - 1].data,
+      }),
     );
   };
 
@@ -148,7 +148,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
           initialBalanceAmount: errorMessages.balanceAmount,
           initialBalanceCurrency: errorMessages.balanceCurrency,
           currentBalanceAmount: errorMessages.balanceAmount,
-          currentBalanceCurrency: errorMessages.balanceCurrency
+          currentBalanceCurrency: errorMessages.balanceCurrency,
         }}
         tabs={tabs.map(tab => tab.name)}
         currentTab={currentTab}
@@ -161,7 +161,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         onTabDelete={openSearchDeleteDialog}
         onTabSave={openSearchSaveDialog}
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
-          exampleGiftCardCode: "21F1-39DY-V4U2"
+          exampleGiftCardCode: "21F1-39DY-V4U2",
         })}
         allTabLabel={intl.formatMessage(messages.defaultTabLabel)}
       />

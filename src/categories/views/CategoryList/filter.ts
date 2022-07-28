@@ -2,34 +2,34 @@ import { CategoryFilterInput } from "@saleor/graphql";
 
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
 } from "../../../utils/filters";
 import {
   CategoryListUrlFilters,
   CategoryListUrlFiltersEnum,
-  CategoryListUrlQueryParams
+  CategoryListUrlQueryParams,
 } from "../../urls";
 
 export const CATEGORY_FILTERS_KEY = "categoryFilters";
 
 export function getFilterVariables(
-  params: CategoryListUrlFilters
+  params: CategoryListUrlFilters,
 ): CategoryFilterInput {
   return {
-    search: params.query
+    search: params.query,
   };
 }
 
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<CategoryListUrlQueryParams, CategoryListUrlFilters>(
-  CategoryListUrlFiltersEnum
+  CategoryListUrlFiltersEnum,
 );

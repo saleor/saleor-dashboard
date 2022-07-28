@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingMethodProductsAddDialog, {
-  ShippingMethodProductsAddDialogProps
+  ShippingMethodProductsAddDialogProps,
 } from "./ShippingMethodProductsAddDialog";
 
 const props: ShippingMethodProductsAddDialogProps = {
@@ -16,7 +16,7 @@ const props: ShippingMethodProductsAddDialogProps = {
   onFetchMore: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  products
+  products,
 };
 
 storiesOf("Shipping / ShippingMethodProductsAddDialog", module)

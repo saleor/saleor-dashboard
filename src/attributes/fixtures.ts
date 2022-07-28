@@ -4,7 +4,7 @@ import {
   AttributeInputTypeEnum,
   AttributeListQuery,
   AttributeTypeEnum,
-  ProductDetailsQuery
+  ProductDetailsQuery,
 } from "@saleor/graphql";
 
 export const attribute: AttributeDetailsQuery["attribute"] = {
@@ -19,8 +19,8 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
     {
       __typename: "MetadataItem",
       key: "integration.id",
-      value: "100023123"
-    }
+      value: "100023123",
+    },
   ],
   name: "Author",
   privateMetadata: [],
@@ -36,7 +36,7 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
       endCursor: "",
       hasNextPage: false,
       hasPreviousPage: false,
-      startCursor: ""
+      startCursor: "",
     },
     edges: [
       {
@@ -49,12 +49,13 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
           name: "John Doe",
           reference: null,
           slug: "john-doe",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
+          value: null,
+        },
       },
       {
         __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -66,16 +67,17 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
           name: "Milionare Pirate",
           reference: null,
           slug: "milionare-pirate",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      }
-    ]
+          value: null,
+        },
+      },
+    ],
   },
-  visibleInStorefront: true
+  visibleInStorefront: true,
 };
 
 export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["node"] &
@@ -99,7 +101,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -114,11 +116,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "john-doe",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -132,15 +135,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "milionare-pirate",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -161,7 +165,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -176,11 +180,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "100g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -194,11 +199,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "250g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -212,11 +218,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "500g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -230,15 +237,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "1kg",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: false
+    visibleInStorefront: false,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -259,7 +267,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -274,15 +282,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "saleor",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: false
+    visibleInStorefront: false,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -303,7 +312,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -318,11 +327,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "100g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -336,11 +346,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "250g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -354,15 +365,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "500g",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: false
+    visibleInStorefront: false,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -383,7 +395,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -398,11 +410,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "arabica",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -416,15 +429,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "robusta",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -445,7 +459,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -460,11 +474,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "round",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -478,11 +493,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "v-neck",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -496,15 +512,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "polo",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -525,7 +542,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -540,11 +557,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "blue",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -558,15 +576,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "white",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -587,7 +606,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -602,11 +621,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "soft",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -620,11 +640,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -638,11 +659,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle-soft",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -656,11 +678,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle-hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -674,11 +697,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "middle",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -692,15 +716,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "very-hard",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: false
+    visibleInStorefront: false,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -721,7 +746,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -736,11 +761,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "sour",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -754,15 +780,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "sweet",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -783,7 +810,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -798,11 +825,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "english",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -816,15 +844,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "pirate",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -845,7 +874,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -860,11 +889,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "mirumee-press",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -878,15 +908,16 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "saleor-publishing",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
+    visibleInStorefront: true,
   },
   {
     __typename: "Attribute" as "Attribute",
@@ -907,7 +938,7 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: "WyIwIiwgIjQ5Il0=",
-        __typename: "PageInfo" as "PageInfo"
+        __typename: "PageInfo" as "PageInfo",
       },
       edges: [
         {
@@ -922,11 +953,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xs",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -940,11 +972,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "s",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -958,11 +991,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "m",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -976,11 +1010,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "l",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -994,11 +1029,12 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xl",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
+            dateTime: null,
+          },
         },
         {
           __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
@@ -1012,14 +1048,15 @@ export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["nod
             slug: "xxl",
 
             value: "",
+            plainText: null,
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
-          }
-        }
-      ]
+            dateTime: null,
+          },
+        },
+      ],
     },
-    visibleInStorefront: true
-  }
+    visibleInStorefront: true,
+  },
 ];

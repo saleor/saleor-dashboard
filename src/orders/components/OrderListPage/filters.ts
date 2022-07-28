@@ -5,7 +5,7 @@ import {
   commonMessages,
   commonStatusMessages,
   orderStatusMessages,
-  paymentStatusMessages
+  paymentStatusMessages,
 } from "@saleor/intl";
 import { FilterOpts, KeyValue, MinMax } from "@saleor/types";
 import {
@@ -13,7 +13,7 @@ import {
   createDateField,
   createKeyValueField,
   createOptionsField,
-  createTextField
+  createTextField,
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -26,12 +26,12 @@ export enum OrderFilterKeys {
   preorder = "preorder",
   channel = "channel",
   giftCard = "giftCard",
-  metadata = "metadata"
+  metadata = "metadata",
 }
 
 export enum OrderFilterGiftCard {
   bought = "bought",
-  paid = "paid"
+  paid = "paid",
 }
 
 export interface OrderListFilterOpts {
@@ -50,52 +50,52 @@ const messages = defineMessages({
   preorder: {
     id: "JYvf8/",
     defaultMessage: "Preorder",
-    description: "is preorder"
+    description: "is preorder",
   },
   clickAndCollect: {
     id: "biAxKR",
     defaultMessage: "Click&Collect",
-    description: "click and collect"
+    description: "click and collect",
   },
   channel: {
     id: "lJP1iw",
     defaultMessage: "Channel",
-    description: "order"
+    description: "order",
   },
   customer: {
     id: "PzXIXh",
     defaultMessage: "Customer",
-    description: "order"
+    description: "order",
   },
   placed: {
     id: "a4qX2+",
     defaultMessage: "Created",
-    description: "order"
+    description: "order",
   },
   giftCard: {
     id: "JUQwne",
     defaultMessage: "Gift Card",
-    description: "order"
+    description: "order",
   },
   giftCardPaid: {
     id: "Kgxlsf",
     defaultMessage: "Paid with Gift Card",
-    description: "order"
+    description: "order",
   },
   giftCardOrdered: {
     id: "s5v6m0",
     defaultMessage: "Gift Card ordered",
-    description: "order"
+    description: "order",
   },
   metadata: {
     defaultMessage: "Metadata",
-    id: "8Q504V"
-  }
+    id: "8Q504V",
+  },
 });
 
 export function createFilterStructure(
   intl: IntlShape,
-  opts: OrderListFilterOpts
+  opts: OrderListFilterOpts,
 ): IFilter<OrderFilterKeys> {
   return [
     {
@@ -105,10 +105,10 @@ export function createFilterStructure(
         opts.clickAndCollect.value,
         {
           negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
+          positive: intl.formatMessage(commonMessages.yes),
+        },
       ),
-      active: opts.clickAndCollect.active
+      active: opts.clickAndCollect.active,
     },
     {
       ...createBooleanField(
@@ -117,26 +117,26 @@ export function createFilterStructure(
         opts.preorder.value,
         {
           negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes)
-        }
+          positive: intl.formatMessage(commonMessages.yes),
+        },
       ),
-      active: opts.preorder.active
+      active: opts.preorder.active,
     },
     {
       ...createTextField(
         OrderFilterKeys.customer,
         intl.formatMessage(messages.customer),
-        opts.customer.value
+        opts.customer.value,
       ),
-      active: opts.customer.active
+      active: opts.customer.active,
     },
     {
       ...createDateField(
         OrderFilterKeys.created,
         intl.formatMessage(messages.placed),
-        opts.created.value
+        opts.created.value,
       ),
-      active: opts.created.active
+      active: opts.created.active,
     },
     {
       ...createOptionsField(
@@ -147,15 +147,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.giftCardOrdered),
-            value: OrderFilterGiftCard.bought
+            value: OrderFilterGiftCard.bought,
           },
           {
             label: intl.formatMessage(messages.giftCardPaid),
-            value: OrderFilterGiftCard.paid
-          }
-        ]
+            value: OrderFilterGiftCard.paid,
+          },
+        ],
       ),
-      active: opts.giftCard.active
+      active: opts.giftCard.active,
     },
     {
       ...createOptionsField(
@@ -166,35 +166,35 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(commonStatusMessages.cancelled),
-            value: OrderStatusFilter.CANCELED
+            value: OrderStatusFilter.CANCELED,
           },
           {
             label: intl.formatMessage(orderStatusMessages.fulfilled),
-            value: OrderStatusFilter.FULFILLED
+            value: OrderStatusFilter.FULFILLED,
           },
           {
             label: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
-            value: OrderStatusFilter.PARTIALLY_FULFILLED
+            value: OrderStatusFilter.PARTIALLY_FULFILLED,
           },
           {
             label: intl.formatMessage(orderStatusMessages.unfulfilled),
-            value: OrderStatusFilter.UNFULFILLED
+            value: OrderStatusFilter.UNFULFILLED,
           },
           {
             label: intl.formatMessage(orderStatusMessages.readyToCapture),
-            value: OrderStatusFilter.READY_TO_CAPTURE
+            value: OrderStatusFilter.READY_TO_CAPTURE,
           },
           {
             label: intl.formatMessage(orderStatusMessages.readyToFulfill),
-            value: OrderStatusFilter.READY_TO_FULFILL
+            value: OrderStatusFilter.READY_TO_FULFILL,
           },
           {
             label: intl.formatMessage(orderStatusMessages.unconfirmed),
-            value: OrderStatusFilter.UNCONFIRMED
-          }
-        ]
+            value: OrderStatusFilter.UNCONFIRMED,
+          },
+        ],
       ),
-      active: opts.status.active
+      active: opts.status.active,
     },
     {
       ...createOptionsField(
@@ -205,47 +205,47 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(paymentStatusMessages.paid),
-            value: PaymentChargeStatusEnum.FULLY_CHARGED
+            value: PaymentChargeStatusEnum.FULLY_CHARGED,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-            value: PaymentChargeStatusEnum.PARTIALLY_CHARGED
+            value: PaymentChargeStatusEnum.PARTIALLY_CHARGED,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.unpaid),
-            value: PaymentChargeStatusEnum.NOT_CHARGED
+            value: PaymentChargeStatusEnum.NOT_CHARGED,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.refunded),
-            value: PaymentChargeStatusEnum.FULLY_REFUNDED
+            value: PaymentChargeStatusEnum.FULLY_REFUNDED,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-            value: PaymentChargeStatusEnum.PARTIALLY_REFUNDED
+            value: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,
           },
           {
             label: intl.formatMessage(commonStatusMessages.cancelled),
-            value: PaymentChargeStatusEnum.CANCELLED
+            value: PaymentChargeStatusEnum.CANCELLED,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.pending),
-            value: PaymentChargeStatusEnum.PENDING
+            value: PaymentChargeStatusEnum.PENDING,
           },
           {
             label: intl.formatMessage(paymentStatusMessages.refused),
-            value: PaymentChargeStatusEnum.REFUSED
-          }
-        ]
+            value: PaymentChargeStatusEnum.REFUSED,
+          },
+        ],
       ),
-      active: opts.paymentStatus.active
+      active: opts.paymentStatus.active,
     },
     {
       ...createKeyValueField(
         OrderFilterKeys.metadata,
         intl.formatMessage(messages.metadata),
-        opts.metadata.value
+        opts.metadata.value,
       ),
-      active: opts.metadata.active
+      active: opts.metadata.active,
     },
     ...(opts?.channel?.value.length
       ? [
@@ -255,11 +255,11 @@ export function createFilterStructure(
               intl.formatMessage(messages.channel),
               [],
               true,
-              opts.channel.value
+              opts.channel.value,
             ),
-            active: opts.channel.active
-          }
+            active: opts.channel.active,
+          },
         ]
-      : [])
+      : []),
   ];
 }

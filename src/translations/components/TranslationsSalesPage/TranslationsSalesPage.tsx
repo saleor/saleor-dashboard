@@ -9,7 +9,7 @@ import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
-  TranslatableEntities
+  TranslatableEntities,
 } from "@saleor/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,7 +22,7 @@ export interface TranslationsSalesPageProps
 }
 
 export const fieldNames = {
-  name: "name"
+  name: "name",
 };
 
 const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
@@ -35,7 +35,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   saveButtonState,
   onDiscard,
   onEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
 
@@ -43,7 +43,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
     <Container>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
-          tab: TranslatableEntities.sales
+          tab: TranslatableEntities.sales,
         })}
       >
         {intl.formatMessage(sectionNames.translations)}
@@ -53,12 +53,12 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
           {
             id: "zjkAMs",
             defaultMessage: 'Translation Sale "{saleName}" - {languageCode}',
-            description: "header"
+            description: "header",
           },
           {
             languageCode,
-            saleName: getStringOrPlaceholder(data?.sale?.name)
-          }
+            saleName: getStringOrPlaceholder(data?.sale?.name),
+          },
         )}
       >
         <LanguageSwitch
@@ -78,13 +78,13 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
           {
             displayName: intl.formatMessage({
               id: "s40PZt",
-              defaultMessage: "Sale Name"
+              defaultMessage: "Sale Name",
             }),
             name: fieldNames.name,
             translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.sale?.name
-          }
+            value: data?.sale?.name,
+          },
         ]}
         saveButtonState={saveButtonState}
         richTextResetKey={languageCode}

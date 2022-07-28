@@ -48,17 +48,17 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemAdd,
   onItemClick,
   onItemEdit,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {
-    name: menu?.name ?? ""
+    name: menu?.name ?? "",
   };
 
   const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>(
-    []
+    [],
   );
 
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
@@ -67,7 +67,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   const handleSubmit = async (data: MenuDetailsFormData) => {
     const result = await onSubmit({
       name: data.name,
-      operations: removeSimulatedMoves(treeOperations)
+      operations: removeSimulatedMoves(treeOperations),
     });
 
     if (result) {

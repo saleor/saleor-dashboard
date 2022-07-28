@@ -7,18 +7,18 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     active: {
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
     },
     root: {
       "&$active": {
         borderBottomColor: theme.palette.primary.main,
-        color: theme.typography.body1.color
+        color: theme.typography.body1.color,
       },
       "&:focus": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
       },
       "&:hover": {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
       },
       borderBottom: "1px solid transparent",
       color: fade(theme.palette.text.secondary, 0.6),
@@ -28,10 +28,10 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2),
       minWidth: 40,
       padding: theme.spacing(1),
-      transition: theme.transitions.duration.short + "ms"
-    }
+      transition: theme.transitions.duration.short + "ms",
+    },
   }),
-  { name: "Tab" }
+  { name: "Tab" },
 );
 
 interface TabProps<T> {
@@ -53,7 +53,7 @@ export function Tab<T>(value: T) {
         data-test-id={testId}
         className={classNames({
           [classes.root]: true,
-          [classes.active]: isActive
+          [classes.active]: isActive,
         })}
         onClick={() => changeTab(value)}
       >

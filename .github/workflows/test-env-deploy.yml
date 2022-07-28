@@ -122,7 +122,7 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-
+  
   cypress-run-critical:
     needs: deploy
     runs-on: ubuntu-latest
@@ -140,6 +140,24 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+      
+      - name: Get tags from pull request body
+        uses: actions/github-script@v6
+        id: set-tags
+        with:
+          script: |
+                  const pullRequestBody = github.event.pull_request.body;
+                  const tags = [];
+                  const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
+                  const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### Select tests to run from above`);
+                  let tagsInString = removedPullRequestBodyAfterTests[0];
+                  tagsInString = tagsInString.split('\n');
+                  tagsInString.forEach(line => {
+                    if(line.includes('[x]')) tags.push(line.replace('[x] ', "@stable+"))
+                  });
+                  return `"${tags.join(" ")}"`
+          result-encoding: string
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -172,7 +190,8 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{steps.set-tags.outputs.result}}
+          CYPRESS_grepTags: ${{steps.set-tags.outputs.result}}
         with:
-          tag: Critical, ${{github.event.action}}
-          command: npx cypress run --record --env tags=critical --spec cypress/e2e/navigation.js,cypress/e2e/products/createProduct.js,cypress/e2e/products/productsVariants.js --tag Critical, PR_Deploy
-
+          record: true
+          tag: ${{github.event.action}}

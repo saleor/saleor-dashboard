@@ -6,7 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import {
   FulfillmentStatus,
   OrderErrorFragment,
-  OrderRefundDataQuery
+  OrderRefundDataQuery,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { renderCollection } from "@saleor/misc";
@@ -19,18 +19,18 @@ import OrderRefundFulfilledProducts from "../OrderRefundFulfilledProducts";
 import OrderRefundAmount from "../OrderRefundReturnAmount";
 import {
   getMiscellaneousAmountValues,
-  getRefundProductsAmountValues
+  getRefundProductsAmountValues,
 } from "../OrderRefundReturnAmount/utils";
 import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
 import OrderRefundForm, {
   OrderRefundSubmitData,
-  OrderRefundType
+  OrderRefundType,
 } from "./form";
 
 export const refundFulfilledStatuses = [
   FulfillmentStatus.FULFILLED,
   FulfillmentStatus.RETURNED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL
+  FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
 export interface OrderRefundPageProps {
@@ -47,18 +47,18 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
     defaultType = OrderRefundType.PRODUCTS,
     disabled,
     errors = [],
-    onSubmit
+    onSubmit,
   } = props;
 
   const intl = useIntl();
 
   const unfulfilledLines = order?.lines.filter(
-    line => line.quantityToFulfill > 0
+    line => line.quantityToFulfill > 0,
   );
 
   const fulfilledFulfillemnts =
     order?.fulfillments.filter(({ status }) =>
-      refundFulfilledStatuses.includes(status)
+      refundFulfilledStatuses.includes(status),
     ) || [];
 
   return (
@@ -79,16 +79,16 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                     {
                       id: "rVIlBs",
                       defaultMessage: "Order #{orderNumber}",
-                      description: "page header with order number"
+                      description: "page header with order number",
                     },
                     {
-                      orderNumber: order.number
-                    }
+                      orderNumber: order.number,
+                    },
                   )
                 : intl.formatMessage({
                     id: "6u4K7e",
                     defaultMessage: "Order",
-                    description: "page header"
+                    description: "page header",
                   })}
             </Backlink>
             <PageHeader
@@ -96,11 +96,11 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                 {
                   id: "0krqBj",
                   defaultMessage: "Order no. {orderNumber} - Refund",
-                  description: "page header"
+                  description: "page header",
                 },
                 {
-                  orderNumber: order?.number
-                }
+                  orderNumber: order?.number,
+                },
               )}
             />
             <Grid>
@@ -141,7 +141,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                           }
                           onSetMaximalQuantities={() =>
                             handlers.setMaximalRefundedFulfilledProductQuantities(
-                              fulfillment?.id
+                              fulfillment?.id,
                             )
                           }
                         />

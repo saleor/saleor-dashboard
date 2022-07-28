@@ -4,7 +4,7 @@ import { TreeOperation } from "../MenuItems";
 
 export function findNode(
   tree: MenuDetailsFragment["items"],
-  id: string
+  id: string,
 ): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
   if (tree.length === 0) {
@@ -15,14 +15,14 @@ export function findNode(
   }
   const nodeMap = tree.map((node, nodeIndex) => [
     nodeIndex,
-    ...findNode(node.children, id)
+    ...findNode(node.children, id),
   ]);
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
 export function getNode(
   tree: MenuDetailsFragment["items"],
-  path: number[]
+  path: number[],
 ): MenuDetailsFragment["items"][0] {
   if (path.length === 1) {
     return tree[path[0]];
@@ -32,7 +32,7 @@ export function getNode(
 
 function removeNode(
   tree: MenuDetailsFragment["items"],
-  path: number[]
+  path: number[],
 ): MenuDetailsFragment["items"] {
   const removeIndex = path[0];
 
@@ -43,7 +43,7 @@ function removeNode(
   const newTree = [...tree];
   newTree[removeIndex] = {
     ...tree[path[0]],
-    children: removeNode(tree[path[0]].children, path.slice(1))
+    children: removeNode(tree[path[0]].children, path.slice(1)),
   };
 
   return newTree;
@@ -60,7 +60,7 @@ function insertNode({
   tree,
   path,
   node,
-  position
+  position,
 }: InsertNodeInput): MenuDetailsFragment["items"] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
@@ -71,7 +71,7 @@ function insertNode({
       tree: tree[path[0]].children,
       path: path.slice(1),
       node,
-      position
+      position,
     });
   }
   return tree;
@@ -79,7 +79,7 @@ function insertNode({
 
 function removeNodeAndChildren(
   tree: MenuDetailsFragment["items"],
-  operation: TreeOperation
+  operation: TreeOperation,
 ): MenuDetailsFragment["items"] {
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
@@ -89,9 +89,9 @@ function removeNodeAndChildren(
       (acc, child) =>
         removeNodeAndChildren(acc, {
           id: child.id,
-          type: "remove"
+          type: "remove",
         }),
-      tree
+      tree,
     );
 
     return removeNode(treeAfterChildrenRemoval, sourcePath);
@@ -102,7 +102,7 @@ function removeNodeAndChildren(
 
 function permuteRelativeNode(
   tree: MenuDetailsFragment["items"],
-  permutation: TreeOperation
+  permutation: TreeOperation,
 ): MenuDetailsFragment["items"] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
@@ -121,7 +121,7 @@ function permuteRelativeNode(
     tree: treeAfterRemoval,
     path: targetPath,
     node,
-    position: position + permutation.sortOrder
+    position: position + permutation.sortOrder,
   });
 
   return treeAfterInsertion;
@@ -129,7 +129,7 @@ function permuteRelativeNode(
 
 function executeRelativeOperation(
   tree: MenuDetailsFragment["items"],
-  operation: TreeOperation
+  operation: TreeOperation,
 ): MenuDetailsFragment["items"] {
   return operation.type === "move"
     ? permuteRelativeNode(tree, operation)
@@ -138,11 +138,11 @@ function executeRelativeOperation(
 
 export function computeRelativeTree(
   tree: MenuDetailsFragment["items"],
-  operations: TreeOperation[]
+  operations: TreeOperation[],
 ) {
   const newTree = operations.reduce(
     (acc, operation) => executeRelativeOperation(acc, operation),
-    JSON.parse(JSON.stringify(tree))
+    JSON.parse(JSON.stringify(tree)),
   );
   return newTree;
 }

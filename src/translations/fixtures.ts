@@ -4,21 +4,21 @@ export const languages: LanguageFragment[] = [
   {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.DE,
-    language: "niemiecki"
+    language: "niemiecki",
   },
   {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.EN,
-    language: "angielski"
+    language: "angielski",
   },
   {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.ES,
-    language: "hiszpański"
+    language: "hiszpański",
   },
   {
     __typename: "LanguageDisplay",
     code: LanguageCodeEnum.PL,
-    language: "polski"
-  }
+    language: "polski",
+  },
 ];

@@ -13,19 +13,19 @@ import {
   PermissionGroupDetailsUrlQueryParams,
   permissionGroupListPath,
   PermissionGroupListUrlQueryParams,
-  PermissionGroupListUrlSortField
+  PermissionGroupListUrlSortField,
 } from "./urls";
 import PermissionGroupCreate from "./views/PermissionGroupCreate";
 import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
-  location
+  location,
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PermissionGroupListUrlQueryParams = asSortParams(
     qs,
-    PermissionGroupListUrlSortField
+    PermissionGroupListUrlSortField,
   );
 
   return <PermissionGroupListComponent params={params} />;
@@ -40,7 +40,7 @@ const PermissionGroupDetails: React.FC<RouteComponentProps<
   const qs = parseQs(location.search.substr(1));
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,
-    MembersListUrlSortField
+    MembersListUrlSortField,
   );
 
   return (

@@ -15,7 +15,7 @@ export interface ChannelStatusProps {
 export const ChannelStatus: React.FC<ChannelStatusProps> = ({
   disabled,
   isActive,
-  updateChannelStatus
+  updateChannelStatus,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -26,7 +26,7 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
         title={intl.formatMessage({
           id: "TSJRiZ",
           defaultMessage: "Channel Status",
-          description: "channel status title"
+          description: "channel status title",
         })}
       />
       <CardContent>

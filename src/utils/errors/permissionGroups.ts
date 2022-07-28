@@ -1,6 +1,6 @@
 import {
   PermissionGroupErrorCode,
-  PermissionGroupErrorFragment
+  PermissionGroupErrorFragment,
 } from "@saleor/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -9,29 +9,29 @@ import { getCommonFormFieldErrorMessage } from "./common";
 const messages = defineMessages({
   assignNonStaffMember: {
     id: "+x4cZH",
-    defaultMessage: "Only staff members can be assigned"
+    defaultMessage: "Only staff members can be assigned",
   },
   cannotRemoveFromLastGroup: {
     id: "WzA5Ll",
-    defaultMessage: "Cannot remove user from last group"
+    defaultMessage: "Cannot remove user from last group",
   },
   duplicatedInputItem: {
     id: "E8T3e+",
-    defaultMessage: "Cannot add and remove group the same time"
+    defaultMessage: "Cannot add and remove group the same time",
   },
   permissionOutOfScope: {
     id: "vVviA2",
-    defaultMessage: "Those permissions are out of your scope"
+    defaultMessage: "Those permissions are out of your scope",
   },
   unique: {
     id: "mgFyBA",
-    defaultMessage: "This name should be unique"
-  }
+    defaultMessage: "This name should be unique",
+  },
 });
 
 function getPermissionGroupErrorMessage(
   err: PermissionGroupErrorFragment,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err) {
     switch (err.code) {

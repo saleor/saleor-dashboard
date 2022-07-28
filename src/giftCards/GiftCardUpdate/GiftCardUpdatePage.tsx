@@ -22,11 +22,11 @@ const GiftCardUpdatePage: React.FC = () => {
   const {
     submit,
     data,
-    handlers: { changeMetadata }
+    handlers: { changeMetadata },
   } = useGiftCardUpdateForm();
 
   const {
-    opts: { loading: loadingUpdate, status }
+    opts: { loading: loadingUpdate, status },
   } = useGiftCardUpdate();
 
   return (

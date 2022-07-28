@@ -27,7 +27,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   data,
   loading,
   navigateToAppsList,
-  onSubmit
+  onSubmit,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -47,9 +47,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 {
                   id: "Id7C0X",
                   defaultMessage: `You are about to install {name}`,
-                  description: "section header"
+                  description: "section header",
                 },
-                { name }
+                { name },
               )
             )
           }
@@ -62,7 +62,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
               <div
                 className={classNames(
                   classes.installIcon,
-                  classes.installSaleorIcon
+                  classes.installSaleorIcon,
                 )}
               >
                 <img src={saleorDarkLogoSmall} alt="" />
@@ -81,7 +81,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           title={intl.formatMessage({
             id: "VsGcdP",
             defaultMessage: "App permissions",
-            description: "section header"
+            description: "section header",
           })}
         />
         <CardContent>

@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Paper,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import { Button } from "@saleor/components/Button";
@@ -49,7 +49,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   }, [token]);
 
   useModalDialogOpen(open, {
-    onClose: () => setStep("form")
+    onClose: () => setStep("form"),
   });
 
   return (
@@ -77,7 +77,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                   <TextField
                     label={intl.formatMessage({
                       id: "0DRBjg",
-                      defaultMessage: "Token Note"
+                      defaultMessage: "Token Note",
                     })}
                     value={data.name}
                     onChange={change}

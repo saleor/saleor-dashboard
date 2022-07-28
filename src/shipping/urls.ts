@@ -14,7 +14,7 @@ export type ShippingZonesListUrlQueryParams = BulkAction &
   Pagination &
   SingleAction;
 export const shippingZonesListUrl = (
-  params?: ShippingZonesListUrlQueryParams
+  params?: ShippingZonesListUrlQueryParams,
 ) => shippingZonesListPath + "?" + stringifyQs(params);
 
 export const shippingZonePath = (id: string) =>
@@ -37,7 +37,7 @@ export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   }>;
 export const shippingZoneUrl = (
   id: string,
-  params?: ShippingZoneUrlQueryParams
+  params?: ShippingZoneUrlQueryParams,
 ) => shippingZonePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 type ZipCodeRangeActions = "add-range" | "remove-range";
@@ -63,7 +63,7 @@ export const shippingRateCreatePath = (id: string) =>
   urlJoin(shippingZonePath(id), "add");
 export const shippingRateCreateUrl = (
   id: string,
-  params?: ShippingRateCreateUrlQueryParams
+  params?: ShippingRateCreateUrlQueryParams,
 ) => shippingRateCreatePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const shippingRateEditPath = (id: string, rateId: string) =>
@@ -71,7 +71,7 @@ export const shippingRateEditPath = (id: string, rateId: string) =>
 export const shippingRateEditUrl = (
   id: string,
   rateId: string,
-  params?: ShippingRateUrlQueryParams
+  params?: ShippingRateUrlQueryParams,
 ) =>
   shippingRateEditPath(encodeURIComponent(id), encodeURIComponent(rateId)) +
   "?" +

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import {
   SearchWarehousesDocument,
   SearchWarehousesQuery,
-  SearchWarehousesQueryVariables
+  SearchWarehousesQueryVariables,
 } from "@saleor/graphql";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 
@@ -14,6 +14,7 @@ export const searchWarehouses = gql`
       sortBy: { direction: ASC, field: NAME }
       filter: { search: $query }
     ) {
+      totalCount
       edges {
         node {
           id

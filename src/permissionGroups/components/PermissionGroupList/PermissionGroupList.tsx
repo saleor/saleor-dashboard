@@ -3,7 +3,7 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -16,7 +16,7 @@ import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import {
   permissionGroupDetailsUrl,
-  PermissionGroupListUrlSortField
+  PermissionGroupListUrlSortField,
 } from "@saleor/permissionGroups/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -27,33 +27,33 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colActions: {
-        width: 180
+        width: 180,
       },
       colMembers: {
-        width: 180
+        width: 180,
       },
       colName: {
-        width: "auto"
-      }
+        width: "auto",
+      },
     },
     colActions: {
       paddingRight: theme.spacing(),
-      textAlign: "right"
+      textAlign: "right",
     },
     colActionsHeader: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colMembers: {
-      textAlign: "right"
+      textAlign: "right",
     },
     colName: {
-      paddingLeft: 0
+      paddingLeft: 0,
     },
     link: {
-      cursor: "pointer"
-    }
+      cursor: "pointer",
+    },
   }),
-  { name: "PermissionGroupList" }
+  { name: "PermissionGroupList" },
 );
 const numberOfColumns = 3;
 
@@ -143,7 +143,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                           data-test-id="delete-icon"
                           color="primary"
                           onClick={stopPropagation(() =>
-                            onDelete(permissionGroup.id)
+                            onDelete(permissionGroup.id),
                           )}
                         >
                           <DeleteIcon />
@@ -166,7 +166,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                 />
               </TableCell>
             </TableRow>
-          )
+          ),
         )}
       </TableBody>
     </ResponsiveTable>

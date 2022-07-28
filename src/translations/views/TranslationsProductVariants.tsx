@@ -3,7 +3,7 @@ import {
   LanguageCodeEnum,
   useProductVariantTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
-  useUpdateProductVariantTranslationsMutation
+  useUpdateProductVariantTranslationsMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -32,7 +32,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
   id,
   productId,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -40,7 +40,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
   const intl = useIntl();
 
   const productVariantTranslations = useProductVariantTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const onUpdate = (errors: unknown[]) => {
@@ -48,7 +48,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       productVariantTranslations.refetch();
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate("?", { replace: true });
     }
@@ -56,24 +56,24 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdateProductVariantTranslationsMutation({
-    onCompleted: data => onUpdate(data.productVariantTranslate.errors)
+    onCompleted: data => onUpdate(data.productVariantTranslate.errors),
   });
 
   const [
-    updateAttributeValueTranslations
+    updateAttributeValueTranslations,
   ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors)
+    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -82,7 +82,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string
+    data: string,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -90,25 +90,25 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
           id,
           input: getParsedTranslationInputData({
             data,
-            fieldName
+            fieldName,
           }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const handleAttributeValueSubmit = (
     { id }: TranslationField<TranslationInputFieldName>,
-    data: OutputData
+    data: OutputData,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
           id,
           input: { richText: JSON.stringify(data) },
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = productVariantTranslations?.data?.translation;

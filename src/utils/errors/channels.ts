@@ -6,21 +6,21 @@ import { getCommonFormFieldErrorMessage } from "./common";
 const messages = defineMessages({
   channelAlreadyExist: {
     id: "DK+8PB",
-    defaultMessage: "This channel has already been created"
+    defaultMessage: "This channel has already been created",
   },
   channelSameCurrency: {
     id: "V2BBQu",
-    defaultMessage: "Currency in both channels must be the same"
+    defaultMessage: "Currency in both channels must be the same",
   },
   channelUnique: {
     id: "QFCUEt",
-    defaultMessage: "Slug must be unique"
-  }
+    defaultMessage: "Slug must be unique",
+  },
 });
 
 function getChannelsErrorMessage(
   err: Omit<ChannelErrorFragment, "__typename"> | undefined,
-  intl: IntlShape
+  intl: IntlShape,
 ): string {
   if (err) {
     switch (err.code) {

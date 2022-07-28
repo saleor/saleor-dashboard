@@ -2,7 +2,7 @@ import useStateFromProps from "./useStateFromProps";
 
 function useListActions<TData>(
   initial: TData[] = [],
-  compareFunc: (a: TData, b: TData) => boolean = (a, b) => a === b
+  compareFunc: (a: TData, b: TData) => boolean = (a, b) => a === b,
 ) {
   const [listElements, setListElements] = useStateFromProps(initial);
 
@@ -16,7 +16,7 @@ function useListActions<TData>(
 
   function remove(data: TData) {
     setListElements(
-      listElements.filter(listElement => !compareFunc(listElement, data))
+      listElements.filter(listElement => !compareFunc(listElement, data)),
     );
   }
 
@@ -43,7 +43,7 @@ function useListActions<TData>(
     remove,
     reset,
     set,
-    toggle
+    toggle,
   };
 }
 export default useListActions;

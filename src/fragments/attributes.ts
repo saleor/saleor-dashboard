@@ -20,6 +20,7 @@ export const attributeValueDetailsFragment = gql`
   ${attributeValueFragment}
   fragment AttributeValueDetails on AttributeValue {
     ...AttributeValue
+    plainText
     richText
   }
 `;

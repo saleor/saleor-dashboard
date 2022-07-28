@@ -2,34 +2,34 @@ import { PageTypeFilterInput } from "@saleor/graphql";
 
 import {
   createFilterTabUtils,
-  createFilterUtils
+  createFilterUtils,
 } from "../../../utils/filters";
 import {
   PageTypeListUrlFilters,
   PageTypeListUrlFiltersEnum,
-  PageTypeListUrlQueryParams
+  PageTypeListUrlQueryParams,
 } from "../../urls";
 
 export const PAGE_TYPE_FILTERS_KEY = "pageTypeFilters";
 
 export function getFilterVariables(
-  params: PageTypeListUrlFilters
+  params: PageTypeListUrlFilters,
 ): PageTypeFilterInput {
   return {
-    search: params.query
+    search: params.query,
   };
 }
 
 export const {
   deleteFilterTab,
   getFilterTabs,
-  saveFilterTab
+  saveFilterTab,
 } = createFilterTabUtils<PageTypeListUrlFilters>(PAGE_TYPE_FILTERS_KEY);
 
 export const {
   areFiltersApplied,
   getActiveFilters,
-  getFiltersCurrentTab
+  getFiltersCurrentTab,
 } = createFilterUtils<PageTypeListUrlQueryParams, PageTypeListUrlFilters>(
-  PageTypeListUrlFiltersEnum
+  PageTypeListUrlFiltersEnum,
 );

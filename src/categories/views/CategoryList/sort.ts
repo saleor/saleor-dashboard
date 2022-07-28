@@ -3,7 +3,7 @@ import { CategorySortField } from "@saleor/graphql";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
 export function getSortQueryField(
-  sort: CategoryListUrlSortField
+  sort: CategoryListUrlSortField,
 ): CategorySortField {
   switch (sort) {
     case CategoryListUrlSortField.name:
@@ -18,5 +18,5 @@ export function getSortQueryField(
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField
+  getSortQueryField,
 );

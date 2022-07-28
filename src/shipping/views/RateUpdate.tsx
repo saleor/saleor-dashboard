@@ -1,6 +1,6 @@
 import {
   createShippingChannelsFromRate,
-  createSortedShippingChannels
+  createSortedShippingChannels,
 } from "@saleor/channels/utils";
 import { Button } from "@saleor/components/Button";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
@@ -16,12 +16,12 @@ import {
   useShippingZoneQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-  useUpdateShippingRateMutation
+  useUpdateShippingRateMutation,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
 import useLocalPaginator, {
-  useLocalPaginationState
+  useLocalPaginationState,
 } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -29,7 +29,7 @@ import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import {
   getById,
-  getByUnmatchingId
+  getByUnmatchingId,
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
@@ -41,19 +41,19 @@ import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables,
-  getUpdateShippingWeightRateVariables
+  getUpdateShippingWeightRateVariables,
 } from "@saleor/shipping/handlers";
 import {
   shippingRateEditUrl,
   ShippingRateUrlDialog,
   ShippingRateUrlQueryParams,
-  shippingZoneUrl
+  shippingZoneUrl,
 } from "@saleor/shipping/urls";
 import postalCodesReducer from "@saleor/shipping/views/reducer";
 import {
   filterPostalCodes,
   getPostalCodeRuleByMinMax,
-  getRuleObject
+  getRuleObject,
 } from "@saleor/shipping/views/utils";
 import { MinMax } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -73,20 +73,20 @@ export interface RateUpdateProps {
 export const RateUpdate: React.FC<RateUpdateProps> = ({
   id,
   rateId,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
   const [paginationState, setPaginationState] = useLocalPaginationState(
-    PAGINATE_BY
+    PAGINATE_BY,
   );
   const paginate = useLocalPaginator(setPaginationState);
 
   const { data, loading, refetch } = useShippingZoneQuery({
     displayLoader: true,
-    variables: { id, ...paginationState }
+    variables: { id, ...paginationState },
   });
 
   const channelsData = data?.shippingZone?.channels;
@@ -96,7 +96,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   const {
     loadMore,
     search: productsSearch,
-    result: productsSearchOpts
+    result: productsSearchOpts,
   } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -105,22 +105,22 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   >(navigate, params => shippingRateEditUrl(id, rateId, params), params);
 
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    []
+    [],
   );
 
   const { pageInfo, ...paginationValues } = paginate(
     rate?.excludedProducts.pageInfo,
-    paginationState
+    paginationState,
   );
 
   const [
     updateShippingMethodChannelListing,
-    updateShippingMethodChannelListingOpts
+    updateShippingMethodChannelListingOpts,
   ] = useShippingMethodChannelListingUpdateMutation({});
 
   const [
     unassignProduct,
-    unassignProductOpts
+    unassignProductOpts,
   ] = useShippingPriceRemoveProductFromExcludeMutation({
     onCompleted: data => {
       if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
@@ -128,12 +128,12 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         refetch();
         closeModal();
       }
-    }
+    },
   });
 
   const [
     assignProduct,
-    assignProductOpts
+    assignProductOpts,
   ] = useShippingPriceExcludeProductMutation({
     onCompleted: data => {
       if (data.shippingPriceExcludeProducts.errors.length === 0) {
@@ -141,10 +141,10 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         refetch();
         closeModal();
       }
-    }
+    },
   });
   const shippingChannels = createShippingChannelsFromRate(
-    rate?.channelListings
+    rate?.channelListings,
   );
   const allChannels = createSortedShippingChannels(channelsData);
 
@@ -158,35 +158,35 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
-    toggleAllChannels
+    toggleAllChannels,
   } = useChannels(
     shippingChannels,
     params?.action,
     { closeModal, openModal },
-    { formId: FORM_ID }
+    { formId: FORM_ID },
   );
 
   const [
     updateShippingRate,
-    updateShippingRateOpts
+    updateShippingRateOpts,
   ] = useUpdateShippingRateMutation({});
 
   const handleSuccess = () => {
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges)
+      text: intl.formatMessage(commonMessages.savedChanges),
     });
   };
   const [
     deleteShippingRate,
-    deleteShippingRateOpts
+    deleteShippingRateOpts,
   ] = useDeleteShippingRateMutation({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
         handleSuccess();
         navigate(shippingZoneUrl(id));
       }
-    }
+    },
   });
 
   const [updateMetadata] = useUpdateMetadataMutation({});
@@ -197,7 +197,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     havePostalCodesChanged: false,
     inclusionType: rate?.postalCodeRules[0]?.inclusionType,
     originalCodes: [],
-    postalCodeRules: rate?.postalCodeRules || []
+    postalCodeRules: rate?.postalCodeRules || [],
   });
 
   const postalCodeRulesLoaded =
@@ -211,18 +211,18 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   }
 
   const onPostalCodeInclusionChange = (
-    inclusion: PostalCodeRuleInclusionTypeEnum
+    inclusion: PostalCodeRuleInclusionTypeEnum,
   ) => {
     dispatch({
       codesToDelete: rate.postalCodeRules.map(code => code.id),
       havePostalCodesChanged: true,
       inclusionType: inclusion,
-      postalCodeRules: []
+      postalCodeRules: [],
     });
   };
 
   const updateData = async (
-    formData: ShippingZoneRateUpdateFormData
+    formData: ShippingZoneRateUpdateFormData,
   ): Promise<unknown[]> => {
     const getUpdateVariables =
       rate!.type === ShippingMethodTypeEnum.PRICE
@@ -234,8 +234,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         id,
         rateId,
         state.postalCodeRules,
-        state.codesToDelete
-      )
+        state.codesToDelete,
+      ),
     });
 
     dispatch({ codesToDelete: [] });
@@ -250,8 +250,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           rateId,
           formData.orderValueRestricted,
           formData.channelListings,
-          shippingChannels
-        )
+          shippingChannels,
+        ),
       });
     }
 
@@ -262,17 +262,17 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     rate,
     updateData,
     variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables })
+    variables => updatePrivateMetadata({ variables }),
   );
 
   const handleProductAssign = (ids: string[]) =>
     assignProduct({
-      variables: { id: rateId, input: { products: ids } }
+      variables: { id: rateId, input: { products: ids } },
     });
 
   const handleProductUnassign = (ids: string[]) => {
     unassignProduct({
-      variables: { id: rateId, products: ids }
+      variables: { id: rateId, products: ids },
     });
     reset();
   };
@@ -292,7 +292,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     const newCode = getRuleObject(rule, state.inclusionType);
     dispatch({
       havePostalCodesChanged: true,
-      postalCodeRules: [...state.postalCodeRules, newCode]
+      postalCodeRules: [...state.postalCodeRules, newCode],
     });
     closeModal();
   };
@@ -303,13 +303,13 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         codesToDelete: [...state.codesToDelete, code.id],
         havePostalCodesChanged: true,
         postalCodeRules: state.postalCodeRules.filter(
-          getByUnmatchingId(code.id)
-        )
+          getByUnmatchingId(code.id),
+        ),
       });
     } else {
       dispatch({
         havePostalCodesChanged: true,
-        postalCodeRules: filterPostalCodes(state.postalCodeRules, code)
+        postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
       });
     }
   };
@@ -326,7 +326,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           open={isChannelsModalOpen}
           title={intl.formatMessage({
             id: "EM730i",
-            defaultMessage: "Manage Channel Availability"
+            defaultMessage: "Manage Channel Availability",
           })}
           selected={channelListElements.length}
           confirmButtonState="default"
@@ -340,8 +340,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         handleConfirm={() =>
           deleteShippingRate({
             variables: {
-              id: rateId
-            }
+              id: rateId,
+            },
           })
         }
         open={params.action === "remove"}
@@ -360,7 +360,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
         products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id
+          suggestedProduct => suggestedProduct.id,
         )}
         onClose={closeModal}
         onFetch={productsSearch}

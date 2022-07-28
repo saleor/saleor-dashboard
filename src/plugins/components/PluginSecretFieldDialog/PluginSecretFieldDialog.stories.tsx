@@ -4,7 +4,7 @@ import React from "react";
 
 import Decorator from "../../../storybook/Decorator";
 import PluginSecretFieldDialog, {
-  PluginSecretFieldDialogProps
+  PluginSecretFieldDialogProps,
 } from "./PluginSecretFieldDialog";
 
 const props: PluginSecretFieldDialogProps = {
@@ -15,11 +15,11 @@ const props: PluginSecretFieldDialogProps = {
     label: "Generic Secret Field",
     name: "secret",
     type: ConfigurationTypeFieldEnum.SECRET,
-    value: "value"
+    value: "value",
   },
   onClose: () => undefined,
   onConfirm: () => undefined,
-  open: true
+  open: true,
 };
 
 storiesOf("Views / Plugins / Edit secret field", module)
@@ -30,7 +30,7 @@ storiesOf("Views / Plugins / Edit secret field", module)
       {...props}
       field={{
         ...props.field,
-        type: ConfigurationTypeFieldEnum.PASSWORD
+        type: ConfigurationTypeFieldEnum.PASSWORD,
       }}
     />
   ));

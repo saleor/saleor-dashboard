@@ -2,7 +2,7 @@ import {
   FilterElement,
   FilterElementKeyValue,
   FilterElementRegular,
-  IFilter
+  IFilter,
 } from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
 import { ActiveTab } from "@saleor/types";
@@ -27,7 +27,7 @@ function createFilterUtils<
 
   function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
     params: TQueryTabParams,
-    tabs: unknown[]
+    tabs: unknown[],
   ) {
     return params.activeTab === undefined
       ? areFiltersApplied((params as unknown) as TQueryParams)
@@ -39,7 +39,7 @@ function createFilterUtils<
   return {
     areFiltersApplied,
     getActiveFilters,
-    getFiltersCurrentTab
+    getFiltersCurrentTab,
   };
 }
 
@@ -60,14 +60,14 @@ export function getFilterQueryParams<
   TUrlFilters extends {}
 >(
   filters: IFilter<TFilterKeys>,
-  getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
+  getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>,
 ): TUrlFilters {
   return filters.reduce(
     (acc, filterField) => ({
       ...acc,
-      ...getFilterQueryParam(filterField, acc)
+      ...getFilterQueryParam(filterField, acc),
     }),
-    {} as TUrlFilters
+    {} as TUrlFilters,
   );
 }
 
@@ -75,7 +75,8 @@ export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   if (
     !![variables.gte, variables.lte].some(
-      v => v !== undefined && v !== null && !(typeof v === "number" && isNaN(v))
+      v =>
+        v !== undefined && v !== null && !(typeof v === "number" && isNaN(v)),
     )
   ) {
     return variables;
@@ -92,12 +93,12 @@ export function getSingleValueQueryParam<
 
   if (!active) {
     return {
-      [key]: undefined
+      [key]: undefined,
     };
   }
 
   return {
-    [key]: value[0]
+    [key]: value[0],
   };
 }
 
@@ -110,12 +111,12 @@ export function getSingleEnumValueQueryParam<
 
   if (!active) {
     return {
-      [key]: undefined
+      [key]: undefined,
     };
   }
 
   return {
-    [key]: findValueInEnum(value[0], haystack)
+    [key]: findValueInEnum(value[0], haystack),
   };
 }
 
@@ -128,12 +129,12 @@ export function getMultipleEnumValueQueryParam<
 
   if (!active) {
     return {
-      [key]: undefined
+      [key]: undefined,
     };
   }
 
   return {
-    [key]: value.map(val => findValueInEnum(val, haystack))
+    [key]: value.map(val => findValueInEnum(val, haystack)),
   };
 }
 
@@ -145,12 +146,12 @@ export function getMultipleValueQueryParam<
 
   if (!active) {
     return {
-      [key]: undefined
+      [key]: undefined,
     };
   }
 
   return {
-    [key]: value
+    [key]: value,
   };
 }
 
@@ -163,20 +164,20 @@ export function getMinMaxQueryParam<
   if (!active) {
     return {
       [keyFrom]: undefined,
-      [keyTo]: undefined
+      [keyTo]: undefined,
     };
   }
 
   if (multiple) {
     return {
       [keyFrom]: value[0],
-      [keyTo]: value[1]
+      [keyTo]: value[1],
     };
   }
 
   return {
     [keyFrom]: value[0],
-    [keyTo]: value[0]
+    [keyTo]: value[0],
   };
 }
 
@@ -188,14 +189,14 @@ export function getKeyValueQueryParam<
 
   if (!active) {
     return {
-      [key]: undefined
+      [key]: undefined,
     };
   }
 
   const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== "");
 
   return {
-    [key]: filledOutPairs
+    [key]: filledOutPairs,
   };
 }
 

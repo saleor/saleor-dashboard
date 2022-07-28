@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import {
   Pagination,
-  PaginationProps as MacawPaginationProps
+  PaginationProps as MacawPaginationProps,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -11,15 +11,15 @@ import { ListSettings } from "../../types";
 
 export type ListSettingsUpdate = <T extends keyof ListSettings>(
   key: T,
-  value: ListSettings[T]
+  value: ListSettings[T],
 ) => void;
 
 const messages = defineMessages({
   noOfRows: {
     id: "2HfSiT",
     defaultMessage: "No. of rows",
-    description: "pagination"
-  }
+    description: "pagination",
+  },
 });
 
 export interface PaginationProps
@@ -57,7 +57,7 @@ export const TablePagination: React.FC<PaginationProps> = ({
         hasNextPage={hasNextPage && !disabled}
         hasPreviousPage={hasPreviousPage && !disabled}
         labels={{
-          noOfRows: intl.formatMessage(messages.noOfRows)
+          noOfRows: intl.formatMessage(messages.noOfRows),
         }}
         rowNumber={settings?.rowNumber}
         onRowNumberUpdate={

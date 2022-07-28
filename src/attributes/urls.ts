@@ -9,7 +9,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 export const attributeSection = "/attributes/";
@@ -19,7 +19,7 @@ export enum AttributeListUrlFiltersEnum {
   isVariantOnly = "isVariantOnly",
   valueRequired = "valueRequired",
   visibleInStorefront = "visibleInStorefront",
-  query = "query"
+  query = "query",
 }
 export type AttributeListUrlFilters = Filters<AttributeListUrlFiltersEnum>;
 export type AttributeListUrlDialog = "remove" | TabActionDialog;
@@ -28,7 +28,7 @@ export enum AttributeListUrlSortField {
   slug = "slug",
   visible = "visible",
   searchable = "searchable",
-  useInFacetedSearch = "use-in-faceted-search"
+  useInFacetedSearch = "use-in-faceted-search",
 }
 export type AttributeListUrlSort = Sort<AttributeListUrlSortField>;
 export type AttributeListUrlQueryParams = ActiveTab &

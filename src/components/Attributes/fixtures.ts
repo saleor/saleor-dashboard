@@ -1,7 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  MeasurementUnitsEnum
+  MeasurementUnitsEnum,
 } from "@saleor/graphql";
 
 import { AttributeInput } from "./Attributes";
@@ -18,11 +18,12 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         name: "Dropdown First Value",
         reference: null,
         slug: "dropdown-first-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
+        value: null,
       },
       {
         __typename: "AttributeValue",
@@ -31,17 +32,18 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         name: "Dropdown Second Value",
         reference: null,
         slug: "dropdown-second-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "ifudbgidfsb",
   label: "Dropdown Attribute",
-  value: []
+  value: [],
 };
 
 const MULTISELECT_ATTRIBUTE: AttributeInput = {
@@ -56,11 +58,12 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect First Value",
         reference: null,
         slug: "multiselect-first-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
+        value: null,
       },
       {
         __typename: "AttributeValue",
@@ -69,11 +72,12 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect Second Value",
         reference: null,
         slug: "multiselect-second-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
+        value: null,
       },
       {
         __typename: "AttributeValue",
@@ -82,17 +86,18 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect Third Value",
         reference: null,
         slug: "multiselect-third-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "idffuidhffl",
   label: "Multiselect Attribute",
-  value: []
+  value: [],
 };
 
 const FILE_ATTRIBUTE: AttributeInput = {
@@ -105,23 +110,24 @@ const FILE_ATTRIBUTE: AttributeInput = {
         file: {
           __typename: "File",
           contentType: "image/png",
-          url: "some-non-existing-url"
+          url: "some-non-existing-url",
         },
         id: "gdghdgdhkkdae",
         name: "File First Value",
         reference: null,
         slug: "file-first-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "fguygygugyu",
   label: "File Attribute",
-  value: []
+  value: [],
 };
 
 const REFERENCE_ATTRIBUTE: AttributeInput = {
@@ -132,16 +138,16 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
     references: [
       {
         label: "References First Value",
-        value: "vbnhgcvjhbvhj"
+        value: "vbnhgcvjhbvhj",
       },
       {
         label: "References Second Value",
-        value: "gucngdfdfvdvd"
+        value: "gucngdfdfvdvd",
       },
       {
         label: "References Third Value",
-        value: "dfdfdsfdsfdse"
-      }
+        value: "dfdfdsfdsfdse",
+      },
     ],
     values: [
       {
@@ -151,11 +157,12 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References First Value",
         reference: null,
         slug: "references-first-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
+        value: null,
       },
       {
         __typename: "AttributeValue",
@@ -164,11 +171,12 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References Second Value",
         reference: null,
         slug: "references-second-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
+        value: null,
       },
       {
         __typename: "AttributeValue",
@@ -177,17 +185,45 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References Third Value",
         reference: null,
         slug: "references-third-value",
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "kclsmcdsmcs",
   label: "References Attribute",
-  value: []
+  value: [],
+};
+
+const PLAIN_TEXT_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "iuytqweytrqwe",
+        name: "Some cool text",
+        reference: null,
+        slug: "text",
+        plainText: "Some cool text",
+        richText: null,
+        boolean: null,
+        date: null,
+        dateTime: null,
+        value: null,
+      },
+    ],
+    selectedValues: [],
+  },
+  id: "iuytqweytrqwe",
+  label: "Plain Text Attribute",
+  value: [],
 };
 
 const RICH_TEXT_ATTRIBUTE: AttributeInput = {
@@ -202,22 +238,23 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
         name: "Some cool text",
         reference: null,
         slug: "text",
+        plainText: null,
         richText: JSON.stringify({
           time: 1617788754145,
           blocks: [{ data: { text: "Some cool text" }, type: "paragraph" }],
-          version: "2.19.3"
+          version: "2.19.3",
         }),
         boolean: null,
         date: null,
         dateTime: null,
-        value: null
-      }
+        value: null,
+      },
     ],
-    selectedValues: []
+    selectedValues: [],
   },
   id: "asdfafd",
-  label: "Text Attribute",
-  value: []
+  label: "Rich Text Attribute",
+  value: [],
 };
 
 const NUMERIC_ATTRIBUTE: AttributeInput = {
@@ -232,18 +269,19 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
         id: "QXR0cmlidXRlVmFsdWU6MTAx",
         name: "12",
         reference: null,
+        plainText: null,
         richText: null,
         boolean: null,
         date: null,
         dateTime: null,
         value: null,
-        slug: "319_35"
-      }
-    ]
+        slug: "319_35",
+      },
+    ],
   },
   id: "QXR0cmlidXRlOjM1",
   label: "Numeric Attribute",
-  value: []
+  value: [],
 };
 
 const BOOLEAN_ATTRIBUTE: AttributeInput = {
@@ -257,18 +295,19 @@ const BOOLEAN_ATTRIBUTE: AttributeInput = {
         id: "asdfasdfasdfasdf",
         name: "Boolean Attribute: Yes",
         reference: null,
+        plainText: null,
         richText: null,
         boolean: true,
         slug: "319_True",
         date: null,
         dateTime: null,
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "QXR0cmlidXRlOjMasdfasdf1",
   label: "Boolean Attribute",
-  value: []
+  value: [],
 };
 
 const DATE_ATTRIBUTE: AttributeInput = {
@@ -282,18 +321,19 @@ const DATE_ATTRIBUTE: AttributeInput = {
         id: "asdfasdfasdfasdf",
         name: "Date Attribute: '2021-06-03 00:15:00+00:00'",
         reference: null,
+        plainText: null,
         richText: null,
         boolean: true,
         slug: "319_True",
         date: "2021-06-03",
         dateTime: "2021-06-03 00:15:00+00:00",
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "QXR0cmfsdfasfdjMasdfasdf1",
   label: "Date Attribute",
-  value: []
+  value: [],
 };
 
 const DATE_TIME_ATTRIBUTE: AttributeInput = {
@@ -307,18 +347,19 @@ const DATE_TIME_ATTRIBUTE: AttributeInput = {
         id: "asdfasdfasdfasdf",
         name: "Date Time Attribute: '2021-06-03 00:15:00+00:00'",
         reference: null,
+        plainText: null,
         richText: null,
         boolean: true,
         slug: "319_True",
         date: "2021-06-03",
         dateTime: "2021-06-03 00:15:00+00:00",
-        value: null
-      }
-    ]
+        value: null,
+      },
+    ],
   },
   id: "QXR0cmlidXasdfasdfasdf1",
   label: "Date Time Attribute",
-  value: []
+  value: [],
 };
 
 const SWATCH_ATTRIBUTE: AttributeInput = {
@@ -332,18 +373,19 @@ const SWATCH_ATTRIBUTE: AttributeInput = {
         id: "sdfgsdgsdfg",
         name: "Red",
         reference: null,
+        plainText: null,
         richText: null,
         boolean: true,
         slug: "315_11",
         date: null,
         dateTime: null,
-        value: "#FF0000"
-      }
-    ]
+        value: "#FF0000",
+      },
+    ],
   },
   id: "QXR0cmlidXasdfasdfasdf1",
   label: "Swatch Attribute",
-  value: []
+  value: [],
 };
 
 export const ATTRIBUTES: AttributeInput[] = [
@@ -351,64 +393,69 @@ export const ATTRIBUTES: AttributeInput[] = [
   MULTISELECT_ATTRIBUTE,
   FILE_ATTRIBUTE,
   REFERENCE_ATTRIBUTE,
+  PLAIN_TEXT_ATTRIBUTE,
   RICH_TEXT_ATTRIBUTE,
   NUMERIC_ATTRIBUTE,
   BOOLEAN_ATTRIBUTE,
   DATE_ATTRIBUTE,
   DATE_TIME_ATTRIBUTE,
-  SWATCH_ATTRIBUTE
+  SWATCH_ATTRIBUTE,
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...DROPDOWN_ATTRIBUTE,
-    value: [DROPDOWN_ATTRIBUTE.data.values[0].slug]
+    value: [DROPDOWN_ATTRIBUTE.data.values[0].slug],
   },
   {
     ...MULTISELECT_ATTRIBUTE,
     value: [
       MULTISELECT_ATTRIBUTE.data.values[0].slug,
-      MULTISELECT_ATTRIBUTE.data.values[1].slug
-    ]
+      MULTISELECT_ATTRIBUTE.data.values[1].slug,
+    ],
   },
   {
     ...FILE_ATTRIBUTE,
-    value: [FILE_ATTRIBUTE.data.values[0].slug]
+    value: [FILE_ATTRIBUTE.data.values[0].slug],
   },
   {
     ...REFERENCE_ATTRIBUTE,
     value: [
       REFERENCE_ATTRIBUTE.data.values[0].id,
       REFERENCE_ATTRIBUTE.data.values[1].id,
-      REFERENCE_ATTRIBUTE.data.values[2].id
-    ]
+      REFERENCE_ATTRIBUTE.data.values[2].id,
+    ],
+  },
+  {
+    ...PLAIN_TEXT_ATTRIBUTE,
+    value: [PLAIN_TEXT_ATTRIBUTE.data.values[0].plainText],
   },
   {
     ...RICH_TEXT_ATTRIBUTE,
     data: {
       ...RICH_TEXT_ATTRIBUTE.data,
-      selectedValues: [RICH_TEXT_ATTRIBUTE.data.values[0]]
+      selectedValues: [RICH_TEXT_ATTRIBUTE.data.values[0]],
     },
-    value: []
+    value: [],
   },
   {
     ...NUMERIC_ATTRIBUTE,
-    value: [NUMERIC_ATTRIBUTE.data.values[0].name]
+    value: [NUMERIC_ATTRIBUTE.data.values[0].name],
   },
   {
     ...BOOLEAN_ATTRIBUTE,
-    value: [JSON.stringify(BOOLEAN_ATTRIBUTE.data.values[0].boolean)]
+    value: [JSON.stringify(BOOLEAN_ATTRIBUTE.data.values[0].boolean)],
   },
   {
     ...DATE_ATTRIBUTE,
-    value: [DATE_TIME_ATTRIBUTE.data.values[0].date]
+    value: [DATE_TIME_ATTRIBUTE.data.values[0].date],
   },
   {
     ...DATE_TIME_ATTRIBUTE,
-    value: [DATE_TIME_ATTRIBUTE.data.values[0].dateTime]
+    value: [DATE_TIME_ATTRIBUTE.data.values[0].dateTime],
   },
   {
     ...SWATCH_ATTRIBUTE,
-    value: [SWATCH_ATTRIBUTE.data.values[0].slug]
-  }
+    value: [SWATCH_ATTRIBUTE.data.values[0].slug],
+  },
 ];

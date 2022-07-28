@@ -2,7 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,41 +19,41 @@ const useStyles = makeStyles(
       left: -29,
       position: "absolute",
       top: 6,
-      width: 8
+      width: 8,
     },
     panel: {
       "& .MuiAccordionDetails-root": {
         padding: 0,
-        paddingTop: theme.spacing(2)
+        paddingTop: theme.spacing(2),
       },
       "&.Mui-expanded": {
         margin: 0,
-        minHeight: 0
+        minHeight: 0,
       },
       "&:before": {
-        display: "none"
+        display: "none",
       },
       background: "none",
       display: "",
       margin: 0,
       minHeight: 0,
-      width: "100%"
+      width: "100%",
     },
     panelExpander: {
       "&.MuiAccordionSummary-root.Mui-expanded": {
-        minHeight: 0
+        minHeight: 0,
       },
       "&> .MuiAccordionSummary-content": {
-        margin: 0
+        margin: 0,
       },
       "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
         position: "absolute",
-        right: theme.spacing(20)
+        right: theme.spacing(20),
       },
       margin: 0,
       minHeight: 0,
-      padding: 0
+      padding: 0,
     },
     root: {
       "&:last-child:after": {
@@ -63,17 +63,17 @@ const useStyles = makeStyles(
         left: -26,
         position: "absolute",
         top: "calc(50% + 4px)",
-        width: "2px"
+        width: "2px",
       },
       alignItems: "center",
       display: "flex",
       marginBottom: theme.spacing(3),
       marginTop: 0,
       position: "relative",
-      width: "100%"
-    }
+      width: "100%",
+    },
   }),
-  { name: "TimelineEvent" }
+  { name: "TimelineEvent" },
 );
 
 export interface TimelineEventProps {

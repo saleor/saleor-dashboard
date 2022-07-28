@@ -20,34 +20,34 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
               {
                 id: "zTdwWM",
                 defaultMessage: "{fromMoney} - {toMoney}",
-                description: "money"
+                description: "money",
               },
               {
                 fromMoney: formatMoney(from, locale),
-                toMoney: formatMoney(to, locale)
-              }
+                toMoney: formatMoney(to, locale),
+              },
             )
           : from && !to
           ? intl.formatMessage(
               {
                 id: "lW5uJO",
                 defaultMessage: "from {money}",
-                description: "money"
+                description: "money",
               },
               {
-                money: formatMoney(from, locale)
-              }
+                money: formatMoney(from, locale),
+              },
             )
           : !from && to
           ? intl.formatMessage(
               {
                 id: "hptDxW",
                 defaultMessage: "to {money}",
-                description: "money"
+                description: "money",
               },
               {
-                money: formatMoney(to, locale)
-              }
+                money: formatMoney(to, locale),
+              },
             )
           : "-"
       }

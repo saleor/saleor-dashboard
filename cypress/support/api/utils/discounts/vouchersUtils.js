@@ -2,7 +2,7 @@ import {
   addChannelToVoucher,
   createVoucher,
   deleteVouchers,
-  getVouchers
+  getVouchers,
 } from "../../requests/Discounts/Vouchers";
 
 export function deleteVouchersStartsWith(startsWith) {
@@ -16,13 +16,14 @@ export function createVoucherInChannel({
   value,
   code = name,
   type,
-  country
+  country,
 }) {
-  let voucher;
+  let voucherCreate;
+
   return createVoucher({ name, productId, code, type, country })
-    .then(({ voucher: voucherResp }) => {
-      voucher = voucherResp;
-      addChannelToVoucher(voucher.id, channelId, value);
+    .then(({ voucherCreate: voucherResp }) => {
+      voucherCreate = voucherResp;
+      addChannelToVoucher(voucherCreate.voucher.id, channelId, value);
     })
-    .then(() => voucher);
+    .then(() => voucherCreate);
 }

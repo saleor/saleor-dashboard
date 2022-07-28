@@ -16,7 +16,7 @@ export interface OrderFulfillmentSettingsProps {
 const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
   data,
   disabled,
-  onChange
+  onChange,
 }) => {
   const intl = useIntl();
 
@@ -26,7 +26,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
         title={intl.formatMessage({
           id: "G3ay2p",
           defaultMessage: "Fulfillment settings",
-          description: "section header"
+          description: "section header",
         })}
       />
       <CardContent>

@@ -1,14 +1,14 @@
 import {
   createAttributeMultiChangeHandler,
-  prepareAttributesInput
+  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import {
   AttributeInput,
-  AttributeInputData
+  AttributeInputData,
 } from "@saleor/components/Attributes";
 import {
   AttributeInputTypeEnum,
-  AttributeValueDetailsFragment
+  AttributeValueDetailsFragment,
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 
@@ -25,17 +25,18 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 1 Value 1",
           reference: null,
           slug: "attr-1-v-1",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
+          value: null,
+        },
+      ],
     },
     id: "attr-1",
     label: "Attribute 1",
-    value: []
+    value: [],
   },
   {
     data: {
@@ -49,11 +50,12 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 1",
           reference: null,
           slug: "attr-2-v-1",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
+          value: null,
         },
         {
           __typename: "AttributeValue",
@@ -62,11 +64,12 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 2",
           reference: null,
           slug: "attr-2-v-2",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
+          value: null,
         },
         {
           __typename: "AttributeValue",
@@ -75,17 +78,18 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           name: "Attribute 2 Value 3",
           reference: null,
           slug: "attr-2-v-3",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
+          value: null,
+        },
+      ],
     },
     id: "attr-2",
     label: "Attribute 2",
-    value: ["attr-2-v-3"]
+    value: ["attr-2-v-3"],
   },
   {
     data: {
@@ -97,24 +101,25 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
           file: {
             __typename: "File",
             contentType: "image/png",
-            url: "some-non-existing-url"
+            url: "some-non-existing-url",
           },
           id: "gdghdgdhkkdae",
           name: "File First Value",
           reference: null,
           slug: "file-first-value",
+          plainText: null,
           richText: null,
           boolean: null,
           date: null,
           dateTime: null,
-          value: null
-        }
-      ]
+          value: null,
+        },
+      ],
     },
     id: "ifudbgidfsb",
     label: "File Attribute",
-    value: []
-  }
+    value: [],
+  },
 ];
 
 const ATTR_ID = "123" as const;
@@ -128,7 +133,7 @@ interface CreateAttribute {
 
 const createAttribute = ({
   inputType,
-  value
+  value,
 }: CreateAttribute): AttributeInput => ({
   data: {
     entityType: null,
@@ -137,30 +142,33 @@ const createAttribute = ({
     // those values don't matter
     selectedValues: [],
     values: [],
-    unit: null
+    unit: null,
   },
   id: ATTR_ID,
   label: "MyAttribute",
-  value: value !== null ? [value] : []
+  value: value !== null ? [value] : [],
 });
 
 const createSelectAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.DROPDOWN,
-    value
+    value,
   });
 
 const createReferenceAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.REFERENCE,
-    value
+    value,
   });
 
 const createBooleanAttribute = (value: string) =>
   createAttribute({
     inputType: AttributeInputTypeEnum.BOOLEAN,
-    value
+    value,
   });
+
+const createPlainTextAttribute = (value: string) =>
+  createAttribute({ inputType: AttributeInputTypeEnum.PLAIN_TEXT, value });
 
 const createRichTextAttribute = (value: string) =>
   createAttribute({ inputType: AttributeInputTypeEnum.RICH_TEXT, value });
@@ -187,7 +195,7 @@ describe("Multiple select change handler", () => {
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,
-      trigger
+      trigger,
     );
 
     handler("attr-2", "attr-2-v-1");
@@ -206,7 +214,7 @@ describe("Multiple select change handler", () => {
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,
-      trigger
+      trigger,
     );
 
     handler("attr-2", "attr-2-v-3");
@@ -223,7 +231,7 @@ describe("Multiple select change handler", () => {
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,
-      trigger
+      trigger,
     );
 
     handler("attr-2", "A Value");
@@ -255,13 +263,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, references: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with select attributes", () => {
@@ -280,13 +288,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with boolean attributes", () => {
@@ -308,13 +316,38 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, boolean: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
+    );
+  });
+  describe("works with plain text attributes", () => {
+    test.each`
+      newAttr       | oldAttr       | expected
+      ${null}       | ${null}       | ${null}
+      ${"my value"} | ${"my value"} | ${null}
+      ${"my value"} | ${null}       | ${"my value"}
+      ${null}       | ${"my value"} | ${undefined}
+    `(
+      "$oldAttr -> $newAttr returns $expected",
+      ({ newAttr, oldAttr, expected }) => {
+        const attribute = createPlainTextAttribute(newAttr);
+        const prevAttribute = createPlainTextAttribute(oldAttr);
+
+        const result = prepareAttributesInput({
+          attributes: [attribute],
+          prevAttributes: [prevAttribute],
+          updatedFileAttributes: [],
+        });
+
+        const expectedResult =
+          expected !== null ? [{ id: ATTR_ID, plainText: expected }] : [];
+        expect(result).toEqual(expectedResult);
+      },
     );
   });
   describe("works with rich text attributes", () => {
@@ -333,13 +366,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, richText: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with date attributes", () => {
@@ -358,13 +391,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, date: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with date time attributes", () => {
@@ -384,13 +417,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, dateTime: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with swatch attributes", () => {
@@ -409,13 +442,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with numeric attributes", () => {
@@ -434,13 +467,13 @@ describe("Sending only changed attributes", () => {
         const result = prepareAttributesInput({
           attributes: [attribute],
           prevAttributes: [prevAttribute],
-          updatedFileAttributes: []
+          updatedFileAttributes: [],
         });
 
         const expectedResult =
           expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
         expect(result).toEqual(expectedResult);
-      }
+      },
     );
   });
   describe("works with file attributes", () => {
@@ -452,8 +485,8 @@ describe("Sending only changed attributes", () => {
         attributes: [attribute],
         prevAttributes: [prevAttribute],
         updatedFileAttributes: [
-          { file: undefined, id: ATTR_ID, contentType: undefined, values: [] }
-        ]
+          { file: undefined, id: ATTR_ID, contentType: undefined, values: [] },
+        ],
       });
 
       // Files are deleted by using AttributeValueDetele mutation
@@ -472,17 +505,17 @@ describe("Sending only changed attributes", () => {
             file: uploadUrl,
             id: ATTR_ID,
             contentType: "image/jpeg",
-            values: []
-          }
-        ]
+            values: [],
+          },
+        ],
       });
 
       expect(result).toEqual([
         {
           id: ATTR_ID,
           file: uploadUrl,
-          contentType: "image/jpeg"
-        }
+          contentType: "image/jpeg",
+        },
       ]);
     });
     it("replaces existing image (bob.jpg -> juice.png)", () => {
@@ -498,17 +531,17 @@ describe("Sending only changed attributes", () => {
             file: uploadUrl,
             id: ATTR_ID,
             contentType: "image/png",
-            values: []
-          }
-        ]
+            values: [],
+          },
+        ],
       });
 
       expect(result).toEqual([
         {
           id: ATTR_ID,
           file: uploadUrl,
-          contentType: "image/png"
-        }
+          contentType: "image/png",
+        },
       ]);
     });
   });

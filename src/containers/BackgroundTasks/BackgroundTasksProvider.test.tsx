@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import {
   backgroundTasksRefreshTime,
-  useBackgroundTasks
+  useBackgroundTasks,
 } from "./BackgroundTasksProvider";
 import { checkExportFileStatus } from "./queries";
 import { Task, TaskData, TaskStatus } from "./types";
@@ -16,35 +16,35 @@ function renderBackgroundTasks() {
     [
       {
         request: {
-          query: checkExportFileStatus
+          query: checkExportFileStatus,
         },
         result: {
           data: {
             exportFile: {
               __typename: "ExportFile",
               id: "123",
-              status: JobStatusEnum.SUCCESS
-            }
-          }
-        }
-      }
+              status: JobStatusEnum.SUCCESS,
+            },
+          },
+        },
+      },
     ],
-    checkExportFileStatus
+    checkExportFileStatus,
   );
 
   const intl = {
-    formatMessage: ({ defaultMessage }) => defaultMessage
+    formatMessage: ({ defaultMessage }) => defaultMessage,
   };
 
   return renderHook(() =>
-    useBackgroundTasks(mockClient, jest.fn(), intl as any)
+    useBackgroundTasks(mockClient, jest.fn(), intl as any),
   );
 }
 
 describe("Background task provider", () => {
   it("can queue a task", done => {
     const handle = jest.fn<Promise<TaskStatus>, []>(
-      () => new Promise(resolve => resolve(TaskStatus.SUCCESS))
+      () => new Promise(resolve => resolve(TaskStatus.SUCCESS)),
     );
     const onCompleted = jest.fn();
     const onError = jest.fn();
@@ -54,7 +54,7 @@ describe("Background task provider", () => {
     const taskId = result.current.queue(Task.CUSTOM, {
       handle,
       onCompleted,
-      onError
+      onError,
     });
     expect(taskId).toBe(1);
     expect(handle).toHaveBeenCalledTimes(0);
@@ -77,7 +77,7 @@ describe("Background task provider", () => {
       () =>
         new Promise(() => {
           throw new Error("dummy error");
-        })
+        }),
     );
     const onCompleted = jest.fn();
     const onError = jest.fn();
@@ -87,7 +87,7 @@ describe("Background task provider", () => {
     result.current.queue(Task.CUSTOM, {
       handle,
       onCompleted,
-      onError
+      onError,
     });
 
     jest.runOnlyPendingTimers();
@@ -108,7 +108,7 @@ describe("Background task provider", () => {
 
     const taskId = result.current.queue(Task.CUSTOM, {
       handle: () => new Promise(resolve => resolve(TaskStatus.SUCCESS)),
-      onCompleted
+      onCompleted,
     });
 
     // Cancel task before executing it
@@ -130,17 +130,17 @@ describe("Background task provider", () => {
     // Completed in two cycles
     const shortTask = {
       handle: jest.fn(() =>
-        Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
+        Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING),
       ),
-      onCompleted: jest.fn()
+      onCompleted: jest.fn(),
     };
 
     // Completed in three cycles
     const longTask = {
       handle: jest.fn(() =>
-        Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING)
+        Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING),
       ),
-      onCompleted: jest.fn()
+      onCompleted: jest.fn(),
     };
     const tasks: TaskData[] = [shortTask, longTask];
 

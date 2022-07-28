@@ -11,7 +11,7 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   if (menuItem.children) {
     return menuItem.children.reduce(
       (acc, subMenuItem) => acc || isMenuActive(location, subMenuItem),
-      false
+      false,
     );
   }
 
@@ -35,13 +35,13 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
 
   return !!matchPath(activeUrl, {
     exact: menuItemUrl === "/",
-    path: menuItemUrl
+    path: menuItemUrl,
   });
 }
 
 export const mapToExtensionsItems = (
   extensions: Extension[],
-  header: FilterableMenuItem
+  header: FilterableMenuItem,
 ) => {
   const items: FilterableMenuItem[] = extensions.map(
     ({ label, id, app, url, permissions, open }) => ({
@@ -50,8 +50,8 @@ export const mapToExtensionsItems = (
       label,
       url: getDashboardUrFromAppCompleteUrl(url, app.appUrl, app.id),
       onClick: open,
-      permissions
-    })
+      permissions,
+    }),
   );
   if (items.length) {
     items.unshift(header);
@@ -64,14 +64,14 @@ const isMenuItemExtension = (menuItem: SidebarMenuItem) =>
 
 export const getMenuItemExtension = (
   extensions: Record<AppExtensionMountEnum, Extension[]>,
-  menuItem: SidebarMenuItem
+  menuItem: SidebarMenuItem,
 ) => {
   const extensionsList = Object.values(extensions).reduce(
     (list, extensions) => list.concat(extensions),
-    []
+    [],
   );
   const extension = extensionsList.find(
-    extension => menuItem.id === `extension-${extension.id}`
+    extension => menuItem.id === `extension-${extension.id}`,
   );
   return extension;
 };

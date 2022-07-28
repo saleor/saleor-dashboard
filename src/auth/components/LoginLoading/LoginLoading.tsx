@@ -8,10 +8,10 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       height: "100vh",
-      justifyContent: "center"
-    }
+      justifyContent: "center",
+    },
   },
-  { name: "LoginLoading" }
+  { name: "LoginLoading" },
 );
 const LoginLoading: React.FC = props => {
   const classes = useStyles(props);

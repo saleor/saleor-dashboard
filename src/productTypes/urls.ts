@@ -10,7 +10,7 @@ import {
   Pagination,
   SingleAction,
   Sort,
-  TabActionDialog
+  TabActionDialog,
 } from "../types";
 
 const productTypeSection = "/product-types/";
@@ -19,13 +19,13 @@ export const productTypeListPath = productTypeSection;
 export enum ProductTypeListUrlFiltersEnum {
   configurable = "configurable",
   type = "type",
-  query = "query"
+  query = "query",
 }
 export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;
 export type ProductTypeListUrlDialog = "remove" | TabActionDialog;
 export enum ProductTypeListUrlSortField {
   name = "name",
-  digital = "digital"
+  digital = "digital",
 }
 export type ProductTypeListUrlSort = Sort<ProductTypeListUrlSortField>;
 export type ProductTypeListUrlQueryParams = ActiveTab &
@@ -58,5 +58,5 @@ export type ProductTypeUrlQueryParams = BulkAction &
   };
 export const productTypeUrl = (
   id: string,
-  params?: ProductTypeUrlQueryParams
+  params?: ProductTypeUrlQueryParams,
 ) => productTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);

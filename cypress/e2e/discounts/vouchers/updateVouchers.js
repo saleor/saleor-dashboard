@@ -8,85 +8,92 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
 import {
   createVoucherInChannel,
-  deleteVouchersStartsWith
+  deleteVouchersStartsWith,
 } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to update vouchers", () => {
-    const startsWith = "CyVou-";
-    const productPrice = 100;
-    const shippingPrice = 100;
+describe("As an admin I want to update vouchers", () => {
+  const startsWith = "CyVou-";
+  const productPrice = 100;
+  const shippingPrice = 100;
 
-    let defaultChannel;
-    let product;
-    let dataForCheckout;
+  let defaultChannel;
+  let product;
+  let dataForCheckout;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteVouchersStartsWith(startsWith);
-      const name = `${startsWith}${faker.datatype.number()}`;
-      productsUtils
-        .createProductWithShipping({ name, productPrice, shippingPrice })
-        .then(
-          ({
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteVouchersStartsWith(startsWith);
+    const name = `${startsWith}${faker.datatype.number()}`;
+    productsUtils
+      .createProductWithShipping({ name, productPrice, shippingPrice })
+      .then(
+        ({
+          variantsList: variantsResp,
+          defaultChannel: channel,
+          shippingMethod: shippingMethodResp,
+          address: addressResp,
+          product: productResp,
+        }) => {
+          defaultChannel = channel;
+          product = productResp;
+
+          dataForCheckout = {
+            channelSlug: defaultChannel.slug,
             variantsList: variantsResp,
-            defaultChannel: channel,
-            shippingMethod: shippingMethodResp,
             address: addressResp,
-            product: productResp
-          }) => {
-            defaultChannel = channel;
-            product = productResp;
+            shippingMethodName: shippingMethodResp.name,
+            auth: "token",
+          };
+        },
+      );
+  });
 
-            dataForCheckout = {
-              channelSlug: defaultChannel.slug,
-              variantsList: variantsResp,
-              address: addressResp,
-              shippingMethodName: shippingMethodResp.name,
-              auth: "token"
-            };
-          }
-        );
-    });
-
-    it("should delete voucher. TC: SALEOR_1905", () => {
+  it(
+    "should delete voucher. TC: SALEOR_1905",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
-      let voucher;
+      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
-          cy.visit(voucherDetailsUrl(voucher.id))
+          voucherCreate = voucherResp;
+          expect(voucherCreate.voucher.id).to.be.ok;
+          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
             .addAliasToGraphRequest("VoucherDelete")
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@VoucherDelete");
-          dataForCheckout.voucherCode = voucher.code;
+          dataForCheckout.voucherCode = voucherCreate.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    });
+    },
+  );
 
-    it("should update voucher. TC: SALEOR_1906", () => {
+  it(
+    "should update voucher. TC: SALEOR_1906",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const voucherUpdatedValue = 20;
@@ -95,19 +102,19 @@ filterTests({ definedTags: ["all"] }, () => {
         shippingPrice -
         (productPrice * voucherUpdatedValue) / 100;
 
-      let voucher;
+      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
-          cy.visit(voucherDetailsUrl(voucher.id))
+          voucherCreate = voucherResp;
+          expect(voucherCreate.voucher.id).to.be.ok;
+          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
             .addAliasToGraphRequest("VoucherUpdate")
             .get(VOUCHERS_SELECTORS.percentageDiscountRadioButton)
             .click()
@@ -116,16 +123,22 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .wait("@VoucherUpdate");
-          dataForCheckout.voucherCode = voucher.code;
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const amount = addPromoCodeResp.checkout.totalPrice.gross.amount;
           expect(amount).to.be.eq(expectedOrderAmount);
         });
-    });
+    },
+  );
 
-    it("should set date on voucher. TC: SALEOR_1912", () => {
+  it(
+    "should set date on voucher. TC: SALEOR_1912",
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
@@ -133,35 +146,47 @@ filterTests({ definedTags: ["all"] }, () => {
       const todayDate = formatDate(today);
       const tomorrowDate = formatDate(tomorrow.setDate(tomorrow.getDate() + 1));
 
-      let voucher;
+      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
-          setVoucherDate({ voucherId: voucher.id, startDate: tomorrowDate });
-          dataForCheckout.voucherCode = voucher.code;
+          voucherCreate = voucherResp;
+          expect(voucherCreate.voucher.id).to.be.ok;
+          setVoucherDate({
+            voucherId: voucherCreate.voucher.id,
+            startDate: tomorrowDate,
+          });
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
-          setVoucherDate({ voucherId: voucher.id, startDate: todayDate });
-          dataForCheckout.voucherCode = voucher.code;
+          setVoucherDate({
+            voucherId: voucherCreate.voucher.id,
+            startDate: todayDate,
+          });
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    });
+    },
+  );
 
-    it("should set end date on voucher. TC: SALEOR_1913", () => {
+  it(
+    "should set end date on voucher. TC: SALEOR_1913",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
@@ -169,48 +194,54 @@ filterTests({ definedTags: ["all"] }, () => {
       const tomorrow = new Date(today);
       const tomorrowDate = formatDate(tomorrow.setDate(tomorrow.getDate() + 1));
 
-      let voucher;
+      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
         productId: product.id,
         channelId: defaultChannel.id,
-        value: voucherValue
+        value: voucherValue,
       })
         .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
+          voucherCreate = voucherResp;
+          expect(voucherCreate.voucher.id).to.be.ok;
           setVoucherDate({
-            voucherId: voucher.id,
+            voucherId: voucherCreate.voucher.id,
             endDate: todayDate,
             endTime: formatTime(today),
-            hasEndDate: true
+            hasEndDate: true,
           });
-          dataForCheckout.voucherCode = voucher.code;
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
           setVoucherDate({
-            voucherId: voucher.id,
+            voucherId: voucherCreate.voucher.id,
             endDate: tomorrowDate,
-            endTime: formatTime(tomorrow)
+            endTime: formatTime(tomorrow),
           });
-          dataForCheckout.voucherCode = voucher.code;
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
         });
-    });
+    },
+  );
 
-    it("should set country on voucher. TC: SALEOR_1914", () => {
+  it(
+    "should set country on voucher. TC: SALEOR_1914",
+    { tags: ["@vouchers", "@allEnv"] },
+    () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
-      let voucher;
+      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -219,17 +250,19 @@ filterTests({ definedTags: ["all"] }, () => {
         channelId: defaultChannel.id,
         value: voucherValue,
         type: "SHIPPING",
-        country: "US"
+        country: "US",
       })
         .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
-          dataForCheckout.voucherCode = voucher.code;
+          voucherCreate = voucherResp;
+          expect(voucherCreate.voucher.id).to.be.ok;
+          dataForCheckout.voucherCode = voucherCreate.voucher.code;
+          window.sessionStorage.setItem("token", "");
+          dataForCheckout.auth = "token";
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           expect(addPromoCodeResp.errors).to.be.empty;
-          cy.visit(voucherDetailsUrl(voucher.id))
+          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
             .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
             .click()
             .get(VOUCHERS_SELECTORS.countriesDropdownIcon)
@@ -251,6 +284,6 @@ filterTests({ definedTags: ["all"] }, () => {
           const errorField = addPromoCodeResp.errors[0].field;
           expect(errorField).to.be.eq("promoCode");
         });
-    });
-  });
+    },
+  );
 });

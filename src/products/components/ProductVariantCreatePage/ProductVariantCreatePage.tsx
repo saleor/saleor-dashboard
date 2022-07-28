@@ -1,11 +1,11 @@
 import {
   getAttributeValuesFromReferences,
-  mergeAttributeValues
+  mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
-  VariantAttributeScope
+  VariantAttributeScope,
 } from "@saleor/components/Attributes";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -20,7 +20,7 @@ import {
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  SearchWarehousesQuery
+  SearchWarehousesQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -36,36 +36,36 @@ import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, {
   ProductVariantCreateData,
-  ProductVariantCreateHandlers
+  ProductVariantCreateHandlers,
 } from "./form";
 
 const messages = defineMessages({
   attributesHeader: {
     id: "f3B4tc",
     defaultMessage: "Variant Attributes",
-    description: "attributes, section header"
+    description: "attributes, section header",
   },
   attributesSelectionHeader: {
     id: "o6260f",
     defaultMessage: "Variant Selection Attributes",
-    description: "attributes, section header"
+    description: "attributes, section header",
   },
   deleteVariant: {
     id: "7hNjaI",
     defaultMessage: "Delete Variant",
-    description: "button"
+    description: "button",
   },
   saveVariant: {
     id: "U9CIo7",
     defaultMessage: "Save variant",
-    description: "button"
+    description: "button",
   },
   pricingCardSubtitle: {
     id: "sw8Wl2",
     defaultMessage:
       "There is no channel to define prices for. You need to first add variant to channels to define prices.",
-    description: "variant pricing section subtitle"
-  }
+    description: "variant pricing section subtitle",
+  },
 });
 
 interface ProductVariantCreatePageProps {
@@ -122,7 +122,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   fetchMoreReferenceProducts,
   fetchMoreAttributeValues,
   onCloseDialog,
-  onAttributeSelectBlur
+  onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -132,15 +132,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
     data: ProductVariantCreateData,
-    handlers: ProductVariantCreateHandlers
+    handlers: ProductVariantCreateHandlers,
   ) => {
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
         attributeValues,
-        data.attributes
-      )
+        data.attributes,
+      ),
     );
     onCloseDialog();
   };
@@ -166,7 +166,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         handlers,
         submit,
         isSaveDisabled,
-        attributeRichTextGetters
+        attributeRichTextGetters,
       }) => (
         <Container>
           <Backlink href={productUrl(productId)}>{product?.name}</Backlink>
@@ -186,7 +186,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 attributes={data.attributes.filter(
                   attribute =>
                     attribute.data.variantAttributeScope ===
-                    VariantAttributeScope.NOT_VARIANT_SELECTION
+                    VariantAttributeScope.NOT_VARIANT_SELECTION,
                 )}
                 attributeValues={attributeValues}
                 loading={disabled}
@@ -209,7 +209,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 attributes={data.attributes.filter(
                   attribute =>
                     attribute.data.variantAttributeScope ===
-                    VariantAttributeScope.VARIANT_SELECTION
+                    VariantAttributeScope.VARIANT_SELECTION,
                 )}
                 attributeValues={attributeValues}
                 loading={disabled}
@@ -269,7 +269,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             disabled={isSaveDisabled}
             labels={{
               confirm: intl.formatMessage(messages.saveVariant),
-              delete: intl.formatMessage(messages.deleteVariant)
+              delete: intl.formatMessage(messages.deleteVariant),
             }}
             state={saveButtonBarState}
             onCancel={() => navigate(productUrl(productId))}
@@ -281,7 +281,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 assignReferencesAttributeId,
                 data.attributes,
                 referencePages,
-                referenceProducts
+                referenceProducts,
               )}
               hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}

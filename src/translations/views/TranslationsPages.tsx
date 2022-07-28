@@ -3,7 +3,7 @@ import {
   LanguageCodeEnum,
   usePageTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
-  useUpdatePageTranslationsMutation
+  useUpdatePageTranslationsMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -30,7 +30,7 @@ export interface TranslationsPagesProps {
 const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   id,
   languageCode,
-  params
+  params,
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -38,7 +38,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   const intl = useIntl();
 
   const pageTranslations = usePageTranslationDetailsQuery({
-    variables: { id, language: languageCode }
+    variables: { id, language: languageCode },
   });
 
   const onUpdate = (errors: unknown[]) => {
@@ -46,7 +46,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       pageTranslations.refetch();
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
+        text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate("?", { replace: true });
     }
@@ -54,24 +54,24 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
 
   const [
     updateTranslations,
-    updateTranslationsOpts
+    updateTranslationsOpts,
   ] = useUpdatePageTranslationsMutation({
-    onCompleted: data => onUpdate(data.pageTranslate.errors)
+    onCompleted: data => onUpdate(data.pageTranslate.errors),
   });
 
   const [
-    updateAttributeValueTranslations
+    updateAttributeValueTranslations,
   ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors)
+    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
 
   const onEdit = (field: string) =>
     navigate(
       "?" +
         stringifyQs({
-          activeField: field
+          activeField: field,
         }),
-      { replace: true }
+      { replace: true },
     );
 
   const onDiscard = () => {
@@ -80,7 +80,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
 
   const handleSubmit = (
     { name: fieldName }: TranslationField<PageTranslationInputFieldName>,
-    data: string | any
+    data: string | any,
   ) =>
     extractMutationErrors(
       updateTranslations({
@@ -88,25 +88,25 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
           id,
           input: getParsedTranslationInputData({
             data,
-            fieldName
+            fieldName,
           }),
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const handleAttributeValueSubmit = (
     { id }: TranslationField<PageTranslationInputFieldName>,
-    data: OutputData
+    data: OutputData,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
           id,
           input: { richText: JSON.stringify(data) },
-          language: languageCode
-        }
-      })
+          language: languageCode,
+        },
+      }),
     );
 
   const translation = pageTranslations?.data?.translation;

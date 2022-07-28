@@ -6,13 +6,14 @@ import faker from "faker";
 import { createCustomer } from "../../../support/api/requests/Customer";
 import { createReadyToFulfillOrder } from "../../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
-  const name = `ProductsWithoutSkuInOrder${faker.datatype.number()}`;
+const name = `ProductsWithoutSkuInOrder${faker.datatype.number()}`;
 
-  describe("As an admin I should be able to create order with variant without SKU", () => {
-    it("should create order with variant product without sku. SALEOR_2801", () => {
+describe("As an admin I should be able to create order with variant without SKU", () => {
+  it(
+    "should create order with variant product without sku. SALEOR_2801",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       let variants;
       let channel;
       let shippingMethodId;
@@ -25,14 +26,14 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             variantsList,
             defaultChannel,
             shippingMethod,
-            address: addressResp
+            address: addressResp,
           }) => {
             variants = variantsList;
             channel = defaultChannel;
             shippingMethodId = shippingMethod.id;
             address = addressResp;
             createCustomer(`${name}@example.com`, name, address, true);
-          }
+          },
         )
         .then(customerResp => {
           const customer = customerResp.user;
@@ -41,12 +42,12 @@ filterTests({ definedTags: ["all", "critical", "refactored"] }, () => {
             channelId: channel.id,
             customerId: customer.id,
             shippingMethodId,
-            variantsList: variants
+            variantsList: variants,
           });
         })
         .then(({ errors }) => {
           expect(errors, "check if no errors").to.be.empty;
         });
-    });
-  });
+    },
+  );
 });

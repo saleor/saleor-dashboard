@@ -9,117 +9,115 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import {
   productDetailsUrl,
-  productVariantDetailUrl
+  productVariantDetailUrl,
 } from "../../../fixtures/urlList";
 import {
   createVariant,
-  getVariant
+  getVariant,
 } from "../../../support/api/requests/Product";
 import {
   createTypeProduct,
-  productAttributeAssignmentUpdate
+  productAttributeAssignmentUpdate,
 } from "../../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannelWithoutVariants,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
-  deleteShippingStartsWith
+  deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Updating products without sku", () => {
-    const startsWith = "UpdateProductsSku";
+describe("Updating products without sku", () => {
+  const startsWith = "UpdateProductsSku";
 
-    let defaultChannel;
-    let address;
-    let warehouse;
-    let shippingMethod;
-    let attribute;
-    let category;
-    let productTypeWithVariants;
-    let productTypeWithoutVariants;
-    let product;
+  let defaultChannel;
+  let address;
+  let warehouse;
+  let shippingMethod;
+  let attribute;
+  let category;
+  let productTypeWithVariants;
+  let productTypeWithoutVariants;
+  let product;
 
-    const name = `${startsWith}${faker.datatype.number()}`;
-    const productTypeWithoutVariantsName = `${startsWith}${faker.datatype.number()}`;
-    const email = "example@example.com";
-    const attributeValues = ["value1", "value2"];
+  const name = `${startsWith}${faker.datatype.number()}`;
+  const productTypeWithoutVariantsName = `${startsWith}${faker.datatype.number()}`;
+  const email = "example@example.com";
+  const attributeValues = ["value1", "value2"];
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          cy.fixture("addresses");
-        })
-        .then(fixtureAddresses => {
-          address = fixtureAddresses.plAddress;
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct({ name, attributeValues });
-          }
-        )
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp
-          }) => {
-            attribute = attributeResp;
-            productTypeWithVariants = productTypeResp;
-            category = categoryResp;
-            productAttributeAssignmentUpdate({
-              productTypeId: productTypeWithVariants.id,
-              attributeId: attribute.id
-            });
-            createTypeProduct({
-              name: productTypeWithoutVariantsName,
-              attributeId: attribute.id,
-              hasVariants: false
-            });
-          }
-        )
-        .then(productTypeResp => {
-          productTypeWithoutVariants = productTypeResp;
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(fixtureAddresses => {
+        address = fixtureAddresses.plAddress;
+        createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address,
+        });
+      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+          createTypeAttributeAndCategoryForProduct({ name, attributeValues });
+        },
+      )
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp,
+        }) => {
+          attribute = attributeResp;
+          productTypeWithVariants = productTypeResp;
+          category = categoryResp;
           productAttributeAssignmentUpdate({
-            productTypeId: productTypeWithoutVariants.id,
-            attributeId: attribute.id
-          });
-          createProductInChannelWithoutVariants({
-            name,
-            channelId: defaultChannel.id,
-            attributeId: attribute.id,
             productTypeId: productTypeWithVariants.id,
-            categoryId: category.id
+            attributeId: attribute.id,
           });
-        })
-        .then(productResp => (product = productResp));
-    });
+          createTypeProduct({
+            name: productTypeWithoutVariantsName,
+            attributeId: attribute.id,
+            hasVariants: false,
+          });
+        },
+      )
+      .then(productTypeResp => {
+        productTypeWithoutVariants = productTypeResp;
+        productAttributeAssignmentUpdate({
+          productTypeId: productTypeWithoutVariants.id,
+          attributeId: attribute.id,
+        });
+        createProductInChannelWithoutVariants({
+          name,
+          channelId: defaultChannel.id,
+          attributeId: attribute.id,
+          productTypeId: productTypeWithVariants.id,
+          categoryId: category.id,
+        });
+      })
+      .then(productResp => (product = productResp));
+  });
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
 
-    it("should add sku to simple product", () => {
+  it(
+    "should add sku to simple product",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       const sku = "NewSkuSimpleProd";
       const simpleProductName = `${startsWith}${faker.datatype.number()}`;
       let simpleProduct;
@@ -128,7 +126,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         attributeId: attribute.id,
         categoryId: category.id,
         channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id
+        productTypeId: productTypeWithoutVariants.id,
       })
         .then(productResp => {
           simpleProduct = productResp;
@@ -136,12 +134,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             productId: simpleProduct.id,
             channelId: defaultChannel.id,
             warehouseId: warehouse.id,
-            quantityInWarehouse: 10
+            quantityInWarehouse: 10,
           });
         })
         .then(variantsList => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id)
+            productDetailsUrl(simpleProduct.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -156,9 +154,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(variantResp => {
           expect(variantResp.sku).to.eq(sku);
         });
-    });
+    },
+  );
 
-    it("should add sku to variant", () => {
+  it(
+    "should add sku to variant",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       const sku = "NewSku";
       let variant;
       createVariant({
@@ -167,12 +169,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         productId: product.id,
         quantityInWarehouse: 10,
         warehouseId: warehouse.id,
-        attributeName: attributeValues[0]
+        attributeName: attributeValues[0],
       })
         .then(variantResp => {
           variant = variantResp[0];
           cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id)
+            productVariantDetailUrl(product.id, variant.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -187,9 +189,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(variantResp => {
           expect(variantResp.sku).to.equal(sku);
         });
-    });
+    },
+  );
 
-    it("should remove sku from variant", () => {
+  it(
+    "should remove sku from variant",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       let variant;
       createVariant({
         attributeId: attribute.id,
@@ -198,12 +204,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         quantityInWarehouse: 10,
         warehouseId: warehouse.id,
         sku: name,
-        attributeName: attributeValues[1]
+        attributeName: attributeValues[1],
       })
         .then(variantResp => {
           variant = variantResp[0];
           cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id)
+            productVariantDetailUrl(product.id, variant.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -219,9 +225,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(variantResp.sku).to.be.null;
           checkIfCheckoutForVariantCanBeCompleted(variantResp);
         });
-    });
+    },
+  );
 
-    it("should remove sku from simple product", () => {
+  it(
+    "should remove sku from simple product",
+    { tags: ["@products", "@allEnv", "@stable"] },
+    () => {
       const simpleProductName = `${startsWith}${faker.datatype.number()}`;
       let simpleProduct;
       createProductInChannelWithoutVariants({
@@ -229,7 +239,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         attributeId: attribute.id,
         categoryId: category.id,
         channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id
+        productTypeId: productTypeWithoutVariants.id,
       })
         .then(productResp => {
           simpleProduct = productResp;
@@ -238,12 +248,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             channelId: defaultChannel.id,
             sku: simpleProductName,
             quantityInWarehouse: 10,
-            warehouseId: warehouse.id
+            warehouseId: warehouse.id,
           });
         })
         .then(variantsList => {
           cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id)
+            productDetailsUrl(simpleProduct.id),
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
@@ -259,18 +269,18 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(variantResp.sku).to.be.null;
           checkIfCheckoutForVariantCanBeCompleted(variantResp);
         });
-    });
+    },
+  );
 
-    function checkIfCheckoutForVariantCanBeCompleted(variant) {
-      createWaitingForCaptureOrder({
-        address,
-        channelSlug: defaultChannel.slug,
-        email,
-        shippingMethodName: shippingMethod.name,
-        variantsList: [variant]
-      }).then(({ order }) => {
-        expect(order.id).to.be.ok;
-      });
-    }
-  });
+  function checkIfCheckoutForVariantCanBeCompleted(variant) {
+    createWaitingForCaptureOrder({
+      address,
+      channelSlug: defaultChannel.slug,
+      email,
+      shippingMethodName: shippingMethod.name,
+      variantsList: [variant],
+    }).then(({ order }) => {
+      expect(order.id).to.be.ok;
+    });
+  }
 });

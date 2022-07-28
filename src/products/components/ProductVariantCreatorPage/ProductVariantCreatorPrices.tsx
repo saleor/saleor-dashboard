@@ -4,7 +4,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
@@ -20,7 +20,7 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
-  VariantCreatorPricesAndSkuMode
+  VariantCreatorPricesAndSkuMode,
 } from "./form";
 import { getPriceAttributeValues } from "./utils";
 
@@ -28,8 +28,8 @@ const messages = defineMessages({
   price: {
     id: "OgFBAj",
     defaultMessage: "Price",
-    description: "input label"
-  }
+    description: "input label",
+  },
 });
 
 const useStyles = makeStyles(
@@ -38,31 +38,31 @@ const useStyles = makeStyles(
       display: "grid",
       gap: theme.spacing(2),
       gridTemplateColumns:
-        "minmax(80px, 150px) repeat(auto-fit, minmax(150px, 250px))"
+        "minmax(80px, 150px) repeat(auto-fit, minmax(150px, 250px))",
     },
     channelName: {
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     container: {
-      display: "block"
+      display: "block",
     },
     hr: {
       marginBottom: theme.spacing(),
-      marginTop: theme.spacing(0.5)
+      marginTop: theme.spacing(0.5),
     },
     hrAttribute: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
     },
     inputsContainer: {
       display: "grid",
       gap: theme.spacing(2),
-      gridTemplateColumns: "repeat(auto-fit, minmax(150px, 250px))"
+      gridTemplateColumns: "repeat(auto-fit, minmax(150px, 250px))",
     },
     label: {
-      alignSelf: "center"
-    }
+      alignSelf: "center",
+    },
   }),
-  { name: "ProductVariantCreatorPrices" }
+  { name: "ProductVariantCreatorPrices" },
 );
 
 export interface ProductVariantCreatorPricesProps {
@@ -75,7 +75,7 @@ export interface ProductVariantCreatorPricesProps {
   onAttributeValueChange: (
     id: string,
     value: string,
-    channelId: string
+    channelId: string,
   ) => void;
 }
 
@@ -87,14 +87,14 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
     onApplyToAllChange,
     onApplyToAllPriceChange,
     onAttributeSelect,
-    onAttributeValueChange
+    onAttributeValueChange,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   const attributeChoices = attributes.map(attribute => ({
     label: attribute.name,
-    value: attribute.id
+    value: attribute.id,
   }));
   const priceAttributeValues = getPriceAttributeValues(data, attributes);
 
@@ -104,7 +104,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
         title={intl.formatMessage({
           id: "TPCRKr",
           defaultMessage: "Price",
-          description: "variant price, header"
+          description: "variant price, header",
         })}
       />
       <CardContent>
@@ -114,7 +114,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             control={<Radio color="primary" />}
             label={intl.formatMessage({
               id: "lra7Ej",
-              defaultMessage: "Apply single price to all SKUs"
+              defaultMessage: "Apply single price to all SKUs",
             })}
             onChange={() => onApplyToAllChange("all")}
           />
@@ -134,7 +134,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                       name={`${listing.id}-variant-channel-price`}
                       value={
                         data.price.channels.find(
-                          channel => channel.channelId === listing.id
+                          channel => channel.channelId === listing.id,
                         )?.price
                       }
                       label={intl.formatMessage(messages.price)}
@@ -154,7 +154,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             control={<Radio color="primary" />}
             label={intl.formatMessage({
               id: "EGG8f+",
-              defaultMessage: "Apply unique prices by attribute to each SKU"
+              defaultMessage: "Apply unique prices by attribute to each SKU",
             })}
             onChange={() => onApplyToAllChange("attribute")}
           />
@@ -177,7 +177,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                     label={intl.formatMessage({
                       id: "lVZ5n7",
                       defaultMessage: "Attribute",
-                      description: "variant attribute"
+                      description: "variant attribute",
                     })}
                     value={data.price.attribute}
                     onChange={event => onAttributeSelect(event.target.value)}
@@ -187,7 +187,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
               {priceAttributeValues &&
                 priceAttributeValues.map(attributeValue => {
                   const attributesChannels = data.price.values.find(
-                    value => value.slug === attributeValue.slug
+                    value => value.slug === attributeValue.slug,
                   ).value;
                   return (
                     <React.Fragment key={attributeValue.id}>
@@ -211,14 +211,14 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                               value={
                                 attributesChannels.find(
                                   attrChannel =>
-                                    attrChannel.channelId === listing.id
+                                    attrChannel.channelId === listing.id,
                                 )?.price || ""
                               }
                               onChange={event =>
                                 onAttributeValueChange(
                                   attributeValue.slug,
                                   event.target.value,
-                                  listing.id
+                                  listing.id,
                                 )
                               }
                             />
@@ -236,7 +236,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
             control={<Radio color="primary" />}
             label={intl.formatMessage({
               id: "J0UdxG",
-              defaultMessage: "Skip pricing for now"
+              defaultMessage: "Skip pricing for now",
             })}
             onChange={() => onApplyToAllChange("skip")}
           />
