@@ -9,7 +9,7 @@ import {
   isNumberOfProductsSameAsInSelectResultsOnPage,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-describe("Products", () => {
+describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
     cy.visit(urlList.products);

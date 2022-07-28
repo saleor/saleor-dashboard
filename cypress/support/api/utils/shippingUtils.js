@@ -1,4 +1,3 @@
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import { updateChannelWarehouses } from "../requests/Channels";
 import * as shippingMethodRequest from "../requests/ShippingMethod";
 import * as warehouseRequest from "../requests/Warehouse";
@@ -27,9 +26,7 @@ export function createShipping({
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
-      if (returnValueDependsOnShopVersion("3.5", true, false)) {
-        updateChannelWarehouses(channelId, warehouse.id);
-      }
+      updateChannelWarehouses(channelId, warehouse.id);
       shippingMethodRequest.createShippingRate({
         name,
         shippingZone: shippingZone.id,

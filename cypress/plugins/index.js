@@ -25,7 +25,6 @@ module.exports = async (on, config) => {
   // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
   config.env.API_URI = process.env.API_URI;
   config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
-  config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
@@ -41,7 +40,7 @@ function getShopInfo(envVariables) {
   // envVariables.CYPRESS_USER_NAME
   const variables = {
     email: envVariables.CYPRESS_USER_NAME,
-    password: envVariables.CYPRESS_USER_PASSWORD
+    password: envVariables.CYPRESS_USER_PASSWORD,
   };
 
   const createTokenMutation = graphql.gql`mutation tokenCreate($email: String!, $password: String!){
@@ -57,7 +56,7 @@ function getShopInfo(envVariables) {
   }`;
 
   const client = new graphql.GraphQLClient(envVariables.API_URI, {
-    headers: {}
+    headers: {},
   });
   return client.request(createTokenMutation, variables).then(data => {
     const token = data.tokenCreate.token;
