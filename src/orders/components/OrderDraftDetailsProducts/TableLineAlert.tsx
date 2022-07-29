@@ -5,6 +5,8 @@ import {
 } from "@saleor/macaw-ui";
 import React from "react";
 
+import OrderAlerts from "../OrderAlerts";
+
 interface TableLineAlertProps {
   alerts?: string[];
   variant: "warning" | "error";
@@ -15,16 +17,7 @@ const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts, variant }) => {
     return null;
   }
 
-  const title =
-    alerts.length === 1 ? (
-      <>{alerts[0]}</>
-    ) : (
-      <ul>
-        {alerts.map((alert, index) => (
-          <li key={index}>{alert}</li>
-        ))}
-      </ul>
-    );
+  const title = <OrderAlerts alerts={alerts} />;
 
   return (
     <Tooltip title={title} variant={variant}>

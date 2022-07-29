@@ -4,8 +4,9 @@ import {
 } from "@saleor/graphql";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, MessageDescriptor } from "react-intl";
+import { MessageDescriptor, useIntl } from "react-intl";
 
+import OrderAlerts from "../OrderAlerts";
 import { alertMessages } from "./messages";
 import { useAlertStyles } from "./styles";
 
@@ -13,13 +14,13 @@ const getAlerts = (
   order?: OrderDetailsFragment,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
-  const inactiveChannel = order && !order.channel.isActive;
+  const isChannelInactive = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
   const noShippingMethodsInChannel = order?.shippingMethods.length === 0;
 
   let alerts: MessageDescriptor[] = [];
 
-  if (inactiveChannel) {
+  if (isChannelInactive) {
     alerts = [...alerts, alertMessages.inactiveChannel];
   }
   if (noProductsInChannel) {
@@ -40,29 +41,20 @@ export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
 const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
   const { order, channelUsabilityData, ...alertProps } = props;
   const classes = useAlertStyles();
+  const intl = useIntl();
 
   const alerts = getAlerts(order, channelUsabilityData);
 
-  if (alerts.length === 0) {
+  if (!alerts.length) {
     return null;
   }
 
   return (
     <Alert variant="warning" close className={classes.root} {...alertProps}>
-      {alerts.length > 1 ? (
-        <>
-          <FormattedMessage {...alertMessages.manyAlerts} />
-          <ul>
-            {alerts.map((alert, index) => (
-              <li key={index}>
-                <FormattedMessage {...alert} />
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <FormattedMessage {...alerts[0]} />
-      )}
+      <OrderAlerts
+        alerts={alerts}
+        alertsHeader={intl.formatMessage(alertMessages.manyAlerts)}
+      />
     </Alert>
   );
 };
