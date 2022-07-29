@@ -45,9 +45,6 @@ export const useStyles = makeStyles(
       lineHeight: "160%",
       marginBottom: theme.spacing(2),
     },
-    skeleton: {
-      margin: theme.spacing(0, 4),
-    },
   }),
   { name: "OrderFulfillPage" },
 );

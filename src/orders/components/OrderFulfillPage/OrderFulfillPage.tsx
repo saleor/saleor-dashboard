@@ -1,17 +1,17 @@
 import {
   Card,
+  CardContent,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
-import { Grid } from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
@@ -224,79 +224,83 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         >
           {({ change, data, submit }) => (
             <>
-              <Grid>
+              <Card>
+                <CardTitle
+                  title={intl.formatMessage(messages.itemsReadyToShip)}
+                />
+                {order ? (
+                  <ResponsiveTable className={classes.table}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell className={classes.colName}>
+                          <FormattedMessage {...messages.productName} />
+                        </TableCell>
+                        <TableCell className={classes.colSku}>
+                          <FormattedMessage {...messages.sku} />
+                        </TableCell>
+                        <TableCell
+                          className={classNames(
+                            classes.colQuantity,
+                            classes.colQuantityHeader,
+                          )}
+                        >
+                          <FormattedMessage {...messages.quantity} />
+                        </TableCell>
+                        <TableCell className={classes.colStock}>
+                          <FormattedMessage {...messages.stock} />
+                        </TableCell>
+                        <TableCell className={classes.colWarehouse}>
+                          <FormattedMessage {...messages.warehouse} />
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {renderCollection(
+                        getToFulfillOrderLines(order.lines),
+                        (line: OrderFulfillLineFragment, lineIndex) => (
+                          <OrderFulfillLine
+                            key={line.id}
+                            line={line}
+                            lineIndex={lineIndex}
+                            formsetData={formsetData}
+                            formsetChange={formsetChange}
+                            onWarehouseChange={() =>
+                              openModal("change-warehouse", {
+                                lineId: line.id,
+                                warehouseId:
+                                  formsetData[lineIndex]?.value?.[0]?.warehouse
+                                    .id,
+                              })
+                            }
+                          />
+                        ),
+                      )}
+                    </TableBody>
+                  </ResponsiveTable>
+                ) : (
+                  <CardContent>
+                    <Skeleton />
+                  </CardContent>
+                )}
+              </Card>
+
+              <CardSpacer />
+
+              {shopSettings?.fulfillmentAutoApprove && (
                 <Card>
                   <CardTitle
-                    title={intl.formatMessage(messages.itemsReadyToShip)}
+                    title={intl.formatMessage(messages.shipmentInformation)}
                   />
-                  {order ? (
-                    <ResponsiveTable className={classes.table}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell className={classes.colName}>
-                            <FormattedMessage {...messages.productName} />
-                          </TableCell>
-                          <TableCell className={classes.colSku}>
-                            <FormattedMessage {...messages.sku} />
-                          </TableCell>
-                          <TableCell
-                            className={classNames(
-                              classes.colQuantity,
-                              classes.colQuantityHeader,
-                            )}
-                          >
-                            <FormattedMessage {...messages.quantity} />
-                          </TableCell>
-                          <TableCell className={classes.colStock}>
-                            <FormattedMessage {...messages.stock} />
-                          </TableCell>
-                          <TableCell className={classes.colWarehouse}>
-                            <FormattedMessage {...messages.warehouse} />
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {renderCollection(
-                          getToFulfillOrderLines(order.lines),
-                          (line: OrderFulfillLineFragment, lineIndex) => (
-                            <OrderFulfillLine
-                              key={line.id}
-                              line={line}
-                              lineIndex={lineIndex}
-                              formsetData={formsetData}
-                              formsetChange={formsetChange}
-                              onWarehouseChange={() =>
-                                openModal("change-warehouse", {
-                                  lineId: line.id,
-                                  warehouseId:
-                                    formsetData[lineIndex]?.value?.[0]
-                                      ?.warehouse.id,
-                                })
-                              }
-                            />
-                          ),
-                        )}
-                      </TableBody>
-                    </ResponsiveTable>
-                  ) : (
-                    <Skeleton className={classes.skeleton} />
-                  )}
-                </Card>
-
-                {shopSettings?.fulfillmentAutoApprove && (
-                  <Card className={classes.shipmentInformationCard}>
-                    <Typography className={classes.supportHeader}>
-                      <FormattedMessage {...messages.shipmentInformation} />
-                    </Typography>
+                  <CardContent>
                     <ControlledCheckbox
                       checked={data.sendInfo}
                       label={intl.formatMessage(messages.sentShipmentDetails)}
                       name="sendInfo"
                       onChange={change}
                     />
-                  </Card>
-                )}
-              </Grid>
+                  </CardContent>
+                </Card>
+              )}
 
               <Savebar
                 disabled={!shouldEnableSave()}

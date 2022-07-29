@@ -47,12 +47,16 @@ export const useStyles = makeStyles(
       whiteSpace: "nowrap",
     },
     warehouseButton: {
-      border: 0,
+      padding: theme.spacing(1.5),
+      width: "100%",
+      justifyContent: "right",
+      border: `1px solid ${theme.palette.divider}`,
     },
     warehouseButtonContent: {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: "center",
+      width: "100%",
       cursor: "pointer",
     },
   }),
