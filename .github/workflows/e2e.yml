@@ -92,7 +92,7 @@ jobs:
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
-      matrix: ${{ needs.get-selected-tags-and-containers.outputs.containers }}
+      matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
         # run copies of the current job in parallel
     steps:
 

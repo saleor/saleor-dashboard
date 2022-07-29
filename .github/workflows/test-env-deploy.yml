@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
+      api_URL: ${{ steps.api_uri.outputs.custom_api_uri }}
     steps:
       - uses: actions/checkout@v2
 
@@ -122,28 +123,17 @@ jobs:
           status: ${{ job.status }}
           env_url: https://${{ steps.set-domain.outputs.domain }}/storybook/index.html
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
-  
-  cypress-run-critical:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
 
-      - name: Get API_URI
-        id: api_uri
-        # Search for API_URI in PR description and use default if not defined
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
-          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
-        run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-      
-      - name: Get tags from pull request body
+  get-selected-tags-and-containers:
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{steps.get_tags.outputs.result}}
+      containers: ${{ steps.get_containers.outputs.result}}
+
+    steps:
+      - name: Get tags
+        id: get_tags
         uses: actions/github-script@v6
-        id: set-tags
         env: 
           pullRequestBody: ${{ github.event.pull_request.body }}
         with:
@@ -156,16 +146,43 @@ jobs:
                     let tagsInString = removedPullRequestBodyAfterTests[0];
                     tagsInString = tagsInString.split('\n');
                     tagsInString.forEach(line => {
-                      if (line.includes('[x]')){
-                        line = line.replace(/\s/g, "");
-                        tags.push(line.replace(/\d+\.\[x\]/, "@stable+@"))
-                      }
+                      if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
                     });
                     return `${tags.join(" ")}`
                   }catch{
                     return "@critical"
                   }
           result-encoding: string
+
+      - name: Get containers
+        id: get_containers
+        uses: actions/github-script@v6
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+        with:
+          script: |
+                  const containers = [];
+                  try{
+                    const numberOfContainersRegex = /CONTAINERS=(\d*)/
+                    const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
+                    for(let i=1; i<numberOfContainers[1]; i++){
+                      containers.push(i)
+                    }
+                  }catch{
+                    containers.push(1)
+                  }
+                  return {containers: containers}
+  
+  cypress-run-critical:
+    needs: [deploy, get-selected-tags-and-containers]
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -191,7 +208,7 @@ jobs:
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
+          API_URI: ${{ needs.deploy.outputs.api_URL }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
@@ -200,7 +217,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{steps.set-tags.outputs.result}}
-          CYPRESS_grepTags: ${{steps.set-tags.outputs.result}}
+          CYPRESS_grepTags: ${{needs.get-selected-tags-and-containers.outputs.tags}}
         with:
           record: true
           tag: ${{github.event.action}}
