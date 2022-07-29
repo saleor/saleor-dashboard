@@ -12,16 +12,20 @@ const useStyles = makeStyles(
   { name: "SortableHandle" },
 );
 
-interface SortableHandle {
+interface SortableHandleProps {
   className?: string;
 }
 
-const SortableHandle = SortableHandleHoc(props => {
+const SortableHandle = SortableHandleHoc((props: SortableHandleProps) => {
   const { className, ...restProps } = props;
   const classes = useStyles(props);
 
   return (
-    <DragIcon className={classNames(classes.drag, className)} {...restProps} />
+    <DragIcon
+      className={classNames(classes.drag, className)}
+      tabIndex={0}
+      {...restProps}
+    />
   );
 });
 
