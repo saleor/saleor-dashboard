@@ -1,7 +1,7 @@
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import {
   selectorWithDataValue,
-  SHARED_ELEMENTS
+  SHARED_ELEMENTS,
 } from "../../../elements/shared/sharedElements";
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
@@ -26,6 +26,7 @@ Cypress.Commands.add("fillMultiSelect", (selectSelector, option) => {
 
 Cypress.Commands.add("fillBaseSelect", (selectSelector, value) => {
   cy.get(selectSelector)
+    .should("not.have.attr", "aria-disabled", "true")
     .click()
     .get(selectorWithDataValue(value))
     .click();
