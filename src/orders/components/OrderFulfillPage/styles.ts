@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       width: 180,
     },
     colName: {
-      width: 250,
+      width: 220,
     },
     colQuantity: {
       textAlign: "right",
@@ -19,11 +19,11 @@ export const useStyles = makeStyles(
     colSku: {
       textAlign: "right",
       textOverflow: "ellipsis",
-      width: 150,
+      width: 100,
     },
     colWarehouse: {
       textAlign: "right",
-      width: 250,
+      width: 200,
     },
     table: {
       "&&": {

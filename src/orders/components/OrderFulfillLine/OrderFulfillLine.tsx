@@ -165,7 +165,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           data-test-id="select-warehouse-button"
         >
           <div className={classes.warehouseButtonContent}>
-            <div>{lineFormWarehouse.name ?? <Skeleton />}</div>
+            <div className={classes.warehouseButtonContentText}>
+              {lineFormWarehouse.name ?? <Skeleton />}
+            </div>
             <ChevronIcon />
           </div>
         </IconButton>

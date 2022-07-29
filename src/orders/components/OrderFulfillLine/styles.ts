@@ -7,7 +7,7 @@ export const useStyles = makeStyles(
       width: 180,
     },
     colName: {
-      width: 250,
+      width: 220,
     },
     colQuantity: {
       textAlign: "right",
@@ -16,10 +16,10 @@ export const useStyles = makeStyles(
     colSku: {
       textAlign: "right",
       textOverflow: "ellipsis",
-      width: 150,
+      width: 100,
     },
     colWarehouse: {
-      width: 250,
+      width: 200,
       textAlign: "right",
     },
     warningIcon: {
@@ -58,6 +58,10 @@ export const useStyles = makeStyles(
       alignItems: "center",
       width: "100%",
       cursor: "pointer",
+    },
+    warehouseButtonContentText: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   }),
   { name: "OrderFulfillLine" },
