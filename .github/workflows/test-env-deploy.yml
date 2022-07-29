@@ -165,7 +165,7 @@ jobs:
                   try{
                     const numberOfContainersRegex = /CONTAINERS=(\d*)/
                     const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
-                    for(let i=1; i<numberOfContainers[1]; i++){
+                    for(let i=1; i<=numberOfContainers[1]; i++){
                       containers.push(i)
                     }
                   }catch{
@@ -179,6 +179,7 @@ jobs:
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
+      max-parallel: 10
       matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
     steps:
       - name: Checkout

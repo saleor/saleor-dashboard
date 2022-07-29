@@ -28,6 +28,7 @@ API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/
 MARKETPLACE_URL=https://marketplace-gray.vercel.app/
 
 ### Do you want to run more stable tests?
+Tests will be re-run only when the "run e2e" label is added.
 
 1. [ ] stable
 2. [ ] giftCard
