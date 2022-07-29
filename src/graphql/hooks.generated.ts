@@ -12445,6 +12445,9 @@ export const ProductVariantCreateDataDocument = gql`
     thumbnail {
       url
     }
+    defaultVariant {
+      id
+    }
     variants {
       id
       name
