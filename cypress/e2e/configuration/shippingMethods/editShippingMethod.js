@@ -4,12 +4,14 @@
 import faker from "faker";
 
 import { shippingRateUrl } from "../../../fixtures/urlList";
+import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import {
   addChannelToShippingMethod,
   createShippingRate,
   createShippingZone,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
+import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
@@ -25,6 +27,8 @@ describe("As a user I should be able to update and delete shipping method", () =
   let defaultChannel;
   let shippingZone;
   let shippingMethod;
+  let usAddress;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -33,10 +37,22 @@ describe("As a user I should be able to update and delete shipping method", () =
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        createShippingZone(name, "US", defaultChannel.id);
+
+        cy.fixture("addresses");
       })
-      .then(shippingZoneResp => {
-        shippingZone = shippingZoneResp;
+      .then(({ usAddress: usAddressResp }) => {
+        usAddress = usAddressResp;
+
+        createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
+
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
+            shippingZoneResp => {
+              shippingZone = shippingZoneResp;
+            },
+          );
+        });
       });
   });
 

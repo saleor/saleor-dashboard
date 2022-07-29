@@ -17,7 +17,6 @@ import {
 } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../../support/api/utils/storeFront/checkoutUtils";
-import { returnValueDependsOnShopVersion } from "../../../../support/formatData/dataDependingOnVersion";
 import {
   createShippingRate,
   rateOptions,
@@ -43,26 +42,24 @@ describe("As a staff user I want to manage shipping weights", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+
         cy.fixture("addresses");
       })
       .then(({ usAddress: usAddressResp }) => {
         usAddress = usAddressResp;
-        createShippingZone(name, "US", defaultChannel.id);
-      })
-      .then(shippingZoneResp => {
-        shippingZone = shippingZoneResp;
-        createWarehouse({
-          name,
-          shippingZone: shippingZone.id,
-          address: usAddress,
-        });
-      })
-      .then(warehouseResp => {
-        warehouse = warehouseResp;
-        if (returnValueDependsOnShopVersion("3.5", true, false)) {
+
+        createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
+
           updateChannelWarehouses(defaultChannel.id, warehouse.id);
-        }
-        createTypeAttributeAndCategoryForProduct({ name });
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
+            shippingZoneResp => {
+              shippingZone = shippingZoneResp;
+
+              createTypeAttributeAndCategoryForProduct({ name });
+            },
+          );
+        });
       })
       .then(({ attribute, productType, category }) => {
         createProductInChannel({

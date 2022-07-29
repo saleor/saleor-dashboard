@@ -1,9 +1,8 @@
 import { stringify } from "../.././formatData/formatJson";
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import {
   getDataForDescriptionInVariables,
   getValueWithDefault,
-  getVariantsListIds
+  getVariantsListIds,
 } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
@@ -55,7 +54,7 @@ export function updateChannelInProduct({
   variantsIdsToRemove = "[]",
   isPublished = true,
   isAvailableForPurchase = true,
-  visibleInListings = true
+  visibleInListings = true,
 }) {
   const mutation = `mutation{
     productChannelListingUpdate(id:"${productId}",
@@ -99,24 +98,24 @@ export function createProduct({
   productTypeId,
   categoryId,
   collectionId,
-  description
+  description,
 }) {
   const collection = getValueWithDefault(
     collectionId,
-    `collections:["${collectionId}"]`
+    `collections:["${collectionId}"]`,
   );
   const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
   const descriptionData = getDataForDescriptionInVariables(description);
   const attributeValuesLine = getValueWithDefault(
     attributeValue,
-    `values:["${attributeValue}"]`
+    `values:["${attributeValue}"]`,
   );
   const attributes = getValueWithDefault(
     attributeId,
     `attributes:[{
       id:"${attributeId}"
       ${attributeValuesLine}
-    }]`
+    }]`,
   );
   const mutation = `mutation createProduct${descriptionData.mutationVariables}{
     productCreate(input:{
@@ -156,11 +155,11 @@ export function createVariant({
   trackInventory = true,
   weight = 1,
   attributeName = "value",
-  preorder
+  preorder,
 }) {
   const preorderLines = getValueWithDefault(
     preorder,
-    `preorder:${stringify(preorder)}`
+    `preorder:${stringify(preorder)}`,
   );
   const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
 
@@ -170,7 +169,7 @@ export function createVariant({
     id:"${attributeId}"
     values: ["${attributeName}"]
   }]`,
-    "attributes:[]"
+    "attributes:[]",
   );
 
   const channelListings = getValueWithDefault(
@@ -179,7 +178,7 @@ export function createVariant({
       channelId:"${channelId}"
       price:"${price}"
       costPrice:"${costPrice}"
-    }`
+    }`,
   );
 
   const stocks = getValueWithDefault(
@@ -187,7 +186,7 @@ export function createVariant({
     `stocks:{
       warehouse:"${warehouseId}"
       quantity:${quantityInWarehouse}
-    }`
+    }`,
   );
 
   const mutation = `mutation{
@@ -248,14 +247,11 @@ export function getVariants(variantsList) {
 }
 
 export function getVariant(id, channelSlug, auth = "auth") {
-  const preorder = returnValueDependsOnShopVersion(
-    "3.1",
-    `preorder{
+  const preorder = `preorder{
     globalThreshold
     globalSoldUnits
     endDate
-  }`
-  );
+  }`;
 
   const query = `query{
     productVariant(id:"${id}" channel:"${channelSlug}"){
@@ -317,11 +313,11 @@ export function deactivatePreorderOnVariant(variantId) {
 export function activatePreorderOnVariant({
   variantId,
   threshold = 50,
-  endDate
+  endDate,
 }) {
   const thresholdLine = getValueWithDefault(
     threshold,
-    `globalThreshold:${threshold}`
+    `globalThreshold:${threshold}`,
   );
   const endDateLine = getValueWithDefault(endDate, `endDate:${endDate}`);
   const mutation = `mutation{
