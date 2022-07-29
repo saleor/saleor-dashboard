@@ -1,7 +1,6 @@
 name: TEST-ENV-DEPLOYMENT
 # Build and deploy test instance for every pull request
 
-on: [pull_request]
 
 jobs:
   deploy:
@@ -206,7 +205,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Cypress run critical
+      - name: Cypress run
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ needs.deploy.outputs.api_URL }}
@@ -217,8 +216,8 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{needs.get-selected-tags-and-containers.outputs.tags}}
-          CYPRESS_grepTags: ${{needs.get-selected-tags-and-containers.outputs.tags}}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{ fromJSON(needs.get-selected-tags-and-containers.outputs.tags) }}
+          CYPRESS_grepTags: ${{ fromJSON(needs.get-selected-tags-and-containers.outputs.tags)}}
         with:
           record: true
           tag: ${{github.event.action}}
