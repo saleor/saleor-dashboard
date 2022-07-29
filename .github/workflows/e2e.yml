@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
-      containers: ${{ steps.get_containers.outputs.containers}}
+      containers: ${{ steps.get_containers.outputs.result}}
 
     steps:
       - name: Get tags
@@ -39,13 +39,22 @@ jobs:
       - name: get-containers
         id: get_containers
         if: steps.set-tags.outputs.result != '@critical'
+        uses: actions/github-script@v6
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: CONTAINERS=
-          pattern: \[.*\]
-        run: |
-          echo "::set-output name=containers::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 { read set_containers; if [ -z "$set_containers" ]; then echo "[1]"; else echo "$set_containers"; fi })"
-      
+        with:
+          script: |
+                  const containers = [];
+                  try{
+                    const numberOfContainersRegex = /CONTAINERS=(\d*)/
+                    const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
+                    for(let i=1; i<numberOfContainers[1]; i++){
+                      containers.push(i)
+                    }
+                  }catch{
+                    containers.push(1)
+                  }
+                  return {containers: containers}
 
   install-cypress:
     needs: get-selected-tags-and-containers
