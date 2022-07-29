@@ -29,22 +29,27 @@ MARKETPLACE_URL=https://marketplace-gray.vercel.app/
 
 ### Do you want to run more stable tests?
 
-[ ] @giftCard
-[ ] @category
-[ ] @collection
-[ ] @attribute
-[ ] @productType
-[ ] @shipping
-[ ] @customer
-[ ] @permissions
-[ ] @menuNavigation
-[ ] @pages
-[ ] @sales
-[ ] @vouchers
-[ ] @homePage
-[ ] @login
-[ ] @orders
-[ ] @products
-[ ] @app
+1. [ ] stable
+2. [ ] giftCard
+3. [ ] category
+4. [ ] collection
+5. [ ] attribute
+6. [ ] productType
+7. [ ] shipping
+8. [ ] customer
+9. [ ] permissions
+10. [ ] menuNavigation
+11. [ ] pages
+12. [ ] sales
+13. [ ] vouchers
+14. [ ] homePage
+15. [ ] login
+16. [ ] orders
+17. [ ] products
+18. [ ] app
 
-### Select tests to run from above
+### NUMBER OF CONTAINERS TO RUN TESTS
+
+Type containers in array, eg. [1, 2, 3]
+
+CONTAINERS=[1]

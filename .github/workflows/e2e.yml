@@ -2,13 +2,57 @@ name: E2E
 
 on:
   pull_request:
-    types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
-  workflow_dispatch:
-    branches: ["*"]
+    types: [edited]
+
 jobs:
+  
+  get-selected-tags-and-containers:
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{steps.set-tags.outputs.result}}
+      containers: ${{ steps.get-containers.outputs.containers}}
+    steps:
+
+      - name: Get tags
+        id: get-tags
+        env: 
+          pullRequestBody: ${{ github.event.pull_request.body }}
+        with:
+          script: |
+                  const { pullRequestBody } = process.env
+                  const tags = [];
+                  try{
+                    const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
+                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### NUMBER OF CONTAINERS TO RUN TESTS);
+                    let tagsInString = removedPullRequestBodyAfterTests[0];
+                    tagsInString = tagsInString.split('\n');
+                    tagsInString.forEach(line => {
+                      if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
+                    });
+                  }catch{
+                    return "@critical"
+                  }
+                  if(tags.length!=0){
+                    return `${tags.join(" ")}`
+                  }else{
+                    return "@critical"
+                  }
+          result-encoding: string
+
+      - name: get-containers
+        id: get-containers
+        if: ${{ steps.set-tags.outputs.result !== "@critical" }}
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+          prefix: CONTAINERS=
+          pattern: \[.*\]
+        run: |
+          echo "::set-output name=containers::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 { read set_containers; if [ -z "$set_containers" ]; then echo "[1]"; else echo "$set_containers"; fi })"
+      
+
   install-cypress:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
+    needs: get-selected-tags-and-containers
+    if: ${{ needs.open_release_pull_request.outputs.tags !== "@critical" }}
     runs-on: ubuntu-latest
     steps:
 
@@ -36,14 +80,15 @@ jobs:
           runTests: false
     
   run-tests-in-parallel-on-label:
-    needs: install-cypress
+    needs: [get-selected-tags-and-containers, install-cypress]
+    if: ${{ needs.get-selected-tags-and-containers.outputs.tags !== "@critical" }}
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [1, 2, 3, 4]
+        containers: ${{ needs.get-selected-tags-and-containers.outputs.containers }}
     steps:
 
       - uses: rlespinasse/github-slug-action@3.1.0
@@ -67,21 +112,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cypress run all tests
+      - name: Cypress run
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{steps.api_uri.outputs.custom_api_uri}}
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: https://${{ steps.set-domain.outputs.domain }}/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
-          COMMIT_INFO_MESSAGE: All tests triggered via "Run e2e" label on PR - ${{ github.ref_name }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{needs.get-selected-tags-and-containers.outputs.tags}}
+          CYPRESS_grepTags: ${{needs.get-selected-tags-and-containers.outputs.tags}}
         with:
-          parallel: true
-          group: 'UI - Chrome'
-          command: npx cypress run --record --env tags=all --parallel --tag All_Tests, Run_E2E_Label
+          record: true
+          tag: ${{github.event.action}}
