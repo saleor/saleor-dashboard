@@ -71,7 +71,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
               errors?.filter(error => error.channels.includes(data.id)) || [];
 
             return (
-              <ChannelAvailabilityItemWrapper messages={messages} data={data}>
+              <ChannelAvailabilityItemWrapper
+                messages={messages}
+                data={data}
+                key={data.id}
+              >
                 <ChannelAvailabilityItemContent
                   data={data}
                   onChange={onChange}

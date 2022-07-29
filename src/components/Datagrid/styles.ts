@@ -5,7 +5,7 @@ import { useMemo } from "react";
 const useStyles = makeStyles(
   theme => {
     const rowActionSelected = {
-      background: theme.palette.divider,
+      background: theme.palette.background.paper,
       color: theme.palette.saleor.main[1],
     };
 
@@ -83,15 +83,15 @@ export function useDatagridTheme() {
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
       accentColor: theme.palette.saleor.main[1],
-      accentLight: theme.palette.divider,
+      accentLight: theme.palette.background.paper,
       accentFg: theme.palette.divider,
       bgCell: theme.palette.background.default,
       bgHeader: theme.palette.background.default,
       bgHeaderHasFocus: theme.palette.background.default,
       bgHeaderHovered: theme.palette.background.default,
-      bgBubbleSelected: theme.palette.background.default,
+      bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.saleor.main[3],
-      borderColor: theme.palette.divider,
+      borderColor: "rgba(37, 41, 41, 0.1)",
       fontFamily: theme.typography.fontFamily,
       baseFontStyle: theme.typography.body1.fontSize as string,
       headerFontStyle: theme.typography.body2.fontSize as string,

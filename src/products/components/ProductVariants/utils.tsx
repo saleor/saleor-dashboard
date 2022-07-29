@@ -194,11 +194,21 @@ export function getData({
     ? undefined
     : variants[row + removed.filter(r => r <= row).length];
 
+  const styled = (props: GridCell) => ({
+    ...props,
+    themeOverride:
+      change !== undefined
+        ? {
+            bgCell: "#C1DBFF",
+          }
+        : {},
+  });
+
   switch (columnId) {
     case "name":
     case "sku":
       const value = change ?? (dataRow ? dataRow[columnId] : "");
-      return textCell(value || "");
+      return styled(textCell(value || ""));
   }
 
   if (getColumnStock(columnId)) {
@@ -209,7 +219,7 @@ export function getData({
       )?.quantity ??
       numberCellEmptyValue;
 
-    return numberCell(value);
+    return styled(numberCell(value));
   }
 
   if (getColumnChannel(columnId)) {
@@ -222,18 +232,18 @@ export function getData({
         ?.data ?? !!listing;
 
     if (!available) {
-      return {
+      return styled({
         ...numberCell(numberCellEmptyValue),
         readonly: true,
         allowOverlay: false,
-      };
+      });
     }
 
     const currency = channels.find(channel => channelId === channel.id)
       ?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return moneyCell(value, currency);
+    return styled(moneyCell(value, currency));
   }
 
   if (getColumnChannelAvailability(columnId)) {
@@ -243,7 +253,7 @@ export function getData({
     );
     const value = change ?? !!listing;
 
-    return booleanCell(value);
+    return styled(booleanCell(value));
   }
 
   if (getColumnAttribute(columnId)) {
@@ -257,7 +267,7 @@ export function getData({
         .join(", ") ??
       "";
 
-    return textCell(value || "");
+    return styled(textCell(value || ""));
   }
 }
 
@@ -295,9 +305,8 @@ export function getColumnData(
     );
     return {
       ...common,
-      group: channel.name,
       width: 150,
-      title: `Price [${channel.currency}]`,
+      title: `Price in ${channel.name} [${channel.currency}]`,
     };
   }
 
@@ -307,9 +316,8 @@ export function getColumnData(
     );
     return {
       ...common,
-      group: channel.name,
       width: 80,
-      title: "Available",
+      title: `Available in ${channel.name}`,
     };
   }
 
