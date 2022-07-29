@@ -1,6 +1,6 @@
 name: TEST-ENV-DEPLOYMENT
 # Build and deploy test instance for every pull request
-
+on: [pull_request]
 
 jobs:
   deploy:
