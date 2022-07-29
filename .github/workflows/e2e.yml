@@ -42,7 +42,7 @@ jobs:
 
       - name: get-containers
         id: get-containers
-        if: ${{ steps.set-tags.outputs.result !== "@critical" }}
+        if: ${{ steps.set-tags.outputs.result != "@critical" }}
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: CONTAINERS=
@@ -53,7 +53,7 @@ jobs:
 
   install-cypress:
     needs: get-selected-tags-and-containers
-    if: ${{ needs.open_release_pull_request.outputs.tags !== "@critical" }}
+    if: ${{ needs.open_release_pull_request.outputs.tags != "@critical" }}
     runs-on: ubuntu-latest
     steps:
 
@@ -82,7 +82,7 @@ jobs:
     
   run-tests-in-parallel-on-label:
     needs: [get-selected-tags-and-containers, install-cypress]
-    if: ${{ needs.get-selected-tags-and-containers.outputs.tags !== "@critical" }}
+    if: ${{ needs.get-selected-tags-and-containers.outputs.tags != "@critical" }}
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
