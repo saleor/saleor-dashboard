@@ -35,16 +35,15 @@ jobs:
                   }catch{
                     return "@critical"
                   }
-          result-encoding: string
 
       - name: get-containers
         id: get_containers
-        if: steps.set-tags.outputs.result != '@critical'
         uses: actions/github-script@v6
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
         with:
           script: |
+                  const { pullRequestBody } = process.env
                   const containers = [];
                   try{
                     const numberOfContainersRegex = /CONTAINERS=(\d*)/
@@ -59,7 +58,6 @@ jobs:
 
   install-cypress:
     needs: get-selected-tags-and-containers
-    if: needs.get-selected-tags-and-containers.outputs.tags != '@critical'
     runs-on: ubuntu-latest
     steps:
 
@@ -71,7 +69,7 @@ jobs:
         with:
           node-version: 14
           
-      - name: Wait for Deploy and Critical tests
+      - name: Wait for Deploy and tests
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -88,7 +86,6 @@ jobs:
     
   run-tests-in-parallel-on-label:
     needs: [get-selected-tags-and-containers, install-cypress]
-    if: needs.get-selected-tags-and-containers.outputs.tags != '@critical'
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:

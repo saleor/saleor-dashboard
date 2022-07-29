@@ -152,7 +152,6 @@ jobs:
                   }catch{
                     return "@critical"
                   }
-          result-encoding: string
 
       - name: Get containers
         id: get_containers
@@ -161,6 +160,7 @@ jobs:
           pull_request_body: ${{ github.event.pull_request.body }}
         with:
           script: |
+                  const { pullRequestBody } = process.env
                   const containers = [];
                   try{
                     const numberOfContainersRegex = /CONTAINERS=(\d*)/
@@ -169,7 +169,7 @@ jobs:
                       containers.push(i)
                     }
                   }catch{
-                    containers.push(1)
+                    containers.push(5)
                   }
                   return {containers: containers}
   
@@ -179,7 +179,7 @@ jobs:
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 9
       matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
     steps:
       - name: Checkout
@@ -217,7 +217,7 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{steps.set-tags.outputs.result}}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{needs.get-selected-tags-and-containers.outputs.tags}}
           CYPRESS_grepTags: ${{needs.get-selected-tags-and-containers.outputs.tags}}
         with:
           record: true
