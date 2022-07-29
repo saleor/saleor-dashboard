@@ -13,25 +13,39 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
-  createShippingZone,
+  createShippingZoneWithoutWarehouse,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
+import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
 import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
+import { returnValueDependsOnShopVersion } from "../../../support/formatData/dataDependingOnVersion";
 import { createChannelByView } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
   const channelStartsWith = `CyChannels`;
-  const randomName = `${channelStartsWith} ${faker.datatype.number()}`;
+  const randomName = `${channelStartsWith}${faker.datatype.number()}`;
   const currency = "PLN";
   let shippingZone;
+  let usAddress;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteChannelsStartsWith(channelStartsWith);
     deleteShippingStartsWith(channelStartsWith);
-    createShippingZone(randomName, "US").then(shippingZoneResp => {
-      shippingZone = shippingZoneResp;
+    deleteWarehouseStartsWith(channelStartsWith);
+    createShippingZoneWithoutWarehouse(randomName, "US").then(
+      shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+      },
+    );
+    cy.fixture("addresses").then(addresses => {
+      usAddress = addresses.usAddress;
+      createWarehouseViaApi({
+        name: randomName,
+        address: usAddress,
+      });
     });
   });
 
@@ -85,9 +99,8 @@ describe("Channels", () => {
         .contains(randomChannel);
     },
   );
-
   it(
-    "should create channel with shippingZone. TC: SALEOR_0702",
+    "should create channel with shippingZone and warehouse TC: SALEOR_0712",
     { tags: ["@channel", "@allEnv"] },
     () => {
       // remove login after fixing SALEOR-3162
@@ -102,6 +115,7 @@ describe("Channels", () => {
         name: randomChannel,
         currency,
         shippingZone: shippingZone.name,
+        warehouse: randomName,
       });
       cy.waitForRequestAndCheckIfNoErrors("@Channel");
       getShippingZone(shippingZone.id).then(shippingZoneResp => {
