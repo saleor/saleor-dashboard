@@ -11,10 +11,11 @@ jobs:
     outputs:
       tags: ${{steps.set-tags.outputs.result}}
       containers: ${{ steps.get-containers.outputs.containers}}
-    steps:
 
+    steps:
       - name: Get tags
         id: get-tags
+        uses: actions/github-script@v6
         env: 
           pullRequestBody: ${{ github.event.pull_request.body }}
         with:
