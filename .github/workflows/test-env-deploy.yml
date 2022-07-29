@@ -159,12 +159,12 @@ jobs:
                       if (line.includes('[x]')) tags.push(line.replace('[x] ', "@stable+"))
                     });
                   }catch{
-                    return `"@critical"`
+                    return "@critical"
                   }
                   if(tags.length!=0){
-                    return `"${tags.join(" ")}"`
+                    return `${tags.join(" ")}`
                   }else{
-                    return `"@critical"`
+                    return "@critical"
                   }
           result-encoding: string
 
