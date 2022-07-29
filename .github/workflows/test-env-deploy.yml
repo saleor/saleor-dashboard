@@ -152,7 +152,7 @@ jobs:
                   const tags = ["@critical"];
                   try{
                     const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
-                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### NUMBER OF CONTAINERS TO RUN TESTS`);
+                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`CONTAINERS`);
                     let tagsInString = removedPullRequestBodyAfterTests[0];
                     tagsInString = tagsInString.split('\n');
                     tagsInString.forEach(line => {
@@ -161,7 +161,7 @@ jobs:
                         tags.push(line.replace(/\d+\.\[x\]/, "@stable+@"))
                       }
                     });
-                    return `"${tags.join(" ")}"`
+                    return `${tags.join(" ")}`
                   }catch{
                     return "@critical"
                   }

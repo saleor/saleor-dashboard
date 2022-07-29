@@ -48,8 +48,4 @@ MARKETPLACE_URL=https://marketplace-gray.vercel.app/
 17. [ ] products
 18. [ ] app
 
-### NUMBER OF CONTAINERS TO RUN TESTS
-
-Type containers in array, eg. [1, 2, 3]
-
-CONTAINERS=[1]
+CONTAINERS=1

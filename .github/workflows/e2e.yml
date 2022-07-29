@@ -24,7 +24,7 @@ jobs:
                   const tags = ["@critical"];
                   try{
                     const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
-                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### NUMBER OF CONTAINERS TO RUN TESTS`);
+                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`CONTAINERS`);
                     let tagsInString = removedPullRequestBodyAfterTests[0];
                     tagsInString = tagsInString.split('\n');
                     tagsInString.forEach(line => {
@@ -92,9 +92,8 @@ jobs:
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
-      matrix:
+      matrix: ${{ needs.get-selected-tags-and-containers.outputs.containers }}
         # run copies of the current job in parallel
-        containers: ${{ needs.get-selected-tags-and-containers.outputs.containers }}
     steps:
 
       - uses: rlespinasse/github-slug-action@3.1.0
@@ -130,7 +129,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{needs.get-selected-tags-and-containers.outputs.tags}}
-          CYPRESS_grepTags: "${{needs.get-selected-tags-and-containers.outputs.tags}}"
+          CYPRESS_grepTags: ${{needs.get-selected-tags-and-containers.outputs.tags}}
         with:
           record: true
           tag: ${{github.event.action}}
