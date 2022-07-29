@@ -225,6 +225,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       />
       <ProductVariantCreatePage
         productId={productId}
+        defaultVariantId={data?.product.defaultVariant?.id}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

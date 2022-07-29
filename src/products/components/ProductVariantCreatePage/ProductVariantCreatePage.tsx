@@ -70,6 +70,7 @@ const messages = defineMessages({
 
 interface ProductVariantCreatePageProps {
   productId: string;
+  defaultVariantId?: string;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -100,6 +101,7 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   productId,
+  defaultVariantId,
   disabled,
   errors,
   header,
@@ -177,7 +179,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 fallbackThumbnail={product?.thumbnail?.url}
                 variants={product?.variants}
                 productId={productId}
+                defaultVariantId={defaultVariantId}
                 onReorder={onVariantReorder}
+                isCreate={true}
               />
             </div>
             <div>

@@ -208,6 +208,9 @@ export const productVariantCreateQuery = gql`
       thumbnail {
         url
       }
+      defaultVariant {
+        id
+      }
       variants {
         id
         name
