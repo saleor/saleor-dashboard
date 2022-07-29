@@ -89,29 +89,21 @@ describe("As an admin I want to manage collections.", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
-      cy.visit(urlList.collections);
-      cy.expectSkeletonIsVisible();
+      cy.visit(urlList.collections).expectSkeletonIsVisible();
 
-      createCollection(collectionName, false, defaultChannel)
-        .then(collectionResp => {
+      createCollection(collectionName, false, defaultChannel).then(
+        collectionResp => {
           collection = collectionResp;
+
           assignProductsToCollection(productName);
-        })
-        .then(() => {
           getCollection({
             collectionId: collection.id,
             channelSlug: defaultChannel.slug,
-          }).as("col");
-
-          cy.get("@col")
-            .its("collection.channelListings[isPublished]")
+          })
+            .its("collection.channelListings.0.isPublished")
             .should("eq", false);
-        });
-      // .then(({ collection: resp }) => {
-      //   const isVisible = resp.channelListings[0].isPublished;
-      //   expect(isVisible).to.equal(false);
-
-      // });
+        },
+      );
     },
   );
   // include after fixing issue:SALEOR-7646
@@ -125,23 +117,22 @@ describe("As an admin I want to manage collections.", () => {
       cy.visit(urlList.collections);
       cy.expectSkeletonIsVisible();
 
-      createCollection(collectionName, true, defaultChannel)
-        .then(collectionResp => {
+      createCollection(collectionName, true, defaultChannel).then(
+        collectionResp => {
           collection = collectionResp;
           assignProductsToCollection(productName);
           getCollection({
             collectionId: collection.id,
             channelSlug: defaultChannel.slug,
-          });
-        })
-        .then(({ collection: resp }) => {
-          const isVisible = isCollectionVisible(resp, collection.id);
-          expect(isVisible).to.equal(true);
-        });
+          })
+            .its("collection.channelListings.0.isPublished")
+            .should("eq", true);
+        },
+      );
     },
   );
 
-  xit(
+  it(
     "create collection not available for channel. TC: SALEOR_0303",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
@@ -149,28 +140,25 @@ describe("As an admin I want to manage collections.", () => {
       let collection;
       let channel;
 
-      createChannel({ name: collectionName })
-        .then(channelResp => {
-          channel = channelResp;
-          updateChannelInProduct(product.id, channel.id);
-        })
-        .then(() => {
-          cy.visit(urlList.collections);
-          cy.expectSkeletonIsVisible();
-          createCollection(collectionName, true, channel);
-        })
-        .then(collectionResp => {
-          collection = collectionResp;
-          assignProductsToCollection(productName);
-          getCollection({
-            collectionId: collection.id,
-            channelSlug: defaultChannel.slug,
-          });
-        })
-        .then(({ collection: resp }) => {
-          const isVisible = isCollectionVisible(resp, collection.id);
-          expect(isVisible).to.equal(false);
-        });
+      createChannel({ name: collectionName }).then(channelResp => {
+        channel = channelResp;
+
+        updateChannelInProduct(product.id, channel.id);
+        cy.visit(urlList.collections).expectSkeletonIsVisible();
+
+        createCollection(collectionName, false, channel).then(
+          collectionResp => {
+            collection = collectionResp;
+            assignProductsToCollection(productName);
+            getCollection({
+              collectionId: collection.id,
+              channelSlug: defaultChannel.slug,
+            })
+              .its("collection")
+              .should("be.null");
+          },
+        );
+      });
     },
   );
   // include after fixing issue:SALEOR-7646
@@ -227,7 +215,7 @@ describe("As an admin I want to manage collections.", () => {
     },
   );
 
-  xit(
+  it(
     "should delete collection. TC: SALEOR_0305",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
@@ -241,14 +229,14 @@ describe("As an admin I want to manage collections.", () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
-        getCollection({ collectionId: collectionResp.id, auth: "auth" })
+        getCollection({ collectionId: collectionResp.id })
           .its("collection")
           .should("be.null");
       });
     },
   );
 
-  xit(
+  it(
     "delete several collections on collections list page. TC: SALEOR_0309",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
@@ -280,17 +268,17 @@ describe("As an admin I want to manage collections.", () => {
           .click()
           .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
 
-        getCollection({ collectionId: firstCollection.id, auth: "auth" })
+        getCollection({ collectionId: firstCollection.id })
           .its("collection")
           .should("be.null");
-        getCollection({ collectionId: secondCollection.id, auth: "auth" })
+        getCollection({ collectionId: secondCollection.id })
           .its("collection")
           .should("be.null");
       });
     },
   );
 
-  xit(
+  it(
     "should assign product to collection. TC: SALEOR_0307",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
@@ -318,18 +306,15 @@ describe("As an admin I want to manage collections.", () => {
             cy.visit(collectionDetailsUrl(collection.id));
             assignProductsToCollection(productToAssign.name);
 
-            getCollection({ collectionId: collection.id, auth: "auth" })
-              .its("collection.products.edges")
-              .should("have.length", 1)
-              .then(productArray => {
-                expect(productArray[0].node.id).to.equal(productToAssign.id);
-              });
+            getCollection({ collectionId: collection.id })
+              .its("collection.products.edges.0.node.id")
+              .should("include", productToAssign);
           });
       });
     },
   );
 
-  xit(
+  it(
     "remove product from collection. TC: SALEOR_0308",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
@@ -378,27 +363,29 @@ describe("As an admin I want to manage collections.", () => {
     },
   );
 
-  xit(
+  it(
     "should update collection. TC: SALEOR_0306",
     { tags: ["@collection", "@allEnv"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCollection`;
 
-      createCollectionRequest(collectionName)
-        .then(collectionResp => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            collectionDetailsUrl(collectionResp.id),
-          );
-          updateCollection({ name: updatedName, description: updatedName });
-          getCollection({ collectionId: collectionResp.id, auth: "auth" });
-        })
-        .then(({ collection: collectionResp }) => {
-          expect(collectionResp.name).to.eq(updatedName);
-          const descriptionJson = JSON.parse(collectionResp.description);
-          const descriptionText = descriptionJson.blocks[0].data.text;
-          expect(descriptionText).to.eq(updatedName);
-        });
+      createCollectionRequest(collectionName).then(collectionResp => {
+        cy.visitAndWaitForProgressBarToDisappear(
+          collectionDetailsUrl(collectionResp.id),
+        );
+        updateCollection({ name: updatedName, description: updatedName });
+        getCollection({ collectionId: collectionResp.id })
+          .its("collection")
+          .should("include", [{ name: updateName }])
+          .and("include", [{ description: updatedName }]);
+      });
+      // .then(({ collection: collectionResp }) => {
+      //   expect(collectionResp.name).to.eq(updatedName);
+      //   const descriptionJson = JSON.parse(collectionResp.description);
+      //   const descriptionText = descriptionJson.blocks[0].data.text;
+      //   expect(descriptionText).to.eq(updatedName);
+      // });
     },
   );
 });
