@@ -21,21 +21,17 @@ jobs:
         with:
           script: |
                   const { pullRequestBody } = process.env
-                  const tags = [];
+                  const tags = ["@critical"];
                   try{
                     const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
-                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### NUMBER OF CONTAINERS TO RUN TESTS);
+                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`### NUMBER OF CONTAINERS TO RUN TESTS`);
                     let tagsInString = removedPullRequestBodyAfterTests[0];
                     tagsInString = tagsInString.split('\n');
                     tagsInString.forEach(line => {
                       if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
                     });
-                  }catch{
-                    return "@critical"
-                  }
-                  if(tags.length!=0){
                     return `${tags.join(" ")}`
-                  }else{
+                  }catch{
                     return "@critical"
                   }
           result-encoding: string
@@ -53,7 +49,7 @@ jobs:
 
   install-cypress:
     needs: get-selected-tags-and-containers
-    if: ${{ needs.open_release_pull_request.outputs.tags != "@critical" }}
+    if: ${{ needs.get-selected-tags-and-containers.outputs.tags != "@critical" }}
     runs-on: ubuntu-latest
     steps:
 
