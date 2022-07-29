@@ -197,7 +197,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{steps.set-tags.outputs.result}}
-          CYPRESS_grepTags: ${{steps.set-tags.outputs.result}}
+          CYPRESS_grepTags: "${{steps.set-tags.outputs.result}}"
         with:
           record: true
           tag: ${{github.event.action}}
