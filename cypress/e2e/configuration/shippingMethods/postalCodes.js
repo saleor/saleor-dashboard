@@ -17,7 +17,6 @@ import {
 } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
-import { returnValueDependsOnShopVersion } from "../../../support/formatData/dataDependingOnVersion";
 import {
   createRateWithPostalCode,
   postalCodesOptions,

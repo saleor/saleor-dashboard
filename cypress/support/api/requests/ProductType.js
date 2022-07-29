@@ -1,4 +1,3 @@
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import { getValueWithDefault } from "./utils/Utils";
 
 export function createTypeProduct({
@@ -8,16 +7,16 @@ export function createTypeProduct({
   slug = name,
   shippable = true,
   kind = "NORMAL",
-  productAttributes = true
+  productAttributes = true,
 }) {
-  const kindLines = returnValueDependsOnShopVersion("3.1", `kind: ${kind}`);
+  const kindLines = `kind: ${kind}`;
   const productAttributesLine = getValueWithDefault(
     productAttributes && attributeId,
-    `productAttributes: "${attributeId}"`
+    `productAttributes: "${attributeId}"`,
   );
   const variantAttributesLine = getValueWithDefault(
     hasVariants && attributeId,
-    `variantAttributes: "${attributeId}"`
+    `variantAttributes: "${attributeId}"`,
   );
   const mutation = `mutation{
     productTypeCreate(input: {
@@ -78,7 +77,7 @@ export function deleteProductType(productTypeId) {
 export function productAttributeAssignmentUpdate({
   productTypeId,
   attributeId,
-  variantSelection = false
+  variantSelection = false,
 }) {
   const mutation = `mutation {
     productAttributeAssignmentUpdate(
@@ -152,7 +151,7 @@ export function setProductTypeAsDigital(productTypeId, isDigital = true) {
 export function assignAttribute(
   productTypeId,
   attributeId,
-  attributeType = "VARIANT"
+  attributeType = "VARIANT",
 ) {
   const mutation = `mutation{
     productAttributeAssign(productTypeId:"${productTypeId}", operations:{
