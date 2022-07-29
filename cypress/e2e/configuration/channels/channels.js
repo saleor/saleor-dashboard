@@ -13,7 +13,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
 import {
-  createShippingZone,
+  createShippingZoneWithoutWarehouse,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
@@ -35,9 +35,11 @@ describe("Channels", () => {
     deleteChannelsStartsWith(channelStartsWith);
     deleteShippingStartsWith(channelStartsWith);
     deleteWarehouseStartsWith(channelStartsWith);
-    createShippingZone(randomName, "US").then(shippingZoneResp => {
-      shippingZone = shippingZoneResp;
-    });
+    createShippingZoneWithoutWarehouse(randomName, "US").then(
+      shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+      },
+    );
     cy.fixture("addresses").then(addresses => {
       usAddress = addresses.usAddress;
       createWarehouseViaApi({
