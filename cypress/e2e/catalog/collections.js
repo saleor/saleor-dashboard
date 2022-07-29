@@ -24,7 +24,6 @@ import {
   isProductInCollectionVisible,
 } from "../../support/api/utils/storeFront/collectionsUtils";
 import { isProductVisibleInSearchResult } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
   createCollection,
@@ -32,368 +31,374 @@ import {
   updateCollection,
 } from "../../support/pages/catalog/collectionsPage";
 
-filterTests({ definedTags: ["all"] }, () => {
-  describe("As an admin I want to manage collections.", () => {
-    const startsWith = "CyCollections-";
-    const name = `${startsWith}${faker.datatype.number()}`;
+describe("As an admin I want to manage collections.", () => {
+  const startsWith = "CyCollections-";
+  const productName = `${startsWith}${faker.datatype.number()}`;
 
-    let attribute;
-    let productType;
-    let category;
-    let product;
+  let attribute;
+  let productType;
+  let category;
+  let product;
 
-    let defaultChannel;
+  let defaultChannel;
 
-    before(() => {
-      cy.clearSessionData().loginUserViaRequest();
-      productsUtils.deleteProductsStartsWith(startsWith);
-      deleteCollectionsStartsWith(startsWith);
-      deleteShippingStartsWith(startsWith);
-      channelsUtils.deleteChannelsStartsWith(startsWith);
+  before(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    productsUtils.deleteProductsStartsWith(startsWith);
+    deleteCollectionsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
 
-      channelsUtils
-        .getDefaultChannel()
-        .then(channel => {
-          defaultChannel = channel;
-          productsUtils.createTypeAttributeAndCategoryForProduct({ name });
+    channelsUtils
+      .getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        productsUtils.createTypeAttributeAndCategoryForProduct({
+          name: productName,
+        });
+      })
+      .then(
+        ({
+          attribute: attributeResp,
+          productType: productTypeResp,
+          category: categoryResp,
+        }) => {
+          attribute = attributeResp;
+          productType = productTypeResp;
+          category = categoryResp;
+          productsUtils.createProductInChannel({
+            name: productName,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+          });
+        },
+      )
+      .then(({ product: productResp }) => (product = productResp));
+  });
+
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
+
+  it(
+    "should create hidden collection. TC: SALEOR_0301",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
+
+      cy.visit(urlList.collections);
+      cy.expectSkeletonIsVisible();
+
+      createCollection(collectionName, false, defaultChannel)
+        .then(collectionResp => {
+          collection = collectionResp;
+          assignProductsToCollection(productName);
         })
-        .then(
-          ({
-            attribute: attributeResp,
-            productType: productTypeResp,
-            category: categoryResp,
-          }) => {
-            attribute = attributeResp;
-            productType = productTypeResp;
-            category = categoryResp;
-            productsUtils.createProductInChannel({
-              name,
-              channelId: defaultChannel.id,
-              productTypeId: productType.id,
-              attributeId: attribute.id,
-              categoryId: category.id,
-            });
-          },
-        )
-        .then(({ product: productResp }) => (product = productResp));
-    });
+        .then(() => {
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug,
+          }).as("col");
 
-    beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
-    });
+          cy.get("@col")
+            .its("collection.channelListings[isPublished]")
+            .should("eq", false);
+        });
+      // .then(({ collection: resp }) => {
+      //   const isVisible = resp.channelListings[0].isPublished;
+      //   expect(isVisible).to.equal(false);
 
-    xit(
-      "should create hidden collection. TC: SALEOR_0301",
-      { tags: ["@collection", "@allEnv"] },
-      () => {
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
-        let collection;
+      // });
+    },
+  );
+  // include after fixing issue:SALEOR-7646
+  xit(
+    "should create published collection. TC: SALEOR_0302",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
 
-        cy.visit(urlList.collections);
-        cy.expectSkeletonIsVisible();
+      cy.visit(urlList.collections);
+      cy.expectSkeletonIsVisible();
 
-        createCollection(collectionName, false, defaultChannel)
-          .then(collectionResp => {
-            collection = collectionResp;
-            assignProductsToCollection(name);
-          })
-          .then(() => {
-            getCollection({
-              collectionId: collection.id,
-              channelSlug: defaultChannel.slug,
-            });
-          })
-          .then(({ collection: resp }) => {
-            const isVisible = isCollectionVisible(resp, collection.id);
-            expect(isVisible).to.equal(false);
+      createCollection(collectionName, true, defaultChannel)
+        .then(collectionResp => {
+          collection = collectionResp;
+          assignProductsToCollection(productName);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug,
           });
-      },
-    );
+        })
+        .then(({ collection: resp }) => {
+          const isVisible = isCollectionVisible(resp, collection.id);
+          expect(isVisible).to.equal(true);
+        });
+    },
+  );
 
-    it(
-      "should create published collection. TC: SALEOR_0302",
-      { tags: ["@collection", "@allEnv", "@stable"] },
-      () => {
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
-        let collection;
+  xit(
+    "create collection not available for channel. TC: SALEOR_0303",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
+      let channel;
 
-        cy.visit(urlList.collections);
-        cy.expectSkeletonIsVisible();
-
-        createCollection(collectionName, true, defaultChannel)
-          .then(collectionResp => {
-            collection = collectionResp;
-            assignProductsToCollection(name);
-            getCollection({
-              collectionId: collection.id,
-              channelSlug: defaultChannel.slug,
-            });
-          })
-          .then(({ collection: resp }) => {
-            const isVisible = isCollectionVisible(resp, collection.id);
-            expect(isVisible).to.equal(true);
+      createChannel({ name: collectionName })
+        .then(channelResp => {
+          channel = channelResp;
+          updateChannelInProduct(product.id, channel.id);
+        })
+        .then(() => {
+          cy.visit(urlList.collections);
+          cy.expectSkeletonIsVisible();
+          createCollection(collectionName, true, channel);
+        })
+        .then(collectionResp => {
+          collection = collectionResp;
+          assignProductsToCollection(productName);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug,
           });
-      },
-    );
+        })
+        .then(({ collection: resp }) => {
+          const isVisible = isCollectionVisible(resp, collection.id);
+          expect(isVisible).to.equal(false);
+        });
+    },
+  );
+  // include after fixing issue:SALEOR-7646
+  xit(
+    "create published collection with products hidden in listings. TC: SALEOR_0304",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      // Products "hidden in listings" are not displayed in Category listings or search results,
+      // but are listed on Collections
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      let collection;
+      let createdProduct;
 
-    it(
-      "create collection not available for channel. TC: SALEOR_0303",
-      { tags: ["@collection", "@allEnv", "@stable"] },
-      () => {
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
-        let collection;
-        let channel;
-
-        createChannel({ name: collectionName })
-          .then(channelResp => {
-            channel = channelResp;
-            updateChannelInProduct(product.id, channel.id);
-          })
-          .then(() => {
-            cy.visit(urlList.collections);
-            cy.expectSkeletonIsVisible();
-            createCollection(collectionName, true, channel);
-          })
-          .then(collectionResp => {
-            collection = collectionResp;
-            assignProductsToCollection(name);
-            getCollection({
-              collectionId: collection.id,
-              channelSlug: defaultChannel.slug,
-            });
-          })
-          .then(({ collection: resp }) => {
-            const isVisible = isCollectionVisible(resp, collection.id);
-            expect(isVisible).to.equal(false);
+      productsUtils
+        .createProductInChannel({
+          name: collectionName,
+          channelId: defaultChannel.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+          visibleInListings: false,
+        })
+        .then(({ product: productResp }) => (createdProduct = productResp));
+      cy.visit(urlList.collections);
+      cy.expectSkeletonIsVisible();
+      createCollection(collectionName, true, defaultChannel)
+        .then(collectionResp => {
+          collection = collectionResp;
+          assignProductsToCollection(collectionName);
+        })
+        .then(() => {
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug,
           });
-      },
-    );
+        })
+        .then(({ collection: resp }) => {
+          const isVisible = isProductInCollectionVisible(
+            resp,
+            createdProduct.id,
+          );
+          expect(isVisible).to.equal(true);
+        })
+        .then(() => {
+          searchInShop(createdProduct.name);
+        })
+        .then(resp => {
+          const isVisible = isProductVisibleInSearchResult(
+            resp,
+            createdProduct.name,
+          );
+          expect(isVisible).to.equal(false);
+        });
+    },
+  );
 
-    it(
-      "create published collection with products hidden in listings. TC: SALEOR_0304",
-      { tags: ["@collection", "@allEnv", "@stable"] },
-      () => {
-        // Products "hidden in listings" are not displayed in Category listings or search results,
-        // but are listed on Collections
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
-        let collection;
-        let createdProduct;
+  xit(
+    "should delete collection. TC: SALEOR_0305",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        cy.visit(collectionDetailsUrl(collectionResp.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("RemoveCollection")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
+        getCollection({ collectionId: collectionResp.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+      });
+    },
+  );
+
+  xit(
+    "delete several collections on collections list page. TC: SALEOR_0309",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const deleteSeveral = "delete-several-";
+      const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      let firstCollection;
+      let secondCollection;
+
+      createCollectionRequest(firstCollectionName).then(collectionResp => {
+        firstCollection = collectionResp;
+      });
+
+      createCollectionRequest(secondCollectionName).then(collectionResp => {
+        secondCollection = collectionResp;
+
+        cy.visit(urlList.collections)
+          .searchInTable(deleteSeveral)
+          .get(collectionRow(firstCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(collectionRow(secondCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .addAliasToGraphRequest("CollectionBulkDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
+
+        getCollection({ collectionId: firstCollection.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+        getCollection({ collectionId: secondCollection.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+      });
+    },
+  );
+
+  xit(
+    "should assign product to collection. TC: SALEOR_0307",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+
+      let collection;
+      let productToAssign;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        collection = collectionResp;
 
         productsUtils
           .createProductInChannel({
-            name: collectionName,
+            name: productName,
             channelId: defaultChannel.id,
             productTypeId: productType.id,
             attributeId: attribute.id,
             categoryId: category.id,
             visibleInListings: false,
           })
-          .then(({ product: productResp }) => (createdProduct = productResp));
-        cy.visit(urlList.collections);
-        cy.expectSkeletonIsVisible();
-        createCollection(collectionName, true, defaultChannel)
-          .then(collectionResp => {
-            collection = collectionResp;
-            assignProductsToCollection(collectionName);
-          })
-          .then(() => {
-            getCollection({
-              collectionId: collection.id,
-              channelSlug: defaultChannel.slug,
-            });
-          })
-          .then(({ collection: resp }) => {
-            const isVisible = isProductInCollectionVisible(
-              resp,
-              createdProduct.id,
-            );
-            expect(isVisible).to.equal(true);
-          })
-          .then(() => {
-            searchInShop(createdProduct.name);
-          })
-          .then(resp => {
-            const isVisible = isProductVisibleInSearchResult(
-              resp,
-              createdProduct.name,
-            );
-            expect(isVisible).to.equal(false);
-          });
-      },
-    );
+          .then(({ product: productResp }) => {
+            productToAssign = productResp;
 
-    it(
-      "should delete collection. TC: SALEOR_0305",
-      { tags: ["@collection", "@allEnv", "@stable"] },
-      () => {
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
+            cy.visit(collectionDetailsUrl(collection.id));
+            assignProductsToCollection(productToAssign.name);
 
-        createCollectionRequest(collectionName).then(collectionResp => {
-          cy.visit(collectionDetailsUrl(collectionResp.id))
-            .get(BUTTON_SELECTORS.deleteButton)
-            .click()
-            .addAliasToGraphRequest("RemoveCollection")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
-          getCollection({ collectionId: collectionResp.id, auth: "auth" })
-            .its("collection")
-            .should("be.null");
-        });
-      },
-    );
-
-    it(
-      "delete several collections on collections list page. TC: SALEOR_0309",
-      { tags: ["@collection", "@allEnv"] },
-      () => {
-        const deleteSeveral = "delete-several-";
-        const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
-        const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
-        let firstCollection;
-        let secondCollection;
-
-        createCollectionRequest(firstCollectionName).then(collectionResp => {
-          firstCollection = collectionResp;
-        });
-
-        createCollectionRequest(secondCollectionName).then(collectionResp => {
-          secondCollection = collectionResp;
-          cy.visit(urlList.collections)
-            .searchInTable(deleteSeveral)
-            .get(collectionRow(firstCollection.id))
-            .find(BUTTON_SELECTORS.checkbox)
-            .click()
-            .get(collectionRow(secondCollection.id))
-            .find(BUTTON_SELECTORS.checkbox)
-            .click()
-            .get(BUTTON_SELECTORS.deleteIcon)
-            .click()
-            .addAliasToGraphRequest("CollectionBulkDelete")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
-
-          getCollection({ collectionId: firstCollection.id, auth: "auth" })
-            .its("collection")
-            .should("be.null");
-          getCollection({ collectionId: secondCollection.id, auth: "auth" })
-            .its("collection")
-            .should("be.null");
-        });
-      },
-    );
-
-    xit(
-      "should assign product to collection. TC: SALEOR_0307",
-      { tags: ["@collection", "@allEnv"] },
-      () => {
-        const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
-        const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
-
-        let collection;
-        let productToAssign;
-
-        createCollectionRequest(collectionName).then(collectionResp => {
-          collection = collectionResp;
-
-          productsUtils
-            .createProductInChannel({
-              name: productName,
-              channelId: defaultChannel.id,
-              productTypeId: productType.id,
-              attributeId: attribute.id,
-              categoryId: category.id,
-              visibleInListings: false,
-            })
-            .then(({ product: productResp }) => {
-              productToAssign = productResp;
-
-              cy.visit(collectionDetailsUrl(collection.id));
-              assignProductsToCollection(productToAssign.name);
-
-              getCollection({ collectionId: collection.id, auth: "auth" })
-                .its("collection.products.edges")
-                .should("have.length", 1)
-                .then(productArray => {
-                  expect(productArray[0].node.id).to.equal(productToAssign.id);
-                });
-            });
-        });
-      },
-    );
-
-    it(
-      "remove product from collection. TC: SALEOR_0308",
-      { tags: ["@collection", "@allEnv"] },
-      () => {
-        const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
-        const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
-        let collection;
-        let productToAssign;
-
-        createCollectionRequest(collectionName).then(collectionResp => {
-          collection = collectionResp;
-
-          productsUtils
-            .createProductInChannel({
-              name: productName,
-              channelId: defaultChannel.id,
-              productTypeId: productType.id,
-              attributeId: attribute.id,
-              categoryId: category.id,
-              visibleInListings: false,
-            })
-            .then(({ product: productResp }) => {
-              productToAssign = productResp;
-
-              addProductToCollection({
-                collectionId: collection.id,
-                productId: productToAssign.id,
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("have.length", 1)
+              .then(productArray => {
+                expect(productArray[0].node.id).to.equal(productToAssign.id);
               });
-
-              cy.visit(collectionDetailsUrl(collection.id));
-
-              getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
-                .its("body.data.product.collections")
-                .should("have.length", 1);
-
-              getCollection({ collectionId: collection.id, auth: "auth" })
-                .its("collection.products.edges")
-                .should("have.length", 1);
-
-              removeProductsFromCollection(productToAssign.name);
-
-              getCollection({ collectionId: collection.id, auth: "auth" })
-                .its("collection.products.edges")
-                .should("be.empty");
-            });
-        });
-      },
-    );
-
-    it(
-      "should update collection. TC: SALEOR_0306",
-      { tags: ["@collection", "@allEnv"] },
-      () => {
-        const collectionName = `${startsWith}${faker.datatype.number()}`;
-        const updatedName = `${startsWith}updatedCollection`;
-
-        createCollectionRequest(collectionName)
-          .then(collectionResp => {
-            cy.visitAndWaitForProgressBarToDisappear(
-              collectionDetailsUrl(collectionResp.id),
-            );
-            updateCollection({ name: updatedName, description: updatedName });
-            getCollection({ collectionId: collectionResp.id, auth: "auth" });
-          })
-          .then(({ collection: collectionResp }) => {
-            expect(collectionResp.name).to.eq(updatedName);
-            const descriptionJson = JSON.parse(collectionResp.description);
-            const descriptionText = descriptionJson.blocks[0].data.text;
-            expect(descriptionText).to.eq(updatedName);
           });
-      },
-    );
-  });
+      });
+    },
+  );
+
+  xit(
+    "remove product from collection. TC: SALEOR_0308",
+    { tags: ["@collection", "@allEnv", "@stable"] },
+    () => {
+      const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
+      const productName = `Product-To-Assign-${startsWith}${faker.datatype.number()}`;
+      let collection;
+      let productToAssign;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        collection = collectionResp;
+
+        productsUtils
+          .createProductInChannel({
+            name: productName,
+            channelId: defaultChannel.id,
+            productTypeId: productType.id,
+            attributeId: attribute.id,
+            categoryId: category.id,
+            visibleInListings: false,
+          })
+          .then(({ product: productResp }) => {
+            productToAssign = productResp;
+
+            addProductToCollection({
+              collectionId: collection.id,
+              productId: productToAssign.id,
+            });
+
+            cy.visit(collectionDetailsUrl(collection.id));
+
+            getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
+              .its("body.data.product.collections")
+              .should("have.length", 1);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("have.length", 1);
+
+            removeProductsFromCollection(productToAssign.name);
+
+            getCollection({ collectionId: collection.id, auth: "auth" })
+              .its("collection.products.edges")
+              .should("be.empty");
+          });
+      });
+    },
+  );
+
+  xit(
+    "should update collection. TC: SALEOR_0306",
+    { tags: ["@collection", "@allEnv"] },
+    () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}updatedCollection`;
+
+      createCollectionRequest(collectionName)
+        .then(collectionResp => {
+          cy.visitAndWaitForProgressBarToDisappear(
+            collectionDetailsUrl(collectionResp.id),
+          );
+          updateCollection({ name: updatedName, description: updatedName });
+          getCollection({ collectionId: collectionResp.id, auth: "auth" });
+        })
+        .then(({ collection: collectionResp }) => {
+          expect(collectionResp.name).to.eq(updatedName);
+          const descriptionJson = JSON.parse(collectionResp.description);
+          const descriptionText = descriptionJson.blocks[0].data.text;
+          expect(descriptionText).to.eq(updatedName);
+        });
+    },
+  );
 });
