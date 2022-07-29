@@ -14,23 +14,25 @@ export function createShipping({
   let shippingZone;
   let warehouse;
 
-  return shippingMethodRequest
-    .createShippingZone(name, address.country, channelId)
-    .then(shippingZoneResp => {
-      shippingZone = shippingZoneResp;
-      warehouseRequest.createWarehouse({
-        name,
-        shippingZone: shippingZone.id,
-        address,
-      });
+  return warehouseRequest
+    .createWarehouse({
+      name,
+      address,
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
+
       updateChannelWarehouses(channelId, warehouse.id);
-      shippingMethodRequest.createShippingRate({
-        name,
-        shippingZone: shippingZone.id,
-      });
+      shippingMethodRequest
+        .createShippingZone(name, address.country, channelId, warehouse.id)
+        .then(shippingZoneResp => {
+          shippingZone = shippingZoneResp;
+
+          shippingMethodRequest.createShippingRate({
+            name,
+            shippingZone: shippingZone.id,
+          });
+        });
     })
     .then(({ shippingMethod: sippingMethodResp }) => {
       shippingMethod = sippingMethodResp;

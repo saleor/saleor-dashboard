@@ -5,6 +5,7 @@ import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
+import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import {
   createShippingZone,
   getShippingZone,
@@ -22,6 +23,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   let defaultChannel;
   let shippingZone;
   let plAddress;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -34,7 +36,11 @@ describe("As a user I should be able to update and delete shipping zone", () => 
       })
       .then(addresses => {
         plAddress = addresses.plAddress;
-        createWarehouse({ name, address: plAddress });
+        createWarehouse({ name, address: plAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
+
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+        });
       });
   });
 
@@ -42,14 +48,16 @@ describe("As a user I should be able to update and delete shipping zone", () => 
     const rateName = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    createShippingZone(name, "US", defaultChannel.id).then(shippingZoneResp => {
-      shippingZone = shippingZoneResp;
-    });
+    createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
+      shippingZoneResp => {
+        shippingZone = shippingZoneResp;
+      },
+    );
   });
 
   it(
     "should be able to update shipping zone. TC: SALEOR_0808",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const updatedName = `${startsWith}Updated`;
 
@@ -64,7 +72,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
         expect(shippingZone.channels).to.have.length(0);
         expect(shippingZone.name).to.eq(updatedName);
         expect(shippingZone.description).to.eq(updatedName);
-        expect(shippingZone.warehouses[0].name).to.eq(name);
+        expect(shippingZone.warehouses).to.have.length(0);
         expect(shippingZone.countries.find(el => el.code === "PL")).to.be.ok;
       });
     },
@@ -72,7 +80,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
 
   it(
     "should be able to delete shipping zone. TC: SALEOR_0809",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       cy.visit(
         shippingZoneDetailsUrl(shippingZone.id),
@@ -83,24 +91,27 @@ describe("As a user I should be able to update and delete shipping zone", () => 
 
   it(
     "should be able to delete several shipping zones on shipping zones list page. TC: SALEOR_0810",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       let secondShippingZone;
 
-      createShippingZone(`${startsWith}Second`, "US", defaultChannel.id).then(
-        shippingZoneResp => {
-          secondShippingZone = shippingZoneResp;
-          enterAndSelectShippings([shippingZone.id, secondShippingZone.id]);
-          cy.get(BUTTON_SELECTORS.deleteSelectedElementsButton)
-            .click()
-            .addAliasToGraphRequest("BulkDeleteShippingZone")
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .wait("@BulkDeleteShippingZone");
-          getShippingZone(shippingZone.id).should("be.null");
-          getShippingZone(secondShippingZone.id).should("be.null");
-        },
-      );
+      createShippingZone(
+        `${startsWith}Second`,
+        "US",
+        defaultChannel.id,
+        warehouse.id,
+      ).then(shippingZoneResp => {
+        secondShippingZone = shippingZoneResp;
+        enterAndSelectShippings([shippingZone.id, secondShippingZone.id]);
+        cy.get(BUTTON_SELECTORS.deleteSelectedElementsButton)
+          .click()
+          .addAliasToGraphRequest("BulkDeleteShippingZone")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .wait("@BulkDeleteShippingZone");
+        getShippingZone(shippingZone.id).should("be.null");
+        getShippingZone(secondShippingZone.id).should("be.null");
+      });
     },
   );
 });

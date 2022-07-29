@@ -6,23 +6,26 @@ import faker from "faker";
 import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
 import { shippingRateUrl, urlList } from "../../../../fixtures/urlList";
+import { updateChannelWarehouses } from "../../../../support/api/requests/Channels";
 import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone,
 } from "../../../../support/api/requests/ShippingMethod";
 import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
+import { createWarehouse } from "../../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
-xdescribe("As a staff user I want to change shop default weight unit", () => {
+describe("As a staff user I want to change shop default weight unit", () => {
   const startsWith = "RecalculateWeight";
   const name = `${startsWith}${faker.datatype.number()}`;
 
   let defaultChannel;
   let usAddress;
   let shippingZone;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -38,14 +41,19 @@ xdescribe("As a staff user I want to change shop default weight unit", () => {
       })
       .then(({ usAddress: usAddressResp }) => {
         usAddress = usAddressResp;
-        createShippingZone(name, "US", defaultChannel.id);
+
+        createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
+
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id);
+        });
       })
       .then(shippingZoneResp => {
         shippingZone = shippingZoneResp;
       });
   });
 
-  // Log in as user with shipping permissions after resolving SALEOR-3407 bug
   it(
     "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
     { tags: ["@shipping", "@allEnv", "@stable"] },
@@ -79,9 +87,8 @@ xdescribe("As a staff user I want to change shop default weight unit", () => {
             .its("response.body");
         })
         .then(responseArray => {
-          const shippingMethods = responseArray.find(
-            element => element.data.shippingZone,
-          ).data.shippingZone.shippingMethods;
+          const shippingMethods =
+            responseArray.data.shippingZone.shippingMethods;
           const rate = shippingMethods.find(
             element => element.id === shippingMethod.id,
           );

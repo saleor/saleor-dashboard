@@ -43,6 +43,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+
         cy.fixture("addresses");
       })
       .then(
@@ -52,22 +53,24 @@ describe("As a user I want to create shipping method with postal codes", () => {
         }) => {
           usAddress = usAddressResp;
           secondUsAddress = secondUsAddressResp;
-          createShippingZone(name, "US", defaultChannel.id);
+
+          createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+            warehouse = warehouseResp;
+
+            updateChannelWarehouses(defaultChannel.id, warehouse.id);
+            createShippingZone(
+              name,
+              "US",
+              defaultChannel.id,
+              warehouse.id,
+            ).then(shippingZoneResp => {
+              shippingZone = shippingZoneResp;
+
+              createTypeAttributeAndCategoryForProduct({ name });
+            });
+          });
         },
       )
-      .then(shippingZoneResp => {
-        shippingZone = shippingZoneResp;
-        createWarehouse({
-          name,
-          shippingZone: shippingZone.id,
-          address: usAddress,
-        });
-      })
-      .then(warehouseResp => {
-        warehouse = warehouseResp;
-        updateChannelWarehouses(defaultChannel.id, warehouse.id);
-        createTypeAttributeAndCategoryForProduct({ name });
-      })
       .then(({ attribute, productType, category }) => {
         createProductInChannel({
           name,
