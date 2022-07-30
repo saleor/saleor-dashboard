@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {
   isScrolledToBottom,
@@ -14,7 +15,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
-import React from "react";
+import React, { ReactNode } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -32,6 +33,7 @@ export interface MultiAutocompleteChoiceType {
   label: string;
   value: any;
   disabled?: boolean;
+  badge?: ReactNode;
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
@@ -123,6 +125,7 @@ const useStyles = makeStyles(
       whiteSpace: "normal",
     },
     menuItemLabel: {
+      display: "flex",
       overflowWrap: "break-word",
     },
     progress: {},
@@ -264,7 +267,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                   disabled={value.disabled}
                   disableRipple
                 />
-                <span className={classes.menuItemLabel}>{value.label}</span>
+                <span className={classes.menuItemLabel}>
+                  {value.badge}
+                  {value.badge && <HorizontalSpacer spacing={1} />}
+                  {value.label}
+                </span>
               </MenuItem>
             ))}
             {displayValues?.length > 0 && choices.length > 0 && (
@@ -297,7 +304,10 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     className={classes.checkbox}
                     disableRipple
                   />
+
                   <span className={classes.menuItemLabel}>
+                    {suggestion.badge}
+                    {suggestion.badge && <HorizontalSpacer spacing={1} />}
                     {suggestion.label}
                   </span>
                 </MenuItem>
