@@ -48,7 +48,12 @@ export const channelWarehouses = gql`
         }
       }
     }
-    allWarehouses: warehouses {
+  }
+`;
+
+export const warehousesCount = gql`
+  query WarehousesCount {
+    warehouses {
       totalCount
     }
   }

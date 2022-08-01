@@ -18,6 +18,8 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
   useChannelWarehousesQuery,
+  useShippingZonesCountQuery,
+  useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -164,6 +166,11 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const {
+    data: shippingZonesCountData,
+    loading: shippingZonesCountLoading,
+  } = useShippingZonesCountQuery();
+
+  const {
     data: channelShippingZonesData,
     loading: channelsShippingZonesLoading,
   } = useChannelShippingZonesQuery({
@@ -181,6 +188,11 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   } = useShippingZonesSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
+  const {
+    data: warehousesCountData,
+    loading: warehousesCountLoading,
+  } = useWarehousesCountQuery();
 
   const {
     data: channelWarehousesData,
@@ -216,14 +228,22 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </Backlink>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
-          channelShippingZones={channelShippingZonesData}
+          channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
+            ({ node }) => node,
+          )}
+          allShippingZonesCount={
+            shippingZonesCountData?.shippingZones?.totalCount
+          }
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
             fetchMoreShippingZones,
           )}
-          channelWarehouses={channelWarehousesData}
+          channelWarehouses={channelWarehousesData?.warehouses?.edges?.map(
+            ({ node }) => node,
+          )}
+          allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
           searchWarehouses={searchWarehouses}
           searchWarehousesData={searchWarehousesResult.data}
           fetchMoreWarehouses={getSearchFetchMoreProps(
@@ -234,6 +254,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           disabled={
             updateChannelOpts.loading ||
             loading ||
+            shippingZonesCountLoading ||
+            warehousesCountLoading ||
             channelsShippingZonesLoading ||
             channelsWarehousesLoading
           }

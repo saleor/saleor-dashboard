@@ -8016,7 +8016,12 @@ export type ChannelShippingZonesQueryVariables = Exact<{
 }>;
 
 
-export type ChannelShippingZonesQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } | null, allShippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null } | null };
+export type ChannelShippingZonesQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } | null };
+
+export type ShippingZonesCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShippingZonesCountQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null } | null };
 
 export type ShopSettingsUpdateMutationVariables = Exact<{
   shopSettingsInput: ShopSettingsInput;
@@ -8468,7 +8473,12 @@ export type ChannelWarehousesQueryVariables = Exact<{
 }>;
 
 
-export type ChannelWarehousesQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null, allWarehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+export type ChannelWarehousesQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
+
+export type WarehousesCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarehousesCountQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
 
 export type WebhookCreateMutationVariables = Exact<{
   input: WebhookCreateInput;

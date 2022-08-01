@@ -14170,9 +14170,6 @@ export const ChannelShippingZonesDocument = gql`
       }
     }
   }
-  allShippingZones: shippingZones {
-    totalCount
-  }
 }
     `;
 
@@ -14203,6 +14200,40 @@ export function useChannelShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.
 export type ChannelShippingZonesQueryHookResult = ReturnType<typeof useChannelShippingZonesQuery>;
 export type ChannelShippingZonesLazyQueryHookResult = ReturnType<typeof useChannelShippingZonesLazyQuery>;
 export type ChannelShippingZonesQueryResult = Apollo.QueryResult<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>;
+export const ShippingZonesCountDocument = gql`
+    query ShippingZonesCount {
+  shippingZones {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useShippingZonesCountQuery__
+ *
+ * To run a query within a React component, call `useShippingZonesCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShippingZonesCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShippingZonesCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShippingZonesCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountDocument, options);
+      }
+export function useShippingZonesCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountDocument, options);
+        }
+export type ShippingZonesCountQueryHookResult = ReturnType<typeof useShippingZonesCountQuery>;
+export type ShippingZonesCountLazyQueryHookResult = ReturnType<typeof useShippingZonesCountLazyQuery>;
+export type ShippingZonesCountQueryResult = Apollo.QueryResult<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>;
 export const ShopSettingsUpdateDocument = gql`
     mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
@@ -16514,9 +16545,6 @@ export const ChannelWarehousesDocument = gql`
       }
     }
   }
-  allWarehouses: warehouses {
-    totalCount
-  }
 }
     `;
 
@@ -16547,6 +16575,40 @@ export function useChannelWarehousesLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type ChannelWarehousesQueryHookResult = ReturnType<typeof useChannelWarehousesQuery>;
 export type ChannelWarehousesLazyQueryHookResult = ReturnType<typeof useChannelWarehousesLazyQuery>;
 export type ChannelWarehousesQueryResult = Apollo.QueryResult<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>;
+export const WarehousesCountDocument = gql`
+    query WarehousesCount {
+  warehouses {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useWarehousesCountQuery__
+ *
+ * To run a query within a React component, call `useWarehousesCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehousesCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehousesCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWarehousesCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountDocument, options);
+      }
+export function useWarehousesCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountDocument, options);
+        }
+export type WarehousesCountQueryHookResult = ReturnType<typeof useWarehousesCountQuery>;
+export type WarehousesCountLazyQueryHookResult = ReturnType<typeof useWarehousesCountLazyQuery>;
+export type WarehousesCountQueryResult = Apollo.QueryResult<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>;
 export const WebhookCreateDocument = gql`
     mutation WebhookCreate($input: WebhookCreateInput!) {
   webhookCreate(input: $input) {
