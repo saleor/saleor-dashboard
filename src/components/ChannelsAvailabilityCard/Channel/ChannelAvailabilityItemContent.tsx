@@ -54,7 +54,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeDate(new Date(dateNow).toISOString());
+  const todayDate = localizeDate(new Date(dateNow).toISOString(), "YYYY-MM-DD");
 
   const visibleMessage = (date: string) =>
     intl.formatMessage(
