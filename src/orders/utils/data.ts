@@ -349,7 +349,7 @@ export const getWarehouseStock = (
 export const isLineAvailableInWarehouse = (
   line: OrderFulfillLineFragment | OrderLineStockDataFragment,
   warehouse: WarehouseFragment,
-) => {
+): boolean => {
   if (!line?.variant?.stocks) {
     return false;
   }
@@ -363,7 +363,7 @@ export const isLineAvailableInWarehouse = (
 export const getLineAvailableQuantityInWarehouse = (
   line: OrderFulfillLineFragment,
   warehouse: WarehouseFragment,
-) => {
+): number => {
   if (!line?.variant?.stocks) {
     return 0;
   }
@@ -374,9 +374,19 @@ export const getLineAvailableQuantityInWarehouse = (
   return 0;
 };
 
+export const getLineAllocationWithHighestQuantity = (
+  line: OrderFulfillLineFragment,
+): OrderFulfillLineFragment["allocations"][number] | undefined =>
+  line.allocations.reduce((prevAllocation, allocation) => {
+    if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
+      return allocation;
+    }
+    return prevAllocation;
+  }, null);
+
 export const getWarehouseWithHighestAvailableQuantity = (
   lines?: OrderLineFragment[],
-) => {
+): WarehouseFragment | undefined => {
   let highestAvailableQuantity = 0;
 
   return lines?.reduce(

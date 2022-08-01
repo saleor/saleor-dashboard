@@ -166,7 +166,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         >
           <div className={classes.warehouseButtonContent}>
             <div className={classes.warehouseButtonContentText}>
-              {lineFormWarehouse.name ?? <Skeleton />}
+              {lineFormWarehouse?.name ?? <Skeleton />}
             </div>
             <ChevronIcon />
           </div>

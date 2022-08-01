@@ -38,6 +38,7 @@ import {
 } from "@saleor/orders/urls";
 import {
   getAttributesCaption,
+  getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
@@ -100,17 +101,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   >(
     (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
       line => {
-        const highestQuantityAllocation = line.allocations.reduce(
-          (prevAllocation, allocation) => {
-            if (
-              !prevAllocation ||
-              prevAllocation.quantity < allocation.quantity
-            ) {
-              return allocation;
-            }
-            return prevAllocation;
-          },
-          null,
+        const highestQuantityAllocation = getLineAllocationWithHighestQuantity(
+          line,
         );
 
         return {

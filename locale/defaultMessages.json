@@ -2598,6 +2598,10 @@
     "context": "header",
     "string": "Edit Media"
   },
+  "Ila7WO": {
+    "context": "change warehouse dialog description",
+    "string": "Choose warehouse from which you want to fulfill {productName}"
+  },
   "ImTelT": {
     "context": "card subtitle",
     "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
@@ -5885,10 +5889,6 @@
   "j3yE7I": {
     "context": "order history message",
     "string": "Shipping tracking number was sent to customer"
-  },
-  "j5hYcn": {
-    "context": "change warehouse dialog description",
-    "string": "Choose warehouse from you want to fulfill {productName}"
   },
   "j8PV7E": {
     "context": "attribute values",

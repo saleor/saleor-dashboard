@@ -20,20 +20,17 @@ export interface OrderFulfillStockExceededDialogLineProps {
 const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
   const { line: genericLine, warehouseId, formsetData } = props;
 
-  const line = genericLine
-    ? "orderLine" in genericLine
-      ? genericLine.orderLine
-      : genericLine
-    : null;
   const classes = useStyles(props);
-
-  const stock = line?.variant?.stocks.find(
-    stock => stock.warehouse.id === warehouseId,
-  );
 
   if (!genericLine) {
     return null;
   }
+
+  const line = "orderLine" in genericLine ? genericLine.orderLine : genericLine;
+
+  const stock = line?.variant?.stocks.find(
+    stock => stock.warehouse.id === warehouseId,
+  );
 
   return (
     <TableRow key={line?.id}>

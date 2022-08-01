@@ -126,11 +126,8 @@ export type OrderUrlDialog =
 
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 
-export enum OrderFulfillUrlFiltersEnum {
-  warehouseId = "warehouseId",
-  lineId = "lineId",
-}
-export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersEnum>;
+export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
+export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
 export type OrderFulfillUrlDialog = "change-warehouse";
 export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> &
   OrderFulfillUrlFilters;
