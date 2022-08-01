@@ -31,7 +31,7 @@ describe("As a staff user I want have different shipping method prices for each 
 
   it(
     "should be able to display different price for each channel. TC: SALEOR_0805",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       const defaultChannelPrice = 11;

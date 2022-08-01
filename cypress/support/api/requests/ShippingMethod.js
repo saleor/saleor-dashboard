@@ -37,7 +37,34 @@ export function createShippingRate({
   return cy.sendRequestWithQuery(mutation).its("body.data.shippingPriceCreate");
 }
 
-export function createShippingZone(name, country, channelId) {
+export function createShippingZone(name, country, channelId, warehouseId) {
+  const channelsLines = getValueWithDefault(
+    channelId,
+    `addChannels:["${channelId}"]`,
+  );
+  const mutation = `mutation{
+    shippingZoneCreate(input:{
+      name: "${name}"
+      countries: "${country}"
+      ${channelsLines}
+      addWarehouses: ["${warehouseId}"]
+    }){
+      shippingZone{
+        id
+        name
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.shippingZoneCreate.shippingZone");
+}
+
+export function createShippingZoneWithoutWarehouse(name, country, channelId) {
   const channelsLines = getValueWithDefault(
     channelId,
     `addChannels:["${channelId}"]`,

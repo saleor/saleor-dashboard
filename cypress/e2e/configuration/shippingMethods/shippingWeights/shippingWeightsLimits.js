@@ -42,24 +42,24 @@ describe("As a staff user I want to manage shipping weights", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+
         cy.fixture("addresses");
       })
       .then(({ usAddress: usAddressResp }) => {
         usAddress = usAddressResp;
-        createShippingZone(name, "US", defaultChannel.id);
-      })
-      .then(shippingZoneResp => {
-        shippingZone = shippingZoneResp;
-        createWarehouse({
-          name,
-          shippingZone: shippingZone.id,
-          address: usAddress,
+
+        createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
+
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
+            shippingZoneResp => {
+              shippingZone = shippingZoneResp;
+
+              createTypeAttributeAndCategoryForProduct({ name });
+            },
+          );
         });
-      })
-      .then(warehouseResp => {
-        warehouse = warehouseResp;
-        updateChannelWarehouses(defaultChannel.id, warehouse.id);
-        createTypeAttributeAndCategoryForProduct({ name });
       })
       .then(({ attribute, productType, category }) => {
         createProductInChannel({
