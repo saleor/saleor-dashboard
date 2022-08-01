@@ -11,11 +11,13 @@ export function isUnnamed(webhook: WebhookFragment): boolean {
   return ["", null].includes(webhook?.name);
 }
 
-const isWebhookInPreview = (
-  webhook: WebhookEventTypeSyncEnum | WebhookEventTypeAsyncEnum,
-) =>
-  webhook === WebhookEventTypeSyncEnum.CHECKOUT_CALCULATE_TAXES ||
-  webhook === WebhookEventTypeSyncEnum.ORDER_CALCULATE_TAXES;
+type WebhookEventType = WebhookEventTypeSyncEnum | WebhookEventTypeAsyncEnum;
+
+const isWebhookInPreview = (webhook: WebhookEventType) =>
+  ([
+    WebhookEventTypeSyncEnum.CHECKOUT_CALCULATE_TAXES,
+    WebhookEventTypeSyncEnum.ORDER_CALCULATE_TAXES,
+  ] as WebhookEventType[]).includes(webhook);
 
 export function mapSyncEventsToChoices(
   events: WebhookEventTypeSyncEnum[],
