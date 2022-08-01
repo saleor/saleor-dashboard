@@ -27,7 +27,6 @@ import {
   mapNodeToChoice,
   mapSlugNodeToChoice,
 } from "@saleor/utils/maps";
-import isArray from "lodash/isArray";
 import moment from "moment-timezone";
 
 import {
@@ -238,12 +237,12 @@ const parseFilterValue = (
   params: ProductListUrlFilters,
   key: string,
 ): {
-  type: "boolean" | "date" | "dateTime" | "string";
+  type: "boolean" | "date" | "dateTime" | "numeric" | "string";
   isMulti: boolean;
   value: string[];
 } => {
   const value = params.attributes[key];
-  const isMulti = isArray(params.attributes[key]);
+  const isMulti = params.attributes[key].length > 1;
 
   const isBooleanValue = value.every(val => val === "true" || val === "false");
   const isDateValue = (isMulti ? value : [value]).some(val =>
@@ -252,8 +251,9 @@ const parseFilterValue = (
   const isDateTimeValue = (isMulti ? value : [value]).some(val =>
     moment(val, moment.ISO_8601, true).isValid(),
   );
+  const isNumericValue = value.some(value => !isNaN(parseFloat(value)));
 
-  const data = { isMulti, value: (isMulti ? value : [value]) as string[] };
+  const data = { isMulti, value };
 
   if (isBooleanValue) {
     return { ...data, type: "boolean" };
@@ -261,6 +261,8 @@ const parseFilterValue = (
     return { ...data, type: "date" };
   } else if (isDateTimeValue) {
     return { ...data, type: "dateTime" };
+  } else if (isNumericValue) {
+    return { ...data, type: "numeric" };
   }
   return { ...data, type: "string" };
 };
@@ -315,6 +317,15 @@ function getFilteredAttributeValue(
                 gte: value[0] || null,
                 lte: isMulti ? value[1] || null : value[0],
               }),
+            };
+
+          case "numeric":
+            return {
+              ...name,
+              valuesRange: {
+                gte: value[0] || undefined,
+                lte: isMulti ? value[1] || undefined : value[0] || undefined,
+              },
             };
 
           default:

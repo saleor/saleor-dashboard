@@ -14,6 +14,7 @@ import {
   createDateField,
   createDateTimeField,
   createKeyValueField,
+  createNumberField,
   createOptionsField,
   createPriceField,
 } from "@saleor/utils/filters/fields";
@@ -121,6 +122,9 @@ export function createFilterStructure(
   const dateTimeAttributes = attributes.filter(
     filterByType(AttributeInputTypeEnum.DATE_TIME),
   );
+  const numericAttributes = attributes.filter(
+    filterByType(AttributeInputTypeEnum.NUMERIC),
+  );
 
   const defaultAttributes = opts.attributes.filter(
     ({ inputType }) =>
@@ -128,6 +132,7 @@ export function createFilterStructure(
         AttributeInputTypeEnum.BOOLEAN,
         AttributeInputTypeEnum.DATE,
         AttributeInputTypeEnum.DATE_TIME,
+        AttributeInputTypeEnum.NUMERIC,
       ].includes(inputType),
   );
 
@@ -267,6 +272,14 @@ export function createFilterStructure(
     })),
     ...dateTimeAttributes.map(attr => ({
       ...createDateTimeField(attr.slug, attr.name, {
+        min: attr.value[0],
+        max: attr.value[1] ?? attr.value[0],
+      }),
+      active: attr.active,
+      group: ProductFilterKeys.attributes,
+    })),
+    ...numericAttributes.map(attr => ({
+      ...createNumberField(attr.slug, attr.name, {
         min: attr.value[0],
         max: attr.value[1] ?? attr.value[0],
       }),
