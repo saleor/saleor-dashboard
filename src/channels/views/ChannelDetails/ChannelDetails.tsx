@@ -216,18 +216,14 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </Backlink>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
-          channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
-            ({ node }) => node,
-          )}
+          channelShippingZones={channelShippingZonesData}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
             fetchMoreShippingZones,
           )}
-          channelWarehouses={channelWarehousesData?.warehouses?.edges?.map(
-            ({ node }) => node,
-          )}
+          channelWarehouses={channelWarehousesData}
           searchWarehouses={searchWarehouses}
           searchWarehousesData={searchWarehousesResult.data}
           fetchMoreWarehouses={getSearchFetchMoreProps(

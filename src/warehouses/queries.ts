@@ -48,5 +48,8 @@ export const channelWarehouses = gql`
         }
       }
     }
+    allWarehouses: warehouses {
+      totalCount
+    }
   }
 `;

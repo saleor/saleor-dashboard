@@ -17,12 +17,7 @@ const messages = defineMessages({
 });
 
 const AssignmentList: React.FC<AssignmentListProps> = props => {
-  const {
-    items,
-    itemsName,
-    fetchMoreItems: { totalCount },
-    removeItem,
-  } = props;
+  const { items, itemsName, totalCount = 0, removeItem } = props;
 
   const intl = useIntl();
   const classes = useStyles();

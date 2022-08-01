@@ -70,5 +70,8 @@ export const channelShippingZones = gql`
         }
       }
     }
+    allShippingZones: shippingZones {
+      totalCount
+    }
   }
 `;

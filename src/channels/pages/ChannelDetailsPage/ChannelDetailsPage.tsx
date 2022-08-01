@@ -9,6 +9,8 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import {
   ChannelDetailsFragment,
   ChannelErrorFragment,
+  ChannelShippingZonesQuery,
+  ChannelWarehousesQuery,
   CountryCode,
   CountryFragment,
   SearchShippingZonesQuery,
@@ -43,10 +45,10 @@ export interface ChannelDetailsPageProps<TErrors> {
   saveButtonBarState: ConfirmButtonTransitionState;
   searchShippingZonesData?: SearchData;
   fetchMoreShippingZones: FetchMoreProps;
-  channelShippingZones?: ChannelShippingZones;
+  channelShippingZones?: ChannelShippingZonesQuery;
   searchWarehousesData?: SearchData;
   fetchMoreWarehouses: FetchMoreProps;
-  channelWarehouses?: ChannelWarehouses;
+  channelWarehouses?: ChannelWarehousesQuery;
   countries: CountryFragment[];
   onDelete?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
@@ -68,11 +70,11 @@ const ChannelDetailsPage = function<TErrors>({
   searchShippingZones,
   searchShippingZonesData,
   fetchMoreShippingZones,
-  channelShippingZones = [],
+  channelShippingZones,
   searchWarehouses,
   searchWarehousesData,
   fetchMoreWarehouses,
-  channelWarehouses = [],
+  channelWarehouses,
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
@@ -83,12 +85,17 @@ const ChannelDetailsPage = function<TErrors>({
     setSelectedCountryDisplayName,
   ] = useStateFromProps(channel?.defaultCountry.country || "");
 
+  const channelShippingZonesNodes =
+    channelShippingZones?.shippingZones?.edges?.map(({ node }) => node) || [];
+  const channelWarehousesNodes =
+    channelWarehouses?.warehouses?.edges?.map(({ node }) => node) || [];
+
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
-  >(channelShippingZones);
+  >(channelShippingZonesNodes);
   const [warehousesToDisplay, setWarehousesToDisplay] = useStateFromProps<
     ChannelWarehouses
-  >(channelWarehouses);
+  >(channelWarehousesNodes);
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
@@ -268,6 +275,9 @@ const ChannelDetailsPage = function<TErrors>({
                   removeShippingZone={removeShippingZone}
                   searchShippingZones={searchShippingZones}
                   fetchMoreShippingZones={fetchMoreShippingZones}
+                  totalCount={
+                    channelShippingZones?.allShippingZones?.totalCount
+                  }
                 />
                 <CardSpacer />
                 <Warehouses
@@ -277,6 +287,7 @@ const ChannelDetailsPage = function<TErrors>({
                   removeWarehouse={removeWarehouse}
                   searchWarehouses={searchWarehouses}
                   fetchMoreWarehouses={fetchMoreWarehouses}
+                  totalCount={channelWarehouses?.allWarehouses?.totalCount}
                 />
               </div>
             </Grid>

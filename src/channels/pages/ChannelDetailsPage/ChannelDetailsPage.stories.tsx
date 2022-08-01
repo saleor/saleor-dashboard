@@ -29,36 +29,68 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
     country: name,
     __typename: "CountryDisplay",
   })),
-  channelShippingZones: [
-    {
-      __typename: "ShippingZone",
-      id: "zone-1",
-      name: "Europe",
+  channelShippingZones: {
+    __typename: "Query",
+    allShippingZones: {
+      __typename: "ShippingZoneCountableConnection",
+      totalCount: 10,
     },
-    {
-      __typename: "ShippingZone",
-      id: "zone-2",
-      name: "USA",
+    shippingZones: {
+      __typename: "ShippingZoneCountableConnection",
+      edges: [
+        {
+          __typename: "ShippingZoneCountableEdge",
+          node: {
+            __typename: "ShippingZone",
+            id: "zone-1",
+            name: "Europe",
+          },
+        },
+        {
+          __typename: "ShippingZoneCountableEdge",
+          node: {
+            __typename: "ShippingZone",
+            id: "zone-2",
+            name: "USA",
+          },
+        },
+      ],
     },
-  ],
+  },
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
     onFetchMore: () => undefined,
     totalCount: 0,
   },
-  channelWarehouses: [
-    {
-      __typename: "Warehouse",
-      id: "warehouse-1",
-      name: "Warehouse 1",
+  channelWarehouses: {
+    __typename: "Query",
+    allWarehouses: {
+      __typename: "WarehouseCountableConnection",
+      totalCount: 10,
     },
-    {
-      __typename: "Warehouse",
-      id: "warehouse-2",
-      name: "Warehouse 2",
+    warehouses: {
+      __typename: "WarehouseCountableConnection",
+      edges: [
+        {
+          __typename: "WarehouseCountableEdge",
+          node: {
+            __typename: "Warehouse",
+            id: "warehouse-1",
+            name: "Warehouse 1",
+          },
+        },
+        {
+          __typename: "WarehouseCountableEdge",
+          node: {
+            __typename: "Warehouse",
+            id: "warehouse-2",
+            name: "Warehouse 2",
+          },
+        },
+      ],
     },
-  ],
+  },
   fetchMoreWarehouses: {
     loading: false,
     hasMore: false,

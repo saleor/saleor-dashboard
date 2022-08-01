@@ -10,6 +10,7 @@ export interface AssignmentListProps {
   itemsChoices: AssignItem[];
   itemsName: string;
   fetchMoreItems: FetchMoreProps;
+  totalCount: number;
   inputName: string;
   dataTestId: string;
   addItem: (id: string) => void;

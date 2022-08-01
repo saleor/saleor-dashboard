@@ -14170,6 +14170,9 @@ export const ChannelShippingZonesDocument = gql`
       }
     }
   }
+  allShippingZones: shippingZones {
+    totalCount
+  }
 }
     `;
 
@@ -16510,6 +16513,9 @@ export const ChannelWarehousesDocument = gql`
         name
       }
     }
+  }
+  allWarehouses: warehouses {
+    totalCount
   }
 }
     `;
