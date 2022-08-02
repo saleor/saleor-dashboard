@@ -180,6 +180,9 @@ export type AppExtensionFilterInput = {
 
 /** All places where app extension can be mounted. */
 export enum AppExtensionMountEnum {
+  CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
+  CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
+  CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
   PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
   PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
   PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
@@ -1216,6 +1219,8 @@ export type CountryFilterInput = {
 /** An enumeration. */
 export enum CustomerEventsEnum {
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
+  ACCOUNT_ACTIVATED = 'ACCOUNT_ACTIVATED',
+  ACCOUNT_DEACTIVATED = 'ACCOUNT_DEACTIVATED',
   PASSWORD_RESET_LINK_SENT = 'PASSWORD_RESET_LINK_SENT',
   PASSWORD_RESET = 'PASSWORD_RESET',
   EMAIL_CHANGED_REQUEST = 'EMAIL_CHANGED_REQUEST',
@@ -3436,7 +3441,8 @@ export enum PermissionEnum {
   MANAGE_SETTINGS = 'MANAGE_SETTINGS',
   MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS',
   MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
-  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS'
+  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
+  HANDLE_TAXES = 'HANDLE_TAXES'
 }
 
 export type PermissionGroupCreateInput = {
@@ -3712,14 +3718,18 @@ export type ProductFilterInput = {
   categories?: InputMaybe<Array<Scalars['ID']>>;
   hasCategory?: InputMaybe<Scalars['Boolean']>;
   attributes?: InputMaybe<Array<AttributeInput>>;
+  /** Filter by variants having specific stock status. */
   stockAvailability?: InputMaybe<StockAvailability>;
   stocks?: InputMaybe<ProductStockFilterInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   price?: InputMaybe<PriceRangeInput>;
+  /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
+  /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   productTypes?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter on whether product is a gift card or not. */
   giftCard?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
@@ -4467,6 +4477,11 @@ export enum StorePaymentMethodEnum {
   NONE = 'NONE'
 }
 
+/** An enumeration. */
+export enum ThumbnailFormatEnum {
+  WEBP = 'WEBP'
+}
+
 export type TimePeriodInputType = {
   /** The length of the period. */
   amount: Scalars['Int'];
@@ -4742,6 +4757,7 @@ export type VoucherFilterInput = {
   started?: InputMaybe<DateTimeRangeInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type VoucherInput = {
@@ -5020,12 +5036,19 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
+  /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  /** A draft order is updated. */
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  /** A draft order is deleted. */
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  /** A sale is created. */
   SALE_CREATED = 'SALE_CREATED',
+  /** A sale is updated. */
   SALE_UPDATED = 'SALE_UPDATED',
+  /** A sale is deleted. */
   SALE_DELETED = 'SALE_DELETED',
+  /** A sale is activated or deactivated. */
   SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
@@ -5057,7 +5080,9 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   /** A product variant is deleted. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
@@ -5081,6 +5106,12 @@ export enum WebhookEventTypeAsyncEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page type is deleted. */
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new permission group is created. */
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  /** A permission group is updated. */
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  /** A permission group is deleted. */
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -5093,12 +5124,17 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  /** A staff user is deleted */
+  /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
+  /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
+  /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
+  /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   /** A new warehouse created. */
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
@@ -5192,12 +5228,19 @@ export enum WebhookEventTypeEnum {
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
+  /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  /** A draft order is updated. */
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  /** A draft order is deleted. */
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  /** A sale is created. */
   SALE_CREATED = 'SALE_CREATED',
+  /** A sale is updated. */
   SALE_UPDATED = 'SALE_UPDATED',
+  /** A sale is deleted. */
   SALE_DELETED = 'SALE_DELETED',
+  /** A sale is activated or deactivated. */
   SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
@@ -5229,7 +5272,9 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   /** A product variant is deleted. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
@@ -5253,6 +5298,12 @@ export enum WebhookEventTypeEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page type is deleted. */
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new permission group is created. */
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  /** A permission group is updated. */
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  /** A permission group is deleted. */
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -5265,12 +5316,17 @@ export enum WebhookEventTypeEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  /** A staff user is deleted */
+  /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
+  /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
+  /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
+  /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   /** A new warehouse created. */
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
@@ -5286,29 +5342,81 @@ export enum WebhookEventTypeEnum {
   VOUCHER_DELETED = 'VOUCHER_DELETED',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY',
+  /** Authorize payment. */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
+  /** Capture payment. */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
+  /** Confirm payment. */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
+  /** Listing available payment gateways. */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
+  /** Process payment. */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
+  /** Refund payment. */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
+  /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
+  /**
+   * Event called for checkout tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
+  /**
+   * Event called for order tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
+  /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeSyncEnum {
+  /** Authorize payment. */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
+  /** Capture payment. */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
+  /** Confirm payment. */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
+  /** Listing available payment gateways. */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
+  /** Process payment. */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
+  /** Refund payment. */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
+  /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
+  /**
+   * Event called for checkout tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
+  /**
+   * Event called for order tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
+  /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
@@ -5385,6 +5493,9 @@ export enum WebhookSampleEventTypeEnum {
   PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
   SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',

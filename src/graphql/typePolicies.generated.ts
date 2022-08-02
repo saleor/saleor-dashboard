@@ -716,16 +716,18 @@ export type CategoryUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	category?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ChannelKeySpecifier = ('id' | 'name' | 'isActive' | 'currencyCode' | 'slug' | 'hasOrders' | 'defaultCountry' | 'warehouses' | ChannelKeySpecifier)[];
+export type ChannelKeySpecifier = ('id' | 'slug' | 'name' | 'isActive' | 'currencyCode' | 'hasOrders' | 'defaultCountry' | 'warehouses' | 'countries' | 'availableShippingMethodsPerCountry' | ChannelKeySpecifier)[];
 export type ChannelFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	isActive?: FieldPolicy<any> | FieldReadFunction<any>,
 	currencyCode?: FieldPolicy<any> | FieldReadFunction<any>,
-	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasOrders?: FieldPolicy<any> | FieldReadFunction<any>,
 	defaultCountry?: FieldPolicy<any> | FieldReadFunction<any>,
-	warehouses?: FieldPolicy<any> | FieldReadFunction<any>
+	warehouses?: FieldPolicy<any> | FieldReadFunction<any>,
+	countries?: FieldPolicy<any> | FieldReadFunction<any>,
+	availableShippingMethodsPerCountry?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ChannelActivateKeySpecifier = ('channel' | 'channelErrors' | 'errors' | ChannelActivateKeySpecifier)[];
 export type ChannelActivateFieldPolicy = {
@@ -3240,11 +3242,27 @@ export type PermissionGroupCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PermissionGroupCreatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'permissionGroup' | PermissionGroupCreatedKeySpecifier)[];
+export type PermissionGroupCreatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PermissionGroupDeleteKeySpecifier = ('permissionGroupErrors' | 'errors' | 'group' | PermissionGroupDeleteKeySpecifier)[];
 export type PermissionGroupDeleteFieldPolicy = {
 	permissionGroupErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PermissionGroupDeletedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'permissionGroup' | PermissionGroupDeletedKeySpecifier)[];
+export type PermissionGroupDeletedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PermissionGroupErrorKeySpecifier = ('field' | 'message' | 'code' | 'permissions' | 'users' | PermissionGroupErrorKeySpecifier)[];
 export type PermissionGroupErrorFieldPolicy = {
@@ -3259,6 +3277,14 @@ export type PermissionGroupUpdateFieldPolicy = {
 	permissionGroupErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	group?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PermissionGroupUpdatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'permissionGroup' | PermissionGroupUpdatedKeySpecifier)[];
+export type PermissionGroupUpdatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PluginKeySpecifier = ('id' | 'name' | 'description' | 'globalConfiguration' | 'channelConfigurations' | PluginKeySpecifier)[];
 export type PluginFieldPolicy = {
@@ -3818,7 +3844,7 @@ export type ProductVariantUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('webhook' | 'webhookEvents' | 'webhookSamplePayload' | 'warehouse' | 'warehouses' | 'translations' | 'translation' | 'stock' | 'stocks' | 'shop' | 'orderSettings' | 'giftCardSettings' | 'shippingZone' | 'shippingZones' | 'digitalContent' | 'digitalContents' | 'categories' | 'category' | 'collection' | 'collections' | 'product' | 'products' | 'productType' | 'productTypes' | 'productVariant' | 'productVariants' | 'reportProductSales' | 'payment' | 'payments' | 'page' | 'pages' | 'pageType' | 'pageTypes' | 'homepageEvents' | 'order' | 'orders' | 'draftOrders' | 'ordersTotal' | 'orderByToken' | 'menu' | 'menus' | 'menuItem' | 'menuItems' | 'giftCard' | 'giftCards' | 'giftCardCurrencies' | 'giftCardTags' | 'plugin' | 'plugins' | 'sale' | 'sales' | 'voucher' | 'vouchers' | 'exportFile' | 'exportFiles' | 'taxTypes' | 'checkout' | 'checkouts' | 'checkoutLines' | 'channel' | 'channels' | 'attributes' | 'attribute' | 'appsInstallations' | 'apps' | 'app' | 'appExtensions' | 'appExtension' | 'addressValidationRules' | 'address' | 'customers' | 'permissionGroups' | 'permissionGroup' | 'me' | 'staffUsers' | 'user' | '_entities' | '_service' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('webhook' | 'webhookEvents' | 'webhookSamplePayload' | 'warehouse' | 'warehouses' | 'translations' | 'translation' | 'stock' | 'stocks' | 'shop' | 'orderSettings' | 'giftCardSettings' | 'shippingZone' | 'shippingZones' | 'digitalContent' | 'digitalContents' | 'categories' | 'category' | 'collection' | 'collections' | 'product' | 'products' | 'productType' | 'productTypes' | 'productVariant' | 'productVariants' | 'reportProductSales' | 'payment' | 'payments' | 'transaction' | 'page' | 'pages' | 'pageType' | 'pageTypes' | 'homepageEvents' | 'order' | 'orders' | 'draftOrders' | 'ordersTotal' | 'orderByToken' | 'menu' | 'menus' | 'menuItem' | 'menuItems' | 'giftCard' | 'giftCards' | 'giftCardCurrencies' | 'giftCardTags' | 'plugin' | 'plugins' | 'sale' | 'sales' | 'voucher' | 'vouchers' | 'exportFile' | 'exportFiles' | 'taxTypes' | 'checkout' | 'checkouts' | 'checkoutLines' | 'channel' | 'channels' | 'attributes' | 'attribute' | 'appsInstallations' | 'apps' | 'app' | 'appExtensions' | 'appExtension' | 'addressValidationRules' | 'address' | 'customers' | 'permissionGroups' | 'permissionGroup' | 'me' | 'staffUsers' | 'user' | '_entities' | '_service' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	webhook?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookEvents?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3849,6 +3875,7 @@ export type QueryFieldPolicy = {
 	reportProductSales?: FieldPolicy<any> | FieldReadFunction<any>,
 	payment?: FieldPolicy<any> | FieldReadFunction<any>,
 	payments?: FieldPolicy<any> | FieldReadFunction<any>,
+	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
 	pages?: FieldPolicy<any> | FieldReadFunction<any>,
 	pageType?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4160,6 +4187,11 @@ export type ShippingMethodTypeFieldPolicy = {
 	maximumOrderWeight?: FieldPolicy<any> | FieldReadFunction<any>,
 	maximumDeliveryDays?: FieldPolicy<any> | FieldReadFunction<any>,
 	minimumDeliveryDays?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ShippingMethodsPerCountryKeySpecifier = ('countryCode' | 'shippingMethods' | ShippingMethodsPerCountryKeySpecifier)[];
+export type ShippingMethodsPerCountryFieldPolicy = {
+	countryCode?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShippingPriceBulkDeleteKeySpecifier = ('count' | 'shippingErrors' | 'errors' | ShippingPriceBulkDeleteKeySpecifier)[];
 export type ShippingPriceBulkDeleteFieldPolicy = {
@@ -4570,7 +4602,7 @@ export type TransactionEventFieldPolicy = {
 	reference?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionItemKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'createdAt' | 'modifiedAt' | 'actions' | 'authorizedAmount' | 'refundedAmount' | 'voidedAmount' | 'chargedAmount' | 'status' | 'type' | 'reference' | 'events' | TransactionItemKeySpecifier)[];
+export type TransactionItemKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'createdAt' | 'modifiedAt' | 'actions' | 'authorizedAmount' | 'refundedAmount' | 'voidedAmount' | 'chargedAmount' | 'status' | 'type' | 'reference' | 'order' | 'events' | TransactionItemKeySpecifier)[];
 export type TransactionItemFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4589,6 +4621,7 @@ export type TransactionItemFieldPolicy = {
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	reference?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TransactionRequestActionKeySpecifier = ('transaction' | 'errors' | TransactionRequestActionKeySpecifier)[];
@@ -6598,9 +6631,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | PermissionGroupCreateKeySpecifier | (() => undefined | PermissionGroupCreateKeySpecifier),
 		fields?: PermissionGroupCreateFieldPolicy,
 	},
+	PermissionGroupCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PermissionGroupCreatedKeySpecifier | (() => undefined | PermissionGroupCreatedKeySpecifier),
+		fields?: PermissionGroupCreatedFieldPolicy,
+	},
 	PermissionGroupDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PermissionGroupDeleteKeySpecifier | (() => undefined | PermissionGroupDeleteKeySpecifier),
 		fields?: PermissionGroupDeleteFieldPolicy,
+	},
+	PermissionGroupDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PermissionGroupDeletedKeySpecifier | (() => undefined | PermissionGroupDeletedKeySpecifier),
+		fields?: PermissionGroupDeletedFieldPolicy,
 	},
 	PermissionGroupError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PermissionGroupErrorKeySpecifier | (() => undefined | PermissionGroupErrorKeySpecifier),
@@ -6609,6 +6650,10 @@ export type StrictTypedTypePolicies = {
 	PermissionGroupUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PermissionGroupUpdateKeySpecifier | (() => undefined | PermissionGroupUpdateKeySpecifier),
 		fields?: PermissionGroupUpdateFieldPolicy,
+	},
+	PermissionGroupUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PermissionGroupUpdatedKeySpecifier | (() => undefined | PermissionGroupUpdatedKeySpecifier),
+		fields?: PermissionGroupUpdatedFieldPolicy,
 	},
 	Plugin?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PluginKeySpecifier | (() => undefined | PluginKeySpecifier),
@@ -7021,6 +7066,10 @@ export type StrictTypedTypePolicies = {
 	ShippingMethodType?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingMethodTypeKeySpecifier | (() => undefined | ShippingMethodTypeKeySpecifier),
 		fields?: ShippingMethodTypeFieldPolicy,
+	},
+	ShippingMethodsPerCountry?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingMethodsPerCountryKeySpecifier | (() => undefined | ShippingMethodsPerCountryKeySpecifier),
+		fields?: ShippingMethodsPerCountryFieldPolicy,
 	},
 	ShippingPriceBulkDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingPriceBulkDeleteKeySpecifier | (() => undefined | ShippingPriceBulkDeleteKeySpecifier),
