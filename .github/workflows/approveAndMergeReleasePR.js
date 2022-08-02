@@ -14,7 +14,7 @@ program
   .option("--pull_request_number <pull_request_number>", "Pull Request number")
   .action(async options => {
     const octokit = new Octokit({
-      auth: "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",
+      auth: process.env.GITHUB_TOKEN,
     });
 
     const pullNumber = options.pull_request_number;
