@@ -27,11 +27,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
 
   return (
     <Accordion classes={expanderClasses}>
-      <AssignmentListHeader
-        assignCount={items.length}
-        totalCount={totalCount}
-        itemsName={itemsName}
-      />
+      <AssignmentListHeader assignCount={items.length} itemsName={itemsName} />
       <Divider />
       {items.map(item => (
         <Item key={item.id} item={item} onDelete={removeItem} />
