@@ -44,9 +44,11 @@ export interface ChannelDetailsPageProps<TErrors> {
   searchShippingZonesData?: SearchData;
   fetchMoreShippingZones: FetchMoreProps;
   channelShippingZones?: ChannelShippingZones;
+  allShippingZonesCount: number;
   searchWarehousesData?: SearchData;
   fetchMoreWarehouses: FetchMoreProps;
   channelWarehouses?: ChannelWarehouses;
+  allWarehousesCount: number;
   countries: CountryFragment[];
   onDelete?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
@@ -69,10 +71,12 @@ const ChannelDetailsPage = function<TErrors>({
   searchShippingZonesData,
   fetchMoreShippingZones,
   channelShippingZones = [],
+  allShippingZonesCount,
   searchWarehouses,
   searchWarehousesData,
   fetchMoreWarehouses,
   channelWarehouses = [],
+  allWarehousesCount,
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
@@ -268,6 +272,7 @@ const ChannelDetailsPage = function<TErrors>({
                   removeShippingZone={removeShippingZone}
                   searchShippingZones={searchShippingZones}
                   fetchMoreShippingZones={fetchMoreShippingZones}
+                  totalCount={allShippingZonesCount}
                 />
                 <CardSpacer />
                 <Warehouses
@@ -277,6 +282,7 @@ const ChannelDetailsPage = function<TErrors>({
                   removeWarehouse={removeWarehouse}
                   searchWarehouses={searchWarehouses}
                   fetchMoreWarehouses={fetchMoreWarehouses}
+                  totalCount={allWarehousesCount}
                 />
               </div>
             </Grid>

@@ -29,6 +29,7 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
     country: name,
     __typename: "CountryDisplay",
   })),
+  allShippingZonesCount: 10,
   channelShippingZones: [
     {
       __typename: "ShippingZone",
@@ -47,6 +48,7 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
     onFetchMore: () => undefined,
     totalCount: 0,
   },
+  allWarehousesCount: 10,
   channelWarehouses: [
     {
       __typename: "Warehouse",
