@@ -1,16 +1,19 @@
 import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import {
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput,
-} from "@saleor/graphql";
+import { OrderFulfillLineFragment } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
-import { Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import {
+  ChevronIcon,
+  IconButton,
+  Tooltip,
+  WarningIcon,
+} from "@saleor/macaw-ui";
 import {
   getAttributesCaption,
   getOrderLineAvailableQuantity,
   getWarehouseStock,
+  OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
@@ -22,13 +25,19 @@ import { useStyles } from "./styles";
 interface OrderFulfillLineProps {
   line: OrderFulfillLineFragment;
   lineIndex: number;
-  warehouseId: string;
-  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
-  formsetChange: FormsetChange<OrderFulfillStockInput[]>;
+  formsetData: FormsetData<null, OrderFulfillLineFormData[]>;
+  formsetChange: FormsetChange<OrderFulfillLineFormData[]>;
+  onWarehouseChange: () => void;
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const { line, lineIndex, warehouseId, formsetData, formsetChange } = props;
+  const {
+    line,
+    lineIndex,
+    formsetData,
+    formsetChange,
+    onWarehouseChange,
+  } = props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -37,14 +46,19 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const lineFormQuantity = isPreorder
     ? 0
     : formsetData[lineIndex]?.value?.[0]?.quantity;
+  const lineFormWarehouse = formsetData[lineIndex]?.value?.[0]?.warehouse;
 
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
-  const warehouseStock = getWarehouseStock(line?.variant?.stocks, warehouseId);
+
+  const warehouseStock = getWarehouseStock(
+    line?.variant?.stocks,
+    lineFormWarehouse?.id,
+  );
   const availableQuantity = getOrderLineAvailableQuantity(line, warehouseStock);
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
 
-  if (!line) {
+  if (!line || !lineFormWarehouse) {
     return (
       <TableRow key={lineIndex}>
         <TableCellAvatar className={classes.colName}>
@@ -57,6 +71,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           <Skeleton />
         </TableCell>
         <TableCell className={classes.colStock}>
+          <Skeleton />
+        </TableCell>
+        <TableCell className={classes.colWarehouse}>
           <Skeleton />
         </TableCell>
       </TableRow>
@@ -116,7 +133,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               formsetChange(line.id, [
                 {
                   quantity: parseInt(event.target.value, 10),
-                  warehouse: warehouseId,
+                  warehouse: lineFormWarehouse,
                 },
               ])
             }
@@ -140,6 +157,20 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
       )}
       <TableCell className={classes.colStock} key="total">
         {isPreorder || isDeletedVariant ? undefined : availableQuantity}
+      </TableCell>
+      <TableCell className={classes.colWarehouse}>
+        <IconButton
+          onClick={onWarehouseChange}
+          className={classes.warehouseButton}
+          data-test-id="select-warehouse-button"
+        >
+          <div className={classes.warehouseButtonContent}>
+            <div className={classes.warehouseButtonContentText}>
+              {lineFormWarehouse?.name ?? <Skeleton />}
+            </div>
+            <ChevronIcon />
+          </div>
+        </IconButton>
       </TableCell>
     </TableRow>
   );

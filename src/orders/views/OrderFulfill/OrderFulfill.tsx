@@ -2,9 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
-  useOrderFulfillmentUpdateTrackingMutation,
   useOrderFulfillSettingsQuery,
-  useWarehouseDetailsQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -12,7 +10,13 @@ import { getMutationErrors } from "@saleor/misc";
 import OrderFulfillPage, {
   OrderFulfillSubmitData,
 } from "@saleor/orders/components/OrderFulfillPage";
-import { OrderFulfillUrlQueryParams, orderUrl } from "@saleor/orders/urls";
+import {
+  orderFulfillUrl,
+  OrderFulfillUrlDialog,
+  OrderFulfillUrlQueryParams,
+  orderUrl,
+} from "@saleor/orders/urls";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,6 +30,11 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
+  const [openModal, closeModal] = createDialogActionHandlers<
+    OrderFulfillUrlDialog,
+    OrderFulfillUrlQueryParams
+  >(navigate, params => orderFulfillUrl(orderId, params), params);
+
   const {
     data: settings,
     loading: settingsLoading,
@@ -37,8 +46,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
       orderId,
     },
   });
-
-  const [updateTracking] = useOrderFulfillmentUpdateTrackingMutation();
 
   const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
     onCompleted: data => {
@@ -53,12 +60,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
           }),
         });
       }
-    },
-  });
-
-  const { data: warehouseData } = useWarehouseDetailsQuery({
-    variables: {
-      id: params?.warehouse,
     },
   });
 
@@ -85,6 +86,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
         }
       />
       <OrderFulfillPage
+        params={params}
         loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onSubmit={async (formData: OrderFulfillSubmitData) => {
@@ -105,27 +107,13 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
             },
           });
 
-          const fulfillments = res?.data?.orderFulfill?.order?.fulfillments;
-          if (fulfillments && formData.trackingNumber) {
-            updateTracking({
-              variables: {
-                id: fulfillments[fulfillments.length - 1].id,
-                input: {
-                  ...(formData?.trackingNumber && {
-                    trackingNumber: formData.trackingNumber,
-                  }),
-                  notifyCustomer:
-                    settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
-                },
-              },
-            });
-          }
           return getMutationErrors(res);
         }}
         order={data?.order}
         saveButtonBar={fulfillOrderOpts.status}
-        warehouse={warehouseData?.warehouse}
         shopSettings={settings?.shop}
+        openModal={openModal}
+        closeModal={closeModal}
       />
     </>
   );

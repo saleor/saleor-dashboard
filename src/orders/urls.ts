@@ -126,7 +126,11 @@ export type OrderUrlDialog =
 
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 
-export type OrderFulfillUrlQueryParams = Partial<{ warehouse: string }>;
+export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
+export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
+export type OrderFulfillUrlDialog = "change-warehouse";
+export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> &
+  OrderFulfillUrlFilters;
 
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

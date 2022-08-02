@@ -79,6 +79,7 @@ export const fragmentOrderLine = gql`
       quantity
       warehouse {
         id
+        name
       }
     }
     variant {
@@ -342,9 +343,11 @@ export const fragmentOrderFulfillLine = gql`
     productName
     quantity
     allocations {
+      id
       quantity
       warehouse {
         id
+        name
       }
     }
     quantityFulfilled
