@@ -18,10 +18,11 @@ const messages = defineMessages({
   },
 });
 
-interface WarehousesProps {
+export interface WarehousesProps {
   addWarehouse: (id: string) => void;
   removeWarehouse: (id: string) => void;
   searchWarehouses: (searchPhrase: string) => void;
+  totalCount: number;
   fetchMoreWarehouses: FetchMoreProps;
   warehouses: ChannelWarehouses;
   warehousesChoices: RelayToFlat<SearchWarehousesQuery["search"]>;
@@ -32,6 +33,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
     addWarehouse,
     removeWarehouse,
     searchWarehouses,
+    totalCount,
     fetchMoreWarehouses,
     warehouses,
     warehousesChoices,
@@ -52,6 +54,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
         removeItem={removeWarehouse}
         searchItems={searchWarehouses}
         fetchMoreItems={fetchMoreWarehouses}
+        totalCount={totalCount}
         dataTestId="warehouse"
         inputName="warehouse"
         itemsName={intl.formatMessage(sectionNames.warehouses)}
