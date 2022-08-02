@@ -55,8 +55,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const classes = useStyles({});
 
   const parsedDate = new Date(dateNow);
-  const todayDateUTC = `${parsedDate.getUTCFullYear()}-${parsedDate.getUTCMonth() +
-    1}-${parsedDate.getUTCDate()}`;
+  const todayDateUTC = parsedDate.toISOString().slice(0, 10);
 
   const visibleMessage = (date: string) =>
     intl.formatMessage(
