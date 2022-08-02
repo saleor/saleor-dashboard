@@ -54,7 +54,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeDate(new Date(dateNow).toISOString(), "YYYY-MM-DD");
+  const parsedDate = new Date(dateNow);
+  const todayDateUTC = `${parsedDate.getUTCFullYear()}-${parsedDate.getUTCMonth() +
+    1}-${parsedDate.getUTCDate()}`;
 
   const visibleMessage = (date: string) =>
     intl.formatMessage(
@@ -111,7 +113,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             ...formData,
             isPublished: !isPublished,
             publicationDate:
-              !isPublished && !publicationDate ? todayDate : publicationDate,
+              !isPublished && !publicationDate ? todayDateUTC : publicationDate,
           });
         }}
       />
