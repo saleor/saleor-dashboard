@@ -20,9 +20,15 @@ export const useStyles = makeStyles(
       fontWeight: 600 as 600,
       marginBottom: theme.spacing(1),
     },
+  }),
+  { name: "OrderCustomer" },
+);
+
+export const useAddressTextErrorStyles = makeStyles(
+  theme => ({
     textError: {
       color: theme.palette.error.main,
     },
   }),
-  { name: "OrderCustomer" },
+  { name: "AddrssTextError" },
 );

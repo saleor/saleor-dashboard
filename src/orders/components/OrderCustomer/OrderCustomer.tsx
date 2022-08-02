@@ -1,9 +1,9 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import AddressFormatter from "@saleor/components/AddressFormatter";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
 import RequirePermissions from "@saleor/components/RequirePermissions";
@@ -15,20 +15,18 @@ import {
   OrderErrorFragment,
   PermissionEnum,
   SearchCustomersQuery,
-  WarehouseClickAndCollectOptionEnum,
 } from "@saleor/graphql";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
 import { maybe } from "../../../misc";
-import { AddressFields } from "./AddressFields";
-import messages from "./messages";
+import { AddressTextError } from "./AddrssTextError";
+import { PickupAnnotation } from "./PickupAnnotation";
 import { useStyles } from "./styles";
 
 export interface CustomerEditData {
@@ -89,34 +87,6 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   );
   const noShippingAddressError = errors.find(
     error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS,
-  );
-
-  const pickupAnnotation = (order?: OrderDetailsFragment) => {
-    if (order?.deliveryMethod?.__typename === "Warehouse") {
-      return (
-        <>
-          <FormSpacer />
-          <Typography variant="caption" color="textSecondary">
-            {order?.deliveryMethod?.clickAndCollectOption ===
-            WarehouseClickAndCollectOptionEnum.LOCAL ? (
-              <FormattedMessage {...messages.orderCustomerFulfillmentLocal} />
-            ) : (
-              <FormattedMessage {...messages.orderCustomerFulfillmentAll} />
-            )}
-          </Typography>
-        </>
-      );
-    }
-    return "";
-  };
-
-  const addressTextError = (orderError: OrderErrorFragment) => (
-    <>
-      <Typography variant="body2" className={classes.textError}>
-        {getOrderErrorMessage(orderError, intl)}
-      </Typography>
-      <FormSpacer />
-    </>
   );
 
   return (
@@ -295,7 +265,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <Skeleton />
         ) : (
           <>
-            {noShippingAddressError && addressTextError(noShippingAddressError)}
+            {noShippingAddressError && (
+              <AddressTextError orderError={noShippingAddressError} />
+            )}
             {shippingAddress === null ? (
               <Typography>
                 <FormattedMessage
@@ -306,8 +278,8 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               </Typography>
             ) : (
               <>
-                <AddressFields address={shippingAddress} />
-                {pickupAnnotation(order)}
+                <AddressFormatter address={shippingAddress} />
+                <PickupAnnotation order={order} />
               </>
             )}
           </>
@@ -336,7 +308,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <Skeleton />
         ) : (
           <>
-            {noBillingAddressError && addressTextError(noBillingAddressError)}
+            {noBillingAddressError && (
+              <AddressTextError orderError={noBillingAddressError} />
+            )}
             {billingAddress === null ? (
               <Typography>
                 <FormattedMessage
@@ -354,7 +328,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 />
               </Typography>
             ) : (
-              <AddressFields address={billingAddress} />
+              <AddressFormatter address={billingAddress} />
             )}
           </>
         )}
