@@ -8,6 +8,7 @@ import {
   OrderDetailsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
+  OrderFulfillLineFragment,
   OrderListQuery,
   OrderSettingsFragment,
   OrderStatus,
@@ -1078,6 +1079,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               {
                 id: "allocation_test_id",
                 warehouse: {
+                  name: "US Warehouse",
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
@@ -1186,6 +1188,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               {
                 id: "allocation_test_id",
                 warehouse: {
+                  name: "US Warehouse",
                   id:
                     "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
@@ -1302,6 +1305,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1395,6 +1399,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1628,6 +1633,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1721,6 +1727,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         {
           id: "allocation_test_id",
           warehouse: {
+            name: "US Warehouse",
             id:
               "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
@@ -1869,6 +1876,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   user: null,
   userEmail: null,
 });
+
 export const flatOrders = orders.map(order => ({
   ...order,
   orderStatus: transformOrderStatus(order.status, {
@@ -1878,6 +1886,70 @@ export const flatOrders = orders.map(order => ({
     formatMessage: (message: MessageDescriptor) => message.defaultMessage,
   } as any),
 }));
+
+export const fulfillOrderLine = (
+  placeholderImage: string,
+): OrderFulfillLineFragment => ({
+  __typename: "OrderLine",
+  id: "T3JkZXJMaW5lOjIz",
+  isShippingRequired: false,
+  productName: "Williams, Garcia and Walker (XS)",
+  quantity: 2,
+  quantityFulfilled: 2,
+  quantityToFulfill: 0,
+  allocations: [
+    {
+      id: "allocation_test_id",
+      warehouse: {
+        name: "US Warehouse",
+        id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+        __typename: "Warehouse",
+      },
+      quantity: 1,
+      __typename: "Allocation",
+    },
+  ],
+  thumbnail: {
+    __typename: "Image" as "Image",
+    url: placeholderImage,
+  },
+  variant: {
+    __typename: "ProductVariant",
+    id: "dsfsfuhb",
+    name: "Williams, Garcia and Walker (XS)",
+    sku: "5-1337",
+    attributes: [],
+    trackInventory: true,
+    preorder: null,
+    stocks: [
+      {
+        id: "stock_test_id1",
+        warehouse: {
+          name: "stock_warehouse1",
+          id:
+            "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+          __typename: "Warehouse",
+        },
+        quantity: 166,
+        quantityAllocated: 0,
+        __typename: "Stock",
+      },
+      {
+        id: "stock_test_id2",
+        warehouse: {
+          name: "stock_warehouse2",
+          id:
+            "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+          __typename: "Warehouse",
+        },
+        quantity: 166,
+        quantityAllocated: 0,
+        __typename: "Stock",
+      },
+    ],
+  },
+});
+
 export const variants = [
   { id: "p1", name: "Product 1: variant 1", sku: "12345", stockQuantity: 3 },
   { id: "p2", name: "Product 1: variant 2", sku: "12346", stockQuantity: 1 },
