@@ -123,6 +123,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           />
           <OrderDraftDetails
             order={order}
+            channelUsabilityData={channelUsabilityData}
             errors={errors}
             onOrderLineAdd={onOrderLineAdd}
             onOrderLineChange={onOrderLineChange}

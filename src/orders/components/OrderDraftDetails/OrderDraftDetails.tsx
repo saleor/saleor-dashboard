@@ -2,6 +2,7 @@ import { Card, CardContent } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import {
+  ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
@@ -19,6 +20,7 @@ import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
+  channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
@@ -28,6 +30,7 @@ interface OrderDraftDetailsProps {
 
 const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   order,
+  channelUsabilityData,
   errors,
   onOrderLineAdd,
   onOrderLineChange,
@@ -35,6 +38,9 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onShippingMethodEdit,
 }) => {
   const intl = useIntl();
+
+  const isChannelActive = order?.channel.isActive;
+  const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
 
   return (
     <Card>
@@ -45,7 +51,8 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           description: "section header",
         })}
         toolbar={
-          order?.channel.isActive && (
+          isChannelActive &&
+          areProductsInChannel && (
             <Button
               variant="tertiary"
               onClick={onOrderLineAdd}
