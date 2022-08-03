@@ -3,7 +3,6 @@
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { urlList } from "../fixtures/urlList";
-import filterTests from "../support/filterTests";
 
 describe("User authorization", () => {
   beforeEach(() => {

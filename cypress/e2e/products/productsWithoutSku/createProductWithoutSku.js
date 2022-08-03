@@ -29,7 +29,7 @@ import {
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
-  const startsWith = "CyCreateVariants-";
+  const startsWith = "CreateProdSku";
   const attributeValues = ["value1", "value2"];
 
   let defaultChannel;

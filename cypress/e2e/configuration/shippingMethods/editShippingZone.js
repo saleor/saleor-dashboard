@@ -17,7 +17,7 @@ import { fillUpShippingZoneData } from "../../../support/pages/shippingMethodPag
 import { enterAndSelectShippings } from "../../../support/pages/shippingZones";
 
 describe("As a user I should be able to update and delete shipping zone", () => {
-  const startsWith = "EditShipping-";
+  const startsWith = "EditShippingZ-";
   const name = `${startsWith}${faker.datatype.number()}`;
 
   let defaultChannel;

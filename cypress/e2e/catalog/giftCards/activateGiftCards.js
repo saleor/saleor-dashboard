@@ -26,7 +26,7 @@ import {
 } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As a admin I want to use enabled gift card in checkout", () => {
-  const startsWith = "GiftCardsCheckout";
+  const startsWith = "ActivateGiftCards";
   const productPrice = 50;
   const shippingPrice = 50;
   const email = "example@example.com";
