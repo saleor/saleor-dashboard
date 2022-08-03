@@ -72,7 +72,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
 
   it(
     "should be able to enable gift card and use it in checkout. TC: SALEOR_1006",
-    { tags: ["@giftCard", "@allEnv"] },
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const expectedGiftCardBalance =
         giftCardData.amount - productPrice - shippingPrice;
