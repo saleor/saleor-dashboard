@@ -211,8 +211,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-              npm i commander
-              npm i octokit
+              cd .github/workflows
+              npm ci
 
       - name: Add review and merge if patch
         env:
