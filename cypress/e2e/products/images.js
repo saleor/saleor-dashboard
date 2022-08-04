@@ -114,8 +114,6 @@ describe("Tests for images", () => {
           const productsWithThumbnails = products.filter(
             product => product.node.thumbnail !== null,
           );
-          productsWithThumbnails[0].node.thumbnail.url =
-            "https://master.staging.saleor.cloud/thumbnail/Q2F0ZWdvcnk6NDk2/128/";
           productsWithThumbnails.forEach(product => {
             const thumbnailUrl = product.node.thumbnail.url;
             if (!thumbnailUrl.includes("/media/thumbnails")) {
