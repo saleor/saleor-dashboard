@@ -272,7 +272,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />,
+            endAdornment: loading && (
+              <CircularProgress size={16} data-test-id="search-loader" />
+            ),
           }}
         />
       </DialogContent>

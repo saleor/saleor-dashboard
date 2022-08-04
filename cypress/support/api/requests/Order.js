@@ -6,9 +6,16 @@ export function markOrderAsPaid(orderId) {
       errors{
         message
       }
+      order{
+        id
+        number
+        lines{
+          id
+        }
+      }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderMarkAsPaid");
 }
 
 export function updateOrdersSettings(automaticallyConfirmAllNewOrders = true) {

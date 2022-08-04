@@ -1,6 +1,7 @@
 export const SHARED_ELEMENTS = {
   header: "[data-test-id='page-header']",
   progressBar: '[role="progressbar"]',
+  searchLoader: '[data-test-id="search-loader]',
   circularProgress: '[class*="CircularProgress-circle"]',
   autocompleteCircle: '[class*="arrowInnerContainer"]',
   skeleton: '[data-test-id="skeleton"]',
@@ -15,14 +16,14 @@ export const SHARED_ELEMENTS = {
   urlInput: 'input[type="url"]',
   richTextEditor: {
     loader: '[class*="codex-editor__loader"]',
-    empty: '[class*="codex-editor--empty"]'
+    empty: '[class*="codex-editor--empty"]',
   },
   contentEditable: '[contenteditable="true"]',
   filters: {
     filterGroupActivateCheckbox: '[data-test-id*="filter-group-active"]',
-    filterRow: '[data-test-id*="channel-availability-item"]'
+    filterRow: '[data-test-id*="channel-availability-item"]',
   },
-  warningDialog: '[data-test-id="warning-dialog"]'
+  warningDialog: '[data-test-id="warning-dialog"]',
 };
 
 export const selectorWithDataValue = value => `[data-value="${value}"]`;
