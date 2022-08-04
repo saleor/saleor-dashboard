@@ -1,28 +1,25 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  assignVariantDialogHeader: {
-    id: "xAHOGV",
-    defaultMessage: "Assign Variant",
+  title: {
+    defaultMessage: "Add product",
     description: "dialog header",
+    id: "9Y6vg+",
   },
-  assignVariantDialogButton: {
-    id: "p4X/0H",
-    defaultMessage: "Assign and save",
-    description: "button, assign variants to sale and save",
+  search: {
+    defaultMessage: "Search products",
+    description: "search label",
+    id: "s6oAC+",
   },
-  assignVariantDialogContent: {
-    id: "K+vjtE",
-    defaultMessage: "Search Variants",
-  },
-  assignVariantDialogSearch: {
-    id: "SHm7ee",
+  searchPlaceholder: {
     defaultMessage: "Search by product name, attribute, product type etc...",
+    description: "search placeholder",
+    id: "S2xLxV",
   },
-  assignVariantDialogSKU: {
-    id: "+HuipK",
+  sku: {
     defaultMessage: "SKU {sku}",
     description: "variant sku",
+    id: "+HuipK",
   },
   noProductsInChannel: {
     id: "HcFrfy",

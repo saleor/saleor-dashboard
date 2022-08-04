@@ -21,7 +21,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -30,65 +30,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
-
-const useStyles = makeStyles(
-  theme => ({
-    avatar: {
-      paddingLeft: 0,
-      width: 64,
-    },
-    colName: {
-      paddingLeft: 0,
-    },
-    colVariantCheckbox: {
-      padding: 0,
-    },
-    content: {
-      overflowY: "scroll",
-      paddingTop: 0,
-      marginBottom: theme.spacing(3),
-    },
-    grayText: {
-      color: theme.palette.text.disabled,
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      height: theme.spacing(3),
-      justifyContent: "center",
-      marginTop: theme.spacing(3),
-    },
-    overflow: {
-      overflowY: "hidden",
-    },
-    topArea: {
-      overflowY: "hidden",
-      paddingBottom: theme.spacing(6),
-      margin: theme.spacing(0, 3, 3, 3),
-    },
-    productCheckboxCell: {
-      "&:first-child": {
-        paddingLeft: 0,
-        paddingRight: 0,
-      },
-    },
-    textRight: {
-      textAlign: "right",
-    },
-    variantCheckbox: {
-      left: theme.spacing(),
-      position: "relative",
-    },
-    wideCell: {
-      width: "100%",
-    },
-  }),
-  { name: "OrderProductAddDialog" },
-);
-
-type SetVariantsAction = (
-  data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-) => void;
+import { messages } from "./messages";
+import { useStyles } from "./styles";
+import {
+  hasAllVariantsSelected,
+  isVariantSelected,
+  onProductAdd,
+  onVariantAdd,
+} from "./utils";
 
 export interface OrderProductAddDialogProps
   extends FetchMoreProps,
@@ -103,69 +52,6 @@ export interface OrderProductAddDialogProps
     data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   ) => void;
 }
-
-function hasAllVariantsSelected(
-  productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-): boolean {
-  return productVariants.reduce(
-    (acc, productVariant) =>
-      acc &&
-      !!selectedVariantsToProductsMap.find(
-        selectedVariant => selectedVariant.id === productVariant.id,
-      ),
-    true,
-  );
-}
-
-function isVariantSelected(
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-): boolean {
-  return !!selectedVariantsToProductsMap.find(
-    selectedVariant => selectedVariant.id === variant.id,
-  );
-}
-
-const onProductAdd = (
-  product: SearchOrderVariantQuery["search"]["edges"][0]["node"],
-  productIndex: number,
-  productsWithAllVariantsSelected: boolean[],
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
-    ? setVariants(
-        variants.filter(
-          selectedVariant =>
-            !product.variants.find(
-              productVariant => productVariant.id === selectedVariant.id,
-            ),
-        ),
-      )
-    : setVariants([
-        ...variants,
-        ...product.variants.filter(
-          productVariant =>
-            !variants.find(
-              selectedVariant => selectedVariant.id === productVariant.id,
-            ),
-        ),
-      ]);
-
-const onVariantAdd = (
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
-  variantIndex: number,
-  productIndex: number,
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  selectedVariantsToProductsMap: boolean[][],
-  setVariants: SetVariantsAction,
-) =>
-  selectedVariantsToProductsMap[productIndex][variantIndex]
-    ? setVariants(
-        variants.filter(selectedVariant => selectedVariant.id !== variant.id),
-      )
-    : setVariants([...variants, variant]);
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
 
@@ -249,26 +135,15 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle>
-        <FormattedMessage
-          id="myyWNp"
-          defaultMessage="Add Product"
-          description="dialog header"
-        />
+        <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent className={classes.topArea} data-test-id="search-query">
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={intl.formatMessage({
-            id: "/TF6BZ",
-            defaultMessage: "Search Products",
-          })}
-          placeholder={intl.formatMessage({
-            id: "SHm7ee",
-            defaultMessage:
-              "Search by product name, attribute, product type etc...",
-          })}
+          label={intl.formatMessage(messages.search)}
+          placeholder={intl.formatMessage(messages.searchPlaceholder)}
           fullWidth
           InputProps={{
             autoComplete: "off",
@@ -355,9 +230,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                             {variant.sku && (
                               <div className={classes.grayText}>
                                 <FormattedMessage
-                                  id="+HuipK"
-                                  defaultMessage="SKU {sku}"
-                                  description="variant sku"
+                                  {...messages.sku}
                                   values={{
                                     sku: variant.sku,
                                   }}
@@ -374,11 +247,10 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 ),
                 () => (
                   <TableRow>
-                    <TableCell colSpan={4}>
-                      <FormattedMessage
-                        id="WQnltU"
-                        defaultMessage="No products available in order channel matching given query"
-                      />
+                    <TableCell colSpan={4} className={classes.noContentCell}>
+                      {!!query
+                        ? intl.formatMessage(messages.noProductsInQuery)
+                        : intl.formatMessage(messages.noProductsInChannel)}
                     </TableCell>
                   </TableRow>
                 ),

@@ -1363,6 +1363,10 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
+  "9Y6vg+": {
+    "context": "dialog header",
+    "string": "Add product"
+  },
   "9YazHG": {
     "string": "Company"
   },
@@ -2456,6 +2460,10 @@
   "HaQ8cg": {
     "context": "button",
     "string": "Refund"
+  },
+  "HcFrfy": {
+    "context": "no products placeholder",
+    "string": "No products are available in the channel assigned to this order"
   },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
@@ -3834,6 +3842,10 @@
     "context": "button",
     "string": "Set new password"
   },
+  "S2xLxV": {
+    "context": "search placeholder",
+    "string": "Search by product name, attribute, product type etc..."
+  },
   "S52JMl": {
     "context": "default gift card delete description",
     "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} giftCards?}}"
@@ -4062,6 +4074,10 @@
   "TpPx7V": {
     "context": "navigator placeholder",
     "string": "Search Customer"
+  },
+  "TpptCl": {
+    "context": "no products placeholder",
+    "string": "No products are available matching query"
   },
   "TtZg/K": {
     "context": "ExitFormPrompt title",
@@ -4427,9 +4443,6 @@
   "WQMTKI": {
     "context": "list of warehouses",
     "string": "Warehouses A to Z"
-  },
-  "WQnltU": {
-    "string": "No products available in order channel matching given query"
   },
   "WR8rir": {
     "context": "button",
@@ -6377,10 +6390,6 @@
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
-  "myyWNp": {
-    "context": "dialog header",
-    "string": "Add Product"
-  },
   "mzASqs": {
     "context": "days after label",
     "string": "days after issue"
@@ -7012,6 +7021,10 @@
   "s6lW8R": {
     "context": "option label",
     "string": "Change address"
+  },
+  "s6oAC+": {
+    "context": "search label",
+    "string": "Search products"
   },
   "s8FlDW": {
     "context": "hide error log label in notification",

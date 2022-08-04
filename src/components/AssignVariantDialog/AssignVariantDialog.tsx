@@ -17,10 +17,6 @@ import { SearchProductsQuery } from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import {
-  getById,
-  getByUnmatchingId,
-} from "@saleor/orders/components/OrderReturnPage/utils";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
@@ -31,12 +27,14 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import {
+  handleProductAssign,
+  handleVariantAssign,
+  hasAllVariantsSelected,
+  isVariantSelected,
+  SearchVariant,
+} from "./utils";
 
-type SearchVariant = RelayToFlat<
-  SearchProductsQuery["search"]
->[0]["variants"][0];
-
-type SetVariantsAction = (data: SearchVariant[]) => void;
 export interface AssignVariantDialogFormData {
   products: RelayToFlat<SearchProductsQuery["search"]>;
   query: string;
@@ -47,57 +45,6 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: SearchVariant[]) => void;
-}
-
-function isVariantSelected(
-  variant: SearchVariant,
-  selectedVariantsToProductsMap: SearchVariant[],
-): boolean {
-  return !!selectedVariantsToProductsMap.find(getById(variant.id));
-}
-
-const handleProductAssign = (
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
-  productIndex: number,
-  productsWithAllVariantsSelected: boolean[],
-  variants: SearchVariant[],
-  setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
-    ? setVariants(
-        variants.filter(
-          selectedVariant =>
-            !product.variants.find(getById(selectedVariant.id)),
-        ),
-      )
-    : setVariants([
-        ...variants,
-        ...product.variants.filter(
-          productVariant => !variants.find(getById(productVariant.id)),
-        ),
-      ]);
-
-const handleVariantAssign = (
-  variant: SearchVariant,
-  variantIndex: number,
-  productIndex: number,
-  variants: SearchVariant[],
-  selectedVariantsToProductsMap: boolean[][],
-  setVariants: SetVariantsAction,
-) =>
-  selectedVariantsToProductsMap[productIndex][variantIndex]
-    ? setVariants(variants.filter(getByUnmatchingId(variant.id)))
-    : setVariants([...variants, variant]);
-
-function hasAllVariantsSelected(
-  productVariants: SearchVariant[],
-  selectedVariantsToProductsMap: SearchVariant[],
-): boolean {
-  return productVariants.reduce(
-    (acc, productVariant) =>
-      acc && !!selectedVariantsToProductsMap.find(getById(productVariant.id)),
-    true,
-  );
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -265,11 +212,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                 ),
                 () => (
                   <TableRow>
-                    <TableCell colSpan={4}>
-                      <FormattedMessage
-                        id="WQnltU"
-                        defaultMessage="No products available in order channel matching given query"
-                      />
+                    <TableCell colSpan={4} className={classes.noContentCell}>
+                      {!!query
+                        ? intl.formatMessage(messages.noProductsInQuery)
+                        : intl.formatMessage(messages.noProductsInChannel)}
                     </TableCell>
                   </TableRow>
                 ),
