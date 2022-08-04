@@ -105,9 +105,9 @@ describe("Orders", () => {
     );
   });
 
-  xit(
+  it(
     "should create order with selected channel. TC: SALEOR_2104",
-    { tags: ["@orders", "@allEnv"] },
+    { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
@@ -145,7 +145,7 @@ describe("Orders", () => {
 
   it(
     "should cancel fulfillment. TC: SALEOR_2106",
-    { tags: ["@orders", "@allEnv"] },
+    { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;
       createFulfilledOrder({
@@ -212,7 +212,7 @@ describe("Orders", () => {
           getOrder(order.id);
         })
         .then(orderResp => {
-          expect(orderResp.paymentStatus).to.be.eq("FULLY_REFUNDED");
+          expect(orderResp.paymentStatus).to.be.eq("PARTIALLY_REFUNDED");
         });
     },
   );

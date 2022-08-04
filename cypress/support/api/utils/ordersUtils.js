@@ -2,7 +2,7 @@ import * as checkoutRequest from "../requests/Checkout";
 import * as orderRequest from "../requests/Order";
 import {
   getPaymentMethodStripeId,
-  sendConfirmationToStripe
+  sendConfirmationToStripe,
 } from "../requests/stripe";
 import { createProductInChannel } from "./products/productsUtils";
 
@@ -11,7 +11,7 @@ export function createWaitingForCaptureOrder({
   email,
   variantsList,
   shippingMethodName,
-  address
+  address,
 }) {
   let checkout;
   const auth = "token";
@@ -23,13 +23,13 @@ export function createWaitingForCaptureOrder({
       variantsList,
       address,
       billingAddress: address,
-      auth
+      auth,
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       const shippingMethodId = getShippingMethodIdFromCheckout(
         checkout,
-        shippingMethodName
+        shippingMethodName,
       );
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
@@ -44,7 +44,7 @@ export function getShippingMethodIdFromCheckout(checkout, shippingMethodName) {
     return null;
   } else {
     return checkout.shippingMethods.find(
-      element => element.name === shippingMethodName
+      element => element.name === shippingMethodName,
     ).id;
   }
 }
@@ -53,11 +53,11 @@ export function updateShippingInCheckout(checkoutToken, shippingMethodName) {
   return checkoutRequest.getCheckout(checkoutToken).then(checkout => {
     const shippingMethodId = getShippingMethodIdFromCheckout(
       checkout,
-      shippingMethodName
+      shippingMethodName,
     );
     return checkoutRequest.checkoutShippingMethodUpdate(
       checkout.id,
-      shippingMethodId
+      shippingMethodId,
     );
   });
 }
@@ -70,7 +70,7 @@ export function createCheckoutWithVoucher({
   address,
   shippingMethodName,
   voucherCode,
-  auth
+  auth,
 }) {
   let checkout;
   return checkoutRequest
@@ -81,13 +81,13 @@ export function createCheckoutWithVoucher({
       variantsList,
       address,
       billingAddress: address,
-      auth
+      auth,
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       const shippingMethodId = getShippingMethodIdFromCheckout(
         checkout,
-        shippingMethodName
+        shippingMethodName,
       );
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
@@ -96,7 +96,7 @@ export function createCheckoutWithVoucher({
     })
     .then(resp => ({
       addPromoCodeResp: resp.body.data.checkoutAddPromoCode,
-      checkout
+      checkout,
     }));
 }
 
@@ -107,7 +107,7 @@ export function purchaseProductWithPromoCode({
   address,
   shippingMethodName,
   voucherCode,
-  auth
+  auth,
 }) {
   let checkout;
 
@@ -118,7 +118,7 @@ export function purchaseProductWithPromoCode({
     address,
     shippingMethodName,
     voucherCode,
-    auth
+    auth,
   })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
@@ -133,7 +133,7 @@ export function createReadyToFulfillOrder({
   shippingMethodId,
   channelId,
   variantsList,
-  address
+  address,
 }) {
   let order;
   return orderRequest
@@ -142,8 +142,8 @@ export function createReadyToFulfillOrder({
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
     })
-    .then(() => orderRequest.markOrderAsPaid(order.id))
-    .then(() => orderRequest.completeOrder(order.id));
+    .then(() => orderRequest.completeOrder(order.id))
+    .then(() => orderRequest.markOrderAsPaid(order.id));
 }
 
 export function createFulfilledOrder({
@@ -153,20 +153,20 @@ export function createFulfilledOrder({
   variantsList,
   address,
   warehouse,
-  quantity = 1
+  quantity = 1,
 }) {
   return createReadyToFulfillOrder({
     customerId,
     shippingMethodId,
     channelId,
     variantsList,
-    address
+    address,
   }).then(({ order }) => {
     orderRequest.fulfillOrder({
       orderId: order.id,
       warehouse,
       quantity,
-      linesId: order.lines
+      linesId: order.lines,
     });
   });
 }
@@ -176,7 +176,7 @@ export function createOrder({
   shippingMethodId,
   channelId,
   variantsList,
-  address
+  address,
 }) {
   let order;
   return orderRequest
@@ -199,7 +199,7 @@ export function addPayment(checkoutId) {
   return checkoutRequest.addPayment({
     checkoutId,
     gateway: "mirumee.payments.dummy",
-    token: "not-charged"
+    token: "not-charged",
   });
 }
 
@@ -207,7 +207,7 @@ export function addAdyenPayment(checkoutId, amount) {
   return checkoutRequest.addPayment({
     checkoutId,
     gateway: "mirumee.payments.adyen",
-    amount
+    amount,
   });
 }
 export function addStripePayment(checkoutId, amount, token) {
@@ -215,7 +215,7 @@ export function addStripePayment(checkoutId, amount, token) {
     checkoutId,
     gateway: "saleor.payments.stripe",
     amount,
-    token
+    token,
   });
 }
 
@@ -224,7 +224,7 @@ export function createAndCompleteCheckoutWithoutShipping({
   email,
   variantsList,
   billingAddress,
-  auth
+  auth,
 }) {
   let checkout;
   return checkoutRequest
@@ -247,7 +247,7 @@ export function createOrderWithNewProduct({
   quantityInWarehouse = 1,
   trackInventory = true,
   shippingMethod,
-  address
+  address,
 }) {
   let variantsList;
   return createProductInChannel({
@@ -258,7 +258,7 @@ export function createOrderWithNewProduct({
     name,
     warehouseId,
     quantityInWarehouse,
-    trackInventory
+    trackInventory,
   })
     .then(({ variantsList: variantsListResp }) => {
       variantsList = variantsListResp;
@@ -267,7 +267,7 @@ export function createOrderWithNewProduct({
         email: "email@example.com",
         variantsList,
         shippingMethodName: shippingMethod.name,
-        address
+        address,
       });
     })
     .then(({ order, checkout }) => ({ order, checkout, variantsList }));
@@ -276,7 +276,7 @@ export function createOrderWithNewProduct({
 export function addStripePaymentAndGetConfirmationData({
   card,
   checkoutId,
-  amount
+  amount,
 }) {
   let paymentMethodId;
 
