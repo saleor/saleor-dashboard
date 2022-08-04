@@ -60,7 +60,7 @@ function usePaginator({
     [paginationState, pageInfo],
   );
 
-  const nextPageHref = useMemo(() => {
+  const nextHref = useMemo(() => {
     if (!newPageInfo?.hasNextPage || !pageInfo?.endCursor) {
       return undefined;
     }
@@ -75,7 +75,7 @@ function usePaginator({
     );
   }, [pageInfo?.endCursor, newPageInfo?.hasNextPage, queryString]);
 
-  const prevPageHref = useMemo(() => {
+  const prevHref = useMemo(() => {
     if (!newPageInfo?.hasPreviousPage || !pageInfo?.startCursor) {
       return undefined;
     }
@@ -90,8 +90,8 @@ function usePaginator({
   }, [pageInfo?.startCursor, newPageInfo?.hasPreviousPage, queryString]);
 
   return {
-    nextPageHref,
-    prevPageHref,
+    nextHref,
+    prevHref,
     paginatorType: "link" as const,
     ...newPageInfo,
   };
@@ -110,15 +110,15 @@ export type PaginatorContextValues = PaginatorContextValuesCommon &
   (
     | {
         paginatorType: "link";
-        nextPageHref?: string;
-        prevPageHref?: string;
+        nextHref?: string;
+        prevHref?: string;
         loadNextPage?: never;
         loadPreviousPage?: never;
       }
     | {
         paginatorType: "click";
-        nextPageHref?: never;
-        prevPageHref?: never;
+        nextHref?: never;
+        prevHref?: never;
         loadNextPage: () => void;
         loadPreviousPage: () => void;
       }

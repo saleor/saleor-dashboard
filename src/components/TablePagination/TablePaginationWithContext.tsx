@@ -36,15 +36,12 @@ export const TablePaginationWithContext = (
     );
   }
 
-  const { prevPageHref, nextPageHref } = paginationProps;
-
   return (
     <TablePagination
       {...props}
+      {...paginationProps}
       hasNextPage={hasNextPage}
       hasPreviousPage={hasPreviousPage}
-      prevHref={prevPageHref}
-      nextHref={nextPageHref}
     />
   );
 };
