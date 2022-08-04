@@ -14,9 +14,13 @@ const getAlerts = (
   order?: OrderDetailsFragment,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
+  const canDetermineShippingMethods =
+    order?.shippingAddress?.country.code && !!order?.lines?.length;
+
   const isChannelInactive = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
-  const noShippingMethodsInChannel = order?.shippingMethods.length === 0;
+  const noShippingMethodsInChannel =
+    canDetermineShippingMethods && order?.shippingMethods.length === 0;
 
   let alerts: MessageDescriptor[] = [];
 
