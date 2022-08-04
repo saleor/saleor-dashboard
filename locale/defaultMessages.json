@@ -1783,6 +1783,10 @@
   "ClFzoD": {
     "string": "Selected values will be used to create variants for the configurable product."
   },
+  "ClKKID": {
+    "context": "channel publication status",
+    "string": "Not published"
+  },
   "Co2U4u": {
     "string": "No plugins found"
   },
@@ -1853,10 +1857,6 @@
   },
   "DILs4b": {
     "string": "Unsupported media provider or incorrect URL"
-  },
-  "DIrxt7": {
-    "context": "channel publication date",
-    "string": "Visible since {date}"
   },
   "DJFPzq": {
     "context": "button",
@@ -2875,10 +2875,6 @@
   },
   "KRqgfo": {
     "string": "User is out of your permissions scope"
-  },
-  "KSp+8B": {
-    "context": "product available for purchase date",
-    "string": "will become available on {date}"
   },
   "KXkdMH": {
     "context": "order discount removed title",
@@ -5096,10 +5092,6 @@
     "context": "voucher",
     "string": "Applies to"
   },
-  "beuxAP": {
-    "context": "channel publication status",
-    "string": "Hidden"
-  },
   "bgO+7G": {
     "context": "order return amount button",
     "string": "Return & Replace products"
@@ -5681,10 +5673,6 @@
     "context": "voucher",
     "string": "Times used"
   },
-  "hAcUEl": {
-    "context": "product publication date label",
-    "string": "will become published on {date}"
-  },
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
@@ -5716,6 +5704,10 @@
   "hS+ZjH": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete this webhook?"
+  },
+  "hTLCC2": {
+    "context": "channel publication date",
+    "string": "Will become published on {date}"
   },
   "hWO1SD": {
     "context": "order history message",
@@ -6079,6 +6071,10 @@
     "context": "product updated at",
     "string": "Last updated"
   },
+  "kYYbrv": {
+    "context": "channel publication date",
+    "string": "Published since {date}"
+  },
   "kZfIl/": {
     "string": "These are general information about this Content Type."
   },
@@ -6273,10 +6269,6 @@
     "context": "order draft creation date",
     "string": "Date"
   },
-  "mDgOmP": {
-    "context": "channel publication status",
-    "string": "Visible"
-  },
   "mE+fru": {
     "context": "tag filter label",
     "string": "Tags"
@@ -6463,10 +6455,6 @@
   "nf3XSt": {
     "context": "attribute internal name",
     "string": "Slug"
-  },
-  "nfbabo": {
-    "context": "channel publication date",
-    "string": "Will become available on {date}"
   },
   "njBulj": {
     "context": "check to require attribute to have value",
@@ -7828,6 +7816,10 @@
     "context": "button refreshing page",
     "string": "Refresh page"
   },
+  "ys0jH2": {
+    "context": "channel publication status",
+    "string": "Published"
+  },
   "yuiyES": {
     "string": "General Settings"
   },
@@ -7934,6 +7926,10 @@
   "zjkAMs": {
     "context": "header",
     "string": "Translation Sale \"{saleName}\" - {languageCode}"
+  },
+  "znbVYT": {
+    "context": "product available for purchase date",
+    "string": "Will become available on {date}"
   },
   "zqarUF": {
     "context": "modal information under title",

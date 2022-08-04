@@ -2,6 +2,7 @@ import { ChannelData } from "@saleor/channels/utils";
 import { LocalizeDate } from "@saleor/hooks/useDateLocalize";
 import { IntlShape } from "react-intl";
 
+import { publicationMessages } from "./messages";
 import { Messages } from "./types";
 
 export const getChannelsAvailabilityMessages = ({
@@ -22,73 +23,37 @@ export const getChannelsAvailabilityMessages = ({
         ...messages,
         availableDateText:
           currVal.publicationDate && !currVal.isPublished
-            ? intl.formatMessage(
-                {
-                  id: "nfbabo",
-                  defaultMessage: "Will become available on {date}",
-                  description: "channel publication date",
-                },
-                {
-                  date: localizeDate(currVal.publicationDate),
-                },
-              )
-            : currVal.publicationDate
-            ? intl.formatMessage(
-                {
-                  id: "DIrxt7",
-                  defaultMessage: "Visible since {date}",
-                  description: "channel publication date",
-                },
-                {
-                  date: localizeDate(currVal.publicationDate),
-                },
-              )
-            : currVal.isPublished
-            ? intl.formatMessage({
-                id: "mDgOmP",
-                defaultMessage: "Visible",
-                description: "channel publication status",
+            ? intl.formatMessage(publicationMessages.willBecomePublishedOn, {
+                date: localizeDate(currVal.publicationDate),
               })
-            : intl.formatMessage({
-                id: "beuxAP",
-                defaultMessage: "Hidden",
-                description: "channel publication status",
-              }),
-        availableLabel: intl.formatMessage({
-          id: "P/oGtb",
-          defaultMessage: "Available for purchase",
-          description: "product availability",
-        }),
+            : currVal.publicationDate
+            ? intl.formatMessage(publicationMessages.publishedSince, {
+                date: localizeDate(currVal.publicationDate),
+              })
+            : currVal.isPublished
+            ? intl.formatMessage(publicationMessages.published)
+            : intl.formatMessage(publicationMessages.notPublished),
+        availableLabel: intl.formatMessage(
+          publicationMessages.availableForPurchase,
+        ),
         availableSecondLabel: intl.formatMessage(
-          {
-            id: "KSp+8B",
-            defaultMessage: "will become available on {date}",
-            description: "product available for purchase date",
-          },
+          publicationMessages.willBecomeAvailableOn,
           {
             date: localizeDate(currVal.availableForPurchase),
           },
         ),
         hiddenSecondLabel: intl.formatMessage(
-          {
-            id: "hAcUEl",
-            defaultMessage: "will become published on {date}",
-            description: "product publication date label",
-          },
+          publicationMessages.willBecomePublishedOn,
           {
             date: localizeDate(currVal.publicationDate),
           },
         ),
-        setAvailabilityDateLabel: intl.formatMessage({
-          id: "YFQBs1",
-          defaultMessage: "Set availability date",
-          description: "product availability date label",
-        }),
-        unavailableLabel: intl.formatMessage({
-          id: "Y9lv8z",
-          defaultMessage: "Unavailable for purchase",
-          description: "product unavailability",
-        }),
+        setAvailabilityDateLabel: intl.formatMessage(
+          publicationMessages.setAvailabilityDate,
+        ),
+        unavailableLabel: intl.formatMessage(
+          publicationMessages.unavailableForPurchase,
+        ),
       },
     }),
     {} as Messages,
