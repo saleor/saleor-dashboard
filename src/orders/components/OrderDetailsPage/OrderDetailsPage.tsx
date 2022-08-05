@@ -329,9 +329,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onProfileView={onProfileView}
                 />
                 <CardSpacer />
-                <OrderChannelSectionCard
-                  selectedChannelName={order?.channel?.name}
-                />
+                <OrderChannelSectionCard channel={order?.channel} />
                 <CardSpacer />
                 {!isOrderUnconfirmed && (
                   <>

@@ -19,7 +19,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
+import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@saleor/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
@@ -137,6 +137,8 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           />
         </div>
         <div>
+          <OrderChannelSectionCard channel={order?.channel} />
+          <CardSpacer />
           <OrderCustomer
             canEditAddresses={!!order?.user}
             canEditCustomer={true}
@@ -152,8 +154,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
             onProfileView={onProfileView}
             onShippingAddressEdit={onShippingAddressEdit}
           />
-          <CardSpacer />
-          <DraftOrderChannelSectionCard channelName={order?.channel?.name} />
         </div>
       </Grid>
       <Savebar

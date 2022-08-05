@@ -8,6 +8,7 @@ import {
   TableCell,
   TableRow,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Money from "@saleor/components/Money";
@@ -211,13 +212,11 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                   </React.Fragment>
                 ),
                 () => (
-                  <TableRow>
-                    <TableCell colSpan={4} className={classes.noContentCell}>
-                      {!!query
-                        ? intl.formatMessage(messages.noProductsInQuery)
-                        : intl.formatMessage(messages.noProductsInChannel)}
-                    </TableCell>
-                  </TableRow>
+                  <Typography className={classes.noContentText}>
+                    {!!query
+                      ? intl.formatMessage(messages.noProductsInQuery)
+                      : intl.formatMessage(messages.noProductsInChannel)}
+                  </Typography>
                 ),
               )}
             </TableBody>

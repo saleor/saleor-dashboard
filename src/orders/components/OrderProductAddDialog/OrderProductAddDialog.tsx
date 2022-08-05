@@ -9,6 +9,7 @@ import {
   TableCell,
   TableRow,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
@@ -246,13 +247,11 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                   </React.Fragment>
                 ),
                 () => (
-                  <TableRow>
-                    <TableCell colSpan={4} className={classes.noContentCell}>
-                      {!!query
-                        ? intl.formatMessage(messages.noProductsInQuery)
-                        : intl.formatMessage(messages.noProductsInChannel)}
-                    </TableCell>
-                  </TableRow>
+                  <Typography className={classes.noContentText}>
+                    {!!query
+                      ? intl.formatMessage(messages.noProductsInQuery)
+                      : intl.formatMessage(messages.noProductsInChannel)}
+                  </Typography>
                 ),
               )}
             </TableBody>

@@ -22,14 +22,15 @@ export const messages = defineMessages({
     id: "+HuipK",
   },
   noProductsInChannel: {
-    id: "HcFrfy",
+    id: "shmSDX",
     defaultMessage:
-      "No products are available in the channel assigned to this order",
+      "No products are available in the channel assigned to this order.",
     description: "no products placeholder",
   },
   noProductsInQuery: {
-    id: "TpptCl",
-    defaultMessage: "No products are available matching query",
+    id: "9mrWKz",
+    defaultMessage:
+      "No products are available matching query in the channel assigned to this order.",
     description: "no products placeholder",
   },
 });

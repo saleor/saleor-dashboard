@@ -1398,6 +1398,10 @@
     "context": "button linking to dashboard",
     "string": "Dashboard"
   },
+  "9mrWKz": {
+    "context": "no products placeholder",
+    "string": "No products are available matching query in the channel assigned to this order."
+  },
   "9piUVz": {
     "context": "order history message",
     "string": "Order refund information was sent to customer"
@@ -2460,10 +2464,6 @@
   "HaQ8cg": {
     "context": "button",
     "string": "Refund"
-  },
-  "HcFrfy": {
-    "context": "no products placeholder",
-    "string": "No products are available in the channel assigned to this order"
   },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
@@ -4074,10 +4074,6 @@
   "TpPx7V": {
     "context": "navigator placeholder",
     "string": "Search Customer"
-  },
-  "TpptCl": {
-    "context": "no products placeholder",
-    "string": "No products are available matching query"
   },
   "TtZg/K": {
     "context": "ExitFormPrompt title",
@@ -7094,6 +7090,10 @@
   },
   "sfErC+": {
     "string": "Voucher Name"
+  },
+  "shmSDX": {
+    "context": "no products placeholder",
+    "string": "No products are available in the channel assigned to this order."
   },
   "sidKce": {
     "context": "delete channel",

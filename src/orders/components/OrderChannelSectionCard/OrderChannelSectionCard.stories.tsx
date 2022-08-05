@@ -6,7 +6,10 @@ import React from "react";
 import OrderChannelSectionCard, { OrderChannelSectionCardProps } from ".";
 
 const props: OrderChannelSectionCardProps = {
-  selectedChannelName: "International store",
+  channel: {
+    id: "dh87hf34hk8i",
+    name: "International store",
+  },
 };
 
 storiesOf("Orders / Order details channel section", module)
@@ -14,5 +17,5 @@ storiesOf("Orders / Order details channel section", module)
   .addDecorator(Decorator)
   .add("default", () => <OrderChannelSectionCard {...props} />)
   .add("loading", () => (
-    <OrderChannelSectionCard {...props} selectedChannelName={undefined} />
+    <OrderChannelSectionCard {...props} channel={undefined} />
   ));
