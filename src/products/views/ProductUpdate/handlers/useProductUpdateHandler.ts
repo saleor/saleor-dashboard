@@ -9,12 +9,20 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
+  AttributeValueDeleteMutation,
   BulkStockErrorFragment,
+  FileUploadMutation,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
+  ProductChannelListingUpdateMutation,
+  ProductErrorCode,
   ProductErrorWithAttributesFragment,
   ProductFragment,
+  ProductUpdateMutation,
+  ProductVariantChannelListingUpdateMutation,
+  ProductVariantChannelListingUpdateMutationVariables,
   StockErrorFragment,
+  StockInput,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -25,10 +33,15 @@ import {
   useVariantDatagridChannelListingUpdateMutation,
   useVariantDatagridStockUpdateMutation,
   useVariantDatagridUpdateMutation,
+  VariantDatagridChannelListingUpdateMutation,
+  VariantDatagridStockUpdateMutation,
+  VariantDatagridStockUpdateMutationVariables,
+  VariantDatagridUpdateMutation,
+  VariantDatagridUpdateMutationVariables,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationErrors } from "@saleor/misc";
+import { getMutationErrors, hasMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import {
   getStocks,
@@ -37,6 +50,7 @@ import {
 } from "@saleor/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -49,7 +63,27 @@ export type UseProductUpdateHandlerError =
   | AttributeErrorFragment
   | UploadErrorFragment
   | StockErrorFragment
-  | BulkStockErrorFragment;
+  | BulkStockErrorFragment
+  | ProductChannelListingErrorFragment;
+
+type DatagridError =
+  | {
+      attributes: string[] | null;
+      error: ProductErrorCode;
+      variantId: string;
+      type: "variantData";
+    }
+  | {
+      variantId: string;
+      warehouseId: string;
+      type: "stock";
+    }
+  | {
+      error: ProductErrorCode;
+      variantId: string;
+      channelIds: string[];
+      type: "channel";
+    };
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
@@ -57,7 +91,8 @@ type UseProductUpdateHandler = (
 interface UseProductUpdateHandlerOpts {
   called: boolean;
   loading: boolean;
-  errors: UseProductUpdateHandlerError[];
+  errors: ProductErrorWithAttributesFragment[];
+  datagridErrors: DatagridError[];
   channelsErrors: ProductChannelListingErrorFragment[];
 }
 
@@ -66,6 +101,9 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
+  const [datagridErrors, setDatagridErrors] = useState<
+    DatagridError[] | undefined
+  >(undefined);
 
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
@@ -111,7 +149,6 @@ export function useProductUpdateHandler(
     product,
     async (data: ProductUpdateSubmitData) => {
       let errors: UseProductUpdateHandlerError[] = [];
-
       const uploadFilesResult = await handleUploadMultipleFiles(
         data.attributesWithNewFileValue,
         variables => uploadFile({ variables }),
@@ -134,7 +171,7 @@ export function useProductUpdateHandler(
       });
       errors = [...errors, ...result.data.productUpdate.errors];
 
-      await updateChannels({
+      const productChannelsUpdateResult = await updateChannels({
         variables: getProductChannelsUpdateVariables(product, data),
       });
 
@@ -155,9 +192,73 @@ export function useProductUpdateHandler(
       errors = [
         ...errors,
         ...(variantUpdateResult.flatMap(getMutationErrors) as Array<
-          StockErrorFragment | BulkStockErrorFragment
+          | StockErrorFragment
+          | BulkStockErrorFragment
+          | ProductChannelListingErrorFragment
         >),
       ];
+
+      const datagridRelatedErrors: DatagridError[] = [
+        productChannelsUpdateResult,
+        ...variantUpdateResult,
+      ]
+        .filter(hasMutationErrors)
+        .flatMap(result => {
+          if (result.data.productVariantChannelListingUpdate) {
+            const data = result.data as ProductVariantChannelListingUpdateMutation;
+            return data.productVariantChannelListingUpdate.errors.map<
+              DatagridError
+            >(error => ({
+              type: "channel",
+              error: error.code,
+              variantId: (result.extensions
+                .variables as ProductVariantChannelListingUpdateMutationVariables)
+                .id,
+              channelIds: error.channels,
+            }));
+          }
+
+          if (result.data.productVariantStocksUpdate) {
+            const data = result.data as VariantDatagridStockUpdateMutation;
+            const variables = result.extensions
+              .variables as VariantDatagridStockUpdateMutationVariables;
+            return [
+              ...data.productVariantStocksUpdate.errors.map<DatagridError>(
+                error => ({
+                  type: "stock",
+                  variantId: (variables as VariantDatagridStockUpdateMutationVariables)
+                    .id,
+                  warehouseId: (variables.stocks as StockInput[])[error.index]
+                    .warehouse,
+                }),
+              ),
+              ...data.productVariantStocksDelete.errors.map<DatagridError>(
+                () => ({
+                  type: "stock",
+                  variantId: (variables as VariantDatagridStockUpdateMutationVariables)
+                    .id,
+                  warehouseId: null,
+                }),
+              ),
+            ];
+          }
+
+          if (result.data.productVariantUpdate) {
+            const data = result.data as VariantDatagridUpdateMutation;
+            const variables = result.extensions
+              .variables as VariantDatagridUpdateMutationVariables;
+            return data.productVariantUpdate.errors.map<DatagridError>(
+              error => ({
+                type: "variantData",
+                variantId: (variables as VariantDatagridUpdateMutationVariables)
+                  .id,
+                error: error.code,
+                attributes: error.attributes,
+              }),
+            );
+          }
+        });
+      setDatagridErrors(datagridRelatedErrors);
 
       return errors;
     },
@@ -214,6 +315,7 @@ export function useProductUpdateHandler(
       loading,
       channelsErrors,
       errors,
+      datagridErrors,
     },
   ];
 }
