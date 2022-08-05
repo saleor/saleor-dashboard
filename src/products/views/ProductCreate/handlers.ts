@@ -87,12 +87,12 @@ export function createHandler(
   }) => Promise<FetchResult<ProductDeleteMutation>>,
 ) {
   return async (formData: ProductCreateData) => {
-    let errors: Array<Partial<
+    let errors: Array<
       | AttributeErrorFragment
       | UploadErrorFragment
       | ProductErrorFragment
       | ProductChannelListingErrorFragment
-    >> = [];
+    > = [];
 
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
