@@ -158,6 +158,19 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       />
       <CardContent>
         <div className={classes.root}>
+          {order?.discounts?.map(discount => (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.discount} />
+              {discount.type === OrderDiscountType.MANUAL ? (
+                <FormattedMessage {...orderPaymentMessages.staffAdded} />
+              ) : (
+                <FormattedMessage {...orderPaymentMessages.voucher} />
+              )}
+              <div className={classes.leftmostRightAlignedElement}>
+                -<Money money={discount.amount} />
+              </div>
+            </div>
+          ))}
           <div>
             <FormattedMessage {...orderPaymentMessages.subtotal} />
             <div className={classes.leftmostRightAlignedElement}>
@@ -174,19 +187,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
             </div>
           </div>
-          {order?.discounts?.map(discount => (
-            <div>
-              <FormattedMessage {...orderPaymentMessages.discount} />
-              {discount.type === OrderDiscountType.MANUAL ? (
-                <FormattedMessage {...orderPaymentMessages.staffAdded} />
-              ) : (
-                <FormattedMessage {...orderPaymentMessages.voucher} />
-              )}
-              <div className={classes.leftmostRightAlignedElement}>
-                -<Money money={discount.amount} />
-              </div>
-            </div>
-          ))}
           <div>
             <FormattedMessage {...orderPaymentMessages.taxes} />
             {order?.total.tax.amount > 0 && (
