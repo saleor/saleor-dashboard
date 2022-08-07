@@ -95,6 +95,11 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage: "Paid with Gift Card",
     description: "order payment",
   },
+  includedInSubtotal: {
+    id: "pPef6L",
+    defaultMessage: "Included in subtotal",
+    description: "order payment",
+  },
 });
 
 export const paymentButtonMessages = defineMessages({

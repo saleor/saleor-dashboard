@@ -159,12 +159,26 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           {order?.discounts?.map(discount => (
             <div>
               <FormattedMessage {...orderPaymentMessages.discount} />
-              {discount.type === OrderDiscountType.MANUAL ? (
-                <FormattedMessage {...orderPaymentMessages.staffAdded} />
-              ) : (
-                <FormattedMessage {...orderPaymentMessages.voucher} />
-              )}
-              <div className={classes.leftmostRightAlignedElement}>
+              <HorizontalSpacer spacing={4} />
+              <span className={classes.supportText}>
+                {discount.type === OrderDiscountType.MANUAL ? (
+                  <FormattedMessage {...orderPaymentMessages.staffAdded} />
+                ) : (
+                  <FormattedMessage {...orderPaymentMessages.voucher} />
+                )}
+              </span>
+              <span
+                className={clsx(
+                  classes.leftmostRightAlignedElement,
+                  classes.supportText,
+                )}
+              >
+                <FormattedMessage
+                  {...orderPaymentMessages.includedInSubtotal}
+                />
+              </span>
+              <HorizontalSpacer spacing={2} />
+              <div className={classes.supportText}>
                 -<Money money={discount.amount} />
               </div>
             </div>
@@ -197,7 +211,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 >
                   <FormattedMessage {...orderPaymentMessages.vatIncluded} />{" "}
                 </div>
-                <HorizontalSpacer spacing={4} />
+                <HorizontalSpacer spacing={2} />
               </>
             )}
             <div
