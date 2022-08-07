@@ -85,7 +85,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const outstandingBalance = extractOutstandingBalance(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
-  const getDeliveryMethodName = order => {
+  const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
       order?.shippingMethodName === undefined &&
       order?.shippingPrice === undefined &&
