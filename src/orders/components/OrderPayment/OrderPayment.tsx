@@ -165,6 +165,29 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </div>
           </div>
           <div>
+            <FormattedMessage {...orderPaymentMessages.shipping} />
+            <HorizontalSpacer spacing={4} />
+            <div className={classes.supportText}>
+              {getDeliveryMethodName(order)}
+            </div>
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
+            </div>
+          </div>
+          {order?.discounts?.map(discount => (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.discount} />
+              {discount.type === OrderDiscountType.MANUAL ? (
+                <FormattedMessage {...orderPaymentMessages.staffAdded} />
+              ) : (
+                <FormattedMessage {...orderPaymentMessages.voucher} />
+              )}
+              <div className={classes.leftmostRightAlignedElement}>
+                -<Money money={discount.amount} />
+              </div>
+            </div>
+          ))}
+          <div>
             <FormattedMessage {...orderPaymentMessages.taxes} />
             {order?.total.tax.amount > 0 && (
               <>
@@ -188,29 +211,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {<Money money={order?.total.tax} /> ?? <Skeleton />}
             </div>
           </div>
-          <div>
-            <FormattedMessage {...orderPaymentMessages.shipping} />
-            <HorizontalSpacer spacing={4} />
-            <div className={classes.supportText}>
-              {getDeliveryMethodName(order)}
-            </div>
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
-            </div>
-          </div>
-          {order?.discounts?.map(discount => (
-            <div>
-              <FormattedMessage {...orderPaymentMessages.discount} />
-              {discount.type === OrderDiscountType.MANUAL ? (
-                <FormattedMessage {...orderPaymentMessages.staffAdded} />
-              ) : (
-                <FormattedMessage {...orderPaymentMessages.voucher} />
-              )}
-              <div className={classes.leftmostRightAlignedElement}>
-                -<Money money={discount.amount} />
-              </div>
-            </div>
-          ))}
           <div className={classes.totalRow}>
             <FormattedMessage {...orderPaymentMessages.total} />
             <div className={classes.leftmostRightAlignedElement}>
