@@ -16,7 +16,7 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, transformPaymentStatus } from "../../../misc";
+import { transformPaymentStatus } from "../../../misc";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import {
   extractOrderGiftCardUsedAmount,
@@ -72,12 +72,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
 
   const intl = useIntl();
 
-  const canCapture = maybe(() => order.actions, []).includes(
-    OrderAction.CAPTURE,
-  );
-  const canVoid = maybe(() => order.actions, []).includes(OrderAction.VOID);
-  const canRefund = maybe(() => order.actions, []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = maybe(() => order.actions, []).includes(
+  const canCapture = (order?.actions ?? []).includes(OrderAction.CAPTURE);
+  const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
+  const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
+  const canMarkAsPaid = (order?.actions ?? []).includes(
     OrderAction.MARK_AS_PAID,
   );
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
