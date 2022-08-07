@@ -209,7 +209,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                     classes.leftmostRightAlignedElement,
                   )}
                 >
-                  <FormattedMessage {...orderPaymentMessages.vatIncluded} />{" "}
+                  <FormattedMessage
+                    {...orderPaymentMessages.includedInPrices}
+                  />{" "}
                 </div>
                 <HorizontalSpacer spacing={2} />
               </>

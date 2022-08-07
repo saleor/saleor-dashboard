@@ -100,6 +100,11 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage: "Included in subtotal",
     description: "order payment",
   },
+  includedInPrices: {
+    id: "ukYopn",
+    defaultMessage: "Included in prices",
+    description: "order payment",
+  },
 });
 
 export const paymentButtonMessages = defineMessages({
