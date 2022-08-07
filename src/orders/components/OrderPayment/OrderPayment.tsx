@@ -54,6 +54,9 @@ const useStyles = makeStyles(
     supportText: {
       color: theme.palette.saleor.main[3],
     },
+    smallFont: {
+      fontSize: theme.typography.body2.fontSize,
+    },
   }),
   { name: "OrderPayment" },
 );
@@ -170,6 +173,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <span
                 className={clsx(
                   classes.leftmostRightAlignedElement,
+                  classes.smallFont,
                   classes.supportText,
                 )}
               >
@@ -206,6 +210,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 <div
                   className={clsx(
                     classes.supportText,
+                    classes.smallFont,
                     classes.leftmostRightAlignedElement,
                   )}
                 >
