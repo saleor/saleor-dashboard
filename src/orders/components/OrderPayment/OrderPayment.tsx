@@ -265,12 +265,14 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {<Money money={order?.totalCaptured} /> ?? <Skeleton />}
             </div>
           </div>
-          <div>
-            <FormattedMessage {...orderPaymentMessages.refunded} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={refundedAmount} /> ?? <Skeleton />}
+          {refundedAmount && (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.refunded} />
+              <div className={classes.leftmostRightAlignedElement}>
+                {<Money money={refundedAmount} />}
+              </div>
             </div>
-          </div>
+          )}
           <div className={classes.totalRow}>
             <FormattedMessage {...orderPaymentMessages.outstanding} />
             <div className={classes.leftmostRightAlignedElement}>
