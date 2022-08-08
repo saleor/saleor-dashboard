@@ -83,7 +83,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   );
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
-  const outstandingBalance = extractOutstandingBalance(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
@@ -275,7 +274,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           <div className={classes.totalRow}>
             <FormattedMessage {...orderPaymentMessages.outstanding} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={outstandingBalance} /> ?? <Skeleton />}
+              {<Money money={order?.totalBalance} /> ?? <Skeleton />}
             </div>
           </div>
         </div>
