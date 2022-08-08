@@ -221,10 +221,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </>
             )}
             <div
-              className={clsx({
-                [classes.leftmostRightAlignedElement]:
-                  order?.total.tax.amount === 0,
-              })}
+              className={clsx(
+                {
+                  [classes.leftmostRightAlignedElement]:
+                    order?.total.tax.amount === 0,
+                },
+                classes.supportText,
+              )}
             >
               {<Money money={order?.total.tax} /> ?? <Skeleton />}
             </div>
