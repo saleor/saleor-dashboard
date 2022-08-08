@@ -6570,6 +6570,10 @@
     "context": "tab name",
     "string": "All Vouchers"
   },
+  "pPef6L": {
+    "context": "order payment",
+    "string": "Included in subtotal"
+  },
   "pRYGUR": {
     "context": "section description",
     "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
@@ -7235,6 +7239,10 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
+  },
+  "ukYopn": {
+    "context": "order payment",
+    "string": "Included in prices"
   },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",
