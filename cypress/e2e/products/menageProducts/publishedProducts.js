@@ -50,7 +50,7 @@ describe("Published products", () => {
 
   it(
     "should update product to published",
-    { tags: ["@products", "@allEnv"] },
+    { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
 
@@ -79,7 +79,7 @@ describe("Published products", () => {
 
   it(
     "should update product to not published",
-    { tags: ["@products", "@allEnv"] },
+    { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
       let product;
