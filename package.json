@@ -43,6 +43,7 @@
     "currency-codes": "^2.1.0",
     "cypress-mailhog": "^1.3.0",
     "cypress-mochawesome-reporter": "^2.3.0",
+    "cypress-repeat": "^2.3.3",
     "downshift": "^6.1.7",
     "editorjs-inline-tool": "^0.4.0",
     "faker": "^5.1.0",

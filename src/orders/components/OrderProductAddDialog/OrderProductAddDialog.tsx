@@ -297,7 +297,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
-                    <TableRow>
+                    <TableRow data-test-id="tableRow">
                       <TableCell
                         padding="checkbox"
                         className={classes.productCheckboxCell}
