@@ -5090,11 +5090,12 @@ export type WarehouseDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type WarehouseErrorKeySpecifier = ('field' | 'message' | 'code' | WarehouseErrorKeySpecifier)[];
+export type WarehouseErrorKeySpecifier = ('field' | 'message' | 'code' | 'shippingZones' | WarehouseErrorKeySpecifier)[];
 export type WarehouseErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	code?: FieldPolicy<any> | FieldReadFunction<any>
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingZones?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type WarehouseShippingZoneAssignKeySpecifier = ('warehouseErrors' | 'errors' | 'warehouse' | WarehouseShippingZoneAssignKeySpecifier)[];
 export type WarehouseShippingZoneAssignFieldPolicy = {
