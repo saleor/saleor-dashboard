@@ -11,51 +11,15 @@ import {
   OrderDiscountType,
   OrderStatus,
 } from "@saleor/graphql";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { Pill } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
+import { useStyles } from "./styles";
 import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    root: {
-      ...theme.typography.body1,
-      lineHeight: 1.9,
-      width: "100%",
-      "& > div": {
-        display: "flex",
-        justifyContent: "flex-end",
-      },
-    },
-    leftmostRightAlignedElement: {
-      marginLeft: "auto",
-    },
-    rightmostLeftAlignedElement: {
-      marginRight: "auto",
-    },
-    totalRow: {
-      fontWeight: 600,
-    },
-    titleContainer: {
-      display: "flex",
-    },
-    supportText: {
-      color: theme.palette.saleor.main[3],
-    },
-    smallFont: {
-      fontSize: theme.typography.body2.fontSize,
-    },
-  }),
-  { name: "OrderPayment" },
-);
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
