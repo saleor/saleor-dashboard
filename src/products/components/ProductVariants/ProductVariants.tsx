@@ -13,7 +13,7 @@ import {
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
-import { DatagridError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 // import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +22,7 @@ import { getColumnData, getData } from "./utils";
 
 interface ProductVariantsProps {
   channels: ChannelData[];
-  errors: DatagridError[];
+  errors: ProductVariantListError[];
   limits: RefreshLimitsQuery["shop"]["limits"];
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];

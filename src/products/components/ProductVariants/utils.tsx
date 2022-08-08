@@ -21,7 +21,7 @@ import {
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
-import { DatagridError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
@@ -161,7 +161,10 @@ export function getVariantChannels(
     .filter(({ input }) => input.length > 0);
 }
 
-function errorMatchesColumn(error: DatagridError, columnId: string): boolean {
+function errorMatchesColumn(
+  error: ProductVariantListError,
+  columnId: string,
+): boolean {
   if (error.type === "channel") {
     return (
       error.channelIds.includes(getColumnChannel(columnId)) ||
@@ -184,7 +187,7 @@ function errorMatchesColumn(error: DatagridError, columnId: string): boolean {
 interface GetData {
   availableColumns: AvailableColumn[];
   column: number;
-  errors: DatagridError[];
+  errors: ProductVariantListError[];
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;

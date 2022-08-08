@@ -40,7 +40,7 @@ import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHa
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DatagridError, getDatagridErrors } from "./errors";
+import { getProductVariantListErrors, ProductVariantListError } from "./errors";
 import {
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
@@ -61,7 +61,7 @@ interface UseProductUpdateHandlerOpts {
   called: boolean;
   loading: boolean;
   errors: ProductErrorWithAttributesFragment[];
-  datagridErrors: DatagridError[];
+  datagridErrors: ProductVariantListError[];
   channelsErrors: ProductChannelListingErrorFragment[];
 }
 
@@ -70,7 +70,9 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
-  const [datagridErrors, setDatagridErrors] = useState<DatagridError[]>([]);
+  const [datagridErrors, setDatagridErrors] = useState<
+    ProductVariantListError[]
+  >([]);
 
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
@@ -166,7 +168,10 @@ export function useProductUpdateHandler(
       ];
 
       setDatagridErrors(
-        getDatagridErrors(productChannelsUpdateResult, variantUpdateResults),
+        getProductVariantListErrors(
+          productChannelsUpdateResult,
+          variantUpdateResults,
+        ),
       );
 
       return errors;

@@ -44,7 +44,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import { productImageUrl, productListUrl } from "@saleor/products/urls";
-import { DatagridError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
@@ -67,7 +67,7 @@ export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
   channelsErrors: ProductChannelListingErrorFragment[];
-  datagridErrors: DatagridError[];
+  datagridErrors: ProductVariantListError[];
   errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
