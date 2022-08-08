@@ -339,6 +339,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         attributeValues={attributeValues}
         disabled={disableFormSave}
         errors={submitOpts.errors}
+        datagridErrors={submitOpts.datagridErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}

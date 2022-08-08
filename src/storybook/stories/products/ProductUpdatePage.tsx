@@ -19,6 +19,14 @@ const product = productFixture(placeholderImage);
 
 const props: ProductUpdatePageProps = {
   channels: channelsList,
+  datagridErrors: [
+    {
+      variantId: product.variants[0].id,
+      type: "channel",
+      channelIds: [channelsList[1].id],
+      error: ProductErrorCode.ALREADY_EXISTS,
+    },
+  ],
   productId: "123",
   isSimpleProduct: false,
   categories: [product.category],

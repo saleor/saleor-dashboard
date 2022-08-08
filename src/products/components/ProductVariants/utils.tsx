@@ -21,6 +21,7 @@ import {
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
+import { DatagridError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
@@ -160,9 +161,30 @@ export function getVariantChannels(
     .filter(({ input }) => input.length > 0);
 }
 
+function errorMatchesColumn(error: DatagridError, columnId: string): boolean {
+  if (error.type === "channel") {
+    return (
+      error.channelIds.includes(getColumnChannel(columnId)) ||
+      error.channelIds.includes(getColumnChannelAvailability(columnId))
+    );
+  }
+
+  if (error.type === "stock") {
+    return error.warehouseId.includes(getColumnStock(columnId));
+  }
+
+  if (error.type === "variantData") {
+    if (error.attributes?.length > 0) {
+      return error.attributes.includes(getColumnAttribute(columnId));
+    }
+    return columnId === "sku";
+  }
+}
+
 interface GetData {
   availableColumns: AvailableColumn[];
   column: number;
+  errors: DatagridError[];
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
@@ -175,6 +197,7 @@ interface GetData {
 export function getData({
   availableColumns,
   changes,
+  errors,
   added,
   removed,
   column,
@@ -189,19 +212,24 @@ export function getData({
   }
 
   const columnId = availableColumns[column].id;
+  const variantId = variants[row].id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined
     : variants[row + removed.filter(r => r <= row).length];
+  const error = errors.find(
+    err => err.variantId === variantId && errorMatchesColumn(err, columnId),
+  );
 
   const styled = (props: GridCell) => ({
     ...props,
-    themeOverride:
-      change !== undefined
-        ? {
-            bgCell: "#C1DBFF",
-          }
-        : {},
+    themeOverride: error
+      ? { bgCell: "#F4DDBA" }
+      : change !== undefined
+      ? {
+          bgCell: "#C1DBFF",
+        }
+      : {},
   });
 
   switch (columnId) {

@@ -44,6 +44,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import { productImageUrl, productListUrl } from "@saleor/products/urls";
+import { DatagridError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
@@ -66,6 +67,7 @@ export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
   channelsErrors: ProductChannelListingErrorFragment[];
+  datagridErrors: DatagridError[];
   errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
@@ -116,6 +118,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   categories: categoryChoiceList,
   channels,
   channelsErrors,
+  datagridErrors,
   collections: collectionChoiceList,
   attributeValues,
   isSimpleProduct,
@@ -341,6 +344,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <ProductVariants
+                    errors={datagridErrors}
                     channels={listings}
                     limits={limits}
                     variants={variants}

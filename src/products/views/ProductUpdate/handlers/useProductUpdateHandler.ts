@@ -9,20 +9,12 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
-  AttributeValueDeleteMutation,
   BulkStockErrorFragment,
-  FileUploadMutation,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
-  ProductChannelListingUpdateMutation,
-  ProductErrorCode,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductUpdateMutation,
-  ProductVariantChannelListingUpdateMutation,
-  ProductVariantChannelListingUpdateMutationVariables,
   StockErrorFragment,
-  StockInput,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -33,15 +25,10 @@ import {
   useVariantDatagridChannelListingUpdateMutation,
   useVariantDatagridStockUpdateMutation,
   useVariantDatagridUpdateMutation,
-  VariantDatagridChannelListingUpdateMutation,
-  VariantDatagridStockUpdateMutation,
-  VariantDatagridStockUpdateMutationVariables,
-  VariantDatagridUpdateMutation,
-  VariantDatagridUpdateMutationVariables,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationErrors, hasMutationErrors } from "@saleor/misc";
+import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import {
   getStocks,
@@ -53,6 +40,7 @@ import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHa
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { DatagridError, getDatagridErrors } from "./errors";
 import {
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
@@ -65,25 +53,6 @@ export type UseProductUpdateHandlerError =
   | StockErrorFragment
   | BulkStockErrorFragment
   | ProductChannelListingErrorFragment;
-
-type DatagridError =
-  | {
-      attributes: string[] | null;
-      error: ProductErrorCode;
-      variantId: string;
-      type: "variantData";
-    }
-  | {
-      variantId: string;
-      warehouseId: string;
-      type: "stock";
-    }
-  | {
-      error: ProductErrorCode;
-      variantId: string;
-      channelIds: string[];
-      type: "channel";
-    };
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
@@ -101,9 +70,7 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
-  const [datagridErrors, setDatagridErrors] = useState<
-    DatagridError[] | undefined
-  >(undefined);
+  const [datagridErrors, setDatagridErrors] = useState<DatagridError[]>([]);
 
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [
@@ -175,7 +142,7 @@ export function useProductUpdateHandler(
         variables: getProductChannelsUpdateVariables(product, data),
       });
 
-      const variantUpdateResult = await Promise.all<FetchResult>([
+      const variantUpdateResults = await Promise.all<FetchResult>([
         ...getStocks(product.variants, data.variants).map(variables =>
           updateStocks({ variables }),
         ),
@@ -191,74 +158,16 @@ export function useProductUpdateHandler(
 
       errors = [
         ...errors,
-        ...(variantUpdateResult.flatMap(getMutationErrors) as Array<
+        ...(variantUpdateResults.flatMap(getMutationErrors) as Array<
           | StockErrorFragment
           | BulkStockErrorFragment
           | ProductChannelListingErrorFragment
         >),
       ];
 
-      const datagridRelatedErrors: DatagridError[] = [
-        productChannelsUpdateResult,
-        ...variantUpdateResult,
-      ]
-        .filter(hasMutationErrors)
-        .flatMap(result => {
-          if (result.data.productVariantChannelListingUpdate) {
-            const data = result.data as ProductVariantChannelListingUpdateMutation;
-            return data.productVariantChannelListingUpdate.errors.map<
-              DatagridError
-            >(error => ({
-              type: "channel",
-              error: error.code,
-              variantId: (result.extensions
-                .variables as ProductVariantChannelListingUpdateMutationVariables)
-                .id,
-              channelIds: error.channels,
-            }));
-          }
-
-          if (result.data.productVariantStocksUpdate) {
-            const data = result.data as VariantDatagridStockUpdateMutation;
-            const variables = result.extensions
-              .variables as VariantDatagridStockUpdateMutationVariables;
-            return [
-              ...data.productVariantStocksUpdate.errors.map<DatagridError>(
-                error => ({
-                  type: "stock",
-                  variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-                    .id,
-                  warehouseId: (variables.stocks as StockInput[])[error.index]
-                    .warehouse,
-                }),
-              ),
-              ...data.productVariantStocksDelete.errors.map<DatagridError>(
-                () => ({
-                  type: "stock",
-                  variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-                    .id,
-                  warehouseId: null,
-                }),
-              ),
-            ];
-          }
-
-          if (result.data.productVariantUpdate) {
-            const data = result.data as VariantDatagridUpdateMutation;
-            const variables = result.extensions
-              .variables as VariantDatagridUpdateMutationVariables;
-            return data.productVariantUpdate.errors.map<DatagridError>(
-              error => ({
-                type: "variantData",
-                variantId: (variables as VariantDatagridUpdateMutationVariables)
-                  .id,
-                error: error.code,
-                attributes: error.attributes,
-              }),
-            );
-          }
-        });
-      setDatagridErrors(datagridRelatedErrors);
+      setDatagridErrors(
+        getDatagridErrors(productChannelsUpdateResult, variantUpdateResults),
+      );
 
       return errors;
     },
@@ -302,11 +211,8 @@ export function useProductUpdateHandler(
 
   const errors = updateProductOpts.data?.productUpdate.errors ?? [];
 
-  const channelsErrors = [
-    ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? []),
-    ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
-      ?.errors ?? []),
-  ];
+  const channelsErrors =
+    updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? [];
 
   return [
     submit,
