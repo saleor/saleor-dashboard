@@ -9,7 +9,7 @@ const valueFalse = AVAILABLE_CHANNELS_FORM.radioButtonsValueFalse;
 
 export function updateProductIsAvailableForPurchase(
   productUrl,
-  isAvailableForPurchase
+  isAvailableForPurchase,
 ) {
   const isAvailableForPurchaseSelector = isAvailableForPurchase
     ? valueTrue
@@ -27,7 +27,7 @@ export function updateProductPublish(productUrl, isPublished) {
 export function updateProductVisibleInListings(productUrl) {
   updateProductMenageInChannel(
     productUrl,
-    AVAILABLE_CHANNELS_FORM.visibleInListingsButton
+    AVAILABLE_CHANNELS_FORM.visibleInListingsButton,
   );
 }
 
@@ -36,16 +36,17 @@ function updateProductMenageInChannel(productUrl, menageSelector) {
     .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
     .click()
     .get(menageSelector)
-    .click();
-  cy.addAliasToGraphRequest("ProductChannelListingUpdate");
-  cy.get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForProgressBarToNotBeVisible()
+    .addAliasToGraphRequest("ProductChannelListingUpdate")
+    .get(BUTTON_SELECTORS.confirm)
     .click()
     .wait("@ProductChannelListingUpdate");
 }
 
 export function fillUpCommonFieldsForAllProductTypes(
   { generalInfo, seo, metadata, productOrganization },
-  createMode = true
+  createMode = true,
 ) {
   return fillUpAllCommonFieldsInCreateAndUpdate({ generalInfo, seo, metadata })
     .then(() => {
@@ -54,7 +55,7 @@ export function fillUpCommonFieldsForAllProductTypes(
       } else {
         fillUpCollectionAndCategory({
           category: productOrganization.category,
-          collection: productOrganization.collection
+          collection: productOrganization.collection,
         });
       }
     })
@@ -64,7 +65,7 @@ export function fillUpCommonFieldsForAllProductTypes(
 export function fillUpAllCommonFieldsInCreateAndUpdate({
   generalInfo,
   seo,
-  metadata
+  metadata,
 }) {
   return fillUpProductGeneralInfo(generalInfo)
     .then(() => {
@@ -92,7 +93,7 @@ export function fillUpProductGeneralInfo({ name, description, rating }) {
 export function fillUpProductOrganization({
   productType,
   category,
-  collection
+  collection,
 }) {
   const organization = {};
   return cy
