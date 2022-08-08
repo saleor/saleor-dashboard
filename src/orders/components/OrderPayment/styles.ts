@@ -33,6 +33,9 @@ export const useStyles = makeStyles(
     smallFont: {
       fontSize: theme.typography.body2.fontSize,
     },
+    success: {
+      color: theme.palette.success.dark,
+    },
   }),
   { name: "OrderPayment" },
 );

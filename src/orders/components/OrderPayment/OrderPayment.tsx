@@ -236,10 +236,20 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </div>
             </div>
           )}
-          <div className={classes.totalRow}>
+          <div
+            className={clsx(
+              { [classes.success]: order?.totalBalance.amount === 0 },
+              classes.totalRow,
+            )}
+          >
             <FormattedMessage {...orderPaymentMessages.outstanding} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.totalBalance} /> ?? <Skeleton />}
+              {order?.totalBalance.amount === 0 ? (
+                <FormattedMessage {...orderPaymentMessages.settled} />
+              ) : (
+                <Money money={order?.totalBalance} /> ?? <Skeleton />
+              )}
+              {}
             </div>
           </div>
         </div>

@@ -105,6 +105,11 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage: "Included in prices",
     description: "order payment",
   },
+  settled: {
+    id: "Sxzua5",
+    defaultMessage: "Settled",
+    description: "order payment",
+  },
 });
 
 export const paymentButtonMessages = defineMessages({
