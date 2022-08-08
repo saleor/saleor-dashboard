@@ -18,11 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformPaymentStatus } from "../../../misc";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
-import {
-  extractOrderGiftCardUsedAmount,
-  extractOutstandingBalance,
-  extractRefundedAmount,
-} from "./utils";
+import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
