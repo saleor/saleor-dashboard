@@ -67,7 +67,7 @@ export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
   channelsErrors: ProductChannelListingErrorFragment[];
-  datagridErrors: ProductVariantListError[];
+  variantListErrors: ProductVariantListError[];
   errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
@@ -118,7 +118,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   categories: categoryChoiceList,
   channels,
   channelsErrors,
-  datagridErrors,
+  variantListErrors,
   collections: collectionChoiceList,
   attributeValues,
   isSimpleProduct,
@@ -344,7 +344,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <ProductVariants
-                    errors={datagridErrors}
+                    errors={variantListErrors}
                     channels={listings}
                     limits={limits}
                     variants={variants}

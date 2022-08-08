@@ -61,7 +61,7 @@ interface UseProductUpdateHandlerOpts {
   called: boolean;
   loading: boolean;
   errors: ProductErrorWithAttributesFragment[];
-  datagridErrors: ProductVariantListError[];
+  variantListErrors: ProductVariantListError[];
   channelsErrors: ProductChannelListingErrorFragment[];
 }
 
@@ -70,7 +70,7 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
-  const [datagridErrors, setDatagridErrors] = useState<
+  const [variantListErrors, setVariantListErrors] = useState<
     ProductVariantListError[]
   >([]);
 
@@ -167,7 +167,7 @@ export function useProductUpdateHandler(
         >),
       ];
 
-      setDatagridErrors(
+      setVariantListErrors(
         getProductVariantListErrors(
           productChannelsUpdateResult,
           variantUpdateResults,
@@ -226,7 +226,7 @@ export function useProductUpdateHandler(
       loading,
       channelsErrors,
       errors,
-      datagridErrors,
+      variantListErrors,
     },
   ];
 }

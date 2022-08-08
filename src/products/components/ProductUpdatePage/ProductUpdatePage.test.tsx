@@ -38,6 +38,7 @@ jest.mock("@saleor/utils/richText/useRichText");
 
 const props: ProductUpdatePageProps = {
   channels: channelsList,
+  variantListErrors: [],
   productId: "123",
   categories: [product.category],
   isSimpleProduct: false,

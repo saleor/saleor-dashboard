@@ -19,7 +19,7 @@ const product = productFixture(placeholderImage);
 
 const props: ProductUpdatePageProps = {
   channels: channelsList,
-  datagridErrors: [
+  variantListErrors: [
     {
       variantId: product.variants[0].id,
       type: "channel",
