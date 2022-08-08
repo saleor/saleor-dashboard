@@ -12,8 +12,8 @@ export const orderPaymentMessages = defineMessages({
     description: "OrderPayment does not require shipping",
   },
   paymentTitle: {
-    id: "SC/eNC",
-    defaultMessage: "Payment status",
+    id: "7KRGqz",
+    defaultMessage: "Payment balance",
     description: "Payment card title",
   },
   subtotal: {

@@ -1131,6 +1131,10 @@
     "context": "product field",
     "string": "Export Product Weight"
   },
+  "7KRGqz": {
+    "context": "Payment card title",
+    "string": "Payment balance"
+  },
   "7NFfmz": {
     "string": "Products"
   },
@@ -3805,10 +3809,6 @@
   "S7j+Wf": {
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
-  },
-  "SC/eNC": {
-    "context": "Payment card title",
-    "string": "Payment status"
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
