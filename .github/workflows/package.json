@@ -1,9 +1,0 @@
-{
-  "engines": {
-    "node": ">=14"
-  },
-  "dependencies": {
-    "@octokit/core": "^4.0.4",
-    "commander": "^9.4.0"
-  }
-}
