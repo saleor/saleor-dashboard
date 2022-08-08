@@ -73,19 +73,15 @@ export function useProductUpdateHandler(
   const [variantListErrors, setVariantListErrors] = useState<
     ProductVariantListError[]
   >([]);
+  const [called, setCalled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [
-    updatePrivateMetadata,
-    updatePrivateMetadataOpts,
-  ] = useUpdatePrivateMetadataMutation({});
-  const [
-    updateStocks,
-    updateStocksOpts,
-  ] = useVariantDatagridStockUpdateMutation({});
-  const [updateVariant, updateVariantOpts] = useVariantDatagridUpdateMutation();
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const [updateStocks] = useVariantDatagridStockUpdateMutation({});
+  const [updateVariant] = useVariantDatagridUpdateMutation();
 
-  const [uploadFile, uploadFileOpts] = useFileUploadMutation();
+  const [uploadFile] = useFileUploadMutation();
 
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
   const [
@@ -106,82 +102,83 @@ export function useProductUpdateHandler(
 
   const [
     updateVariantChannels,
-    updateVariantChannelsOpts,
   ] = useVariantDatagridChannelListingUpdateMutation();
 
-  const [
-    deleteAttributeValue,
-    deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation();
+  const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
-  const sendMutations = createMetadataUpdateHandler(
-    product,
-    async (data: ProductUpdateSubmitData) => {
-      let errors: UseProductUpdateHandlerError[] = [];
-      const uploadFilesResult = await handleUploadMultipleFiles(
-        data.attributesWithNewFileValue,
-        variables => uploadFile({ variables }),
-      );
+  const sendMutations = async (
+    data: ProductUpdateSubmitData,
+  ): Promise<UseProductUpdateHandlerError[]> => {
+    let errors: UseProductUpdateHandlerError[] = [];
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables }),
+    );
 
-      const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-        data.attributesWithNewFileValue,
-        product?.attributes,
-        variables => deleteAttributeValue({ variables }),
-      );
+    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
+      data.attributesWithNewFileValue,
+      product?.attributes,
+      variables => deleteAttributeValue({ variables }),
+    );
 
-      errors = [
-        ...errors,
-        ...mergeFileUploadErrors(uploadFilesResult),
-        ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ];
+    errors = [
+      ...errors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+    ];
 
-      const result = await updateProduct({
-        variables: getProductUpdateVariables(product, data, uploadFilesResult),
-      });
-      errors = [...errors, ...result.data.productUpdate.errors];
+    const result = await updateProduct({
+      variables: getProductUpdateVariables(product, data, uploadFilesResult),
+    });
+    errors = [...errors, ...result.data.productUpdate.errors];
 
-      const productChannelsUpdateResult = await updateChannels({
-        variables: getProductChannelsUpdateVariables(product, data),
-      });
+    const productChannelsUpdateResult = await updateChannels({
+      variables: getProductChannelsUpdateVariables(product, data),
+    });
 
-      const variantUpdateResults = await Promise.all<FetchResult>([
-        ...getStocks(product.variants, data.variants).map(variables =>
-          updateStocks({ variables }),
-        ),
-        ...getVariantInputs(product.variants, data.variants).map(variables =>
-          updateVariant({ variables }),
-        ),
-        ...getVariantChannels(product.variants, data.variants).map(variables =>
-          updateVariantChannels({
-            variables,
-          }),
-        ),
-      ]);
+    const variantUpdateResults = await Promise.all<FetchResult>([
+      ...getStocks(product.variants, data.variants).map(variables =>
+        updateStocks({ variables }),
+      ),
+      ...getVariantInputs(product.variants, data.variants).map(variables =>
+        updateVariant({ variables }),
+      ),
+      ...getVariantChannels(product.variants, data.variants).map(variables =>
+        updateVariantChannels({
+          variables,
+        }),
+      ),
+    ]);
 
-      errors = [
-        ...errors,
-        ...(variantUpdateResults.flatMap(getMutationErrors) as Array<
-          | StockErrorFragment
-          | BulkStockErrorFragment
-          | ProductChannelListingErrorFragment
-        >),
-      ];
+    errors = [
+      ...errors,
+      ...(variantUpdateResults.flatMap(
+        getMutationErrors,
+      ) as UseProductUpdateHandlerError[]),
+    ];
 
-      setVariantListErrors(
-        getProductVariantListErrors(
-          productChannelsUpdateResult,
-          variantUpdateResults,
-        ),
-      );
+    setVariantListErrors(
+      getProductVariantListErrors(
+        productChannelsUpdateResult,
+        variantUpdateResults,
+      ),
+    );
 
-      return errors;
-    },
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+    return errors;
+  };
 
   const submit = async (data: ProductUpdateSubmitData) => {
-    const errors = await sendMutations(data);
+    setCalled(true);
+    setLoading(true);
+
+    const errors = await createMetadataUpdateHandler(
+      product,
+      sendMutations,
+      variables => updateMetadata({ variables }),
+      variables => updatePrivateMetadata({ variables }),
+    )(data);
+
+    setLoading(false);
 
     if (errors.length === 0) {
       notify({
@@ -192,27 +189,6 @@ export function useProductUpdateHandler(
 
     return errors;
   };
-
-  const called =
-    updateMetadataOpts.called ||
-    updatePrivateMetadataOpts.called ||
-    uploadFileOpts.called ||
-    updateProductOpts.called ||
-    updateChannelsOpts.called ||
-    updateVariantChannelsOpts.called ||
-    deleteAttributeValueOpts.called ||
-    updateStocksOpts.called ||
-    updateVariantOpts.called;
-  const loading =
-    updateMetadataOpts.loading ||
-    updatePrivateMetadataOpts.loading ||
-    uploadFileOpts.loading ||
-    updateProductOpts.loading ||
-    updateChannelsOpts.loading ||
-    updateVariantChannelsOpts.loading ||
-    deleteAttributeValueOpts.loading ||
-    updateStocksOpts.loading ||
-    updateVariantOpts.loading;
 
   const errors = updateProductOpts.data?.productUpdate.errors ?? [];
 
