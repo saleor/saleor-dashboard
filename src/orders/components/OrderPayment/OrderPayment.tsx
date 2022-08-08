@@ -228,7 +228,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {<Money money={order?.totalCaptured} /> ?? <Skeleton />}
             </div>
           </div>
-          {refundedAmount && (
+          {!!refundedAmount?.amount && (
             <div>
               <FormattedMessage {...orderPaymentMessages.refunded} />
               <div className={classes.leftmostRightAlignedElement}>
