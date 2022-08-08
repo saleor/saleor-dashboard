@@ -8,24 +8,21 @@ import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage, { OrderFulfillPageProps } from "./OrderFulfillPage";
 
 const props: OrderFulfillPageProps = {
+  params: {},
   errors: [],
   loading: false,
   onSubmit: () => undefined,
   order: orderToFulfill,
   saveButtonBar: "default",
-  warehouse: warehouseList[0],
+  openModal: () => undefined,
+  closeModal: () => undefined,
 };
 
 storiesOf("Views / Orders / Fulfill order", module)
   .addDecorator(Decorator)
   .add("default", () => <OrderFulfillPage {...props} />)
   .add("loading", () => (
-    <OrderFulfillPage
-      {...props}
-      loading={true}
-      order={undefined}
-      warehouse={undefined}
-    />
+    <OrderFulfillPage {...props} loading={true} order={undefined} />
   ))
   .add("error", () => (
     <OrderFulfillPage

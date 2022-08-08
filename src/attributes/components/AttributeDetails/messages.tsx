@@ -76,10 +76,15 @@ export const inputTypeMessages = defineMessages({
     defaultMessage: "References",
     description: "references attribute type",
   },
-  text: {
-    id: "fdbqIs",
-    defaultMessage: "Text",
-    description: "text attribute type",
+  plainText: {
+    id: "HLr8KQ",
+    defaultMessage: "Plain Text",
+    description: "plain text attribute type",
+  },
+  richText: {
+    id: "kEAjZV",
+    defaultMessage: "Rich Text",
+    description: "rich text attribute type",
   },
   numeric: {
     id: "SNiyXb",

@@ -1,4 +1,5 @@
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
+
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
   return cy
@@ -16,6 +17,7 @@ export function getDisplayedColumnArray(columnName) {
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
   let sortedProductsArray;
   let productsArray;
+
   cy.get(PRODUCTS_LIST.emptyProductRow).should("not.exist");
   getDisplayedColumnArray(columnName)
     .then(productsArrayResp => {
@@ -23,7 +25,7 @@ export function expectProductsSortedBy(columnName, inAscOrder = true) {
       sortedProductsArray = productsArray.slice();
       if (columnName !== "price") {
         sortedProductsArray = sortedProductsArray.sort((a, b) =>
-          a.localeCompare(b, undefined, { ignorePunctuation: true })
+          a.localeCompare(b, undefined, { ignorePunctuation: true }),
         );
         if (!inAscOrder) {
           sortedProductsArray.reverse();
@@ -31,13 +33,16 @@ export function expectProductsSortedBy(columnName, inAscOrder = true) {
       } else {
         sortedProductsArray = getSortedPriceColumn(
           sortedProductsArray,
-          inAscOrder
+          inAscOrder,
         );
+        if (!inAscOrder) {
+          sortedProductsArray.reverse();
+        }
       }
     })
     .then(() => {
       expect(
-        JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray)
+        JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray),
       ).to.be.eq(true);
     });
 }

@@ -15,16 +15,11 @@ export const useStyles = makeStyles(
       textAlign: "right",
       width: 300,
     },
-    hr: {
-      margin: theme.spacing(2, -3),
-      width: `calc(100% + ${theme.spacing(6)}px)`,
-    },
     table: {
       tableLayout: "fixed",
     },
     tableContainer: {
-      margin: theme.spacing(0, -3),
-      width: `calc(100% + ${theme.spacing(6)}px)`,
+      margin: theme.spacing(0, -4),
     },
   }),
   {

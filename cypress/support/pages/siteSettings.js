@@ -17,5 +17,5 @@ export function enterSiteSettingAndSetStockReservation(userType, stockAmount) {
 
 export const userType = {
   anonymous: SITE_SETTINGS_DETAILS.stockReservationAnonymousUserInput,
-  authenticated: SITE_SETTINGS_DETAILS.stockReservationAuthenticatedUserInput
+  authenticated: SITE_SETTINGS_DETAILS.stockReservationAuthenticatedUserInput,
 };

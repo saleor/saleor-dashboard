@@ -54,7 +54,8 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const todayDate = localizeDate(new Date(dateNow).toISOString(), "YYYY-MM-DD");
+  const parsedDate = new Date(dateNow);
+  const todayDateUTC = parsedDate.toISOString().slice(0, 10);
 
   const visibleMessage = (date: string) =>
     intl.formatMessage(
@@ -64,7 +65,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         description: "date",
       },
       {
-        date: localizeDate(date, "L"),
+        date: localizeDate(date),
       },
     );
   const formErrors = getFormErrors(
@@ -111,7 +112,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             ...formData,
             isPublished: !isPublished,
             publicationDate:
-              !isPublished && !publicationDate ? todayDate : publicationDate,
+              !isPublished && !publicationDate ? todayDateUTC : publicationDate,
           });
         }}
       />

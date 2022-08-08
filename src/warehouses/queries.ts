@@ -50,3 +50,11 @@ export const channelWarehouses = gql`
     }
   }
 `;
+
+export const warehousesCount = gql`
+  query WarehousesCount {
+    warehouses {
+      totalCount
+    }
+  }
+`;

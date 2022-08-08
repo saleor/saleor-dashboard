@@ -445,9 +445,6 @@
   "1div9r": {
     "string": "Search Attribute"
   },
-  "1eCau/": {
-    "string": "Unnamed webhook"
-  },
   "1eEyJv": {
     "context": "ExitFormPrompt continue editing button",
     "string": "Continue editing"
@@ -1228,6 +1225,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8GC/ah": {
+    "context": "variants section name",
+    "string": "Variants"
+  },
   "8HRy+U": {
     "string": "Category Description"
   },
@@ -1486,6 +1487,9 @@
     "context": "section header",
     "string": "Eligible Categories"
   },
+  "AcMzwj": {
+    "string": "Menu items"
+  },
   "AdmPca": {
     "context": "error message",
     "string": "Max value cannot be less than min value"
@@ -1639,6 +1643,10 @@
   "BkFke9": {
     "context": "section header",
     "string": "Unfulfilled Items"
+  },
+  "Bkxrhw": {
+    "context": "no webhooks message",
+    "string": "No webhooks found"
   },
   "BooQvo": {
     "context": "navigator placeholder",
@@ -2392,9 +2400,16 @@
     "context": "pages section name",
     "string": "Pages"
   },
+  "HAlOn1": {
+    "string": "Name"
+  },
   "HLqWXA": {
     "context": "voucher value requirement",
     "string": "Usage Limit"
+  },
+  "HLr8KQ": {
+    "context": "plain text attribute type",
+    "string": "Plain Text"
   },
   "HMD+ib": {
     "string": "Last order"
@@ -2548,6 +2563,10 @@
     "context": "payment status",
     "string": "Partially paid"
   },
+  "IOshTA": {
+    "context": "header",
+    "string": "Translation MenuItem \"{menuItemName}\" - {languageCode}"
+  },
   "IUeGzv": {
     "context": "plugin name",
     "string": "Plugin Name"
@@ -2583,6 +2602,10 @@
     "context": "header",
     "string": "Edit Media"
   },
+  "Ila7WO": {
+    "context": "change warehouse dialog description",
+    "string": "Choose warehouse from which you want to fulfill {productName}"
+  },
   "ImTelT": {
     "context": "card subtitle",
     "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
@@ -2593,6 +2616,10 @@
   },
   "IoDlcd": {
     "string": "Slug"
+  },
+  "IqRBql": {
+    "context": "variant name",
+    "string": "New variant"
   },
   "Irflxf": {
     "context": "window title",
@@ -2618,6 +2645,10 @@
   },
   "J0UdxG": {
     "string": "Skip pricing for now"
+  },
+  "J0lNnk": {
+    "context": "column label",
+    "string": "Warehouse"
   },
   "J3uE0t": {
     "context": "section header",
@@ -2928,10 +2959,6 @@
     "context": "channel select label",
     "string": "Channel"
   },
-  "LATpSE": {
-    "context": "marketplace content",
-    "string": "Discover great free and paid apps in our Saleor Marketplace."
-  },
   "LEZZkK": {
     "context": "WarehouseSettings all warehouses description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
@@ -2967,6 +2994,10 @@
   "LkuDEb": {
     "context": "metadata field value, header",
     "string": "Value"
+  },
+  "Lm2Zw7": {
+    "context": "name placeholder",
+    "string": "Unnamed webhook"
   },
   "LmKz3g": {
     "string": "Storefront"
@@ -3232,10 +3263,6 @@
     "context": "placeholder",
     "string": "Search by value name, etc..."
   },
-  "NskBjH": {
-    "context": "marketplace content",
-    "string": "Marketplace is coming soon"
-  },
   "NtFVFS": {
     "context": "weight",
     "string": "{value} {unit}"
@@ -3250,6 +3277,10 @@
   "NvwS/N": {
     "context": "gift card history message",
     "string": "Gift card was deactivated"
+  },
+  "NwQXZp": {
+    "context": "status",
+    "string": "Not active"
   },
   "NxRsHQ": {
     "context": "section header",
@@ -3301,10 +3332,6 @@
   "OTek3r": {
     "context": "product variant name",
     "string": "Variant"
-  },
-  "OTpV1t": {
-    "context": "webhook name",
-    "string": "Name"
   },
   "OVOU1z": {
     "context": "section header",
@@ -3609,10 +3636,6 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
-  "QWCh6/": {
-    "context": "change warehouse dialog description",
-    "string": "Choose warehouse you want to fulfill this order from"
-  },
   "QY7FSs": {
     "context": "button",
     "string": "create product type"
@@ -3640,10 +3663,6 @@
   "Qe4XHv": {
     "context": "years after label",
     "string": "years after issue"
-  },
-  "QfKQx3": {
-    "context": "warehouse label when multiple products are unavailable",
-    "string": "{productCount} products are unavailable at this location"
   },
   "QiN4hv": {
     "context": "active",
@@ -3895,10 +3914,6 @@
   "SqhC7g": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
-  },
-  "SwISVH": {
-    "context": "section header",
-    "string": "Saleor Marketplace"
   },
   "Sx7QVu": {
     "context": "variant creation step",
@@ -4353,6 +4368,10 @@
   },
   "W5SK5c": {
     "string": "Select content type"
+  },
+  "W5hb5H": {
+    "context": "warehouse input",
+    "string": "Warehouse"
   },
   "W8i2Ez": {
     "context": "product field",
@@ -5139,6 +5158,10 @@
   "c0H45L": {
     "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
   },
+  "c24hjq": {
+    "context": "status",
+    "string": "Active"
+  },
   "c4gbXr": {
     "string": "Draft order successfully finalized"
   },
@@ -5475,10 +5498,6 @@
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
   },
-  "fdbqIs": {
-    "context": "text attribute type",
-    "string": "Text"
-  },
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
@@ -5574,10 +5593,6 @@
   "gAqkrG": {
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
-  },
-  "gF7hbK": {
-    "context": "variant name",
-    "string": "New Variant"
   },
   "gKdGxP": {
     "context": "error message",
@@ -5680,6 +5695,10 @@
   "hLOEeb": {
     "context": "button",
     "string": "Set as default billing address"
+  },
+  "hLSgWj": {
+    "context": "warehouse label number available of products",
+    "string": "{productCount} available at this location"
   },
   "hLUYBt": {
     "context": "payment status",
@@ -5940,10 +5959,6 @@
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
   },
-  "jqnwW9": {
-    "context": "header",
-    "string": "Webhooks"
-  },
   "jswILH": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
@@ -6009,6 +6024,10 @@
   "k9hf7F": {
     "context": "total order price",
     "string": "Total"
+  },
+  "kEAjZV": {
+    "context": "rich text attribute type",
+    "string": "Rich Text"
   },
   "kErneR": {
     "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
@@ -6559,10 +6578,6 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
-  },
-  "oiaUni": {
-    "context": "Support text under page header",
-    "string": "Fulfilling from {warehouseName}"
   },
   "oiuwOl": {
     "context": "button",
@@ -7557,9 +7572,6 @@
     "context": "product variant inventory",
     "string": "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}"
   },
-  "wbjuR4": {
-    "string": "No webhooks found"
-  },
   "wgA48T": {
     "context": "country selection",
     "string": "Countries A to Z"
@@ -7595,10 +7607,6 @@
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
   },
-  "wxFwUW": {
-    "context": "marketplace button",
-    "string": "Visit Marketplace"
-  },
   "wyvzh9": {
     "context": "dialog header",
     "string": "Publish Pages"
@@ -7617,10 +7625,6 @@
   "x3leH4": {
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
-  },
-  "x4WAC7": {
-    "context": "warehouse label when one product is unavailable",
-    "string": "{productName} is unavailable at this location"
   },
   "x8V/xS": {
     "context": "attribute visibility in storefront",
@@ -7918,10 +7922,6 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
-  },
-  "zbrHAw": {
-    "context": "Tracking number input label",
-    "string": "Tracking number"
   },
   "zjHH6b": {
     "context": "sale start date",

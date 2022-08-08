@@ -3,7 +3,7 @@ import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ShippingZones from "./ShippingZones";
+import ShippingZones, { ShippingZonesProps } from "./ShippingZones";
 
 const shippingZones = [
   {
@@ -18,7 +18,7 @@ const shippingZones = [
   },
 ];
 
-const baseProps = {
+const baseProps: ShippingZonesProps = {
   addShippingZone: () => undefined,
   removeShippingZone: () => undefined,
   searchShippingZones: () => undefined,
@@ -30,6 +30,7 @@ const baseProps = {
   },
   shippingZones: [],
   shippingZonesChoices: shippingZones as ChannelShippingZones,
+  totalCount: 10,
 };
 
 storiesOf("Shipping zones", module)

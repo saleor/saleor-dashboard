@@ -1,13 +1,23 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import PreviewPill from "@saleor/components/PreviewPill";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
   WebhookFragment,
 } from "@saleor/graphql";
+import React from "react";
 
 export function isUnnamed(webhook: WebhookFragment): boolean {
   return ["", null].includes(webhook?.name);
 }
+
+type WebhookEventType = WebhookEventTypeSyncEnum | WebhookEventTypeAsyncEnum;
+
+const isWebhookInPreview = (webhook: WebhookEventType) =>
+  ([
+    WebhookEventTypeSyncEnum.CHECKOUT_CALCULATE_TAXES,
+    WebhookEventTypeSyncEnum.ORDER_CALCULATE_TAXES,
+  ] as WebhookEventType[]).includes(webhook);
 
 export function mapSyncEventsToChoices(
   events: WebhookEventTypeSyncEnum[],
@@ -15,6 +25,7 @@ export function mapSyncEventsToChoices(
   return events.map(event => ({
     label: event,
     value: event,
+    badge: isWebhookInPreview(event) ? <PreviewPill /> : undefined,
   }));
 }
 

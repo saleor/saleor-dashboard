@@ -707,6 +707,9 @@ input AppExtensionFilterInput {
 
 """All places where app extension can be mounted."""
 enum AppExtensionMountEnum {
+  CUSTOMER_OVERVIEW_CREATE
+  CUSTOMER_OVERVIEW_MORE_ACTIONS
+  CUSTOMER_DETAILS_MORE_ACTIONS
   PRODUCT_OVERVIEW_CREATE
   PRODUCT_OVERVIEW_MORE_ACTIONS
   PRODUCT_DETAILS_MORE_ACTIONS
@@ -2175,8 +2178,19 @@ type Category implements Node & ObjectWithMetadata {
     last: Int
   ): CategoryCountableConnection
   backgroundImage(
-    """Size of the image."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated category fields for the given language code."""
@@ -2441,10 +2455,30 @@ type CategoryUpdated implements Event {
 """Represents channel."""
 type Channel implements Node {
   id: ID!
-  name: String!
-  isActive: Boolean!
-  currencyCode: String!
+
+  """Slug of the channel."""
   slug: String!
+
+  """
+  Name of the channel.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  name: String!
+
+  """
+  Whether the channel is active.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  isActive: Boolean!
+
+  """
+  A currency that is assigned to the channel.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  currencyCode: String!
 
   """
   Whether a channel has associated orders.
@@ -2457,6 +2491,8 @@ type Channel implements Node {
   Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
   
   Added in Saleor 3.1.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   defaultCountry: CountryDisplay!
 
@@ -2466,8 +2502,28 @@ type Channel implements Node {
   Added in Saleor 3.5.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   warehouses: [Warehouse!]!
+
+  """
+  List of shippable countries for the channel.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  countries: [CountryDisplay!]
+
+  """
+  Shipping methods that are available for the channel.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  availableShippingMethodsPerCountry(countries: [CountryCode!]): [ShippingMethodsPerCountry!]
 }
 
 """
@@ -3466,8 +3522,19 @@ type Collection implements Node & ObjectWithMetadata {
     last: Int
   ): ProductCountableConnection
   backgroundImage(
-    """Size of the image."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated collection fields for the given language code."""
@@ -4395,6 +4462,8 @@ type CustomerEvent implements Node {
 """An enumeration."""
 enum CustomerEventsEnum {
   ACCOUNT_CREATED
+  ACCOUNT_ACTIVATED
+  ACCOUNT_DEACTIVATED
   PASSWORD_RESET_LINK_SENT
   PASSWORD_RESET
   EMAIL_CHANGED_REQUEST
@@ -11929,7 +11998,7 @@ type Mutation {
   ): CustomerBulkDelete
 
   """
-  Creates a new staff user. 
+  Creates a new staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -11939,7 +12008,7 @@ type Mutation {
   ): StaffCreate
 
   """
-  Updates an existing staff user. 
+  Updates an existing staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -11952,7 +12021,7 @@ type Mutation {
   ): StaffUpdate
 
   """
-  Deletes a staff user. 
+  Deletes a staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -11962,7 +12031,7 @@ type Mutation {
   ): StaffDelete
 
   """
-  Deletes staff users. 
+  Deletes staff users. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -12002,7 +12071,7 @@ type Mutation {
   ): UserBulkSetActive
 
   """
-  Create new permission group. 
+  Create new permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -12012,7 +12081,7 @@ type Mutation {
   ): PermissionGroupCreate
 
   """
-  Update permission group. 
+  Update permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -12025,7 +12094,7 @@ type Mutation {
   ): PermissionGroupUpdate
 
   """
-  Delete permission group. 
+  Delete permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
   """
@@ -13114,11 +13183,20 @@ type OrderLine implements Node & ObjectWithMetadata {
   unitDiscountReason: String
   taxRate: Float!
   digitalContentUrl: DigitalContentUrl
-
-  """The main thumbnail for the ordered product."""
   thumbnail(
-    """Size of thumbnail."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): Image
 
   """Price of the single item in the order line."""
@@ -14716,10 +14794,11 @@ enum PermissionEnum {
   MANAGE_TRANSLATIONS
   MANAGE_CHECKOUTS
   HANDLE_CHECKOUTS
+  HANDLE_TAXES
 }
 
 """
-Create new permission group. 
+Create new permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -14740,8 +14819,31 @@ input PermissionGroupCreateInput {
   name: String!
 }
 
+type PermissionGroupCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """
+  The permission group the event relates to.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  permissionGroup: Group
+}
+
 """
-Delete permission group. 
+Delete permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -14749,6 +14851,29 @@ type PermissionGroupDelete {
   permissionGroupErrors: [PermissionGroupError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [PermissionGroupError!]!
   group: Group
+}
+
+type PermissionGroupDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """
+  The permission group the event relates to.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  permissionGroup: Group
 }
 
 type PermissionGroupError {
@@ -14801,7 +14926,7 @@ input PermissionGroupSortingInput {
 }
 
 """
-Update permission group. 
+Update permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -14826,6 +14951,29 @@ input PermissionGroupUpdateInput {
 
   """List of users to unassign from this group."""
   removeUsers: [ID!]
+}
+
+type PermissionGroupUpdated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """
+  The permission group the event relates to.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  permissionGroup: Group
 }
 
 """Plugin."""
@@ -15092,11 +15240,20 @@ type Product implements Node & ObjectWithMetadata {
   Rich text format. For reference see https://editorjs.io/
   """
   descriptionJson: JSONString @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `description` field instead.")
-
-  """The main thumbnail for a product."""
   thumbnail(
-    """Size of thumbnail."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): Image
 
   """
@@ -15619,14 +15776,22 @@ input ProductFilterInput {
   categories: [ID!]
   hasCategory: Boolean
   attributes: [AttributeInput!]
+
+  """Filter by variants having specific stock status."""
   stockAvailability: StockAvailability
   stocks: ProductStockFilterInput
   search: String
   metadata: [MetadataFilter!]
   price: PriceRangeInput
+
+  """Filter by the lowest variant price after discounts."""
   minimalPrice: PriceRangeInput
+
+  """Filter by when was the most recent update."""
   updatedAt: DateTimeRangeInput
   productTypes: [ID!]
+
+  """Filter on whether product is a gift card or not."""
   giftCard: Boolean
   ids: [ID!]
   hasPreorderedVariants: Boolean
@@ -15651,11 +15816,20 @@ type ProductImage {
   The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged.
   """
   sortOrder: Int
-
-  """The URL of the image."""
   url(
-    """Size of the image."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): String!
 }
 
@@ -15705,11 +15879,20 @@ type ProductMedia implements Node {
   alt: String!
   type: ProductMediaType!
   oembedData: JSONString!
-
-  """The URL of the media."""
   url(
-    """Size of the image."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): String!
 }
 
@@ -17492,6 +17675,20 @@ type Query {
     last: Int
   ): PaymentCountableConnection
 
+  """
+  Look up a transaction by ID.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transaction(
+    """ID of a transaction."""
+    id: ID!
+  ): TransactionItem
+
   """Look up a page by ID or slug."""
   page(
     """ID of the page."""
@@ -18043,14 +18240,19 @@ type Query {
     last: Int
   ): CheckoutLineCountableConnection
 
-  """
-  Look up a channel by ID.
-  
-  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
-  """
+  """Look up a channel by ID or slug."""
   channel(
     """ID of the channel."""
     id: ID
+
+    """
+    Slug of the channel.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    slug: String
   ): Channel
 
   """
@@ -19253,6 +19455,21 @@ enum ShippingMethodTypeEnum {
   WEIGHT
 }
 
+"""
+List of shipping methods available for the country.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type ShippingMethodsPerCountry {
+  """The country code."""
+  countryCode: CountryCode!
+
+  """List of available shipping methods."""
+  shippingMethods: [ShippingMethod!]
+}
+
 input ShippingPostalCodeRulesCreateInputRange {
   """Start range of the postal code."""
   start: String!
@@ -20171,7 +20388,7 @@ input SiteDomainInput {
 }
 
 """
-Deletes staff users. 
+Deletes staff users. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -20183,7 +20400,7 @@ type StaffBulkDelete {
 }
 
 """
-Creates a new staff user. 
+Creates a new staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -20242,7 +20459,7 @@ type StaffCreated implements Event {
 }
 
 """
-Deletes a staff user. 
+Deletes a staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -20369,7 +20586,7 @@ type StaffNotificationRecipientUpdate {
 }
 
 """
-Updates an existing staff user. 
+Updates an existing staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
 """
@@ -20577,6 +20794,11 @@ type TaxedMoneyRange {
 
   """Upper bound of a price range."""
   stop: TaxedMoney
+}
+
+"""An enumeration."""
+enum ThumbnailFormatEnum {
+  WEBP
 }
 
 type TimePeriod {
@@ -20850,6 +21072,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """Reference of transaction."""
   reference: String!
+
+  """
+  The related order.
+  
+  Added in Saleor 3.6.
+  """
+  order: Order
 
   """List of all transaction's events."""
   events: [TransactionEvent!]!
@@ -21264,8 +21493,19 @@ type User implements Node & ObjectWithMetadata {
   """List of user's permission groups which user can manage."""
   editableGroups: [Group!]
   avatar(
-    """Size of the avatar."""
+    """
+    Size of the image. If not provided, the original image will be returned.
+    """
     size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: ThumbnailFormatEnum
   ): Image
 
   """
@@ -21851,6 +22091,7 @@ input VoucherFilterInput {
   started: DateTimeRangeInput
   search: String
   metadata: [MetadataFilter!]
+  ids: [ID!]
 }
 
 input VoucherInput {
@@ -22646,12 +22887,26 @@ enum WebhookEventTypeAsyncEnum {
 
   """An order is fulfilled."""
   ORDER_FULFILLED
+
+  """A draft order is created."""
   DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
   DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
   DRAFT_ORDER_DELETED
+
+  """A sale is created."""
   SALE_CREATED
+
+  """A sale is updated."""
   SALE_UPDATED
+
+  """A sale is deleted."""
   SALE_DELETED
+
+  """A sale is activated or deactivated."""
   SALE_TOGGLE
 
   """An invoice for order requested."""
@@ -22698,7 +22953,11 @@ enum WebhookEventTypeAsyncEnum {
 
   """A product variant is deleted."""
   PRODUCT_VARIANT_DELETED
+
+  """A product variant is out of stock."""
   PRODUCT_VARIANT_OUT_OF_STOCK
+
+  """A product variant is back in stock."""
   PRODUCT_VARIANT_BACK_IN_STOCK
 
   """A new checkout is created."""
@@ -22736,6 +22995,15 @@ enum WebhookEventTypeAsyncEnum {
   """A page type is deleted."""
   PAGE_TYPE_DELETED
 
+  """A new permission group is created."""
+  PERMISSION_GROUP_CREATED
+
+  """A permission group is updated."""
+  PERMISSION_GROUP_UPDATED
+
+  """A permission group is deleted."""
+  PERMISSION_GROUP_DELETED
+
   """A new shipping price is created."""
   SHIPPING_PRICE_CREATED
 
@@ -22754,12 +23022,22 @@ enum WebhookEventTypeAsyncEnum {
   """A shipping zone is deleted."""
   SHIPPING_ZONE_DELETED
 
-  """A staff user is deleted"""
+  """A new staff user is created."""
   STAFF_CREATED
+
+  """A staff user is updated."""
   STAFF_UPDATED
+
+  """A staff user is deleted."""
   STAFF_DELETED
+
+  """An action requested for transaction."""
   TRANSACTION_ACTION_REQUEST
+
+  """A new translation is created."""
   TRANSLATION_CREATED
+
+  """A translation is updated."""
   TRANSLATION_UPDATED
 
   """A new warehouse created."""
@@ -22900,12 +23178,26 @@ enum WebhookEventTypeEnum {
 
   """An order is fulfilled."""
   ORDER_FULFILLED
+
+  """A draft order is created."""
   DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
   DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
   DRAFT_ORDER_DELETED
+
+  """A sale is created."""
   SALE_CREATED
+
+  """A sale is updated."""
   SALE_UPDATED
+
+  """A sale is deleted."""
   SALE_DELETED
+
+  """A sale is activated or deactivated."""
   SALE_TOGGLE
 
   """An invoice for order requested."""
@@ -22952,7 +23244,11 @@ enum WebhookEventTypeEnum {
 
   """A product variant is deleted."""
   PRODUCT_VARIANT_DELETED
+
+  """A product variant is out of stock."""
   PRODUCT_VARIANT_OUT_OF_STOCK
+
+  """A product variant is back in stock."""
   PRODUCT_VARIANT_BACK_IN_STOCK
 
   """A new checkout is created."""
@@ -22990,6 +23286,15 @@ enum WebhookEventTypeEnum {
   """A page type is deleted."""
   PAGE_TYPE_DELETED
 
+  """A new permission group is created."""
+  PERMISSION_GROUP_CREATED
+
+  """A permission group is updated."""
+  PERMISSION_GROUP_UPDATED
+
+  """A permission group is deleted."""
+  PERMISSION_GROUP_DELETED
+
   """A new shipping price is created."""
   SHIPPING_PRICE_CREATED
 
@@ -23008,12 +23313,22 @@ enum WebhookEventTypeEnum {
   """A shipping zone is deleted."""
   SHIPPING_ZONE_DELETED
 
-  """A staff user is deleted"""
+  """A new staff user is created."""
   STAFF_CREATED
+
+  """A staff user is updated."""
   STAFF_UPDATED
+
+  """A staff user is deleted."""
   STAFF_DELETED
+
+  """An action requested for transaction."""
   TRANSACTION_ACTION_REQUEST
+
+  """A new translation is created."""
   TRANSLATION_CREATED
+
+  """A translation is updated."""
   TRANSLATION_UPDATED
 
   """A new warehouse created."""
@@ -23036,29 +23351,104 @@ enum WebhookEventTypeEnum {
 
   """An observability event is created."""
   OBSERVABILITY
+
+  """Authorize payment."""
   PAYMENT_AUTHORIZE
+
+  """Capture payment."""
   PAYMENT_CAPTURE
+
+  """Confirm payment."""
   PAYMENT_CONFIRM
+
+  """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+
+  """Process payment."""
   PAYMENT_PROCESS
+
+  """Refund payment."""
   PAYMENT_REFUND
+
+  """Void payment."""
   PAYMENT_VOID
+
+  """
+  Event called for checkout tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  CHECKOUT_CALCULATE_TAXES
+
+  """
+  Event called for order tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_CALCULATE_TAXES
+
+  """Fetch external shipping methods for checkout."""
   SHIPPING_LIST_METHODS_FOR_CHECKOUT
+
+  """Filter shipping methods for order."""
   ORDER_FILTER_SHIPPING_METHODS
+
+  """Filter shipping methods for checkout."""
   CHECKOUT_FILTER_SHIPPING_METHODS
 }
 
 """Enum determining type of webhook."""
 enum WebhookEventTypeSyncEnum {
+  """Authorize payment."""
   PAYMENT_AUTHORIZE
+
+  """Capture payment."""
   PAYMENT_CAPTURE
+
+  """Confirm payment."""
   PAYMENT_CONFIRM
+
+  """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+
+  """Process payment."""
   PAYMENT_PROCESS
+
+  """Refund payment."""
   PAYMENT_REFUND
+
+  """Void payment."""
   PAYMENT_VOID
+
+  """
+  Event called for checkout tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  CHECKOUT_CALCULATE_TAXES
+
+  """
+  Event called for order tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_CALCULATE_TAXES
+
+  """Fetch external shipping methods for checkout."""
   SHIPPING_LIST_METHODS_FOR_CHECKOUT
+
+  """Filter shipping methods for order."""
   ORDER_FILTER_SHIPPING_METHODS
+
+  """Filter shipping methods for checkout."""
   CHECKOUT_FILTER_SHIPPING_METHODS
 }
 
@@ -23135,6 +23525,9 @@ enum WebhookSampleEventTypeEnum {
   PAGE_TYPE_CREATED
   PAGE_TYPE_UPDATED
   PAGE_TYPE_DELETED
+  PERMISSION_GROUP_CREATED
+  PERMISSION_GROUP_UPDATED
+  PERMISSION_GROUP_DELETED
   SHIPPING_PRICE_CREATED
   SHIPPING_PRICE_UPDATED
   SHIPPING_PRICE_DELETED

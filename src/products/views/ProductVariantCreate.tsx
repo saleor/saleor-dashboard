@@ -90,10 +90,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  if (product === null) {
-    return <NotFoundPage onBack={() => navigate(productListUrl())} />;
-  }
-
   const [
     reorderProductVariants,
     reorderProductVariantsOpts,
@@ -214,6 +210,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     variantCreateResult.loading ||
     reorderProductVariantsOpts.loading;
 
+  if (product === null) {
+    return <NotFoundPage onBack={() => navigate(productListUrl())} />;
+  }
+
   return (
     <>
       <WindowTitle
@@ -225,6 +225,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       />
       <ProductVariantCreatePage
         productId={productId}
+        defaultVariantId={data?.product.defaultVariant?.id}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

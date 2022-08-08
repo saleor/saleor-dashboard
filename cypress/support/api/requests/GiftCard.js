@@ -107,7 +107,10 @@ export function getGiftCardWithId(id) {
   return cy.sendRequestWithQuery(query).its("body.data.giftCard");
 }
 
-export function createGiftCard({ tag, currency, amount, isActive = true }) {
+export function createGiftCard(
+  { tag, currency, amount, isActive = true },
+  token,
+) {
   const mutation = `mutation{
     giftCardCreate(input:{
       addTags:"${tag}"
@@ -129,7 +132,7 @@ export function createGiftCard({ tag, currency, amount, isActive = true }) {
     }
   }`;
   return cy
-    .sendRequestWithQuery(mutation)
+    .sendRequestWithQuery(mutation, token)
     .its("body.data.giftCardCreate.giftCard");
 }
 

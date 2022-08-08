@@ -124,7 +124,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should not be possible to change channel in order",
+    "should not be possible to change channel in order. TC: SALEOR_2105",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createOrder({
@@ -181,7 +181,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should make a refund",
+    "should make a refund. TC: 2107",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;

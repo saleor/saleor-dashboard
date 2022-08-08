@@ -7,7 +7,7 @@ export const useStyles = makeStyles(
       width: 180,
     },
     colName: {
-      width: 250,
+      width: 220,
     },
     colQuantity: {
       textAlign: "right",
@@ -16,7 +16,11 @@ export const useStyles = makeStyles(
     colSku: {
       textAlign: "right",
       textOverflow: "ellipsis",
-      width: 150,
+      width: 100,
+    },
+    colWarehouse: {
+      width: 200,
+      textAlign: "right",
     },
     warningIcon: {
       color: theme.palette.saleor.warning.mid,
@@ -41,6 +45,23 @@ export const useStyles = makeStyles(
       paddingTop: theme.spacing(2),
       color: theme.palette.text.secondary,
       whiteSpace: "nowrap",
+    },
+    warehouseButton: {
+      padding: theme.spacing(1.5),
+      width: "100%",
+      justifyContent: "right",
+      border: `1px solid ${theme.palette.divider}`,
+    },
+    warehouseButtonContent: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      cursor: "pointer",
+    },
+    warehouseButtonContentText: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   }),
   { name: "OrderFulfillLine" },

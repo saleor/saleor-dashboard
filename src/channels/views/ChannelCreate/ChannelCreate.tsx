@@ -7,6 +7,8 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelCreateMutation,
   useChannelCreateMutation,
+  useShippingZonesCountQuery,
+  useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -64,12 +66,22 @@ export const ChannelCreateView = ({}) => {
     );
 
   const {
+    data: shippingZonesCountData,
+    loading: shippingZonesCountLoading,
+  } = useShippingZonesCountQuery();
+
+  const {
     loadMore: fetchMoreShippingZones,
     search: searchShippingZones,
     result: searchShippingZonesResult,
   } = useShippingZonesSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
+  const {
+    data: warehousesCountData,
+    loading: warehousesCountLoading,
+  } = useWarehousesCountQuery();
 
   const {
     loadMore: fetchMoreWarehouses,
@@ -115,19 +127,27 @@ export const ChannelCreateView = ({}) => {
           })}
         />
         <ChannelDetailsPage
+          allShippingZonesCount={
+            shippingZonesCountData?.shippingZones?.totalCount
+          }
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
             searchShippingZonesResult,
             fetchMoreShippingZones,
           )}
+          allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
           searchWarehouses={searchWarehouses}
           searchWarehousesData={searchWarehousesResult.data}
           fetchMoreWarehouses={getSearchFetchMoreProps(
             searchWarehousesResult,
             fetchMoreWarehouses,
           )}
-          disabled={createChannelOpts.loading}
+          disabled={
+            createChannelOpts.loading ||
+            shippingZonesCountLoading ||
+            warehousesCountLoading
+          }
           errors={createChannelOpts?.data?.channelCreate?.errors || []}
           currencyCodes={currencyCodeChoices}
           onSubmit={handleSubmit}

@@ -63,7 +63,6 @@ jobs:
             ${{ runner.os }}-qa-${{ env.cache-name }}-
             ${{ runner.os }}-qa-
             ${{ runner.os }}-
-
       - name: Write config file
         id: write-config-file
         env:
@@ -105,7 +104,6 @@ jobs:
         if: ${{ github.event.inputs.environment == 'Other' }}
         run: |
           echo "::set-output name=ENV_URI::${{github.event.inputs.otherEnvironment}}"
-
       - name: Get env
         id: get-env-uri
         env:
@@ -113,7 +111,6 @@ jobs:
           TYPED_ENV_URI: ''
         run: |
           echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
-
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -132,6 +129,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           CYPRESS_grepTags: ${{ github.event.inputs.tags }}
         with:
@@ -150,8 +148,18 @@ jobs:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4]
     steps:
+
+      - name: Get branch
+        id: branch
+        env:
+          version: ${{github.event.client_payload.version}}
+        run: |
+              echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )" 
+
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.branch.outputs.ref }}
       
       - name: Get formatted version
         id: version
@@ -170,8 +178,11 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: Critical triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
           CYPRESS_grepTags: '@stable'
         with:

@@ -1,6 +1,7 @@
 import { Container } from "@material-ui/core";
 import { AppFrame } from "@saleor/apps/components/AppFrame";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import PreviewPill from "@saleor/components/PreviewPill";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { MARKETPLACE_URL } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -23,6 +24,7 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.marketplace)} />
       <Container>
+        <PreviewPill className={classes.previewPill} />
         <AppFrame
           src={MARKETPLACE_URL}
           // Marketplace doesn't require app token nor id

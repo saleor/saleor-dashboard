@@ -18,10 +18,11 @@ const messages = defineMessages({
   },
 });
 
-interface ShippingZonesProps {
+export interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
   removeShippingZone: (id: string) => void;
   searchShippingZones: (searchPhrase: string) => void;
+  totalCount: number;
   fetchMoreShippingZones: FetchMoreProps;
   shippingZones: ChannelShippingZones;
   shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
@@ -32,6 +33,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
     addShippingZone,
     removeShippingZone,
     searchShippingZones,
+    totalCount,
     fetchMoreShippingZones,
     shippingZones,
     shippingZonesChoices,
@@ -52,6 +54,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
         removeItem={removeShippingZone}
         searchItems={searchShippingZones}
         fetchMoreItems={fetchMoreShippingZones}
+        totalCount={totalCount}
         dataTestId="shipping"
         inputName="shippingZone"
         itemsName={intl.formatMessage(sectionNames.shippingZones)}

@@ -7,6 +7,6 @@ export const APP_DETAILS = {
     tokenDialog: '[role="dialog"]',
     nameInput: '[name="name"]',
     tokenToCopy: '[data-test-id="generated-token"]',
-    doneButton: '[data-test-id="done"]'
-  }
+    doneButton: '[data-test-id="done"]',
+  },
 };

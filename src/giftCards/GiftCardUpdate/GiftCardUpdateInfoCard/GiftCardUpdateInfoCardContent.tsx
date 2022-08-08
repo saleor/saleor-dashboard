@@ -115,7 +115,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   return (
     <>
       <Label text={intl.formatMessage(messages.creationLabel)} />
-      <Typography>{localizeDate(created, "DD MMMM YYYY")}</Typography>
+      <Typography>{localizeDate(created)}</Typography>
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.orderNumberLabel)} />

@@ -3,7 +3,7 @@ import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Warehouses from "./Warehouses";
+import Warehouses, { WarehousesProps } from "./Warehouses";
 
 const warehouses = [
   {
@@ -18,7 +18,7 @@ const warehouses = [
   },
 ];
 
-const baseProps = {
+const baseProps: WarehousesProps = {
   addWarehouse: () => undefined,
   removeWarehouse: () => undefined,
   searchWarehouses: () => undefined,
@@ -30,6 +30,7 @@ const baseProps = {
   },
   warehouses: [],
   warehousesChoices: warehouses as ChannelWarehouses,
+  totalCount: 10,
 };
 
 storiesOf("Warehouses", module)

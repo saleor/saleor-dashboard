@@ -1,4 +1,3 @@
-import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import { getValueWithDefault } from "./utils/Utils";
 
 export function createTypeProduct({
@@ -10,7 +9,7 @@ export function createTypeProduct({
   kind = "NORMAL",
   productAttributes = true,
 }) {
-  const kindLines = returnValueDependsOnShopVersion("3.1", `kind: ${kind}`);
+  const kindLines = `kind: ${kind}`;
   const productAttributesLine = getValueWithDefault(
     productAttributes && attributeId,
     `productAttributes: "${attributeId}"`,
