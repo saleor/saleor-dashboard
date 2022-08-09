@@ -197,6 +197,7 @@ jobs:
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
 
   add-review-and-merge-patch:
+    if: ${{github.event.client_payload.autoRelease}}
     runs-on: ubuntu-latest
     needs: [run-tests-on-release]
     steps:
@@ -215,7 +216,6 @@ jobs:
               npm ci
 
       - name: Add review and merge if patch
-        if: ${{github.event.client_payload.autoRelease}}
         env: 
          tests_status: ${{ needs.run-tests-on-release.outputs.status}}
          version: ${{github.event.client_payload.version}}
