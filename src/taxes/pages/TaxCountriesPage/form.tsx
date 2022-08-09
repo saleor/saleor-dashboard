@@ -5,7 +5,7 @@ import {
   TaxCountryConfigurationFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset from "@saleor/hooks/useFormset";
+import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
 
@@ -16,11 +16,16 @@ export interface TaxCountriesPageFormData {
   }>;
   country: string;
 }
+export interface UseTaxCountriesFormResult {
+  data: FormsetData<TaxClassRateInput>;
+  submit: () => SubmitPromise;
+  handlers: { handleRateChange: (id: string, value: string) => void };
+}
 
 interface TaxCountriesFormProps {
   children: (props: any) => React.ReactNode;
   country: TaxCountryConfigurationFragment;
-  onSubmit: (data: any) => SubmitPromise;
+  onSubmit: (data: TaxClassRateInput[]) => SubmitPromise;
   disabled: boolean;
 }
 
@@ -28,7 +33,7 @@ function useTaxCountriesForm(
   country: TaxCountryConfigurationFragment,
   onSubmit,
   disabled,
-) {
+): UseTaxCountriesFormResult {
   // Initial
   const initialFormsetData = country?.taxClassCountryRates.map(item => ({
     id: item.taxClass.id,
