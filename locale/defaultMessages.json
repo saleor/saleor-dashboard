@@ -309,6 +309,10 @@
     "context": "menu item name",
     "string": "Name"
   },
+  "0a0fLZ": {
+    "context": "countries list menu label when no countries are assigned",
+    "string": "There are no countries assigned"
+  },
   "0cVk9I": {
     "string": "Show in product listings"
   },
@@ -1139,6 +1143,10 @@
   "7Oorx5": {
     "context": "navigator section header",
     "string": "Search in Catalog"
+  },
+  "7U/NPm": {
+    "context": "tax class rates list label when no country is selected",
+    "string": "Add country to access tax classes"
   },
   "7U8GRy": {
     "string": "Shipping method successfully updated"
