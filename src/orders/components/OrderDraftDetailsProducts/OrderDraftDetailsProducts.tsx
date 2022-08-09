@@ -127,7 +127,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
                   line={line}
                   channelId={order.channel.id}
                   error={formErrors.find(error =>
-                    error.orderLines.some(id => id === line.id),
+                    error.orderLines?.some(id => id === line.id),
                   )}
                   onOrderLineChange={onOrderLineChange}
                   onOrderLineRemove={onOrderLineRemove}
