@@ -1225,6 +1225,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8GC/ah": {
+    "context": "variants section name",
+    "string": "Variants"
+  },
   "8HRy+U": {
     "string": "Category Description"
   },
@@ -2598,6 +2602,10 @@
     "context": "header",
     "string": "Edit Media"
   },
+  "Ila7WO": {
+    "context": "change warehouse dialog description",
+    "string": "Choose warehouse from which you want to fulfill {productName}"
+  },
   "ImTelT": {
     "context": "card subtitle",
     "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
@@ -2608,6 +2616,10 @@
   },
   "IoDlcd": {
     "string": "Slug"
+  },
+  "IqRBql": {
+    "context": "variant name",
+    "string": "New variant"
   },
   "Irflxf": {
     "context": "window title",
@@ -2633,6 +2645,10 @@
   },
   "J0UdxG": {
     "string": "Skip pricing for now"
+  },
+  "J0lNnk": {
+    "context": "column label",
+    "string": "Warehouse"
   },
   "J3uE0t": {
     "context": "section header",
@@ -3620,10 +3636,6 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
-  "QWCh6/": {
-    "context": "change warehouse dialog description",
-    "string": "Choose warehouse you want to fulfill this order from"
-  },
   "QY7FSs": {
     "context": "button",
     "string": "create product type"
@@ -3651,10 +3663,6 @@
   "Qe4XHv": {
     "context": "years after label",
     "string": "years after issue"
-  },
-  "QfKQx3": {
-    "context": "warehouse label when multiple products are unavailable",
-    "string": "{productCount} products are unavailable at this location"
   },
   "QiN4hv": {
     "context": "active",
@@ -4360,6 +4368,10 @@
   },
   "W5SK5c": {
     "string": "Select content type"
+  },
+  "W5hb5H": {
+    "context": "warehouse input",
+    "string": "Warehouse"
   },
   "W8i2Ez": {
     "context": "product field",
@@ -5582,10 +5594,6 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
-  "gF7hbK": {
-    "context": "variant name",
-    "string": "New Variant"
-  },
   "gKdGxP": {
     "context": "error message",
     "string": "Only pre-authorized payments can be captured"
@@ -5687,6 +5695,10 @@
   "hLOEeb": {
     "context": "button",
     "string": "Set as default billing address"
+  },
+  "hLSgWj": {
+    "context": "warehouse label number available of products",
+    "string": "{productCount} available at this location"
   },
   "hLUYBt": {
     "context": "payment status",
@@ -6566,10 +6578,6 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
-  },
-  "oiaUni": {
-    "context": "Support text under page header",
-    "string": "Fulfilling from {warehouseName}"
   },
   "oiuwOl": {
     "context": "button",
@@ -7618,10 +7626,6 @@
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
   },
-  "x4WAC7": {
-    "context": "warehouse label when one product is unavailable",
-    "string": "{productName} is unavailable at this location"
-  },
   "x8V/xS": {
     "context": "attribute visibility in storefront",
     "string": "Public"
@@ -7918,10 +7922,6 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
-  },
-  "zbrHAw": {
-    "context": "Tracking number input label",
-    "string": "Tracking number"
   },
   "zjHH6b": {
     "context": "sale start date",

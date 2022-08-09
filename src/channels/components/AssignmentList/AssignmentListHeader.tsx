@@ -7,13 +7,11 @@ import { useHeaderStyles } from "./styles";
 
 interface AssignmentListHeaderProps {
   assignCount: number;
-  totalCount: number;
   itemsName: string;
 }
 
 const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
   assignCount,
-  totalCount,
   itemsName,
 }) => {
   const classes = useHeaderStyles();
@@ -22,7 +20,7 @@ const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
     <div className={classes.container}>
       <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
         <Typography variant="subtitle2" color="textSecondary">
-          {`${assignCount} / ${totalCount} ${itemsName.toLowerCase()}`}
+          {`${assignCount} ${itemsName.toLowerCase()}`}
         </Typography>
       </AccordionSummary>
       <HorizontalSpacer spacing={1.5} />

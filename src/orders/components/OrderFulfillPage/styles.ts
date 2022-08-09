@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       width: 180,
     },
     colName: {
-      width: 250,
+      width: 220,
     },
     colQuantity: {
       textAlign: "right",
@@ -19,7 +19,11 @@ export const useStyles = makeStyles(
     colSku: {
       textAlign: "right",
       textOverflow: "ellipsis",
-      width: 150,
+      width: 100,
+    },
+    colWarehouse: {
+      textAlign: "right",
+      width: 200,
     },
     table: {
       "&&": {
@@ -40,9 +44,6 @@ export const useStyles = makeStyles(
       fontSize: "12px",
       lineHeight: "160%",
       marginBottom: theme.spacing(2),
-    },
-    warehouseLabel: {
-      marginBottom: theme.spacing(4),
     },
   }),
   { name: "OrderFulfillPage" },

@@ -96,7 +96,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <Container>
             <Backlink href={customAppUrl(appId)}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
-            <Grid>
+            <Grid variant="uniform">
               <div>
                 <WebhookInfo
                   data={data}

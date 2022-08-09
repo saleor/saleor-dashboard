@@ -128,9 +128,21 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
   const imgInputAnchor = React.createRef<HTMLInputElement>();
 
   const clickImgInput = () => imgInputAnchor.current.click();
-  const formErrors = getFormErrors(["id"], errors || []);
+  const formErrors = getFormErrors(
+    ["id", "firstName", "lastName", "email"],
+    errors || [],
+  );
 
   const hasAvatar = !!staffMember?.avatar?.url;
+
+  const getFieldProps = (name: string) => ({
+    disabled: props.disabled,
+    error: !!formErrors[name],
+    helperText: formErrors[name]?.message,
+    label: intl.formatMessage(commonMessages[name]),
+    name,
+    value: data[name],
+  });
 
   return (
     <Card className={className}>
@@ -197,27 +209,21 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
             <div className={classes.propGrid}>
               <div className={classes.prop}>
                 <TextField
-                  label={intl.formatMessage(commonMessages.firstName)}
-                  value={data.firstName}
-                  name="firstName"
+                  {...getFieldProps("firstName")}
                   onChange={onChange}
                   fullWidth
                 />
               </div>
               <div className={classes.prop}>
                 <TextField
-                  label={intl.formatMessage(commonMessages.lastName)}
-                  value={data.lastName}
-                  name="lastName"
+                  {...getFieldProps("lastName")}
                   onChange={onChange}
                   fullWidth
                 />
               </div>
               <div className={classes.prop}>
                 <TextField
-                  label={intl.formatMessage(commonMessages.email)}
-                  value={data.email}
-                  name="email"
+                  {...getFieldProps("email")}
                   onChange={onChange}
                   fullWidth
                 />

@@ -1,18 +1,17 @@
 import {
   Card,
+  CardContent,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  TextField,
-  Typography,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
-import { Grid } from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
@@ -24,7 +23,6 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-  WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
@@ -32,10 +30,17 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { orderUrl } from "@saleor/orders/urls";
+import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
+import {
+  OrderFulfillUrlDialog,
+  OrderFulfillUrlQueryParams,
+  orderUrl,
+} from "@saleor/orders/urls";
 import {
   getAttributesCaption,
+  getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
+  OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
 import classNames from "classnames";
 import React from "react";
@@ -48,37 +53,42 @@ import { useStyles } from "./styles";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
-  trackingNumber: string;
   allowStockToBeExceeded: boolean;
 }
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
+  params: OrderFulfillUrlQueryParams;
   loading: boolean;
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
   order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
-  warehouse: WarehouseFragment;
   shopSettings?: ShopOrderSettingsFragment;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
+  openModal: (
+    action: OrderFulfillUrlDialog,
+    params?: OrderFulfillUrlQueryParams,
+  ) => void;
+  closeModal: () => void;
 }
 
 const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
-  trackingNumber: "",
   allowStockToBeExceeded: false,
 };
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
+    params,
     loading,
     errors,
     order,
     saveButtonBar,
-    warehouse,
     shopSettings,
     onSubmit,
+    openModal,
+    closeModal,
   } = props;
 
   const intl = useIntl();
@@ -87,22 +97,28 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
-    OrderFulfillStockInput[]
+    OrderFulfillLineFormData[]
   >(
     (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
-      line => ({
-        data: null,
-        id: line.id,
-        label: getAttributesCaption(line?.variant?.attributes),
-        value: line?.variant?.preorder
-          ? null
-          : [
-              {
-                quantity: line.quantityToFulfill,
-                warehouse: warehouse?.id,
-              },
-            ],
-      }),
+      line => {
+        const highestQuantityAllocation = getLineAllocationWithHighestQuantity(
+          line,
+        );
+
+        return {
+          data: null,
+          id: line.id,
+          label: getAttributesCaption(line?.variant?.attributes),
+          value: line?.variant?.preorder
+            ? null
+            : [
+                {
+                  quantity: line.quantityToFulfill,
+                  warehouse: highestQuantityAllocation?.warehouse,
+                },
+              ],
+        };
+      },
     ),
   );
 
@@ -122,7 +138,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
-      items: formsetData.filter(item => !!item.value),
+      items: formsetData
+        .filter(item => !!item.value)
+        .map(item => ({
+          ...item,
+          value: item.value.map(value => ({
+            quantity: value.quantity,
+            warehouse: value.warehouse.id,
+          })),
+        })),
     });
   };
   React.useEffect(() => {
@@ -166,43 +190,37 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   };
 
   return (
-    <Container>
-      <Backlink href={orderUrl(order?.id)}>
-        {order?.number
-          ? intl.formatMessage(messages.headerOrderNumber, {
-              orderNumber: order.number,
-            })
-          : intl.formatMessage(messages.headerOrder)}
-      </Backlink>
-      <PageHeader
-        title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
-          orderNumber: order?.number,
-        })}
-      />
-      <Typography className={classes.warehouseLabel}>
-        <FormattedMessage
-          {...messages.fulfillingFrom}
-          values={{ warehouseName: warehouse?.name }}
+    <>
+      <Container>
+        <Backlink href={orderUrl(order?.id)}>
+          {order?.number
+            ? intl.formatMessage(messages.headerOrderNumber, {
+                orderNumber: order.number,
+              })
+            : intl.formatMessage(messages.headerOrder)}
+        </Backlink>
+        <PageHeader
+          title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
+            orderNumber: order?.number,
+          })}
         />
-      </Typography>
-      <Form
-        confirmLeave
-        initial={initialFormData}
-        onSubmit={formData =>
-          handleSubmit({
-            formData,
-            allowStockToBeExceeded: displayStockExceededDialog,
-          })
-        }
-      >
-        {({ change, data, submit }) => (
-          <>
-            <Grid>
+        <Form
+          confirmLeave
+          initial={initialFormData}
+          onSubmit={formData =>
+            handleSubmit({
+              formData,
+              allowStockToBeExceeded: displayStockExceededDialog,
+            })
+          }
+        >
+          {({ change, data, submit }) => (
+            <>
               <Card>
                 <CardTitle
                   title={intl.formatMessage(messages.itemsReadyToShip)}
                 />
-                {warehouse ? (
+                {order ? (
                   <ResponsiveTable className={classes.table}>
                     <TableHead>
                       <TableRow>
@@ -223,80 +241,108 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         <TableCell className={classes.colStock}>
                           <FormattedMessage {...messages.stock} />
                         </TableCell>
+                        <TableCell className={classes.colWarehouse}>
+                          <FormattedMessage {...messages.warehouse} />
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {renderCollection(
-                        getToFulfillOrderLines(order?.lines),
+                        getToFulfillOrderLines(order.lines),
                         (line: OrderFulfillLineFragment, lineIndex) => (
                           <OrderFulfillLine
                             key={line.id}
                             line={line}
                             lineIndex={lineIndex}
-                            warehouseId={warehouse?.id}
                             formsetData={formsetData}
                             formsetChange={formsetChange}
+                            onWarehouseChange={() =>
+                              openModal("change-warehouse", {
+                                lineId: line.id,
+                                warehouseId:
+                                  formsetData[lineIndex]?.value?.[0]?.warehouse
+                                    .id,
+                              })
+                            }
                           />
                         ),
                       )}
                     </TableBody>
                   </ResponsiveTable>
                 ) : (
-                  <Skeleton />
+                  <CardContent>
+                    <Skeleton />
+                  </CardContent>
                 )}
               </Card>
 
-              <Card className={classes.shipmentInformationCard}>
-                <Typography className={classes.supportHeader}>
-                  <FormattedMessage {...messages.shipmentInformation} />
-                </Typography>
-                <TextField
-                  value={data.trackingNumber}
-                  name="trackingNumber"
-                  label={intl.formatMessage(messages.trackingNumber)}
-                  fullWidth
-                  onChange={change}
-                />
-                {shopSettings?.fulfillmentAutoApprove && (
-                  <ControlledCheckbox
-                    checked={data.sendInfo}
-                    label={intl.formatMessage(messages.sentShipmentDetails)}
-                    name="sendInfo"
-                    onChange={change}
+              <CardSpacer />
+
+              {shopSettings?.fulfillmentAutoApprove && (
+                <Card>
+                  <CardTitle
+                    title={intl.formatMessage(messages.shipmentInformation)}
                   />
-                )}
-              </Card>
-            </Grid>
+                  <CardContent>
+                    <ControlledCheckbox
+                      checked={data.sendInfo}
+                      label={intl.formatMessage(messages.sentShipmentDetails)}
+                      name="sendInfo"
+                      onChange={change}
+                    />
+                  </CardContent>
+                </Card>
+              )}
 
-            <Savebar
-              disabled={!shouldEnableSave()}
-              labels={{
-                confirm: shopSettings?.fulfillmentAutoApprove
-                  ? intl.formatMessage(messages.submitFulfillment)
-                  : intl.formatMessage(messages.submitPrepareFulfillment),
-              }}
-              state={saveButtonBar}
-              tooltips={{
-                confirm:
-                  notAllowedToFulfillUnpaid &&
-                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
-              }}
-              onSubmit={submit}
-              onCancel={() => navigate(orderUrl(order?.id))}
-            />
-            <OrderFulfillStockExceededDialog
-              open={displayStockExceededDialog}
-              lines={order?.lines}
-              formsetData={formsetData}
-              warehouseId={warehouse?.id}
-              confirmButtonState={saveButtonBar}
-              onSubmit={submit}
-              onClose={() => setDisplayStockExceededDialog(false)}
-            />
-          </>
-        )}
-      </Form>
-    </Container>
+              <Savebar
+                disabled={!shouldEnableSave()}
+                labels={{
+                  confirm: shopSettings?.fulfillmentAutoApprove
+                    ? intl.formatMessage(messages.submitFulfillment)
+                    : intl.formatMessage(messages.submitPrepareFulfillment),
+                }}
+                state={saveButtonBar}
+                tooltips={{
+                  confirm:
+                    notAllowedToFulfillUnpaid &&
+                    intl.formatMessage(
+                      commonMessages.cannotFullfillUnpaidOrder,
+                    ),
+                }}
+                onSubmit={submit}
+                onCancel={() => navigate(orderUrl(order?.id))}
+              />
+              <OrderFulfillStockExceededDialog
+                open={displayStockExceededDialog}
+                lines={order?.lines}
+                formsetData={formsetData}
+                confirmButtonState={saveButtonBar}
+                onSubmit={submit}
+                onClose={() => setDisplayStockExceededDialog(false)}
+              />
+            </>
+          )}
+        </Form>
+      </Container>
+      <OrderChangeWarehouseDialog
+        open={params.action === "change-warehouse"}
+        line={order?.lines.find(line => line.id === params.lineId)}
+        currentWarehouseId={params.warehouseId}
+        onConfirm={warehouse => {
+          const lineFormQuantity = formsetData.find(
+            item => item.id === params.lineId,
+          )?.value?.[0]?.quantity;
+
+          formsetChange(params.lineId, [
+            {
+              quantity: lineFormQuantity,
+              warehouse,
+            },
+          ]);
+        }}
+        onClose={closeModal}
+      />
+    </>
   );
 };
 

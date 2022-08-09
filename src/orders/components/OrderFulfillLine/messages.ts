@@ -12,4 +12,9 @@ export const messages = defineMessages({
     id: "8vQGO0",
     description: "tooltip content when line's variant has been deleted",
   },
+  warehouse: {
+    defaultMessage: "Warehouse",
+    id: "W5hb5H",
+    description: "warehouse input",
+  },
 });

@@ -17,12 +17,7 @@ const messages = defineMessages({
 });
 
 const AssignmentList: React.FC<AssignmentListProps> = props => {
-  const {
-    items,
-    itemsName,
-    fetchMoreItems: { totalCount },
-    removeItem,
-  } = props;
+  const { items, itemsName, totalCount = 0, removeItem } = props;
 
   const intl = useIntl();
   const classes = useStyles();
@@ -32,11 +27,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
 
   return (
     <Accordion classes={expanderClasses}>
-      <AssignmentListHeader
-        assignCount={items.length}
-        totalCount={totalCount}
-        itemsName={itemsName}
-      />
+      <AssignmentListHeader assignCount={items.length} itemsName={itemsName} />
       <Divider />
       {items.map(item => (
         <Item key={item.id} item={item} onDelete={removeItem} />

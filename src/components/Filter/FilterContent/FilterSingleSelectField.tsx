@@ -35,6 +35,9 @@ export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = (
               name: filter.name,
               update: {
                 multiple: event.target.value === FilterType.MULTIPLE,
+                ...(event.target.value !== FilterType.MULTIPLE && {
+                  value: filter.value.slice(0, 1) as string[],
+                }),
               },
             },
             type: "set-property",
