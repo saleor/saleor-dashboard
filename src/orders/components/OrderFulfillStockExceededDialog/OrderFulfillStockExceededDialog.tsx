@@ -14,7 +14,7 @@ import { renderCollection } from "@saleor/misc";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockInputFormsetData,
+  OrderFulfillStockFormsetData,
 } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -26,8 +26,7 @@ import { useStyles } from "./styles";
 export interface OrderFulfillStockExceededDialogProps {
   lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
-  formsetData: OrderFulfillStockInputFormsetData;
-  warehouseId: string;
+  formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit();
   onClose();
@@ -38,7 +37,6 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
     lines,
     open,
     formsetData,
-    warehouseId,
     confirmButtonState,
     onClose,
     onSubmit,
@@ -49,8 +47,10 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
 
   const exceededLines = lines?.filter(el => {
     const line = "orderLine" in el ? el.orderLine : el;
+    const lineFormWarehouse = formsetData?.find(item => item.id === el.id)
+      ?.value?.[0]?.warehouse;
     const stock = line.variant?.stocks.find(
-      stock => stock.warehouse.id === warehouseId,
+      stock => stock.warehouse.id === lineFormWarehouse?.id,
     );
 
     return (
@@ -91,14 +91,20 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
             )}
 
             <TableBody>
-              {renderCollection(exceededLines, line => (
-                <OrderFulfillStockExceededDialogLine
-                  key={line?.id}
-                  line={line}
-                  formsetData={formsetData}
-                  warehouseId={warehouseId}
-                />
-              ))}
+              {renderCollection(exceededLines, line => {
+                const lineFormWarehouse = formsetData?.find(
+                  item => item.id === line.id,
+                )?.value?.[0]?.warehouse;
+
+                return (
+                  <OrderFulfillStockExceededDialogLine
+                    key={line?.id}
+                    line={line}
+                    formsetData={formsetData}
+                    warehouseId={lineFormWarehouse?.id}
+                  />
+                );
+              })}
             </TableBody>
           </ResponsiveTable>
         </div>

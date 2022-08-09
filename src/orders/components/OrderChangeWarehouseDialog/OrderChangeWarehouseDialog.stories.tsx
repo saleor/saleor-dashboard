@@ -1,6 +1,6 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { allPermissions } from "@saleor/hooks/makeQuery";
-import { order, warehouseSearch } from "@saleor/orders/fixtures";
+import { fulfillOrderLine, warehouseSearch } from "@saleor/orders/fixtures";
 import { searchWarehouses } from "@saleor/searches/useWarehouseSearch";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -10,8 +10,8 @@ import OrderChangeWarehouseDialog, { OrderChangeWarehouseDialogProps } from ".";
 
 const props: OrderChangeWarehouseDialogProps = {
   open: true,
-  lines: order("abc").lines,
-  currentWarehouse: null,
+  line: fulfillOrderLine("abc"),
+  currentWarehouseId: null,
   onConfirm: () => null,
   onClose: () => null,
 };

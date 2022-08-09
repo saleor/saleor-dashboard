@@ -6,9 +6,16 @@ export function markOrderAsPaid(orderId) {
       errors{
         message
       }
+      order{
+        id
+        number
+        lines{
+          id
+        }
+      }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderMarkAsPaid");
 }
 
 export function updateOrdersSettings(automaticallyConfirmAllNewOrders = true) {
@@ -43,12 +50,12 @@ export function createDraftOrder({
   customerId,
   shippingMethodId,
   channelId,
-  address
+  address,
 }) {
   const user = getValueWithDefault(customerId, `user:"${customerId}"`);
   const shippingMethod = getValueWithDefault(
     shippingMethodId,
-    `shippingMethod:"${shippingMethodId}"`
+    `shippingMethod:"${shippingMethodId}"`,
   );
 
   const mutation = `mutation{

@@ -41,6 +41,15 @@ export const useStyles = makeStyles(
       overflow: "hidden",
       textOverflow: "ellipsis",
     },
+    tableBody: {
+      display: "table",
+      width: "100%",
+    },
+    tableCell: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
   }),
   { name: "OrderChangeWarehouseDialog" },
 );
