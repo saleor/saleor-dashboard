@@ -142,7 +142,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                       placeholder={getDefaultTaxRateInCountry(
                         taxClasses,
                         countryRate.country,
-                      )}
+                      ).toString()}
                       value={(countryRate.rate * 100).toString()}
                       change={() => null} // TODO: add change function from form
                     />

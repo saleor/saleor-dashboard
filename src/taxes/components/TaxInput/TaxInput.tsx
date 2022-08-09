@@ -5,7 +5,7 @@ import React from "react";
 import { useStyles } from "./styles";
 
 interface TaxInputProps {
-  placeholder: number | undefined;
+  placeholder: string | undefined;
   value: string | undefined;
   change: FormChange;
 }
@@ -21,7 +21,7 @@ export const TaxInput: React.FC<TaxInputProps> = ({
     <TextField
       type="number"
       fullWidth
-      placeholder={placeholder?.toString()}
+      placeholder={placeholder}
       value={value}
       InputProps={{
         startAdornment: <InputAdornment position="start">%</InputAdornment>,
