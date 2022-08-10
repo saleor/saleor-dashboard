@@ -147,6 +147,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
+  const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
+
   return (
     <>
       <WindowTitle
@@ -168,6 +170,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             disabled={
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
             }
+            errors={errors}
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({

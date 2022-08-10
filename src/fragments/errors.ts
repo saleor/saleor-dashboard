@@ -73,6 +73,7 @@ export const orderErrorFragment = gql`
     field
     addressType
     message
+    orderLines
   }
 `;
 

@@ -49,7 +49,6 @@ import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -71,8 +70,6 @@ import {
   productUrl,
   ProductUrlDialog,
   ProductUrlQueryParams,
-  productVariantAddUrl,
-  productVariantCreatorUrl,
 } from "../../urls";
 import {
   CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
@@ -401,9 +398,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleBack = () => navigate(productListUrl());
 
-  const handleVariantAdd = () => navigate(productVariantAddUrl(id));
-  const handleVariantsAdd = () => navigate(productVariantCreatorUrl(id));
-
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
 
@@ -598,7 +592,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantsAdd={() => openModal("add-variants")}
         onVariantReorder={handleVariantReorder}
         onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
@@ -678,13 +671,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-      <ProductVariantCreateDialog
-        open={params.action === "add-variants"}
-        onClose={closeModal}
-        onConfirm={option =>
-          option === "multiple" ? handleVariantsAdd() : handleVariantAdd()
-        }
-      />
       {isSimpleProduct && !!product?.variants?.[0]?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={deactivatePreoderOpts.status}

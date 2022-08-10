@@ -8,5 +8,5 @@ export const ORDERS_SELECTORS = {
     "[data-test-id='cancel-fulfillment-select-field']",
   orderFulfillmentFrame: "[data-test-id='order-fulfillment']",
   refundButton: '[data-test-id="refund-button"]',
-  fulfillMenuButton: '[data-test-id="fulfill-menu"]'
+  fulfillMenuButton: '[data-test-id="fulfill-menu"]',
 };

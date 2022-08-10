@@ -1,4 +1,5 @@
 import {
+  ChannelUsabilityDataQuery,
   CountryWithCodeFragment,
   FulfillmentStatus,
   InvoiceFragment,
@@ -1132,6 +1133,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                channelListings: [],
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1241,6 +1247,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              product: {
+                __typename: "Product",
+                id: "UHJvZHVjdDo1",
+                channelListings: [],
+              },
               stocks: [
                 {
                   id: "stock_test_id1",
@@ -1358,6 +1369,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1453,6 +1469,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1585,7 +1606,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
   actions: [OrderAction.CAPTURE],
-  shippingMethods: null,
+  shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
   channel: {
@@ -1686,6 +1707,11 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -1780,6 +1806,11 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         quantityAvailable: 10,
         preorder: null,
+        product: {
+          __typename: "Product",
+          id: "UHJvZHVjdDo1",
+          channelListings: [],
+        },
         stocks: [
           {
             id: "stock_test_id1",
@@ -2491,4 +2522,12 @@ export const warehouseSearch: SearchWarehousesQuery["search"] = {
     __typename: "PageInfo",
   },
   __typename: "WarehouseCountableConnection",
+};
+
+export const channelUsabilityData: ChannelUsabilityDataQuery = {
+  __typename: "Query",
+  products: {
+    __typename: "ProductCountableConnection",
+    totalCount: 50,
+  },
 };

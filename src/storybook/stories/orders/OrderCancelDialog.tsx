@@ -38,6 +38,7 @@ storiesOf("Orders / OrderCancelDialog", module)
           field: null,
           addressType: null,
           message: "Cannot cancel order",
+          orderLines: null,
         },
       ]}
     />
