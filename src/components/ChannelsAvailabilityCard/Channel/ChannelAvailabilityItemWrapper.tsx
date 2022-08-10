@@ -2,6 +2,7 @@ import { Accordion, AccordionSummary, Typography } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
+import Label from "@saleor/orders/components/OrderHistory/Label";
 import React from "react";
 
 import { Messages } from "../types";
@@ -55,6 +56,16 @@ const useSummaryStyles = makeStyles(
   { name: "ChannelContentWrapperExpanderSummary" },
 );
 
+const useStyles = makeStyles(
+  () => ({
+    container: {
+      display: "flex",
+      flexDirection: "column",
+    },
+  }),
+  { name: "ChannelWithVariantAvailabilityItemWrapper" },
+);
+
 export interface ChannelContentWrapperProps {
   data: ChannelData;
   children: React.ReactNode;
@@ -66,8 +77,9 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   messages,
   children,
 }) => {
-  const expanderClasses = useExpanderStyles({});
-  const summaryClasses = useSummaryStyles({});
+  const expanderClasses = useExpanderStyles();
+  const summaryClasses = useSummaryStyles();
+  const classes = useStyles();
 
   const { name } = data;
 
@@ -80,8 +92,10 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
         expandIcon={<IconChevronDown />}
         classes={summaryClasses}
       >
-        <Typography>{name}</Typography>
-        <Typography variant="caption">{messages.availableDateText}</Typography>
+        <div className={classes.container}>
+          <Typography>{name}</Typography>
+          <Label text={messages.availableDateText} />
+        </div>
       </AccordionSummary>
       {children}
     </Accordion>

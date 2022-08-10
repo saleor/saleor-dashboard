@@ -98,9 +98,9 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
   messages: commonChannelMessages,
   children,
 }) => {
-  const expanderClasses = useExpanderStyles({});
-  const summaryClasses = useSummaryStyles({});
-  const classes = useStyles({});
+  const expanderClasses = useExpanderStyles();
+  const summaryClasses = useSummaryStyles();
+  const classes = useStyles();
   const intl = useIntl();
 
   const { name } = channels.find(getById(channelId));
