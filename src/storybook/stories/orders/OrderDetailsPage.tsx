@@ -40,6 +40,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
   order,
+  errors: [],
   shop: shopFixture,
   saveButtonBarState: "default",
 };

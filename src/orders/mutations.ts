@@ -422,7 +422,6 @@ export const fulfillOrder = gql`
       errors {
         ...OrderError
         warehouse
-        orderLines
       }
       order {
         ...OrderDetails

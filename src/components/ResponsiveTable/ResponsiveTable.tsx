@@ -1,20 +1,19 @@
 import { Table } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     root: {
-      [theme.breakpoints.up("md")]: {
-        "&& table": {
-          tableLayout: "fixed",
-        },
-      },
-      "& table": {
-        tableLayout: "auto",
-      },
       overflowX: "auto",
       width: "100%",
+    },
+    table: {
+      [theme.breakpoints.up("md")]: {
+        tableLayout: "fixed",
+      },
+      tableLayout: "auto",
     },
   }),
   {
@@ -35,7 +34,7 @@ const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
 
   return (
     <div className={classes.root}>
-      <Table className={className}>{children}</Table>
+      <Table className={classNames(classes.table, className)}>{children}</Table>
     </div>
   );
 };

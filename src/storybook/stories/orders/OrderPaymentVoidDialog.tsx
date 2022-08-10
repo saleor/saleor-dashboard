@@ -28,6 +28,7 @@ storiesOf("Orders / OrderPaymentVoidDialog", module)
           field: null,
           addressType: null,
           message: "Void inactive payment Error",
+          orderLines: null,
         },
       ]}
     />

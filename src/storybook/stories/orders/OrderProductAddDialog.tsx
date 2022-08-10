@@ -37,6 +37,7 @@ storiesOf("Orders / OrderProductAddDialog", module)
           field: null,
           addressType: null,
           message: "Graphql Error",
+          orderLines: null,
         },
       ]}
     />

@@ -32,6 +32,7 @@ storiesOf("Orders / OrderShippingMethodEditDialog", module)
           field: "shippingMethod",
           addressType: null,
           message: "Shipping method not applicable",
+          orderLines: null,
         },
         {
           __typename: "OrderError",
@@ -39,6 +40,7 @@ storiesOf("Orders / OrderShippingMethodEditDialog", module)
           field: null,
           addressType: null,
           message: "Graphql error",
+          orderLines: null,
         },
       ]}
     />

@@ -4,11 +4,14 @@ import {
   OrderDetailsQuery,
   OrderDraftCancelMutation,
   OrderDraftCancelMutationVariables,
+  OrderDraftFinalizeMutation,
+  OrderDraftFinalizeMutationVariables,
   OrderDraftUpdateMutation,
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
   StockAvailability,
+  useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -67,7 +70,10 @@ interface OrderDraftDetailsProps {
     OrderDraftCancelMutation,
     OrderDraftCancelMutationVariables
   >;
-  orderDraftFinalize: any;
+  orderDraftFinalize: PartialMutationProviderOutput<
+    OrderDraftFinalizeMutation,
+    OrderDraftFinalizeMutationVariables
+  >;
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
@@ -97,6 +103,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 }) => {
   const order = data.order;
   const navigate = useNavigator();
+
+  const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
+    variables: {
+      channel: order.channel.slug,
+    },
+  });
 
   const {
     loadMore,
@@ -184,6 +196,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     return errors;
   };
 
+  const errors = orderDraftFinalize.opts.data?.draftOrderComplete.errors || [];
+
   return (
     <>
       <WindowTitle
@@ -203,6 +217,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         <OrderLineDiscountProvider order={order}>
           <OrderDraftPage
             disabled={loading}
+            errors={errors}
             onNoteAdd={variables =>
               extractMutationErrors(
                 orderAddNote.mutate({
@@ -222,6 +237,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             order={order}
+            channelUsabilityData={channelUsabilityData}
             onProductClick={id => () =>
               navigate(productUrl(encodeURIComponent(id)))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}

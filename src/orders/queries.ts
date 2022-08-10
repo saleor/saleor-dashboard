@@ -192,3 +192,11 @@ export const orderRefundData = gql`
     }
   }
 `;
+
+export const channelUsabilityData = gql`
+  query ChannelUsabilityData($channel: String!) {
+    products(channel: $channel) {
+      totalCount
+    }
+  }
+`;
