@@ -225,7 +225,6 @@ interface ProductVariantsProps extends ListActions, ChannelProps {
   variants: ProductDetailsVariantFragment[];
   onVariantReorder: ReorderAction;
   onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
-  onVariantsAdd?();
 }
 
 const numberOfColumns = 7;
@@ -237,7 +236,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
     limits,
     variants,
     product,
-    onVariantsAdd,
     onVariantReorder,
     onSetDefaultVariant,
     isChecked,
@@ -263,33 +261,18 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
           description: "section header",
         })}
         toolbar={
-          hasVariants ? (
-            <Button
-              disabled={limitReached}
-              href={productVariantAddUrl(productId)}
-              variant="tertiary"
-              data-test-id="button-add-variant"
-            >
-              <FormattedMessage
-                id="3VyHbJ"
-                defaultMessage="Create variant"
-                description="button"
-              />
-            </Button>
-          ) : (
-            <Button
-              disabled={limitReached}
-              onClick={onVariantsAdd}
-              variant="tertiary"
-              data-test-id="button-add-variants"
-            >
-              <FormattedMessage
-                id="HcjV6k"
-                defaultMessage="Create variants"
-                description="button"
-              />
-            </Button>
-          )
+          <Button
+            disabled={limitReached}
+            href={productVariantAddUrl(productId)}
+            variant="tertiary"
+            data-test-id="button-add-variant"
+          >
+            <FormattedMessage
+              id="3VyHbJ"
+              defaultMessage="Create variant"
+              description="button"
+            />
+          </Button>
         }
       />
 

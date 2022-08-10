@@ -74,7 +74,6 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
 
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog =
-  | "add-variants"
   | "remove"
   | "remove-variants"
   | "assign-attribute-value"
@@ -106,11 +105,6 @@ export const productVariantEditUrl = (
   ) +
   "?" +
   stringifyQs(params);
-
-export const productVariantCreatorPath = (productId: string) =>
-  urlJoin(productSection, productId, "variant-creator");
-export const productVariantCreatorUrl = (productId: string) =>
-  productVariantCreatorPath(encodeURIComponent(productId));
 
 export type ProductVariantAddUrlDialog = "assign-attribute-value";
 export type ProductVariantAddUrlQueryParams = Dialog<

@@ -120,9 +120,9 @@ describe("Creating variants", () => {
           });
           cy.visit(`${urlList.products}${createdProduct.id}`);
           cy.waitForProgressBarToNotBeVisible();
-          createFirstVariant({
+          createVariant({
             price,
-            attribute: attributeValues[0],
+            attributeName: attributeValues[0],
           });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })

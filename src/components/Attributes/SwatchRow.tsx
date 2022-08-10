@@ -6,7 +6,7 @@ import {
   getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
+import { getBySlug } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
