@@ -6,10 +6,13 @@ import {
   useTaxCountryConfigurationUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import TaxCountryDialog from "../components/TaxCountryDialog";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
@@ -30,6 +33,8 @@ interface CountriesListProps {
 
 export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
+  const intl = useIntl();
 
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
@@ -38,7 +43,17 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   const [
     taxCountryConfigurationUpdateMutation,
     { status: mutationStatus, loading: mutationInProgress },
-  ] = useTaxCountryConfigurationUpdateMutation();
+  ] = useTaxCountryConfigurationUpdateMutation({
+    onCompleted: data => {
+      const errors = data?.taxCountryConfigurationUpdate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   const shop = useShop();
 
