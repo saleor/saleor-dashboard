@@ -8,11 +8,7 @@ export const PRODUCT_DETAILS = {
   firstCategoryItem: "#downshift-0-item-0",
   visibleRadioBtn: "[name='isPublished']",
   channelAvailabilityItem: "[data-test-id*='channel-availability-item']",
-  addVariantsButton: "[data-test-id*='button-add-variant']",
-  addVariantsOptionDialog: {
-    optionMultiple: '[data-test-id="variant-create-option-multiple"]',
-    optionSingle: '[data-test-id="variant-create-option-single"]'
-  },
+  addVariantButton: "[data-test-id*='button-add-variant']",
   descriptionInput: "[data-test-id='rich-text-editor-description']",
   ratingInput: "[name='rating']",
   skuInput: "[name='sku']",
@@ -24,10 +20,9 @@ export const PRODUCT_DETAILS = {
   stockInput: '[data-test-id="stock-input"]',
   costPriceInput: '[name*="costPrice"]',
   sellingPriceInput: '[name*="channel-price"]',
-  createSingleVariantCheckbox: '[value="single"]',
   productImage: '[data-test-id="product-image"]',
   uploadImageButton: '[data-test-id="button-upload-image"]',
   uploadSavedImagesButton: '[data-test-id="upload-images"]',
   uploadMediaUrlButton: '[data-test-id="upload-media-url"]',
-  saveUploadUrlButton: '[data-test-id="upload-url-button"]'
+  saveUploadUrlButton: '[data-test-id="upload-url-button"]',
 };

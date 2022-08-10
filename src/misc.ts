@@ -531,3 +531,6 @@ export const isInDevelopment =
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> &
   Partial<Pick<T, K>>;
+
+export const getBySlug = (slugToCompare: string) => (obj: { slug: string }) =>
+  obj.slug === slugToCompare;
