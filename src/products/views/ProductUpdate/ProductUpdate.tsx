@@ -17,7 +17,6 @@ import {
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
-  useProductVariantBulkDeleteMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -118,7 +117,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const { data, loading, refetch } = useProductDetailsQuery({
+  const { data, loading } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
       id,
@@ -180,19 +179,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       }),
-  });
-
-  const [
-    bulkProductVariantDelete,
-    bulkProductVariantDeleteOpts,
-  ] = useProductVariantBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productVariantBulkDelete.errors.length === 0) {
-        closeModal();
-        refetch();
-        limitOpts.refetch();
-      }
-    },
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -388,30 +374,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           <FormattedMessage
             {...messages.deleteProductDialogSubtitle}
             values={{ name: product?.name }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove-variants"}
-        onClose={closeModal}
-        confirmButtonState={bulkProductVariantDeleteOpts.status}
-        onConfirm={() =>
-          bulkProductVariantDelete({
-            variables: {
-              ids: params.ids,
-            },
-          })
-        }
-        variant="delete"
-        title={intl.formatMessage(messages.deleteVariantDialogTitle)}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            {...messages.deleteVariantDialogSubtitle}
-            values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
-            }}
           />
         </DialogContentText>
       </ActionDialog>
