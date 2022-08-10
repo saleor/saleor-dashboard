@@ -1,8 +1,4 @@
-import { getValueWithDefault } from "../utils/Utils";
-
 export function getCollection({ collectionId, channelSlug, auth }) {
-  cy.log(collectionId, channelSlug);
-
   const query = `query Collection{
     collection(id: "${collectionId}" channel: "${channelSlug}") {
       id

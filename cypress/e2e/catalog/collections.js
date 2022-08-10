@@ -8,6 +8,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
+  addChannelToCollection,
   addProductToCollection,
   createCollection as createCollectionRequest,
 } from "../../support/api/requests/Collections";
@@ -19,11 +20,6 @@ import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/col
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
-import {
-  isCollectionVisible,
-  isProductInCollectionVisible,
-} from "../../support/api/utils/storeFront/collectionsUtils";
-import { isProductVisibleInSearchResult } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   assignProductsToCollection,
   createCollection,
@@ -39,7 +35,6 @@ describe("As an admin I want to manage collections.", () => {
   let productType;
   let category;
   let product;
-
   let defaultChannel;
 
   before(() => {
@@ -90,7 +85,6 @@ describe("As an admin I want to manage collections.", () => {
       let collection;
 
       cy.visit(urlList.collections).expectSkeletonIsVisible();
-
       createCollection(collectionName, false, defaultChannel).then(
         collectionResp => {
           collection = collectionResp;
@@ -106,20 +100,19 @@ describe("As an admin I want to manage collections.", () => {
       );
     },
   );
-  // include after fixing issue:SALEOR-7646
-  xit(
+
+  it(
     "should create published collection. TC: SALEOR_0302",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
-      cy.visit(urlList.collections);
-      cy.expectSkeletonIsVisible();
-
+      cy.visit(urlList.collections).expectSkeletonIsVisible();
       createCollection(collectionName, true, defaultChannel).then(
         collectionResp => {
           collection = collectionResp;
+
           assignProductsToCollection(productName);
           getCollection({
             collectionId: collection.id,
@@ -133,7 +126,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "create collection not available for channel. TC: SALEOR_0303",
+    "should create collection not available for channel. TC: SALEOR_0303",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -145,10 +138,10 @@ describe("As an admin I want to manage collections.", () => {
 
         updateChannelInProduct(product.id, channel.id);
         cy.visit(urlList.collections).expectSkeletonIsVisible();
-
         createCollection(collectionName, false, channel).then(
           collectionResp => {
             collection = collectionResp;
+
             assignProductsToCollection(productName);
             getCollection({
               collectionId: collection.id,
@@ -161,9 +154,9 @@ describe("As an admin I want to manage collections.", () => {
       });
     },
   );
-  // include after fixing issue:SALEOR-7646
-  xit(
-    "create published collection with products hidden in listings. TC: SALEOR_0304",
+
+  it(
+    "should create published collection with products hidden in listings. TC: SALEOR_0304",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
@@ -182,36 +175,24 @@ describe("As an admin I want to manage collections.", () => {
           visibleInListings: false,
         })
         .then(({ product: productResp }) => (createdProduct = productResp));
-      cy.visit(urlList.collections);
-      cy.expectSkeletonIsVisible();
-      createCollection(collectionName, true, defaultChannel)
-        .then(collectionResp => {
+
+      cy.visit(urlList.collections).expectSkeletonIsVisible();
+      createCollection(collectionName, true, defaultChannel).then(
+        collectionResp => {
           collection = collectionResp;
+
           assignProductsToCollection(collectionName);
-        })
-        .then(() => {
           getCollection({
             collectionId: collection.id,
             channelSlug: defaultChannel.slug,
-          });
-        })
-        .then(({ collection: resp }) => {
-          const isVisible = isProductInCollectionVisible(
-            resp,
-            createdProduct.id,
-          );
-          expect(isVisible).to.equal(true);
-        })
-        .then(() => {
-          searchInShop(createdProduct.name);
-        })
-        .then(resp => {
-          const isVisible = isProductVisibleInSearchResult(
-            resp,
-            createdProduct.name,
-          );
-          expect(isVisible).to.equal(false);
-        });
+          })
+            .its("collection.products.edges.0.node.id")
+            .should("eq", createdProduct.id);
+          searchInShop(createdProduct.name)
+            .its("body.data.products.edges")
+            .should("be.empty");
+        },
+      );
     },
   );
 
@@ -237,43 +218,33 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "delete several collections on collections list page. TC: SALEOR_0309",
+    "should update collection. TC: SALEOR_0306",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
-      const deleteSeveral = "delete-several-";
-      const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
-      const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
-      let firstCollection;
-      let secondCollection;
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}updatedCollection`;
 
-      createCollectionRequest(firstCollectionName).then(collectionResp => {
-        firstCollection = collectionResp;
-      });
+      let collection;
 
-      createCollectionRequest(secondCollectionName).then(collectionResp => {
-        secondCollection = collectionResp;
+      createCollectionRequest(collectionName).then(collectionResp => {
+        collection = collectionResp;
 
-        cy.visit(urlList.collections)
-          .searchInTable(deleteSeveral)
-          .get(collectionRow(firstCollection.id))
-          .find(BUTTON_SELECTORS.checkbox)
-          .click()
-          .get(collectionRow(secondCollection.id))
-          .find(BUTTON_SELECTORS.checkbox)
-          .click()
-          .get(BUTTON_SELECTORS.deleteIcon)
-          .click()
-          .addAliasToGraphRequest("CollectionBulkDelete")
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
-
-        getCollection({ collectionId: firstCollection.id })
+        cy.visitAndWaitForProgressBarToDisappear(
+          collectionDetailsUrl(collection.id),
+        );
+        addChannelToCollection({
+          collectionId: collection.id,
+          channelId: defaultChannel.id,
+        });
+        updateCollection({ name: updatedName, description: updatedName });
+        getCollection({
+          collectionId: collection.id,
+          channelSlug: defaultChannel.slug,
+        })
           .its("collection")
-          .should("be.null");
-        getCollection({ collectionId: secondCollection.id })
-          .its("collection")
-          .should("be.null");
+          .should("include", { name: updatedName })
+          .its("description")
+          .should("have.string", `{"text": "${updatedName}"}`);
       });
     },
   );
@@ -291,6 +262,10 @@ describe("As an admin I want to manage collections.", () => {
       createCollectionRequest(collectionName).then(collectionResp => {
         collection = collectionResp;
 
+        addChannelToCollection({
+          collectionId: collection.id,
+          channelId: defaultChannel.id,
+        });
         productsUtils
           .createProductInChannel({
             name: productName,
@@ -303,19 +278,24 @@ describe("As an admin I want to manage collections.", () => {
           .then(({ product: productResp }) => {
             productToAssign = productResp;
 
-            cy.visit(collectionDetailsUrl(collection.id));
+            cy.visitAndWaitForProgressBarToDisappear(
+              collectionDetailsUrl(collection.id),
+            );
+            cy.reload();
             assignProductsToCollection(productToAssign.name);
-
-            getCollection({ collectionId: collection.id })
+            getCollection({
+              collectionId: collection.id,
+              channelSlug: defaultChannel.slug,
+            })
               .its("collection.products.edges.0.node.id")
-              .should("include", productToAssign);
+              .should("include", productToAssign.id);
           });
       });
     },
   );
 
   it(
-    "remove product from collection. TC: SALEOR_0308",
+    "should remove product from collection. TC: SALEOR_0308",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
@@ -326,6 +306,10 @@ describe("As an admin I want to manage collections.", () => {
       createCollectionRequest(collectionName).then(collectionResp => {
         collection = collectionResp;
 
+        addChannelToCollection({
+          collectionId: collection.id,
+          channelId: defaultChannel.id,
+        });
         productsUtils
           .createProductInChannel({
             name: productName,
@@ -342,20 +326,23 @@ describe("As an admin I want to manage collections.", () => {
               collectionId: collection.id,
               productId: productToAssign.id,
             });
-
-            cy.visit(collectionDetailsUrl(collection.id));
-
-            getProductDetails(productToAssign.id, defaultChannel.slug, "auth")
+            cy.visitAndWaitForProgressBarToDisappear(
+              collectionDetailsUrl(collection.id),
+            );
+            getProductDetails(productToAssign.id, defaultChannel.slug)
               .its("body.data.product.collections")
               .should("have.length", 1);
-
-            getCollection({ collectionId: collection.id, auth: "auth" })
+            getCollection({
+              collectionId: collection.id,
+              channelSlug: defaultChannel.slug,
+            })
               .its("collection.products.edges")
               .should("have.length", 1);
-
             removeProductsFromCollection(productToAssign.name);
-
-            getCollection({ collectionId: collection.id, auth: "auth" })
+            getCollection({
+              collectionId: collection.id,
+              channelSlug: defaultChannel.slug,
+            })
               .its("collection.products.edges")
               .should("be.empty");
           });
@@ -364,28 +351,42 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should update collection. TC: SALEOR_0306",
-    { tags: ["@collection", "@allEnv"] },
+    "delete several collections on collections list page. TC: SALEOR_0309",
+    { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
-      const collectionName = `${startsWith}${faker.datatype.number()}`;
-      const updatedName = `${startsWith}updatedCollection`;
+      const deleteSeveral = "delete-several-";
+      const firstCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
+      let firstCollection;
+      let secondCollection;
 
-      createCollectionRequest(collectionName).then(collectionResp => {
-        cy.visitAndWaitForProgressBarToDisappear(
-          collectionDetailsUrl(collectionResp.id),
-        );
-        updateCollection({ name: updatedName, description: updatedName });
-        getCollection({ collectionId: collectionResp.id })
-          .its("collection")
-          .should("include", [{ name: updateName }])
-          .and("include", [{ description: updatedName }]);
+      createCollectionRequest(firstCollectionName).then(collectionResp => {
+        firstCollection = collectionResp;
       });
-      // .then(({ collection: collectionResp }) => {
-      //   expect(collectionResp.name).to.eq(updatedName);
-      //   const descriptionJson = JSON.parse(collectionResp.description);
-      //   const descriptionText = descriptionJson.blocks[0].data.text;
-      //   expect(descriptionText).to.eq(updatedName);
-      // });
+      createCollectionRequest(secondCollectionName).then(collectionResp => {
+        secondCollection = collectionResp;
+
+        cy.visit(urlList.collections)
+          .searchInTable(deleteSeveral)
+          .get(collectionRow(firstCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(collectionRow(secondCollection.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .addAliasToGraphRequest("CollectionBulkDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
+        getCollection({ collectionId: firstCollection.id })
+          .its("collection")
+          .should("be.null");
+        getCollection({ collectionId: secondCollection.id })
+          .its("collection")
+          .should("be.null");
+      });
     },
   );
 });
