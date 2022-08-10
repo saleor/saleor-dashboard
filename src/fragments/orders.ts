@@ -91,6 +91,17 @@ export const fragmentOrderLine = gql`
       stocks {
         ...Stock
       }
+      product {
+        id
+        channelListings {
+          id
+          isPublished
+          isAvailableForPurchase
+          channel {
+            id
+          }
+        }
+      }
     }
     productName
     productSku

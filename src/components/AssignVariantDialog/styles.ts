@@ -12,6 +12,9 @@ export const useStyles = makeStyles(
     colVariantCheckbox: {
       padding: 0,
     },
+    noContentText: {
+      marginBottom: theme.spacing(3),
+    },
     content: {
       overflowY: "scroll",
       paddingTop: 0,

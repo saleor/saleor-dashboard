@@ -149,6 +149,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     }
   }, [approvalErrors]);
 
+  const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
+
   return (
     <>
       <WindowTitle
@@ -168,6 +170,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         disabled={
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
         }
+        errors={errors}
         onNoteAdd={variables =>
           extractMutationErrors(
             orderAddNote.mutate({

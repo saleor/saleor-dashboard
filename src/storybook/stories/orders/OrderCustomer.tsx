@@ -20,6 +20,7 @@ const props: Omit<OrderCustomerProps, "classes"> = {
   onShippingAddressEdit: undefined,
   order,
   users: clients,
+  errors: [],
 };
 
 const OrderCustomer = props => {

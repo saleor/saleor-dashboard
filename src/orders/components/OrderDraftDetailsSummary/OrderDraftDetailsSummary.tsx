@@ -2,10 +2,16 @@ import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
-import { DiscountValueTypeEnum, OrderDetailsFragment } from "@saleor/graphql";
+import {
+  DiscountValueTypeEnum,
+  OrderDetailsFragment,
+  OrderErrorFragment,
+} from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
+import { getFormErrors } from "@saleor/utils/errors";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -22,6 +28,11 @@ const useStyles = makeStyles(
     },
     textRight: {
       textAlign: "right",
+    },
+    textError: {
+      color: theme.palette.error.main,
+      marginLeft: theme.spacing(1.5),
+      display: "inline",
     },
     subtitle: {
       color: theme.palette.grey[500],
@@ -51,12 +62,14 @@ interface OrderDraftDetailsSummaryProps
   extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
   order: OrderDetailsFragment;
+  errors: OrderErrorFragment[];
   onShippingMethodEdit: () => void;
 }
 
 const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
   const {
     order,
+    errors,
     onShippingMethodEdit,
     orderDiscount,
     addOrderDiscount,
@@ -88,6 +101,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     shippingAddress,
     isShippingRequired,
   } = order;
+
+  const formErrors = getFormErrors(["shipping"], errors);
 
   const hasChosenShippingMethod =
     shippingMethod !== null && shippingMethodName !== null;
@@ -192,11 +207,18 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           </td>
         </tr>
         <tr>
-          {hasShippingMethods && <td>{getShippingMethodComponent()}</td>}
+          <td>
+            {hasShippingMethods && getShippingMethodComponent()}
 
-          {!hasShippingMethods && (
-            <td>{intl.formatMessage(messages.noShippingCarriers)}</td>
-          )}
+            {!hasShippingMethods &&
+              intl.formatMessage(messages.noShippingCarriers)}
+
+            {formErrors.shipping && (
+              <Typography variant="body2" className={classes.textError}>
+                {getOrderErrorMessage(formErrors.shipping, intl)}
+              </Typography>
+            )}
+          </td>
 
           <td className={classes.textRight}>
             {hasChosenShippingMethod ? (
