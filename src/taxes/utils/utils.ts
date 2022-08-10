@@ -3,7 +3,7 @@ import {
   CountryWithCodeFragment,
   TaxClassFragment,
   TaxCountryConfigurationFragment,
-  TaxRateFragment
+  TaxRateFragment,
 } from "@saleor/graphql";
 
 export const getDefaultTaxRateInCountry = (
@@ -22,9 +22,9 @@ export const encodeURIComponentOptional = (
 
 export const filterChosenCountries = (
   countries: CountryFragment[],
-  configurations: TaxCountryConfigurationFragment[]
+  configurations: TaxCountryConfigurationFragment[],
 ) =>
   countries.filter(
     country =>
-      !configurations.find(config => config.country.code === country.code)
+      !configurations.find(config => config.country.code === country.code),
   );

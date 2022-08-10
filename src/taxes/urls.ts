@@ -28,7 +28,7 @@ export const taxCountriesListPath = (id?: string) =>
 
 export const taxCountriesListUrl = (
   id?: string,
-  params?: TaxesUrlQueryParams
+  params?: TaxesUrlQueryParams,
 ) =>
   taxCountriesListPath(encodeURIComponentOptional(id)) +
   "?" +

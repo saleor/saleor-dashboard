@@ -31,7 +31,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   configurations,
   selectedCountryId,
   onCountryDelete,
-  onCountryAdd
+  onCountryAdd,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -64,7 +64,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
               <ListItemLink
                 key={config.country.code}
                 className={clsx(classes.clickable, classes.tableRow, {
-                  [classes.selected]: config.country.code === selectedCountryId
+                  [classes.selected]: config.country.code === selectedCountryId,
                 })}
                 href={taxCountriesListUrl(config.country.code)}
               >

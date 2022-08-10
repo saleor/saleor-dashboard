@@ -16,7 +16,7 @@ const props = {
   closeDialog: () => null,
   onSubmit: () => null,
   savebarState: "default" as const,
-  disabled: false
+  disabled: false,
 };
 
 storiesOf("Views / Taxes / Countries view", module)

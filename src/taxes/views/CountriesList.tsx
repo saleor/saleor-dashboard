@@ -3,7 +3,7 @@ import {
   TaxCountryConfigurationFragment,
   useTaxClassesListQuery,
   useTaxCountriesListQuery,
-  useTaxCountryConfigurationUpdateMutation
+  useTaxCountryConfigurationUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
@@ -18,7 +18,7 @@ import {
   TaxesUrlDialog,
   TaxesUrlQueryParams,
   TaxTab,
-  taxTabPath
+  taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import { filterChosenCountries } from "../utils/utils";
@@ -37,7 +37,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
 
   const [
     taxCountryConfigurationUpdateMutation,
-    { status: mutationStatus, loading: mutationInProgress }
+    { status: mutationStatus, loading: mutationInProgress },
   ] = useTaxCountryConfigurationUpdateMutation();
 
   const shop = useShop();
@@ -53,7 +53,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
 
   const { data } = useTaxCountriesListQuery();
   const { data: taxClassesData } = useTaxClassesListQuery({
-    variables: { first: 100 }
+    variables: { first: 100 },
   });
 
   const taxCountryConfigurations = data?.taxCountryConfigurations;
@@ -63,12 +63,12 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     id,
     data: taxCountryConfigurations,
     navigate,
-    urlFunction: taxCountriesListUrl
+    urlFunction: taxCountriesListUrl,
   });
 
   const allCountryTaxes = [
     ...(taxCountryConfigurations ?? []),
-    ...newCountries
+    ...newCountries,
   ];
 
   React.useEffect(() => {
@@ -96,8 +96,8 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
           taxCountryConfigurationUpdateMutation({
             variables: {
               countryCode: id as CountryCode,
-              updateTaxClassRates: data
-            }
+              updateTaxClassRates: data,
+            },
           })
         }
         savebarState={mutationStatus}
@@ -108,10 +108,10 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
           open={params?.action === "add-country"}
           countries={filterChosenCountries(
             shop?.countries,
-            allCountryTaxes
+            allCountryTaxes,
           ).map(country => ({
             checked: false,
-            ...country
+            ...country,
           }))}
           onConfirm={data => {
             closeDialog();
@@ -122,10 +122,10 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
                 taxClassCountryRates: taxClasses.map(taxClass => ({
                   __typename: "TaxClassCountryRate" as const,
                   rate: undefined,
-                  taxClass
+                  taxClass,
                 })),
-                __typename: "TaxCountryConfiguration" as const
-              }))
+                __typename: "TaxCountryConfiguration" as const,
+              })),
             ]);
           }}
           onClose={closeDialog}

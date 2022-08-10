@@ -14,7 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { configurationMenuUrl } from "@saleor/configuration";
 import {
   TaxClassRateInput,
-  TaxCountryConfigurationFragment
+  TaxCountryConfigurationFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -52,11 +52,11 @@ interface TaxCountriesPageProps {
 const useStyles = makeStyles(
   theme => ({
     inputPadding: {
-      padding: "16px 0 16px 0"
+      padding: "16px 0 16px 0",
     },
     greyText: {
-      color: theme.palette.text.hint
-    }
+      color: theme.palette.text.hint,
+    },
   }),
   { name: "TaxCountriesPage" },
 );
@@ -69,7 +69,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     openDialog,
     onSubmit,
     savebarState,
-    disabled
+    disabled,
   } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -139,7 +139,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                         variant="outlined"
                         onChange={e => setQuery(e.target.value)}
                         placeholder={intl.formatMessage(
-                          taxesMessages.searchTaxClasses
+                          taxesMessages.searchTaxClasses,
                         )}
                         fullWidth
                         InputProps={{
@@ -147,7 +147,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                             <InputAdornment position="start">
                               <SearchIcon />
                             </InputAdornment>
-                          )
+                          ),
                         }}
                         inputProps={{ className: classes.inputPadding }}
                       />

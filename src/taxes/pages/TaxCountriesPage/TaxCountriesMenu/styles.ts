@@ -18,11 +18,11 @@ export const useStyles = makeStyles(
       alignItems: "center",
     },
     tableRow: {
-      minHeight: "48px"
+      minHeight: "48px",
     },
     greyText: {
-      color: theme.palette.text.hint
-    }
+      color: theme.palette.text.hint,
+    },
   }),
   { name: "TaxCountriesMenu" },
 );
