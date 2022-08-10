@@ -46,118 +46,116 @@ export const getColumnChannelAvailability = makeGetColumnData(
 );
 export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
+export function getVariantInput(data: DatagridChangeOpts, index: number) {
+  const attributes = data.updates
+    .filter(
+      change =>
+        getColumnAttribute(change.column) &&
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map(change => {
+      const attributeId = getColumnAttribute(change.column);
+
+      return {
+        id: attributeId,
+        values: [change.data],
+      };
+    });
+
+  const sku = data.updates.find(
+    change =>
+      change.column === "sku" &&
+      change.row === index + data.removed.filter(r => r <= index).length,
+  )?.data;
+
+  return {
+    attributes,
+    sku,
+  };
+}
+
 export function getVariantInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): VariantDatagridUpdateMutationVariables[] {
-  const attributeChanges = data.updates.filter(change =>
-    getColumnAttribute(change.column),
-  );
-  const skuChanges = data.updates.filter(change => change.column === "sku");
-
   return variants
     .map(
-      (variant, variantIndex): VariantDatagridUpdateMutationVariables => {
-        const sku = skuChanges.find(
-          change =>
-            change.row ===
-            variantIndex + data.removed.filter(r => r <= variantIndex).length,
-        )?.data;
-
-        const attributes = attributeChanges
-          .filter(
-            change =>
-              change.row ===
-              variantIndex + data.removed.filter(r => r <= variantIndex).length,
-          )
-          .map(change => {
-            const attributeId = getColumnAttribute(change.column);
-
-            return {
-              id: attributeId,
-              values: [change.data],
-            };
-          });
-
-        return {
-          id: variant.id,
-          input: {
-            attributes,
-            sku,
-          },
-        };
-      },
+      (variant, variantIndex): VariantDatagridUpdateMutationVariables => ({
+        id: variant.id,
+        input: getVariantInput(data, variantIndex),
+      }),
     )
     .filter(
       variables => variables.input.sku || variables.input.attributes.length > 0,
     );
 }
 
-export function getStocks(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridStockUpdateMutationVariables[] {
+export function getStockInputs(data: DatagridChangeOpts, index: number) {
   const stockChanges = data.updates.filter(change =>
     getColumnStock(change.column),
   );
 
-  return variants
-    .map((variant, variantIndex) => {
-      const variantChanges = stockChanges
-        .filter(
-          change =>
-            change.row ===
-            variantIndex + data.removed.filter(r => r <= variantIndex).length,
-        )
-        .map(change => ({
-          warehouse: getColumnStock(change.column),
-          quantity: change.data.value,
-        }));
+  const variantChanges = stockChanges
+    .filter(
+      change =>
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map(change => ({
+      warehouse: getColumnStock(change.column),
+      quantity: change.data.value,
+    }));
 
-      return {
-        id: variant.id,
-        stocks: variantChanges.filter(
-          change => change.quantity !== numberCellEmptyValue,
-        ),
-        removeStocks: variantChanges
-          .filter(change => change.quantity === numberCellEmptyValue)
-          .map(({ warehouse }) => warehouse),
-      };
-    })
+  return {
+    stocks: variantChanges.filter(
+      change => change.quantity !== numberCellEmptyValue,
+    ),
+    removeStocks: variantChanges
+      .filter(change => change.quantity === numberCellEmptyValue)
+      .map(({ warehouse }) => warehouse),
+  };
+}
+
+export function getStocks(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridStockUpdateMutationVariables[] {
+  return variants
+    .map((variant, variantIndex) => ({
+      id: variant.id,
+      ...getStockInputs(data, variantIndex),
+    }))
     .filter(
       variables =>
         variables.removeStocks.length > 0 || variables.stocks.length > 0,
     );
 }
 
+export function getVariantChannelsInputs(
+  data: DatagridChangeOpts,
+  index: number,
+) {
+  return data.updates
+    .filter(change => getColumnChannel(change.column))
+    .filter(
+      change =>
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map<ProductVariantChannelListingAddInput>(change => ({
+      channelId: getColumnChannel(change.column),
+      price: change.data.value,
+    }))
+    .filter(change => change.price !== numberCellEmptyValue);
+}
+
 export function getVariantChannels(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): VariantDatagridChannelListingUpdateMutationVariables[] {
-  const channelChanges = data.updates.filter(change =>
-    getColumnChannel(change.column),
-  );
-
   return variants
-    .map((variant, variantIndex) => {
-      const variantChanges = channelChanges
-        .filter(
-          change =>
-            change.row ===
-            variantIndex + data.removed.filter(r => r <= variantIndex).length,
-        )
-        .map<ProductVariantChannelListingAddInput>(change => ({
-          channelId: getColumnChannel(change.column),
-          price: change.data.value,
-        }));
-
-      return {
-        id: variant.id,
-        input: variantChanges.filter(
-          change => change.price !== numberCellEmptyValue,
-        ),
-      };
-    })
+    .map((variant, variantIndex) => ({
+      id: variant.id,
+      input: getVariantChannelsInputs(data, variantIndex),
+    }))
     .filter(({ input }) => input.length > 0);
 }
 
@@ -215,7 +213,7 @@ export function getData({
   }
 
   const columnId = availableColumns[column].id;
-  const variantId = variants[row].id;
+  const variantId = variants[row]?.id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined

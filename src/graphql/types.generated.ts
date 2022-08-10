@@ -7797,6 +7797,14 @@ export type ProductBulkDeleteMutationVariables = Exact<{
 
 export type ProductBulkDeleteMutation = { __typename: 'Mutation', productBulkDelete: { __typename: 'ProductBulkDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
+export type ProductVariantBulkCreateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  inputs: Array<ProductVariantBulkCreateInput> | ProductVariantBulkCreateInput;
+}>;
+
+
+export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string }> } | null };
+
 export type ProductVariantBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;

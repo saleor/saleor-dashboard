@@ -9,9 +9,11 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
+  BulkProductErrorFragment,
   BulkStockErrorFragment,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
+  ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
   StockErrorFragment,
@@ -20,6 +22,8 @@ import {
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
+  useProductVariantBulkCreateMutation,
+  useProductVariantBulkDeleteMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantDatagridChannelListingUpdateMutation,
@@ -31,8 +35,11 @@ import { commonMessages } from "@saleor/intl";
 import { getMutationErrors } from "@saleor/misc";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import {
+  getStockInputs,
   getStocks,
   getVariantChannels,
+  getVariantChannelsInputs,
+  getVariantInput,
   getVariantInputs,
 } from "@saleor/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -48,6 +55,8 @@ import {
 
 export type UseProductUpdateHandlerError =
   | ProductErrorWithAttributesFragment
+  | ProductErrorFragment
+  | BulkProductErrorFragment
   | AttributeErrorFragment
   | UploadErrorFragment
   | StockErrorFragment
@@ -80,6 +89,8 @@ export function useProductUpdateHandler(
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [updateStocks] = useVariantDatagridStockUpdateMutation({});
   const [updateVariant] = useVariantDatagridUpdateMutation();
+  const [createVariants] = useProductVariantBulkCreateMutation();
+  const [deleteVariants] = useProductVariantBulkDeleteMutation();
 
   const [uploadFile] = useFileUploadMutation();
 
@@ -126,6 +137,37 @@ export function useProductUpdateHandler(
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
+
+    if (data.variants.removed.length > 0) {
+      errors.push(
+        ...(
+          await deleteVariants({
+            variables: {
+              ids: data.variants.removed.map(
+                index => product.variants[index].id,
+              ),
+            },
+          })
+        ).data.productVariantBulkDelete.errors,
+      );
+    }
+
+    if (data.variants.added.length > 0) {
+      errors.push(
+        ...(
+          await createVariants({
+            variables: {
+              id: product.id,
+              inputs: data.variants.added.map(index => ({
+                ...getVariantInput(data.variants, index),
+                channelListings: getVariantChannelsInputs(data.variants, index),
+                stocks: getStockInputs(data.variants, index).stocks,
+              })),
+            },
+          })
+        ).data.productVariantBulkCreate.errors,
+      );
+    }
 
     const result = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
