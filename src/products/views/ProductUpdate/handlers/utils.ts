@@ -110,7 +110,7 @@ export function getProductChannelsUpdateVariables(
       channelId => dataUpdated.has(channelId) || variantsUpdates.has(channelId),
     )
     .map(channelId => ({
-      ...variantsUpdates.get(channelId),
+      ...dataUpdated.get(channelId),
       ...variantsUpdates.get(channelId),
     }));
 
