@@ -11247,18 +11247,14 @@ export type ProductVariantSetDefaultMutationHookResult = ReturnType<typeof usePr
 export type ProductVariantSetDefaultMutationResult = Apollo.MutationResult<Types.ProductVariantSetDefaultMutation>;
 export type ProductVariantSetDefaultMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>;
 export const ProductUpdateDocument = gql`
-    mutation ProductUpdate($id: ID!, $input: ProductInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    mutation ProductUpdate($id: ID!, $input: ProductInput!) {
   productUpdate(id: $id, input: $input) {
     errors {
       ...ProductErrorWithAttributes
     }
-    product {
-      ...Product
-    }
   }
 }
-    ${ProductErrorWithAttributesFragmentDoc}
-${ProductFragmentDoc}`;
+    ${ProductErrorWithAttributesFragmentDoc}`;
 export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>;
 
 /**
@@ -11276,10 +11272,6 @@ export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdat
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
  *   },
  * });
  */
@@ -11961,26 +11953,12 @@ export type ProductExportMutationOptions = Apollo.BaseMutationOptions<Types.Prod
 export const ProductChannelListingUpdateDocument = gql`
     mutation ProductChannelListingUpdate($id: ID!, $input: ProductChannelListingUpdateInput!) {
   productChannelListingUpdate(id: $id, input: $input) {
-    product {
-      id
-      channelListings {
-        ...ChannelListingProductWithoutPricing
-      }
-      variants {
-        id
-        channelListings {
-          ...ChannelListingProductVariant
-        }
-      }
-    }
     errors {
       ...ProductChannelListingError
     }
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${ChannelListingProductVariantFragmentDoc}
-${ProductChannelListingErrorFragmentDoc}`;
+    ${ProductChannelListingErrorFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
 
 /**

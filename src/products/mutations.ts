@@ -82,20 +82,10 @@ export const productVariantSetDefault = gql`
 `;
 
 export const productUpdateMutation = gql`
-  mutation ProductUpdate(
-    $id: ID!
-    $input: ProductInput!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  mutation ProductUpdate($id: ID!, $input: ProductInput!) {
     productUpdate(id: $id, input: $input) {
       errors {
         ...ProductErrorWithAttributes
-      }
-      product {
-        ...Product
       }
     }
   }
@@ -403,18 +393,6 @@ export const ProductChannelListingUpdateMutation = gql`
     $input: ProductChannelListingUpdateInput!
   ) {
     productChannelListingUpdate(id: $id, input: $input) {
-      product {
-        id
-        channelListings {
-          ...ChannelListingProductWithoutPricing
-        }
-        variants {
-          id
-          channelListings {
-            ...ChannelListingProductVariant
-          }
-        }
-      }
       errors {
         ...ProductChannelListingError
       }
