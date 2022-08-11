@@ -14201,7 +14201,7 @@ export type ShippingZonesCountQueryHookResult = ReturnType<typeof useShippingZon
 export type ShippingZonesCountLazyQueryHookResult = ReturnType<typeof useShippingZonesCountLazyQuery>;
 export type ShippingZonesCountQueryResult = Apollo.QueryResult<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>;
 export const ShopSettingsUpdateDocument = gql`
-    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
+    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
@@ -14241,7 +14241,6 @@ export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ShopSet
  *   variables: {
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *      addressInput: // value for 'addressInput'
- *      isCloudInstance: // value for 'isCloudInstance'
  *   },
  * });
  */
