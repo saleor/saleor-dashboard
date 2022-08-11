@@ -916,6 +916,15 @@ export type CheckoutErrorFieldPolicy = {
 	lines?: FieldPolicy<any> | FieldReadFunction<any>,
 	addressType?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CheckoutFilterShippingMethodsKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'checkout' | 'shippingMethods' | CheckoutFilterShippingMethodsKeySpecifier)[];
+export type CheckoutFilterShippingMethodsFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CheckoutLanguageCodeUpdateKeySpecifier = ('checkout' | 'checkoutErrors' | 'errors' | CheckoutLanguageCodeUpdateKeySpecifier)[];
 export type CheckoutLanguageCodeUpdateFieldPolicy = {
 	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2756,6 +2765,15 @@ export type OrderEventOrderLineObjectFieldPolicy = {
 	itemName?: FieldPolicy<any> | FieldReadFunction<any>,
 	discount?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type OrderFilterShippingMethodsKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'order' | 'shippingMethods' | OrderFilterShippingMethodsKeySpecifier)[];
+export type OrderFilterShippingMethodsFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type OrderFulfillKeySpecifier = ('fulfillments' | 'order' | 'orderErrors' | 'errors' | OrderFulfillKeySpecifier)[];
 export type OrderFulfillFieldPolicy = {
 	fulfillments?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3163,17 +3181,41 @@ export type PaymentFieldPolicy = {
 	availableRefundAmount?: FieldPolicy<any> | FieldReadFunction<any>,
 	creditCard?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PaymentAuthorizeKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentAuthorizeKeySpecifier)[];
+export type PaymentAuthorizeFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PaymentCaptureKeySpecifier = ('payment' | 'paymentErrors' | 'errors' | PaymentCaptureKeySpecifier)[];
 export type PaymentCaptureFieldPolicy = {
 	payment?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PaymentCaptureEventKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentCaptureEventKeySpecifier)[];
+export type PaymentCaptureEventFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PaymentCheckBalanceKeySpecifier = ('data' | 'paymentErrors' | 'errors' | PaymentCheckBalanceKeySpecifier)[];
 export type PaymentCheckBalanceFieldPolicy = {
 	data?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PaymentConfirmEventKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentConfirmEventKeySpecifier)[];
+export type PaymentConfirmEventFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PaymentCountableConnectionKeySpecifier = ('pageInfo' | 'edges' | 'totalCount' | PaymentCountableConnectionKeySpecifier)[];
 export type PaymentCountableConnectionFieldPolicy = {
@@ -3212,11 +3254,35 @@ export type PaymentInitializedFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	data?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PaymentListGatewaysKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'checkout' | PaymentListGatewaysKeySpecifier)[];
+export type PaymentListGatewaysFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PaymentProcessEventKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentProcessEventKeySpecifier)[];
+export type PaymentProcessEventFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PaymentRefundKeySpecifier = ('payment' | 'paymentErrors' | 'errors' | PaymentRefundKeySpecifier)[];
 export type PaymentRefundFieldPolicy = {
 	payment?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PaymentRefundEventKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentRefundEventKeySpecifier)[];
+export type PaymentRefundEventFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PaymentSourceKeySpecifier = ('gateway' | 'paymentMethodId' | 'creditCardInfo' | 'metadata' | PaymentSourceKeySpecifier)[];
 export type PaymentSourceFieldPolicy = {
@@ -3230,6 +3296,14 @@ export type PaymentVoidFieldPolicy = {
 	payment?: FieldPolicy<any> | FieldReadFunction<any>,
 	paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PaymentVoidEventKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'payment' | PaymentVoidEventKeySpecifier)[];
+export type PaymentVoidEventFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	payment?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PermissionKeySpecifier = ('code' | 'name' | PermissionKeySpecifier)[];
 export type PermissionFieldPolicy = {
@@ -4105,6 +4179,15 @@ export type ShippingErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouses?: FieldPolicy<any> | FieldReadFunction<any>,
 	channels?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ShippingListMethodsForCheckoutKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'checkout' | 'shippingMethods' | ShippingListMethodsForCheckoutKeySpecifier)[];
+export type ShippingListMethodsForCheckoutFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
+	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShippingMethodKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'type' | 'name' | 'description' | 'maximumDeliveryDays' | 'minimumDeliveryDays' | 'maximumOrderWeight' | 'minimumOrderWeight' | 'translation' | 'price' | 'maximumOrderPrice' | 'minimumOrderPrice' | 'active' | 'message' | ShippingMethodKeySpecifier)[];
 export type ShippingMethodFieldPolicy = {
@@ -5551,6 +5634,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | CheckoutErrorKeySpecifier | (() => undefined | CheckoutErrorKeySpecifier),
 		fields?: CheckoutErrorFieldPolicy,
 	},
+	CheckoutFilterShippingMethods?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckoutFilterShippingMethodsKeySpecifier | (() => undefined | CheckoutFilterShippingMethodsKeySpecifier),
+		fields?: CheckoutFilterShippingMethodsFieldPolicy,
+	},
 	CheckoutLanguageCodeUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutLanguageCodeUpdateKeySpecifier | (() => undefined | CheckoutLanguageCodeUpdateKeySpecifier),
 		fields?: CheckoutLanguageCodeUpdateFieldPolicy,
@@ -6379,6 +6466,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | OrderEventOrderLineObjectKeySpecifier | (() => undefined | OrderEventOrderLineObjectKeySpecifier),
 		fields?: OrderEventOrderLineObjectFieldPolicy,
 	},
+	OrderFilterShippingMethods?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OrderFilterShippingMethodsKeySpecifier | (() => undefined | OrderFilterShippingMethodsKeySpecifier),
+		fields?: OrderFilterShippingMethodsFieldPolicy,
+	},
 	OrderFulfill?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderFulfillKeySpecifier | (() => undefined | OrderFulfillKeySpecifier),
 		fields?: OrderFulfillFieldPolicy,
@@ -6579,13 +6670,25 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | PaymentKeySpecifier | (() => undefined | PaymentKeySpecifier),
 		fields?: PaymentFieldPolicy,
 	},
+	PaymentAuthorize?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentAuthorizeKeySpecifier | (() => undefined | PaymentAuthorizeKeySpecifier),
+		fields?: PaymentAuthorizeFieldPolicy,
+	},
 	PaymentCapture?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentCaptureKeySpecifier | (() => undefined | PaymentCaptureKeySpecifier),
 		fields?: PaymentCaptureFieldPolicy,
 	},
+	PaymentCaptureEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentCaptureEventKeySpecifier | (() => undefined | PaymentCaptureEventKeySpecifier),
+		fields?: PaymentCaptureEventFieldPolicy,
+	},
 	PaymentCheckBalance?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentCheckBalanceKeySpecifier | (() => undefined | PaymentCheckBalanceKeySpecifier),
 		fields?: PaymentCheckBalanceFieldPolicy,
+	},
+	PaymentConfirmEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentConfirmEventKeySpecifier | (() => undefined | PaymentConfirmEventKeySpecifier),
+		fields?: PaymentConfirmEventFieldPolicy,
 	},
 	PaymentCountableConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentCountableConnectionKeySpecifier | (() => undefined | PaymentCountableConnectionKeySpecifier),
@@ -6611,9 +6714,21 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | PaymentInitializedKeySpecifier | (() => undefined | PaymentInitializedKeySpecifier),
 		fields?: PaymentInitializedFieldPolicy,
 	},
+	PaymentListGateways?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentListGatewaysKeySpecifier | (() => undefined | PaymentListGatewaysKeySpecifier),
+		fields?: PaymentListGatewaysFieldPolicy,
+	},
+	PaymentProcessEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentProcessEventKeySpecifier | (() => undefined | PaymentProcessEventKeySpecifier),
+		fields?: PaymentProcessEventFieldPolicy,
+	},
 	PaymentRefund?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentRefundKeySpecifier | (() => undefined | PaymentRefundKeySpecifier),
 		fields?: PaymentRefundFieldPolicy,
+	},
+	PaymentRefundEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentRefundEventKeySpecifier | (() => undefined | PaymentRefundEventKeySpecifier),
+		fields?: PaymentRefundEventFieldPolicy,
 	},
 	PaymentSource?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentSourceKeySpecifier | (() => undefined | PaymentSourceKeySpecifier),
@@ -6622,6 +6737,10 @@ export type StrictTypedTypePolicies = {
 	PaymentVoid?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentVoidKeySpecifier | (() => undefined | PaymentVoidKeySpecifier),
 		fields?: PaymentVoidFieldPolicy,
+	},
+	PaymentVoidEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentVoidEventKeySpecifier | (() => undefined | PaymentVoidEventKeySpecifier),
+		fields?: PaymentVoidEventFieldPolicy,
 	},
 	Permission?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PermissionKeySpecifier | (() => undefined | PermissionKeySpecifier),
@@ -7038,6 +7157,10 @@ export type StrictTypedTypePolicies = {
 	ShippingError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingErrorKeySpecifier | (() => undefined | ShippingErrorKeySpecifier),
 		fields?: ShippingErrorFieldPolicy,
+	},
+	ShippingListMethodsForCheckout?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ShippingListMethodsForCheckoutKeySpecifier | (() => undefined | ShippingListMethodsForCheckoutKeySpecifier),
+		fields?: ShippingListMethodsForCheckoutFieldPolicy,
 	},
 	ShippingMethod?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ShippingMethodKeySpecifier | (() => undefined | ShippingMethodKeySpecifier),
