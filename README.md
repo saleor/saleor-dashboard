@@ -10,11 +10,11 @@
 
 <div align="center">
   <a href="https://saleor.io/">🏠 Website</a>
-  <span> | </span>
+  <span> • </span>
   <a href="https://docs.saleor.io/docs/3.x/">📚 Docs</a>
-  <span> | </span>
+  <span> • </span>
   <a href="https://saleor.io/blog/">📰 Blog</a>
-  <span> | </span>
+  <span> • </span>
   <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
 </div>
 
