@@ -299,19 +299,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                {!isOrderUnconfirmed && (
-                  <>
-                    <OrderPayment
-                      order={order}
-                      onCapture={onPaymentCapture}
-                      onMarkAsPaid={onPaymentPaid}
-                      onRefund={onPaymentRefund}
-                      onVoid={onPaymentVoid}
-                    />
-                    <CardSpacer />
-                    <Metadata data={data} onChange={changeMetadata} />
-                  </>
-                )}
+                <OrderPayment
+                  order={order}
+                  onCapture={onPaymentCapture}
+                  onMarkAsPaid={onPaymentPaid}
+                  onRefund={onPaymentRefund}
+                  onVoid={onPaymentVoid}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}
                   orderCurrency={order?.total?.gross.currency}
