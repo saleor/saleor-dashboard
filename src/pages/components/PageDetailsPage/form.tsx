@@ -112,12 +112,15 @@ export interface PageFormProps extends UsePageFormOpts {
   disabled: boolean;
 }
 
-const getInitialFormData = (page?: PageDetailsFragment): PageFormData => ({
-  isPublished: page?.isPublished || true,
+const getInitialFormData = (
+  pageExists: boolean,
+  page?: PageDetailsFragment,
+): PageFormData => ({
+  isPublished: pageExists ? page?.isPublished : true,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
   privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
-  publicationDate: page?.publicationDate || "",
+  publicationDate: pageExists ? page?.publicationDate : "",
   seoDescription: page?.seoDescription || "",
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",
@@ -133,7 +136,7 @@ function usePageForm(
   const pageExists = page !== null;
 
   const { handleChange, triggerChange, data: formData, formId } = useForm(
-    getInitialFormData(page),
+    getInitialFormData(pageExists, page),
     undefined,
     {
       confirmLeave: true,
