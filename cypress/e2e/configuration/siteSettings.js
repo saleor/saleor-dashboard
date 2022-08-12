@@ -10,7 +10,7 @@ import {
   updateShopAddress,
 } from "../../support/api/requests/ShopSettings";
 
-xdescribe("Tests for site settings", () => {
+describe("Tests for site settings", () => {
   let address;
 
   before(() => {
