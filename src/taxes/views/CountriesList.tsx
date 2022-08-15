@@ -24,7 +24,10 @@ import {
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
-import { filterChosenCountries } from "../utils/utils";
+import {
+  filterChosenCountries,
+  mapUndefinedTaxRatesToCountries,
+} from "../utils/utils";
 
 interface CountriesListProps {
   id: string | undefined;
@@ -81,8 +84,11 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     urlFunction: taxCountriesListUrl,
   });
 
-  const allCountryTaxes = [
-    ...(taxCountryConfigurations ?? []),
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = [
+    ...mapUndefinedTaxRatesToCountries(
+      taxCountryConfigurations ?? [],
+      taxClasses ?? [],
+    ),
     ...newCountries,
   ];
 
@@ -94,7 +100,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     ) {
       navigate(taxCountriesListUrl(newCountries[0].country.code));
     }
-  }, [newCountries]);
+  }, [id, navigate, newCountries, taxCountryConfigurations?.length]);
 
   if (id === "undefined" && allCountryTaxes?.length) {
     return null;
@@ -134,11 +140,17 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
               ...prevState,
               ...data.map(country => ({
                 country,
-                taxClassCountryRates: taxClasses.map(taxClass => ({
-                  __typename: "TaxClassCountryRate" as const,
-                  rate: undefined,
-                  taxClass,
-                })),
+                taxClassCountryRates: taxClasses
+                  .map(taxClass => ({
+                    __typename: "TaxClassCountryRate" as const,
+                    rate: undefined,
+                    taxClass,
+                  }))
+                  .sort(
+                    (a, b) =>
+                      Number(b.taxClass.isDefault) -
+                      Number(a.taxClass.isDefault),
+                  ),
                 __typename: "TaxCountryConfiguration" as const,
               })),
             ]);
