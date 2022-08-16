@@ -110,7 +110,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const members = users?.sort(sortMembers(sort?.sort, sort?.asc));
+  const members = [...users].sort(sortMembers(sort?.sort, sort?.asc));
 
   return (
     <Card>
