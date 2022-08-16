@@ -22,7 +22,7 @@ import {
 } from "../../support/pages/discounts/salesPage";
 
 xdescribe("Sales discounts for products", () => {
-  const startsWith = "CySales-";
+  const startsWith = "SalesProd-";
 
   let productType;
   let attribute;

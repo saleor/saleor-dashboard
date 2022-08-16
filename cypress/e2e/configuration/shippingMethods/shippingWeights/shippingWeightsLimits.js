@@ -23,7 +23,7 @@ import {
 } from "../../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to manage shipping weights", () => {
-  const startsWith = "CyWeightRates-";
+  const startsWith = "weightsLimits";
   const name = `${startsWith}${faker.datatype.number()}`;
 
   const price = 10;

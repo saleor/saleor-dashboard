@@ -14,7 +14,6 @@ import { updateTranslationToCategory } from "../support/pages/translationsPage";
 xdescribe("As an admin I want to manage translations", () => {
   const startsWith = "TestTranslations";
   const randomNumber = faker.datatype.number();
-  const name = `${startsWith}${randomNumber}`;
 
   let category;
 

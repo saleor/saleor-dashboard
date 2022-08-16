@@ -25,9 +25,9 @@ import {
 } from "../../../support/api/utils/shippingUtils";
 
 describe("Adyen payments", () => {
-  const startsWith = "CyChannelInDraftOrders-";
+  const startsWith = "Adyen";
   const name = startsWith + faker.datatype.number();
-  const email = `CyChannelInDraftOrders@example.com`;
+  const email = `example@example.com`;
 
   let address;
   let defaultChannel;
