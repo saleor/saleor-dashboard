@@ -50,7 +50,8 @@ export function updateCollection({ name, description }) {
 }
 
 export function assignProductsToCollection(productName) {
-  cy.get(COLLECTION_SELECTORS.addProductButton)
+  cy.waitForProgressBarToNotBeVisible()
+    .get(COLLECTION_SELECTORS.addProductButton)
     .click()
     .addAliasToGraphRequest("SearchProducts")
     .get(ASSIGN_ELEMENTS_SELECTORS.searchInput)
