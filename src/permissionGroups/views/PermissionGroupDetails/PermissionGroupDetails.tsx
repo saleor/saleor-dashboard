@@ -23,7 +23,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
