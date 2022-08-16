@@ -19,7 +19,7 @@ import {
 } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage product types", () => {
-  const startsWith = "productType";
+  const startsWith = "delProdType";
   let category;
   let channel;
   let attribute;

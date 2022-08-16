@@ -17,7 +17,7 @@ import {
 } from "../../../support/pages/discounts/vouchersPage";
 
 describe("As an admin I want to create voucher", () => {
-  const startsWith = "CyVou-";
+  const startsWith = "CyVouLimit-";
   const productPrice = 100;
   const shippingPrice = 100;
 
