@@ -1,16 +1,13 @@
-import { getValueWithDefault } from "../utils/Utils";
-
-export function getCollection({ collectionId, channelSlug, auth = "token" }) {
-  const channelLine = getValueWithDefault(
-    channelSlug,
-    `channel: "${channelSlug}"`
-  );
+export function getCollection({ collectionId, channelSlug, auth }) {
   const query = `query Collection{
-    collection(id: "${collectionId}" ${channelLine}) {
+    collection(id: "${collectionId}" channel: "${channelSlug}") {
       id
       slug
       name
       description
+      channelListings{
+        isPublished
+      }
       products(first:100){
         totalCount
         edges{
