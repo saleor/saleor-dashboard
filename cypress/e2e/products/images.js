@@ -11,6 +11,7 @@ import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/col
 import {
   createNewProductWithNewDataAndDefaultChannel,
   deleteProductsStartsWith,
+  iterateThroughThumbnails,
 } from "../../support/api/utils/products/productsUtils";
 
 describe("Tests for images", () => {
@@ -108,52 +109,16 @@ describe("Tests for images", () => {
     "should create thumbnail url after entering image url",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
-      const failedRequests = [];
+      let failedRequests;
       getFirstProducts(100)
         .then(products => {
           const productsWithThumbnails = products.filter(
             product => product.node.thumbnail !== null,
           );
-          productsWithThumbnails.forEach(product => {
-            const thumbnailUrl = product.node.thumbnail.url;
-            if (!thumbnailUrl.includes("/media/thumbnails")) {
-              cy.request({
-                url: thumbnailUrl,
-                followRedirect: false,
-                failOnStatusCode: false,
-              }).then(response => {
-                if (response.status !== 302) {
-                  failedRequests.push(
-                    `product: ${product.node.id}, expectedStatus: 302, status: ${response.status}`,
-                  );
-                } else {
-                  cy.request({
-                    url: response.redirectedToUrl,
-                    failOnStatusCode: false,
-                  }).then(resp => {
-                    if (resp.status !== 200) {
-                      failedRequests.push(
-                        `product: ${product.node.id}, expectedStatus: 200, status: ${resp.status}`,
-                      );
-                    }
-                  });
-                }
-              });
-            } else {
-              cy.request({ url: thumbnailUrl, failOnStatusCode: false }).then(
-                response => {
-                  if (response.status !== 200) {
-                    failedRequests.push(
-                      `product: ${product.node.id}, expectedStatus: 200, status: ${response.status}`,
-                    );
-                  }
-                },
-              );
-            }
-          });
+          failedRequests = iterateThroughThumbnails(productsWithThumbnails);
         })
         .then(() => {
-          if (failedRequests.length > 0) {
+          if (failedRequests && failedRequests.length > 0) {
             throw new Error(failedRequests.join("\n"));
           }
         });
