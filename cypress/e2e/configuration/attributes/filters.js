@@ -11,7 +11,6 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 import { enterAttributeAndChanegeIsFilterableInDashbord } from "../../../support/pages/attributesPage";
 import {
   enterProductListPage,

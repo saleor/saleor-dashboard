@@ -16,7 +16,7 @@ import {
 } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to create gift card", () => {
-  const startsWith = "GiftCards";
+  const startsWith = "CreateGCards";
   const amount = 50;
   const currency = "USD";
 
