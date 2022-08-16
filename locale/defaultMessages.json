@@ -945,10 +945,6 @@
     "context": "translations section name",
     "string": "Translations"
   },
-  "5ftg/B": {
-    "context": "button",
-    "string": "create permission group"
-  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
@@ -4993,6 +4989,10 @@
   "bPFp8B": {
     "context": "product type",
     "string": "Product Type"
+  },
+  "bRJD/v": {
+    "context": "button",
+    "string": "Create permission group"
   },
   "bS7A8u": {
     "context": "add tracking button",
