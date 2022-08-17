@@ -16,7 +16,7 @@ import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
 describe("As an admin I want to update vouchers", () => {
-  const startsWith = "CyVou-";
+  const startsWith = "UpdateVou-";
   const productPrice = 100;
   const shippingPrice = 100;
 

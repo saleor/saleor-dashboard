@@ -14,7 +14,7 @@ import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/cat
 import { formatDate } from "../../../support/formatData/formatDate";
 
 describe("As an admin I want to update gift card", () => {
-  const startsWith = "GiftCards";
+  const startsWith = "updateGCard";
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
