@@ -129,7 +129,7 @@ describe("As an admin I want to create voucher", () => {
 
   it(
     "should be able to create voucher with limit to staff only. TC: SALEOR_1909",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       dataForCheckout.auth = "auth";
@@ -145,13 +145,17 @@ describe("As an admin I want to create voucher", () => {
       }).then(({ checkout, addPromoCodeResp }) => {
         expect(addPromoCodeResp.errors).to.be.empty;
         firstCheckout = checkout;
-        dataForCheckout = {
-          voucherCode,
-          auth: "token",
-        };
+        dataForCheckout.voucherCode = voucherCode;
 
         addPayment(firstCheckout.id);
         completeCheckout(firstCheckout.id);
+
+        // Create new checkout as other not logged in customer - voucher should be not available for other customer
+
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+        dataForCheckout.email = "newUser@example.com";
+
         createCheckoutWithVoucher(dataForCheckout)
           .its("addPromoCodeResp.errors.0")
           .should("include", { field: "promoCode" })
@@ -162,9 +166,9 @@ describe("As an admin I want to create voucher", () => {
     },
   );
 
-  xit(
+  it(
     "should be able to create voucher with minimum value of order. TC: SALEOR_1910",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const minOrderValue = productPrice * 1.5;
@@ -178,49 +182,46 @@ describe("As an admin I want to create voucher", () => {
         dataForCheckout,
         minOrderValue,
       })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          dataForCheckout.voucherCode = voucherCode;
-
-          expect(errorField, "error in promo code should occur").to.be.eq(
-            "promoCode",
-          );
-          dataForCheckout.productQuantity = 2;
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors;
-          expect(errorField, "No errors when adding promo code").to.be.empty;
+        .its("addPromoCodeResp.errors.0")
+        .should("include", { field: "promoCode" })
+        .and("include", {
+          message: "Voucher is not applicable to this checkout.",
         });
+      dataForCheckout.voucherCode = voucherCode;
+      dataForCheckout.productQuantity = 2;
+
+      createCheckoutWithVoucher(dataForCheckout)
+        .its("addPromoCodeResp.errors")
+        .should("be.be.empty");
     },
   );
 
-  xit("should create voucher with min product quantity. TC: SALEOR_1911", () => {
-    const voucherCode = `${startsWith}${faker.datatype.number()}`;
-    const minAmountOfItems = 2;
-    dataForCheckout.productQuantity = 1;
+  it(
+    "should create voucher with min product quantity. TC: SALEOR_1911",
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
+    () => {
+      const voucherCode = `${startsWith}${faker.datatype.number()}`;
+      dataForCheckout.productQuantity = 1;
 
-    loginAndCreateCheckoutForVoucherWithDiscount({
-      discount: discountOptions.PERCENTAGE,
-      voucherValue,
-      voucherCode,
-      channelName: defaultChannel.name,
-      dataForCheckout,
-      minAmountOfItems,
-    })
-      .then(({ addPromoCodeResp }) => {
-        const errorField = addPromoCodeResp.errors[0].field;
-        dataForCheckout.voucherCode = voucherCode;
-
-        expect(errorField, "error in promo code should occur").to.be.eq(
-          "promoCode",
-        );
-        dataForCheckout.productQuantity = 2;
-        createCheckoutWithVoucher(dataForCheckout);
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.PERCENTAGE,
+        voucherValue,
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout,
+        minAmountOfItems: 2,
       })
-      .then(({ addPromoCodeResp }) => {
-        const errorField = addPromoCodeResp.errors;
-        expect(errorField, "No errors when adding promo code").to.be.empty;
-      });
-  });
+        .its("addPromoCodeResp.errors.0")
+        .should("include", { field: "promoCode" })
+        .and("include", {
+          message: "Voucher is not applicable to this checkout.",
+        });
+      dataForCheckout.voucherCode = voucherCode;
+      dataForCheckout.productQuantity = 2;
+
+      createCheckoutWithVoucher(dataForCheckout)
+        .its("addPromoCodeResp.errors")
+        .should("be.be.empty");
+    },
+  );
 });

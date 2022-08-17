@@ -1,8 +1,6 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import faker from "faker";
-
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList } from "../../fixtures/urlList";
 import {
@@ -24,7 +22,7 @@ describe("Tests for site settings", () => {
 
   it(
     "should change store address",
-    { tags: ["@siteSettings", "@allEnv"] },
+    { tags: ["@siteSettings", "@allEnv", "@stable"] },
     () => {
       cy.clearSessionData()
         .loginUserViaRequest()

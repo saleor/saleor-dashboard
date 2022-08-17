@@ -100,8 +100,6 @@ describe("As an admin I want to update vouchers", () => {
         shippingPrice -
         (productPrice * voucherUpdatedValue) / 100;
 
-      let voucherCreate;
-
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
@@ -109,10 +107,9 @@ describe("As an admin I want to update vouchers", () => {
         channelId: defaultChannel.id,
         value: voucherValue,
       }).then(voucherResp => {
-        voucherCreate = voucherResp;
-        expect(voucherCreate.voucher.id).to.be.ok;
+        expect(voucherResp.voucher.id).to.be.ok;
 
-        cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
+        cy.visit(voucherDetailsUrl(voucherResp.voucher.id))
           .addAliasToGraphRequest("VoucherUpdate")
           .get(VOUCHERS_SELECTORS.percentageDiscountRadioButton)
           .click()
@@ -122,7 +119,7 @@ describe("As an admin I want to update vouchers", () => {
           .click()
           .wait("@VoucherUpdate");
 
-        dataForCheckout.voucherCode = voucherCreate.voucher.code;
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
         window.sessionStorage.setItem("token", "");
         dataForCheckout.auth = "token";
 
@@ -143,8 +140,6 @@ describe("As an admin I want to update vouchers", () => {
         new Date().setDate(new Date().getDate() + 1),
       );
 
-      let voucherCreate;
-
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
@@ -152,21 +147,20 @@ describe("As an admin I want to update vouchers", () => {
         channelId: defaultChannel.id,
         value: voucherValue,
       }).then(voucherResp => {
-        voucherCreate = voucherResp;
-        expect(voucherCreate.voucher.id).to.be.ok;
+        expect(voucherResp.voucher.id).to.be.ok;
 
         setVoucherDate({
-          voucherId: voucherCreate.voucher.id,
+          voucherId: voucherResp.voucher.id,
           startDate: tomorrowDate,
         });
-        dataForCheckout.voucherCode = voucherCreate.voucher.code;
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
 
         createCheckoutWithVoucher(dataForCheckout)
           .its("addPromoCodeResp.errors.0")
           .should("include", { field: "promoCode" })
           .and("include", { message: "Promo code is invalid" });
         setVoucherDate({
-          voucherId: voucherCreate.voucher.id,
+          voucherId: voucherResp.voucher.id,
           startDate: todayDate,
         });
         window.sessionStorage.setItem("token", "");
@@ -189,8 +183,6 @@ describe("As an admin I want to update vouchers", () => {
         new Date().setDate(new Date().getDate() + 1),
       );
 
-      let voucherCreate;
-
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
@@ -198,16 +190,15 @@ describe("As an admin I want to update vouchers", () => {
         channelId: defaultChannel.id,
         value: voucherValue,
       }).then(voucherResp => {
-        voucherCreate = voucherResp;
-        expect(voucherCreate.voucher.id).to.be.ok;
+        expect(voucherResp.voucher.id).to.be.ok;
 
         setVoucherDate({
-          voucherId: voucherCreate.voucher.id,
+          voucherId: voucherResp.voucher.id,
           endDate: todayDate,
           endTime: formatTime(new Date()),
           hasEndDate: true,
         });
-        dataForCheckout.voucherCode = voucherCreate.voucher.code;
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
         window.sessionStorage.setItem("token", "");
         dataForCheckout.auth = "token";
 
@@ -216,12 +207,10 @@ describe("As an admin I want to update vouchers", () => {
           .should("include", { field: "promoCode" })
           .and("include", { message: "Promo code is invalid" });
         setVoucherDate({
-          voucherId: voucherCreate.voucher.id,
+          voucherId: voucherResp.voucher.id,
           endDate: tomorrowDate,
           endTime: formatTime(new Date()),
         });
-        dataForCheckout.voucherCode = voucherCreate.voucher.code;
-
         createCheckoutWithVoucher(dataForCheckout)
           .its("addPromoCodeResp.errors")
           .should("be.be.empty");
@@ -235,8 +224,6 @@ describe("As an admin I want to update vouchers", () => {
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
-      let voucherCreate;
-
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
@@ -246,16 +233,15 @@ describe("As an admin I want to update vouchers", () => {
         type: "SHIPPING",
         country: "US",
       }).then(voucherResp => {
-        voucherCreate = voucherResp;
-        expect(voucherCreate.voucher.id).to.be.ok;
-        dataForCheckout.voucherCode = voucherCreate.voucher.code;
+        expect(voucherResp.voucher.id).to.be.ok;
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
         window.sessionStorage.setItem("token", "");
         dataForCheckout.auth = "token";
 
         createCheckoutWithVoucher(dataForCheckout)
           .its("addPromoCodeResp.errors")
           .should("be.be.empty");
-        cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
+        cy.visit(voucherDetailsUrl(voucherResp.voucher.id))
           .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
           .click()
           .get(VOUCHERS_SELECTORS.countriesDropdownIcon)
