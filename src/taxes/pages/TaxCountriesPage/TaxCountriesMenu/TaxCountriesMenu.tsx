@@ -75,6 +75,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
                       variant="secondary"
                       onClick={event => {
                         event.stopPropagation();
+                        event.preventDefault();
                         onCountryDelete(config.country.code);
                       }}
                     >

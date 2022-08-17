@@ -13,6 +13,7 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { configurationMenuUrl } from "@saleor/configuration";
 import {
+  CountryCode,
   TaxClassRateInput,
   TaxCountryConfigurationFragment,
 } from "@saleor/graphql";
@@ -39,12 +40,13 @@ import TaxInput from "../../components/TaxInput";
 import TaxCountriesForm from "./form";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
-interface TaxCountriesPageProps {
+export interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   handleTabChange: (tab: string) => void;
   openDialog: (action?: string) => void;
   onSubmit: (input: TaxClassRateInput[]) => SubmitPromise;
+  onDeleteConfiguration: (countryCode: CountryCode) => SubmitPromise;
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
 }
@@ -68,6 +70,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
     handleTabChange,
     openDialog,
     onSubmit,
+    onDeleteConfiguration,
     savebarState,
     disabled,
   } = props;
@@ -118,7 +121,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
               <TaxCountriesMenu
                 configurations={countryTaxesData}
                 selectedCountryId={selectedCountryId}
-                onCountryDelete={() => null}
+                onCountryDelete={onDeleteConfiguration}
                 onCountryAdd={() => openDialog("add-country")}
               />
               <Card>

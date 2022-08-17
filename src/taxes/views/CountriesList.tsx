@@ -3,6 +3,7 @@ import {
   TaxCountryConfigurationFragment,
   useTaxClassesListQuery,
   useTaxCountriesListQuery,
+  useTaxCountryConfigurationDeleteMutation,
   useTaxCountryConfigurationUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -57,6 +58,19 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
       }
     },
   });
+  const [
+    taxCountryConfigurationDeleteMutation,
+  ] = useTaxCountryConfigurationDeleteMutation({
+    onCompleted: data => {
+      const errors = data?.taxCountryConfigurationDelete?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   const shop = useShop();
 
@@ -81,20 +95,29 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   const taxCountryConfigurations = data?.taxCountryConfigurations;
   const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
 
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(
+    () => [
+      ...mapUndefinedTaxRatesToCountries(
+        taxCountryConfigurations ?? [],
+        taxClasses ?? [],
+      ),
+      ...newCountries,
+    ],
+    [taxCountryConfigurations, newCountries, taxClasses],
+  );
+
+  React.useEffect(() => {
+    if (!allCountryTaxes.some(country => country.country.code === id)) {
+      navigate(taxCountriesListUrl());
+    }
+  }, [allCountryTaxes, id, navigate]);
+
   useTaxUrlRedirect({
     id,
     data: taxCountryConfigurations,
     navigate,
     urlFunction: taxCountriesListUrl,
   });
-
-  const allCountryTaxes: TaxCountryConfigurationFragment[] = [
-    ...mapUndefinedTaxRatesToCountries(
-      taxCountryConfigurations ?? [],
-      taxClasses ?? [],
-    ),
-    ...newCountries,
-  ];
 
   React.useEffect(() => {
     if (
@@ -122,6 +145,15 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
             variables: {
               countryCode: id as CountryCode,
               updateTaxClassRates: data,
+            },
+          });
+          refetch();
+          return res;
+        }}
+        onDeleteConfiguration={async (countryCode: CountryCode) => {
+          const res = await taxCountryConfigurationDeleteMutation({
+            variables: {
+              countryCode,
             },
           });
           refetch();
