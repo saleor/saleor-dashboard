@@ -1,4 +1,4 @@
-![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)
+![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185124554-c5538cdc-a33d-4def-8ae5-20781591ea34.png)
 
 <div align="center">
   <h1>Saleor Dashboard</h1>
