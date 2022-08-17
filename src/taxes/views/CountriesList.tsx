@@ -69,7 +69,11 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     TaxCountryConfigurationFragment[]
   >([]);
 
-  const { data } = useTaxCountriesListQuery();
+  const {
+    data,
+    refetch,
+    loading: queryInProgress,
+  } = useTaxCountriesListQuery();
   const { data: taxClassesData } = useTaxClassesListQuery({
     variables: { first: 100 },
   });
@@ -113,16 +117,18 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
         selectedCountryId={id!}
         handleTabChange={handleTabChange}
         openDialog={openDialog}
-        onSubmit={data =>
-          taxCountryConfigurationUpdateMutation({
+        onSubmit={async data => {
+          const res = await taxCountryConfigurationUpdateMutation({
             variables: {
               countryCode: id as CountryCode,
               updateTaxClassRates: data,
             },
-          })
-        }
+          });
+          refetch();
+          return res;
+        }}
         savebarState={mutationStatus}
-        disabled={mutationInProgress}
+        disabled={mutationInProgress || queryInProgress}
       />
       {shop?.countries && (
         <TaxCountryDialog
