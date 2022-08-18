@@ -22,4 +22,3 @@ storiesOf("Views / Taxes / Countries view", module)
     <TaxCountriesPage {...props} countryTaxesData={undefined} />
   ))
   .add("default", () => <TaxCountriesPage {...props} />);
-// .add("add country", () => <TaxCountriesPage {...props} />); // TODO: add country modal
