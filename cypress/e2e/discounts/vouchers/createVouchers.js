@@ -148,7 +148,6 @@ describe("As an admin I want to create voucher", () => {
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
 
       cy.clearSessionData()
         .loginUserViaRequest()
