@@ -16,7 +16,7 @@ import {
 } from "../../support/pages/discounts/salesPage";
 
 xdescribe("Sales discounts for variant", () => {
-  const startsWith = "CySales-";
+  const startsWith = "SalesVar-";
 
   let productType;
   let attribute;

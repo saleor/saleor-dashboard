@@ -17,7 +17,7 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage attributes in product types", () => {
-  const startsWith = "productType";
+  const startsWith = "attrProdType";
   let category;
   let channel;
   let attribute;

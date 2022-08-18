@@ -20,7 +20,6 @@ import { createWarehouse as createWarehouseViaApi } from "../../../support/api/r
 import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
-import { returnValueDependsOnShopVersion } from "../../../support/formatData/dataDependingOnVersion";
 import { createChannelByView } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
