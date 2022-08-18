@@ -87,101 +87,54 @@ describe("Create sale with assigned products", () => {
   });
 
   it(
-    "should discount only variants added to sale",
+    "should be able to delete sale. TC: SALEOR_1805",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
       const name = `${startsWith}${faker.datatype.number()}`;
-
-      let variantNotOnSale;
-      let variantOnSale;
-
-      productData.name = productName;
-      productData.sku = productName;
+      let variants;
+      let saleToDelete;
+      productData.name = name;
+      productData.sku = name;
       createProductInChannel(productData)
-        .then(({ product, variantsList }) => {
-          variantNotOnSale = variantsList;
-          productData.name = name;
-          productData.sku = name;
-          productData.productId = product.id;
-          productData.quantityInWarehouse = 10;
-          productData.attributeName = "value2";
-          createVariant(productData);
-        })
-        .then(variantsList => {
-          variantOnSale = variantsList;
-          updateSale({ saleId: sale.id, variants: variantOnSale });
-        })
-        .then(() => {
-          createCheckout({
-            channelSlug: channel.slug,
-            email: "example@example.com",
-            address,
-            variantsList: variantOnSale.concat(variantNotOnSale),
+        .then(({ variantsList }) => {
+          variants = variantsList;
+          createSaleInChannelWithProduct({
+            name,
+            type: "FIXED",
+            value: saleValue,
+            channelId: channel.id,
+            variants,
           });
         })
-        .then(({ checkout }) => {
-          const variantRespNotOnSale = checkout.lines.find(
-            element => element.variant.id === variantNotOnSale[0].id,
-          ).variant;
-          const variantRespOnSale = checkout.lines.find(
-            element => element.variant.id === variantOnSale[0].id,
-          ).variant;
-          expect(variantRespNotOnSale.pricing.onSale).to.be.false;
-          expect(variantRespOnSale.pricing.onSale).to.be.true;
-          expect(variantRespNotOnSale.pricing.price.gross.amount).to.eq(
-            productData.price,
-          );
-          expect(variantRespOnSale.pricing.price.gross.amount).to.eq(
+        .then(saleResp => {
+          saleToDelete = saleResp;
+          getVariant(variants[0].id, channel.slug);
+        })
+        .then(variantResp => {
+          expect(variantResp.pricing.onSale).to.be.true;
+          expect(variantResp.pricing.price.gross.amount).to.eq(
             productData.price - saleValue,
+          );
+          cy.visit(saleDetailsUrl(saleToDelete.id))
+            .addAliasToGraphRequest("SaleDelete")
+            .get(BUTTON_SELECTORS.deleteButton)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .wait("@SaleDelete");
+          getVariant(variants[0].id, channel.slug);
+        })
+        .then(variantResp => {
+          expect(variantResp.pricing.onSale).to.be.false;
+          expect(variantResp.pricing.price.gross.amount).to.eq(
+            productData.price,
           );
         });
     },
   );
 
-  it("should delete sale", { tags: ["@sales", "@allEnv", "@stable"] }, () => {
-    const name = `${startsWith}${faker.datatype.number()}`;
-    let variants;
-    let saleToDelete;
-    productData.name = name;
-    productData.sku = name;
-    createProductInChannel(productData)
-      .then(({ variantsList }) => {
-        variants = variantsList;
-        createSaleInChannelWithProduct({
-          name,
-          type: "FIXED",
-          value: saleValue,
-          channelId: channel.id,
-          variants,
-        });
-      })
-      .then(saleResp => {
-        saleToDelete = saleResp;
-        getVariant(variants[0].id, channel.slug);
-      })
-      .then(variantResp => {
-        expect(variantResp.pricing.onSale).to.be.true;
-        expect(variantResp.pricing.price.gross.amount).to.eq(
-          productData.price - saleValue,
-        );
-        cy.visit(saleDetailsUrl(saleToDelete.id))
-          .addAliasToGraphRequest("SaleDelete")
-          .get(BUTTON_SELECTORS.deleteButton)
-          .click()
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .wait("@SaleDelete");
-        getVariant(variants[0].id, channel.slug);
-      })
-      .then(variantResp => {
-        expect(variantResp.pricing.onSale).to.be.false;
-        expect(variantResp.pricing.price.gross.amount).to.eq(productData.price);
-      });
-  });
-
   xit(
-    "should remove variant from sale",
+    "should be able to remove variant from sale. TC: SALEOR_1806",
     { tags: ["@sales", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

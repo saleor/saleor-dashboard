@@ -21,8 +21,10 @@ import {
   discountOptions,
 } from "../../../support/pages/discounts/salesPage";
 
-xdescribe("Sales discounts for products", () => {
+describe("As an admin I want to create sale for products", () => {
   const startsWith = "SalesProd-";
+  const discountValue = 50;
+  const productPrice = 100;
 
   let productType;
   let attribute;
@@ -31,13 +33,13 @@ xdescribe("Sales discounts for products", () => {
   let warehouse;
 
   before(() => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+
     cy.clearSessionData().loginUserViaRequest();
     channelsUtils.deleteChannelsStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
-
-    const name = `${startsWith}${faker.datatype.number()}`;
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -75,12 +77,11 @@ xdescribe("Sales discounts for products", () => {
   });
 
   it(
-    "should create percentage discount",
-    { tags: ["@sales", "@allEnv"] },
+    "should be able to create percentage discount. TC: SALEOR_1801",
+    { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
-      const discountValue = 50;
-      const productPrice = 100;
+      const expectedPrice = (productPrice * discountValue) / 100;
 
       createSaleWithNewProduct({
         name: saleName,
@@ -92,20 +93,16 @@ xdescribe("Sales discounts for products", () => {
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
         discountValue,
-      }).then(price => {
-        const expectedPrice = (productPrice * discountValue) / 100;
-        expect(expectedPrice).to.be.eq(price);
-      });
+      }).should("eq", expectedPrice);
     },
   );
 
   it(
-    "should create fixed price discount",
-    { tags: ["@sales", "@allEnv"] },
+    "should be able to create fixed price discount. TC: SALEOR_1802",
+    { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
-      const discountValue = 50;
-      const productPrice = 100;
+      const expectedPrice = productPrice - discountValue;
 
       createSaleWithNewProduct({
         name: saleName,
@@ -117,22 +114,17 @@ xdescribe("Sales discounts for products", () => {
         price: productPrice,
         discountOption: discountOptions.FIXED,
         discountValue,
-      }).then(price => {
-        const expectedPrice = productPrice - discountValue;
-        expect(expectedPrice).to.be.eq(price);
-      });
+      }).should("eq", expectedPrice);
     },
   );
 
   it(
-    "should not displayed discount not assign to channel",
-    { tags: ["@sales", "@allEnv"] },
+    "should not be able to see product discount not assign to channel. TC: SALEOR_1803",
+    { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
       let channel;
       let product;
-      const discountValue = 50;
-      const productPrice = 100;
 
       createChannel({ name: saleName }).then(
         channelResp => (channel = channelResp),
@@ -149,19 +141,18 @@ xdescribe("Sales discounts for products", () => {
         })
         .then(({ product: productResp }) => {
           product = productResp;
+
           updateChannelInProduct({
             productId: product.id,
             channelId: channel.id,
           });
-        })
-        .then(() => {
           /* Uncomment after fixing SALEOR-3367 bug 
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */
-
-          cy.visit(urlList.sales);
-          cy.expectSkeletonIsVisible();
+          cy.visit(urlList.sales)
+            .expectSkeletonIsVisible()
+            .waitForProgressBarToNotExist();
           createSale({
             saleName,
             channelName: channel.name,
@@ -170,7 +161,7 @@ xdescribe("Sales discounts for products", () => {
           assignProducts(product.name);
           getProductPrice(product.id, defaultChannel.slug);
         })
-        .then(price => expect(price).to.equal(productPrice));
+        .should("eq", productPrice);
     },
   );
 });

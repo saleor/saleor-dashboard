@@ -68,7 +68,60 @@ xdescribe("Sales discounts for variant", () => {
   });
 
   it(
-    "should create percentage discount",
+    "should not be able see product variant discount not assigned to channel. TC: SALEOR_1804",
+    { tags: ["@sales", "@allEnv", "@stable"] },
+    () => {
+      const productName = `${startsWith}${faker.datatype.number()}`;
+      const name = `${startsWith}${faker.datatype.number()}`;
+
+      let variantNotOnSale;
+      let variantOnSale;
+
+      productData.name = productName;
+      productData.sku = productName;
+      createProductInChannel(productData)
+        .then(({ product, variantsList }) => {
+          variantNotOnSale = variantsList;
+          productData.name = name;
+          productData.sku = name;
+          productData.productId = product.id;
+          productData.quantityInWarehouse = 10;
+          productData.attributeName = "value2";
+          createVariant(productData);
+        })
+        .then(variantsList => {
+          variantOnSale = variantsList;
+          updateSale({ saleId: sale.id, variants: variantOnSale });
+        })
+        .then(() => {
+          createCheckout({
+            channelSlug: channel.slug,
+            email: "example@example.com",
+            address,
+            variantsList: variantOnSale.concat(variantNotOnSale),
+          });
+        })
+        .then(({ checkout }) => {
+          const variantRespNotOnSale = checkout.lines.find(
+            element => element.variant.id === variantNotOnSale[0].id,
+          ).variant;
+          const variantRespOnSale = checkout.lines.find(
+            element => element.variant.id === variantOnSale[0].id,
+          ).variant;
+          expect(variantRespNotOnSale.pricing.onSale).to.be.false;
+          expect(variantRespOnSale.pricing.onSale).to.be.true;
+          expect(variantRespNotOnSale.pricing.price.gross.amount).to.eq(
+            productData.price,
+          );
+          expect(variantRespOnSale.pricing.price.gross.amount).to.eq(
+            productData.price - saleValue,
+          );
+        });
+    },
+  );
+
+  it(
+    "should be able to create percentage discount. TC: SALEOR_1807",
     { tags: ["@sales", "@allEnv"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -94,7 +147,7 @@ xdescribe("Sales discounts for variant", () => {
   );
 
   it(
-    "should create fixed price discount",
+    "should be able to create fixed price discount. TC: SALEOR_1808",
     { tags: ["@sales", "@allEnv"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
