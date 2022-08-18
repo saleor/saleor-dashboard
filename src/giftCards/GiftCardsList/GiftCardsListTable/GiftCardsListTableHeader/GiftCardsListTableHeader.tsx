@@ -101,7 +101,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
         <col />
         <col className={classes.colCardCode} />
         <col className={classes.colBase} />
-        <col className={classes.colBase} />
+        <col className={classes.colProduct} />
         <col className={classes.colBase} />
         <col className={classes.colBalance} />
         <col className={classes.colDelete} />
