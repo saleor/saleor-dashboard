@@ -272,7 +272,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />,
+            endAdornment: loading && (
+              <CircularProgress size={16} data-test-id="search-loader" />
+            ),
           }}
         />
       </DialogContent>
@@ -295,7 +297,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
-                    <TableRow>
+                    <TableRow data-test-id="tableRow">
                       <TableCell
                         padding="checkbox"
                         className={classes.productCheckboxCell}

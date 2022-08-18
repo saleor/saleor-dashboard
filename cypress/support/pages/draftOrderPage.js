@@ -6,7 +6,7 @@ import { SELECT_SHIPPING_METHOD_FORM } from "../../elements/shipping/select-ship
 export function finalizeDraftOrder(name, address) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts)
     .click()
-    .assignElements(name)
+    .assignElements(name, true)
     .get(DRAFT_ORDER_SELECTORS.editCustomerButton)
     .click()
     .get(DRAFT_ORDER_SELECTORS.selectCustomer)

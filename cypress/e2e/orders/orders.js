@@ -105,9 +105,9 @@ describe("Orders", () => {
     );
   });
 
-  xit(
+  it(
     "should create order with selected channel. TC: SALEOR_2104",
-    { tags: ["@orders", "@allEnv"] },
+    { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
@@ -145,7 +145,7 @@ describe("Orders", () => {
 
   it(
     "should cancel fulfillment. TC: SALEOR_2106",
-    { tags: ["@orders", "@allEnv"] },
+    { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;
       createFulfilledOrder({
@@ -165,11 +165,9 @@ describe("Orders", () => {
             .should("not.exist")
             .get(ORDERS_SELECTORS.cancelFulfillment)
             .click()
-            .get(ORDERS_SELECTORS.cancelFulfillmentSelectField)
-            .click()
-            .get(BUTTON_SELECTORS.selectOption)
-            .first()
-            .click()
+            .fillAutocompleteSelect(
+              ORDERS_SELECTORS.cancelFulfillmentSelectField,
+            )
             .addAliasToGraphRequest("OrderFulfillmentCancel")
             .get(BUTTON_SELECTORS.submit)
             .click()
