@@ -24,7 +24,6 @@ import {
   TaxTab,
   taxTabPath,
 } from "../urls";
-import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import {
   filterChosenCountries,
   mapUndefinedTaxRatesToCountries,
@@ -123,27 +122,16 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   };
 
   React.useEffect(() => {
-    if (!allCountryTaxes.some(country => country.country.code === id)) {
-      navigate(taxCountriesListUrl());
+    if (
+      allCountryTaxes?.length > 0 &&
+      (id === "undefined" ||
+        allCountryTaxes.every(
+          configuration => configuration.country.code !== id,
+        ))
+    ) {
+      navigate(taxCountriesListUrl(allCountryTaxes[0].country.code));
     }
   }, [allCountryTaxes, id, navigate]);
-
-  useTaxUrlRedirect({
-    id,
-    data: taxCountryConfigurations,
-    navigate,
-    urlFunction: taxCountriesListUrl,
-  });
-
-  React.useEffect(() => {
-    if (
-      id === "undefined" &&
-      newCountries.length > 0 &&
-      taxCountryConfigurations.length === 0
-    ) {
-      navigate(taxCountriesListUrl(newCountries[0].country.code));
-    }
-  }, [id, navigate, newCountries, taxCountryConfigurations?.length]);
 
   if (id === "undefined" && allCountryTaxes?.length) {
     return null;
