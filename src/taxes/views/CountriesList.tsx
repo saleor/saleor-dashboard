@@ -106,6 +106,22 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     [taxCountryConfigurations, newCountries, taxClasses],
   );
 
+  const handleDeleteConfiguration = async (countryCode: CountryCode) => {
+    if (newCountries.some(config => config.country.code === countryCode)) {
+      setNewCountries(
+        newCountries.filter(config => config.country.code !== countryCode),
+      );
+      return;
+    }
+    const res = await taxCountryConfigurationDeleteMutation({
+      variables: {
+        countryCode,
+      },
+    });
+    refetch();
+    return res;
+  };
+
   React.useEffect(() => {
     if (!allCountryTaxes.some(country => country.country.code === id)) {
       navigate(taxCountriesListUrl());
@@ -148,17 +164,12 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
             },
           });
           refetch();
+          setNewCountries(
+            newCountries.filter(config => config.country.code !== id),
+          );
           return res;
         }}
-        onDeleteConfiguration={async (countryCode: CountryCode) => {
-          const res = await taxCountryConfigurationDeleteMutation({
-            variables: {
-              countryCode,
-            },
-          });
-          refetch();
-          return res;
-        }}
+        onDeleteConfiguration={handleDeleteConfiguration}
         savebarState={mutationStatus}
         disabled={mutationInProgress || queryInProgress}
       />
