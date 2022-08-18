@@ -1,28 +1,22 @@
 /// <reference types="cypress"/>
-/// <reference types="../../support"/>
+/// <reference types="../../../support"/>
 
 import faker from "faker";
 
-import { urlList } from "../../fixtures/urlList";
-import { createChannel } from "../../support/api/requests/Channels";
-import { updateChannelInProduct } from "../../support/api/requests/Product";
-import * as channelsUtils from "../../support/api/utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
-import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
+} from "../../../support/api/utils/shippingUtils";
 import {
-  assignProducts,
-  createSale,
-  createSaleWithNewProduct,
+  createSaleWithNewVariant,
   discountOptions,
-} from "../../support/pages/discounts/salesPage";
+} from "../../../support/pages/discounts/salesPage";
 
-xdescribe("Sales discounts for products", () => {
-  const startsWith = "SalesProd-";
+xdescribe("Sales discounts for variant", () => {
+  const startsWith = "SalesVar-";
 
   let productType;
   let attribute;
@@ -32,7 +26,6 @@ xdescribe("Sales discounts for products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
@@ -82,7 +75,7 @@ xdescribe("Sales discounts for products", () => {
       const discountValue = 50;
       const productPrice = 100;
 
-      createSaleWithNewProduct({
+      createSaleWithNewVariant({
         name: saleName,
         channel: defaultChannel,
         warehouseId: warehouse.id,
@@ -92,9 +85,10 @@ xdescribe("Sales discounts for products", () => {
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
         discountValue,
-      }).then(price => {
+      }).then(({ pricing }) => {
+        const priceInResponse = pricing.price.gross.amount;
         const expectedPrice = (productPrice * discountValue) / 100;
-        expect(expectedPrice).to.be.eq(price);
+        expect(expectedPrice).to.be.eq(priceInResponse);
       });
     },
   );
@@ -107,7 +101,7 @@ xdescribe("Sales discounts for products", () => {
       const discountValue = 50;
       const productPrice = 100;
 
-      createSaleWithNewProduct({
+      createSaleWithNewVariant({
         name: saleName,
         channel: defaultChannel,
         warehouseId: warehouse.id,
@@ -117,60 +111,11 @@ xdescribe("Sales discounts for products", () => {
         price: productPrice,
         discountOption: discountOptions.FIXED,
         discountValue,
-      }).then(price => {
+      }).then(({ pricing }) => {
+        const priceInResponse = pricing.price.gross.amount;
         const expectedPrice = productPrice - discountValue;
-        expect(expectedPrice).to.be.eq(price);
+        expect(expectedPrice).to.be.eq(priceInResponse);
       });
-    },
-  );
-
-  it(
-    "should not displayed discount not assign to channel",
-    { tags: ["@sales", "@allEnv"] },
-    () => {
-      const saleName = `${startsWith}${faker.datatype.number()}`;
-      let channel;
-      let product;
-      const discountValue = 50;
-      const productPrice = 100;
-
-      createChannel({ name: saleName }).then(
-        channelResp => (channel = channelResp),
-      );
-      productsUtils
-        .createProductInChannel({
-          name: saleName,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          price: productPrice,
-        })
-        .then(({ product: productResp }) => {
-          product = productResp;
-          updateChannelInProduct({
-            productId: product.id,
-            channelId: channel.id,
-          });
-        })
-        .then(() => {
-          /* Uncomment after fixing SALEOR-3367 bug 
-           cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
-          */
-
-          cy.visit(urlList.sales);
-          cy.expectSkeletonIsVisible();
-          createSale({
-            saleName,
-            channelName: channel.name,
-            discountValue,
-          });
-          assignProducts(product.name);
-          getProductPrice(product.id, defaultChannel.slug);
-        })
-        .then(price => expect(price).to.equal(productPrice));
     },
   );
 });
