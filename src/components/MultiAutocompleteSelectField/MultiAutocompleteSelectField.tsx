@@ -235,7 +235,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                       open={isOpen}
                       style={{
                         width: anchor.current.clientWidth,
-                        zIndex: 10,
+                        zIndex: 1301,
                       }}
                       placement={popperPlacement}
                     >
