@@ -1,5 +1,4 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import {
   CountryCode,
   useShopSettingsUpdateMutation,
@@ -79,7 +78,6 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
             reserveStockDurationAuthenticatedUser:
               data.reserveStockDurationAuthenticatedUser || null,
           },
-          isCloudInstance: IS_CLOUD_INSTANCE,
         },
       }),
     );

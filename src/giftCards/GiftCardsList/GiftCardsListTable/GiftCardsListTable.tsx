@@ -64,10 +64,6 @@ const GiftCardsListTable: React.FC = () => {
     }
   });
 
-  const onLinkClick: React.MouseEventHandler = event => {
-    event.stopPropagation();
-  };
-
   return (
     <Card>
       <GiftCardListSearchAndFilters />
@@ -141,9 +137,13 @@ const GiftCardsListTable: React.FC = () => {
                     {product ? (
                       <TableButtonWrapper>
                         <PillLink
+                          className={classes.pill}
                           component={RouterLink}
                           to={productUrl(product?.id)}
-                          onClick={onLinkClick}
+                          onClick={event => {
+                            event.stopPropagation();
+                            navigate(productUrl(product?.id));
+                          }}
                         >
                           {product?.name}
                         </PillLink>
