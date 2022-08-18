@@ -93,7 +93,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle>{labels.title}</DialogTitle>
-      <DialogContent className={scrollableDialogClasses.topArea}>
+      <DialogContent>
         <TextField
           name="query"
           value={query}
