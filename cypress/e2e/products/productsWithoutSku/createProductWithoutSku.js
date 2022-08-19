@@ -197,6 +197,7 @@ describe("Creating variants", () => {
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
         .click()
@@ -246,7 +247,9 @@ describe("Creating variants", () => {
             variantsList: variants,
             shippingMethodName: shippingMethod.name,
             address,
-          });
+          })
+            .its("order.id")
+            .should("be.ok");
         });
     },
   );
