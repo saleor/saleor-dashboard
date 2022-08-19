@@ -188,7 +188,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const product = data?.product;
 
-  const warehouses = useWarehouseListQuery({
+  const warehousesQuery = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50,
@@ -236,6 +236,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductImage({ variables: { id } });
 
   const [submit, submitOpts] = useProductUpdateHandler(product);
+
+  const warehouses = React.useMemo(
+    () => mapEdgesToItems(warehousesQuery.data?.warehouses) || [],
+    [warehousesQuery.data],
+  );
 
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
@@ -330,7 +335,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        warehouses={warehouses}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
         onDelete={() => openModal("remove")}

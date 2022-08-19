@@ -1,10 +1,8 @@
-import { OutputData } from "@editorjs/editorjs";
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps,
 } from "@saleor/attributes/utils/data";
 import {
   createAttributeChangeHandler,
@@ -15,38 +13,17 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import {
-  ProductChannelListingUpdateInput,
-  ProductFragment,
-  SearchPagesQuery,
-  SearchProductsQuery,
-  SearchWarehousesQuery,
-} from "@saleor/graphql";
-import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  FormErrors,
-  SubmitPromise,
-} from "@saleor/hooks/useForm";
-import useFormset, {
-  FormsetAtomicData,
-  FormsetChange,
-  FormsetData,
-} from "@saleor/hooks/useFormset";
+import { ProductFragment } from "@saleor/graphql";
+import useForm from "@saleor/hooks/useForm";
+import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
 } from "@saleor/products/utils/data";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -54,127 +31,21 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
-import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
-
-export interface ProductUpdateFormData extends MetadataFormData {
-  category: string | null;
-  changeTaxCode: boolean;
-  chargeTaxes: boolean;
-  collections: string[];
-  isAvailable: boolean;
-  name: string;
-  rating: number;
-  slug: string;
-  seoDescription: string;
-  seoTitle: string;
-  sku: string;
-  taxCode: string;
-  trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
-  weight: string;
-}
-export interface FileAttributeInputData {
-  attributeId: string;
-  file: File;
-}
-export type FileAttributeInput = FormsetAtomicData<
-  FileAttributeInputData,
-  string[]
->;
-
-export interface FileAttributesSubmitData {
-  fileAttributes: FileAttributeInput[];
-}
-export interface ProductUpdateData extends ProductUpdateFormData {
-  attributes: AttributeInput[];
-  channels: ProductChannelListingUpdateInput;
-  description: OutputData;
-}
-export interface ProductUpdateSubmitData extends ProductUpdateFormData {
-  attributes: AttributeInput[];
-  attributesWithNewFileValue: FormsetData<null, File>;
-  channels: ProductChannelListingUpdateInput;
-  collections: string[];
-  description: OutputData;
-  variants: DatagridChangeOpts;
-}
-
-export interface ProductUpdateHandlers
-  extends Record<
-      | "changeMetadata"
-      | "selectCategory"
-      | "selectCollection"
-      | "selectTaxRate",
-      FormChange
-    >,
-    Record<
-      "selectAttribute" | "selectAttributeMultiple",
-      FormsetChange<string>
-    > {
-  changeChannels: (id: string, data: ChannelOpts) => void;
-  selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeFile: FormsetChange<File>;
-  reorderAttributeValue: FormsetChange<ReorderEvent>;
-  changeVariants: (data: DatagridChangeOpts) => void;
-  fetchReferences: (value: string) => void;
-  fetchMoreReferences: FetchMoreProps;
-  updateChannelList: ProductChannelsListingDialogSubmit;
-}
-
-export interface UseProductUpdateFormOutput
-  extends CommonUseFormResultWithHandlers<
-      ProductUpdateData,
-      ProductUpdateHandlers
-    >,
-    RichTextProps {
-  formErrors: FormErrors<ProductUpdateSubmitData>;
-}
-
-export type UseProductUpdateFormRenderProps = Omit<
+import {
+  ProductUpdateData,
+  ProductUpdateFormProps,
+  ProductUpdateSubmitData,
+  SubmitResult,
+  UseProductUpdateFormOpts,
   UseProductUpdateFormOutput,
-  "richText"
->;
-
-export interface UseProductUpdateFormOpts
-  extends Record<
-    "categories" | "collections" | "taxTypes",
-    SingleAutocompleteChoiceType[]
-  > {
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<
-    React.SetStateAction<MultiAutocompleteChoiceType[]>
-  >;
-  setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
-  selectedCollections: MultiAutocompleteChoiceType[];
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  hasVariants: boolean;
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
-  fetchReferencePages?: (data: string) => void;
-  fetchMoreReferencePages?: FetchMoreProps;
-  fetchReferenceProducts?: (data: string) => void;
-  fetchMoreReferenceProducts?: FetchMoreProps;
-  assignReferencesAttributeId?: string;
-  isSimpleProduct: boolean;
-}
-
-export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
-  children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
-  product: ProductFragment;
-  onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
-  disabled: boolean;
-}
+} from "./types";
 
 function useProductUpdateForm(
   product: ProductFragment,
-  onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
+  onSubmit: (data: ProductUpdateSubmitData) => SubmitResult,
   disabled: boolean,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
@@ -341,7 +212,11 @@ function useProductUpdateForm(
     onSubmit: handleSubmit,
   });
 
-  const submit = async () => handleFormSubmit(await getSubmitData());
+  const submit = useCallback(async () => {
+    const result = await handleFormSubmit(await getSubmitData());
+
+    return result;
+  }, [handleFormSubmit, getSubmitData]);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

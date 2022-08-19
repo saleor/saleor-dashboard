@@ -59,9 +59,8 @@ export type UseProductUpdateHandlerError =
   | BulkProductErrorFragment
   | AttributeErrorFragment
   | UploadErrorFragment
-  | StockErrorFragment
-  | BulkStockErrorFragment
-  | ProductChannelListingErrorFragment;
+  | ProductChannelListingErrorFragment
+  | ProductVariantListError;
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,

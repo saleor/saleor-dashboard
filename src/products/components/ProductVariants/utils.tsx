@@ -1,4 +1,4 @@
-import { GridCell } from "@glideapps/glide-data-grid";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   booleanCell,
@@ -182,10 +182,23 @@ function errorMatchesColumn(
   }
 }
 
+export function getError(
+  [column, row]: Item,
+  errors: ProductVariantListError[],
+  availableColumns: AvailableColumn[],
+  variants: ProductDetailsVariantFragment[],
+): boolean {
+  const columnId = availableColumns[column].id;
+  const variantId = variants[row]?.id;
+
+  return errors.some(
+    err => err.variantId === variantId && errorMatchesColumn(err, columnId),
+  );
+}
+
 interface GetData {
   availableColumns: AvailableColumn[];
   column: number;
-  errors: ProductVariantListError[];
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
@@ -198,7 +211,6 @@ interface GetData {
 export function getData({
   availableColumns,
   changes,
-  errors,
   added,
   removed,
   column,
@@ -213,24 +225,19 @@ export function getData({
   }
 
   const columnId = availableColumns[column].id;
-  const variantId = variants[row]?.id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
   const dataRow = added.includes(row)
     ? undefined
     : variants[row + removed.filter(r => r <= row).length];
-  const error = errors.find(
-    err => err.variantId === variantId && errorMatchesColumn(err, columnId),
-  );
 
   const styled = (props: GridCell) => ({
     ...props,
-    themeOverride: error
-      ? { bgCell: "#F4DDBA" }
-      : change !== undefined
-      ? {
-          bgCell: "#C1DBFF",
-        }
-      : {},
+    themeOverride:
+      change !== undefined
+        ? {
+            bgCell: "#C1DBFF",
+          }
+        : {},
   });
 
   switch (columnId) {
