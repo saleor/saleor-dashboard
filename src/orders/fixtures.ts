@@ -1136,7 +1136,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
-                channelListings: [],
+                isAvailableForPurchase: true,
               },
               stocks: [
                 {
@@ -1250,7 +1250,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
-                channelListings: [],
+                isAvailableForPurchase: true,
               },
               stocks: [
                 {
@@ -1372,7 +1372,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
-          channelListings: [],
+          isAvailableForPurchase: true,
         },
         stocks: [
           {
@@ -1472,7 +1472,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
-          channelListings: [],
+          isAvailableForPurchase: true,
         },
         stocks: [
           {
@@ -1710,7 +1710,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
-          channelListings: [],
+          isAvailableForPurchase: true,
         },
         stocks: [
           {
@@ -1809,7 +1809,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
-          channelListings: [],
+          isAvailableForPurchase: true,
         },
         stocks: [
           {

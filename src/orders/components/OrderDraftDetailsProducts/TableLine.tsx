@@ -55,7 +55,6 @@ const useStyles = makeStyles(
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
   line: OrderLineFragment;
-  channelId: string;
   error?: OrderErrorFragment;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -63,7 +62,6 @@ interface TableLineProps extends OrderLineDiscountContextConsumerProps {
 
 const TableLine: React.FC<TableLineProps> = ({
   line,
-  channelId,
   error,
   onOrderLineChange,
   onOrderLineRemove,
@@ -84,7 +82,6 @@ const TableLine: React.FC<TableLineProps> = ({
 
   const alerts = useLineAlerts({
     line,
-    channelId,
     error,
   });
 

@@ -24,7 +24,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ChannelProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -40,9 +40,7 @@ import {
   onVariantAdd,
 } from "./utils";
 
-export interface OrderProductAddDialogProps
-  extends FetchMoreProps,
-    ChannelProps {
+export interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -64,7 +62,6 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     loading,
     hasMore,
     products,
-    selectedChannelId,
     onFetch,
     onFetchMore,
     onClose,
@@ -84,19 +81,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   });
 
   const isValidVariant = ({
-    channelListings,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) => {
-    const currentListing = channelListings.find(
-      listing => listing.channel.id === selectedChannelId,
-    );
-
-    const listingPrice = currentListing?.price?.amount;
-
-    const isVariantPriceSet =
-      listingPrice !== null && listingPrice !== undefined;
-
-    return !!currentListing && isVariantPriceSet;
-  };
+    pricing,
+  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) =>
+    !!pricing;
 
   const getValidProductVariants = ({
     variants,
@@ -138,7 +125,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
       <DialogTitle>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
-      <DialogContent className={classes.topArea} data-test-id="search-query">
+      <DialogContent data-test-id="search-query">
         <TextField
           name="query"
           value={query}
