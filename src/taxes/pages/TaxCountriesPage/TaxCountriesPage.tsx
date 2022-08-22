@@ -33,6 +33,7 @@ import {
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,10 +60,8 @@ const useStyles = makeStyles(
     greyText: {
       color: theme.palette.text.hint,
     },
-    listItemPadding: {
-      "&:last-child": {
-        paddingBottom: theme.spacing(3),
-      },
+    noDivider: {
+      "&::after": { display: "none" },
     },
   }),
   { name: "TaxCountriesPage" },
@@ -175,11 +174,16 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
-                      {filteredRates?.map(rate => (
+                      {filteredRates?.map((rate, rateIndex) => (
                         <ListItem
                           key={rate.id}
                           hover={false}
-                          className={classes.listItemPadding}
+                          className={clsx({
+                            [classes.noDivider]: !(
+                              rateIndex + 1 !==
+                              filteredRates.length
+                            ),
+                          })}
                         >
                           <ListItemCell>{rate.label}</ListItemCell>
                           <ListItemCell>
@@ -197,6 +201,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                         </ListItem>
                       )) ?? <Skeleton />}
                     </List>
+                    <VerticalSpacer spacing={3} />
                   </>
                 )}
               </Card>
