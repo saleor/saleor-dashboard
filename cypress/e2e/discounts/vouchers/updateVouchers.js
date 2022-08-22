@@ -19,15 +19,17 @@ describe("As an admin I want to update vouchers", () => {
   const startsWith = "UpdateVou-";
   const productPrice = 100;
   const shippingPrice = 100;
+  const voucherValue = 50;
 
   let defaultChannel;
   let product;
   let dataForCheckout;
 
   before(() => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+
     cy.clearSessionData().loginUserViaRequest();
     deleteVouchersStartsWith(startsWith);
-    const name = `${startsWith}${faker.datatype.number()}`;
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -54,12 +56,9 @@ describe("As an admin I want to update vouchers", () => {
 
   it(
     "should delete voucher. TC: SALEOR_1905",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-
-      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -67,71 +66,67 @@ describe("As an admin I want to update vouchers", () => {
         productId: product.id,
         channelId: defaultChannel.id,
         value: voucherValue,
-      })
-        .then(voucherResp => {
-          voucherCreate = voucherResp;
-          expect(voucherCreate.voucher.id).to.be.ok;
-          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
-            .addAliasToGraphRequest("VoucherDelete")
-            .get(BUTTON_SELECTORS.deleteButton)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .wait("@VoucherDelete");
-          dataForCheckout.voucherCode = voucherCreate.code;
-          window.sessionStorage.setItem("token", "");
-          dataForCheckout.auth = "token";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-        });
+      }).then(voucherResp => {
+        expect(voucherResp.voucher.id).to.be.ok;
+
+        cy.visit(voucherDetailsUrl(voucherResp.voucher.id))
+          .addAliasToGraphRequest("VoucherDelete")
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .wait("@VoucherDelete");
+
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors.0")
+          .should("include", { field: "promoCode" })
+          .and("include", { message: "Promo code is invalid" });
+      });
     },
   );
 
   it(
     "should update voucher. TC: SALEOR_1906",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
       const voucherUpdatedValue = 20;
       const expectedOrderAmount =
         productPrice +
         shippingPrice -
         (productPrice * voucherUpdatedValue) / 100;
 
-      let voucherCreate;
-
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
         name,
         productId: product.id,
         channelId: defaultChannel.id,
         value: voucherValue,
-      })
-        .then(voucherResp => {
-          voucherCreate = voucherResp;
-          expect(voucherCreate.voucher.id).to.be.ok;
-          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
-            .addAliasToGraphRequest("VoucherUpdate")
-            .get(VOUCHERS_SELECTORS.percentageDiscountRadioButton)
-            .click()
-            .get(VOUCHERS_SELECTORS.discountValueInputs)
-            .clearAndType(voucherUpdatedValue)
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .wait("@VoucherUpdate");
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          window.sessionStorage.setItem("token", "");
-          dataForCheckout.auth = "token";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const amount = addPromoCodeResp.checkout.totalPrice.gross.amount;
-          expect(amount).to.be.eq(expectedOrderAmount);
-        });
+      }).then(voucherResp => {
+        expect(voucherResp.voucher.id).to.be.ok;
+
+        cy.visit(voucherDetailsUrl(voucherResp.voucher.id))
+          .addAliasToGraphRequest("VoucherUpdate")
+          .get(VOUCHERS_SELECTORS.percentageDiscountRadioButton)
+          .click()
+          .get(VOUCHERS_SELECTORS.discountValueInputs)
+          .clearAndType(voucherUpdatedValue)
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .wait("@VoucherUpdate");
+
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.checkout.totalPrice.gross.amount")
+          .should("eq", expectedOrderAmount);
+      });
     },
   );
 
@@ -140,13 +135,10 @@ describe("As an admin I want to update vouchers", () => {
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-      const today = new Date();
-      const tomorrow = new Date(today);
-      const todayDate = formatDate(today);
-      const tomorrowDate = formatDate(tomorrow.setDate(tomorrow.getDate() + 1));
-
-      let voucherCreate;
+      const todayDate = formatDate(new Date());
+      const tomorrowDate = formatDate(
+        new Date().setDate(new Date().getDate() + 1),
+      );
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -154,47 +146,42 @@ describe("As an admin I want to update vouchers", () => {
         productId: product.id,
         channelId: defaultChannel.id,
         value: voucherValue,
-      })
-        .then(voucherResp => {
-          voucherCreate = voucherResp;
-          expect(voucherCreate.voucher.id).to.be.ok;
-          setVoucherDate({
-            voucherId: voucherCreate.voucher.id,
-            startDate: tomorrowDate,
-          });
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-          setVoucherDate({
-            voucherId: voucherCreate.voucher.id,
-            startDate: todayDate,
-          });
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          window.sessionStorage.setItem("token", "");
-          dataForCheckout.auth = "token";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.errors).to.be.empty;
+      }).then(voucherResp => {
+        expect(voucherResp.voucher.id).to.be.ok;
+
+        setVoucherDate({
+          voucherId: voucherResp.voucher.id,
+          startDate: tomorrowDate,
         });
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors.0")
+          .should("include", { field: "promoCode" })
+          .and("include", { message: "Promo code is invalid" });
+        setVoucherDate({
+          voucherId: voucherResp.voucher.id,
+          startDate: todayDate,
+        });
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors")
+          .should("be.be.empty");
+      });
     },
   );
 
   it(
     "should set end date on voucher. TC: SALEOR_1913",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-      const today = new Date();
-      const todayDate = formatDate(today);
-      const tomorrow = new Date(today);
-      const tomorrowDate = formatDate(tomorrow.setDate(tomorrow.getDate() + 1));
-
-      let voucherCreate;
+      const todayDate = formatDate(new Date());
+      const tomorrowDate = formatDate(
+        new Date().setDate(new Date().getDate() + 1),
+      );
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -202,46 +189,40 @@ describe("As an admin I want to update vouchers", () => {
         productId: product.id,
         channelId: defaultChannel.id,
         value: voucherValue,
-      })
-        .then(voucherResp => {
-          voucherCreate = voucherResp;
-          expect(voucherCreate.voucher.id).to.be.ok;
-          setVoucherDate({
-            voucherId: voucherCreate.voucher.id,
-            endDate: todayDate,
-            endTime: formatTime(today),
-            hasEndDate: true,
-          });
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          window.sessionStorage.setItem("token", "");
-          dataForCheckout.auth = "token";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-          setVoucherDate({
-            voucherId: voucherCreate.voucher.id,
-            endDate: tomorrowDate,
-            endTime: formatTime(tomorrow),
-          });
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.errors).to.be.empty;
+      }).then(voucherResp => {
+        expect(voucherResp.voucher.id).to.be.ok;
+
+        setVoucherDate({
+          voucherId: voucherResp.voucher.id,
+          endDate: todayDate,
+          endTime: formatTime(new Date()),
+          hasEndDate: true,
         });
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors.0")
+          .should("include", { field: "promoCode" })
+          .and("include", { message: "Promo code is invalid" });
+        setVoucherDate({
+          voucherId: voucherResp.voucher.id,
+          endDate: tomorrowDate,
+          endTime: formatTime(new Date()),
+        });
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors")
+          .should("be.be.empty");
+      });
     },
   );
 
   it(
     "should set country on voucher. TC: SALEOR_1914",
-    { tags: ["@vouchers", "@allEnv"] },
+    { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-
-      let voucherCreate;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -251,39 +232,38 @@ describe("As an admin I want to update vouchers", () => {
         value: voucherValue,
         type: "SHIPPING",
         country: "US",
-      })
-        .then(voucherResp => {
-          voucherCreate = voucherResp;
-          expect(voucherCreate.voucher.id).to.be.ok;
-          dataForCheckout.voucherCode = voucherCreate.voucher.code;
-          window.sessionStorage.setItem("token", "");
-          dataForCheckout.auth = "token";
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.errors).to.be.empty;
-          cy.visit(voucherDetailsUrl(voucherCreate.voucher.id))
-            .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
-            .click()
-            .get(VOUCHERS_SELECTORS.countriesDropdownIcon)
-            .click()
-            .get(BUTTON_SELECTORS.deleteIcon)
-            .click()
-            .get(BUTTON_SELECTORS.deleteIcon)
-            .should("not.exist")
-            .get(VOUCHERS_SELECTORS.assignCountryButton)
-            .click()
-            .assignElements("Poland", false)
-            .addAliasToGraphRequest("VoucherUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .wait("@VoucherUpdate");
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-        });
+      }).then(voucherResp => {
+        expect(voucherResp.voucher.id).to.be.ok;
+        dataForCheckout.voucherCode = voucherResp.voucher.code;
+        window.sessionStorage.setItem("token", "");
+        dataForCheckout.auth = "token";
+
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors")
+          .should("be.be.empty");
+        cy.visit(voucherDetailsUrl(voucherResp.voucher.id))
+          .get(VOUCHERS_SELECTORS.shippingDiscountRadioButton)
+          .click()
+          .get(VOUCHERS_SELECTORS.countriesDropdownIcon)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .should("not.exist")
+          .get(VOUCHERS_SELECTORS.assignCountryButton)
+          .click()
+          .assignElements("Poland", false)
+          .addAliasToGraphRequest("VoucherUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .wait("@VoucherUpdate");
+        createCheckoutWithVoucher(dataForCheckout)
+          .its("addPromoCodeResp.errors.0")
+          .should("include", { field: "promoCode" })
+          .and("include", {
+            message: "Voucher is not applicable to this checkout.",
+          });
+      });
     },
   );
 });

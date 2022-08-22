@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 const useStyles = makeStyles(
   theme => ({
     popper: {
-      zIndex: 11,
+      zIndex: 1302,
     },
     tooltip: {
       // TO-FIX

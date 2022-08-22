@@ -16,8 +16,18 @@ export const useTableStyles = makeStyles(
     colBalance: {
       width: 135,
     },
+    colProduct: {
+      width: 250,
+    },
     colBase: {
       width: 150,
+    },
+    pill: {
+      display: "block",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      maxWidth: "min-content",
+      overflow: "hidden",
     },
     row: {
       cursor: "pointer",
