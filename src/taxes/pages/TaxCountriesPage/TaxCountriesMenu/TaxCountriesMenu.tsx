@@ -51,42 +51,40 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
           <FormattedMessage {...taxesMessages.noCountriesAssigned} />
         </CardContent>
       ) : (
-        <div className={classes.scrollWrapper}>
-          <List gridTemplate={["1fr"]}>
-            <ListHeader>
-              <ListItem className={classes.tableRow}>
-                <ListItemCell>
-                  <FormattedMessage {...taxesMessages.countryNameHeader} />
-                </ListItemCell>
-              </ListItem>
-            </ListHeader>
-            {configurations?.map(config => (
-              <ListItemLink
-                key={config.country.code}
-                className={clsx(classes.clickable, classes.tableRow, {
-                  [classes.selected]: config.country.code === selectedCountryId,
-                })}
-                href={taxCountriesListUrl(config.country.code)}
-              >
-                <ListItemCell>
-                  <div className={classes.spaceBetween}>
-                    {config.country.country}
-                    <IconButton
-                      variant="secondary"
-                      onClick={event => {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        onCountryDelete(config.country.code);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                </ListItemCell>
-              </ListItemLink>
-            )) ?? <Skeleton />}
-          </List>
-        </div>
+        <List gridTemplate={["1fr"]}>
+          <ListHeader>
+            <ListItem className={classes.tableRow}>
+              <ListItemCell>
+                <FormattedMessage {...taxesMessages.countryNameHeader} />
+              </ListItemCell>
+            </ListItem>
+          </ListHeader>
+          {configurations?.map(config => (
+            <ListItemLink
+              key={config.country.code}
+              className={clsx(classes.clickable, classes.tableRow, {
+                [classes.selected]: config.country.code === selectedCountryId,
+              })}
+              href={taxCountriesListUrl(config.country.code)}
+            >
+              <ListItemCell>
+                <div className={classes.spaceBetween}>
+                  {config.country.country}
+                  <IconButton
+                    variant="secondary"
+                    onClick={event => {
+                      event.stopPropagation();
+                      event.preventDefault();
+                      onCountryDelete(config.country.code);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
+              </ListItemCell>
+            </ListItemLink>
+          )) ?? <Skeleton />}
+        </List>
       )}
     </Card>
   );

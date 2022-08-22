@@ -5,10 +5,6 @@ export const useStyles = makeStyles(
     clickable: {
       cursor: "pointer",
     },
-    scrollWrapper: {
-      overflowY: "scroll",
-      maxHeight: 600,
-    },
     selected: {
       "&&&&::before": {
         position: "absolute",

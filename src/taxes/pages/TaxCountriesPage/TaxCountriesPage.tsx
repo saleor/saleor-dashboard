@@ -179,10 +179,8 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                           key={rate.id}
                           hover={false}
                           className={clsx({
-                            [classes.noDivider]: !(
-                              rateIndex + 1 !==
-                              filteredRates.length
-                            ),
+                            [classes.noDivider]:
+                              rateIndex + 1 === filteredRates.length,
                           })}
                         >
                           <ListItemCell>{rate.label}</ListItemCell>
