@@ -13,9 +13,13 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
-import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
+import {
+  DatagridChangeOpts,
+  DatagridChangeStateContext,
+  useDatagridChangeState,
+} from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { ProductFragment } from "@saleor/graphql";
+import { ProductFragment, useProductDetailsQuery } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -67,6 +71,7 @@ function useProductUpdateForm(
     setIsSubmitDisabled,
   } = form;
 
+  const datagrid = useDatagridChangeState();
   const variants = useRef<DatagridChangeOpts>({
     added: [],
     removed: [],
@@ -108,6 +113,10 @@ function useProductUpdateForm(
     handleChannelListUpdate,
     touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
+
+  const { refetch } = useProductDetailsQuery({
+    skip: true,
+  });
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
@@ -214,9 +223,33 @@ function useProductUpdateForm(
 
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
+    await refetch({ id: product.id });
+
+    datagrid.setAdded(prevAdded =>
+      prevAdded.filter((_, index) =>
+        result.some(
+          error =>
+            error.__typename === "BulkProductError" && error.index === index,
+        ),
+      ),
+    );
+    datagrid.changes.current = datagrid.changes.current.filter(change =>
+      datagrid.added.includes(change.row)
+        ? result.some(
+            error =>
+              error.__typename === "BulkProductError" &&
+              error.index === datagrid.added.findIndex(r => r === change.row),
+          )
+        : result.some(
+            error =>
+              error.__typename === "DatagridError" &&
+              error.variantId === product.variants[change.row].id,
+          ),
+    );
+    datagrid.setRemoved([]);
 
     return result;
-  }, [handleFormSubmit, getSubmitData]);
+  }, [datagrid, handleFormSubmit, getSubmitData]);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -246,6 +279,7 @@ function useProductUpdateForm(
   return {
     change: handleChange,
     data,
+    datagrid,
     formErrors: form.errors,
     handlers: {
       changeChannels: handleChannelChange,
@@ -277,7 +311,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const { richText, ...props } = useProductUpdateForm(
+  const { datagrid, richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,
     disabled,
@@ -286,9 +320,11 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
 
   return (
     <form onSubmit={props.submit}>
-      <RichTextContext.Provider value={richText}>
-        {children(props)}
-      </RichTextContext.Provider>
+      <DatagridChangeStateContext.Provider value={datagrid}>
+        <RichTextContext.Provider value={richText}>
+          {children(props)}
+        </RichTextContext.Provider>
+      </DatagridChangeStateContext.Provider>
     </form>
   );
 };

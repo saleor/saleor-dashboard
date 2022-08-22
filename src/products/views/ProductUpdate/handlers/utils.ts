@@ -8,7 +8,7 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
 } from "@saleor/graphql";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
 import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/utils";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";

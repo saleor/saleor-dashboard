@@ -2,7 +2,10 @@ import { OutputData } from "@editorjs/editorjs";
 import { RichTextProps } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
-import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
+import {
+  DatagridChangeOpts,
+  UseDatagridChangeState,
+} from "@saleor/components/Datagrid/useDatagridChange";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -105,12 +108,13 @@ export interface UseProductUpdateFormOutput
       ProductUpdateHandlers
     >,
     RichTextProps {
+  datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
 export type UseProductUpdateFormRenderProps = Omit<
   UseProductUpdateFormOutput,
-  "richText"
+  "datagrid" | "richText"
 >;
 
 export interface UseProductUpdateFormOpts

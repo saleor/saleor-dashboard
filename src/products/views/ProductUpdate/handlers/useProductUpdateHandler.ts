@@ -10,13 +10,11 @@ import {
 import {
   AttributeErrorFragment,
   BulkProductErrorFragment,
-  BulkStockErrorFragment,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  StockErrorFragment,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -32,8 +30,7 @@ import {
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationErrors } from "@saleor/misc";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
 import {
   getStockInputs,
   getStocks,
@@ -191,19 +188,14 @@ export function useProductUpdateHandler(
       ),
     ]);
 
-    errors = [
-      ...errors,
-      ...(variantUpdateResults.flatMap(
-        getMutationErrors,
-      ) as UseProductUpdateHandlerError[]),
-    ];
-
-    setVariantListErrors(
-      getProductVariantListErrors(
-        productChannelsUpdateResult,
-        variantUpdateResults,
-      ),
+    const variantErrors = getProductVariantListErrors(
+      productChannelsUpdateResult,
+      variantUpdateResults,
     );
+
+    errors = [...errors, ...variantErrors];
+
+    setVariantListErrors(variantErrors);
 
     return errors;
   };

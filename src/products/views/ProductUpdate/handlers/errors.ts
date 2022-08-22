@@ -14,17 +14,20 @@ import { hasMutationErrors } from "@saleor/misc";
 
 export type ProductVariantListError =
   | {
+      __typename: "DatagridError";
       attributes: string[] | null;
       error: ProductErrorCode;
       variantId: string;
       type: "variantData";
     }
   | {
+      __typename: "DatagridError";
       variantId: string;
       warehouseId: string;
       type: "stock";
     }
   | {
+      __typename: "DatagridError";
       error: ProductErrorCode;
       variantId: string;
       channelIds: string[];
@@ -43,6 +46,7 @@ export function getProductVariantListErrors(
         return data.productVariantChannelListingUpdate.errors.map<
           ProductVariantListError
         >(error => ({
+          __typename: "DatagridError",
           type: "channel",
           error: error.code,
           variantId: (result.extensions
@@ -60,6 +64,7 @@ export function getProductVariantListErrors(
           ...data.productVariantStocksUpdate.errors.map<
             ProductVariantListError
           >(error => ({
+            __typename: "DatagridError",
             type: "stock",
             variantId: (variables as VariantDatagridStockUpdateMutationVariables)
               .id,
@@ -69,6 +74,7 @@ export function getProductVariantListErrors(
           ...data.productVariantStocksDelete.errors.map<
             ProductVariantListError
           >(() => ({
+            __typename: "DatagridError",
             type: "stock",
             variantId: (variables as VariantDatagridStockUpdateMutationVariables)
               .id,
@@ -83,6 +89,7 @@ export function getProductVariantListErrors(
           .variables as VariantDatagridUpdateMutationVariables;
         return data.productVariantUpdate.errors.map<ProductVariantListError>(
           error => ({
+            __typename: "DatagridError",
             type: "variantData",
             variantId: (variables as VariantDatagridUpdateMutationVariables).id,
             error: error.code,
