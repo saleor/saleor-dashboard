@@ -33,32 +33,34 @@ export const mapUndefinedTaxRatesToCountries = (
   taxConfigurations: TaxCountryConfigurationFragment[],
   taxClasses: TaxClassFragment[],
 ): TaxCountryConfigurationFragment[] =>
-  taxConfigurations.map(config => {
-    if ((config.taxClassCountryRates?.length ?? 0) === taxClasses.length) {
-      return config;
-    } else {
-      const taxClassCountryRates = uniqBy(
-        [
-          ...config.taxClassCountryRates,
-          ...taxClasses.map(taxClass => ({
-            taxClass,
-            rate: undefined,
-            __typename: "TaxClassCountryRate" as const,
-          })),
-        ],
-        "taxClass.id",
-      );
-      const defaultRate = taxClassCountryRates.find(
-        rate => rate.taxClass.isDefault,
-      );
-      const parsedCountryRates = taxClassCountryRates.filter(
-        rate => !rate.taxClass.isDefault,
-      );
-      parsedCountryRates.unshift(defaultRate);
+  taxConfigurations
+    .map(config => {
+      if ((config.taxClassCountryRates?.length ?? 0) === taxClasses.length) {
+        return config;
+      } else {
+        const taxClassCountryRates = uniqBy(
+          [
+            ...config.taxClassCountryRates,
+            ...taxClasses.map(taxClass => ({
+              taxClass,
+              rate: undefined,
+              __typename: "TaxClassCountryRate" as const,
+            })),
+          ],
+          "taxClass.id",
+        );
+        const defaultRate = taxClassCountryRates.find(
+          rate => rate.taxClass.isDefault,
+        );
+        const parsedCountryRates = taxClassCountryRates.filter(
+          rate => !rate.taxClass.isDefault,
+        );
+        parsedCountryRates.unshift(defaultRate);
 
-      return {
-        ...config,
-        taxClassCountryRates: parsedCountryRates,
-      };
-    }
-  });
+        return {
+          ...config,
+          taxClassCountryRates: parsedCountryRates,
+        };
+      }
+    })
+    .sort((a, b) => a.country.country.localeCompare(b.country.country));
