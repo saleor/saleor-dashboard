@@ -12,12 +12,14 @@ import {
   AttributeErrorFragment,
   FileUploadMutation,
   FileUploadMutationVariables,
+  ProductChannelListingErrorFragment,
   ProductChannelListingUpdateMutation,
   ProductChannelListingUpdateMutationVariables,
   ProductCreateMutation,
   ProductCreateMutationVariables,
   ProductDeleteMutation,
   ProductDeleteMutationVariables,
+  ProductErrorFragment,
   ProductTypeQuery,
   ProductVariantChannelListingUpdateMutation,
   ProductVariantChannelListingUpdateMutationVariables,
@@ -85,7 +87,12 @@ export function createHandler(
   }) => Promise<FetchResult<ProductDeleteMutation>>,
 ) {
   return async (formData: ProductCreateData) => {
-    let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];
+    let errors: Array<
+      | AttributeErrorFragment
+      | UploadErrorFragment
+      | ProductErrorFragment
+      | ProductChannelListingErrorFragment
+    > = [];
 
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
@@ -123,8 +130,9 @@ export function createHandler(
     };
 
     const result = await productCreate(productVariables);
+    const productErrors = result.data.productCreate.errors || [];
 
-    let hasErrors = errors.length > 0;
+    errors = [...errors, ...productErrors];
 
     const hasVariants = productType?.hasVariants;
     const productId = result?.data?.productCreate?.product?.id;
@@ -140,12 +148,10 @@ export function createHandler(
         ),
         productVariantCreate(getSimpleProductVariables(formData, productId)),
       ]);
-      const channelErrors = result[0].data?.productChannelListingUpdate?.errors;
-      const variantErrors = result[1].data?.productVariantCreate?.errors;
-
-      if ([...(channelErrors || []), ...(variantErrors || [])].length > 0) {
-        hasErrors = true;
-      }
+      const channelErrors =
+        result[0].data?.productChannelListingUpdate?.errors || [];
+      const variantErrors = result[1].data?.productVariantCreate?.errors || [];
+      errors = [...errors, ...channelErrors, ...variantErrors];
 
       const variantId = result[1].data.productVariantCreate.productVariant?.id;
       if (variantErrors.length === 0 && variantId) {
@@ -164,17 +170,17 @@ export function createHandler(
       const result = await updateChannels(
         getChannelsVariables(productId, formData.channelListings),
       );
+      const channelErrors =
+        result.data?.productChannelListingUpdate?.errors || [];
 
-      if (result.data?.productChannelListingUpdate?.errors.length > 0) {
-        hasErrors = true;
-      }
+      errors = [...errors, ...channelErrors];
     }
 
     /*
      INFO: This is a stop-gap solution, where we delete products that didn't meet all required data in the create form
      A more robust solution would require merging create and update form into one to persist form state across redirects
     */
-    if (productId && hasErrors) {
+    if (productId && errors.length > 0) {
       await productDelete({ variables: { id: productId } });
 
       return { errors };

@@ -212,7 +212,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>
             <div>
-              <CardSpacer />
               <VisibilityCard
                 data={data}
                 errors={errors}

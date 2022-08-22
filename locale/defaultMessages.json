@@ -303,9 +303,6 @@
     "context": "menu item name",
     "string": "Name"
   },
-  "0cVk9I": {
-    "string": "Show in product listings"
-  },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
   },
@@ -699,6 +696,10 @@
     "context": "gift card export type label",
     "string": "gift cards"
   },
+  "3oQzWR": {
+    "context": "product availability",
+    "string": "Set publication date"
+  },
   "3psvRS": {
     "context": "attribute values list: slug column header",
     "string": "Admin"
@@ -786,6 +787,10 @@
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
+  },
+  "4VOIum": {
+    "context": "product availability",
+    "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
   "4W/CKn": {
     "context": "modal button",
@@ -975,9 +980,6 @@
   "5u7b3V": {
     "context": "voucher is active from date",
     "string": "Starts"
-  },
-  "5ukAFZ": {
-    "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
   "5x6yT9": {
     "context": "weight",
@@ -2750,6 +2752,10 @@
     "context": "input description",
     "string": "{unitsLeft} units left"
   },
+  "JmdBa3": {
+    "context": "product availability publish date",
+    "string": "Publish on"
+  },
   "JnzDrI": {
     "context": "discount type",
     "string": "Fixed Amount"
@@ -2768,10 +2774,6 @@
   "Jsh6+U": {
     "context": "product type is digital or physical",
     "string": "Type"
-  },
-  "Jt3DwJ": {
-    "context": "publish on date",
-    "string": "Publish on"
   },
   "JtZ71e": {
     "context": "filtering option",
@@ -3920,6 +3922,10 @@
   "TGX4T1": {
     "string": "Search Engine Preview"
   },
+  "THpf1b": {
+    "context": "product availability available date",
+    "string": "Set available on"
+  },
   "TKmub+": {
     "string": "This field is required"
   },
@@ -4000,9 +4006,6 @@
   },
   "U2mOqA": {
     "string": "No vouchers found"
-  },
-  "U3BQKA": {
-    "string": "Set publication date"
   },
   "U5aVd8": {
     "context": "product",
@@ -4608,10 +4611,6 @@
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
-  },
-  "Y7Vy19": {
-    "context": "available on date",
-    "string": "Set available on"
   },
   "Y9lv8z": {
     "context": "product unavailability",
@@ -5847,6 +5846,10 @@
   },
   "jWna9Q": {
     "string": "Content Type Name"
+  },
+  "jXf/9p": {
+    "context": "product availability",
+    "string": "Hide in product listings"
   },
   "jZbT0O": {
     "string": "Add search engine title and description to make this page easier to find"
