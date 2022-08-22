@@ -59,6 +59,11 @@ const useStyles = makeStyles(
     greyText: {
       color: theme.palette.text.hint,
     },
+    listItemPadding: {
+      "&:last-child": {
+        paddingBottom: theme.spacing(3),
+      },
+    },
   }),
   { name: "TaxCountriesPage" },
 );
@@ -171,7 +176,11 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                         </ListItem>
                       </ListHeader>
                       {filteredRates?.map(rate => (
-                        <ListItem key={rate.id} hover={false}>
+                        <ListItem
+                          key={rate.id}
+                          hover={false}
+                          className={classes.listItemPadding}
+                        >
                           <ListItemCell>{rate.label}</ListItemCell>
                           <ListItemCell>
                             <TaxInput
