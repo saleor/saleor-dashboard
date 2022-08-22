@@ -44,43 +44,41 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
           </Button>
         }
       />
-      <div className={classes.scrollWrapper}>
-        <List gridTemplate={["1fr"]}>
-          <ListHeader>
-            <ListItem className={classes.tableRow}>
-              <ListItemCell>
-                <FormattedMessage {...taxesMessages.taxClassNameHeader} />
-              </ListItemCell>
-            </ListItem>
-          </ListHeader>
-          {taxClasses?.map(taxClass => (
-            <ListItemLink
-              key={taxClass.id}
-              className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: taxClass.id === selectedTaxClassId,
-              })}
-              href={taxClassesListUrl(taxClass.id)}
-            >
-              <ListItemCell>
-                <div className={classes.spaceBetween}>
-                  {taxClass.name}
-                  {!taxClass.isDefault && (
-                    <IconButton
-                      variant="secondary"
-                      onClick={event => {
-                        event.stopPropagation();
-                        onTaxClassDelete(taxClass.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </div>
-              </ListItemCell>
-            </ListItemLink>
-          )) ?? <Skeleton />}
-        </List>
-      </div>
+      <List gridTemplate={["1fr"]}>
+        <ListHeader>
+          <ListItem className={classes.tableRow}>
+            <ListItemCell>
+              <FormattedMessage {...taxesMessages.taxClassNameHeader} />
+            </ListItemCell>
+          </ListItem>
+        </ListHeader>
+        {taxClasses?.map(taxClass => (
+          <ListItemLink
+            key={taxClass.id}
+            className={clsx(classes.clickable, classes.tableRow, {
+              [classes.selected]: taxClass.id === selectedTaxClassId,
+            })}
+            href={taxClassesListUrl(taxClass.id)}
+          >
+            <ListItemCell>
+              <div className={classes.spaceBetween}>
+                {taxClass.name}
+                {!taxClass.isDefault && (
+                  <IconButton
+                    variant="secondary"
+                    onClick={event => {
+                      event.stopPropagation();
+                      onTaxClassDelete(taxClass.id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </div>
+            </ListItemCell>
+          </ListItemLink>
+        )) ?? <Skeleton />}
+      </List>
     </Card>
   );
 };
