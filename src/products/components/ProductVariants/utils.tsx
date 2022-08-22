@@ -191,8 +191,17 @@ export function getError(
   const columnId = availableColumns[column].id;
   const variantId = variants[row]?.id;
 
+  if (!variantId) {
+    return errors.some(
+      err => err.type === "create" && err.index === row - variants.length,
+    );
+  }
+
   return errors.some(
-    err => err.variantId === variantId && errorMatchesColumn(err, columnId),
+    err =>
+      err.type !== "create" &&
+      err.variantId === variantId &&
+      errorMatchesColumn(err, columnId),
   );
 }
 

@@ -2,6 +2,7 @@ import { FetchResult } from "@apollo/client";
 import {
   ProductChannelListingUpdateMutation,
   ProductErrorCode,
+  ProductVariantBulkCreateMutation,
   ProductVariantChannelListingUpdateMutation,
   ProductVariantChannelListingUpdateMutationVariables,
   StockInput,
@@ -32,13 +33,19 @@ export type ProductVariantListError =
       variantId: string;
       channelIds: string[];
       type: "channel";
+    }
+  | {
+      __typename: "DatagridError";
+      error: ProductErrorCode;
+      index: number;
+      type: "create";
     };
 
 export function getProductVariantListErrors(
   productChannelsUpdateResult: FetchResult<ProductChannelListingUpdateMutation>,
-  variantUpdateResults: FetchResult[],
+  variantMutationResults: FetchResult[],
 ): ProductVariantListError[] {
-  return [productChannelsUpdateResult, ...variantUpdateResults]
+  return [productChannelsUpdateResult, ...variantMutationResults]
     .filter(hasMutationErrors)
     .flatMap(result => {
       if (result.data.productVariantChannelListingUpdate) {
@@ -96,6 +103,18 @@ export function getProductVariantListErrors(
             attributes: error.attributes,
           }),
         );
+      }
+
+      if (result.data.productVariantBulkCreate) {
+        const data = result.data as ProductVariantBulkCreateMutation;
+        return data.productVariantBulkCreate.errors.map<
+          ProductVariantListError
+        >(error => ({
+          __typename: "DatagridError",
+          type: "create",
+          index: error.index,
+          error: error.code,
+        }));
       }
     });
 }

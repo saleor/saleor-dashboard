@@ -229,7 +229,9 @@ function useProductUpdateForm(
       prevAdded.filter((_, index) =>
         result.some(
           error =>
-            error.__typename === "BulkProductError" && error.index === index,
+            error.__typename === "DatagridError" &&
+            error.type === "create" &&
+            error.index === index,
         ),
       ),
     );
@@ -237,12 +239,14 @@ function useProductUpdateForm(
       datagrid.added.includes(change.row)
         ? result.some(
             error =>
-              error.__typename === "BulkProductError" &&
+              error.__typename === "DatagridError" &&
+              error.type === "create" &&
               error.index === datagrid.added.findIndex(r => r === change.row),
           )
         : result.some(
             error =>
               error.__typename === "DatagridError" &&
+              error.type !== "create" &&
               error.variantId === product.variants[change.row].id,
           ),
     );

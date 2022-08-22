@@ -148,23 +148,6 @@ export function useProductUpdateHandler(
       );
     }
 
-    if (data.variants.added.length > 0) {
-      errors.push(
-        ...(
-          await createVariants({
-            variables: {
-              id: product.id,
-              inputs: data.variants.added.map(index => ({
-                ...getVariantInput(data.variants, index),
-                channelListings: getVariantChannelsInputs(data.variants, index),
-                stocks: getStockInputs(data.variants, index).stocks,
-              })),
-            },
-          })
-        ).data.productVariantBulkCreate.errors,
-      );
-    }
-
     const result = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
@@ -174,7 +157,7 @@ export function useProductUpdateHandler(
       variables: getProductChannelsUpdateVariables(product, data),
     });
 
-    const variantUpdateResults = await Promise.all<FetchResult>([
+    const mutations: Array<Promise<FetchResult>> = [
       ...getStocks(product.variants, data.variants).map(variables =>
         updateStocks({ variables }),
       ),
@@ -186,11 +169,28 @@ export function useProductUpdateHandler(
           variables,
         }),
       ),
-    ]);
+    ];
+
+    if (data.variants.added.length > 0) {
+      mutations.push(
+        createVariants({
+          variables: {
+            id: product.id,
+            inputs: data.variants.added.map(index => ({
+              ...getVariantInput(data.variants, index),
+              channelListings: getVariantChannelsInputs(data.variants, index),
+              stocks: getStockInputs(data.variants, index).stocks,
+            })),
+          },
+        }),
+      );
+    }
+
+    const variantMutationResults = await Promise.all<FetchResult>(mutations);
 
     const variantErrors = getProductVariantListErrors(
       productChannelsUpdateResult,
-      variantUpdateResults,
+      variantMutationResults,
     );
 
     errors = [...errors, ...variantErrors];
