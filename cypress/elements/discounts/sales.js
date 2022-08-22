@@ -9,5 +9,5 @@ export const SALES_SELECTORS = {
   productsTab: "[data-test-id='products-tab']",
   variantsTab: "[data-test-id='variants-tab']",
   assignProducts: "[data-test-id='assign-products']",
-  assignVariants: "[data-test-id='assign-variant']"
+  assignVariants: "[data-test-id='assign-variant']",
 };

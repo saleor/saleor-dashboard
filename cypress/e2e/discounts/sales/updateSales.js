@@ -7,12 +7,11 @@ import { SALES_SELECTORS } from "../../../elements/discounts/sales";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { saleDetailsUrl } from "../../../fixtures/urlList";
-import { createCheckout } from "../../../support/api/requests/Checkout";
-import { updateSale } from "../../../support/api/requests/Discounts/Sales";
 import {
-  createVariant,
-  getVariant,
-} from "../../../support/api/requests/Product";
+  getSales,
+  updateSale,
+} from "../../../support/api/requests/Discounts/Sales";
+import { getVariant } from "../../../support/api/requests/Product";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
@@ -29,37 +28,44 @@ import {
   deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
 
-describe("Create sale with assigned products", () => {
+describe("As an admin I want to update sales", () => {
   const startsWith = "CySales";
-  const saleValue = 10;
+  const discountValue = 10;
+  const productPrice = 30;
+  const productPriceOnSale = productPrice - discountValue;
 
-  let channel;
+  let defaultChannel;
   let sale;
   let warehouse;
   let address;
   let productData;
+  let variants;
 
   before(() => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
     getDefaultChannel()
-      .then(defaultChannel => {
-        channel = defaultChannel;
+      .then(channel => {
+        defaultChannel = channel;
+
         createSaleInChannel({
-          name: startsWith,
+          name,
           type: "FIXED",
-          value: saleValue,
-          channelId: channel.id,
+          value: discountValue,
+          channelId: defaultChannel.id,
         });
       })
       .then(saleResp => (sale = saleResp));
     cy.fixture("addresses")
       .then(addresses => {
         address = addresses.usAddress;
+
         createShipping({
-          channelId: channel.id,
+          channelId: defaultChannel.id,
           address,
           name: startsWith,
         });
@@ -68,16 +74,16 @@ describe("Create sale with assigned products", () => {
         warehouse = warehouseResp;
       });
     createTypeAttributeAndCategoryForProduct({
-      name: startsWith,
+      name,
       attributeValues: ["value1", "value2"],
     }).then(({ attribute, category, productType }) => {
       productData = {
         attributeId: attribute.id,
         categoryId: category.id,
         productTypeId: productType.id,
-        channelId: channel.id,
+        channelId: defaultChannel.id,
         warehouseId: warehouse.id,
-        price: 30,
+        price: productPrice,
       };
     });
   });
@@ -90,75 +96,69 @@ describe("Create sale with assigned products", () => {
     "should be able to delete sale. TC: SALEOR_1805",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      let variants;
-      let saleToDelete;
-      productData.name = name;
-      productData.sku = name;
+      const productName = `${startsWith}${faker.datatype.number()}`;
+
+      productData.name = productName;
+      productData.sku = productName;
+
       createProductInChannel(productData)
         .then(({ variantsList }) => {
           variants = variantsList;
+
           createSaleInChannelWithProduct({
-            name,
+            name: productName,
             type: "FIXED",
-            value: saleValue,
-            channelId: channel.id,
+            value: discountValue,
+            channelId: defaultChannel.id,
             variants,
           });
         })
         .then(saleResp => {
-          saleToDelete = saleResp;
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.true;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price - saleValue,
-          );
-          cy.visit(saleDetailsUrl(saleToDelete.id))
+          getVariant(variants[0].id, defaultChannel.slug)
+            .its("pricing")
+            .should("include", { onSale: true })
+            .its("price.gross.amount")
+            .should("eq", productPriceOnSale);
+          cy.visit(saleDetailsUrl(saleResp.id))
             .addAliasToGraphRequest("SaleDelete")
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleDelete");
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.false;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price,
-          );
+          getVariant(variants[0].id, defaultChannel.slug)
+            .its("pricing")
+            .should("include", { onSale: false })
+            .its("price.gross.amount")
+            .should("eq", productPrice);
         });
     },
   );
 
-  xit(
+  it(
     "should be able to remove variant from sale. TC: SALEOR_1806",
-    { tags: ["@sales", "@allEnv"] },
+    { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
+      const productName = `${startsWith}${faker.datatype.number()}`;
+
       let product;
-      let variants;
-      productData.name = name;
-      productData.sku = name;
-      createProductInChannel(productData)
-        .then(({ variantsList, product: productResp }) => {
+      productData.name = productName;
+      productData.sku = productName;
+
+      createProductInChannel(productData).then(
+        ({ variantsList, product: productResp }) => {
           product = productResp;
           variants = variantsList;
+
           updateSale({
             saleId: sale.id,
             variants,
           });
-        })
-        .then(() => {
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.true;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price - saleValue,
-          );
+          getVariant(variants[0].id, defaultChannel.slug)
+            .its("pricing")
+            .should("include", { onSale: true })
+            .its("price.gross.amount")
+            .should("eq", productPriceOnSale);
           cy.visit(saleDetailsUrl(sale.id))
             .get(SALES_SELECTORS.variantsTab)
             .click()
@@ -166,15 +166,16 @@ describe("Create sale with assigned products", () => {
           cy.contains(SHARED_ELEMENTS.tableRow, product.name)
             .find(BUTTON_SELECTORS.button)
             .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
             .wait("@SaleCataloguesRemove");
-          getVariant(variants[0].id, channel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.pricing.onSale).to.be.false;
-          expect(variantResp.pricing.price.gross.amount).to.eq(
-            productData.price,
-          );
-        });
+          getVariant(variants[0].id, defaultChannel.slug)
+            .its("pricing")
+            .should("include", { onSale: false })
+            .its("price.gross.amount")
+            .should("eq", productPrice);
+        },
+      );
     },
   );
 });

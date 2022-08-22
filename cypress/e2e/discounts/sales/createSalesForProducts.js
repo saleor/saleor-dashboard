@@ -123,6 +123,7 @@ describe("As an admin I want to create sale for products", () => {
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
+
       let channel;
       let product;
 
