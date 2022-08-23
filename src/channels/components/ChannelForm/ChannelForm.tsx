@@ -14,7 +14,7 @@ import SingleAutocompleteSelectField, {
 import {
   ChannelErrorFragment,
   CountryCode,
-  StockSettings,
+  StockSettingsInput,
 } from "@saleor/graphql";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
@@ -36,7 +36,7 @@ export interface FormData {
   warehousesIdsToAdd: string[];
   warehousesIdsToRemove: string[];
   defaultCountry: CountryCode;
-  stockSettings: StockSettings;
+  stockSettings: StockSettingsInput;
 }
 
 export interface ChannelFormProps {

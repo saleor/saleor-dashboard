@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { AllocationStrategyEnum, StockSettings } from "@saleor/graphql";
+import { AllocationStrategyEnum, StockSettingsInput } from "@saleor/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +23,7 @@ const strategyOptions = [
 
 interface ChannelAllocationStrategyProps {
   data?: {
-    stockSettings: StockSettings;
+    stockSettings: StockSettingsInput;
   };
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;

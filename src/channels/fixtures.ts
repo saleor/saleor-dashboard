@@ -31,6 +31,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -48,6 +49,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -65,6 +67,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -82,6 +85,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -99,6 +103,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -116,6 +121,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -133,6 +139,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
+      __typename: "StockSettings",
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
@@ -152,6 +159,7 @@ export const channel: ChannelDetailsFragment = {
     __typename: "CountryDisplay",
   },
   stockSettings: {
+    __typename: "StockSettings",
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
   },
 };

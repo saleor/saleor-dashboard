@@ -15,7 +15,7 @@ export function createChannelWarehousesReorderHandler(
     const oldWarehousesOrder = [...warehouses];
 
     reorderChannelWarehouses({
-      move: {
+      moves: {
         id: oldWarehousesOrder[oldIndex].id,
         sortOrder: newIndex - oldIndex,
       },
