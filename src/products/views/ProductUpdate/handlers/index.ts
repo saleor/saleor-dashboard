@@ -3,6 +3,7 @@ import {
   ProductFragment,
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
+  ProductVariantReorderMutationFn,
   ProductVariantReorderMutationVariables,
 } from "@saleor/graphql";
 import { ReorderEvent } from "@saleor/types";
@@ -43,30 +44,46 @@ function areVariantsEqual(a: Node, b: Node) {
 
 export function createVariantReorderHandler<
   T extends { id: string; variants: any[] }
->(
-  product: T,
-  reorderProductVariants: (
-    variables: ProductVariantReorderMutationVariables,
-  ) => void,
-) {
+>(product: T, reorderProductVariants: ProductVariantReorderMutationFn) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];
 
-    product.variants = [
-      ...move<T["variants"][0]>(
-        product.variants[oldIndex],
-        product!.variants,
-        areVariantsEqual,
-        newIndex,
-      ),
-    ];
+    // product.variants = [
+    //   ...move<T["variants"][0]>(
+    //     product.variants[oldIndex],
+    //     product!.variants,
+    //     areVariantsEqual,
+    //     newIndex,
+    //   ),
+    // ];
 
     reorderProductVariants({
-      move: {
-        id: oldVariantOrder[oldIndex].id,
-        sortOrder: newIndex - oldIndex,
+      variables: {
+        move: {
+          id: oldVariantOrder[oldIndex].id,
+          sortOrder: newIndex - oldIndex,
+        },
+        productId: product.id,
       },
-      productId: product.id,
+      optimisticResponse: () => ({
+        __typename: "Mutation",
+        productVariantReorder: {
+          __typename: "ProductVariantReorder",
+          errors: [],
+          product: {
+            __typename: "Product",
+            id: product.id,
+            variants: [
+              ...move<T["variants"][0]>(
+                product.variants[oldIndex],
+                product!.variants,
+                areVariantsEqual,
+                newIndex,
+              ),
+            ],
+          },
+        },
+      }),
     });
   };
 }

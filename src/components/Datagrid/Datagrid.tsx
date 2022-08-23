@@ -34,7 +34,7 @@ export interface MenuItemsActions {
 export interface DatagridProps {
   addButtonLabel: string;
   availableColumns: readonly AvailableColumn[];
-  getCellError: (item: Item) => boolean;
+  getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
@@ -86,10 +86,13 @@ export const Datagrid: React.FC<DatagridProps> = ({
         availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
         row,
       ] as const;
+      const opts = { changes, added, removed, getChangeIndex };
 
       return {
-        ...getCellContent(item, { changes, added, removed, getChangeIndex }),
-        ...(getCellError(item) ? { themeOverride: { bgCell: "#F4DDBA" } } : {}),
+        ...getCellContent(item, opts),
+        ...(getCellError(item, opts)
+          ? { themeOverride: { bgCell: "#F4DDBA" } }
+          : {}),
       };
     },
     [getCellContent, availableColumns, displayedColumns, added, removed],

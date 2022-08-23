@@ -83,7 +83,15 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   );
 
   const getCellError = React.useCallback(
-    (item: Item) => getError(item, errors, columns, variants),
+    ([column, row]: Item, opts: GetCellContentOpts) =>
+      getError(errors, {
+        availableColumns: columns,
+        column,
+        row,
+        channels,
+        variants,
+        ...opts,
+      }),
     [columns, variants, errors],
   );
 

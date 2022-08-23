@@ -183,13 +183,21 @@ function errorMatchesColumn(
 }
 
 export function getError(
-  [column, row]: Item,
   errors: ProductVariantListError[],
-  availableColumns: AvailableColumn[],
-  variants: ProductDetailsVariantFragment[],
+  {
+    availableColumns,
+    changes,
+    added,
+    removed,
+    column,
+    getChangeIndex,
+    row,
+    channels,
+    variants,
+  }: GetDataOrError,
 ): boolean {
   const columnId = availableColumns[column].id;
-  const variantId = variants[row]?.id;
+  const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
   if (!variantId) {
     return errors.some(
@@ -205,7 +213,7 @@ export function getError(
   );
 }
 
-interface GetData {
+interface GetDataOrError {
   availableColumns: AvailableColumn[];
   column: number;
   row: number;
@@ -227,7 +235,7 @@ export function getData({
   row,
   channels,
   variants,
-}: GetData): GridCell {
+}: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
     return textCell("");
