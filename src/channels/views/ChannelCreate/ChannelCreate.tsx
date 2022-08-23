@@ -50,6 +50,7 @@ export const ChannelCreateView = ({}) => {
     warehousesIdsToAdd,
     warehousesIdsToRemove,
     currencyCode,
+    stockSettings,
     ...rest
   }: FormData) =>
     extractMutationErrors(
@@ -60,6 +61,7 @@ export const ChannelCreateView = ({}) => {
             currencyCode: currencyCode.toUpperCase(),
             addShippingZones: shippingZonesIdsToAdd,
             addWarehouses: warehousesIdsToAdd,
+            stockSettings,
           },
         },
       }),

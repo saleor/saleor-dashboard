@@ -604,6 +604,7 @@ export type CategorySortingInput = {
 };
 
 export type ChannelCreateInput = {
+  stockSettings?: StockSettingsInput;
   /** isActive flag. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** List of shipping zones to assign to the channel. */
@@ -650,7 +651,12 @@ export enum ChannelErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
 }
 
+export type StockSettingsInput = {
+  allocationStrategy: AllocationStrategyEnum;
+}
+
 export type ChannelUpdateInput = {
+  stockSettings?: StockSettingsInput;
   /** isActive flag. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** List of shipping zones to assign to the channel. */
@@ -963,6 +969,15 @@ export type ConfigurationItemInput = {
   /** Value of the given field to update. */
   value?: InputMaybe<Scalars['String']>;
 };
+
+export enum AllocationStrategyEnum {
+  PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER',
+  PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK'
+}
+
+export type StockSettings = {
+  allocationStrategy: AllocationStrategyEnum;
+}
 
 /** An enumeration. */
 export enum ConfigurationTypeFieldEnum {
@@ -5768,6 +5783,20 @@ export type AttributeValueReorderMutationVariables = Exact<{
 
 export type AttributeValueReorderMutation = { __typename: 'Mutation', attributeReorderValues: { __typename: 'AttributeReorderValues', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string } }> } | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
+
+
+
+export type ChannelReorderWarehousesMutationVariables = Exact<{
+  channelId: Scalars['ID'];
+  move: ReorderInput;
+}>;
+
+
+export type ChannelReorderWarehousesMutation = { __typename: 'Mutation', channelReorderWarehouses: { __typename: 'ChannelReorderWarehouses', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+
+
+
+
 export type AttributeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   firstValues?: InputMaybe<Scalars['Int']>;
@@ -5907,14 +5936,14 @@ export type BaseChannelsQuery = { __typename: 'Query', channels: Array<{ __typen
 export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null };
+export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: StockSettings }> | null };
 
 export type ChannelQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } } | null };
+export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: StockSettings } | null };
 
 export type CollectionUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -6359,7 +6388,7 @@ export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelEr
 
 export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
 
-export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } };
+export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: StockSettings };
 
 export type CollectionFragment = { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publicationDate: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null };
 

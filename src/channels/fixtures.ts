@@ -1,4 +1,5 @@
 import {
+  AllocationStrategyEnum,
   ChannelDetailsFragment,
   ChannelErrorCode,
   ChannelErrorFragment,
@@ -29,6 +30,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
   },
   {
     __typename: "Channel",
@@ -42,6 +46,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       code: "PL",
       country: "Poland",
       __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
   {
@@ -57,6 +64,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
   },
   {
     __typename: "Channel",
@@ -70,6 +80,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       code: "PL",
       country: "Poland",
       __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
   {
@@ -85,6 +98,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
   },
   {
     __typename: "Channel",
@@ -99,6 +115,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
   },
   {
     __typename: "Channel",
@@ -112,6 +131,9 @@ export const channelsList: ChannelDetailsFragment[] = [
       code: "PL",
       country: "Poland",
       __typename: "CountryDisplay",
+    },
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
   },
 ];
@@ -128,6 +150,9 @@ export const channel: ChannelDetailsFragment = {
     code: "PL",
     country: "Poland",
     __typename: "CountryDisplay",
+  },
+  stockSettings: {
+    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
   },
 };
 

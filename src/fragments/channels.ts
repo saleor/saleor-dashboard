@@ -19,6 +19,9 @@ export const channelFragment = gql`
       code
       country
     }
+    stockSettings {
+      allocationStrategy
+    }
   }
 `;
 

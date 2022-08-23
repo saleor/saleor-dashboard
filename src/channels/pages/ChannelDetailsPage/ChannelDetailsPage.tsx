@@ -1,3 +1,4 @@
+import ChannelAllocationStrategy from "@saleor/channels/components/ChannelAllocationStrategy";
 import ShippingZones from "@saleor/channels/components/ShippingZones";
 import Warehouses from "@saleor/channels/components/Warehouses";
 import { channelsListUrl } from "@saleor/channels/urls";
@@ -7,6 +8,7 @@ import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  AllocationStrategyEnum,
   ChannelDetailsFragment,
   ChannelErrorFragment,
   CountryCode,
@@ -24,7 +26,7 @@ import {
   getById,
   getByUnmatchingId,
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
@@ -55,6 +57,7 @@ export interface ChannelDetailsPageProps<TErrors> {
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
+  reorderWarehouses?: ReorderAction;
 }
 
 const ChannelDetailsPage = function<TErrors>({
@@ -77,6 +80,7 @@ const ChannelDetailsPage = function<TErrors>({
   fetchMoreWarehouses,
   channelWarehouses = [],
   allWarehousesCount,
+  reorderWarehouses,
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
@@ -96,7 +100,8 @@ const ChannelDetailsPage = function<TErrors>({
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
-  const { defaultCountry, ...formData } = channel || {};
+  const { defaultCountry, stockSettings, ...formData } =
+    channel || ({} as ChannelDetailsFragment);
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -107,6 +112,10 @@ const ChannelDetailsPage = function<TErrors>({
     warehousesIdsToRemove: [],
     defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...formData,
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
+      ...stockSettings,
+    },
   };
 
   const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
@@ -283,6 +292,13 @@ const ChannelDetailsPage = function<TErrors>({
                   searchWarehouses={searchWarehouses}
                   fetchMoreWarehouses={fetchMoreWarehouses}
                   totalCount={allWarehousesCount}
+                  reorderWarehouses={reorderWarehouses}
+                />
+                <CardSpacer />
+                <ChannelAllocationStrategy
+                  data={data}
+                  disabled={disabled}
+                  onChange={change}
                 />
               </div>
             </Grid>

@@ -185,6 +185,9 @@ export const ChannelFragmentDoc = gql`
     code
     country
   }
+  stockSettings {
+    allocationStrategy
+  }
 }
     `;
 export const ChannelDetailsFragmentDoc = gql`
@@ -11924,6 +11927,52 @@ export function useProductVariantReorderMutation(baseOptions?: ApolloReactHooks.
 export type ProductVariantReorderMutationHookResult = ReturnType<typeof useProductVariantReorderMutation>;
 export type ProductVariantReorderMutationResult = Apollo.MutationResult<Types.ProductVariantReorderMutation>;
 export type ProductVariantReorderMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantReorderMutation, Types.ProductVariantReorderMutationVariables>;
+
+
+export const ChannelReorderWarehousesDocument = gql`
+    mutation ChannelReorderWarehouses($move: ReorderInput!, $productId: ID!) {
+  productVariantReorder(moves: [$move], productId: $productId) {
+    errors {
+      ...ProductError
+    }
+    product {
+      id
+      variants {
+        id
+      }
+    }
+  }
+}
+    ${ProductErrorFragmentDoc}`;
+export type ChannelReorderWarehousesMutationFn = Apollo.MutationFunction<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
+
+/**
+ * __useChannelReorderWarehousesMutation__
+ *
+ * To run a mutation, you first call `useChannelReorderWarehousesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChannelReorderWarehousesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [productVariantReorderMutation, { data, loading, error }] = useChannelReorderWarehousesMutation({
+ *   variables: {
+ *      move: // value for 'move'
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useChannelReorderWarehousesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>(ChannelReorderWarehousesDocument, options);
+      }
+export type ChannelReorderWarehousesMutationHookResult = ReturnType<typeof useChannelReorderWarehousesMutation>;
+export type ChannelReorderWarehousesMutationResult = Apollo.MutationResult<Types.ChannelReorderWarehousesMutation>;
+export type ChannelReorderWarehousesMutationOptions = Apollo.BaseMutationOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
+
+
 export const ProductVariantChannelListingUpdateDocument = gql`
     mutation ProductVariantChannelListingUpdate($id: ID!, $input: [ProductVariantChannelListingAddInput!]!) {
   productVariantChannelListingUpdate(id: $id, input: $input) {

@@ -61,6 +61,17 @@ export const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      background: theme.palette.background.paper,
+    },
+    containerContent: {
+      display: "flex",
+      overflow: "auto",
+    },
+    sortableHandle: {
+      marginRight: theme.spacing(1),
+    },
+    grabbing: {
+      cursor: "grabbing",
     },
     root: {
       paddingRight: theme.spacing(1),

@@ -28,6 +28,7 @@ const baseProps: WarehousesProps = {
     onFetchMore: () => undefined,
     totalCount: 0,
   },
+  reorderWarehouses: () => undefined,
   warehouses: [],
   warehousesChoices: warehouses as ChannelWarehouses,
   totalCount: 10,

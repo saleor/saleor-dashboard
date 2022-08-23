@@ -1,5 +1,5 @@
 import { countries } from "@saleor/fixtures";
-import { CountryCode } from "@saleor/graphql";
+import { AllocationStrategyEnum, CountryCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -17,6 +17,9 @@ const props: ChannelFormProps = {
     name: "Test",
     slug: "test",
     defaultCountry: CountryCode.PL,
+    stockSettings: {
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
   },
   disabled: false,
   errors: [],

@@ -3,7 +3,7 @@ import { ChannelWarehouses } from "@saleor/channels/pages/ChannelDetailsPage/typ
 import CardTitle from "@saleor/components/CardTitle";
 import { SearchWarehousesQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -22,6 +22,7 @@ export interface WarehousesProps {
   addWarehouse: (id: string) => void;
   removeWarehouse: (id: string) => void;
   searchWarehouses: (searchPhrase: string) => void;
+  reorderWarehouses: ReorderAction;
   totalCount: number;
   fetchMoreWarehouses: FetchMoreProps;
   warehouses: ChannelWarehouses;
@@ -33,6 +34,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
     addWarehouse,
     removeWarehouse,
     searchWarehouses,
+    reorderWarehouses,
     totalCount,
     fetchMoreWarehouses,
     warehouses,
@@ -53,6 +55,7 @@ const Warehouses: React.FC<WarehousesProps> = props => {
         addItem={addWarehouse}
         removeItem={removeWarehouse}
         searchItems={searchWarehouses}
+        reorderItem={reorderWarehouses}
         fetchMoreItems={fetchMoreWarehouses}
         totalCount={totalCount}
         dataTestId="warehouse"

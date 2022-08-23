@@ -11,7 +11,11 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { ChannelErrorFragment, CountryCode } from "@saleor/graphql";
+import {
+  ChannelErrorFragment,
+  CountryCode,
+  StockSettings,
+} from "@saleor/graphql";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -32,6 +36,7 @@ export interface FormData {
   warehousesIdsToAdd: string[];
   warehousesIdsToRemove: string[];
   defaultCountry: CountryCode;
+  stockSettings: StockSettings;
 }
 
 export interface ChannelFormProps {
