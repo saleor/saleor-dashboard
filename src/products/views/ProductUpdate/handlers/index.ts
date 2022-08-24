@@ -48,15 +48,6 @@ export function createVariantReorderHandler<
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];
 
-    // product.variants = [
-    //   ...move<T["variants"][0]>(
-    //     product.variants[oldIndex],
-    //     product!.variants,
-    //     areVariantsEqual,
-    //     newIndex,
-    //   ),
-    // ];
-
     reorderProductVariants({
       variables: {
         move: {
