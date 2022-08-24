@@ -18,7 +18,6 @@ import {
   useChannelShippingZonesQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
-  useChannelWarehousesQuery,
   useShippingZonesCountQuery,
   useWarehousesCountQuery,
 } from "@saleor/graphql";
@@ -44,7 +43,7 @@ import {
   ChannelUrlDialog,
   ChannelUrlQueryParams,
 } from "../../urls";
-import { createChannelWarehousesReorderHandler } from "./handlers";
+import { calculateItemsOrderMoves } from "./handlers";
 
 interface ChannelDetailsProps {
   id: string;
@@ -105,33 +104,66 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     },
   });
 
-  const handleSubmit = ({
+  const [
+    reorderChannelWarehouses,
+    reorderChannelWarehousesOpts,
+  ] = useChannelReorderWarehousesMutation({
+    onCompleted: data => {
+      const errors = data.channelReorderWarehouses.errors;
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+    },
+  });
+
+  const handleSubmit = async ({
     name,
     slug,
     shippingZonesIdsToRemove,
     shippingZonesIdsToAdd,
     warehousesIdsToRemove,
     warehousesIdsToAdd,
+    warehousesToDisplay,
     defaultCountry,
     stockSettings,
-  }: FormData) =>
-    extractMutationErrors(
-      updateChannel({
-        variables: {
-          id: data?.channel.id,
-          input: {
-            name,
-            slug,
-            defaultCountry,
-            addShippingZones: shippingZonesIdsToAdd,
-            removeShippingZones: shippingZonesIdsToRemove,
-            addWarehouses: warehousesIdsToAdd,
-            removeWarehouses: warehousesIdsToRemove,
-            stockSettings,
+  }: FormData) => {
+    const updateChannelMutation = updateChannel({
+      variables: {
+        id: data?.channel.id,
+        input: {
+          name,
+          slug,
+          defaultCountry,
+          addShippingZones: shippingZonesIdsToAdd,
+          removeShippingZones: shippingZonesIdsToRemove,
+          addWarehouses: warehousesIdsToAdd,
+          removeWarehouses: warehousesIdsToRemove,
+          stockSettings: {
+            allocationStrategy: stockSettings.allocationStrategy,
           },
         },
-      }),
-    );
+      },
+    });
+
+    const result = await updateChannelMutation;
+    const errors = await extractMutationErrors(updateChannelMutation);
+
+    if (!errors?.length) {
+      const moves = calculateItemsOrderMoves(
+        result.data?.channelUpdate.channel?.warehouses,
+        warehousesToDisplay,
+      );
+
+      reorderChannelWarehouses({
+        variables: {
+          channelId: id,
+          moves,
+        },
+      });
+    }
+
+    return errors;
+  };
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
@@ -200,17 +232,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   } = useWarehousesCountQuery();
 
   const {
-    data: channelWarehousesData,
-    loading: channelsWarehousesLoading,
-  } = useChannelWarehousesQuery({
-    variables: {
-      filter: {
-        channels: [id],
-      },
-    },
-  });
-
-  const {
     loadMore: fetchMoreWarehouses,
     search: searchWarehouses,
     result: searchWarehousesResult,
@@ -218,20 +239,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const channelWarehouses = mapEdgesToItems(channelWarehousesData?.warehouses);
+  const channelWarehouses = data?.channel?.warehouses || []; // mapEdgesToItems(channelWarehousesData?.warehouses);
   const channelShippingZones = mapEdgesToItems(
     channelShippingZonesData?.shippingZones,
-  );
-
-  const [
-    reorderChannelWarehouses,
-    reorderChannelWarehousesOpts,
-  ] = useChannelReorderWarehousesMutation({});
-
-  const handleChannelWarehousesReorder = createChannelWarehousesReorderHandler(
-    id,
-    channelWarehouses,
-    variables => reorderChannelWarehouses({ variables }),
   );
 
   return (
@@ -267,7 +277,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             searchWarehousesResult,
             fetchMoreWarehouses,
           )}
-          reorderWarehouses={handleChannelWarehousesReorder}
           channel={data?.channel}
           disabled={
             updateChannelOpts.loading ||
@@ -275,8 +284,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             loading ||
             shippingZonesCountLoading ||
             warehousesCountLoading ||
-            channelsShippingZonesLoading ||
-            channelsWarehousesLoading
+            channelsShippingZonesLoading
           }
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading

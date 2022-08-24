@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { ChannelWarehouses } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -35,6 +36,7 @@ export interface FormData {
   shippingZonesIdsToRemove: string[];
   warehousesIdsToAdd: string[];
   warehousesIdsToRemove: string[];
+  warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
   stockSettings: StockSettingsInput;
 }

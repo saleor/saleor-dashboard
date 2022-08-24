@@ -190,12 +190,22 @@ export const ChannelFragmentDoc = gql`
   }
 }
     `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
+}
+    `;
 export const ChannelDetailsFragmentDoc = gql`
     fragment ChannelDetails on Channel {
   ...Channel
   hasOrders
+  warehouses {
+    ...Warehouse
+  }
 }
-    ${ChannelFragmentDoc}`;
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -1204,12 +1214,6 @@ export const OrderEventFragmentDoc = gql`
       variantName
     }
   }
-}
-    `;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
 }
     `;
 export const StockFragmentDoc = gql`
@@ -16543,46 +16547,6 @@ export function useWarehouseDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type WarehouseDetailsQueryHookResult = ReturnType<typeof useWarehouseDetailsQuery>;
 export type WarehouseDetailsLazyQueryHookResult = ReturnType<typeof useWarehouseDetailsLazyQuery>;
 export type WarehouseDetailsQueryResult = Apollo.QueryResult<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>;
-export const ChannelWarehousesDocument = gql`
-    query ChannelWarehouses($filter: WarehouseFilterInput) {
-  warehouses(filter: $filter, first: 100) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useChannelWarehousesQuery__
- *
- * To run a query within a React component, call `useChannelWarehousesQuery` and pass it any options that fit your needs.
- * When your component renders, `useChannelWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChannelWarehousesQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useChannelWarehousesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
-      }
-export function useChannelWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
-        }
-export type ChannelWarehousesQueryHookResult = ReturnType<typeof useChannelWarehousesQuery>;
-export type ChannelWarehousesLazyQueryHookResult = ReturnType<typeof useChannelWarehousesLazyQuery>;
-export type ChannelWarehousesQueryResult = Apollo.QueryResult<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>;
 export const WarehousesCountDocument = gql`
     query WarehousesCount {
   warehouses {

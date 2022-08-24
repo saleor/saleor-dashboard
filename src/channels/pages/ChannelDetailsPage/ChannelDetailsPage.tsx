@@ -26,8 +26,9 @@ import {
   getById,
   getByUnmatchingId,
 } from "@saleor/orders/components/OrderReturnPage/utils";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { move } from "@saleor/utils/lists";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
@@ -57,7 +58,6 @@ export interface ChannelDetailsPageProps<TErrors> {
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
-  reorderWarehouses?: ReorderAction;
 }
 
 const ChannelDetailsPage = function<TErrors>({
@@ -80,7 +80,6 @@ const ChannelDetailsPage = function<TErrors>({
   fetchMoreWarehouses,
   channelWarehouses = [],
   allWarehousesCount,
-  reorderWarehouses,
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
@@ -94,9 +93,9 @@ const ChannelDetailsPage = function<TErrors>({
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
   >(channelShippingZones);
-  const [warehousesToDisplay, setWarehousesToDisplay] = useStateFromProps<
-    ChannelWarehouses
-  >(channelWarehouses);
+  // const [warehousesToDisplay, setWarehousesToDisplay] = useStateFromProps<
+  //   ChannelWarehouses
+  // >(channelWarehouses);
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
@@ -116,6 +115,7 @@ const ChannelDetailsPage = function<TErrors>({
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
       ...stockSettings,
     },
+    warehousesToDisplay: channelWarehouses,
   };
 
   const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
@@ -124,7 +124,9 @@ const ChannelDetailsPage = function<TErrors>({
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
     );
 
-  const getFilteredWarehousesChoices = (): RelayToFlat<SearchWarehousesQuery["search"]> =>
+  const getFilteredWarehousesChoices = (
+    warehousesToDisplay: ChannelWarehouses,
+  ): RelayToFlat<SearchWarehousesQuery["search"]> =>
     getParsedSearchData({ data: searchWarehousesData }).filter(
       ({ id: searchedWarehouseId }) =>
         !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
@@ -216,14 +218,20 @@ const ChannelDetailsPage = function<TErrors>({
               data.warehousesIdsToAdd,
               warehouseId,
             ),
+            warehousesToDisplay: [
+              ...data.warehousesToDisplay,
+              getParsedSearchData({ data: searchWarehousesData }).find(
+                getById(warehouseId),
+              ),
+            ],
           });
 
-          setWarehousesToDisplay([
-            ...warehousesToDisplay,
-            getParsedSearchData({ data: searchWarehousesData }).find(
-              getById(warehouseId),
-            ),
-          ]);
+          // setWarehousesToDisplay([
+          //   ...warehousesToDisplay,
+          //   getParsedSearchData({ data: searchWarehousesData }).find(
+          //     getById(warehouseId),
+          //   ),
+          // ]);
         };
 
         const removeWarehouse = (warehouseId: string) => {
@@ -239,11 +247,30 @@ const ChannelDetailsPage = function<TErrors>({
               data.warehousesIdsToRemove,
               warehouseId,
             ),
+            warehousesToDisplay: data.warehousesToDisplay.filter(
+              getByUnmatchingId(warehouseId),
+            ),
           });
 
-          setWarehousesToDisplay(
-            warehousesToDisplay.filter(getByUnmatchingId(warehouseId)),
+          // setWarehousesToDisplay(
+          //   warehousesToDisplay.filter(getByUnmatchingId(warehouseId)),
+          // );
+        };
+
+        const reorderWarehouse = ({ oldIndex, newIndex }: ReorderEvent) => {
+          const updatedWarehousesToDisplay = move(
+            data.warehousesToDisplay[oldIndex],
+            data.warehousesToDisplay,
+            (a, b) => a.id === b.id,
+            newIndex,
           );
+
+          set({
+            ...data,
+            warehousesToDisplay: updatedWarehousesToDisplay,
+          });
+
+          // setWarehousesToDisplay(updatedWarehousesToDisplay);
         };
 
         return (
@@ -285,14 +312,16 @@ const ChannelDetailsPage = function<TErrors>({
                 />
                 <CardSpacer />
                 <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices()}
-                  warehouses={warehousesToDisplay}
+                  warehousesChoices={getFilteredWarehousesChoices(
+                    data.warehousesToDisplay,
+                  )}
+                  warehouses={data.warehousesToDisplay}
                   addWarehouse={addWarehouse}
                   removeWarehouse={removeWarehouse}
                   searchWarehouses={searchWarehouses}
                   fetchMoreWarehouses={fetchMoreWarehouses}
                   totalCount={allWarehousesCount}
-                  reorderWarehouses={reorderWarehouses}
+                  reorderWarehouses={reorderWarehouse}
                 />
                 <CardSpacer />
                 <ChannelAllocationStrategy

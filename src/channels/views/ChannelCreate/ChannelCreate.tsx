@@ -6,7 +6,9 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelCreateMutation,
+  ChannelErrorFragment,
   useChannelCreateMutation,
+  useChannelReorderWarehousesMutation,
   useShippingZonesCountQuery,
   useWarehousesCountQuery,
 } from "@saleor/graphql";
@@ -19,12 +21,14 @@ import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath, channelsListUrl } from "../../urls";
+import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
@@ -32,40 +36,71 @@ export const ChannelCreateView = ({}) => {
   const intl = useIntl();
   const shop = useShop();
 
-  const [createChannel, createChannelOpts] = useChannelCreateMutation({
-    onCompleted: ({
-      channelCreate: { errors, channel },
-    }: ChannelCreateMutation) => {
-      notify(getDefaultNotifierSuccessErrorData(errors, intl));
+  const handleError = (error: ChannelErrorFragment) => {
+    notify({
+      status: "error",
+      text: getChannelsErrorMessage(error, intl),
+    });
+  };
 
-      if (!errors.length) {
-        navigate(channelPath(channel.id));
-      }
+  const [createChannel, createChannelOpts] = useChannelCreateMutation({
+    onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
+      notify(getDefaultNotifierSuccessErrorData(errors, intl));
     },
   });
 
-  const handleSubmit = ({
+  const [reorderChannelWarehouses] = useChannelReorderWarehousesMutation({
+    onCompleted: data => {
+      const errors = data.channelReorderWarehouses.errors;
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+
+      navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+    },
+  });
+
+  const handleSubmit = async ({
     shippingZonesIdsToAdd,
     shippingZonesIdsToRemove,
     warehousesIdsToAdd,
     warehousesIdsToRemove,
+    warehousesToDisplay,
     currencyCode,
     stockSettings,
     ...rest
-  }: FormData) =>
-    extractMutationErrors(
-      createChannel({
-        variables: {
-          input: {
-            ...rest,
-            currencyCode: currencyCode.toUpperCase(),
-            addShippingZones: shippingZonesIdsToAdd,
-            addWarehouses: warehousesIdsToAdd,
-            stockSettings,
-          },
+  }: FormData) => {
+    const createChannelMutation = createChannel({
+      variables: {
+        input: {
+          ...rest,
+          currencyCode: currencyCode.toUpperCase(),
+          addShippingZones: shippingZonesIdsToAdd,
+          addWarehouses: warehousesIdsToAdd,
+          stockSettings,
         },
-      }),
-    );
+      },
+    });
+
+    const result = await createChannelMutation;
+    const errors = await extractMutationErrors(createChannelMutation);
+
+    if (!errors?.length) {
+      const moves = calculateItemsOrderMoves(
+        result.data?.channelCreate.channel?.warehouses,
+        warehousesToDisplay,
+      );
+
+      reorderChannelWarehouses({
+        variables: {
+          channelId: result.data?.channelCreate.channel?.id,
+          moves,
+        },
+      });
+    }
+
+    return errors;
+  };
 
   const {
     data: shippingZonesCountData,

@@ -20,6 +20,18 @@ const props: ChannelFormProps = {
     stockSettings: {
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     },
+    warehousesToDisplay: [
+      {
+        __typename: "Warehouse",
+        id: "1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   disabled: false,
   errors: [],
