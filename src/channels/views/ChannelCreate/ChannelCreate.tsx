@@ -66,6 +66,7 @@ export const ChannelCreateView = ({}) => {
     warehousesIdsToAdd,
     warehousesIdsToRemove,
     warehousesToDisplay,
+    shippingZonesToDisplay,
     currencyCode,
     stockSettings,
     ...rest

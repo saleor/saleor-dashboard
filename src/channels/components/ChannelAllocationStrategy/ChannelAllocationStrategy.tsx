@@ -1,7 +1,9 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import HelpOutline from "@material-ui/icons/HelpOutline";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@saleor/graphql";
+import { Tooltip } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -46,6 +48,27 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           label={
             <Typography>
               <FormattedMessage {...messages.allocationStrategyDescription} />
+              <Tooltip
+                title={
+                  <>
+                    <FormattedMessage {...messages.allocaationMayOccur} />
+                    <ul>
+                      <li>
+                        <FormattedMessage
+                          {...messages.allocaationMayOccurWithTrackInventory}
+                        />
+                      </li>
+                      <li>
+                        <FormattedMessage
+                          {...messages.allocaationMayOccurWithReservationTime}
+                        />
+                      </li>
+                    </ul>
+                  </>
+                }
+              >
+                <HelpOutline className={classes.tooltipIcon} />
+              </Tooltip>
             </Typography>
           }
           choices={strategyOptions.map(option => ({

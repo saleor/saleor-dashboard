@@ -239,7 +239,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const channelWarehouses = data?.channel?.warehouses || []; // mapEdgesToItems(channelWarehousesData?.warehouses);
+  const channelWarehouses = data?.channel?.warehouses || [];
   const channelShippingZones = mapEdgesToItems(
     channelShippingZonesData?.shippingZones,
   );

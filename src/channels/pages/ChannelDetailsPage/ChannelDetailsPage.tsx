@@ -22,20 +22,21 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import {
-  getById,
-  getByUnmatchingId,
-} from "@saleor/orders/components/OrderReturnPage/utils";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { move } from "@saleor/utils/lists";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
+import {
+  createShippingZoneAddHandler,
+  createShippingZoneRemoveHandler,
+  createWarehouseAddHandler,
+  createWarehouseRemoveHandler,
+  createWarehouseReorderHandler,
+} from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
-import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
   channel?: ChannelDetailsFragment;
@@ -90,13 +91,6 @@ const ChannelDetailsPage = function<TErrors>({
     setSelectedCountryDisplayName,
   ] = useStateFromProps(channel?.defaultCountry.country || "");
 
-  const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
-    ChannelShippingZones
-  >(channelShippingZones);
-  // const [warehousesToDisplay, setWarehousesToDisplay] = useStateFromProps<
-  //   ChannelWarehouses
-  // >(channelWarehouses);
-
   const countryChoices = mapCountriesToChoices(countries || []);
 
   const { defaultCountry, stockSettings, ...formData } =
@@ -115,10 +109,13 @@ const ChannelDetailsPage = function<TErrors>({
       allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
       ...stockSettings,
     },
+    shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
   };
 
-  const getFilteredShippingZonesChoices = (): RelayToFlat<SearchShippingZonesQuery["search"]> =>
+  const getFilteredShippingZonesChoices = (
+    shippingZonesToDisplay: ChannelShippingZones,
+  ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) =>
         !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
@@ -162,116 +159,30 @@ const ChannelDetailsPage = function<TErrors>({
           countryChoices,
         );
 
-        const addShippingZone = (zoneId: string) => {
-          triggerChange();
+        const addShippingZone = createShippingZoneAddHandler(
+          data,
+          searchShippingZonesData,
+          set,
+          triggerChange,
+        );
+        const removeShippingZone = createShippingZoneRemoveHandler(
+          data,
+          set,
+          triggerChange,
+        );
 
-          set({
-            ...data,
-            shippingZonesIdsToRemove: getUpdatedIdsWithoutNewId(
-              data.shippingZonesIdsToRemove,
-              zoneId,
-            ),
-            shippingZonesIdsToAdd: getUpdatedIdsWithNewId(
-              data.shippingZonesIdsToAdd,
-              zoneId,
-            ),
-          });
-
-          setShippingZonesToDisplay([
-            ...shippingZonesToDisplay,
-            getParsedSearchData({ data: searchShippingZonesData }).find(
-              getById(zoneId),
-            ),
-          ]);
-        };
-
-        const removeShippingZone = (zoneId: string) => {
-          triggerChange();
-
-          set({
-            ...data,
-            shippingZonesIdsToAdd: getUpdatedIdsWithoutNewId(
-              data.shippingZonesIdsToAdd,
-              zoneId,
-            ),
-            shippingZonesIdsToRemove: getUpdatedIdsWithNewId(
-              data.shippingZonesIdsToRemove,
-              zoneId,
-            ),
-          });
-
-          setShippingZonesToDisplay(
-            shippingZonesToDisplay.filter(getByUnmatchingId(zoneId)),
-          );
-        };
-
-        const addWarehouse = (warehouseId: string) => {
-          triggerChange();
-
-          set({
-            ...data,
-            warehousesIdsToRemove: getUpdatedIdsWithoutNewId(
-              data.warehousesIdsToRemove,
-              warehouseId,
-            ),
-            warehousesIdsToAdd: getUpdatedIdsWithNewId(
-              data.warehousesIdsToAdd,
-              warehouseId,
-            ),
-            warehousesToDisplay: [
-              ...data.warehousesToDisplay,
-              getParsedSearchData({ data: searchWarehousesData }).find(
-                getById(warehouseId),
-              ),
-            ],
-          });
-
-          // setWarehousesToDisplay([
-          //   ...warehousesToDisplay,
-          //   getParsedSearchData({ data: searchWarehousesData }).find(
-          //     getById(warehouseId),
-          //   ),
-          // ]);
-        };
-
-        const removeWarehouse = (warehouseId: string) => {
-          triggerChange();
-
-          set({
-            ...data,
-            warehousesIdsToAdd: getUpdatedIdsWithoutNewId(
-              data.warehousesIdsToAdd,
-              warehouseId,
-            ),
-            warehousesIdsToRemove: getUpdatedIdsWithNewId(
-              data.warehousesIdsToRemove,
-              warehouseId,
-            ),
-            warehousesToDisplay: data.warehousesToDisplay.filter(
-              getByUnmatchingId(warehouseId),
-            ),
-          });
-
-          // setWarehousesToDisplay(
-          //   warehousesToDisplay.filter(getByUnmatchingId(warehouseId)),
-          // );
-        };
-
-        const reorderWarehouse = ({ oldIndex, newIndex }: ReorderEvent) => {
-          const updatedWarehousesToDisplay = move(
-            data.warehousesToDisplay[oldIndex],
-            data.warehousesToDisplay,
-            (a, b) => a.id === b.id,
-            newIndex,
-          );
-
-          set({
-            ...data,
-            warehousesToDisplay: updatedWarehousesToDisplay,
-          });
-
-          // setWarehousesToDisplay(updatedWarehousesToDisplay);
-        };
+        const addWarehouse = createWarehouseAddHandler(
+          data,
+          searchWarehousesData,
+          set,
+          triggerChange,
+        );
+        const removeWarehouse = createWarehouseRemoveHandler(
+          data,
+          set,
+          triggerChange,
+        );
+        const reorderWarehouse = createWarehouseReorderHandler(data, set);
 
         return (
           <>
@@ -302,8 +213,10 @@ const ChannelDetailsPage = function<TErrors>({
                   </>
                 )}
                 <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices()}
-                  shippingZones={shippingZonesToDisplay}
+                  shippingZonesChoices={getFilteredShippingZonesChoices(
+                    data.shippingZonesToDisplay,
+                  )}
+                  shippingZones={data.shippingZonesToDisplay}
                   addShippingZone={addShippingZone}
                   removeShippingZone={removeShippingZone}
                   searchShippingZones={searchShippingZones}

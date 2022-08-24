@@ -34,4 +34,21 @@ export const messages = defineMessages({
     id: "HN1Gvw",
     description: "option description",
   },
+  allocaationMayOccur: {
+    defaultMessage: "Stock allocations may occur when:",
+    description: "tooltip",
+    id: "G1jXBj",
+  },
+  allocaationMayOccurWithTrackInventory: {
+    defaultMessage:
+      'Order contains products that have "Track inventory" enabled.',
+    description: "tooltip",
+    id: "q5Lfp4",
+  },
+  allocaationMayOccurWithReservationTime: {
+    defaultMessage:
+      "Checkout reservation time threshold is enabled in settings.",
+    description: "tooltip",
+    id: "G5NKx6",
+  },
 });

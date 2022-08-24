@@ -32,6 +32,18 @@ const props: ChannelFormProps = {
         name: "Warehouse 2",
       },
     ],
+    shippingZonesToDisplay: [
+      {
+        __typename: "ShippingZone",
+        id: "1",
+        name: "Shipping Zone 1",
+      },
+      {
+        __typename: "ShippingZone",
+        id: "2",
+        name: "Shipping Zone 2",
+      },
+    ],
   },
   disabled: false,
   errors: [],
