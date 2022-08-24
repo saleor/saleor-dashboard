@@ -94,14 +94,14 @@ export function createSaleWithNewProduct({
     categoryId,
     price,
   }).then(({ product: productResp }) => {
+    const product = productResp;
     /* Uncomment after fixing SALEOR-3367 bug
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-
-    cy.visit(urlList.sales);
-    cy.expectSkeletonIsVisible();
-    const product = productResp;
+    cy.visit(urlList.sales)
+      .expectSkeletonIsVisible()
+      .waitForProgressBarToNotExist();
     createSale({
       saleName: name,
       channelName: channel.name,
@@ -133,13 +133,14 @@ export function createSaleWithNewVariant({
     categoryId,
     price,
   }).then(({ variantsList: variantsListResp, product }) => {
+    const variant = variantsListResp[0];
     /* Uncomment after fixing SALEOR-3367 bug
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales);
-    cy.expectSkeletonIsVisible();
-    const variant = variantsListResp[0];
+    cy.visit(urlList.sales)
+      .expectSkeletonIsVisible()
+      .waitForProgressBarToNotExist();
     createSale({
       saleName: name,
       channelName: channel.name,
