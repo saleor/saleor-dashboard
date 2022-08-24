@@ -157,7 +157,10 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(1),
     },
     installSaleorIcon: {
-      backgroundColor: theme.palette.saleor.main[1],
+      backgroundColor:
+        theme.palette.type === "dark"
+          ? theme.palette.saleor.gray.default
+          : theme.palette.saleor.main[1],
       border: "none",
     },
     installSpacer: {
