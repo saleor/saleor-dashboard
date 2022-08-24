@@ -164,6 +164,7 @@ export enum AddressTypeEnum {
  *
  *     PRIORITIZE_HIGH_STOCK - the allocation is prioritized by the highest available
  *     quantity in stocks
+ *
  */
 export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER',
@@ -216,6 +217,7 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
+ *
  */
 export enum AppExtensionTargetEnum {
   POPUP = 'POPUP',
@@ -2858,6 +2860,7 @@ export type OrderAddNoteInput = {
  *     PARTIAL - the funds that are authorized or charged don't cover fully the order's
  *     total
  *     FULL - the funds that are authorized or charged fully cover the order's total
+ *
  */
 export enum OrderAuthorizeStatusEnum {
   NONE = 'NONE',
@@ -2877,6 +2880,7 @@ export enum OrderAuthorizeStatusEnum {
  *     PARTIAL - the funds that are charged don't cover the order's total
  *     FULL - the funds that are charged fully cover the order's total
  *     OVERCHARGED - the charged funds are bigger than order's total
+ *
  */
 export enum OrderChargeStatusEnum {
   NONE = 'NONE',
@@ -3996,6 +4000,8 @@ export type ProductVariantBulkCreateInput = {
   attributes: Array<BulkAttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4044,6 +4050,8 @@ export type ProductVariantCreateInput = {
   attributes: Array<AttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4083,6 +4091,8 @@ export type ProductVariantInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4568,6 +4578,7 @@ export enum TimePeriodTypeEnum {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     VOID - Represents a void action.
+ *
  */
 export enum TransactionActionEnum {
   CHARGE = 'CHARGE',
@@ -5002,7 +5013,11 @@ export type WebhookCreateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /** The secret key used to create a hash signature with each payload. */
+  /**
+   * The secret key used to create a hash signature with each payload.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /**
    * Subscription query used to define a webhook payload.
@@ -5599,7 +5614,11 @@ export type WebhookUpdateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /** Use to create a hash signature with each payload. */
+  /**
+   * Use to create a hash signature with each payload.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /**
    * Subscription query used to define a webhook payload.
