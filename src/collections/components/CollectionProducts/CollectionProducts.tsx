@@ -162,6 +162,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
               return (
                 <TableRowLink
+                  data-test-id="assign-product-table-row"
                   className={classes.tableRow}
                   hover={!!product}
                   href={product && productUrl(product.id)}
