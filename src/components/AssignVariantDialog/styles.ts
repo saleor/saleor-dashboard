@@ -33,11 +33,6 @@ export const useStyles = makeStyles(
     overflow: {
       overflowY: "hidden",
     },
-    topArea: {
-      overflowY: "hidden",
-      paddingBottom: theme.spacing(6),
-      margin: theme.spacing(0, 3, 3, 3),
-    },
     productCheckboxCell: {
       "&:first-child": {
         paddingLeft: 0,
