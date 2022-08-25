@@ -35,12 +35,16 @@ function useTaxCountriesForm(
   disabled,
 ): UseTaxCountriesFormResult {
   // Initial
-  const initialFormsetData = country?.taxClassCountryRates.map(item => ({
-    id: item.taxClass.id,
-    label: item.taxClass.name,
-    value: item.rate?.toString() ?? "",
-    data: null,
-  }));
+  const initialFormsetData = React.useMemo(
+    () =>
+      country?.taxClassCountryRates.map(item => ({
+        id: item.taxClass.id,
+        label: item.taxClass.name,
+        value: item.rate?.toString() ?? "",
+        data: null,
+      })),
+    [country],
+  );
 
   const { formId, triggerChange } = useForm({}, undefined, {
     confirmLeave: true,
@@ -66,7 +70,9 @@ function useTaxCountriesForm(
 
   const handleSubmit = async (data: TaxClassRateInput[]) => {
     const errors = await onSubmit(data);
-
+    if (!errors?.length) {
+      formset.reset();
+    }
     return errors;
   };
 

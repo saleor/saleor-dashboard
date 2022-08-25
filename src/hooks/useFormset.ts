@@ -20,6 +20,7 @@ export interface UseFormsetOutput<TData = {}, TValue = any> {
   // Used for some rare situations like dataset change
   set: (data: FormsetData<TData, TValue>) => void;
   remove: (id: string) => void;
+  reset: () => void;
 }
 function useFormset<TData = {}, TValue = any>(
   initial: FormsetData<TData, TValue>,
@@ -59,6 +60,10 @@ function useFormset<TData = {}, TValue = any>(
     });
   }
 
+  function reset() {
+    setData(initial || []);
+  }
+
   return {
     add: addItem,
     change: setItemValue,
@@ -66,6 +71,7 @@ function useFormset<TData = {}, TValue = any>(
     get: getItem,
     remove: removeItem,
     set: setData,
+    reset,
   };
 }
 
