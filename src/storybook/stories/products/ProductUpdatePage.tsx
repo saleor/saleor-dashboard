@@ -7,8 +7,8 @@ import { ProductErrorCode } from "@saleor/graphql";
 import ProductUpdatePage, {
   ProductUpdatePageProps,
 } from "@saleor/products/components/ProductUpdatePage";
+import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/form";
 import { product as productFixture } from "@saleor/products/fixtures";
-import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -38,7 +38,6 @@ const props: ProductUpdatePageProps = {
   channelsData: channels,
   channelsErrors: [],
   collections,
-  defaultWeightUnit: "kg",
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,
@@ -57,12 +56,8 @@ const props: ProductUpdatePageProps = {
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onMediaUrlUpload: () => undefined,
-  onSetDefaultVariant: () => undefined,
   onSubmit: () => undefined,
-  onVariantBulkDelete: () => undefined,
   onVariantShow: () => undefined,
-  onVariantEndPreorderDialogOpen: () => undefined,
-  onWarehouseConfigure: () => undefined,
   openChannelsModal: () => undefined,
   placeholderImage,
   product,
@@ -175,18 +170,14 @@ storiesOf("Views / Products / Product edit", module)
         "seoTitle",
         "sku",
         "stockQuantity",
-      ] as Array<keyof ProductUpdatePageFormData | "attributes">).map(
-        field => ({
-          __typename: "ProductError",
-          attributes:
-            field === "attributes"
-              ? [product.attributes[0].attribute.id]
-              : null,
-          code: ProductErrorCode.INVALID,
-          field,
-          message: "Attributes invalid",
-        }),
-      )}
+      ] as Array<keyof ProductUpdateFormData | "attributes">).map(field => ({
+        __typename: "ProductError",
+        attributes:
+          field === "attributes" ? [product.attributes[0].attribute.id] : null,
+        code: ProductErrorCode.INVALID,
+        field,
+        message: "Attributes invalid",
+      }))}
     />
   ))
   .add("with channels", () => (
