@@ -24,7 +24,7 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ProductUpdateFormData } from "../components/ProductUpdatePage/form";
+import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 export interface Collection {
   id: string;

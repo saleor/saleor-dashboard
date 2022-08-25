@@ -1,4 +1,4 @@
-import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { GridCell } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   booleanCell,
@@ -184,17 +184,7 @@ function errorMatchesColumn(
 
 export function getError(
   errors: ProductVariantListError[],
-  {
-    availableColumns,
-    changes,
-    added,
-    removed,
-    column,
-    getChangeIndex,
-    row,
-    channels,
-    variants,
-  }: GetDataOrError,
+  { availableColumns, removed, column, row, variants }: GetDataOrError,
 ): boolean {
   const columnId = availableColumns[column].id;
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;

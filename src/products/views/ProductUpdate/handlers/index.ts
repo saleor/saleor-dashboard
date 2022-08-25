@@ -4,7 +4,6 @@ import {
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
   ProductVariantReorderMutationFn,
-  ProductVariantReorderMutationVariables,
 } from "@saleor/graphql";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
