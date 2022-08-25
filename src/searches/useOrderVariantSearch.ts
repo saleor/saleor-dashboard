@@ -50,18 +50,6 @@ export const searchOrderVariant = gql`
               }
               onSale
             }
-            channelListings {
-              channel {
-                id
-                isActive
-                name
-                currencyCode
-              }
-              price {
-                amount
-                currency
-              }
-            }
           }
         }
       }

@@ -1242,14 +1242,7 @@ export const OrderLineFragmentDoc = gql`
     }
     product {
       id
-      channelListings {
-        id
-        isPublished
-        isAvailableForPurchase
-        channel {
-          id
-        }
-      }
+      isAvailableForPurchase
     }
   }
   productName
@@ -8767,12 +8760,15 @@ export const OrderLineDeleteDocument = gql`
       ...OrderError
     }
     order {
-      ...OrderDetails
+      id
+      lines {
+        ...OrderLine
+      }
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 
 /**
@@ -8806,12 +8802,15 @@ export const OrderLinesAddDocument = gql`
       ...OrderError
     }
     order {
-      ...OrderDetails
+      id
+      lines {
+        ...OrderLine
+      }
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 
 /**
@@ -8845,13 +8844,13 @@ export const OrderLineUpdateDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
+    orderLine {
+      ...OrderLine
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 
 /**
@@ -13061,18 +13060,6 @@ export const SearchOrderVariantDocument = gql`
               }
             }
             onSale
-          }
-          channelListings {
-            channel {
-              id
-              isActive
-              name
-              currencyCode
-            }
-            price {
-              amount
-              currency
-            }
           }
         }
       }

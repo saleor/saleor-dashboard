@@ -89,7 +89,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       <DialogTitle>
         <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
-      <DialogContent className={scrollableDialogClasses.topArea}>
+      <DialogContent>
         <TextField
           name="query"
           value={query}
