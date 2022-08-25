@@ -1,16 +1,13 @@
 import { FetchResult } from "@apollo/client";
 import {
-  getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@saleor/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-  prepareAttributesInput,
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
-import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   AttributeErrorFragment,
   AttributeValueDeleteMutation,
@@ -22,28 +19,20 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductUpdateMutationVariables,
+  ProductUpdateMutationFn,
   ProductVariantChannelListingUpdateMutation,
   ProductVariantChannelListingUpdateMutationVariables,
-  SimpleProductUpdateMutation,
-  SimpleProductUpdateMutationVariables,
   StockErrorFragment,
   UploadErrorFragment,
   VariantCreateMutation,
   VariantCreateMutationVariables,
 } from "@saleor/graphql";
-import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
-import {
-  getAttributeInputFromProduct,
-  mapFormsetStockToStockInput,
-} from "@saleor/products/utils/data";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 
 import {
   getChannelsVariables,
+  getProductUpdateVariables,
   getSimpleChannelsVariables,
-  getSimpleProductErrors,
-  getSimpleProductVariables,
   getVariantChannelsInput,
 } from "./utils";
 
@@ -60,9 +49,7 @@ export function createSimpleProductUpdateHandler(
   uploadFile: (
     variables: FileUploadMutationVariables,
   ) => Promise<FetchResult<FileUploadMutation>>,
-  updateSimpleProduct: (
-    variables: SimpleProductUpdateMutationVariables,
-  ) => Promise<FetchResult<SimpleProductUpdateMutation>>,
+  updateProduct: ProductUpdateMutationFn,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
@@ -77,7 +64,7 @@ export function createSimpleProductUpdateHandler(
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
 ) {
   return async (
-    data: ProductUpdatePageSubmitData,
+    data: ProductUpdateSubmitData,
   ): Promise<SimpleProductUpdateError[]> => {
     let errors: SimpleProductUpdateError[] = [];
 
@@ -97,44 +84,12 @@ export function createSimpleProductUpdateHandler(
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
-    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
-      data.attributesWithNewFileValue,
-      uploadFilesResult,
-    );
-
-    const productVariables: ProductUpdateMutationVariables = {
-      id: product.id,
-      input: {
-        attributes: prepareAttributesInput({
-          attributes: data.attributes,
-          prevAttributes: getAttributeInputFromProduct(product),
-          updatedFileAttributes,
-        }),
-        category: data.category,
-        chargeTaxes: data.chargeTaxes,
-        collections: data.collections,
-        description: getParsedDataForJsonStringField(data.description),
-        name: data.name,
-        rating: data.rating,
-        seo: {
-          description: data.seoDescription,
-          title: data.seoTitle,
-        },
-        slug: data.slug,
-        taxCode: data.changeTaxCode ? data.taxCode : null,
-      },
-      firstValues: VALUES_PAGINATE_BY,
-    };
 
     if (product.variants.length) {
-      const result = await updateSimpleProduct(
-        getSimpleProductVariables(
-          productVariables,
-          data,
-          product.variants[0].id,
-        ),
-      );
-      errors = [...errors, ...getSimpleProductErrors(result.data)];
+      const result = await updateProduct({
+        variables: getProductUpdateVariables(product, data, uploadFilesResult),
+      });
+      errors = [...errors, ...result.data.productUpdate.errors];
 
       await updateChannels({
         variables: getSimpleChannelsVariables(data, product),
@@ -158,7 +113,6 @@ export function createSimpleProductUpdateHandler(
               })) || [],
             product: product.id,
             sku: data.sku,
-            stocks: data.updateStocks.map(mapFormsetStockToStockInput),
           },
         },
       });
@@ -182,10 +136,14 @@ export function createSimpleProductUpdateHandler(
           variables: getChannelsVariables(product, allChannels, data),
         });
 
-        const result = await updateSimpleProduct(
-          getSimpleProductVariables(productVariables, data, variantId),
-        );
-        errors = [...errors, ...getSimpleProductErrors(result.data)];
+        const result = await updateProduct({
+          variables: getProductUpdateVariables(
+            product,
+            data,
+            uploadFilesResult,
+          ),
+        });
+        errors = [...errors, ...result.data.productUpdate.errors];
       }
     }
 

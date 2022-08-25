@@ -101,72 +101,6 @@ export const productUpdateMutation = gql`
   }
 `;
 
-export const simpleProductUpdateMutation = gql`
-  mutation SimpleProductUpdate(
-    $id: ID!
-    $input: ProductInput!
-    $productVariantId: ID!
-    $productVariantInput: ProductVariantInput!
-    $addStocks: [StockInput!]!
-    $deleteStocks: [ID!]!
-    $updateStocks: [StockInput!]!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
-    productUpdate(id: $id, input: $input) {
-      errors {
-        ...ProductErrorWithAttributes
-      }
-      product {
-        ...Product
-      }
-    }
-    productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
-      errors {
-        ...ProductErrorWithAttributes
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksCreate(
-      stocks: $addStocks
-      variantId: $productVariantId
-    ) {
-      errors {
-        ...BulkStockError
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksDelete(
-      warehouseIds: $deleteStocks
-      variantId: $productVariantId
-    ) {
-      errors {
-        ...StockError
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksUpdate(
-      stocks: $updateStocks
-      variantId: $productVariantId
-    ) {
-      errors {
-        ...BulkStockError
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-  }
-`;
-
 export const productCreateMutation = gql`
   mutation ProductCreate($input: ProductCreateInput!) {
     productCreate(input: $input) {
@@ -188,6 +122,35 @@ export const variantDeleteMutation = gql`
       }
       productVariant {
         id
+      }
+    }
+  }
+`;
+
+export const variantDatagridUpdateMutation = gql`
+  mutation VariantDatagridUpdate($id: ID!, $input: ProductVariantInput!) {
+    productVariantUpdate(id: $id, input: $input) {
+      errors {
+        ...ProductErrorWithAttributes
+      }
+    }
+  }
+`;
+
+export const variantDatagridStockUpdateMutation = gql`
+  mutation VariantDatagridStockUpdate(
+    $stocks: [StockInput!]!
+    $removeStocks: [ID!]!
+    $id: ID!
+  ) {
+    productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
+      errors {
+        ...ProductVariantStocksDeleteError
+      }
+    }
+    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
+      errors {
+        ...BulkStockError
       }
     }
   }

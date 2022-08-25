@@ -1,11 +1,16 @@
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
-import { MoneyCell } from "@saleor/components/Datagrid/MoneyCell";
-import { NumberCell } from "@saleor/components/Datagrid/NumberCell";
+import { GridCell } from "@glideapps/glide-data-grid";
+import { numberCell, textCell } from "@saleor/components/Datagrid/cells";
+import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
-import { DatagridChange } from "@saleor/components/Datagrid/useDatagridChange";
 import {
-  ChannelFragment,
+  DatagridChange,
+  DatagridChangeOpts,
+} from "@saleor/components/Datagrid/useDatagridChange";
+import {
   ProductDetailsVariantFragment,
+  ProductFragment,
+  VariantDatagridStockUpdateMutationVariables,
+  VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { MutableRefObject } from "react";
@@ -14,111 +19,172 @@ import { IntlShape } from "react-intl";
 import messages from "./messages";
 
 const isStockColumn = /^stock:(.*)/;
-const isChannelColumn = /^channel:(.*)/;
+// const isChannelColumn = /^channel:(.*)/;
 const isAttributeColumn = /^attribute:(.*)/;
+
+export function getVariantInputs(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridUpdateMutationVariables[] {
+  const attributeChanges = data.updates.filter(change =>
+    isAttributeColumn.test(change.column),
+  );
+  const skuChanges = data.updates.filter(change => change.column === "sku");
+
+  return variants
+    .map(
+      (variant, variantIndex): VariantDatagridUpdateMutationVariables => {
+        const sku = skuChanges.find(
+          change =>
+            change.row ===
+            variantIndex + data.removed.filter(r => r <= variantIndex).length,
+        )?.data;
+
+        const attributes = attributeChanges
+          .filter(
+            change =>
+              change.row ===
+              variantIndex + data.removed.filter(r => r <= variantIndex).length,
+          )
+          .map(change => {
+            const attributeId = change.column.match(isAttributeColumn)[1];
+
+            return {
+              id: attributeId,
+              values: [change.data],
+            };
+          });
+
+        return {
+          id: variant.id,
+          input: {
+            attributes,
+            sku,
+          },
+        };
+      },
+    )
+    .filter(
+      variables => variables.input.sku || variables.input.attributes.length > 0,
+    );
+}
+
+export function getStocks(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridStockUpdateMutationVariables[] {
+  const stockChanges = data.updates.filter(change =>
+    isStockColumn.test(change.column),
+  );
+
+  return variants
+    .map((variant, variantIndex) => {
+      const variantChanges = stockChanges
+        .filter(
+          change =>
+            change.row ===
+            variantIndex + data.removed.filter(r => r <= variantIndex).length,
+        )
+        .map(change => ({
+          warehouse: change.column.match(isStockColumn)[1],
+          quantity: change.data.value,
+        }));
+
+      return {
+        id: variant.id,
+        stocks: variantChanges.filter(
+          change => change.quantity !== numberCellEmptyValue,
+        ),
+        removeStocks: variantChanges
+          .filter(change => change.quantity === numberCellEmptyValue)
+          .map(({ warehouse }) => warehouse),
+      };
+    })
+    .filter(
+      variables =>
+        variables.removeStocks.length > 0 || variables.stocks.length > 0,
+    );
+}
 
 interface GetData {
   availableColumns: AvailableColumn[];
-  channels: ChannelFragment[];
   column: number;
   row: number;
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
+  added: number[];
+  removed: number[];
   getChangeIndex: (column: string, row: number) => number;
 }
 
 export function getData({
   availableColumns,
   changes,
-  channels,
+  added,
+  removed,
   column,
   getChangeIndex,
   row,
   variants,
 }: GetData): GridCell {
   const columnId = availableColumns[column].id;
-  const common = {
-    allowOverlay: true,
-    readonly: false,
-  };
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
+  const dataRow = added.includes(row)
+    ? undefined
+    : variants[row + removed.filter(r => r <= row).length];
 
   switch (columnId) {
     case "name":
     case "sku":
-      const value = change ?? variants[row][columnId] ?? "";
-      return {
-        ...common,
-        data: value,
-        displayData: value,
-        kind: GridCellKind.Text,
-      };
+      const value = change ?? (dataRow ? dataRow[columnId] : "");
+      return textCell(value || "");
   }
 
   if (isStockColumn.test(columnId)) {
     const value =
       change?.value ??
-      variants[row].stocks.find(
+      dataRow?.stocks.find(
         stock => stock.warehouse.id === columnId.match(isStockColumn)[1],
       )?.quantity ??
-      0;
+      numberCellEmptyValue;
 
-    return {
-      ...common,
-      data: {
-        kind: "number-cell",
-        value,
-      },
-      kind: GridCellKind.Custom,
-      copyData: value.toString(),
-    } as NumberCell;
+    return numberCell(value);
   }
 
-  if (isChannelColumn.test(columnId)) {
-    const channelId = columnId.match(isChannelColumn)[1];
-    const listing = variants[row].channelListings.find(
-      listing => listing.channel.id === channelId,
-    );
-    const value = change?.value ?? listing?.price?.amount ?? 0;
+  // TODO: We'll add channels later
+  // if (isChannelColumn.test(columnId)) {
+  //   const channelId = columnId.match(isChannelColumn)[1];
+  //   const listing = dataRow?.channelListings.find(
+  //     listing => listing.channel.id === channelId,
+  //   );
+  //   const currency = channels.find(channel => channelId === channel.id)
+  //     ?.currencyCode;
+  //   const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return {
-      ...common,
-      kind: GridCellKind.Custom,
-      data: {
-        kind: "money-cell",
-        value,
-        currency: channels.find(channel => channelId === channel.id)
-          ?.currencyCode,
-      },
-      copyData: value.toString(),
-    } as MoneyCell;
-  }
+  //   return moneyCell(value, currency);
+  // }
 
   if (isAttributeColumn.test(columnId)) {
     const value =
       change ??
-      variants[row].attributes
+      dataRow?.attributes
         .find(
           attribute =>
             attribute.attribute.id === columnId.match(isAttributeColumn)[1],
         )
         ?.values.map(v => v.name)
-        .join(", ");
+        .join(", ") ??
+      "";
 
-    return {
-      ...common,
-      data: value,
-      displayData: value,
-      kind: GridCellKind.Text,
-    };
+    return textCell(value || "");
   }
 }
 
 export function getColumnData(
   name: string,
-  channels: ChannelFragment[],
+  // channels: ChannelData[],
   warehouses: WarehouseFragment[],
-  variants: ProductDetailsVariantFragment[],
+  variantAttributes: ProductFragment["productType"]["variantAttributes"],
   intl: IntlShape,
 ): AvailableColumn {
   const common = {
@@ -143,26 +209,23 @@ export function getColumnData(
     };
   }
 
-  if (isChannelColumn.test(name)) {
-    const channel = channels.find(
-      channel => channel.id === name.match(isChannelColumn)[1],
-    );
-    return {
-      ...common,
-      width: 150,
-      title: `${channel?.name} [${channel.currencyCode}]`,
-    };
-  }
+  // if (isChannelColumn.test(name)) {
+  //   const channel = channels.find(
+  //     channel => channel.id === name.match(isChannelColumn)[1],
+  //   );
+  //   return {
+  //     ...common,
+  //     width: 150,
+  //     title: `${channel?.name} [${channel.currency}]`,
+  //   };
+  // }
 
   if (isAttributeColumn.test(name)) {
     return {
       ...common,
-      title: variants
-        .flatMap(variant =>
-          variant.attributes.map(attribute => attribute.attribute),
-        )
-        .find(attribute => attribute.id === name.match(isAttributeColumn)[1])
-        ?.name,
+      title: variantAttributes.find(
+        attribute => attribute.id === name.match(isAttributeColumn)[1],
+      )?.name,
     };
   }
 

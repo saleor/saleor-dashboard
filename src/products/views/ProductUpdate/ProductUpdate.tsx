@@ -32,8 +32,6 @@ import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils"
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
-import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
@@ -46,7 +44,6 @@ import { getProductErrorMessage } from "@saleor/utils/errors";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -145,7 +142,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       first: 50,
     },
   });
-  const shop = useShop();
 
   const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
@@ -315,11 +311,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     });
   };
 
-  const onSetDefaultVariant = useOnSetDefaultVariant(
-    product ? product.id : null,
-    null,
-  );
-
   const handleBack = () => navigate(productListUrl());
 
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
@@ -460,9 +451,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         collections={collections}
         attributeValues={attributeValues}
         channelsWithVariantsData={channelsWithVariantsData}
-        defaultWeightUnit={shop?.defaultWeightUnit}
         disabled={disableFormSave}
-        onSetDefaultVariant={onSetDefaultVariant}
         errors={submitOpts.errors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
@@ -480,18 +469,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}
-        onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantBulkDelete={ids =>
-          openModal("remove-variants", {
-            ids,
-          })
-        }
         onVariantShow={variantId =>
           navigate(productVariantEditUrl(product.id, variantId), {
             resetScroll: true,
           })
         }
-        onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
