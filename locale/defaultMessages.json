@@ -2600,10 +2600,6 @@
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
   },
-  "ImTelT": {
-    "context": "card subtitle",
-    "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
-  },
   "IoCMjg": {
     "context": "no collections",
     "string": "No collections found"
@@ -5958,6 +5954,10 @@
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
+  },
+  "k6y+X2": {
+    "context": "card subtitle",
+    "string": "Select warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
   },
   "k8ZJ5L": {
     "context": "number of products",
