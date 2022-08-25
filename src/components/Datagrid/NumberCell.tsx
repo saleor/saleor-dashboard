@@ -9,9 +9,10 @@ import React from "react";
 
 import { Locale } from "../Locale";
 
+export const numberCellEmptyValue = Symbol();
 interface NumberCellProps {
   readonly kind: "number-cell";
-  readonly value: number;
+  readonly value: number | typeof numberCellEmptyValue;
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
@@ -50,7 +51,7 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
           },
         })
       }
-      value={cell.data.value}
+      value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
       autoFocus
     />
   );
@@ -63,7 +64,8 @@ export const numberCellRenderer = (
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { value } = cell.data;
-    const formatted = value?.toLocaleString(locale) ?? "-";
+    const formatted =
+      value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(
@@ -82,12 +84,12 @@ export const numberCellRenderer = (
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null,
+        value: numberCellEmptyValue,
       },
     }),
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: parseFloat(value),
+    value: value ? parseFloat(value) : numberCellEmptyValue,
   }),
 });

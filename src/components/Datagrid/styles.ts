@@ -52,6 +52,7 @@ const useStyles = makeStyles(
           marginBottom: -1,
         },
         border: `1px solid ${theme.palette.divider}`,
+        borderRight: "none",
         cursor: "pointer",
         color: theme.palette.saleor.main[5],
         marginLeft: -1,

@@ -4,20 +4,20 @@ import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductUpdateMutation,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
   useProductVariantChannelListingUpdateMutation,
-  useSimpleProductUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
+  useVariantDatagridStockUpdateMutation,
+  useVariantDatagridUpdateMutation,
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { useIntl } from "react-intl";
@@ -34,7 +34,7 @@ import {
 export type UseProductUpdateHandlerError = ProductErrorWithAttributesFragment;
 
 type UseProductUpdateHandler = (
-  data: ProductUpdatePageSubmitData,
+  data: ProductUpdateSubmitData,
 ) => Promise<
   Array<
     | SimpleProductUpdateError
@@ -65,26 +65,15 @@ export function useProductUpdateHandler(
     productVariantCreate,
     productVariantCreateOpts,
   ] = useVariantCreateMutation({});
-
-  const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-
-  const handleUpdate = (data: ProductUpdateMutation) => {
-    if (data.productUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
-      });
-    }
-  };
-  const [updateProduct, updateProductOpts] = useProductUpdateMutation({
-    onCompleted: handleUpdate,
-  });
   const [
-    updateSimpleProduct,
-    updateSimpleProductOpts,
-  ] = useSimpleProductUpdateMutation({
-    onCompleted: handleUpdate,
-  });
+    updateStocks,
+    updateStocksOpts,
+  ] = useVariantDatagridStockUpdateMutation({});
+  const [updateVariant, updateVariantOpts] = useVariantDatagridUpdateMutation();
+
+  const [uploadFile, uploadFileOpts] = useFileUploadMutation();
+
+  const [updateProduct, updateProductOpts] = useProductUpdateMutation();
   const [
     updateChannels,
     updateChannelsOpts,
@@ -104,29 +93,31 @@ export function useProductUpdateHandler(
   const [
     updateVariantChannels,
     updateVariantChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation({});
+  ] = useProductVariantChannelListingUpdateMutation();
 
   const [
     deleteAttributeValue,
     deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
+  ] = useAttributeValueDeleteMutation();
 
-  const submit = createMetadataUpdateHandler(
+  const sendMutations = createMetadataUpdateHandler(
     product,
     product?.productType.hasVariants
       ? createProductWithVariantsUpdateHandler(
           product,
           allChannels,
           uploadFile,
-          variables => updateProduct({ variables }),
+          updateProduct,
           updateChannels,
           variables => deleteAttributeValue({ variables }),
+          updateVariant,
+          updateStocks,
         )
       : createSimpleProductUpdateHandler(
           product,
           allChannels,
           variables => uploadFile({ variables }),
-          variables => updateSimpleProduct({ variables }),
+          updateProduct,
           updateChannels,
           updateVariantChannels,
           productVariantCreate,
@@ -136,30 +127,44 @@ export function useProductUpdateHandler(
     variables => updatePrivateMetadata({ variables }),
   );
 
+  const submit = async (data: ProductUpdateSubmitData) => {
+    const errors = await sendMutations(data);
+
+    if (errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges),
+      });
+    }
+
+    return errors;
+  };
+
   const called =
     updateMetadataOpts.called ||
     updatePrivateMetadataOpts.called ||
     productVariantCreateOpts.called ||
     uploadFileOpts.called ||
     updateProductOpts.called ||
-    updateSimpleProductOpts.called ||
     updateChannelsOpts.called ||
     updateVariantChannelsOpts.called ||
-    deleteAttributeValueOpts.called;
+    deleteAttributeValueOpts.called ||
+    updateStocksOpts.called ||
+    updateVariantOpts.called;
   const loading =
     updateMetadataOpts.loading ||
     updatePrivateMetadataOpts.loading ||
     productVariantCreateOpts.loading ||
     uploadFileOpts.loading ||
     updateProductOpts.loading ||
-    updateSimpleProductOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
-    deleteAttributeValueOpts.loading;
+    deleteAttributeValueOpts.loading ||
+    updateStocksOpts.loading ||
+    updateVariantOpts.loading;
 
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors ?? []),
-    ...(updateSimpleProductOpts.data?.productUpdate.errors ?? []),
     ...(productVariantCreateOpts.data?.productVariantCreate.errors ?? []),
   ];
 
