@@ -102,7 +102,7 @@ describe("As an admin I want to see correct information on dashboard home page",
         homePageUtils.getSalesAmount(defaultChannel.slug).then(salesAmount => {
           salesAmountRegexp = getSalesAmountRegex(
             salesAmount,
-            (productPrice + shippingPrice) * 2,
+            productPrice * 2 + shippingPrice,
           );
         });
 
