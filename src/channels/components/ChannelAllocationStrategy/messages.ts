@@ -8,8 +8,8 @@ export const messages = defineMessages({
   },
   allocationStrategyDescription: {
     defaultMessage:
-      "Strategy defines the preference of warehouses for order-line allocations or reservations.",
-    id: "vnypKS",
+      "Strategy defines the preference of warehouses for stock allocations and reservations.",
+    id: "/DzBc6",
     description: "section description",
   },
   prioritizeBySortOrder: {
@@ -35,9 +35,9 @@ export const messages = defineMessages({
     description: "option description",
   },
   allocaationMayOccur: {
-    defaultMessage: "Stock allocations may occur when:",
+    defaultMessage: "Stock allocations occur when:",
     description: "tooltip",
-    id: "G1jXBj",
+    id: "icb1fc",
   },
   allocaationMayOccurWithTrackInventory: {
     defaultMessage:

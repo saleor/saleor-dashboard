@@ -125,7 +125,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     warehousesIdsToAdd,
     warehousesToDisplay,
     defaultCountry,
-    stockSettings,
+    allocationStrategy,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
@@ -139,7 +139,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           addWarehouses: warehousesIdsToAdd,
           removeWarehouses: warehousesIdsToRemove,
           stockSettings: {
-            allocationStrategy: stockSettings.allocationStrategy,
+            allocationStrategy,
           },
         },
       },
@@ -154,7 +154,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         warehousesToDisplay,
       );
 
-      reorderChannelWarehouses({
+      await reorderChannelWarehouses({
         variables: {
           channelId: id,
           moves,

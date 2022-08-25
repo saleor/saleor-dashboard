@@ -15,6 +15,12 @@ export const useStyles = makeStyles(
       position: "absolute",
       padding: theme.spacing(0.25),
     },
+    preview: {
+      display: "flex",
+      gap: theme.spacing(1),
+      flexWrap: "wrap",
+      alignItems: "center",
+    },
   }),
   { name: "ChannelAllocationStrategy" },
 );

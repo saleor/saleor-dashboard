@@ -1,11 +1,12 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import CardTitle from "@saleor/components/CardTitle";
+import PreviewPill from "@saleor/components/PreviewPill";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@saleor/graphql";
 import { Tooltip } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -24,9 +25,7 @@ const strategyOptions = [
 ];
 
 interface ChannelAllocationStrategyProps {
-  data?: {
-    stockSettings: StockSettingsInput;
-  };
+  data?: StockSettingsInput;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -36,13 +35,18 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
   disabled,
   onChange,
 }) => {
-  const { stockSettings } = data;
-  const intl = useIntl();
   const classes = useStyles();
 
   return (
     <Card>
-      <CardTitle title={intl.formatMessage(messages.allocationStrategy)} />
+      <CardTitle
+        title={
+          <div className={classes.preview}>
+            <FormattedMessage {...messages.allocationStrategy} />
+            <PreviewPill />
+          </div>
+        }
+      />
       <CardContent>
         <RadioGroupField
           label={
@@ -91,20 +95,8 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           }))}
           disabled={disabled}
           name="allocationStrategy"
-          value={stockSettings?.allocationStrategy}
-          onChange={event =>
-            onChange({
-              ...event,
-              target: {
-                ...event.target,
-                value: {
-                  ...stockSettings,
-                  allocationStrategy: event.target.value,
-                },
-                name: "stockSettings",
-              },
-            })
-          }
+          value={data?.allocationStrategy}
+          onChange={onChange}
         />
       </CardContent>
     </Card>

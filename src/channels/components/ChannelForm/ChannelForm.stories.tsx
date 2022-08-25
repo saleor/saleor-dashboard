@@ -17,9 +17,7 @@ const props: ChannelFormProps = {
     name: "Test",
     slug: "test",
     defaultCountry: CountryCode.PL,
-    stockSettings: {
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
-    },
+    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
     warehousesToDisplay: [
       {
         __typename: "Warehouse",

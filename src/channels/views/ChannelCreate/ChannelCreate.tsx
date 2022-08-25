@@ -68,7 +68,7 @@ export const ChannelCreateView = ({}) => {
     warehousesToDisplay,
     shippingZonesToDisplay,
     currencyCode,
-    stockSettings,
+    allocationStrategy,
     ...rest
   }: FormData) => {
     const createChannelMutation = createChannel({
@@ -78,7 +78,9 @@ export const ChannelCreateView = ({}) => {
           currencyCode: currencyCode.toUpperCase(),
           addShippingZones: shippingZonesIdsToAdd,
           addWarehouses: warehousesIdsToAdd,
-          stockSettings,
+          stockSettings: {
+            allocationStrategy,
+          },
         },
       },
     });
@@ -92,7 +94,7 @@ export const ChannelCreateView = ({}) => {
         warehousesToDisplay,
       );
 
-      reorderChannelWarehouses({
+      await reorderChannelWarehouses({
         variables: {
           channelId: result.data?.channelCreate.channel?.id,
           moves,

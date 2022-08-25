@@ -15,6 +15,7 @@ import {
   CountryFragment,
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
+  StockSettingsInput,
 } from "@saleor/graphql";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -95,6 +96,10 @@ const ChannelDetailsPage = function<TErrors>({
 
   const { defaultCountry, stockSettings, ...formData } =
     channel || ({} as ChannelDetailsFragment);
+  const initialStockSettings: StockSettingsInput = {
+    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
+    ...stockSettings,
+  };
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -105,10 +110,7 @@ const ChannelDetailsPage = function<TErrors>({
     warehousesIdsToRemove: [],
     defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...formData,
-    stockSettings: {
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
-      ...stockSettings,
-    },
+    ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
   };
@@ -222,6 +224,7 @@ const ChannelDetailsPage = function<TErrors>({
                   searchShippingZones={searchShippingZones}
                   fetchMoreShippingZones={fetchMoreShippingZones}
                   totalCount={allShippingZonesCount}
+                  loading={disabled}
                 />
                 <CardSpacer />
                 <Warehouses
@@ -235,6 +238,7 @@ const ChannelDetailsPage = function<TErrors>({
                   fetchMoreWarehouses={fetchMoreWarehouses}
                   totalCount={allWarehousesCount}
                   reorderWarehouses={reorderWarehouse}
+                  loading={disabled}
                 />
                 <CardSpacer />
                 <ChannelAllocationStrategy

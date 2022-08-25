@@ -1,4 +1,5 @@
 import { Accordion, Divider, Typography } from "@material-ui/core";
+import Skeleton from "@saleor/components/Skeleton";
 import { ReorderEvent } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -19,7 +20,14 @@ const messages = defineMessages({
 });
 
 const AssignmentList: React.FC<AssignmentListProps> = props => {
-  const { items, itemsName, totalCount = 0, removeItem, reorderItem } = props;
+  const {
+    items,
+    itemsName,
+    totalCount = 0,
+    loading,
+    removeItem,
+    reorderItem,
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles();
@@ -38,39 +46,49 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
 
   return (
     <Accordion classes={expanderClasses}>
-      <AssignmentListHeader assignCount={items.length} itemsName={itemsName} />
+      <AssignmentListHeader
+        assignCount={items.length}
+        itemsName={itemsName}
+        loading={loading}
+      />
       <Divider />
-      <SortableContainer
-        axis="xy"
-        lockAxis="xy"
-        useDragHandle
-        onSortStart={handleSortStart}
-        onSortEnd={handleSortEnd}
-      >
-        <div>
-          {items.map((item, itemIndex) => (
-            <Item
-              key={itemIndex}
-              index={itemIndex}
-              item={item}
-              onDelete={removeItem}
-              sortable={!!reorderItem}
-            />
-          ))}
-        </div>
-      </SortableContainer>
-      {hasMoreItemsToBeSelected ? (
-        <AssignmentListFooter {...props} />
+      {loading ? (
+        <Skeleton className={classes.skeleton} />
       ) : (
-        <Typography
-          color="textSecondary"
-          variant="subtitle1"
-          className={classes.infoMessage}
-        >
-          {intl.formatMessage(messages.allSelectedMessage, {
-            itemsName: itemsName.toLowerCase(),
-          })}
-        </Typography>
+        <>
+          <SortableContainer
+            axis="xy"
+            lockAxis="xy"
+            useDragHandle
+            onSortStart={handleSortStart}
+            onSortEnd={handleSortEnd}
+          >
+            <div>
+              {items.map((item, itemIndex) => (
+                <Item
+                  key={itemIndex}
+                  index={itemIndex}
+                  item={item}
+                  onDelete={removeItem}
+                  sortable={!!reorderItem}
+                />
+              ))}
+            </div>
+          </SortableContainer>
+          {hasMoreItemsToBeSelected ? (
+            <AssignmentListFooter {...props} />
+          ) : (
+            <Typography
+              color="textSecondary"
+              variant="subtitle1"
+              className={classes.infoMessage}
+            >
+              {intl.formatMessage(messages.allSelectedMessage, {
+                itemsName: itemsName.toLowerCase(),
+              })}
+            </Typography>
+          )}
+        </>
       )}
     </Accordion>
   );

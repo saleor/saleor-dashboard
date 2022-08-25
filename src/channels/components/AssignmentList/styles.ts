@@ -28,6 +28,10 @@ export const useHeaderStyles = makeStyles(
       flexDirection: "row",
       alignItems: "center",
     },
+    skeleton: {
+      width: "100%",
+      marginRight: theme.spacing(4),
+    },
     // empty expanded needed for mui to use root styles
     expanded: {},
     root: {
@@ -78,6 +82,9 @@ export const useStyles = makeStyles(
     },
     infoMessage: {
       padding: theme.spacing(3),
+    },
+    skeleton: {
+      margin: theme.spacing(4, 0),
     },
   }),
   { name: "AssignmentList" },

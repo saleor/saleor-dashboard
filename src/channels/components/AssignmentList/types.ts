@@ -13,6 +13,7 @@ export interface AssignmentListProps {
   totalCount: number;
   inputName: string;
   dataTestId: string;
+  loading: boolean;
   addItem: (id: string) => void;
   removeItem: (id: string) => void;
   reorderItem?: ReorderAction;

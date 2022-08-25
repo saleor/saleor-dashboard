@@ -31,7 +31,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../styles";
 import { ExtendedFormHelperTextProps } from "./types";
 
-export interface FormData {
+export interface FormData extends StockSettingsInput {
   name: string;
   currencyCode: string;
   slug: string;
@@ -42,7 +42,6 @@ export interface FormData {
   shippingZonesToDisplay: ChannelShippingZones;
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
-  stockSettings: StockSettingsInput;
 }
 
 export interface ChannelFormProps {

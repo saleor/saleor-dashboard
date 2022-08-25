@@ -166,6 +166,10 @@
     "context": "header, allocated product quantity",
     "string": "Allocated"
   },
+  "/DzBc6": {
+    "context": "section description",
+    "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
+  },
   "/JENWS": {
     "string": "Reduced Tax Rates"
   },
@@ -2210,10 +2214,6 @@
   "G1KzEx": {
     "context": "page status",
     "string": "Published"
-  },
-  "G1jXBj": {
-    "context": "tooltip",
-    "string": "Stock allocations may occur when:"
   },
   "G3ay2p": {
     "context": "section header",
@@ -5778,6 +5778,10 @@
     "context": "voucher country range",
     "string": "Countries"
   },
+  "icb1fc": {
+    "context": "tooltip",
+    "string": "Stock allocations occur when:"
+  },
   "icz/jb": {
     "context": "customer",
     "string": "Join Date"
@@ -7391,10 +7395,6 @@
   },
   "vlVTmY": {
     "string": "Product removed"
-  },
-  "vnypKS": {
-    "context": "section description",
-    "string": "Strategy defines the preference of warehouses for order-line allocations or reservations."
   },
   "voRaz3": {
     "context": "custom apps content",
