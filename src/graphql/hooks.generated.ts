@@ -1134,6 +1134,35 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const TransactionEventFragmentDoc = gql`
+    fragment TransactionEvent on TransactionEvent {
+  id
+  reference
+  createdAt
+  status
+  name
+}
+    `;
+export const TransactionItemFragmentDoc = gql`
+    fragment TransactionItem on TransactionItem {
+  id
+  type
+  reference
+  events {
+    ...TransactionEvent
+  }
+  refundedAmount {
+    ...Money
+  }
+  chargedAmount {
+    ...Money
+  }
+  authorizedAmount {
+    ...Money
+  }
+}
+    ${TransactionEventFragmentDoc}
+${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1326,6 +1355,9 @@ export const OrderDetailsFragmentDoc = gql`
   billingAddress {
     ...Address
   }
+  transactions {
+    ...TransactionItem
+  }
   giftCards {
     events {
       id
@@ -1463,6 +1495,7 @@ export const OrderDetailsFragmentDoc = gql`
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
+${TransactionItemFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}

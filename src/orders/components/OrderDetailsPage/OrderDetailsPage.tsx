@@ -41,6 +41,7 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
+import OrderTransaction from "../OrderTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
@@ -307,6 +308,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onVoid={onPaymentVoid}
                 />
                 <CardSpacer />
+                {order?.transactions?.map(transaction => (
+                  <OrderTransaction transaction={transaction} />
+                ))}
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}
