@@ -8,7 +8,7 @@ export function getPaymentMethodStripeId({
   cardNumber,
   cvc,
   expMonth,
-  expYear
+  expYear,
 }) {
   return cy.request({
     url: urlList.stripeApiPaymentMethods,
@@ -21,11 +21,11 @@ export function getPaymentMethodStripeId({
       "card[exp_month]": expMonth,
       "card[exp_year]": expYear,
       pasted_fields: "number",
-      key: stripePublicKey
+      key: stripePublicKey,
     },
     headers: {
-      Authorization: stripeAuthBearer
-    }
+      Authorization: stripeAuthBearer,
+    },
   });
 }
 
@@ -36,15 +36,15 @@ export function sendConfirmationToStripe(paymentMethodId, confirmationId) {
     form: true,
     failOnStatusCode: false,
     headers: {
-      Authorization: stripeAuthBearer
+      Authorization: stripeAuthBearer,
     },
     body: {
       payment_method: paymentMethodId,
       return_url: Cypress.config().baseUrl,
       webauthn_uvpa_available: "true",
       spc_eligible: "false",
-      key: stripePublicKey
-    }
+      key: stripePublicKey,
+    },
   });
 }
 
@@ -58,7 +58,7 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
       const { body } = new DOMParser().parseFromString(resp.body, "text/html");
       const formUrl = body.querySelector('[id="form"]').getAttribute("action");
       const source = body
-        .querySelector('[name="source"]')
+        .querySelector('[name="source_slug"]')
         .getAttribute("value");
       returnUrl = body
         .querySelector('[name="return_url"]')
@@ -71,7 +71,7 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
         .getAttribute("value");
       const usage = body.querySelector('[name="usage"]').getAttribute("value");
 
-      const url = `${formUrl}?source=${source}&livemode=false&type=three_d_secure&pass_through=&return_url=${returnUrl}&amount=${amount}&currency=
+      const url = `${formUrl}?source_slug=${source}&livemode=false&type=three_d_secure&pass_through=&return_url=${returnUrl}&amount=${amount}&currency=
     ${currency}&usage=${usage}`;
       cy.request(url);
     })
@@ -82,8 +82,8 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
         form: true,
         body: {
           PaRes: "success",
-          MD: ""
-        }
+          MD: "",
+        },
       });
     })
     .then(resp => {
@@ -99,8 +99,8 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
         body: {
           PaRes: paRes,
           MD: "",
-          Merchant: merchant
-        }
+          Merchant: merchant,
+        },
       });
     });
 }
