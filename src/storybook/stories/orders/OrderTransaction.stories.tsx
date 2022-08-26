@@ -41,6 +41,28 @@ const props: OrderTransactionProps = {
   },
 };
 
+const longAmountProps: OrderTransactionProps = {
+  transaction: {
+    ...props.transaction,
+    authorizedAmount: {
+      amount: 10000000000,
+      currency: "VES",
+      __typename: "Money",
+    },
+    refundedAmount: {
+      amount: 10000000000,
+      currency: "VES",
+      __typename: "Money",
+    },
+    chargedAmount: {
+      amount: 10000000000,
+      currency: "VES",
+      __typename: "Money",
+    },
+  },
+};
+
 storiesOf("Orders / OrderTransaction", module)
   .addDecorator(Decorator)
-  .add("default", () => <OrderTransaction {...props} />);
+  .add("default", () => <OrderTransaction {...props} />)
+  .add("long amounts", () => <OrderTransaction {...longAmountProps} />);

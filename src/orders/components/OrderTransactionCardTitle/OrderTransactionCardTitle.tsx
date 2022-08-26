@@ -45,10 +45,16 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
             {title}
           </TransactionLink>
 
-          {/* TODO: Pending refund */}
-
           <div className={classes.dataDisplay}>
-            {refundedAmount && (
+            {authorizedAmount.amount > 0 && (
+              <Button variant="tertiary" onClick={handleCapture}>
+                Capture
+              </Button>
+            )}
+
+            {/* TODO: Pending refund */}
+
+            {refundedAmount.amount > 0 && (
               <MoneyDisplay
                 label={intl.formatMessage(messages.refunded)}
                 money={refundedAmount}
@@ -62,16 +68,12 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
               money={chargedAmount}
             />
 
-            {authorizedAmount && (
+            {authorizedAmount.amount > 0 && (
               <>
                 <MoneyDisplay
                   label={intl.formatMessage(messages.authorized)}
                   money={authorizedAmount}
                 />
-                {/* TODO: Capture button */}
-                <Button variant="tertiary" onClick={handleCapture}>
-                  Capture
-                </Button>
               </>
             )}
           </div>
