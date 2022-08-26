@@ -132,6 +132,8 @@ jobs:
           CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           CYPRESS_grepTags: ${{ github.event.inputs.tags }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
         with:
           parallel: true
           group: 'UI - Chrome'
