@@ -17,6 +17,10 @@ export const useStyles = makeStyles(
     dataDisplay: {
       display: "flex",
       gap: theme.spacing(2),
+
+      "& > dl": {
+        minWidth: "73px", // aligns amounts with < 10 to each other
+      },
     },
   }),
   { name: "OrderTransactionCardTitle" },
