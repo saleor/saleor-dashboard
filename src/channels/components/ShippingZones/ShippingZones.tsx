@@ -9,7 +9,6 @@ import { useIntl } from "react-intl";
 
 import AssignmentList from "../AssignmentList";
 import { messages } from "./messages";
-import useStyles from "./styles";
 
 export interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
@@ -35,10 +34,9 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
   } = props;
 
   const intl = useIntl();
-  const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardTitle title={intl.formatMessage(sectionNames.shippingZones)} />
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>

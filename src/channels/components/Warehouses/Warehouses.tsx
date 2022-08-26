@@ -9,7 +9,6 @@ import { useIntl } from "react-intl";
 
 import AssignmentList from "../AssignmentList";
 import { messages } from "./messages";
-import useStyles from "./styles";
 
 export interface WarehousesProps {
   addWarehouse: (id: string) => void;
@@ -37,10 +36,9 @@ const Warehouses: React.FC<WarehousesProps> = props => {
   } = props;
 
   const intl = useIntl();
-  const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardTitle title={intl.formatMessage(sectionNames.warehouses)} />
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
