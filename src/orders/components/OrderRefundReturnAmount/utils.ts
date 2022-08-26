@@ -1,4 +1,3 @@
-import { IMoney } from "@saleor/components/Money";
 import { OrderDetailsFragment, OrderRefundDataQuery } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import {
@@ -8,6 +7,7 @@ import {
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
 } from "@saleor/orders/utils/data";
+import { IMoney } from "@saleor/utils/intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
 import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";

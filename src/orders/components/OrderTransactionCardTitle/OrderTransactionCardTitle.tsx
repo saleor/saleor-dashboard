@@ -1,6 +1,5 @@
 import { IconButton } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import Link from "@saleor/components/Link";
 import { TransactionItemFragment } from "@saleor/graphql";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
 import React from "react";
