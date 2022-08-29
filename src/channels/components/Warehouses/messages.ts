@@ -2,9 +2,9 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   subtitle: {
-    id: "k6y+X2",
+    id: "v2+u4c",
     defaultMessage:
-      "Select warehouses that will be used in this channel (warehouses can be assigned in multiple channels).",
+      "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels).",
     description: "card subtitle",
   },
 });

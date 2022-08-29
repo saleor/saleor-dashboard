@@ -5955,10 +5955,6 @@
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
-  "k6y+X2": {
-    "context": "card subtitle",
-    "string": "Select warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
-  },
   "k8ZJ5L": {
     "context": "number of products",
     "string": "No. of Products"
@@ -7288,6 +7284,10 @@
   },
   "v1pNHW": {
     "string": "Attribute Class"
+  },
+  "v2+u4c": {
+    "context": "card subtitle",
+    "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
   },
   "v3WWK+": {
     "string": "Status is invalid"
