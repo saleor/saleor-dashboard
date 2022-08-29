@@ -16,7 +16,6 @@ const props: PermissionGroupDetailsPageProps = {
   errors: [],
   isChecked: () => false,
   members: users,
-  membersModified: false,
   onAssign: () => undefined,
   onSort: () => undefined,
   onSubmit: () => undefined,

@@ -53,7 +53,6 @@ export interface PermissionGroupDetailsPageProps
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
-  membersModified: boolean;
   permissionGroup: PermissionGroupDetailsFragment;
   permissions: PermissionData[];
   permissionsExceeded: boolean;
@@ -67,7 +66,6 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   disabled,
   errors,
   members,
-  membersModified,
   onSubmit,
   permissionGroup,
   permissions,
@@ -143,7 +141,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               onCancel={() => navigate(permissionGroupListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={disabled || !membersModified}
+              disabled={disabled}
             />
           </div>
         </Container>
