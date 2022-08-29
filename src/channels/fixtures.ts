@@ -1,4 +1,5 @@
 import {
+  AllocationStrategyEnum,
   ChannelDetailsFragment,
   ChannelErrorCode,
   ChannelErrorFragment,
@@ -29,6 +30,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -43,6 +60,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -57,6 +90,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -71,6 +120,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -85,6 +150,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -99,6 +180,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
   {
     __typename: "Channel",
@@ -113,6 +210,22 @@ export const channelsList: ChannelDetailsFragment[] = [
       country: "Poland",
       __typename: "CountryDisplay",
     },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    },
+    warehouses: [
+      {
+        __typename: "Warehouse",
+        id: "WH1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "WH2",
+        name: "Warehouse 2",
+      },
+    ],
   },
 ];
 
@@ -129,6 +242,22 @@ export const channel: ChannelDetailsFragment = {
     country: "Poland",
     __typename: "CountryDisplay",
   },
+  stockSettings: {
+    __typename: "StockSettings",
+    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+  },
+  warehouses: [
+    {
+      __typename: "Warehouse",
+      id: "WH1",
+      name: "Warehouse 1",
+    },
+    {
+      __typename: "Warehouse",
+      id: "WH2",
+      name: "Warehouse 2",
+    },
+  ],
 };
 
 type ProductChannelsWithPricing = ProductFragment["channelListings"][0] & {

@@ -19,6 +19,9 @@ export const channelFragment = gql`
       code
       country
     }
+    stockSettings {
+      allocationStrategy
+    }
   }
 `;
 
@@ -26,5 +29,8 @@ export const channelDetailsFragment = gql`
   fragment ChannelDetails on Channel {
     ...Channel
     hasOrders
+    warehouses {
+      ...Warehouse
+    }
   }
 `;
