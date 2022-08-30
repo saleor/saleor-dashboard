@@ -33,6 +33,11 @@ const entityTypeMessages = defineMessages({
     defaultMessage: "Products",
     description: "product attribute entity type",
   },
+  productVariant: {
+    id: "wsDF7X",
+    defaultMessage: "Product variants",
+    description: "product variant attribute entity type",
+  },
 });
 
 const useStyles = makeStyles(
@@ -128,6 +133,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(entityTypeMessages.product),
       value: AttributeEntityTypeEnum.PRODUCT,
+    },
+    {
+      label: intl.formatMessage(entityTypeMessages.productVariant),
+      value: AttributeEntityTypeEnum.PRODUCTVARIANT,
     },
   ];
 
