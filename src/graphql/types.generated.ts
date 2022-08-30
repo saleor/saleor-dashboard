@@ -335,7 +335,8 @@ export type AttributeCreateInput = {
 /** An enumeration. */
 export enum AttributeEntityTypeEnum {
   PAGE = 'PAGE',
-  PRODUCT = 'PRODUCT'
+  PRODUCT = 'PRODUCT',
+  PRODUCTVARIANT = 'PRODUCTVARIANT'
 }
 
 /** An enumeration. */
@@ -486,7 +487,7 @@ export type AttributeValueFilterInput = {
 
 export type AttributeValueInput = {
   /** ID of the selected attribute. */
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
   /** URL of the file attribute. Every time, a new value is created. */
