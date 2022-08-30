@@ -110,7 +110,7 @@
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-bridge": "^0.1.10",
+    "@saleor/app-sdk": "~0.9.0-4",
     "@sentry/webpack-plugin": "^1.14.0",
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
