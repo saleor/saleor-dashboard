@@ -12,6 +12,7 @@ program
   .option("--tests_status <tests_status>", `tests status`)
   .option("--version <version>", "version of a project")
   .option("--pull_request_number <pull_request_number>", "Pull Request number")
+  .option("--auto_release <auto_release>", "is auto release")
   .action(async options => {
     const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
@@ -53,7 +54,11 @@ program
       process.exit(2);
     }
 
-    if (isPatchRelease(options.version) && options.tests_status === "success") {
+    if (
+      options.auto_release &&
+      isPatchRelease(options.version) &&
+      options.tests_status === "success"
+    ) {
       try {
         await octokit.request(
           "PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge",
