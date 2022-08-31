@@ -3888,10 +3888,6 @@
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
   },
-  "Sx7QVu": {
-    "context": "variant creation step",
-    "string": "Prices and SKU"
-  },
   "Sxzua5": {
     "context": "order payment",
     "string": "Settled"
