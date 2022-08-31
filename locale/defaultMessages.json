@@ -7515,6 +7515,10 @@
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
   },
+  "wsDF7X": {
+    "context": "product variant attribute entity type",
+    "string": "Product variants"
+  },
   "wyvzh9": {
     "context": "dialog header",
     "string": "Publish Pages"
