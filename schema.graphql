@@ -414,11 +414,10 @@ type Allocation implements Node {
 """
 Determine the allocation strategy for the channel.
 
-    PRIORITIZE_SORTING_ORDER - the allocation is prioritized by the warehouses' sort
-    order within the channel
+    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
+    within the channel
 
-    PRIORITIZE_HIGH_STOCK - the allocation is prioritized by the highest available
-    quantity in stocks
+    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
     
 """
 enum AllocationStrategyEnum {
@@ -11557,7 +11556,7 @@ type Mutation {
     """ID of a channel."""
     channelId: ID!
 
-    """The list of reordering operations for given channel warehouses."""
+    """The list of reordering operations for the given channel warehouses."""
     moves: [ReorderInput!]!
   ): ChannelReorderWarehouses
 
@@ -14909,7 +14908,7 @@ type PaymentError {
   """The error code."""
   code: PaymentErrorCode!
 
-  """List of varint IDs which causes the error."""
+  """List of variant IDs which causes the error."""
   variants: [ID!]
 }
 
@@ -21151,7 +21150,7 @@ Note: this API is currently in Feature Preview and can be subject to changes at 
 """
 type StockSettings {
   """
-  Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations.
+  Allocation strategy defines the preference of warehouses for allocations and reservations.
   """
   allocationStrategy: AllocationStrategyEnum!
 }
@@ -22856,7 +22855,11 @@ input WarehouseCreateInput {
   """Address of the warehouse."""
   address: AddressInput!
 
-  """Shipping zones supported by the warehouse."""
+  """
+  Shipping zones supported by the warehouse.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.
+  """
   shippingZones: [ID!]
 }
 
@@ -22930,6 +22933,9 @@ type WarehouseError {
 
   """The error code."""
   code: WarehouseErrorCode!
+
+  """List of shipping zones IDs which causes the error."""
+  shippingZones: [ID!]
 }
 
 """An enumeration."""

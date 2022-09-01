@@ -12,8 +12,8 @@ export const orderPaymentMessages = defineMessages({
     description: "OrderPayment does not require shipping",
   },
   paymentTitle: {
-    id: "SC/eNC",
-    defaultMessage: "Payment status",
+    id: "7KRGqz",
+    defaultMessage: "Payment balance",
     description: "Payment card title",
   },
   subtotal: {
@@ -93,6 +93,21 @@ export const orderPaymentMessages = defineMessages({
   paidWithGiftCard: {
     id: "vM9quW",
     defaultMessage: "Paid with Gift Card",
+    description: "order payment",
+  },
+  includedInSubtotal: {
+    id: "pPef6L",
+    defaultMessage: "Included in subtotal",
+    description: "order payment",
+  },
+  includedInPrices: {
+    id: "ukYopn",
+    defaultMessage: "Included in prices",
+    description: "order payment",
+  },
+  settled: {
+    id: "Sxzua5",
+    defaultMessage: "Settled",
     description: "order payment",
   },
 });

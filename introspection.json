@@ -2481,7 +2481,7 @@
       {
         "kind": "ENUM",
         "name": "AllocationStrategyEnum",
-        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - the allocation is prioritized by the warehouses' sort\n    order within the channel\n\n    PRIORITIZE_HIGH_STOCK - the allocation is prioritized by the highest available\n    quantity in stocks\n    ",
+        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -51802,7 +51802,7 @@
               },
               {
                 "name": "moves",
-                "description": "The list of reordering operations for given channel warehouses.",
+                "description": "The list of reordering operations for the given channel warehouses.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -67124,7 +67124,7 @@
           },
           {
             "name": "variants",
-            "description": "List of varint IDs which causes the error.",
+            "description": "List of variant IDs which causes the error.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -93930,7 +93930,7 @@
         "fields": [
           {
             "name": "allocationStrategy",
-            "description": "Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations.",
+            "description": "Allocation strategy defines the preference of warehouses for allocations and reservations.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -102023,7 +102023,7 @@
           },
           {
             "name": "shippingZones",
-            "description": "Shipping zones supported by the warehouse.",
+            "description": "Shipping zones supported by the warehouse.\n\nDEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -102311,6 +102311,26 @@
                 "kind": "ENUM",
                 "name": "WarehouseErrorCode",
                 "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingZones",
+            "description": "List of shipping zones IDs which causes the error.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
