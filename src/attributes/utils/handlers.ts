@@ -90,7 +90,7 @@ export function createFetchReferencesHandler(
     } else if (
       [
         AttributeEntityTypeEnum.PRODUCT,
-        AttributeEntityTypeEnum.PRODUCTVARIANT,
+        AttributeEntityTypeEnum.PRODUCT_VARIANT,
       ].includes(attribute.data.entityType) &&
       fetchReferenceProducts
     ) {
@@ -118,7 +118,7 @@ export function createFetchMoreReferencesHandler(
   } else if (
     [
       AttributeEntityTypeEnum.PRODUCT,
-      AttributeEntityTypeEnum.PRODUCTVARIANT,
+      AttributeEntityTypeEnum.PRODUCT_VARIANT,
     ].includes(attribute.data.entityType)
   ) {
     return fetchMoreReferenceProducts;

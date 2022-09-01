@@ -454,7 +454,7 @@ export const getReferenceAttributeDisplayData = (
       referenceProducts,
     );
   } else if (
-    attribute.data.entityType === AttributeEntityTypeEnum.PRODUCTVARIANT
+    attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT
   ) {
     return getProductVariantReferenceAttributeDisplayData(
       attribute,
@@ -509,7 +509,7 @@ export const getAttributeValuesFromReferences = (
       getSelectedReferencesFromAttribute(attribute, referenceProducts),
     );
   } else if (
-    attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCTVARIANT
+    attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT
   ) {
     return mapNodeToChoice(
       getSelectedReferencesFromAttribute(

@@ -136,7 +136,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     },
     {
       label: intl.formatMessage(entityTypeMessages.productVariant),
-      value: AttributeEntityTypeEnum.PRODUCTVARIANT,
+      value: AttributeEntityTypeEnum.PRODUCT_VARIANT,
     },
   ];
 

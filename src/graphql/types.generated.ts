@@ -335,7 +335,7 @@ export type AttributeCreateInput = {
 export enum AttributeEntityTypeEnum {
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
-  PRODUCTVARIANT = 'PRODUCTVARIANT'
+  PRODUCT_VARIANT = 'PRODUCT_VARIANT'
 }
 
 /** An enumeration. */
