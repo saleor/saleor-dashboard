@@ -15,6 +15,9 @@ export function getFirstProducts(first, search) {
     products(first:${first}${filter}){
       edges{
         node{
+          thumbnail{
+            url
+          }
           id
           name
           variants{
