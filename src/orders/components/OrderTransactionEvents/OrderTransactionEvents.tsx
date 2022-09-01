@@ -1,13 +1,10 @@
+import { TableCell, TableRow } from "@material-ui/core";
+import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { TransactionEventFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
-import {
-  List,
-  ListItem,
-  ListItemCell,
-  makeStyles,
-  Pill,
-} from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import classnames from "classnames";
 import React from "react";
 
 import EventStatus from "./EventStatus";
@@ -31,13 +28,51 @@ const EventTime: React.FC<{ date: string }> = ({ date }) => {
 };
 
 const useStyles = makeStyles(
-  {
-    first: {
-      "&&": {
-        paddingLeft: 0,
+  theme => ({
+    cardContent: {
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
+    table: {
+      "& td": {
+        // Gap = 24px
+        paddingLeft: "12px",
+        paddingRight: "12px",
+        "&:first-child": {
+          // Override for Material first td
+          paddingRight: "12px !important",
+        },
       },
     },
-  },
+    colSmall: {
+      [theme.breakpoints.down("md")]: {
+        // Take as little space as possible on mobile
+        width: "1%",
+        whiteSpace: "nowrap",
+      },
+    },
+    colStatus: {
+      [theme.breakpoints.up("md")]: {
+        // Max text with "Success"
+        width: "126px",
+      },
+    },
+    colPspReference: {
+      [theme.breakpoints.up("md")]: {
+        width: "250px",
+      },
+    },
+    colLast: {
+      // Align with card
+      [theme.breakpoints.up("md")]: {
+        paddingRight: "32px !important",
+        textAlign: "right",
+      },
+      [theme.breakpoints.down("md")]: {
+        whiteSpace: "nowrap",
+      },
+    },
+  }),
   {
     name: "OrderTransactionEvents",
   },
@@ -48,24 +83,28 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
 }) => {
   const classes = useStyles();
   return (
-    <List gridTemplate={["minmax(84px, auto)", "auto", "auto", "1fr"]}>
+    <ResponsiveTable className={classes.table}>
       {renderCollection(events, event => (
-        <ListItem>
-          <ListItemCell className={classes.first}>
+        <TableRow>
+          <TableCell
+            className={classnames(classes.colSmall, classes.colStatus)}
+          >
             <EventStatus status={event.status} />
-          </ListItemCell>
-          <ListItemCell>{event.name}</ListItemCell>
-          <ListItemCell>
+          </TableCell>
+          <TableCell className={classes.colSmall}>{event.name}</TableCell>
+          <TableCell
+            className={classnames(classes.colSmall, classes.colPspReference)}
+          >
             {event.reference && (
               <Pill outlined color="generic" label={event.reference} />
             )}
-          </ListItemCell>
-          <ListItemCell>
+          </TableCell>
+          <TableCell className={classes.colLast}>
             <EventTime date={event.createdAt} />
-          </ListItemCell>
-        </ListItem>
+          </TableCell>
+        </TableRow>
       ))}
-    </List>
+    </ResponsiveTable>
   );
 };
 
