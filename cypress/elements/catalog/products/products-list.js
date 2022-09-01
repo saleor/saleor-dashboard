@@ -5,6 +5,7 @@ export const PRODUCTS_LIST = {
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",
   productImage: "[class='MuiAvatar-img']",
+  imageIcon: '[data-test-id="imageIcon"]',
   tableCellAvatar: "[data-test-id='table-cell-avatar']",
   productRowElements: {
     name: '[data-test-id="name"]',
