@@ -159,11 +159,10 @@ export enum AddressTypeEnum {
 /**
  * Determine the allocation strategy for the channel.
  *
- *     PRIORITIZE_SORTING_ORDER - the allocation is prioritized by the warehouses' sort
- *     order within the channel
+ *     PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
+ *     within the channel
  *
- *     PRIORITIZE_HIGH_STOCK - the allocation is prioritized by the highest available
- *     quantity in stocks
+ *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
  *
  */
 export enum AllocationStrategyEnum {
@@ -4934,7 +4933,11 @@ export type WarehouseCreateInput = {
   name: Scalars['String'];
   /** Address of the warehouse. */
   address: AddressInput;
-  /** Shipping zones supported by the warehouse. */
+  /**
+   * Shipping zones supported by the warehouse.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.
+   */
   shippingZones?: InputMaybe<Array<Scalars['ID']>>;
 };
 
