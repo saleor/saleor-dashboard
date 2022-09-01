@@ -1,6 +1,5 @@
-import { LocaleConsumer } from "@saleor/components/Locale";
-import { TimezoneConsumer } from "@saleor/components/Timezone";
 import { TransactionEventFragment } from "@saleor/graphql";
+import useLocale from "@saleor/hooks/useLocale";
 import {
   List,
   ListItem,
@@ -10,7 +9,6 @@ import {
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
-import ReactMoment from "react-moment";
 
 import EventStatus from "./EventStatus";
 
@@ -18,19 +16,19 @@ export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[];
 }
 
-const EventTime: React.FC<{ date: string }> = ({ date }) => (
-  <TimezoneConsumer>
-    {tz => (
-      <LocaleConsumer>
-        {({ locale }) => (
-          <ReactMoment locale={locale} tz={tz} format="(zz) LLL">
-            {date}
-          </ReactMoment>
-        )}
-      </LocaleConsumer>
-    )}
-  </TimezoneConsumer>
-);
+const EventTime: React.FC<{ date: string }> = ({ date }) => {
+  const { locale } = useLocale();
+  const intl = new Intl.DateTimeFormat(locale, {
+    timeZoneName: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return <time dateTime={date}>{intl.format(new Date(date))}</time>;
+};
 
 const useStyles = makeStyles(
   {
@@ -58,7 +56,9 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           </ListItemCell>
           <ListItemCell>{event.name}</ListItemCell>
           <ListItemCell>
-            {event.reference && <Pill outlined label={event.reference} />}
+            {event.reference && (
+              <Pill outlined color="generic" label={event.reference} />
+            )}
           </ListItemCell>
           <ListItemCell>
             <EventTime date={event.createdAt} />
