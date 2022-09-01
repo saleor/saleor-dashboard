@@ -1131,6 +1131,10 @@
     "context": "product field",
     "string": "Export Product Weight"
   },
+  "7KRGqz": {
+    "context": "Payment card title",
+    "string": "Payment balance"
+  },
   "7NFfmz": {
     "string": "Products"
   },
@@ -3810,10 +3814,6 @@
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
   },
-  "SC/eNC": {
-    "context": "Payment card title",
-    "string": "Payment status"
-  },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
   },
@@ -3891,6 +3891,10 @@
   "SqhC7g": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
+  },
+  "Sxzua5": {
+    "context": "order payment",
+    "string": "Settled"
   },
   "T/5OyA": {
     "string": "No translation yet"
@@ -6574,6 +6578,10 @@
     "context": "tab name",
     "string": "All Vouchers"
   },
+  "pPef6L": {
+    "context": "order payment",
+    "string": "Included in subtotal"
+  },
   "pRYGUR": {
     "context": "section description",
     "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
@@ -7239,6 +7247,10 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
+  },
+  "ukYopn": {
+    "context": "order payment",
+    "string": "Included in prices"
   },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",

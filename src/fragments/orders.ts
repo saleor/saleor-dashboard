@@ -287,6 +287,9 @@ export const fragmentOrderDetails = gql`
     totalCaptured {
       ...Money
     }
+    totalBalance {
+      ...Money
+    }
     undiscountedTotal {
       net {
         ...Money

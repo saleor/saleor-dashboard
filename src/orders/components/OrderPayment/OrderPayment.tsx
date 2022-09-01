@@ -11,41 +11,15 @@ import {
   OrderDiscountType,
   OrderStatus,
 } from "@saleor/graphql";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { Pill } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, transformPaymentStatus } from "../../../misc";
+import { transformPaymentStatus } from "../../../misc";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
-import {
-  extractOrderGiftCardUsedAmount,
-  extractOutstandingBalance,
-  extractRefundedAmount,
-} from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    root: {
-      ...theme.typography.body1,
-      lineHeight: 1.9,
-      width: "100%",
-    },
-    textRight: {
-      textAlign: "right",
-    },
-    totalRow: {
-      fontWeight: 600,
-    },
-    titleContainer: {
-      display: "flex",
-    },
-  }),
-  { name: "OrderPayment" },
-);
+import { useStyles } from "./styles";
+import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -61,20 +35,17 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
 
   const intl = useIntl();
 
-  const canCapture = maybe(() => order.actions, []).includes(
-    OrderAction.CAPTURE,
-  );
-  const canVoid = maybe(() => order.actions, []).includes(OrderAction.VOID);
-  const canRefund = maybe(() => order.actions, []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = maybe(() => order.actions, []).includes(
+  const canCapture = (order?.actions ?? []).includes(OrderAction.CAPTURE);
+  const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
+  const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
+  const canMarkAsPaid = (order?.actions ?? []).includes(
     OrderAction.MARK_AS_PAID,
   );
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
-  const outstandingBalance = extractOutstandingBalance(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
-  const getDeliveryMethodName = order => {
+  const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
       order?.shippingMethodName === undefined &&
       order?.shippingPrice === undefined &&
@@ -102,13 +73,15 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           !order?.paymentStatus ? (
             <Skeleton />
           ) : (
-            <div className={classes.header}>
-              <div className={classes.titleContainer}>
-                <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-                <HorizontalSpacer spacing={2} />
-                <Pill label={payment.localized} color={payment.status} />
-              </div>
-              {maybe(() => order.status) !== OrderStatus.CANCELED &&
+            <div className={classes.titleContainer}>
+              <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+              <HorizontalSpacer spacing={2} />
+              <Pill
+                className={classes.rightmostLeftAlignedElement}
+                label={payment.localized}
+                color={payment.status}
+              />
+              {order?.status !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
                   <div>
                     {canCapture && (
@@ -144,172 +117,142 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         }
       />
       <CardContent>
-        <table className={classes.root}>
-          <tbody>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.subtotal} />
-              </td>
-              <td>
-                {maybe(() => order.lines) === undefined ? (
-                  <Skeleton />
+        <div className={classes.root}>
+          {order?.discounts?.map(discount => (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.discount} />
+              <HorizontalSpacer spacing={4} />
+              <span className={classes.supportText}>
+                {discount.type === OrderDiscountType.MANUAL ? (
+                  <FormattedMessage {...orderPaymentMessages.staffAdded} />
                 ) : (
-                  <FormattedMessage
-                    {...orderPaymentMessages.itemCount}
-                    values={{
-                      quantity: order.lines
-                        .map(line => line.quantity)
-                        .reduce((curr, prev) => prev + curr, 0),
-                    }}
-                  />
+                  <FormattedMessage {...orderPaymentMessages.voucher} />
                 )}
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.subtotal.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.subtotal.gross} />
+              </span>
+              <span
+                className={clsx(
+                  classes.leftmostRightAlignedElement,
+                  classes.smallFont,
+                  classes.supportText,
                 )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.taxes} />
-              </td>
-              <td>
-                {maybe(() => order.total.tax) === undefined ? (
-                  <Skeleton />
-                ) : order.total.tax.amount > 0 ? (
-                  intl.formatMessage(orderPaymentMessages.vatIncluded)
-                ) : (
-                  intl.formatMessage(orderPaymentMessages.vatNotIncluded)
-                )}
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.total.tax) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.total.tax} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.shipping} />
-              </td>
-              <td>{getDeliveryMethodName(order)}</td>
-              <td className={classes.textRight}>
-                {maybe(() => order.shippingPrice.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.shippingPrice.gross} />
-                )}
-              </td>
-            </tr>
-            {order?.discounts?.map(discount => (
-              <tr>
-                <td>
-                  <FormattedMessage {...orderPaymentMessages.discount} />
-                </td>
-                <td>
-                  {discount.type === OrderDiscountType.MANUAL ? (
-                    <FormattedMessage {...orderPaymentMessages.staffAdded} />
-                  ) : (
-                    <FormattedMessage {...orderPaymentMessages.voucher} />
+              >
+                <FormattedMessage
+                  {...orderPaymentMessages.includedInSubtotal}
+                />
+              </span>
+              <HorizontalSpacer spacing={2} />
+              <div className={classes.supportText}>
+                -<Money money={discount.amount} />
+              </div>
+            </div>
+          ))}
+          <div>
+            <FormattedMessage {...orderPaymentMessages.subtotal} />
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.subtotal.gross} /> ?? <Skeleton />}
+            </div>
+          </div>
+          <div>
+            <FormattedMessage {...orderPaymentMessages.shipping} />
+            <HorizontalSpacer spacing={4} />
+            <div className={classes.supportText}>
+              {getDeliveryMethodName(order)}
+            </div>
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
+            </div>
+          </div>
+          <div>
+            <FormattedMessage {...orderPaymentMessages.taxes} />
+            {order?.total.tax.amount > 0 && (
+              <>
+                <div
+                  className={clsx(
+                    classes.supportText,
+                    classes.smallFont,
+                    classes.leftmostRightAlignedElement,
                   )}
-                </td>
-                <td className={classes.textRight}>
-                  -<Money money={discount.amount} />
-                </td>
-              </tr>
-            ))}
-            <tr className={classes.totalRow}>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.total} />
-              </td>
-              <td />
-              <td className={classes.textRight}>
-                {maybe(() => order.total.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.total.gross} />
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                >
+                  <FormattedMessage
+                    {...orderPaymentMessages.includedInPrices}
+                  />{" "}
+                </div>
+                <HorizontalSpacer spacing={2} />
+              </>
+            )}
+            <div
+              className={clsx(
+                {
+                  [classes.leftmostRightAlignedElement]:
+                    order?.total.tax.amount === 0,
+                },
+                classes.supportText,
+              )}
+            >
+              {<Money money={order?.total.tax} /> ?? <Skeleton />}
+            </div>
+          </div>
+          <div className={classes.totalRow}>
+            <FormattedMessage {...orderPaymentMessages.total} />
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.total.gross} /> ?? <Skeleton />}
+            </div>
+          </div>
+        </div>
       </CardContent>
       <Hr />
       <CardContent>
-        <table className={classes.root}>
-          <tbody>
-            {!!usedGiftCardAmount && (
-              <tr>
-                <td>
-                  <FormattedMessage
-                    {...orderPaymentMessages.paidWithGiftCard}
-                  />
-                </td>
-                <td className={classes.textRight}>
-                  <Money
-                    money={{
-                      amount: usedGiftCardAmount,
-                      currency: order?.total?.gross?.currency,
-                    }}
-                  />
-                </td>
-              </tr>
+        <div className={classes.root}>
+          {!!usedGiftCardAmount && (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.paidWithGiftCard} />
+              <div className={classes.leftmostRightAlignedElement}>
+                <Money
+                  money={{
+                    amount: usedGiftCardAmount,
+                    currency: order?.total?.gross?.currency,
+                  }}
+                />
+              </div>
+            </div>
+          )}
+          <div>
+            <FormattedMessage {...orderPaymentMessages.preauthorized} />
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.totalAuthorized} /> ?? <Skeleton />}
+            </div>
+          </div>
+          <div>
+            <FormattedMessage {...orderPaymentMessages.captured} />
+            <div className={classes.leftmostRightAlignedElement}>
+              {<Money money={order?.totalCaptured} /> ?? <Skeleton />}
+            </div>
+          </div>
+          {!!refundedAmount?.amount && (
+            <div>
+              <FormattedMessage {...orderPaymentMessages.refunded} />
+              <div className={classes.leftmostRightAlignedElement}>
+                {<Money money={refundedAmount} />}
+              </div>
+            </div>
+          )}
+          <div
+            className={clsx(
+              { [classes.success]: order?.totalBalance.amount === 0 },
+              classes.totalRow,
             )}
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.preauthorized} />
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.totalAuthorized.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.totalAuthorized} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.captured} />
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.totalCaptured.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.totalCaptured} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.refunded} />
-              </td>
-              <td className={classes.textRight}>
-                {refundedAmount?.amount === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={refundedAmount} />
-                )}
-              </td>
-            </tr>
-            <tr className={classes.totalRow}>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.outstanding} />
-              </td>
-              <td className={classes.textRight}>
-                {outstandingBalance?.amount === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={outstandingBalance} />
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          >
+            <FormattedMessage {...orderPaymentMessages.outstanding} />
+            <div className={classes.leftmostRightAlignedElement}>
+              {order?.totalBalance.amount === 0 ? (
+                <FormattedMessage {...orderPaymentMessages.settled} />
+              ) : (
+                <Money money={order?.totalBalance} /> ?? <Skeleton />
+              )}
+              {}
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
