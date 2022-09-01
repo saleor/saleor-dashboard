@@ -49,6 +49,9 @@ const useStyles = makeStyles(
     spacer: {
       flex: 1,
     },
+    tooltip: {
+      color: theme.palette.saleor.active[5],
+    },
   }),
   { name: "PluginSettings" },
 );
@@ -96,7 +99,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                   {fieldData.helpText && (
                     <Tooltip
                       title={
-                        <Typography variant="body2">
+                        <Typography variant="body2" className={classes.tooltip}>
                           {fieldData.helpText}
                         </Typography>
                       }
