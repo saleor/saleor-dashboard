@@ -182,7 +182,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                       style={
                         value?.file
                           ? { backgroundImage: `url(${value.file.url})` }
-                          : { backgroundColor: value.value }
+                          : { backgroundColor: value?.value }
                       }
                     />
                   </TableCell>
