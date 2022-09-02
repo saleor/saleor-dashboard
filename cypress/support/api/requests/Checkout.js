@@ -280,3 +280,25 @@ export function getCheckout(token) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.checkout");
 }
+
+export function orderCreateFromCheckout(
+  checkoutId,
+  removeCheckoutFlag = true,
+  token,
+) {
+  const mutation = `mutation {
+    orderCreateFromCheckout(id: "${checkoutId}", removeCheckout: ${removeCheckoutFlag})
+    {
+          order{
+              id
+          }
+          errors{
+              field
+              message
+          }
+      }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation, token)
+    .its("body.data.orderCreateFromCheckout.order");
+}
