@@ -283,8 +283,8 @@ export function getCheckout(token) {
 
 export function orderCreateFromCheckout(
   checkoutId,
-  removeCheckoutFlag = true,
   token,
+  removeCheckoutFlag = true,
 ) {
   const mutation = `mutation {
     orderCreateFromCheckout(id: "${checkoutId}", removeCheckout: ${removeCheckoutFlag})

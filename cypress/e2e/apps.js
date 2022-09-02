@@ -68,11 +68,7 @@ describe("As a staff user I want to manage apps", () => {
         });
       })
       .then(
-        ({
-          warehouse: warehouseResp,
-          shippingZone: shippingZoneResp,
-          shippingMethod: shippingMethodResp,
-        }) => {
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
           warehouse = warehouseResp;
           shippingMethod = shippingMethodResp;
         },
@@ -217,9 +213,8 @@ describe("As a staff user I want to manage apps", () => {
 
   it(
     "should be able to use app to create order from checkout. TC: SALEOR_3005",
-    { tags: ["@app", "@allEnv"] },
+    { tags: ["@app", "@allEnv", "@stable"] },
     () => {
-      const startsWith = "HandleCheckouts";
       const token = createdApp.authToken;
 
       cy.clearSessionData().loginUserViaRequest();
@@ -241,7 +236,7 @@ describe("As a staff user I want to manage apps", () => {
         );
         checkout = checkoutResp;
         addShippingMethod(checkout.id, shippingMethodId);
-        orderCreateFromCheckout(checkout.id, true, token).then(resp => {
+        orderCreateFromCheckout(checkout.id, token).then(resp => {
           expect(resp.id).to.be.not.empty;
         });
       });
