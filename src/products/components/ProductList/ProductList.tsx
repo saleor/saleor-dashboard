@@ -1,10 +1,4 @@
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,
