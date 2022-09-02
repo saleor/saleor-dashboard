@@ -492,34 +492,11 @@ export const getSelectedReferencesFromAttribute = <T extends Node>(
       !attribute?.value?.some(selectedValue => selectedValue === value.id),
   ) || [];
 
-export const getAttributeValuesFromReferences = (
+export const getReferenceAttributeEntityTypeFromAttribute = (
   attributeId: string,
   attributes?: AttributeInput[],
-  referencePages?: RelayToFlat<SearchPagesQuery["search"]>,
-  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>,
-) => {
-  const attribute = attributes?.find(attribute => attribute.id === attributeId);
-
-  if (attribute?.data?.entityType === AttributeEntityTypeEnum.PAGE) {
-    return mapPagesToChoices(
-      getSelectedReferencesFromAttribute(attribute, referencePages),
-    );
-  } else if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
-    return mapNodeToChoice(
-      getSelectedReferencesFromAttribute(attribute, referenceProducts),
-    );
-  } else if (
-    attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT
-  ) {
-    return mapNodeToChoice(
-      getSelectedReferencesFromAttribute(
-        attribute,
-        mapReferenceProductsToVariants(referenceProducts),
-      ),
-    );
-  }
-  return [];
-};
+): AttributeEntityTypeEnum | undefined =>
+  attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 
 export const mapReferenceProductsToVariants = (
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,

@@ -1,5 +1,5 @@
 import {
-  getAttributeValuesFromReferences,
+  getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -281,12 +281,13 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           />
           {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog
-              attributeValues={getAttributeValuesFromReferences(
+              entityType={getReferenceAttributeEntityTypeFromAttribute(
                 assignReferencesAttributeId,
                 data.attributes,
-                referencePages,
-                referenceProducts,
               )}
+              confirmButtonState={"default"}
+              products={referenceProducts}
+              pages={referencePages}
               hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}
               onFetch={handlers.fetchReferences}
