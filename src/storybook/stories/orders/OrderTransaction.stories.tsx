@@ -38,6 +38,14 @@ const props: OrderTransactionProps = {
         name: "Capture",
         __typename: "TransactionEvent",
       },
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        reference: "SDFDS34543SDD12",
+        createdAt: "2022-08-12T13:14:20.119138+00:00",
+        status: TransactionStatus.PENDING,
+        name: "Capture",
+        __typename: "TransactionEvent",
+      },
     ],
     authorizedAmount: {
       amount: 1.21,

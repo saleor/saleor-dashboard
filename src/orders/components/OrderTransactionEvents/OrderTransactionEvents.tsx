@@ -5,7 +5,7 @@ import useLocale from "@saleor/hooks/useLocale";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classnames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 
 import EventStatus from "./EventStatus";
 
@@ -43,6 +43,9 @@ const useStyles = makeStyles(
           paddingRight: "12px !important",
         },
       },
+    },
+    hover: {
+      backgroundColor: theme.palette.saleor.active[5],
     },
     colSmall: {
       [theme.breakpoints.down("md")]: {
@@ -82,25 +85,41 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
   events,
 }) => {
   const classes = useStyles();
+  const [hoveredPspRef, setHoveredPspRef] = useState(null);
+
   return (
-    <ResponsiveTable className={classes.table}>
-      {renderCollection(events, event => (
-        <TableRow>
+    <ResponsiveTable
+      className={classes.table}
+      onMouseLeave={() => setHoveredPspRef(null)}
+    >
+      {renderCollection(events, transactionEvent => (
+        <TableRow
+          onMouseOver={() => setHoveredPspRef(transactionEvent.reference)}
+          className={classnames(
+            transactionEvent.reference === hoveredPspRef && classes.hover,
+          )}
+        >
           <TableCell
             className={classnames(classes.colSmall, classes.colStatus)}
           >
-            <EventStatus status={event.status} />
+            <EventStatus status={transactionEvent.status} />
           </TableCell>
-          <TableCell className={classes.colSmall}>{event.name}</TableCell>
+          <TableCell className={classes.colSmall}>
+            {transactionEvent.name}
+          </TableCell>
           <TableCell
             className={classnames(classes.colSmall, classes.colPspReference)}
           >
-            {event.reference && (
-              <Pill outlined color="generic" label={event.reference} />
+            {transactionEvent.reference && (
+              <Pill
+                outlined
+                color="generic"
+                label={transactionEvent.reference}
+              />
             )}
           </TableCell>
           <TableCell className={classes.colLast}>
-            <EventTime date={event.createdAt} />
+            <EventTime date={transactionEvent.createdAt} />
           </TableCell>
         </TableRow>
       ))}
