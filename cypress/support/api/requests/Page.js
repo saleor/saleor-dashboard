@@ -18,9 +18,10 @@ export function getPage(pageId, auth = "auth") {
   return cy.sendRequestWithQuery(query, auth).its("body.data.page");
 }
 
-export function createPage({ title, pageTypeId }) {
+export function createPage({ title, pageTypeId, isPublished = false }) {
   const mutation = `mutation{
     pageCreate(input:{
+      isPublished: ${isPublished}
       title:"${title}"
       pageType:"${pageTypeId}"
     }){

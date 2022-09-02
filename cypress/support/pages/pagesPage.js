@@ -9,14 +9,14 @@ export const attributesTypes = {
   MULTISELECT: addSelectAttributeValue,
   RICH_TEXT: addRichTextAttributeValue,
   BOOLEAN: addBooleanAttributeValue,
-  NUMERIC: addNumericAttributeValue
+  NUMERIC: addNumericAttributeValue,
 };
 export function createPage({
   pageName,
   pageTypeName,
   isPublished = false,
   attributeType = "DROPDOWN",
-  attributeValue
+  attributeValue,
 }) {
   openCreatePageAndFillUpGeneralFields({ pageName, pageTypeName, isPublished });
   attributesTypes[attributeType](attributeValue);
@@ -48,19 +48,19 @@ export function addNumericAttributeValue(attributeValue) {
 function openCreatePageAndFillUpGeneralFields({
   pageName,
   pageTypeName,
-  isPublished
+  isPublished,
 }) {
   cy.visit(urlList.pages)
     .get(PAGES_LIST.createPageButton)
     .click()
     .get(PAGE_DETAILS.nameInput)
     .type(pageName);
-  if (isPublished) {
-    cy.get(PAGE_DETAILS.isPublishedCheckbox).click();
+  if (!isPublished) {
+    cy.get(PAGE_DETAILS.isNotPublishedCheckbox).click();
   }
   cy.fillAutocompleteSelect(
     PAGE_DETAILS.pageTypesAutocompleteSelect,
-    pageTypeName
+    pageTypeName,
   );
 }
 
