@@ -180,9 +180,11 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                       data-test-id="swatch-image"
                       className={classes.swatch}
                       style={
-                        value?.file
-                          ? { backgroundImage: `url(${value.file.url})` }
-                          : { backgroundColor: value?.value }
+                        value
+                          ? value.file
+                            ? { backgroundImage: `url(${value.file.url})` }
+                            : { backgroundColor: value.value }
+                          : undefined
                       }
                     />
                   </TableCell>
