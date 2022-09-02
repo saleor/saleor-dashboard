@@ -94,7 +94,9 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
     >
       {renderCollection(events, transactionEvent => (
         <TableRow
-          onMouseOver={() => setHoveredPspRef(transactionEvent.reference)}
+          onMouseOver={() =>
+            setHoveredPspRef(transactionEvent.reference || null)
+          }
           className={classnames(
             transactionEvent.reference === hoveredPspRef && classes.hover,
           )}
@@ -104,20 +106,23 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           >
             <EventStatus status={transactionEvent.status} />
           </TableCell>
-          <TableCell className={classes.colSmall}>
+          <TableCell
+            className={classes.colSmall}
+            colSpan={!transactionEvent.reference && 2}
+          >
             {transactionEvent.name}
           </TableCell>
-          <TableCell
-            className={classnames(classes.colSmall, classes.colPspReference)}
-          >
-            {transactionEvent.reference && (
+          {transactionEvent.reference && (
+            <TableCell
+              className={classnames(classes.colSmall, classes.colPspReference)}
+            >
               <Pill
                 outlined
                 color="generic"
                 label={transactionEvent.reference}
               />
-            )}
-          </TableCell>
+            </TableCell>
+          )}
           <TableCell className={classes.colLast}>
             <EventTime date={transactionEvent.createdAt} />
           </TableCell>

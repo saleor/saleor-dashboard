@@ -16,6 +16,22 @@ const props: OrderTransactionProps = {
     events: [
       {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        reference: "",
+        createdAt: "2022-08-12T17:14:27.119138+00:00",
+        status: TransactionStatus.SUCCESS,
+        name: "Refund",
+        __typename: "TransactionEvent",
+      },
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
+        reference: "",
+        createdAt: "2022-08-12T17:14:27.119138+00:00",
+        status: TransactionStatus.PENDING,
+        name: "Refund",
+        __typename: "TransactionEvent",
+      },
+      {
+        id: "VHJhbnNhY3Rpb25FdmVudDoy",
         reference: "SDFDS34543SDDFS",
         createdAt: "2022-08-12T15:14:27.119138+00:00",
         status: TransactionStatus.SUCCESS,
