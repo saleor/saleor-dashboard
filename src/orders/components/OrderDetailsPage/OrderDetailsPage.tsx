@@ -309,7 +309,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 <CardSpacer />
                 {order?.transactions?.map(transaction => (
-                  <OrderTransaction transaction={transaction} />
+                  <React.Fragment key={transaction.id}>
+                    <OrderTransaction transaction={transaction} />
+                    <CardSpacer />
+                  </React.Fragment>
                 ))}
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
