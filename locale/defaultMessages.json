@@ -1159,6 +1159,10 @@
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
   },
+  "7ejEbB": {
+    "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
+    "string": "Authorized"
+  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -1314,6 +1318,10 @@
   "9IWg/f": {
     "context": "button",
     "string": "SETUP END DATE"
+  },
+  "9Mro3c": {
+    "context": "Transaction event status - pending",
+    "string": "Pending"
   },
   "9OtpHt": {
     "string": "Order line deleted"
@@ -2527,6 +2535,10 @@
     "context": "value input helper text",
     "string": "Invalid value"
   },
+  "INKsSL": {
+    "context": "Transaction event status - success",
+    "string": "Success"
+  },
   "INNPVX": {
     "context": "payment status",
     "string": "Partially paid"
@@ -2948,6 +2960,10 @@
   },
   "LWmYSU": {
     "string": "Completed Translations"
+  },
+  "LY5dS9": {
+    "context": "Charged transaction amount, data display header",
+    "string": "Charged"
   },
   "LkuDEb": {
     "context": "metadata field value, header",
@@ -5302,6 +5318,10 @@
     "context": "attribute is filterable in storefront",
     "string": "Use as filter"
   },
+  "e4UtKH": {
+    "context": "Transaction event status - failure",
+    "string": "Failure"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -5514,6 +5534,10 @@
   "gMwpNC": {
     "context": "page content",
     "string": "Content"
+  },
+  "gNm1li": {
+    "context": "Refunded transaction amount, data display header",
+    "string": "Refunded"
   },
   "gQGUsN": {
     "context": "dialog title",
