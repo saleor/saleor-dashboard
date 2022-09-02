@@ -356,27 +356,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
-                    {product?.productType ? (
-                      <div className={classes.colNameWrapper}>
-                        <span data-test-id="name">{product.name}</span>
-                        {product?.productType && (
-                          <Typography variant="caption">
-                            {product.productType.hasVariants ? (
-                              <FormattedMessage
-                                id="X90t9n"
-                                defaultMessage="Configurable"
-                                description="product type"
-                              />
-                            ) : (
-                              <FormattedMessage
-                                id="Jz/Cb+"
-                                defaultMessage="Simple"
-                                description="product type"
-                              />
-                            )}
-                          </Typography>
-                        )}
-                      </div>
+                    {product?.name ? (
+                      <span data-test-id="name">{product.name}</span>
                     ) : (
                       <Skeleton />
                     )}
