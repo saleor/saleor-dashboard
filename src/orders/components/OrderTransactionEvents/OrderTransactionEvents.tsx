@@ -2,12 +2,13 @@ import { TableCell, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { TransactionEventFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classnames from "classnames";
 import React, { useState } from "react";
 
 import EventStatus from "./EventStatus";
+import PspReference from "./PspReference";
 
 export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[];
@@ -116,11 +117,7 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
             <TableCell
               className={classnames(classes.colSmall, classes.colPspReference)}
             >
-              <Pill
-                outlined
-                color="generic"
-                label={transactionEvent.reference}
-              />
+              <PspReference reference={transactionEvent.reference} />
             </TableCell>
           )}
           <TableCell className={classes.colLast}>
