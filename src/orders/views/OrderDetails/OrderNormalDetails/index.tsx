@@ -5,6 +5,8 @@ import {
   OrderDetailsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
@@ -17,8 +19,13 @@ import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfil
 import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { OrderTransactionActionDialog } from "@saleor/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { transformFuflillmentLinesToStockFormsetData } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
+import {
+  CloseModalFunction,
+  OpenModalFunction,
+} from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -43,6 +50,7 @@ import {
   orderRefundUrl,
   orderReturnUrl,
   orderUrl,
+  OrderUrlDialog,
   OrderUrlQueryParams,
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
@@ -69,10 +77,14 @@ interface OrderNormalDetailsProps {
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
   orderInvoiceSend: any;
+  orderTransactionAction: PartialMutationProviderOutput<
+    OrderTransactionRequestActionMutation,
+    OrderTransactionRequestActionMutationVariables
+  >;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
-  openModal: any;
-  closeModal: any;
+  openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
+  closeModal: CloseModalFunction;
 }
 interface ApprovalState {
   fulfillment: FulfillmentFragment;
@@ -95,6 +107,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
+  orderTransactionAction,
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
@@ -195,6 +208,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
+        onTransactionAction={(id, action) =>
+          openModal("transaction-action", {
+            type: action,
+            id,
+            action: "transaction-action",
+          })
+        }
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
@@ -260,6 +280,18 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onSubmit={() =>
           orderCancel.mutate({
             id,
+          })
+        }
+      />
+      <OrderTransactionActionDialog
+        confirmButtonState={orderTransactionAction.opts.status}
+        onClose={closeModal}
+        open={params.action === "transaction-action"}
+        action={params.type}
+        onSubmit={() =>
+          orderTransactionAction.mutate({
+            action: params.type,
+            transactionId: params.id,
           })
         }
       />

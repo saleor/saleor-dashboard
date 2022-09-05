@@ -1,3 +1,4 @@
+import { TransactionActionEnum } from "@saleor/graphql";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
@@ -122,9 +123,18 @@ export type OrderUrlDialog =
   | "finalize"
   | "mark-paid"
   | "void"
+  | "transaction-action"
   | "invoice-send";
 
-export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
+export interface TransactionAction {
+  action: "transaction-action";
+  id: string;
+  type: TransactionActionEnum;
+}
+
+export type OrderUrlQueryParams =
+  | (Dialog<OrderUrlDialog> & SingleAction & { type?: never })
+  | TransactionAction;
 
 export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;

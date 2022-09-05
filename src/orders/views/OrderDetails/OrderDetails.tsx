@@ -42,10 +42,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [
-    updatePrivateMetadata,
-    updatePrivateMetadataOpts,
-  ] = useUpdatePrivateMetadataMutation({});
+  const [updatePrivateMetadata, updatePrivateMetadataOpts] =
+    useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -145,6 +143,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             }
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
+          onTransactionActionSend={orderMessages.handleTransactionAction}
         >
           {({
             orderAddNote,
@@ -165,6 +164,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             orderPaymentMarkAsPaid,
             orderInvoiceRequest,
             orderInvoiceSend,
+            orderTransactionAction,
           }) => (
             <>
               {!isOrderDraft && !isOrderUnconfirmed && (
@@ -186,6 +186,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                     orderFulfillmentUpdateTracking
                   }
                   orderInvoiceSend={orderInvoiceSend}
+                  orderTransactionAction={orderTransactionAction}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
@@ -235,6 +236,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderInvoiceSend={orderInvoiceSend}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
+                  orderTransactionAction={orderTransactionAction}
                   openModal={openModal}
                   closeModal={closeModal}
                 />

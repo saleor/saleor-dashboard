@@ -20,6 +20,7 @@ import {
   OrderDetailsQuery,
   OrderErrorFragment,
   OrderStatus,
+  TransactionActionEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -97,6 +98,7 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -146,6 +148,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onTransactionAction,
     onSubmit,
   } = props;
   const classes = useStyles(props);
@@ -310,7 +313,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <CardSpacer />
                 {order?.transactions?.map(transaction => (
                   <React.Fragment key={transaction.id}>
-                    <OrderTransaction transaction={transaction} />
+                    <OrderTransaction
+                      transaction={transaction}
+                      onTransactionAction={onTransactionAction}
+                    />
                     <CardSpacer />
                   </React.Fragment>
                 ))}

@@ -1,4 +1,4 @@
-import { TransactionStatus } from "@saleor/graphql";
+import { TransactionActionEnum, TransactionStatus } from "@saleor/graphql";
 import OrderTransaction, {
   OrderTransactionProps,
 } from "@saleor/orders/components/OrderTransaction";
@@ -8,11 +8,17 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const props: OrderTransactionProps = {
+  onTransactionAction: () => undefined,
   transaction: {
     __typename: "TransactionItem",
     id: "VHJhbnNhY3Rpb25JdGVtOjI=",
     type: "Adyen: refund",
     reference: "12345",
+    actions: [
+      TransactionActionEnum.CHARGE,
+      TransactionActionEnum.REFUND,
+      TransactionActionEnum.VOID,
+    ],
     events: [
       {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
@@ -82,6 +88,7 @@ const props: OrderTransactionProps = {
 };
 
 const longAmountProps: OrderTransactionProps = {
+  onTransactionAction: () => undefined,
   transaction: {
     ...props.transaction,
     authorizedAmount: {

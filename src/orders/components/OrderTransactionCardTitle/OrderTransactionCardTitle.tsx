@@ -1,28 +1,39 @@
 import { IconButton } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import { TransactionItemFragment } from "@saleor/graphql";
+import {
+  TransactionActionEnum,
+  TransactionItemFragment,
+} from "@saleor/graphql";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { OrderTransactionProps } from "../OrderTransaction";
+import { mapActionToMessage } from "./consts";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 import { useStyles } from "./styles";
 
 interface OrderTransactionCardTitleProps {
   title: string;
+  id: string;
   refundedAmount: TransactionItemFragment["refundedAmount"];
   chargedAmount: TransactionItemFragment["chargedAmount"];
   authorizedAmount: TransactionItemFragment["authorizedAmount"];
+  actions: TransactionItemFragment["actions"];
   link?: string;
   className?: string;
+  onTransactionAction: OrderTransactionProps["onTransactionAction"];
 }
 
 const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
   title,
+  id,
+  onTransactionAction,
   refundedAmount,
   chargedAmount,
   authorizedAmount,
+  actions,
   link,
   className,
 }) => {
@@ -46,11 +57,13 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
-            {authorizedAmount.amount > 0 && (
-              <Button variant="tertiary" onClick={handleCapture}>
-                Capture
-              </Button>
-            )}
+            {actions
+              .filter(action => action !== TransactionActionEnum.REFUND)
+              .map(action => (
+                <Button variant="tertiary" onClick={getHandleAction(action)}>
+                  <FormattedMessage {...mapActionToMessage[action]} />
+                </Button>
+              ))}
 
             {/* TODO: Pending refund */}
 
@@ -82,9 +95,10 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
     />
   );
 
-  function handleCapture() {
-    // TODO: Handle capture
-    return;
+  function getHandleAction(action: TransactionActionEnum) {
+    return () => {
+      onTransactionAction(id, action);
+    };
   }
 };
 

@@ -31,6 +31,8 @@ import {
   OrderMarkAsPaidMutationVariables,
   OrderShippingMethodUpdateMutation,
   OrderShippingMethodUpdateMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   OrderVoidMutation,
@@ -51,6 +53,7 @@ import {
   useOrderLineUpdateMutation,
   useOrderMarkAsPaidMutation,
   useOrderShippingMethodUpdateMutation,
+  useOrderTransactionRequestActionMutation,
   useOrderUpdateMutation,
   useOrderVoidMutation,
 } from "@saleor/graphql";
@@ -134,6 +137,10 @@ interface OrderOperationsProps {
       InvoiceEmailSendMutation,
       InvoiceEmailSendMutationVariables
     >;
+    orderTransactionAction: PartialMutationProviderOutput<
+      OrderTransactionRequestActionMutation,
+      OrderTransactionRequestActionMutationVariables
+    >;
   }) => React.ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
@@ -155,6 +162,9 @@ interface OrderOperationsProps {
   onOrderLineUpdate: (data: OrderLineUpdateMutation) => void;
   onInvoiceRequest: (data: InvoiceRequestMutation) => void;
   onInvoiceSend: (data: InvoiceEmailSendMutation) => void;
+  onTransactionActionSend: (
+    data: OrderTransactionRequestActionMutation,
+  ) => void;
 }
 
 const OrderOperations: React.FC<OrderOperationsProps> = ({
@@ -177,6 +187,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onOrderMarkAsPaid,
   onInvoiceRequest,
   onInvoiceSend,
+  onTransactionActionSend,
 }) => {
   const orderVoid = useOrderVoidMutation({
     onCompleted: onOrderVoid,
@@ -232,6 +243,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   const invoiceEmailSend = useInvoiceEmailSendMutation({
     onCompleted: onInvoiceSend,
   });
+  const transactionActionSend = useOrderTransactionRequestActionMutation({
+    onCompleted: onTransactionActionSend,
+  });
 
   return (
     <>
@@ -258,6 +272,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         ),
         orderUpdate: getMutationProviderData(...update),
         orderVoid: getMutationProviderData(...orderVoid),
+        orderTransactionAction: getMutationProviderData(
+          ...transactionActionSend,
+        ),
       })}
     </>
   );

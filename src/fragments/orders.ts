@@ -203,6 +203,7 @@ export const transactionItemFragment = gql`
     id
     type
     reference
+    actions
     events {
       ...TransactionEvent
     }
