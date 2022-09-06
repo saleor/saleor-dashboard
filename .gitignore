@@ -11,6 +11,7 @@
 !.github
 !.gitignore
 !.nvmrc
+!.node-version
 !.npmrc
 !.plop
 !.prettierignore

@@ -144,7 +144,7 @@ jobs:
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
   run-tests-on-release:
-    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE'}}
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.project != 'DEMO'}}
     runs-on: ubuntu-latest
     outputs:
       status: ${{ job.status }}
@@ -199,7 +199,7 @@ jobs:
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
 
   add-review-and-merge-patch:
-    if: ${{github.event.client_payload.autoRelease}}
+    if: ${{ always() && needs.run-tests-on-release.outputs.status != 'skipped' && needs.run-tests-on-release.outputs.status != 'cancelled' }}
     runs-on: ubuntu-latest
     needs: [run-tests-on-release]
     steps:
@@ -217,11 +217,12 @@ jobs:
               cd .github/workflows
               npm ci
 
-      - name: Add review and merge if patch
+      - name: Add review and merge if patch DASHBOARD
         env: 
          tests_status: ${{ needs.run-tests-on-release.outputs.status}}
          version: ${{github.event.client_payload.version}}
          pull_request_number: ${{ github.event.client_payload.pullRequestNumber}}
+         auto_release: ${{github.event.client_payload.autoRelease}}
         run: |
             export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
@@ -230,4 +231,5 @@ jobs:
             node .github/workflows/approveAndMergeReleasePR.js \
             --tests_status $tests_status \
             --version $version \
-            --pull_request_number $pull_request_number
+            --pull_request_number $pull_request_number \
+            --auto_release $auto_release
