@@ -4,7 +4,13 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { booleanCell, moneyCell, numberCell, textCell } from "./cells";
+import {
+  booleanCell,
+  dropdownCell,
+  moneyCell,
+  numberCell,
+  textCell,
+} from "./cells";
 import Datagrid, { GetCellContentOpts } from "./Datagrid";
 import { initialData } from "./fixtures";
 import { numberCellEmptyValue } from "./NumberCell";
@@ -18,6 +24,7 @@ const availableColumns = [
   { title: "Loaned", id: "loan-active", width: 70 },
   { title: "Loaned Amount", id: "loan", width: 200 },
   { title: "Name", id: "name", width: 200 },
+  { title: "Job", id: "job", width: 200 },
   { title: "Balance", id: "balance", width: 200 },
   { title: "Eye color", id: "eyeColor", width: 200 },
   { title: "Age", id: "age", width: 80 },
@@ -63,6 +70,10 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
         return styled(
           numberCell(change ?? dataRow?.balance ?? numberCellEmptyValue),
         );
+      }
+
+      if (columnId === "job") {
+        return styled(dropdownCell(change?.value ?? dataRow?.job));
       }
 
       if (columnId === "age") {

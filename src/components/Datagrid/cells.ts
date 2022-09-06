@@ -4,6 +4,8 @@ import {
   numberCellEmptyValue,
 } from "@saleor/components/Datagrid/NumberCell";
 
+import { Choice } from "../SingleSelectField";
+import { DropdownCell } from "./DropdownCell";
 import { MoneyCell } from "./MoneyCell";
 
 const common = {
@@ -53,5 +55,17 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
       currency,
     },
     copyData: value?.toString() ?? "",
+  };
+}
+
+export function dropdownCell(choice: Choice): DropdownCell {
+  return {
+    ...common,
+    data: {
+      kind: "dropdown-cell",
+      value: choice,
+    },
+    kind: GridCellKind.Custom,
+    copyData: choice.value,
   };
 }

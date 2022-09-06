@@ -11,6 +11,10 @@ export const initialData = [
       amount: 10.0,
       currency: "USD",
     },
+    job: {
+      label: "Engineer",
+      value: "eng",
+    },
   },
   {
     id: "2",
@@ -23,6 +27,10 @@ export const initialData = [
       active: true,
       amount: 151.0,
       currency: "USD",
+    },
+    job: {
+      label: "Engineer",
+      value: "eng",
     },
   },
   {
@@ -37,6 +45,10 @@ export const initialData = [
       amount: 21.0,
       currency: "USD",
     },
+    job: {
+      label: "Director",
+      value: "director",
+    },
   },
   {
     id: "4",
@@ -49,6 +61,10 @@ export const initialData = [
       active: true,
       amount: 52.0,
       currency: "USD",
+    },
+    job: {
+      label: "QA",
+      value: "qa",
     },
   },
   {
@@ -63,6 +79,10 @@ export const initialData = [
       amount: 991.0,
       currency: "USD",
     },
+    job: {
+      label: "QA",
+      value: "qa",
+    },
   },
   {
     id: "6",
@@ -75,6 +95,10 @@ export const initialData = [
       active: true,
       amount: 82.0,
       currency: "USD",
+    },
+    job: {
+      label: "QA",
+      value: "qa",
     },
   },
   {
@@ -89,6 +113,10 @@ export const initialData = [
       amount: null,
       currency: "USD",
     },
+    job: {
+      label: "Engineer",
+      value: "eng",
+    },
   },
   {
     id: "8",
@@ -101,6 +129,10 @@ export const initialData = [
       active: true,
       amount: 1.1,
       currency: "USD",
+    },
+    job: {
+      label: "Designer",
+      value: "designer",
     },
   },
   {
@@ -115,6 +147,10 @@ export const initialData = [
       amount: 1000.0,
       currency: "USD",
     },
+    job: {
+      label: "Designer",
+      value: "designer",
+    },
   },
   {
     id: "10",
@@ -127,6 +163,10 @@ export const initialData = [
       active: false,
       amount: null,
       currency: "USD",
+    },
+    job: {
+      label: "Manager",
+      value: "manager",
     },
   },
 ];
