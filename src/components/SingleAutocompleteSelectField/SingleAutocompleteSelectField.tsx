@@ -210,7 +210,11 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             return (
               <div
-                className={classNames(classes.container, className)}
+                className={classNames(
+                  classes.container,
+                  "click-outside-ignore",
+                  className,
+                )}
                 {...rest}
               >
                 <TextFieldComponent

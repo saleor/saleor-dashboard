@@ -48,6 +48,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
 
   return (
     <SingleAutocompleteSelectField
+      nakedInput
       onChange={event =>
         onFinishedEditing({
           ...cell,
