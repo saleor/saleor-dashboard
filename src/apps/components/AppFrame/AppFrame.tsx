@@ -33,11 +33,20 @@ export const AppFrame: React.FC<Props> = ({
 }) => {
   const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
-  const { sendThemeToExtension } = useTheme();
+  const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
+
+  useEffect(() => {
+    postToExtension({
+      type: "theme",
+      payload: {
+        theme: themeType,
+      },
+    });
+  }, [themeType, postToExtension]);
 
   useEffect(() => {
     postToExtension({
@@ -58,7 +67,12 @@ export const AppFrame: React.FC<Props> = ({
         version: 1,
       },
     });
-    sendThemeToExtension();
+    postToExtension({
+      type: "theme",
+      payload: {
+        theme: themeType,
+      },
+    });
 
     if (onLoad) {
       onLoad();
