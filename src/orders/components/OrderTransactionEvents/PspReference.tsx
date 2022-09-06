@@ -23,14 +23,18 @@ const useInitialWidth = (watch: string[] = []) => {
 
   const onMount = (el: HTMLElement | undefined) => {
     if (el) {
-      setWidth(el.offsetWidth);
+      const { width } = el.getBoundingClientRect();
+      setWidth(width);
+    } else {
+      setWidth(null);
     }
     ref.current = el;
   };
 
   useEffect(() => {
     if (ref.current) {
-      setWidth(ref.current.offsetWidth);
+      const { width } = ref.current.getBoundingClientRect();
+      setWidth(width);
     }
   }, watch);
 
