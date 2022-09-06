@@ -52,13 +52,8 @@ $ cd saleor-dashboard
 
 #### Using stable release
 
-To use the official stable release, checkout to a release tag:
+Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release
 
-```
-$ git checkout 2.11.1
-```
-
-See the list of all releases here: https://github.com/saleor/saleor-dashboard/releases/
 
 #### Using development version
 
