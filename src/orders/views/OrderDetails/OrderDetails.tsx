@@ -49,7 +49,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
     OrderUrlQueryParams
-  >(navigate, params => orderUrl(id, params), params);
+  >(navigate, params => orderUrl(id, params), params, ["type"]);
 
   const handleBack = () => navigate(orderListUrl());
 
