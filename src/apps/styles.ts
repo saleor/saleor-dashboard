@@ -119,8 +119,6 @@ export const useStyles = makeStyles(
       padding: theme.spacing(2, 0),
       position: "relative",
       width: theme.spacing(35),
-    },
-    installCard: {
       "&:before": {
         backgroundColor: theme.palette.divider,
         content: "''",
@@ -130,6 +128,8 @@ export const useStyles = makeStyles(
         transform: "translateY(-50%)",
         width: theme.spacing(30),
       },
+    },
+    installCard: {
       display: "flex",
       justifyContent: "center",
       position: "relative",
@@ -157,7 +157,10 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(1),
     },
     installSaleorIcon: {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor:
+        theme.palette.type === "dark"
+          ? theme.palette.saleor.gray.default
+          : theme.palette.saleor.main[1],
       border: "none",
     },
     installSpacer: {
