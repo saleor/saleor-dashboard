@@ -1,8 +1,7 @@
 import { TableCell, TableRow } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { TransactionEventFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classnames from "classnames";
 import React, { useState } from "react";
@@ -70,6 +69,7 @@ const useStyles = makeStyles(
       // Align with card
       [theme.breakpoints.up("md")]: {
         paddingRight: "32px !important",
+        width: "35%",
         textAlign: "right",
       },
       [theme.breakpoints.down("md")]: {
@@ -92,6 +92,7 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
     <ResponsiveTable
       className={classes.table}
       onMouseLeave={() => setHoveredPspRef(null)}
+      flexBreakpoint="lg"
     >
       {renderCollection(events, transactionEvent => (
         <TableRow
