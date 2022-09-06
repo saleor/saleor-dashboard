@@ -36,42 +36,32 @@ program
         : "Some tests failed, need manual approve";
     const event = options.tests_status === "success" ? "APPROVE" : "COMMENT";
 
-    try {
-      await octokit.request(
-        "POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews",
-        {
-          owner,
-          repo,
-          pull_number: pullNumber,
-          commit_id: commitId,
-          body: requestBody,
-          event,
-          comments: [],
-        },
-      );
-    } catch (e) {
-      error(e.message);
-      process.exit(2);
-    }
+    await octokit.request(
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+      {
+        owner,
+        repo,
+        pull_number: pullNumber,
+        commit_id: commitId,
+        body: requestBody,
+        event,
+        comments: [],
+      },
+    );
 
     if (
       options.auto_release &&
       isPatchRelease(options.version) &&
       options.tests_status === "success"
     ) {
-      try {
-        await octokit.request(
-          "PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge",
-          {
-            owner,
-            repo,
-            pull_number: pullNumber,
-          },
-        );
-      } catch (e) {
-        error(e.message);
-        process.exit(2);
-      }
+      await octokit.request(
+        "PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge",
+        {
+          owner,
+          repo,
+          pull_number: pullNumber,
+        },
+      );
     }
   })
   .parse();

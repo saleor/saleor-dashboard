@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@octokit/core": "^4.0.4",
+    "@octokit/request-error": "^3.0.1",
     "commander": "^9.4.0"
   }
 }
