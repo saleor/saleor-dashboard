@@ -25,6 +25,7 @@
       "AttributeValueCreated",
       "AttributeValueDeleted",
       "AttributeValueUpdated",
+      "CalculateTaxes",
       "CategoryCreated",
       "CategoryDeleted",
       "CategoryUpdated",
@@ -33,6 +34,7 @@
       "ChannelStatusChanged",
       "ChannelUpdated",
       "CheckoutCreated",
+      "CheckoutFilterShippingMethods",
       "CheckoutUpdated",
       "CollectionCreated",
       "CollectionDeleted",
@@ -60,6 +62,7 @@
       "OrderCancelled",
       "OrderConfirmed",
       "OrderCreated",
+      "OrderFilterShippingMethods",
       "OrderFulfilled",
       "OrderFullyPaid",
       "OrderUpdated",
@@ -69,6 +72,16 @@
       "PageTypeDeleted",
       "PageTypeUpdated",
       "PageUpdated",
+      "PaymentAuthorize",
+      "PaymentCaptureEvent",
+      "PaymentConfirmEvent",
+      "PaymentListGateways",
+      "PaymentProcessEvent",
+      "PaymentRefundEvent",
+      "PaymentVoidEvent",
+      "PermissionGroupCreated",
+      "PermissionGroupDeleted",
+      "PermissionGroupUpdated",
       "ProductCreated",
       "ProductDeleted",
       "ProductUpdated",
@@ -81,6 +94,7 @@
       "SaleDeleted",
       "SaleToggle",
       "SaleUpdated",
+      "ShippingListMethodsForCheckout",
       "ShippingPriceCreated",
       "ShippingPriceDeleted",
       "ShippingPriceUpdated",
@@ -227,6 +241,14 @@
       "User",
       "Voucher",
       "Warehouse"
+    ],
+    "TaxSourceLine": [
+      "CheckoutLine",
+      "OrderLine"
+    ],
+    "TaxSourceObject": [
+      "Checkout",
+      "Order"
     ],
     "TranslatableItem": [
       "ProductTranslatableContent",
