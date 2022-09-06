@@ -4,7 +4,7 @@ import {
   Events,
   NotificationAction,
   RedirectAction,
-} from "@saleor/app-bridge";
+} from "@saleor/app-sdk/app-bridge";
 import { appPath } from "@saleor/apps/urls";
 import { APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
