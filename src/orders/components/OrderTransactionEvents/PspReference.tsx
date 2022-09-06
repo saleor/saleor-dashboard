@@ -51,7 +51,7 @@ const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
     <Pill
       outlined
       // preserve width when text changes to "Copied"
-      style={{ width: `${width}px` }}
+      style={{ width: width ? `${width}px` : undefined }}
       color="generic"
       label={copied ? intl.formatMessage(messages.copied) : reference}
       onClick={() => copy(reference)}
