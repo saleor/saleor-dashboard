@@ -33,7 +33,7 @@ program
     const commitId = pullRequest.data.merge_commit_sha;
     const requestBody =
       options.tests_status === "success"
-        ? `Cypress tests passed. . See results at ${options.dashboard_url}`
+        ? `Cypress tests passed. See results at ${options.dashboard_url}`
         : `Some tests failed, need manual approve. See results at ${options.dashboard_url}`;
     const event = "COMMENT";
 
