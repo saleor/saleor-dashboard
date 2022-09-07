@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import useClipboard from "@saleor/hooks/useClipboard";
-import { Pill } from "@saleor/macaw-ui";
+import { CopyIcon, Pill } from "@saleor/macaw-ui";
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -49,6 +49,7 @@ const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
 
   return (
     <Pill
+      icon={<CopyIcon />}
       outlined
       // preserve width when text changes to "Copied"
       style={{ width: width ? `${width}px` : undefined }}
