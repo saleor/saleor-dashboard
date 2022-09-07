@@ -58,7 +58,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
 
-  if (!line || !lineFormWarehouse) {
+  if (!line) {
     return (
       <TableRow key={lineIndex}>
         <TableCellAvatar className={classes.colName}>
@@ -156,7 +156,11 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         </TableCell>
       )}
       <TableCell className={classes.colStock} key="total">
-        {isPreorder || isDeletedVariant ? undefined : availableQuantity}
+        {lineFormWarehouse
+          ? isPreorder || isDeletedVariant
+            ? undefined
+            : availableQuantity
+          : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
         <IconButton
@@ -165,9 +169,13 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           data-test-id="select-warehouse-button"
         >
           <div className={classes.warehouseButtonContent}>
-            <div className={classes.warehouseButtonContentText}>
-              {lineFormWarehouse?.name ?? <Skeleton />}
-            </div>
+            <Typography
+              color={lineFormWarehouse ? "textPrimary" : "textSecondary"}
+              className={classes.warehouseButtonContentText}
+            >
+              {lineFormWarehouse?.name ??
+                intl.formatMessage(messages.selectWarehouse)}
+            </Typography>
             <ChevronIcon />
           </div>
         </IconButton>

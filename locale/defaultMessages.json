@@ -3834,6 +3834,10 @@
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
   },
+  "SBb6Ej": {
+    "context": "select a warehouse to fulfill product from",
+    "string": "Select warehouse..."
+  },
   "SC/eNC": {
     "context": "Payment card title",
     "string": "Payment status"
