@@ -163,6 +163,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     !shopSettings?.fulfillmentAllowUnpaid &&
     !order?.isPaid;
 
+  const areWarehousesSet = formsetData.every(line =>
+    line.value.every(v => v.warehouse),
+  );
+
   const shouldEnableSave = () => {
     if (!order || loading) {
       return false;
@@ -186,7 +190,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         return formQuantityFulfilled > quantityToFulfill;
       });
 
-    return !overfulfill && isAtLeastOneFulfilled;
+    return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
 
   return (
@@ -261,7 +265,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 lineId: line.id,
                                 warehouseId:
                                   formsetData[lineIndex]?.value?.[0]?.warehouse
-                                    .id,
+                                    ?.id,
                               })
                             }
                           />

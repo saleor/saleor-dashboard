@@ -3810,6 +3810,10 @@
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
   },
+  "SBb6Ej": {
+    "context": "select a warehouse to fulfill product from",
+    "string": "Select warehouse..."
+  },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
   },
