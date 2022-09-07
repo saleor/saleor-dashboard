@@ -50,12 +50,18 @@ export const mapUndefinedTaxRatesToCountries = (
           "taxClass.id",
         );
         const defaultRate = taxClassCountryRates.find(
-          rate => rate.taxClass.isDefault,
+          rate => rate.taxClass === null,
         );
         const parsedCountryRates = taxClassCountryRates.filter(
-          rate => !rate.taxClass.isDefault,
+          rate => rate.taxClass !== null,
         );
-        parsedCountryRates.unshift(defaultRate);
+        parsedCountryRates.unshift(
+          defaultRate ?? {
+            rate: undefined,
+            taxClass: null,
+            __typename: "TaxClassCountryRate" as const,
+          },
+        );
 
         return {
           ...config,

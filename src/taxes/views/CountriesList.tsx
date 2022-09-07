@@ -175,21 +175,23 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
             closeDialog();
             return setNewCountries(prevState => [
               ...prevState,
-              ...data.map(country => ({
-                country,
-                taxClassCountryRates: taxClasses
-                  .map(taxClass => ({
-                    __typename: "TaxClassCountryRate" as const,
-                    rate: undefined,
-                    taxClass,
-                  }))
-                  .sort(
-                    (a, b) =>
-                      Number(b.taxClass.isDefault) -
-                      Number(a.taxClass.isDefault),
-                  ),
-                __typename: "TaxCountryConfiguration" as const,
-              })),
+              ...data.map(country => {
+                const taxClassCountryRates = taxClasses.map(taxClass => ({
+                  __typename: "TaxClassCountryRate" as const,
+                  rate: undefined,
+                  taxClass,
+                }));
+                taxClassCountryRates.unshift({
+                  rate: undefined,
+                  taxClass: null,
+                  __typename: "TaxClassCountryRate" as const,
+                });
+                return {
+                  country,
+                  taxClassCountryRates,
+                  __typename: "TaxCountryConfiguration" as const,
+                };
+              }),
             ]);
           }}
           onClose={closeDialog}
