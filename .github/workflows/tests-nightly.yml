@@ -63,7 +63,6 @@ jobs:
             ${{ runner.os }}-qa-${{ env.cache-name }}-
             ${{ runner.os }}-qa-
             ${{ runner.os }}-
-
       - name: Write config file
         id: write-config-file
         env:
@@ -87,9 +86,11 @@ jobs:
           MSG_MINIMAL: true
 
   run-tests-in-parallel:
-    needs: revert-automation-env-to-snap
+    needs: ['revert-automation-env-to-snap']
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.cypress.outcome }}
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
@@ -105,7 +106,6 @@ jobs:
         if: ${{ github.event.inputs.environment == 'Other' }}
         run: |
           echo "::set-output name=ENV_URI::${{github.event.inputs.otherEnvironment}}"
-
       - name: Get env
         id: get-env-uri
         env:
@@ -113,13 +113,14 @@ jobs:
           TYPED_ENV_URI: ''
         run: |
           echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
-
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 14
 
       - name: Cypress run
+        id: cypress
+        continue-on-error: true
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
         uses: cypress-io/github-action@v4
         env:
@@ -143,11 +144,13 @@ jobs:
           record: true
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
+
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.project != 'DEMO'}}
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ job.status }}
+      status: ${{ steps.cypress.outcome }}
+      dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
     container: cypress/browsers:node14.16.0-chrome89-ff86
     strategy:
       fail-fast: false
@@ -162,7 +165,6 @@ jobs:
           version: ${{github.event.client_payload.version}}
         run: |
               echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )" 
-
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -176,6 +178,8 @@ jobs:
               echo "::set-output name=formatted_version::$(echo $version | grep -ohE "[0-9]\.[0-9]+" | sed s/\\.// )" 
               
       - name: Cypress run - automatically
+        id: cypress
+        continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
           API_URI: https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud/graphql/
@@ -199,7 +203,7 @@ jobs:
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
 
   add-review-and-merge-patch:
-    if: ${{ always() && needs.run-tests-on-release.outputs.status != 'skipped' && needs.run-tests-on-release.outputs.status != 'cancelled' }}
+    if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}
     runs-on: ubuntu-latest
     needs: [run-tests-on-release]
     steps:
@@ -216,20 +220,20 @@ jobs:
         run: |
               cd .github/workflows
               npm ci
-
       - name: Add review and merge if patch DASHBOARD
         env: 
          tests_status: ${{ needs.run-tests-on-release.outputs.status}}
          version: ${{github.event.client_payload.version}}
          pull_request_number: ${{ github.event.client_payload.pullRequestNumber}}
          auto_release: ${{github.event.client_payload.autoRelease}}
+         dashboard_url: ${{ needs.run-tests-on-release.outputs.dashboard_url}}
         run: |
             export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
-
             node .github/workflows/approveAndMergeReleasePR.js \
             --tests_status $tests_status \
             --version $version \
             --pull_request_number $pull_request_number \
             --auto_release $auto_release
+            --dashboard_url $dashboard_url
