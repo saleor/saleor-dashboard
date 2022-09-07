@@ -161,4 +161,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Add country to access tax classes",
     description: "tax class rates list label when no country is selected",
   },
+  countryDefaultRate: {
+    id: "lnteBJ",
+    defaultMessage: "Country default rate",
+    description: "country rates list label for the default rate",
+  },
 });

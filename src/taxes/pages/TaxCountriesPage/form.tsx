@@ -7,7 +7,9 @@ import {
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
+import { useIntl } from "react-intl";
 
 export interface TaxCountriesPageFormData {
   rates: Array<{
@@ -35,9 +37,12 @@ function useTaxCountriesForm(
   disabled,
 ): UseTaxCountriesFormResult {
   // Initial
+  const intl = useIntl();
   const initialFormsetData = country?.taxClassCountryRates.map(item => ({
-    id: item.taxClass.id,
-    label: item.taxClass.name,
+    id: item.taxClass?.id ?? null,
+    label:
+      item.taxClass?.name ??
+      intl.formatMessage(taxesMessages.countryDefaultRate),
     value: item.rate?.toString() ?? "",
     data: null,
   }));

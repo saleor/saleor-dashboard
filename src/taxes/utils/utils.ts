@@ -35,8 +35,13 @@ export const mapUndefinedTaxRatesToCountries = (
 ): TaxCountryConfigurationFragment[] =>
   taxConfigurations
     .map(config => {
-      if ((config.taxClassCountryRates?.length ?? 0) === taxClasses.length) {
-        return config;
+      if (config.taxClassCountryRates.length === taxClasses.length + 1) {
+        return {
+          ...config,
+          taxClassCountryRates: [...config.taxClassCountryRates].sort(rate =>
+            rate.taxClass ? 1 : -1,
+          ),
+        };
       } else {
         const taxClassCountryRates = uniqBy(
           [
