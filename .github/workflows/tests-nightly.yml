@@ -204,6 +204,7 @@ jobs:
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
 
   print-status:
+    if: ${{ always() && (needs.run-tests-in-parallel.outputs.status == 'success' || needs.run-tests-in-parallel.outputs.status == 'failure') }}
     runs-on: ubuntu-latest
     needs: [run-tests-in-parallel]
     steps:
