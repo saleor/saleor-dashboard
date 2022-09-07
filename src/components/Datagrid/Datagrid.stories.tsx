@@ -73,7 +73,13 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
       }
 
       if (columnId === "job") {
-        return styled(dropdownCell(change?.value ?? dataRow?.job));
+        return styled(
+          dropdownCell(change?.value ?? dataRow?.job, [
+            { label: "QA", value: "qa" },
+            { label: "Engineer", value: "eng" },
+            { label: "Designer", value: "designer" },
+          ]),
+        );
       }
 
       if (columnId === "age") {

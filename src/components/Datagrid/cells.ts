@@ -58,14 +58,18 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
   };
 }
 
-export function dropdownCell(choice: Choice): DropdownCell {
+export function dropdownCell(
+  value: Choice<string, string>,
+  choices: Array<Choice<string, string>>,
+): DropdownCell {
   return {
     ...common,
     data: {
+      choices,
       kind: "dropdown-cell",
-      value: choice,
+      value,
     },
     kind: GridCellKind.Custom,
-    copyData: choice.value,
+    copyData: value.value,
   };
 }

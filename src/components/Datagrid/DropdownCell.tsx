@@ -11,6 +11,7 @@ import SingleAutocompleteSelectField from "../SingleAutocompleteSelectField";
 import { Choice } from "../SingleSelectField";
 
 interface DropdownCellProps {
+  readonly choices: Array<Choice<string, string>>;
   readonly kind: "dropdown-cell";
   readonly value: Choice | null;
 }
@@ -38,14 +39,6 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
 }) => {
   const classes = useDropdownCellStyles();
 
-  const choices = React.useMemo(
-    () => [
-      { label: "QA", value: "qa" },
-      { label: "Engineer", value: "eng" },
-    ],
-    [],
-  );
-
   return (
     <SingleAutocompleteSelectField
       nakedInput
@@ -54,12 +47,12 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
           ...cell,
           data: {
             ...cell.data,
-            value: choices.find(c => c.value === event.target.value),
+            value: cell.data.choices.find(c => c.value === event.target.value),
           },
         })
       }
       name=""
-      choices={choices}
+      choices={cell.data.choices}
       displayValue={cell.data.value.label.toString()}
       value={cell.data.value.value}
     />
