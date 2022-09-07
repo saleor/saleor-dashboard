@@ -174,11 +174,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
               className={classes.warehouseButtonContentText}
             >
               {lineFormWarehouse?.name ??
-                intl.formatMessage({
-                  defaultMessage: "Select warehouse...",
-                  id: "SBb6Ej",
-                  description: "select a warehouse to fulfill product from",
-                })}
+                intl.formatMessage(messages.selectWarehouse)}
             </Typography>
             <ChevronIcon />
           </div>
