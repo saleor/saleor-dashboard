@@ -64,8 +64,8 @@ function useTaxCountriesForm(
     const { id, value } = item;
     const parsedRate = parseFloat(value);
     return {
+      rate: isNaN(parsedRate) ? null : parsedRate,
       taxClassId: id,
-      rate: isNaN(parsedRate) ? 0 : parsedRate,
     };
   });
 
