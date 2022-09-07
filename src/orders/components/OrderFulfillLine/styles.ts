@@ -62,6 +62,7 @@ export const useStyles = makeStyles(
     warehouseButtonContentText: {
       overflow: "hidden",
       textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
   }),
   { name: "OrderFulfillLine" },
