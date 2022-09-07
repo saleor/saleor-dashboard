@@ -649,12 +649,6 @@ export const product: (
         },
       ],
       trackInventory: true,
-      preorder: {
-        __typename: "PreorderData",
-        endDate: null,
-        globalSoldUnits: null,
-        globalThreshold: 0,
-      },
     },
     {
       __typename: "ProductVariant",
@@ -678,11 +672,6 @@ export const product: (
             amount: 1,
             currency: "USD",
           },
-          preorderThreshold: {
-            __typename: "PreorderThreshold",
-            quantity: 0,
-            soldUnits: 0,
-          },
         },
         {
           __typename: "ProductVariantChannelListing",
@@ -701,11 +690,6 @@ export const product: (
             __typename: "Money",
             amount: 1,
             currency: "USD",
-          },
-          preorderThreshold: {
-            __typename: "PreorderThreshold",
-            quantity: 0,
-            soldUnits: 0,
           },
         },
       ],
@@ -739,12 +723,6 @@ export const product: (
         },
       ],
       trackInventory: false,
-      preorder: {
-        __typename: "PreorderData",
-        endDate: null,
-        globalSoldUnits: null,
-        globalThreshold: 0,
-      },
     },
   ],
   visibleInListings: true,
@@ -2975,11 +2953,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         amount: 10,
         currency: "USD",
       },
-      preorderThreshold: {
-        __typename: "PreorderThreshold",
-        quantity: 0,
-        soldUnits: 0,
-      },
     },
     {
       __typename: "ProductVariantChannelListing",
@@ -2998,11 +2971,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         __typename: "Money",
         amount: 20,
         currency: "USD",
-      },
-      preorderThreshold: {
-        __typename: "PreorderThreshold",
-        quantity: 0,
-        soldUnits: 0,
       },
     },
   ],
@@ -3513,12 +3481,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     },
   ],
   trackInventory: true,
-  preorder: {
-    __typename: "PreorderData",
-    endDate: null,
-    globalSoldUnits: null,
-    globalThreshold: 0,
-  },
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,

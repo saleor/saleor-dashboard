@@ -41,10 +41,6 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
-    preorder: {
-      active: false,
-      value: false,
-    },
     clickAndCollect: {
       active: false,
       value: false,

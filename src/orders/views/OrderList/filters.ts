@@ -46,10 +46,6 @@ export function getFilterOpts(
       active: params.clickAndCollect !== undefined,
       value: parseBoolean(params.clickAndCollect, true),
     },
-    preorder: {
-      active: params.preorder !== undefined,
-      value: parseBoolean(params.preorder, true),
-    },
     channel: channels
       ? {
           active: params?.channel !== undefined,
@@ -125,10 +121,6 @@ export function getFilterVariables(
       params.clickAndCollect !== undefined
         ? parseBoolean(params.clickAndCollect, false)
         : undefined,
-    isPreorder:
-      params.preorder !== undefined
-        ? parseBoolean(params.preorder, false)
-        : undefined,
     giftCardBought:
       params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) ||
       undefined,
@@ -150,8 +142,6 @@ export function getFilterQueryParam(
         filter,
         OrderListUrlFiltersEnum.clickAndCollect,
       );
-    case OrderFilterKeys.preorder:
-      return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.preorder);
 
     case OrderFilterKeys.created:
       return getMinMaxQueryParam(

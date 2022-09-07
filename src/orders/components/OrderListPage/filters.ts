@@ -23,7 +23,6 @@ export enum OrderFilterKeys {
   status = "status",
   paymentStatus = "paymentStatus",
   clickAndCollect = "clickAndCollect",
-  preorder = "preorder",
   channel = "channel",
   giftCard = "giftCard",
   metadata = "metadata",
@@ -41,17 +40,11 @@ export interface OrderListFilterOpts {
   paymentStatus: FilterOpts<PaymentChargeStatusEnum[]>;
   channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
   clickAndCollect: FilterOpts<boolean>;
-  preorder: FilterOpts<boolean>;
   giftCard: FilterOpts<OrderFilterGiftCard[]>;
   metadata: FilterOpts<KeyValue[]>;
 }
 
 const messages = defineMessages({
-  preorder: {
-    id: "JYvf8/",
-    defaultMessage: "Preorder",
-    description: "is preorder",
-  },
   clickAndCollect: {
     id: "biAxKR",
     defaultMessage: "Click&Collect",
@@ -109,18 +102,6 @@ export function createFilterStructure(
         },
       ),
       active: opts.clickAndCollect.active,
-    },
-    {
-      ...createBooleanField(
-        OrderFilterKeys.preorder,
-        intl.formatMessage(messages.preorder),
-        opts.preorder.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes),
-        },
-      ),
-      active: opts.preorder.active,
     },
     {
       ...createTextField(

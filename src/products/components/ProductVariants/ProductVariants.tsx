@@ -142,27 +142,6 @@ function getAvailabilityLabel(
   variant: ProductDetailsVariantFragment[][0],
   numAvailable: number,
 ): string {
-  if (variant.preorder) {
-    if (variant.preorder.globalThreshold) {
-      return intl.formatMessage(
-        {
-          id: "80FeaT",
-          defaultMessage: "{globalThreshold} Global threshold",
-          description: "product variant preorder threshold",
-        },
-        {
-          globalThreshold: variant.preorder.globalThreshold,
-        },
-      );
-    }
-
-    return intl.formatMessage({
-      id: "qbqMpk",
-      defaultMessage: "In preorder",
-      description: "product variant preorder threshold",
-    });
-  }
-
   const variantStock = variant.stocks.find(s => s.warehouse.id === warehouse);
 
   if (!!warehouse) {

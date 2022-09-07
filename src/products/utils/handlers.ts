@@ -1,12 +1,9 @@
 import {
   ChannelData,
-  ChannelPreorderArgs,
-  ChannelPriceAndPreorderData,
   ChannelPriceArgs,
   ChannelPriceData,
 } from "@saleor/channels/utils";
-import { FormChange, UseFormResult } from "@saleor/hooks/useForm";
-import moment from "moment";
+import { FormChange } from "@saleor/hooks/useForm";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -18,26 +15,6 @@ export function createChannelsPriceChangeHandler(
 
     const updatedChannels = channelListings.map(channel =>
       channel.id === id ? { ...channel, costPrice, price } : channel,
-    );
-
-    updateChannels(updatedChannels);
-
-    triggerChange();
-  };
-}
-
-export function createChannelsPreorderChangeHandler(
-  channelListings: ChannelData[],
-  updateChannels: (data: ChannelData[]) => void,
-  triggerChange: () => void,
-) {
-  return (id: string, preorderData: ChannelPreorderArgs) => {
-    const { preorderThreshold, unitsSold } = preorderData;
-
-    const updatedChannels = channelListings.map(channel =>
-      channel.id === id
-        ? { ...channel, preorderThreshold, unitsSold }
-        : channel,
     );
 
     updateChannels(updatedChannels);
@@ -110,7 +87,7 @@ export function createProductTypeSelectHandler(
   };
 }
 
-export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
+export const getChannelsInput = (channels: ChannelPriceData[]) =>
   channels?.map(channel => ({
     data: channel,
     id: channel.id,
@@ -118,7 +95,6 @@ export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
     value: {
       costPrice: channel.costPrice || "",
       price: channel.price || "",
-      preorderThreshold: channel.preorderThreshold || null,
     },
   }));
 
@@ -142,17 +118,3 @@ export const getAvailabilityVariables = (channels: ChannelData[]) =>
       visibleInListings: channel.visibleInListings,
     };
   });
-
-export const createPreorderEndDateChangeHandler = (
-  form: UseFormResult<{ preorderEndDateTime?: string }>,
-  triggerChange: () => void,
-  preorderPastDateErrorMessage: string,
-): FormChange => event => {
-  form.change(event);
-  if (moment(event.target.value).isSameOrBefore(Date.now())) {
-    form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-  } else {
-    form.clearErrors("preorderEndDateTime");
-  }
-  triggerChange();
-};

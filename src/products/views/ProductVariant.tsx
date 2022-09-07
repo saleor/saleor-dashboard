@@ -21,7 +21,6 @@ import {
   useFileUploadMutation,
   useProductVariantChannelListingUpdateMutation,
   useProductVariantDetailsQuery,
-  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -158,13 +157,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         channel.value.costPrice !==
         variantChannel?.costPrice?.amount.toString();
 
-      const preorderThresholdHasChanged =
-        channel.value?.preorderThreshold !==
-        variantChannel.preorderThreshold.quantity;
-
-      return (
-        priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged
-      );
+      return priceHasChanged || costPriceHasChanged;
     });
 
     if (channelsHaveChanged) {
@@ -176,7 +169,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
               channelId: listing.id,
               costPrice: listing.value.costPrice || null,
               price: listing.value.price,
-              preorderThreshold: listing.value.preorderThreshold,
             })),
           },
         }),
@@ -200,13 +192,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   });
 
   const [
-    deactivatePreorder,
-    deactivatePreoderOpts,
-  ] = useProductVariantPreorderDeactivateMutation({});
-  const handleDeactivateVariantPreorder = (id: string) =>
-    deactivatePreorder({ variables: { id } });
-
-  const [
     reorderProductVariants,
     reorderProductVariantsOpts,
   ] = useProductVariantReorderMutation({});
@@ -225,7 +210,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
-    deactivatePreoderOpts.loading ||
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
@@ -280,14 +264,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         quantityLimitPerCustomer: Number(data.quantityLimitPerCustomer) || null,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
-        preorder: data.isPreorder
-          ? {
-              globalThreshold: data.globalThreshold
-                ? parseInt(data.globalThreshold, 10)
-                : null,
-              endDate: data?.preorderEndDateTime || null,
-            }
-          : null,
         weight: weight(data.weight),
         firstValues: 10,
       },
@@ -393,8 +369,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           return [...errors, ...channelErrors];
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
-        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id

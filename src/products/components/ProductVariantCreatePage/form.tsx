@@ -33,14 +33,11 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { errorMessages } from "@saleor/intl";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -48,12 +45,7 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
   quantityLimitPerCustomer: number | null;
-  preorderEndDateTime?: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -82,7 +74,6 @@ export interface ProductVariantCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
-  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -111,11 +102,6 @@ const initial: ProductVariantCreateFormData = {
   sku: "",
   trackInventory: true,
   weight: "",
-  isPreorder: false,
-  globalThreshold: null,
-  globalSoldUnits: 0,
-  hasPreorderEndDate: false,
-  preorderEndDateTime: "",
   quantityLimitPerCustomer: null,
 };
 
@@ -125,7 +111,6 @@ function useProductVariantCreateForm(
   disabled: boolean,
   opts: UseProductVariantCreateFormOpts,
 ): UseProductVariantCreateFormOutput {
-  const intl = useIntl();
   const attributeInput = getVariantAttributeInputFromProduct(product);
 
   const form = useForm(initial, undefined, { confirmLeave: true });
@@ -215,12 +200,6 @@ function useProductVariantCreateForm(
     stocks.remove(id);
   };
 
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
-    triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
-  );
-
   const data: ProductVariantCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(
@@ -253,12 +232,7 @@ function useProductVariantCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const formDisabled =
-    data.isPreorder &&
-    data.hasPreorderEndDate &&
-    !!form.errors.preorderEndDateTime;
-
-  const isSaveDisabled = disabled || formDisabled || !onSubmit;
+  const isSaveDisabled = disabled || !onSubmit;
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -270,7 +244,6 @@ function useProductVariantCreateForm(
       addStock: handleStockAdd,
       changeMetadata,
       changeStock: handleStockChange,
-      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

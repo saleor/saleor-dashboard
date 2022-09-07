@@ -7,11 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import {
-  ChannelData,
-  ChannelPriceAndPreorderArgs,
-  ChannelPriceArgs,
-} from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -61,10 +57,7 @@ interface ProductVariantPriceProps {
   errors?: ProductChannelListingErrorFragment[];
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (
-    id: string,
-    data: ChannelPriceArgs | ChannelPriceAndPreorderArgs,
-  ) => void;
+  onChange?: (id: string, data: ChannelPriceArgs) => void;
   disabledMessage?: MessageDescriptor;
 }
 
@@ -186,7 +179,6 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           onChange(listing.id, {
                             costPrice: listing.costPrice,
                             price: e.target.value,
-                            preorderThreshold: listing.preorderThreshold,
                           })
                         }
                         disabled={loading}
@@ -216,7 +208,6 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           onChange(listing.id, {
                             costPrice: e.target.value,
                             price: listing.price,
-                            preorderThreshold: listing.preorderThreshold,
                           })
                         }
                         disabled={loading}

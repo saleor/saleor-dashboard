@@ -109,14 +109,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           data: null,
           id: line.id,
           label: getAttributesCaption(line?.variant?.attributes),
-          value: line?.variant?.preorder
-            ? null
-            : [
-                {
-                  quantity: line.quantityToFulfill,
-                  warehouse: highestQuantityAllocation?.warehouse,
-                },
-              ],
+          value: [
+            {
+              quantity: line.quantityToFulfill,
+              warehouse: highestQuantityAllocation?.warehouse,
+            },
+          ],
         };
       },
     ),
@@ -180,15 +178,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       el => el.value?.[0]?.quantity > 0,
     );
 
-    const overfulfill = formsetData
-      .filter(item => !!item?.value) // this can be removed after preorder is dropped
-      .some(item => {
-        const formQuantityFulfilled = item?.value?.[0]?.quantity;
-        const quantityToFulfill = order?.lines?.find(
-          line => line.id === item.id,
-        ).quantityToFulfill;
-        return formQuantityFulfilled > quantityToFulfill;
-      });
+    const overfulfill = formsetData.some(item => {
+      const formQuantityFulfilled = item?.value?.[0]?.quantity;
+      const quantityToFulfill = order?.lines?.find(line => line.id === item.id)
+        .quantityToFulfill;
+      return formQuantityFulfilled > quantityToFulfill;
+    });
 
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };

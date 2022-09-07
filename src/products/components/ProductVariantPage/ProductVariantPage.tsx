@@ -35,7 +35,6 @@ import { defineMessages, useIntl } from "react-intl";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
-import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantNavigation from "../ProductVariantNavigation";
@@ -109,8 +108,6 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
-  onVariantPreorderDeactivate: (id: string) => void;
-  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onDelete();
@@ -139,8 +136,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onDelete,
   onMediaSelect,
   onSubmit,
-  onVariantPreorderDeactivate,
-  variantDeactivatePreoderButtonState,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -161,11 +156,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
-  const [
-    isEndPreorderModalOpened,
-    setIsEndPreorderModalOpened,
-  ] = React.useState(false);
-
   const variantMedia = variant?.media?.map(image => image.id);
   const productMedia = [
     ...(variant?.product?.media ?? []),
@@ -175,11 +165,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
-  const handleDeactivatePreorder = async () => {
-    await onVariantPreorderDeactivate(variant.id);
-    setIsEndPreorderModalOpened(false);
-  };
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -342,12 +327,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <CardSpacer />
                     <ProductStocks
-                      productVariantChannelListings={data.channelListings.map(
-                        channel => ({
-                          ...channel.data,
-                          ...channel.value,
-                        }),
-                      )}
                       onVariantChannelListingChange={handlers.changeChannels}
                       data={data}
                       disabled={loading}
@@ -358,12 +337,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
-                      onChangePreorderEndDate={handlers.changePreorderEndDate}
-                      onEndPreorderTrigger={
-                        !!variant?.preorder
-                          ? () => setIsEndPreorderModalOpened(true)
-                          : null
-                      }
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
@@ -415,15 +388,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           open={isModalOpened}
           media={productMedia}
           selectedMedia={variant?.media.map(image => image.id)}
-        />
-      )}
-      {!!variant?.preorder && (
-        <ProductVariantEndPreorderDialog
-          confirmButtonState={variantDeactivatePreoderButtonState}
-          onClose={() => setIsEndPreorderModalOpened(false)}
-          onConfirm={handleDeactivatePreorder}
-          open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
         />
       )}
     </>

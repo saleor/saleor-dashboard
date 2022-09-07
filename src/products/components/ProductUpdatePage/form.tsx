@@ -15,11 +15,7 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
-import {
-  ChannelData,
-  ChannelPreorderArgs,
-  ChannelPriceArgs,
-} from "@saleor/channels/utils";
+import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -43,7 +39,6 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -51,9 +46,7 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
-  createChannelsPreorderChangeHandler,
   createChannelsPriceChangeHandler,
-  createPreorderEndDateChangeHandler,
 } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
@@ -71,7 +64,6 @@ import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo } from "react";
-import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -92,11 +84,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   sku: string;
   taxCode: string;
   trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
   weight: string;
 }
 export interface FileAttributeInputData {
@@ -140,10 +127,6 @@ export interface ProductUpdateHandlers
     >,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
     Record<
-      "changeChannelPreorder",
-      (id: string, data: ChannelPreorderArgs) => void
-    >,
-    Record<
       "changeChannels",
       (
         id: string,
@@ -154,7 +137,6 @@ export interface ProductUpdateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -238,7 +220,6 @@ function useProductUpdateForm(
   disabled: boolean,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
-  const intl = useIntl();
   const initial = useMemo(
     () =>
       getProductUpdatePageFormData(
@@ -375,22 +356,10 @@ function useProductUpdateForm(
     triggerChange,
   );
 
-  const handleChannelPreorderChange = createChannelsPreorderChangeHandler(
-    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
-    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange,
-  );
-
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
     triggerChange,
-  );
-
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
-    triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
   const data: ProductUpdateData = {
@@ -446,14 +415,6 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (
-      data.isPreorder &&
-      data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime
-    ) {
-      return false;
-    }
-
     if (opts.hasVariants) {
       return true;
     }
@@ -482,11 +443,9 @@ function useProductUpdateForm(
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
-      changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
       changeMetadata,
       changeStock: handleStockChange,
-      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

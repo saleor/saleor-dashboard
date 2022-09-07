@@ -42,7 +42,6 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromProductType,
   ProductType,
@@ -65,9 +64,7 @@ import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
 
-import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
@@ -88,11 +85,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   stockQuantity: number;
   taxCode: string;
   trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime: string;
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
@@ -126,7 +118,6 @@ export interface ProductCreateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
-  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -184,7 +175,6 @@ function useProductCreateForm(
   loading: boolean,
   opts: UseProductCreateFormOpts,
 ): UseProductCreateFormOutput {
-  const intl = useIntl();
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
     category: "",
@@ -207,11 +197,6 @@ function useProductCreateForm(
     taxCode: null,
     trackInventory: false,
     weight: "",
-    globalSoldUnits: 0,
-    globalThreshold: "",
-    isPreorder: false,
-    hasPreorderEndDate: false,
-    preorderEndDateTime: "",
   };
 
   const form = useForm(
@@ -342,12 +327,6 @@ function useProductCreateForm(
     triggerChange,
   );
 
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
-    triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
-  );
-
   const data: ProductCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(
@@ -392,14 +371,6 @@ function useProductCreateForm(
       return false;
     }
 
-    if (
-      data.isPreorder &&
-      data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime
-    ) {
-      return false;
-    }
-
     if (opts.selectedProductType?.hasVariants) {
       return true;
     }
@@ -429,7 +400,6 @@ function useProductCreateForm(
       changeChannels: handleChannelsChange,
       changeMetadata,
       changeStock: handleStockChange,
-      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

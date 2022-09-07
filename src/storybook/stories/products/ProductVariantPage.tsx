@@ -29,7 +29,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
-      variantDeactivatePreoderButtonState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -39,7 +38,6 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
-      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -58,7 +56,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
-      variantDeactivatePreoderButtonState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -68,7 +65,6 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
-      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("no warehouses", () => (
@@ -86,7 +82,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
-      variantDeactivatePreoderButtonState="default"
       warehouses={[]}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -96,7 +91,6 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
-      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -112,7 +106,6 @@ storiesOf("Views / Products / Product variant details", module)
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
-      variantDeactivatePreoderButtonState="default"
       errors={[
         {
           attributes: [variant.selectionAttributes[0].attribute.id],
@@ -152,6 +145,5 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
-      onVariantPreorderDeactivate={() => undefined}
     />
   ));

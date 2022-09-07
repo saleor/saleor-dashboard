@@ -260,7 +260,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 stocks={data.stocks}
                 warehouses={warehouses}
                 onChange={handlers.changeStock}
-                onChangePreorderEndDate={handlers.changePreorderEndDate}
                 onWarehouseStockAdd={handlers.addStock}
                 onWarehouseStockDelete={handlers.deleteStock}
                 onWarehouseConfigure={onWarehouseConfigure}

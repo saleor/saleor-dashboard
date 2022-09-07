@@ -85,9 +85,6 @@ export const fragmentOrderLine = gql`
     variant {
       id
       quantityAvailable
-      preorder {
-        endDate
-      }
       stocks {
         ...Stock
       }
@@ -363,9 +360,6 @@ export const fragmentOrderFulfillLine = gql`
       id
       name
       sku
-      preorder {
-        endDate
-      }
       attributes {
         values {
           id

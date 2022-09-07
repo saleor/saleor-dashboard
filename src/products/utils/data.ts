@@ -23,7 +23,6 @@ import {
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
-import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
@@ -226,11 +225,6 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   taxCode: string;
   trackInventory: boolean;
   weight: string;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -272,11 +266,6 @@ export function getProductUpdatePageFormData(
     taxCode: product?.taxType.taxCode,
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
-    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
   };
 }
 
@@ -288,9 +277,3 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id,
   };
 }
-
-export const getPreorderEndDateFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("YYYY-MM-DD") : "";
-
-export const getPreorderEndHourFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("HH:mm") : "";

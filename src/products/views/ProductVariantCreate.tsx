@@ -130,14 +130,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           weight: weight(formData.weight),
           quantityLimitPerCustomer:
             Number(formData.quantityLimitPerCustomer) || null,
-          preorder: formData.isPreorder
-            ? {
-                globalThreshold: formData.globalThreshold
-                  ? parseInt(formData.globalThreshold, 10)
-                  : null,
-                endDate: formData.preorderEndDateTime || null,
-              }
-            : undefined,
         },
         firstValues: 10,
       },

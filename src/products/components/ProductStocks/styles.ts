@@ -60,11 +60,6 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
     },
-    preorderInfo: {
-      marginBottom: theme.spacing(2),
-      marginTop: theme.spacing(2),
-      display: "block",
-    },
     caption: {
       fontSize: 14,
     },
@@ -86,14 +81,6 @@ export const useStyles = makeStyles(
       },
     },
     actionableText: {},
-    preorderItemsLeftCount: {
-      fontSize: 14,
-      paddingTop: theme.spacing(2),
-      textAlign: "center",
-    },
-    preorderLimitInfo: {
-      marginTop: theme.spacing(3),
-    },
     preview: {
       marginLeft: theme.spacing(1),
     },

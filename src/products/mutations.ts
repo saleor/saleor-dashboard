@@ -203,7 +203,6 @@ export const variantUpdateMutation = gql`
     $quantityLimitPerCustomer: Int
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
-    $preorder: PreorderSettingsInput
     $weight: WeightScalar
     $firstValues: Int
     $afterValues: String
@@ -246,7 +245,6 @@ export const variantUpdateMutation = gql`
         attributes: $attributes
         sku: $sku
         trackInventory: $trackInventory
-        preorder: $preorder
         weight: $weight
         quantityLimitPerCustomer: $quantityLimitPerCustomer
       }
@@ -466,22 +464,6 @@ export const ProductVariantChannelListingUpdateMutation = gql`
       }
       errors {
         ...ProductChannelListingError
-      }
-    }
-  }
-`;
-
-export const ProductVariantPreorderDeactivateMutation = gql`
-  mutation ProductVariantPreorderDeactivate($id: ID!) {
-    productVariantPreorderDeactivate(id: $id) {
-      productVariant {
-        id
-        preorder {
-          ...Preorder
-        }
-      }
-      errors {
-        ...ProductError
       }
     }
   }

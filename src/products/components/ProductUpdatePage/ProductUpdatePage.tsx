@@ -115,7 +115,6 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
-  onVariantEndPreorderDialogOpen: () => void;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
@@ -178,7 +177,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   channelsData,
   onSetDefaultVariant,
   onVariantReorder,
-  onVariantEndPreorderDialogOpen,
   onWarehouseConfigure,
   isChecked,
   isMediaUrlModalVisible,
@@ -407,15 +405,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       />
                       <CardSpacer />
                       <ProductStocks
-                        onVariantChannelListingChange={
-                          handlers.changeChannelPreorder
-                        }
-                        productVariantChannelListings={data.channelListings}
-                        onEndPreorderTrigger={
-                          !!variants?.[0]?.preorder
-                            ? () => onVariantEndPreorderDialogOpen()
-                            : null
-                        }
                         data={data}
                         disabled={disabled}
                         hasVariants={false}
@@ -425,7 +414,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         warehouses={warehouses}
                         onChange={handlers.changeStock}
                         onFormDataChange={change}
-                        onChangePreorderEndDate={handlers.changePreorderEndDate}
                         onWarehouseStockAdd={handlers.addStock}
                         onWarehouseStockDelete={handlers.deleteStock}
                         onWarehouseConfigure={onWarehouseConfigure}

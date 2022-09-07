@@ -1132,7 +1132,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1246,7 +1245,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1368,7 +1366,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1468,7 +1465,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1711,7 +1707,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1810,7 +1805,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1961,7 +1955,6 @@ export const fulfillOrderLine = (
     sku: "5-1337",
     attributes: [],
     trackInventory: true,
-    preorder: null,
     stocks: [
       {
         id: "stock_test_id1",

@@ -42,10 +42,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
   const intl = useIntl();
 
   const isDeletedVariant = !line?.variant;
-  const isPreorder = !!line.variant?.preorder;
-  const lineFormQuantity = isPreorder
-    ? 0
-    : formsetData[lineIndex]?.value?.[0]?.quantity;
+  const lineFormQuantity = formsetData[lineIndex]?.value?.[0]?.quantity;
   const lineFormWarehouse = formsetData[lineIndex]?.value?.[0]?.warehouse;
 
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
@@ -86,14 +83,10 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         className={classes.colName}
         thumbnail={line?.thumbnail?.url}
         badge={
-          isPreorder || !line?.variant ? (
+          !line?.variant ? (
             <Tooltip
               variant="warning"
-              title={intl.formatMessage(
-                isPreorder
-                  ? messages.preorderWarning
-                  : messages.deletedVariantWarning,
-              )}
+              title={intl.formatMessage(messages.deletedVariantWarning)}
             >
               <div className={classes.warningIcon}>
                 <WarningIcon />
@@ -110,54 +103,50 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         </Typography>
       </TableCellAvatar>
       <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>
-      {isPreorder ? (
-        <TableCell className={classes.colQuantity} />
-      ) : (
-        <TableCell
-          className={classes.colQuantity}
-          key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
-        >
-          <TextField
-            type="number"
-            inputProps={{
-              className: classNames(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]: !line.variant
-                  ?.trackInventory,
-              }),
-              min: 0,
-              style: { textAlign: "right" },
-            }}
-            fullWidth
-            value={lineFormQuantity}
-            onChange={event =>
-              formsetChange(line.id, [
-                {
-                  quantity: parseInt(event.target.value, 10),
-                  warehouse: lineFormWarehouse,
-                },
-              ])
-            }
-            error={overfulfill}
-            variant="outlined"
-            InputProps={{
-              classes: {
-                ...(isStockExceeded &&
-                  !overfulfill && {
-                    notchedOutline: classes.warning,
-                  }),
+      <TableCell
+        className={classes.colQuantity}
+        key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
+      >
+        <TextField
+          type="number"
+          inputProps={{
+            className: classNames(classes.quantityInnerInput, {
+              [classes.quantityInnerInputNoRemaining]: !line.variant
+                ?.trackInventory,
+            }),
+            min: 0,
+            style: { textAlign: "right" },
+          }}
+          fullWidth
+          value={lineFormQuantity}
+          onChange={event =>
+            formsetChange(line.id, [
+              {
+                quantity: parseInt(event.target.value, 10),
+                warehouse: lineFormWarehouse,
               },
-              endAdornment: (
-                <div className={classes.remainingQuantity}>
-                  / {line.quantityToFulfill}
-                </div>
-              ),
-            }}
-          />
-        </TableCell>
-      )}
+            ])
+          }
+          error={overfulfill}
+          variant="outlined"
+          InputProps={{
+            classes: {
+              ...(isStockExceeded &&
+                !overfulfill && {
+                  notchedOutline: classes.warning,
+                }),
+            },
+            endAdornment: (
+              <div className={classes.remainingQuantity}>
+                / {line.quantityToFulfill}
+              </div>
+            ),
+          }}
+        />
+      </TableCell>
       <TableCell className={classes.colStock} key="total">
         {lineFormWarehouse
-          ? isPreorder || isDeletedVariant
+          ? isDeletedVariant
             ? undefined
             : availableQuantity
           : "-"}

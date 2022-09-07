@@ -31,7 +31,6 @@ import {
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdateMutation,
-  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation,
   useUpdateMetadataMutation,
@@ -49,7 +48,6 @@ import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -264,11 +262,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
 
-  const [
-    isEndPreorderModalOpened,
-    setIsEndPreorderModalOpened,
-  ] = React.useState(false);
-
   const product = data?.product;
 
   // useMemo saves, like, 46 rerenders here
@@ -429,18 +422,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables }),
   );
 
-  const handleDeactivatePreorder = async () => {
-    await handleDeactivateVariantPreorder(product.variants[0].id);
-    setIsEndPreorderModalOpened(false);
-  };
-
-  const [
-    deactivatePreorder,
-    deactivatePreoderOpts,
-  ] = useProductVariantPreorderDeactivateMutation({});
-  const handleDeactivateVariantPreorder = (id: string) =>
-    deactivatePreorder({ variables: { id } });
-
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
@@ -460,7 +441,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
-    deactivatePreoderOpts.loading ||
     deleteAttributeValueOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
@@ -593,7 +573,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
-        onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
         onImageDelete={handleImageDelete}
         toolbar={
@@ -671,15 +650,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-      {isSimpleProduct && !!product?.variants?.[0]?.preorder && (
-        <ProductVariantEndPreorderDialog
-          confirmButtonState={deactivatePreoderOpts.status}
-          onClose={() => setIsEndPreorderModalOpened(false)}
-          onConfirm={handleDeactivatePreorder}
-          open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={product.variants[0].preorder.globalSoldUnits}
-        />
-      )}
     </>
   );
 };

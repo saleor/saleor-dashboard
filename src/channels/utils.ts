@@ -36,8 +36,6 @@ export interface ChannelData {
   availableForPurchase?: string;
   isAvailableForPurchase?: boolean;
   visibleInListings?: boolean;
-  preorderThreshold?: number;
-  unitsSold?: number;
 }
 
 export interface ChannelPriceData {
@@ -56,34 +54,6 @@ export type ChannelPriceArgs = RequireOnlyOne<
   IChannelPriceArgs,
   "price" | "costPrice"
 >;
-
-export interface ChannelPreorderArgs {
-  preorderThreshold: number;
-  unitsSold: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
-}
-
-export interface ChannelPriceAndPreorderData {
-  id: string;
-  name: string;
-  currency: string;
-  price: string;
-  costPrice?: string;
-  preorderThreshold?: number | null;
-  unitsSold?: number;
-}
-
-export interface IChannelPriceAndPreorderArgs {
-  price: string;
-  costPrice: string;
-  preorderThreshold?: number | null;
-  unitsSold?: number;
-}
-export type ChannelPriceAndPreorderArgs = IChannelPriceArgs & {
-  preorderThreshold: number | null;
-  unitsSold?: number;
-};
 
 export interface ChannelVoucherData {
   id: string;
@@ -307,8 +277,6 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
         productData.variants,
         channel.id,
       );
-      const soldUnits = variantChannel?.preorderThreshold?.soldUnits;
-      const preorderThreshold = variantChannel?.preorderThreshold?.quantity;
       // Published defaults to true if none of variants have set channel listing yet
       const isProductPublished =
         !isSimpleProduct && !haveVariantsChannelListings ? true : isPublished;
@@ -325,8 +293,6 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
         name: channel.name,
         price: price ? price.amount.toString() : "",
         visibleInListings: !!visibleInListings,
-        soldUnits,
-        preorderThreshold,
       };
     },
   ) || [];
