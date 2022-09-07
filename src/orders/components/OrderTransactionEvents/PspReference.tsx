@@ -54,7 +54,10 @@ const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
       style={{ width: width ? `${width}px` : undefined }}
       color="generic"
       label={copied ? intl.formatMessage(messages.copied) : reference}
-      onClick={() => copy(reference)}
+      onClick={event => {
+        event.preventDefault();
+        copy(reference);
+      }}
       className={classes.pill}
       ref={ref}
     />
