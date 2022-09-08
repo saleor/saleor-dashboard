@@ -2,6 +2,9 @@ import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
+import { score } from "fuzzaldrin";
+import sortBy from "lodash/sortBy";
+import throttle from "lodash/throttle";
 import React from "react";
 
 import {
@@ -12,6 +15,7 @@ import {
   textCell,
 } from "./cells";
 import Datagrid, { GetCellContentOpts } from "./Datagrid";
+import { DropdownChoice } from "./DropdownCell";
 import { initialData } from "./fixtures";
 import { numberCellEmptyValue } from "./NumberCell";
 import {
@@ -29,6 +33,25 @@ const availableColumns = [
   { title: "Eye color", id: "eyeColor", width: 200 },
   { title: "Age", id: "age", width: 80 },
 ] as const;
+
+const jobChoices = [
+  { label: "QA", value: "qa" },
+  { label: "Engineer", value: "eng" },
+  { label: "Designer", value: "designer" },
+  { label: "Director", value: "director" },
+];
+
+const getJobChoices = throttle(
+  (text: string) =>
+    new Promise<DropdownChoice[]>(resolve =>
+      setTimeout(() => {
+        resolve(
+          sortBy(jobChoices, choice => -score(choice.label, text)).slice(0, 2),
+        );
+      }, 500),
+    ),
+  500,
+);
 
 const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
   const changeProps = useDatagridChangeState();
@@ -74,11 +97,9 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
 
       if (columnId === "job") {
         return styled(
-          dropdownCell(change?.value ?? dataRow?.job, [
-            { label: "QA", value: "qa" },
-            { label: "Engineer", value: "eng" },
-            { label: "Designer", value: "designer" },
-          ]),
+          dropdownCell(change?.value ?? dataRow?.job, {
+            update: getJobChoices,
+          }),
         );
       }
 

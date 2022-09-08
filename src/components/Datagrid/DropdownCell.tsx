@@ -10,8 +10,11 @@ import React from "react";
 import SingleAutocompleteSelectField from "../SingleAutocompleteSelectField";
 import { Choice } from "../SingleSelectField";
 
+export type DropdownChoice = Choice<string, string>;
+
 interface DropdownCellProps {
-  readonly choices: Array<Choice<string, string>>;
+  readonly choices?: DropdownChoice[];
+  readonly update?: (text: string) => Promise<DropdownChoice[]>;
   readonly kind: "dropdown-cell";
   readonly value: Choice | null;
 }
@@ -39,20 +42,29 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
 }) => {
   const classes = useDropdownCellStyles();
 
+  const [data, setData] = React.useState<DropdownChoice[]>([]);
+  const getChoices = React.useCallback(async (text: string) => {
+    setData(await cell.data.update(text));
+  }, []);
+
+  const props = cell.data.update
+    ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
+    : { choices: cell.data.choices };
+
   return (
     <SingleAutocompleteSelectField
+      {...props}
       nakedInput
       onChange={event =>
         onFinishedEditing({
           ...cell,
           data: {
             ...cell.data,
-            value: cell.data.choices.find(c => c.value === event.target.value),
+            value: props.choices.find(c => c.value === event.target.value),
           },
         })
       }
       name=""
-      choices={cell.data.choices}
       displayValue={cell.data.value.label.toString()}
       value={cell.data.value.value}
     />
