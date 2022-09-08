@@ -726,6 +726,10 @@
     "context": "channel settings",
     "string": "Channel Settings"
   },
+  "3zdm8A": {
+    "context": "Dialog title",
+    "string": "Transaction {actionType}"
+  },
   "408KSO": {
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
@@ -741,6 +745,10 @@
   "43Nlay": {
     "context": "warehouse",
     "string": "Address Information"
+  },
+  "43QkTW": {
+    "context": "Transaction capture button - charge preauthorized transaction amount",
+    "string": "Capture"
   },
   "450Fty": {
     "string": "None"
@@ -1163,6 +1171,10 @@
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
   },
+  "7f4YSA": {
+    "context": "Text displayed after PSP reference is copied to clipboard",
+    "string": "Copied"
+  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -1554,6 +1566,9 @@
   "B/y6LC": {
     "context": "section header",
     "string": "Unfulfilled Products"
+  },
+  "B06DG8": {
+    "string": "Transaction wasn't found"
   },
   "B0PaVS": {
     "context": "pint unit",
@@ -4295,6 +4310,10 @@
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
   },
+  "VyKl39": {
+    "context": "Dialog warning text",
+    "string": "Are you sure you want to {actionType} this transaction?"
+  },
   "VyzsWZ": {
     "string": "Default Billing Address"
   },
@@ -4526,6 +4545,10 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "XPiJex": {
+    "context": "Transaction void button - return preauthorized amount to client",
+    "string": "Void"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -6645,6 +6668,9 @@
     "context": "header",
     "string": "Add Value to Authorization Field"
   },
+  "qDfaDI": {
+    "string": "No app or plugin is configured to handle requested transaction action"
+  },
   "qDwvZ4": {
     "string": "Unknown error"
   },
@@ -7796,6 +7822,9 @@
   },
   "zSOvI0": {
     "string": "Filters"
+  },
+  "zTK7fz": {
+    "string": "Transaction action requested successfuly"
   },
   "zTdwWM": {
     "context": "money",
