@@ -33,7 +33,7 @@ jobs:
                     });
                     return tags.join(",")
                   }catch{
-                    return @critical
+                    return '@critical'
                   }
 
       - name: get-containers
