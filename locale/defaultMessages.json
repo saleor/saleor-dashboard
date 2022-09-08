@@ -6275,6 +6275,10 @@
     "context": "password reset, button",
     "string": "Send an email with reset link"
   },
+  "lnteBJ": {
+    "context": "country rates list label for the default rate",
+    "string": "Country default rate"
+  },
   "lqIzC8": {
     "string": "This field needs to be unique"
   },
