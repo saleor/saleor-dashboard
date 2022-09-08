@@ -46,15 +46,11 @@ jobs:
           script: |
                   const { pullRequestBody } = process.env
                   const containers = [];
-                  try{
                     const numberOfContainersRegex = /CONTAINERS=(\d*)/
                     const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
                     for(let i=1; i<=numberOfContainers[1]; i++){
                       containers.push(i)
                     }
-                  }catch{
-                    containers.push(1)
-                  }
                   return `{"containers": ${containers}}`
 
       - name: Echo tags
