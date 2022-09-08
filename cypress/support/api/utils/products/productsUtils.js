@@ -34,7 +34,6 @@ export function createProductInChannel({
   description = null,
   trackInventory = true,
   weight = 1,
-  preorder,
   sku = name,
 }) {
   let product;
@@ -63,7 +62,6 @@ export function createProductInChannel({
         price,
         trackInventory,
         weight,
-        preorder,
       });
     })
     .then(variantsResp => {
@@ -120,7 +118,6 @@ export function createNewProductWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
-  preorder,
   attributeValues = ["value"],
   sku = name,
   productPrice = 10,
@@ -130,7 +127,6 @@ export function createNewProductWithNewDataAndDefaultChannel({
       name,
       description,
       warehouseId,
-      preorder,
       attributeValues,
       sku,
       productPrice,
@@ -143,7 +139,6 @@ export function createNewProductWithNewDataAndChannel({
   name,
   description = name,
   warehouseId,
-  preorder,
   attributeValues = ["value"],
   sku = name,
   productPrice = 10,
@@ -178,7 +173,6 @@ export function createNewProductWithNewDataAndChannel({
           description,
           warehouseId,
           price: productPrice,
-          preorder,
           sku,
         });
       },
@@ -198,7 +192,6 @@ export function createProductWithShipping({
   sku = name,
   productPrice = 10,
   shippingPrice = 10,
-  preorder,
   newChannel = false,
 }) {
   let address;
@@ -239,7 +232,6 @@ export function createProductWithShipping({
           name,
           warehouseId: warehouse.id,
           productPrice,
-          preorder,
           attributeValues,
           sku,
           defaultChannel,

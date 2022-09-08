@@ -166,22 +166,6 @@ export function selectAttributeWithType({ attributeType, attributeName }) {
   }
 }
 
-export function enablePreorderWithThreshold(threshold) {
-  cy.get(VARIANTS_SELECTORS.preorderCheckbox)
-    .click()
-    .get(VARIANTS_SELECTORS.globalThresholdInput)
-    .type(threshold);
-}
-
-export function setUpPreorderEndDate(endDate, endTime) {
-  cy.get(VARIANTS_SELECTORS.setUpEndDateButton)
-    .click()
-    .get(VARIANTS_SELECTORS.preorderEndDateInput)
-    .type(endDate)
-    .get(VARIANTS_SELECTORS.preorderEndTimeInput)
-    .type(endTime);
-}
-
 export function saveVariant(waitForAlias = "VariantCreate") {
   return cy
     .addAliasToGraphRequest(waitForAlias)
