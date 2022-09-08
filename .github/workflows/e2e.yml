@@ -55,7 +55,10 @@ jobs:
                   }catch{
                     containers.push(1)
                   }
-                  return '{"containers": containers}'
+                  return `{"containers": ${containers}}`
+
+      - name: Echo tags
+        run: echo ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
 
   install-cypress:
     needs: get-selected-tags-and-containers
