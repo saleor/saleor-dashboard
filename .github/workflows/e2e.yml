@@ -55,7 +55,7 @@ jobs:
                   }catch{
                     containers.push(1)
                   }
-                  return {"containers": containers}
+                  return '{"containers": containers}'
 
   install-cypress:
     needs: get-selected-tags-and-containers
@@ -131,7 +131,7 @@ jobs:
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with tags ${{fromJSON(needs.get-selected-tags-and-containers.outputs.tags)}}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with selected tags
           CYPRESS_grepTags: ${{ needs.get-selected-tags-and-containers.outputs.tags }}
         with:
           parallel: true
