@@ -31,7 +31,8 @@ jobs:
                     tagsInString.forEach(line => {
                       if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
                     });
-                    return tags.join(",")
+                    const tagsToReturn = tags.join(",").toString();
+                    return tagsToReturn.replace(/\r/g, '')
                   }catch{
                     return '@critical'
                   }
