@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import useLocale from "@saleor/hooks/useLocale";
 import { getMoneyFormatted, IMoney } from "@saleor/utils/intl";
 import React from "react";
@@ -18,10 +19,14 @@ export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
   return (
     <dl className={classes.wrapper}>
       <dt className={classes.label}>{label}</dt>
-      <dd className={classes.moneyWrapper}>
+      <Typography
+        component="dd"
+        variant="body2"
+        className={classes.moneyWrapper}
+      >
         <span className={classes.currency}>{money.currency}&nbsp;</span>
         <span className={classes.amount}>{amount}</span>
-      </dd>
+      </Typography>
     </dl>
   );
 };
