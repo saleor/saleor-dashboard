@@ -180,7 +180,7 @@
     "mochawesome-merge": "^4.2.1",
     "mochawesome-report-generator": "^6.0.1",
     "mock-apollo-client": "^0.4.0",
-    "prettier": "^2.7.1",
+    "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.11.1",
     "register-service-worker": "^1.7.2",
