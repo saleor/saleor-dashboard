@@ -5607,6 +5607,9 @@
     "context": "page title",
     "string": "Title"
   },
+  "gr1BBC": {
+    "string": "Transaction action requested successfully"
+  },
   "gr53VQ": {
     "context": "page header",
     "string": "Create Page"
@@ -7822,9 +7825,6 @@
   },
   "zSOvI0": {
     "string": "Filters"
-  },
-  "zTK7fz": {
-    "string": "Transaction action requested successfuly"
   },
   "zTdwWM": {
     "context": "money",
