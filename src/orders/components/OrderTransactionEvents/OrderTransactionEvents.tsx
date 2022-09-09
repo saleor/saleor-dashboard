@@ -20,13 +20,13 @@ const useStyles = makeStyles(
       paddingRight: 0,
     },
     table: {
-      "& td": {
+      "&& td": {
         // Gap = 24px
         paddingLeft: "12px",
         paddingRight: "12px",
         "&:first-child": {
           // Override for Material first td
-          paddingRight: "12px !important",
+          paddingRight: "12px",
         },
       },
     },
@@ -54,9 +54,11 @@ const useStyles = makeStyles(
     colLast: {
       // Align with card
       [theme.breakpoints.up("md")]: {
-        paddingRight: "32px !important",
-        width: "35%",
-        textAlign: "right",
+        "&&&": {
+          paddingRight: "32px",
+          width: "35%",
+          textAlign: "right",
+        },
       },
       [theme.breakpoints.down("md")]: {
         whiteSpace: "nowrap",
