@@ -1,31 +1,17 @@
 import { TableCell, TableRow } from "@material-ui/core";
 import { TransactionEventFragment } from "@saleor/graphql";
-import useLocale from "@saleor/hooks/useLocale";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import classnames from "classnames";
 import React, { useState } from "react";
 
 import EventStatus from "./EventStatus";
+import EventTime from "./EventTime";
 import PspReference from "./PspReference";
 
 export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[];
 }
-
-const EventTime: React.FC<{ date: string }> = ({ date }) => {
-  const { locale } = useLocale();
-  const intl = new Intl.DateTimeFormat(locale, {
-    timeZoneName: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  return <time dateTime={date}>{intl.format(new Date(date))}</time>;
-};
 
 const useStyles = makeStyles(
   theme => ({
@@ -86,21 +72,21 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
   events,
 }) => {
   const classes = useStyles();
-  const [hoveredPspRef, setHoveredPspRef] = useState(null);
+  const [hoveredPspReference, setHoveredPspReference] = useState(null);
 
   return (
     <ResponsiveTable
       className={classes.table}
-      onMouseLeave={() => setHoveredPspRef(null)}
+      onMouseLeave={() => setHoveredPspReference(null)}
       flexBreakpoint="lg"
     >
       {renderCollection(events, transactionEvent => (
         <TableRow
           onMouseOver={() =>
-            setHoveredPspRef(transactionEvent.reference || null)
+            setHoveredPspReference(transactionEvent.reference || null)
           }
           className={classnames(
-            transactionEvent.reference === hoveredPspRef && classes.hover,
+            transactionEvent.reference === hoveredPspReference && classes.hover,
           )}
         >
           <TableCell

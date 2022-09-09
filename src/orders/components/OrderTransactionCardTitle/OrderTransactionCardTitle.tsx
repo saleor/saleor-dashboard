@@ -60,7 +60,10 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
             {actions
               .filter(action => action !== TransactionActionEnum.REFUND)
               .map(action => (
-                <Button variant="tertiary" onClick={getHandleAction(action)}>
+                <Button
+                  variant="tertiary"
+                  onClick={() => onTransactionAction(id, action)}
+                >
                   <FormattedMessage {...mapActionToMessage[action]} />
                 </Button>
               ))}
@@ -94,12 +97,6 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
       }
     />
   );
-
-  function getHandleAction(action: TransactionActionEnum) {
-    return () => {
-      onTransactionAction(id, action);
-    };
-  }
 };
 
 export default OrderTransactionCardTitle;
