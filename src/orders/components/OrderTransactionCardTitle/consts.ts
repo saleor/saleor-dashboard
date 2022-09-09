@@ -3,7 +3,9 @@ import { MessageDescriptor } from "react-intl";
 
 import { transactionActionMessages } from "./messages";
 
-type TransactionActionUnion = Exclude<`${TransactionActionEnum}`, "REFUND">;
+// Fix when Prettier gets updated to v2.x
+// type TransactionActionUnion = Exclude<`${TransactionActionEnum}`, "REFUND">;
+type TransactionActionUnion = TransactionActionEnum;
 
 export const mapActionToMessage: Record<
   TransactionActionUnion,
@@ -11,4 +13,5 @@ export const mapActionToMessage: Record<
 > = {
   VOID: transactionActionMessages.void,
   CHARGE: transactionActionMessages.capture,
+  REFUND: null,
 };
