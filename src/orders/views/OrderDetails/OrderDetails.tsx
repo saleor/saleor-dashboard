@@ -42,8 +42,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata, updatePrivateMetadataOpts] =
-    useUpdatePrivateMetadataMutation({});
+  const [
+    updatePrivateMetadata,
+    updatePrivateMetadataOpts,
+  ] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<
