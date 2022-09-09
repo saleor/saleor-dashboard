@@ -5,18 +5,25 @@ import {
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
+import pick from "lodash/pick";
 import React from "react";
 
-import SingleAutocompleteSelectField from "../SingleAutocompleteSelectField";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteSelectFieldProps,
+} from "../SingleAutocompleteSelectField";
 import { Choice } from "../SingleSelectField";
 
 export type DropdownChoice = Choice<string, string>;
+export type DropdownCellContentProps = Pick<
+  SingleAutocompleteSelectFieldProps,
+  "allowCustomValues" | "emptyOption"
+>;
 
-interface DropdownCellProps {
+interface DropdownCellProps extends DropdownCellContentProps {
   readonly choices?: DropdownChoice[];
   readonly update?: (text: string) => Promise<DropdownChoice[]>;
   readonly kind: "dropdown-cell";
-  readonly value: Choice | null;
+  readonly value: DropdownChoice | null;
 }
 
 export type DropdownCell = CustomCell<DropdownCellProps>;
@@ -47,12 +54,14 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     setData(await cell.data.update(text));
   }, []);
 
+  const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
     : { choices: cell.data.choices };
 
   return (
     <SingleAutocompleteSelectField
+      {...userProps}
       {...props}
       nakedInput
       onChange={event =>
@@ -60,12 +69,15 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
           ...cell,
           data: {
             ...cell.data,
-            value: props.choices.find(c => c.value === event.target.value),
+            value: props.choices.find(c => c.value === event.target.value) ?? {
+              label: event.target.value,
+              value: event.target.value,
+            },
           },
         })
       }
       name=""
-      displayValue={cell.data.value.label.toString()}
+      displayValue={cell.data.value.label}
       value={cell.data.value.value}
     />
   );
@@ -80,7 +92,7 @@ export const dropdownCellRenderer: CustomCellRenderer<DropdownCell> = {
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(
-      value.label.toString(),
+      value.label,
       rect.x + rect.width - 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );

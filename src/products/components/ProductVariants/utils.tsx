@@ -1,7 +1,9 @@
+import { ApolloQueryResult } from "@apollo/client";
 import { GridCell } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   booleanCell,
+  dropdownCell,
   moneyCell,
   numberCell,
   textCell,
@@ -13,15 +15,19 @@ import {
   DatagridChangeOpts,
 } from "@saleor/components/Datagrid/useDatagridChange";
 import {
+  Exact,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantChannelListingAddInput,
+  SearchAttributeValuesQuery,
+  SearchAttributeValuesQueryVariables,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
@@ -58,7 +64,7 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
 
       return {
         id: attributeId,
-        values: [change.data],
+        values: [change.data.value.value],
       };
     });
 
@@ -212,6 +218,9 @@ interface GetDataOrError {
   channels: ChannelData[];
   added: number[];
   removed: number[];
+  searchAttributeValues: (
+    variables?: Partial<Exact<SearchAttributeValuesQueryVariables>>,
+  ) => Promise<ApolloQueryResult<SearchAttributeValuesQuery>>;
   getChangeIndex: (column: string, row: number) => number;
 }
 
@@ -225,6 +234,7 @@ export function getData({
   row,
   channels,
   variants,
+  searchAttributeValues,
 }: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
@@ -301,16 +311,28 @@ export function getData({
 
   if (getColumnAttribute(columnId)) {
     const value =
-      change ??
-      dataRow?.attributes
-        .find(
+      change?.value ??
+      mapNodeToChoice(
+        dataRow?.attributes.find(
           attribute => attribute.attribute.id === getColumnAttribute(columnId),
-        )
-        ?.values.map(v => v.name)
-        .join(", ") ??
-      "";
+        )?.values,
+      )[0] ??
+      null;
 
-    return styled(textCell(value || ""));
+    return styled(
+      dropdownCell(value, {
+        allowCustomValues: true,
+        emptyOption: true,
+        update: query =>
+          searchAttributeValues({
+            first: 5,
+            id: getColumnAttribute(columnId),
+            query,
+          }).then(values =>
+            mapNodeToChoice(mapEdgesToItems(values.data.attribute.choices)),
+          ),
+      }),
+    );
   }
 }
 

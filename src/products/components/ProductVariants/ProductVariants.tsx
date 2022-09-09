@@ -9,6 +9,7 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
+  useSearchAttributeValuesQuery,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
@@ -41,6 +42,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onRowClick,
 }) => {
   const intl = useIntl();
+  const { refetch: searchAttributeValues } = useSearchAttributeValuesQuery({
+    skip: true,
+  });
   // const limitReached = isLimitReached(limits, "productVariants");
 
   const columns = React.useMemo(
@@ -77,6 +81,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
+        searchAttributeValues,
         ...opts,
       }),
     [columns, variants],
@@ -90,6 +95,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
+        searchAttributeValues,
         ...opts,
       }),
     [columns, variants, errors],

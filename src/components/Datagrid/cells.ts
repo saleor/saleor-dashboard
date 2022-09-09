@@ -4,7 +4,11 @@ import {
   numberCellEmptyValue,
 } from "@saleor/components/Datagrid/NumberCell";
 
-import { DropdownCell, DropdownChoice } from "./DropdownCell";
+import {
+  DropdownCell,
+  DropdownCellContentProps,
+  DropdownChoice,
+} from "./DropdownCell";
 import { MoneyCell } from "./MoneyCell";
 
 const common = {
@@ -59,9 +63,11 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
 
 export function dropdownCell(
   value: DropdownChoice,
-  opts:
-    | { choices: DropdownChoice[] }
-    | { update: (text: string) => Promise<DropdownChoice[]> },
+  opts: DropdownCellContentProps &
+    (
+      | { choices: DropdownChoice[] }
+      | { update: (text: string) => Promise<DropdownChoice[]> }
+    ),
 ): DropdownCell {
   return {
     ...common,
