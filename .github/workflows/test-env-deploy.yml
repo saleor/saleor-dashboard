@@ -176,7 +176,7 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 10
-      matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
+      matrix: ${{ fromJson(needs.prepare-tests.outputs.containers) }}
 
     steps:
       - name: Checkout
@@ -225,7 +225,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ github.ref_name }}
-          CYPRESS_grepTags: ${{ needs.get-selected-tags-and-containers.outputs.tags }}
+          CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           record: true
           tag: Critical, ${{github.event.action}}
