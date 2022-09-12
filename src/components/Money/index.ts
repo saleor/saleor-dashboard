@@ -1,4 +1,4 @@
-import { IMoney } from "./Money";
+import { IMoney } from "@saleor/utils/intl";
 
 export { default } from "./Money";
 export * from "./Money";

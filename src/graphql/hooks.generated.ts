@@ -972,6 +972,13 @@ export const ShippingPriceTranslateErrorFragmentFragmentDoc = gql`
   message
 }
     `;
+export const TransactionRequestActionErrorFragmentDoc = gql`
+    fragment TransactionRequestActionError on TransactionRequestActionError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -1161,6 +1168,36 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const TransactionEventFragmentDoc = gql`
+    fragment TransactionEvent on TransactionEvent {
+  id
+  reference
+  createdAt
+  status
+  name
+}
+    `;
+export const TransactionItemFragmentDoc = gql`
+    fragment TransactionItem on TransactionItem {
+  id
+  type
+  reference
+  actions
+  events {
+    ...TransactionEvent
+  }
+  refundedAmount {
+    ...Money
+  }
+  chargedAmount {
+    ...Money
+  }
+  authorizedAmount {
+    ...Money
+  }
+}
+    ${TransactionEventFragmentDoc}
+${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1340,6 +1377,9 @@ export const OrderDetailsFragmentDoc = gql`
   billingAddress {
     ...Address
   }
+  transactions {
+    ...TransactionItem
+  }
   giftCards {
     events {
       id
@@ -1480,6 +1520,7 @@ export const OrderDetailsFragmentDoc = gql`
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
+${TransactionItemFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
@@ -9138,6 +9179,42 @@ export function useOrderSettingsUpdateMutation(baseOptions?: ApolloReactHooks.Mu
 export type OrderSettingsUpdateMutationHookResult = ReturnType<typeof useOrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.OrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
+export const OrderTransactionRequestActionDocument = gql`
+    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!) {
+  transactionRequestAction(actionType: $action, id: $transactionId) {
+    errors {
+      ...TransactionRequestActionError
+    }
+  }
+}
+    ${TransactionRequestActionErrorFragmentDoc}`;
+export type OrderTransactionRequestActionMutationFn = Apollo.MutationFunction<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
+
+/**
+ * __useOrderTransactionRequestActionMutation__
+ *
+ * To run a mutation, you first call `useOrderTransactionRequestActionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderTransactionRequestActionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderTransactionRequestActionMutation, { data, loading, error }] = useOrderTransactionRequestActionMutation({
+ *   variables: {
+ *      action: // value for 'action'
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useOrderTransactionRequestActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>(OrderTransactionRequestActionDocument, options);
+      }
+export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof useOrderTransactionRequestActionMutation>;
+export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
+export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(
