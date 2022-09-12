@@ -41,7 +41,8 @@ import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDeta
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPayment from "../OrderPayment/OrderPayment";
+import OrderPayment from "../OrderPayment";
+import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
@@ -303,13 +304,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <OrderPayment
+                <OrderSummaryCard
                   order={order}
                   onCapture={onPaymentCapture}
                   onMarkAsPaid={onPaymentPaid}
                   onRefund={onPaymentRefund}
                   onVoid={onPaymentVoid}
                 />
+                <CardSpacer />
+                <OrderPayment order={order} />
                 <CardSpacer />
                 {order?.transactions?.map(transaction => (
                   <React.Fragment key={transaction.id}>
