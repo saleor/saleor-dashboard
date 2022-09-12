@@ -167,7 +167,7 @@ jobs:
               for(let i=1; i<=numberOfContainers[1]; i++){
                 containers.push(i)
               }
-            return `{"containers": [${containers}]}`
+            return {"containers": containers}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
