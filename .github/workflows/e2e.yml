@@ -51,7 +51,7 @@ jobs:
                     for(let i=1; i<=numberOfContainers[1]; i++){
                       containers.push(i)
                     }
-                  return `{"containers": ${containers}}`
+                  return {"containers": [${containers}]}
 
       - name: Echo tags
         run: echo ${{ fromJson(steps.get_containers.outputs.result) }}
@@ -112,9 +112,6 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
-
-      - name: Echo tags
-        run: echo ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
 
       - name: Checkout
         uses: actions/checkout@v2
