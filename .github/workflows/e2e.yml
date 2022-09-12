@@ -41,7 +41,7 @@ jobs:
         id: get_containers
         uses: actions/github-script@v6
         env:
-          pull_request_body: ${{ github.event.pull_request.body }}
+          pullRequestBody: ${{ github.event.pull_request.body }}
         with:
           script: |
                   const { pullRequestBody } = process.env
