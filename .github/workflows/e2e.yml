@@ -2,18 +2,100 @@ name: E2E
 
 on:
   pull_request:
-    types: [reopened, synchronize, labeled, opened]
-    branches: ["*"]
-  workflow_dispatch:
-    branches: ["*"]
+    types: [edited, labeled]
+
 jobs:
-  cypress-run:
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard' && (((github.event.action == 'labeled') && (github.event.label.name == 'run e2e')) || ((github.event.action != 'labeled') && contains(github.event.pull_request.labels.*.name, 'run e2e')))
+  
+  get-selected-tags-and-containers:
+    if:  ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{steps.get_tags.outputs.result}}
+      containers: ${{ steps.get_containers.outputs.result}}
+
+    steps:
+      - name: Get tags
+        id: get_tags
+        uses: actions/github-script@v6
+        env: 
+          pullRequestBody: ${{ github.event.pull_request.body }}
+        with:
+          script: |
+                  const { pullRequestBody } = process.env
+                  const tags = ["@critical"];
+                  try{
+                    const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
+                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`CONTAINERS`);
+                    let tagsInString = removedPullRequestBodyAfterTests[0];
+                    tagsInString = tagsInString.split('\n');
+                    tagsInString.forEach(line => {
+                      if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
+                    });
+                    const tagsToReturn = tags.join(",").toString();
+                    return tagsToReturn.replace(/\r/g, '')
+                  }catch{
+                    return '@critical'
+                  }
+      - name: get-containers
+        id: get_containers
+        uses: actions/github-script@v6
+        env:
+          pullRequestBody: ${{ github.event.pull_request.body }}
+        with:
+          script: |
+                  const { pullRequestBody } = process.env
+                  const containers = [];
+                    const numberOfContainersRegex = /CONTAINERS=(\d*)/
+                    const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
+                    for(let i=1; i<=numberOfContainers[1]; i++){
+                      containers.push(i)
+                    }
+                  return {"containers": containers}
+  install-cypress:
+    needs: get-selected-tags-and-containers
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
 
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          
+      - name: Wait for Deploy and tests
+        uses: lewagon/wait-on-check-action@v1.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          running-workflow-name: e2e
+          check-name: deploy
+          wait-interval: 10
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          # Disable running of tests within install job
+          runTests: false
+    
+  run-tests-in-parallel-on-label:
+    needs: [get-selected-tags-and-containers, install-cypress]
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
+        # run copies of the current job in parallel
+    steps:
+
+      - uses: rlespinasse/github-slug-action@3.1.0
+
+      - name: Set domain
+        id: set-domain
+        run: |
+          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"  
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
@@ -24,50 +106,24 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Cypress run full spec
-        if: ${{ steps.api_uri.outputs.custom_api_uri == 'https://qa.staging.saleor.cloud/graphql/' }}
+      - name: Cypress run
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
-          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
-          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}      
-        with:
-          build: npm run build
-          start: npx local-web-server --spa index.html
-          wait-on: http://localhost:9000/
-          wait-on-timeout: 120
-      - uses: actions/upload-artifact@v1
-        if: ${{ failure() }}
-        with:
-          name: cypress-videos
-          path: cypress/videos
-
-      - name: Cypress run allEnvs spec
-        if: ${{ steps.api_uri.outputs.custom_api_uri != 'https://qa.staging.saleor.cloud/graphql/' }}
-        uses: cypress-io/github-action@v4
-        env:
-          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
-          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL }}
+          CYPRESS_baseUrl: https://${{ steps.set-domain.outputs.domain }}/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          COMMIT_INFO_MESSAGE: Tests triggered on PR - ${{ github.ref_name }} with selected tags
+          CYPRESS_grepTags: ${{ needs.get-selected-tags-and-containers.outputs.tags }}
         with:
-          build: npm run build
-          start: npx local-web-server --spa index.html
-          wait-on: http://localhost:9000/
-          wait-on-timeout: 120
-          command: npm run cy:run:allEnv
-      - uses: actions/upload-artifact@v1
-        if: ${{ failure() }}
-        with:
-          name: cypress-videos
-          path: cypress/videos
+          parallel: true
+          group: 'UI - Chrome'
+          record: true
+          tag: e2eTestsOnPR
