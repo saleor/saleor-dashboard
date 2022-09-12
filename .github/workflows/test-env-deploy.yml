@@ -145,6 +145,7 @@ jobs:
             }catch{
               return '@critical'
             }
+
       - name: get-containers
         id: get_containers
         uses: actions/github-script@v6
@@ -160,6 +161,11 @@ jobs:
                 containers.push(i)
               }
             return {"containers": containers}
+
+      - name: echo-tags
+        run: |
+              echo ${{steps.get_tags.outputs.result}}
+
   cypress-run-selected:
     runs-on: ubuntu-latest
     needs: [prepare-tests, deploy]
@@ -217,5 +223,7 @@ jobs:
           COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ github.ref_name }}
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
+          parallel: true
+          group: 'UI - Chrome'
           record: true
           tag: Critical, ${{github.event.action}}
