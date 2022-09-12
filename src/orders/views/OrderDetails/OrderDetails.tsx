@@ -51,7 +51,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
     OrderUrlQueryParams
-  >(navigate, params => orderUrl(id, params), params);
+  >(navigate, params => orderUrl(id, params), params, ["type"]);
 
   const handleBack = () => navigate(orderListUrl());
 
@@ -145,6 +145,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             }
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
+          onTransactionActionSend={orderMessages.handleTransactionAction}
         >
           {({
             orderAddNote,
@@ -165,6 +166,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             orderPaymentMarkAsPaid,
             orderInvoiceRequest,
             orderInvoiceSend,
+            orderTransactionAction,
           }) => (
             <>
               {!isOrderDraft && !isOrderUnconfirmed && (
@@ -186,6 +188,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                     orderFulfillmentUpdateTracking
                   }
                   orderInvoiceSend={orderInvoiceSend}
+                  orderTransactionAction={orderTransactionAction}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
@@ -235,6 +238,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderInvoiceSend={orderInvoiceSend}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
+                  orderTransactionAction={orderTransactionAction}
                   openModal={openModal}
                   closeModal={closeModal}
                 />

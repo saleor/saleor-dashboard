@@ -16,12 +16,17 @@ import {
   OrderLineUpdateMutation,
   OrderMarkAsPaidMutation,
   OrderShippingMethodUpdateMutation,
+  OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
   OrderVoidMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import {
+  getOrderTransactionErrorMessage,
+  messages as transactionMessages,
+} from "@saleor/utils/errors/transaction";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -57,6 +62,9 @@ interface OrderDetailsMessages {
     handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
     handleInvoiceGenerateFinished: (data: InvoiceRequestMutation) => void;
     handleInvoiceSend: (data: InvoiceEmailSendMutation) => void;
+    handleTransactionAction: (
+      data: OrderTransactionRequestActionMutation,
+    ) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
@@ -337,6 +345,22 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
 
+  const handleTransactionAction = (
+    data: OrderTransactionRequestActionMutation,
+  ) => {
+    const {
+      transactionRequestAction: { errors },
+    } = data;
+    const isError = !!errors.length;
+
+    pushMessage({
+      status: isError ? "error" : "success",
+      text: isError
+        ? getOrderTransactionErrorMessage(errors[0], intl)
+        : intl.formatMessage(transactionMessages.success),
+    });
+  };
+
   return children({
     handleDraftCancel,
     handleDraftFinalize,
@@ -357,5 +381,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handlePaymentCapture,
     handleShippingMethodUpdate,
     handleUpdate,
+    handleTransactionAction,
   });
 };

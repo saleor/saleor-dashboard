@@ -188,6 +188,37 @@ export const invoiceFragment = gql`
   }
 `;
 
+export const transactionEvent = gql`
+  fragment TransactionEvent on TransactionEvent {
+    id
+    reference
+    createdAt
+    status
+    name
+  }
+`;
+
+export const transactionItemFragment = gql`
+  fragment TransactionItem on TransactionItem {
+    id
+    type
+    reference
+    actions
+    events {
+      ...TransactionEvent
+    }
+    refundedAmount {
+      ...Money
+    }
+    chargedAmount {
+      ...Money
+    }
+    authorizedAmount {
+      ...Money
+    }
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
@@ -195,6 +226,9 @@ export const fragmentOrderDetails = gql`
     ...Metadata
     billingAddress {
       ...Address
+    }
+    transactions {
+      ...TransactionItem
     }
     giftCards {
       events {

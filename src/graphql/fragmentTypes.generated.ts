@@ -8,8 +8,8 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "DeliveryMethod": [
-      "ShippingMethod",
-      "Warehouse"
+      "Warehouse",
+      "ShippingMethod"
     ],
     "Event": [
       "AddressCreated",
@@ -238,43 +238,43 @@
       "Warehouse"
     ],
     "TranslatableItem": [
+      "ProductTranslatableContent",
+      "CollectionTranslatableContent",
+      "CategoryTranslatableContent",
       "AttributeTranslatableContent",
       "AttributeValueTranslatableContent",
-      "CategoryTranslatableContent",
-      "CollectionTranslatableContent",
-      "MenuItemTranslatableContent",
-      "PageTranslatableContent",
-      "ProductTranslatableContent",
       "ProductVariantTranslatableContent",
-      "SaleTranslatableContent",
+      "PageTranslatableContent",
       "ShippingMethodTranslatableContent",
-      "VoucherTranslatableContent"
+      "SaleTranslatableContent",
+      "VoucherTranslatableContent",
+      "MenuItemTranslatableContent"
     ],
     "TranslationTypes": [
+      "ProductTranslation",
+      "CollectionTranslation",
+      "CategoryTranslation",
       "AttributeTranslation",
       "AttributeValueTranslation",
-      "CategoryTranslation",
-      "CollectionTranslation",
-      "MenuItemTranslation",
-      "PageTranslation",
-      "ProductTranslation",
       "ProductVariantTranslation",
-      "SaleTranslation",
+      "PageTranslation",
       "ShippingMethodTranslation",
-      "VoucherTranslation"
+      "SaleTranslation",
+      "VoucherTranslation",
+      "MenuItemTranslation"
     ],
     "_Entity": [
-      "Address",
       "App",
-      "Category",
-      "Collection",
+      "Address",
+      "User",
       "Group",
-      "PageType",
-      "Product",
-      "ProductMedia",
-      "ProductType",
       "ProductVariant",
-      "User"
+      "Product",
+      "ProductType",
+      "Collection",
+      "Category",
+      "ProductMedia",
+      "PageType"
     ]
   }
 };
