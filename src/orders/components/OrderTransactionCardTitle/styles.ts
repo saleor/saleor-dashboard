@@ -41,7 +41,7 @@ export const useMoneyDisplayStyles = makeStyles(
     },
     moneyWrapper: {
       margin: 0,
-      fontSize: theme.spacing(1.6875),
+      fontSize: 14,
     },
     currency: {
       fontWeight: 400,
