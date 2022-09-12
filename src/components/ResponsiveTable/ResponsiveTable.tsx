@@ -24,17 +24,23 @@ const useStyles = makeStyles(
 interface ResponsiveTableProps {
   children: React.ReactNode | React.ReactNodeArray;
   className?: string;
+  onMouseLeave?: () => void;
   key?: string;
 }
 
 const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
-  const { children, className } = props;
+  const { children, className, onMouseLeave } = props;
 
   const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <Table className={classNames(classes.table, className)}>{children}</Table>
+      <Table
+        className={classNames(classes.table, className)}
+        onMouseLeave={onMouseLeave}
+      >
+        {children}
+      </Table>
     </div>
   );
 };

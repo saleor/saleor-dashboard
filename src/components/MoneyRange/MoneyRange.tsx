@@ -1,8 +1,9 @@
+import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { LocaleConsumer } from "../Locale";
-import { formatMoney, formatMoneyRange, IMoney } from "../Money";
+import { formatMoney, formatMoneyRange  } from "../Money";
 
 export interface MoneyRangeProps {
   from?: IMoney;

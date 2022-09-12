@@ -491,3 +491,18 @@ export const orderSettingsUpdateMutation = gql`
     }
   }
 `;
+
+// Transactions
+
+export const orderTransactionRequestActionMutation = gql`
+  mutation OrderTransactionRequestAction(
+    $action: TransactionActionEnum!
+    $transactionId: ID!
+  ) {
+    transactionRequestAction(actionType: $action, id: $transactionId) {
+      errors {
+        ...TransactionRequestActionError
+      }
+    }
+  }
+`;

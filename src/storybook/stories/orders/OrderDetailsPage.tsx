@@ -21,6 +21,7 @@ const order = orderFixture(placeholderImage);
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
   onBillingAddressEdit: undefined,
+  onTransactionAction: () => undefined,
   onFulfillmentApprove: () => undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,

@@ -487,3 +487,11 @@ export const shippingPriceTranslateErrorFragment = gql`
     message
   }
 `;
+
+export const transactionRequestActionErrorFragment = gql`
+  fragment TransactionRequestActionError on TransactionRequestActionError {
+    field
+    message
+    code
+  }
+`;
