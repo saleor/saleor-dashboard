@@ -1,9 +1,9 @@
-import { IMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import { OrderErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
+import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

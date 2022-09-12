@@ -4,6 +4,8 @@ import {
   FulfillmentStatus,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
@@ -14,6 +16,7 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderTransactionActionDialog } from "@saleor/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@saleor/searches/useOrderVariantSearch";
@@ -73,6 +76,10 @@ interface OrderUnconfirmedDetailsProps {
   >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
+  orderTransactionAction: PartialMutationProviderOutput<
+    OrderTransactionRequestActionMutation,
+    OrderTransactionRequestActionMutationVariables
+  >;
   orderInvoiceSend: any;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
@@ -102,6 +109,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   orderInvoiceSend,
   updateMetadataOpts,
   updatePrivateMetadataOpts,
+  orderTransactionAction,
   openModal,
   closeModal,
 }) => {
@@ -181,6 +189,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             }
             order={order}
             shop={shop}
+            onTransactionAction={(id, action) =>
+              openModal("transaction-action", {
+                type: action,
+                id,
+                action: "transaction-action",
+              })
+            }
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
@@ -328,6 +343,18 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         transactionReference={transactionReference}
         handleTransactionReference={({ target }) =>
           setTransactionReference(target.value)
+        }
+      />
+      <OrderTransactionActionDialog
+        confirmButtonState={orderTransactionAction.opts.status}
+        onClose={closeModal}
+        open={params.action === "transaction-action"}
+        action={params.type}
+        onSubmit={() =>
+          orderTransactionAction.mutate({
+            action: params.type,
+            transactionId: params.id,
+          })
         }
       />
       <OrderPaymentVoidDialog

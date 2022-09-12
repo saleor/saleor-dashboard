@@ -20,6 +20,7 @@ import {
   OrderDetailsQuery,
   OrderErrorFragment,
   OrderStatus,
+  TransactionActionEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -41,6 +42,7 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
+import OrderTransaction from "../OrderTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -82,6 +84,7 @@ export interface OrderDetailsPageProps {
   onInvoiceClick(invoiceId: string);
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
+  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -113,6 +116,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineChange,
     onOrderLineRemove,
     onShippingMethodEdit,
+    onTransactionAction,
     onSubmit,
   } = props;
   const classes = useStyles(props);
@@ -275,6 +279,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   onVoid={onPaymentVoid}
                 />
                 <CardSpacer />
+                {order?.transactions?.map(transaction => (
+                  <React.Fragment key={transaction.id}>
+                    <OrderTransaction
+                      transaction={transaction}
+                      onTransactionAction={onTransactionAction}
+                    />
+                    <CardSpacer />
+                  </React.Fragment>
+                ))}
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

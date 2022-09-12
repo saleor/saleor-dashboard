@@ -18,6 +18,7 @@ import {
   SearchOrderVariantQuery,
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
+  TransactionStatus,
   WeightUnitsEnum,
 } from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
@@ -784,6 +785,73 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.REFUND,
     OrderAction.VOID,
   ],
+  transactions: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "mollie-creditcard",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Mollie status update: paid",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjI=",
+      type: "test",
+      reference: "123",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDoy",
+          reference: "SDFDS34543SDDFS",
+          createdAt: "2022-08-12T15:14:27.119138+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "123",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 1.21,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 34.21,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -1614,6 +1682,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
+  transactions: [],
   channel: {
     __typename: "Channel",
     slug: "channel-default",
