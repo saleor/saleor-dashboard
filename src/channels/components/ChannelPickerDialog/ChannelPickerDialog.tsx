@@ -7,6 +7,8 @@ import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { messages } from "./messages";
+
 export interface ChannelPickerDialogProps {
   channelsChoices: Array<Choice<string, string>>;
   confirmButtonState: ConfirmButtonTransitionState;
@@ -36,20 +38,12 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       open={open}
       onClose={onClose}
       onConfirm={() => onConfirm(choice)}
-      title={intl.formatMessage({
-        id: "G/pgG3",
-        defaultMessage: "Select a channel",
-        description: "dialog header",
-      })}
+      title={intl.formatMessage(messages.selectChannel)}
     >
       <Autocomplete
         choices={result}
         fullWidth
-        label={intl.formatMessage({
-          defaultMessage: "Channel name",
-          id: "nKwgxY",
-          description: "select label",
-        })}
+        label={intl.formatMessage(messages.channelName)}
         data-test-id="channel-autocomplete"
         value={choice}
         onChange={e => setChoice(e.target.value)}

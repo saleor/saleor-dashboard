@@ -250,6 +250,10 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "/yJJvI": {
+    "context": "dialog header",
+    "string": "Select a product type"
+  },
   "/z9uo1": {
     "context": "order returned success message",
     "string": "Successfully returned products!"
@@ -7438,6 +7442,10 @@
   "vzgZ3U": {
     "context": "card header",
     "string": "Sign In"
+  },
+  "w+3Q3e": {
+    "context": "input label",
+    "string": "Product type"
   },
   "w+5Djm": {
     "string": "Min. Order Weight"

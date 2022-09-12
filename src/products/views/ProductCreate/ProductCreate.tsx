@@ -62,9 +62,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [productCreateComplete, setProductCreateComplete] = React.useState(
     false,
   );
-  const [selectedProductTypeId, setSelectedProductTypeId] = React.useState<
-    string
-  >();
+  const selectedProductTypeId = params["product-type-id"];
+
+  const handleSelectProductType = (productTypeId: string) =>
+    navigate(
+      productAddUrl({
+        ...params,
+        "product-type-id": productTypeId,
+      }),
+    );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductCreateUrlDialog,
@@ -362,7 +368,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
-        onSelectProductType={id => setSelectedProductTypeId(id)}
+        onSelectProductType={handleSelectProductType}
         onAttributeSelectBlur={searchAttributeReset}
       />
     </>
