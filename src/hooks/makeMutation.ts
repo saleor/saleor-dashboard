@@ -34,11 +34,16 @@ export type UseMutationHook<TData, TVariables> = (
 export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<
   TData,
   TVariables
->;
+> & { disableErrorHandling?: boolean };
 
 export function useMutation<TData, TVariables>(
   mutation: DocumentNode,
-  { onCompleted, onError, ...opts }: MutationHookOptions<TData, TVariables>,
+  {
+    onCompleted,
+    onError,
+    disableErrorHandling,
+    ...opts
+  }: MutationHookOptions<TData, TVariables>,
 ): UseMutation<TData, TVariables> {
   const notify = useNotifier();
   const intl = useIntl();
@@ -47,39 +52,43 @@ export function useMutation<TData, TVariables>(
   const [mutateFn, result] = useBaseMutation(mutation, {
     ...opts,
     onCompleted: data => {
-      handleNestedMutationErrors({
-        data,
-        intl,
-        notify,
-      });
+      if (!disableErrorHandling) {
+        handleNestedMutationErrors({
+          data,
+          intl,
+          notify,
+        });
+      }
 
       if (onCompleted) {
         onCompleted(data);
       }
     },
     onError: (err: ApolloError) => {
-      if (err.graphQLErrors) {
-        if (hasError(err, GqlErrors.ReadOnlyException)) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.readOnly),
-          });
-        } else if (err.graphQLErrors.some(isJwtError)) {
-          user.logout();
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.sessionExpired),
-          });
-        } else if (!hasError(err, GqlErrors.LimitReachedException)) {
-          err.graphQLErrors.map(graphQLError => {
+      if (!disableErrorHandling) {
+        if (err.graphQLErrors) {
+          if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
               status: "error",
-              apiMessage: graphQLError.message,
+              text: intl.formatMessage(commonMessages.readOnly),
             });
-          });
+          } else if (err.graphQLErrors.some(isJwtError)) {
+            user.logout();
+            notify({
+              status: "error",
+              text: intl.formatMessage(commonMessages.sessionExpired),
+            });
+          } else if (!hasError(err, GqlErrors.LimitReachedException)) {
+            err.graphQLErrors.map(graphQLError => {
+              notify({
+                status: "error",
+                apiMessage: graphQLError.message,
+              });
+            });
+          }
+        } else {
+          showAllErrors({ notify, error: err });
         }
-      } else {
-        showAllErrors({ notify, error: err });
       }
 
       if (onError) {
