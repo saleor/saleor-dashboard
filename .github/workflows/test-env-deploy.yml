@@ -129,6 +129,7 @@ jobs:
         env:
           pullRequestBody: ${{ github.event.pull_request.body }}
         with:
+          result-encoding: string
           script: |
             const { pullRequestBody } = process.env
             const tags = ["@critical"];
