@@ -4,12 +4,12 @@ import Datagrid, {
   GetCellContentOpts,
 } from "@saleor/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
+import { Choice } from "@saleor/components/SingleSelectField";
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
-  useSearchAttributeValuesQuery,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
@@ -28,6 +28,10 @@ interface ProductVariantsProps {
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
+  onAttributeValuesSearch: (
+    id: string,
+    query: string,
+  ) => Promise<Array<Choice<string, string>>>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
 }
@@ -38,13 +42,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   variants,
   warehouses,
   variantAttributes,
+  onAttributeValuesSearch,
   onChange,
   onRowClick,
 }) => {
   const intl = useIntl();
-  const { refetch: searchAttributeValues } = useSearchAttributeValuesQuery({
-    skip: true,
-  });
   // const limitReached = isLimitReached(limits, "productVariants");
 
   const columns = React.useMemo(
@@ -81,7 +83,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
-        searchAttributeValues,
+        searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
     [columns, variants],
@@ -95,7 +97,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
-        searchAttributeValues,
+        searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
     [columns, variants, errors],

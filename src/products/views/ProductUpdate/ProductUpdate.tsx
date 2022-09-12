@@ -368,6 +368,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
+        onAttributeValuesSearch={getAttributeValuesSuggestions}
       />
       <ActionDialog
         open={params.action === "remove"}

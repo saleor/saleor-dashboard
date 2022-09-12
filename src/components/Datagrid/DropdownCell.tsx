@@ -4,7 +4,6 @@ import {
   getMiddleCenterBias,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@saleor/macaw-ui";
 import pick from "lodash/pick";
 import React from "react";
 
@@ -19,36 +18,22 @@ export type DropdownCellContentProps = Pick<
   "allowCustomValues" | "emptyOption"
 >;
 
+export type DropdownCellGetSuggestionsFn = (
+  text: string,
+) => Promise<DropdownChoice[]>;
 interface DropdownCellProps extends DropdownCellContentProps {
   readonly choices?: DropdownChoice[];
-  readonly update?: (text: string) => Promise<DropdownChoice[]>;
+  readonly update?: DropdownCellGetSuggestionsFn;
   readonly kind: "dropdown-cell";
   readonly value: DropdownChoice | null;
 }
 
 export type DropdownCell = CustomCell<DropdownCellProps>;
 
-const useDropdownCellStyles = makeStyles(
-  theme => ({
-    input: {
-      ...theme.typography.body1,
-      appearance: "none",
-      background: "none",
-      border: "none",
-      padding: theme.spacing(1.5, 1),
-      outline: 0,
-      textAlign: "right",
-    },
-  }),
-  { name: "DropdownCell" },
-);
-
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
 }) => {
-  const classes = useDropdownCellStyles();
-
   const [data, setData] = React.useState<DropdownChoice[]>([]);
   const getChoices = React.useCallback(async (text: string) => {
     setData(await cell.data.update(text));

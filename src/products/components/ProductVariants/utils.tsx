@@ -1,4 +1,3 @@
-import { ApolloQueryResult } from "@apollo/client";
 import { GridCell } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
@@ -14,20 +13,18 @@ import {
   DatagridChange,
   DatagridChangeOpts,
 } from "@saleor/components/Datagrid/useDatagridChange";
+import { Choice } from "@saleor/components/SingleSelectField";
 import {
-  Exact,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantChannelListingAddInput,
-  SearchAttributeValuesQuery,
-  SearchAttributeValuesQueryVariables,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
@@ -219,8 +216,9 @@ interface GetDataOrError {
   added: number[];
   removed: number[];
   searchAttributeValues: (
-    variables?: Partial<Exact<SearchAttributeValuesQueryVariables>>,
-  ) => Promise<ApolloQueryResult<SearchAttributeValuesQuery>>;
+    id: string,
+    text: string,
+  ) => Promise<Array<Choice<string, string>>>;
   getChangeIndex: (column: string, row: number) => number;
 }
 
@@ -323,14 +321,8 @@ export function getData({
       dropdownCell(value, {
         allowCustomValues: true,
         emptyOption: true,
-        update: query =>
-          searchAttributeValues({
-            first: 5,
-            id: getColumnAttribute(columnId),
-            query,
-          }).then(values =>
-            mapNodeToChoice(mapEdgesToItems(values.data.attribute.choices)),
-          ),
+        update: text =>
+          searchAttributeValues(getColumnAttribute(columnId), text),
       }),
     );
   }
