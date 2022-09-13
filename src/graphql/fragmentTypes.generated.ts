@@ -44,6 +44,7 @@
       "DraftOrderCreated",
       "DraftOrderDeleted",
       "DraftOrderUpdated",
+      "FulfillmentApproved",
       "FulfillmentCanceled",
       "FulfillmentCreated",
       "GiftCardCreated",
