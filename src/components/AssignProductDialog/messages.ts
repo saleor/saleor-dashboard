@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   assignVariantDialogHeader: {
-    id: "dTCDMn",
-    defaultMessage: "Assign Product",
+    id: "juxCV3",
+    defaultMessage: "Assign product",
     description: "dialog header",
   },
   assignProductDialogButton: {
@@ -12,8 +12,8 @@ export const messages = defineMessages({
     description: "button",
   },
   assignProductDialogContent: {
-    id: "/TF6BZ",
-    defaultMessage: "Search Products",
+    id: "un+VWt",
+    defaultMessage: "Search products",
   },
   assignProductDialogSearch: {
     id: "SHm7ee",

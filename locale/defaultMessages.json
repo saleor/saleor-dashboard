@@ -889,6 +889,10 @@
     "context": "alert",
     "string": "Warehouse limit reached"
   },
+  "5I7Lc2": {
+    "context": "dialog header",
+    "string": "Assign page"
+  },
   "5JT4v2": {
     "context": "dialog header",
     "string": "Send Invoice"
@@ -2265,10 +2269,6 @@
   "GOdq5V": {
     "string": "Catalog"
   },
-  "GUlwXU": {
-    "context": "dialog header",
-    "string": "Assign Attribute Value"
-  },
   "GVM/fi": {
     "context": "order history message",
     "string": "Payment was authorized"
@@ -3235,10 +3235,6 @@
     "context": "navigator placeholder",
     "string": "Type Command"
   },
-  "NsgWhZ": {
-    "context": "placeholder",
-    "string": "Search by value name, etc..."
-  },
   "NtFVFS": {
     "context": "weight",
     "string": "{value} {unit}"
@@ -3292,6 +3288,10 @@
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
+  },
+  "OFW7nq": {
+    "context": "placeholder",
+    "string": "Search by page name, etc..."
   },
   "OGemtu": {
     "context": "payment status",
@@ -3756,10 +3756,6 @@
   },
   "RlfqSV": {
     "string": "No orders found"
-  },
-  "RoKOQJ": {
-    "context": "label",
-    "string": "Search Attribute Value"
   },
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
@@ -5284,10 +5280,6 @@
     "context": "product",
     "string": "Digital"
   },
-  "dTCDMn": {
-    "context": "dialog header",
-    "string": "Assign Product"
-  },
   "dTCWqt": {
     "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
   },
@@ -5790,6 +5782,10 @@
     "context": "customer",
     "string": "Join Date"
   },
+  "idr+JK": {
+    "context": "assign reference to a page, button",
+    "string": "Assign and save"
+  },
   "ij7olm": {
     "context": "error message",
     "string": "This fulfillment cannot be cancelled"
@@ -5819,6 +5815,10 @@
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "izJvcM": {
+    "context": "label",
+    "string": "Search pages"
   },
   "j/vV0n": {
     "context": "channel name",
@@ -5917,6 +5917,10 @@
   },
   "juBV+h": {
     "string": "End Hour"
+  },
+  "juxCV3": {
+    "context": "dialog header",
+    "string": "Assign product"
   },
   "jvKNMP": {
     "string": "Discount Code"
@@ -7262,6 +7266,9 @@
   "umsU70": {
     "string": "Search Page Type"
   },
+  "un+VWt": {
+    "string": "Search products"
+  },
   "usSkzP": {
     "context": "navigator order mode description",
     "string": "Search Orders"
@@ -7531,6 +7538,10 @@
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
   },
+  "wsDF7X": {
+    "context": "product variant attribute entity type",
+    "string": "Product variants"
+  },
   "wyvzh9": {
     "context": "dialog header",
     "string": "Publish Pages"
@@ -7743,10 +7754,6 @@
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
-  },
-  "ylobu9": {
-    "context": "assign reference to product, button",
-    "string": "Assign"
   },
   "ypW4Mi": {
     "context": "button refreshing page",
