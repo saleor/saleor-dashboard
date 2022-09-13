@@ -8,14 +8,18 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "../m
 
 interface VariantDetailsChannelsAvailabilityCardContainerProps {
   children: React.ReactNode;
+  cardTitle?: React.ReactNode;
 }
 
 const VariantDetailsChannelsAvailabilityCardContainer: React.FC<VariantDetailsChannelsAvailabilityCardContainerProps> = ({
   children,
+  cardTitle,
 }) => (
   <>
     <Card>
-      <CardTitle title={<FormattedMessage {...messages.title} />} />
+      {cardTitle || (
+        <CardTitle title={<FormattedMessage {...messages.title} />} />
+      )}
       {children}
     </Card>
     <CardSpacer />

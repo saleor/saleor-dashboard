@@ -185,6 +185,8 @@ export const productVariantCreateQuery = gql`
         url
       }
       channelListings {
+        isPublished
+        publicationDate
         channel {
           id
           name

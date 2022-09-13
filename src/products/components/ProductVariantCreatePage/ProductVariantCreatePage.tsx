@@ -9,6 +9,7 @@ import Attributes, {
 } from "@saleor/components/Attributes";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
@@ -24,6 +25,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import VariantDetailsChannelsAvailabilityCard from "@saleor/products/components/ProductVariantChannels/VariantDetailsChannelsAvailabilityCard";
 import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -31,6 +33,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
+import { CreateVariantChannelsDialog } from "../ProductVariantChannels/CreateVariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
@@ -38,6 +41,7 @@ import ProductVariantCreateForm, {
   ProductVariantCreateData,
   ProductVariantCreateHandlers,
 } from "./form";
+import { useManageChannels } from "./useManageChannels";
 
 const messages = defineMessages({
   attributesHeader: {
@@ -128,7 +132,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
+  const {
+    isOpen: isManageChannelsModalOpen,
+    toggle: toggleManageChannels,
+  } = useManageChannels();
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
@@ -185,6 +192,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
+              <VariantDetailsChannelsAvailabilityCard
+                variant={product}
+                onManageClick={toggleManageChannels}
+              />
               <Attributes
                 title={intl.formatMessage(messages.attributesHeader)}
                 attributes={data.attributes.filter(
@@ -247,7 +258,16 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
               <CardSpacer />
               <ProductVariantPrice
-                disabledMessage={messages.pricingCardSubtitle}
+                disabled={!product}
+                ProductVariantChannelListings={data.channelListings.map(
+                  channel => ({
+                    ...channel.data,
+                    ...channel.value,
+                  }),
+                )}
+                errors={[]}
+                loading={!product}
+                onChange={handlers.changeChannels}
               />
               <CardSpacer />
               <ProductStocks
@@ -297,6 +317,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               onSubmit={attributeValues =>
                 handleAssignReferenceAttribute(attributeValues, data, handlers)
               }
+            />
+          )}
+          {(product && product.channelListings.length) > 0 && (
+            <CreateVariantChannelsDialog
+              channelListings={product.channelListings}
+              formData={data}
+              open={isManageChannelsModalOpen}
+              onClose={toggleManageChannels}
+              onConfirm={handlers.updateChannels}
             />
           )}
         </Container>

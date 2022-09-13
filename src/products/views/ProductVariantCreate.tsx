@@ -9,6 +9,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   useFileUploadMutation,
+  useProductVariantChannelListingUpdateMutation,
   useProductVariantCreateDataQuery,
   useProductVariantReorderMutation,
   useUpdateMetadataMutation,
@@ -87,6 +88,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     },
   });
 
+  const [updateChannels] = useProductVariantChannelListingUpdateMutation({});
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
@@ -144,7 +146,24 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     });
     const id = result.data?.productVariantCreate?.productVariant?.id || null;
 
-    return { id, errors: getMutationErrors(result) };
+    const updateChannelsResult = await updateChannels({
+      variables: {
+        id,
+        input: formData.channelListings.map(listing => ({
+          channelId: listing.id,
+          costPrice: listing.value.costPrice || null,
+          price: listing.value.price,
+          preorderThreshold: listing.value.preorderThreshold,
+        })),
+      },
+    });
+
+    const errors = [
+      ...getMutationErrors(result),
+      ...getMutationErrors(updateChannelsResult),
+    ];
+
+    return { id, errors };
   };
 
   const handleSubmit = createMetadataCreateHandler(

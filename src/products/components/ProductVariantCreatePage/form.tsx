@@ -14,6 +14,10 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs,
+} from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -35,7 +39,10 @@ import useFormset, {
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
+import {
+  createPreorderEndDateChangeHandler,
+  getChannelsInput,
+} from "@saleor/products/utils/handlers";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
@@ -59,6 +66,10 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
+  channelListings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
 }
 
 export interface UseProductVariantCreateFormOpts {
@@ -74,7 +85,10 @@ export interface UseProductVariantCreateFormOpts {
 
 export interface ProductVariantCreateHandlers
   extends Record<
-      "changeStock" | "selectAttribute" | "selectAttributeMultiple",
+      | "changeStock"
+      | "selectAttribute"
+      | "selectAttributeMultiple"
+      | "changeChannels",
       FormsetChange
     >,
     Record<"selectAttributeReference", FormsetChange<string[]>>,
@@ -82,6 +96,7 @@ export interface ProductVariantCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
+  updateChannels: (selectedChannelsIds: string[]) => void;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -138,7 +153,19 @@ function useProductVariantCreateForm(
     setIsSubmitDisabled,
   } = form;
 
+  const currentChannelsWithPreorderInfo = product
+    ? product.channelListings.map(listing => ({
+        ...listing.channel,
+        currency: listing.channel.currencyCode,
+        price: "",
+      }))
+    : [];
+
+  const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
+
   const attributes = useFormset(attributeInput);
+  const channels = useFormset(channelsInput);
+
   const {
     getters: attributeRichTextGetters,
     getValues: getAttributeRichTextValues,
@@ -221,6 +248,21 @@ function useProductVariantCreateForm(
     intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
+  const handleChannelChange: FormsetChange = (id, value) => {
+    channels.change(id, value);
+    triggerChange();
+  };
+
+  const handleUpdateChannels = (selectedIds: string[]) => {
+    const updatedChannels = currentChannelsWithPreorderInfo.filter(d =>
+      selectedIds.includes(d.id),
+    );
+    const channelsInput = getChannelsInput(updatedChannels);
+    channels.set(channelsInput);
+
+    triggerChange();
+  };
+
   const data: ProductVariantCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(
@@ -231,6 +273,7 @@ function useProductVariantCreateForm(
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     stocks: stocks.data,
+    channelListings: channels.data,
   };
 
   const getSubmitData = async (): Promise<ProductVariantCreateData> => ({
@@ -268,6 +311,8 @@ function useProductVariantCreateForm(
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
+      changeChannels: handleChannelChange,
+      updateChannels: handleUpdateChannels,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
