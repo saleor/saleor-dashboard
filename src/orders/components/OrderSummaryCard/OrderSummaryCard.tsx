@@ -11,16 +11,15 @@ import {
   OrderDiscountType,
   OrderStatus,
 } from "@saleor/graphql";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, transformPaymentStatus } from "../../../misc";
-import { orderPaymentMessages, paymentButtonMessages } from "./messages";
+import { maybe } from "../../../misc";
+import { orderSummaryMessages, paymentButtonMessages } from "./messages";
 import {
   extractOrderGiftCardUsedAmount,
   extractOutstandingBalance,
-  extractRefundedAmount,
 } from "./utils";
 
 const useStyles = makeStyles(
@@ -70,8 +69,6 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
     OrderAction.MARK_AS_PAID,
   );
 
-  const payment = transformPaymentStatus(order?.paymentStatus, intl);
-  const refundedAmount = extractRefundedAmount(order);
   const outstandingBalance = extractOutstandingBalance(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
@@ -86,10 +83,10 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
 
     if (order.shippingMethodName === null) {
       return order.collectionPointName == null ? (
-        <FormattedMessage {...orderPaymentMessages.shippingDoesNotApply} />
+        <FormattedMessage {...orderSummaryMessages.shippingDoesNotApply} />
       ) : (
         <FormattedMessage
-          {...orderPaymentMessages.clickAndCollectShippingMethod}
+          {...orderSummaryMessages.clickAndCollectShippingMethod}
         />
       );
     }
@@ -105,9 +102,8 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
           ) : (
             <div className={classes.header}>
               <div className={classes.titleContainer}>
-                <FormattedMessage {...orderPaymentMessages.paymentTitle} />
+                <FormattedMessage {...orderSummaryMessages.paymentTitle} />
                 <HorizontalSpacer spacing={2} />
-                <Pill label={payment.localized} color={payment.status} />
               </div>
               {maybe(() => order.status) !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
@@ -149,14 +145,14 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
           <tbody>
             <tr>
               <td>
-                <FormattedMessage {...orderPaymentMessages.subtotal} />
+                <FormattedMessage {...orderSummaryMessages.subtotal} />
               </td>
               <td>
                 {maybe(() => order.lines) === undefined ? (
                   <Skeleton />
                 ) : (
                   <FormattedMessage
-                    {...orderPaymentMessages.itemCount}
+                    {...orderSummaryMessages.itemCount}
                     values={{
                       quantity: order.lines
                         .map(line => line.quantity)
@@ -175,15 +171,15 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
             </tr>
             <tr>
               <td>
-                <FormattedMessage {...orderPaymentMessages.taxes} />
+                <FormattedMessage {...orderSummaryMessages.taxes} />
               </td>
               <td>
                 {maybe(() => order.total.tax) === undefined ? (
                   <Skeleton />
                 ) : order.total.tax.amount > 0 ? (
-                  intl.formatMessage(orderPaymentMessages.vatIncluded)
+                  intl.formatMessage(orderSummaryMessages.vatIncluded)
                 ) : (
-                  intl.formatMessage(orderPaymentMessages.vatNotIncluded)
+                  intl.formatMessage(orderSummaryMessages.vatNotIncluded)
                 )}
               </td>
               <td className={classes.textRight}>
@@ -196,7 +192,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
             </tr>
             <tr>
               <td>
-                <FormattedMessage {...orderPaymentMessages.shipping} />
+                <FormattedMessage {...orderSummaryMessages.shipping} />
               </td>
               <td>{getDeliveryMethodName(order)}</td>
               <td className={classes.textRight}>
@@ -210,13 +206,13 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
             {order?.discounts?.map(discount => (
               <tr>
                 <td>
-                  <FormattedMessage {...orderPaymentMessages.discount} />
+                  <FormattedMessage {...orderSummaryMessages.discount} />
                 </td>
                 <td>
                   {discount.type === OrderDiscountType.MANUAL ? (
-                    <FormattedMessage {...orderPaymentMessages.staffAdded} />
+                    <FormattedMessage {...orderSummaryMessages.staffAdded} />
                   ) : (
-                    <FormattedMessage {...orderPaymentMessages.voucher} />
+                    <FormattedMessage {...orderSummaryMessages.voucher} />
                   )}
                 </td>
                 <td className={classes.textRight}>
@@ -226,7 +222,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
             ))}
             <tr className={classes.totalRow}>
               <td>
-                <FormattedMessage {...orderPaymentMessages.total} />
+                <FormattedMessage {...orderSummaryMessages.total} />
               </td>
               <td />
               <td className={classes.textRight}>
@@ -248,7 +244,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
               <tr>
                 <td>
                   <FormattedMessage
-                    {...orderPaymentMessages.paidWithGiftCard}
+                    {...orderSummaryMessages.paidWithGiftCard}
                   />
                 </td>
                 <td className={classes.textRight}>
@@ -261,45 +257,9 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = props => {
                 </td>
               </tr>
             )}
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.preauthorized} />
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.totalAuthorized.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.totalAuthorized} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.captured} />
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.totalCaptured.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.totalCaptured} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage {...orderPaymentMessages.refunded} />
-              </td>
-              <td className={classes.textRight}>
-                {refundedAmount?.amount === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={refundedAmount} />
-                )}
-              </td>
-            </tr>
             <tr className={classes.totalRow}>
               <td>
-                <FormattedMessage {...orderPaymentMessages.outstanding} />
+                <FormattedMessage {...orderSummaryMessages.outstanding} />
               </td>
               <td className={classes.textRight}>
                 {outstandingBalance?.amount === undefined ? (

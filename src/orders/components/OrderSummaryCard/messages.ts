@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const orderPaymentMessages = defineMessages({
+export const orderSummaryMessages = defineMessages({
   clickAndCollectShippingMethod: {
     id: "ghGLbJ",
     defaultMessage: "click&collect",
