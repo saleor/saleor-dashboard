@@ -288,6 +288,16 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading;
 
+  const channelsErrors = [
+    ...(updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
+      ?.errors || []),
+    ...(updateChannelsOpts.data?.productChannelListingUpdate?.errors || []),
+  ];
+  const errors = [
+    ...(productCreateOpts.data?.productCreate.errors || []),
+    ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
+  ];
+
   return (
     <>
       <WindowTitle
@@ -324,14 +334,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           []
         }
         loading={loading}
-        channelsErrors={
-          updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
-            ?.errors
-        }
-        errors={[
-          ...(productCreateOpts.data?.productCreate.errors || []),
-          ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
-        ]}
+        channelsErrors={channelsErrors}
+        errors={errors}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
         fetchProductTypes={searchProductTypes}
