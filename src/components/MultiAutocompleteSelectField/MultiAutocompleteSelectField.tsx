@@ -75,12 +75,17 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
   const anchor = React.useRef<HTMLDivElement | null>(null);
   const input = React.useRef<HTMLInputElement | null>(null);
 
+  const [inputValue, setInputValue] = React.useState("");
+
   const handleSelect = (
     item: string,
     downshiftOpts?: ControllerStateAndHelpers<string>,
   ) => {
     if (downshiftOpts) {
-      downshiftOpts.reset({ inputValue: "", isOpen: true });
+      downshiftOpts.reset({
+        inputValue: downshiftOpts.inputValue,
+        isOpen: true,
+      });
     }
     onChange({
       target: { name, value: item },
@@ -89,12 +94,17 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
 
   return (
     <>
-      <DebounceAutocomplete debounceFn={fetchChoices}>
+      <DebounceAutocomplete
+        debounceFn={value => {
+          setInputValue(value);
+          fetchChoices(value);
+        }}
+      >
         {debounceFn => (
           <Downshift
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
-            itemToString={() => ""}
+            itemToString={() => inputValue}
             // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
             // which downshift interprets as the value being updated with an empty string, causing side-effects
             stateReducer={(state, changes) => {
