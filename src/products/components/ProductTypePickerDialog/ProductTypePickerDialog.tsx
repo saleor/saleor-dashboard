@@ -52,7 +52,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
         value={choice}
         onChange={e => setChoice(e.target.value)}
         fetchChoices={fetchProductTypes}
-        data-test-id="product-type"
+        data-test-id="dialog-product-type"
         {...fetchMoreProductTypes}
       />
     </ActionDialog>
