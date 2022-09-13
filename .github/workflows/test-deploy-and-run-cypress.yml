@@ -1,0 +1,134 @@
+name: TEST-ENV-DEPLOYMENT
+# Build and deploy test instance for every pull request
+
+on: [pull_request]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      base_URL: ${{ steps.set-domain.outputs.domain }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: rlespinasse/github-slug-action@3.1.0
+
+      - name: Start deployment
+        uses: bobheadxi/deployments@v0.4.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          ref: ${{ github.head_ref }}
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install deps
+        run: |
+          npm ci
+
+      - name: Run build
+        env:
+          # Use custom API_URI or the default one
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
+          APP_MOUNT_URI: /
+          STATIC_URL: /
+          IS_CLOUD_INSTANCE: true
+        run: |
+          npm run build
+
+      - name: Set domain
+        id: set-domain
+        # Set test instance domain based on branch name slug
+        run: |
+          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./build/dashboard s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}
+
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
+
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v0.4.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://${{ steps.set-domain.outputs.domain }}/
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+  cypress-run:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Get API_URI
+        id: api_uri
+        # Search for API_URI in PR description and use default if not defined
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+          prefix: API_URI=
+          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
+          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
+        run: |
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ env.cache-name }}-
+            ${{ runner.os }}-qa-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Cypress run critical
+        uses: cypress-io/github-action@v4
+        env:
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          COMMIT_INFO_MESSAGE: Critical tests triggered on PR - ${{ github.ref_name }}
+          CYPRESS_grepTags: '@critical'
+        with:
+          record: true
+          tag: Critical, ${{github.event.action}}
