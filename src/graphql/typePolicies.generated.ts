@@ -1622,6 +1622,15 @@ export type FulfillmentApproveFieldPolicy = {
 	orderErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type FulfillmentApprovedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'fulfillment' | 'order' | FulfillmentApprovedKeySpecifier)[];
+export type FulfillmentApprovedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	fulfillment?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type FulfillmentCancelKeySpecifier = ('fulfillment' | 'order' | 'orderErrors' | 'errors' | FulfillmentCancelKeySpecifier)[];
 export type FulfillmentCancelFieldPolicy = {
 	fulfillment?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6037,6 +6046,10 @@ export type StrictTypedTypePolicies = {
 	FulfillmentApprove?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | FulfillmentApproveKeySpecifier | (() => undefined | FulfillmentApproveKeySpecifier),
 		fields?: FulfillmentApproveFieldPolicy,
+	},
+	FulfillmentApproved?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | FulfillmentApprovedKeySpecifier | (() => undefined | FulfillmentApprovedKeySpecifier),
+		fields?: FulfillmentApprovedFieldPolicy,
 	},
 	FulfillmentCancel?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | FulfillmentCancelKeySpecifier | (() => undefined | FulfillmentCancelKeySpecifier),
