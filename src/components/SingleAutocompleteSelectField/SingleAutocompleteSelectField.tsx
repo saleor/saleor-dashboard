@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
-import { ChevronIcon, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift from "downshift";
@@ -18,32 +18,7 @@ import SingleAutocompleteSelectFieldContent, {
   SingleAutocompleteActionType,
   SingleAutocompleteChoiceType,
 } from "./SingleAutocompleteSelectFieldContent";
-
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      flexGrow: 1,
-      position: "relative",
-    },
-    nakedInput: {
-      padding: theme.spacing(2, 0),
-    },
-    adornment: {
-      color: theme.palette.saleor.main[3],
-      cursor: "pointer",
-      userSelect: "none",
-      "& svg": {
-        transition: theme.transitions.duration.shorter + "ms",
-      },
-    },
-    adornmentRotate: {
-      "& svg": {
-        transform: "rotate(180deg)",
-      },
-    },
-  }),
-  { name: "SingleAutocompleteSelectField" },
-);
+import { useStyles } from "./styles";
 
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
@@ -142,7 +117,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
             closeMenu,
             highlightedIndex,
             reset,
-            getToggleButtonProps,
           }) => {
             const isCustomValueSelected =
               choices && selectedItem
@@ -221,6 +195,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onFocus: handleFocus,
+              ref: anchor,
             };
 
             const nakedInputProps = nakedInput
@@ -256,7 +231,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   label={label}
                   fullWidth={true}
                   onBlur={onBlur}
-                  ref={anchor}
                   inputRef={input}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
