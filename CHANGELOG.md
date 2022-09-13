@@ -6,6 +6,7 @@ All notable, unreleased changes to this project will be documented in this file.
 
 - Pass query params in `ORDER_DETAILS_MORE_ACTIONS` and `PRODUCT_DETAILS_MORE_ACTIONS` mounting points - #2100 by @witoszekdev
 - Add product variant reference attribute - #2268 by @droniu
+- Fix dropdown select arrow clicks bugs - #2301 by @orzechdev
 
 ## 3.4
 
@@ -13,13 +14,16 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fixed clearing attribute values - #2047 by @witoszekdev
 - Fixed EditorJS integration in RichTextEditor input - #2052 by @witoszekdev
 - Improvements to the app list page: added toggle and permision preview - #2035 by @witoszekdev
+
 ### 3.4.1
 
 - Added links to table pagination buttons - #2063 by @witoszekdev
 - Using push instead of replace to history stack for pagination navigation - #2063 by @witoszekdev
 
 ## 3.1
+
 ### PREVIEW FEATURES
+
 - Gift cards - #1366, #1632 by @Cloud11PL and @bmigirl
 - Preorders - #1426 by @JanChodorowski
 - Add stock reservation settings - #1459 by @orzechdev
@@ -27,6 +31,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Optional SKU - #1440 by @orzechdev
 
 ### CHANGES
+
 - Exit form dialog - #1816 by @bmigirl
 - Variant selection attributes - #1463 by @golota60
 - Click & Collect - #1292 by @kuchichan
@@ -109,7 +114,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Display error if no invoicing plugin is active - #1701 by @dominik-zeglen
 - Update rest of the world checkbox on shipping zone details - #1673 by @orzechdev
 - Sales per variant - #1578 by @Bonifacy1
-
 
 # 2.11.1
 
