@@ -9,7 +9,6 @@ import Attributes, {
 } from "@saleor/components/Attributes";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
@@ -322,7 +321,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           {(product && product.channelListings.length) > 0 && (
             <CreateVariantChannelsDialog
               channelListings={product.channelListings}
-              formData={data}
               open={isManageChannelsModalOpen}
               onClose={toggleManageChannels}
               onConfirm={handlers.updateChannels}

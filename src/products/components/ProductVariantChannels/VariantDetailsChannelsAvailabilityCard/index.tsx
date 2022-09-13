@@ -15,7 +15,7 @@ import { NotAvailable } from "./NotAvailable";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: ProductVariantCreateDataQuery["product"] | ProductVariantFragment;
-  onManageClick: () => void;
+  onManageClick?: () => void;
 }
 
 const isProduct = (

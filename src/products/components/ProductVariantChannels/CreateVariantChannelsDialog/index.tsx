@@ -7,12 +7,10 @@ interface CreateVariantChannelsDialogProps {
   open: boolean;
   onClose: () => void;
   onConfirm: (selectedIds: string[]) => void;
-  formData: any;
 }
 
 export const CreateVariantChannelsDialog: React.FC<CreateVariantChannelsDialogProps> = ({
   channelListings,
-  formData,
   open,
   onClose,
   onConfirm,

@@ -5,7 +5,13 @@ import { useIntl } from "react-intl";
 
 import { variantDetailsChannelsAvailabilityCardMessages as messages } from "../messages";
 
-export const CreateVariantTitle: React.FC = ({ onManageClick }) => {
+interface CreateVariantTitleProps {
+  onManageClick: () => void;
+}
+
+export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
+  onManageClick,
+}) => {
   const intl = useIntl();
 
   return (
