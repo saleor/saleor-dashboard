@@ -187,13 +187,30 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               closeMenu();
             };
 
+            const handleFocus = () => {
+              if (fetchOnFocus) {
+                fetchChoices(inputValue);
+              }
+              input.current.select();
+            };
+
+            const handleToggleMenu = () => {
+              if (disabled) {
+                return;
+              }
+              toggleMenu();
+            };
+
             const TextFieldComponent = nakedInput ? InputBase : TextField;
 
             const commonInputProps = {
               ...InputProps,
               endAdornment: (
                 <div
-                  {...getToggleButtonProps()}
+                  onClick={() => {
+                    handleToggleMenu();
+                    handleFocus();
+                  }}
                   className={classNames(classes.adornment, {
                     [classes.adornmentRotate]: isOpen,
                   })}
@@ -203,12 +220,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               ),
               error,
               id: undefined,
-              onFocus: () => {
-                if (fetchOnFocus) {
-                  fetchChoices(inputValue);
-                }
-                input.current.select();
-              },
+              onFocus: handleFocus,
             };
 
             const nakedInputProps = nakedInput
@@ -234,12 +246,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   inputProps={{
                     ...getInputProps({
                       placeholder,
-                      onClick: () => {
-                        if (disabled) {
-                          return;
-                        }
-                        toggleMenu();
-                      },
+                      onClick: handleToggleMenu,
                     }),
                   }}
                   error={error}
