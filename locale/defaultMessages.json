@@ -2807,10 +2807,6 @@
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
   },
-  "Jz/Cb+": {
-    "context": "product type",
-    "string": "Simple"
-  },
   "K+ROF8": {
     "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
