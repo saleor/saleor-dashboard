@@ -1171,6 +1171,12 @@ export const TransactionItemFragmentDoc = gql`
 }
     ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
+export const OrderPaymentFragmentDoc = gql`
+    fragment OrderPayment on Payment {
+  id
+  actions
+}
+    `;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1366,6 +1372,9 @@ export const OrderDetailsFragmentDoc = gql`
   transactions {
     ...TransactionItem
   }
+  payments {
+    ...OrderPayment
+  }
   giftCards {
     events {
       id
@@ -1504,6 +1513,7 @@ export const OrderDetailsFragmentDoc = gql`
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
 ${TransactionItemFragmentDoc}
+${OrderPaymentFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}

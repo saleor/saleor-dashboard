@@ -13,6 +13,7 @@ import OrderDetailsPage, {
 import {
   order as orderFixture,
   shop as shopFixture,
+  transactions,
 } from "../../../orders/fixtures";
 import Decorator from "../../Decorator";
 
@@ -46,11 +47,9 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Orders / Order details", module)
+storiesOf("Views / Orders / Order details / payments", module)
   .addDecorator(Decorator)
-  .add("default", () => <OrderDetailsPage {...props} />)
-  .add("loading", () => <OrderDetailsPage {...props} order={undefined} />)
-  .add("pending payment", () => (
+  .add("pending", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -59,7 +58,7 @@ storiesOf("Views / Orders / Order details", module)
       }}
     />
   ))
-  .add("payment error", () => (
+  .add("error", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -68,7 +67,7 @@ storiesOf("Views / Orders / Order details", module)
       }}
     />
   ))
-  .add("payment confirmed", () => (
+  .add("confirmed", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -86,7 +85,7 @@ storiesOf("Views / Orders / Order details", module)
       }}
     />
   ))
-  .add("refunded payment", () => (
+  .add("refunded", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -95,7 +94,7 @@ storiesOf("Views / Orders / Order details", module)
       }}
     />
   ))
-  .add("rejected payment", () => (
+  .add("rejected", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -103,7 +102,51 @@ storiesOf("Views / Orders / Order details", module)
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
+  ));
+
+storiesOf("Views / Orders / Order details / transactions", module)
+  .addDecorator(Decorator)
+  .add("preauthorized", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.preauthorized }}
+    />
   ))
+  .add("pending", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.pendingCharge }}
+    />
+  ))
+  .add("success", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.chargeSuccess }}
+    />
+  ))
+  .add("failed", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.chargeFail }}
+    />
+  ))
+  .add("refund requested", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.refundRequested }}
+    />
+  ))
+  .add("refund completed", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{ ...props.order, transactions: transactions.refundCompleted }}
+    />
+  ));
+
+storiesOf("Views / Orders / Order details", module)
+  .addDecorator(Decorator)
+  .add("default", () => <OrderDetailsPage {...props} />)
+  .add("loading", () => <OrderDetailsPage {...props} order={undefined} />)
   .add("cancelled", () => (
     <OrderDetailsPage
       {...props}

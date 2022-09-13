@@ -219,6 +219,13 @@ export const transactionItemFragment = gql`
   }
 `;
 
+export const fragmentPayment = gql`
+  fragment OrderPayment on Payment {
+    id
+    actions
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
@@ -229,6 +236,9 @@ export const fragmentOrderDetails = gql`
     }
     transactions {
       ...TransactionItem
+    }
+    payments {
+      ...OrderPayment
     }
     giftCards {
       events {
