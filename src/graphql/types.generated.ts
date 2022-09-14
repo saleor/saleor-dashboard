@@ -486,7 +486,7 @@ export type AttributeValueFilterInput = {
 
 export type AttributeValueInput = {
   /** ID of the selected attribute. */
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
   /** URL of the file attribute. Every time, a new value is created. */
@@ -5174,6 +5174,8 @@ export enum WebhookEventTypeAsyncEnum {
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   /** A fulfillment is cancelled. */
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  /** A fulfillment is approved. */
+  FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
   /** User notification triggered. */
   NOTIFY_USER = 'NOTIFY_USER',
   /** A new page is created. */
@@ -5366,6 +5368,8 @@ export enum WebhookEventTypeEnum {
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   /** A fulfillment is cancelled. */
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  /** A fulfillment is approved. */
+  FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
   /** User notification triggered. */
   NOTIFY_USER = 'NOTIFY_USER',
   /** A new page is created. */
@@ -5568,6 +5572,7 @@ export enum WebhookSampleEventTypeEnum {
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
+  FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
   NOTIFY_USER = 'NOTIFY_USER',
   PAGE_CREATED = 'PAGE_CREATED',
   PAGE_UPDATED = 'PAGE_UPDATED',
