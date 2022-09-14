@@ -203,7 +203,7 @@ jobs:
           tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
 
   add-review-and-merge-patch:
-    if: ${{ always() && needs.run-tests-on-release.outputs.status != 'skipped' && needs.run-tests-on-release.outputs.status != 'cancelled' }}
+    if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}
     runs-on: ubuntu-latest
     needs: [run-tests-on-release]
     steps:
