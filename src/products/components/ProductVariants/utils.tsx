@@ -7,6 +7,7 @@ import {
   numberCell,
   textCell,
 } from "@saleor/components/Datagrid/cells";
+import { emptyDropdownCellValue } from "@saleor/components/Datagrid/DropdownCell";
 import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import {
@@ -315,7 +316,7 @@ export function getData({
           attribute => attribute.attribute.id === getColumnAttribute(columnId),
         )?.values,
       )[0] ??
-      null;
+      emptyDropdownCellValue;
 
     return styled(
       dropdownCell(value, {

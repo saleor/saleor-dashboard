@@ -30,6 +30,11 @@ interface DropdownCellProps extends DropdownCellContentProps {
 
 export type DropdownCell = CustomCell<DropdownCellProps>;
 
+export const emptyDropdownCellValue: DropdownChoice = {
+  label: "",
+  value: null,
+};
+
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
