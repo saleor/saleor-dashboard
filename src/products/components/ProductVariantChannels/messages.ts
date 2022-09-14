@@ -28,4 +28,9 @@ export const variantDetailsChannelsAvailabilityCardMessages = defineMessages({
     defaultMessage: "This variant is not available at any of the channels",
     description: "VariantDetailsChannelsAvailabilityCard no items available",
   },
+  manageButtonText: {
+    id: "2CBcub",
+    defaultMessage: "Manage",
+    description: "CreateVariantTitle manage",
+  },
 });

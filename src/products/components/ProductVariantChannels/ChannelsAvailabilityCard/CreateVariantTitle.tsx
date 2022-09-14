@@ -19,8 +19,7 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
       title={intl.formatMessage(messages.title)}
       toolbar={
         <Button variant="tertiary" disabled={false} onClick={onManageClick}>
-          {/* {intl.formatMessage()} */}
-          Manage
+          {intl.formatMessage(messages.manageButtonText)}
         </Button>
       }
     />
