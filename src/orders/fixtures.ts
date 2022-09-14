@@ -778,6 +778,8 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     userEmail: "curtis.bailey@example.com",
   },
 ];
+
+export const ORDER_AMOUNT = 234.93;
 export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   giftCards: [],
@@ -2609,9 +2611,11 @@ export const transactions: Record<
   | "preauthorized"
   | "pendingCharge"
   | "chargeSuccess"
+  | "chargePartial"
   | "chargeFail"
   | "refundRequested"
-  | "refundCompleted",
+  | "refundCompleted"
+  | "refundPartial",
   TransactionItemFragment[]
 > = {
   preauthorized: [
@@ -2734,6 +2738,56 @@ export const transactions: Record<
       },
       chargedAmount: {
         amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  chargePartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [TransactionActionEnum.REFUND],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: ORDER_AMOUNT - 10,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 10,
         currency: "USD",
         __typename: "Money",
       },
@@ -2914,4 +2968,78 @@ export const transactions: Record<
       __typename: "TransactionItem",
     },
   ],
+  refundPartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Refunded",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Refund reqested",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 10.0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: ORDER_AMOUNT - 10,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
 };
+
+export const prepareMoney = (
+  amount?: number,
+): OrderDetailsQuery["order"]["totalCaptured"] => ({
+  __typename: "Money",
+  amount: amount ?? ORDER_AMOUNT,
+  currency: "USD",
+});

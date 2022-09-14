@@ -12,6 +12,8 @@ import OrderDetailsPage, {
 } from "../../../orders/components/OrderDetailsPage";
 import {
   order as orderFixture,
+  ORDER_AMOUNT,
+  prepareMoney,
   shop as shopFixture,
   transactions,
 } from "../../../orders/fixtures";
@@ -109,37 +111,101 @@ storiesOf("Views / Orders / Order details / transactions", module)
   .add("preauthorized", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.preauthorized }}
+      order={{
+        ...props.order,
+        isPaid: false,
+        totalAuthorized: prepareMoney(),
+        totalCaptured: prepareMoney(0),
+        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+        transactions: transactions.preauthorized,
+      }}
     />
   ))
   .add("pending", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.pendingCharge }}
+      order={{
+        ...props.order,
+        isPaid: false,
+        paymentStatus: PaymentChargeStatusEnum.PENDING,
+        transactions: transactions.pendingCharge,
+      }}
     />
   ))
   .add("success", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.chargeSuccess }}
+      order={{
+        ...props.order,
+        isPaid: true,
+        totalAuthorized: prepareMoney(0),
+        totalCaptured: prepareMoney(),
+        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        transactions: transactions.chargeSuccess,
+      }}
+    />
+  ))
+  .add("partial capture", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{
+        ...props.order,
+        isPaid: true,
+        totalAuthorized: prepareMoney(ORDER_AMOUNT - 10),
+        totalCaptured: prepareMoney(10),
+        paymentStatus: PaymentChargeStatusEnum.PARTIALLY_CHARGED,
+        transactions: transactions.chargePartial,
+      }}
     />
   ))
   .add("failed", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.chargeFail }}
+      order={{
+        ...props.order,
+        isPaid: false,
+        paymentStatus: PaymentChargeStatusEnum.REFUSED,
+        transactions: transactions.chargeFail,
+      }}
     />
   ))
   .add("refund requested", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.refundRequested }}
+      order={{
+        ...props.order,
+        isPaid: true,
+        totalAuthorized: prepareMoney(0),
+        totalCaptured: prepareMoney(),
+        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        transactions: transactions.refundRequested,
+      }}
     />
   ))
   .add("refund completed", () => (
     <OrderDetailsPage
       {...props}
-      order={{ ...props.order, transactions: transactions.refundCompleted }}
+      order={{
+        ...props.order,
+        isPaid: true,
+        totalAuthorized: prepareMoney(0),
+        totalCaptured: prepareMoney(0),
+        paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED,
+        transactions: transactions.refundCompleted,
+      }}
+    />
+  ))
+  .add("partial refund completed", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{
+        ...props.order,
+        isPaid: true,
+        totalAuthorized: prepareMoney(0),
+        totalCaptured: prepareMoney(ORDER_AMOUNT - 10),
+        paymentStatus: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,
+        transactions: transactions.refundPartial,
+      }}
     />
   ));
 

@@ -7,7 +7,7 @@ import {
   OrderStatus,
 } from "@saleor/graphql";
 import { Button, Pill } from "@saleor/macaw-ui";
-import { maybe, transformPaymentStatus } from "@saleor/misc";
+import { transformPaymentStatus } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,7 +55,50 @@ const getLegacyOrderActions = (order: OrderDetailsFragment) => {
 
   return {
     ...results,
-    canAnything: anyAction && order.payments?.length > 0,
+    canAnything:
+      anyAction &&
+      order.payments?.length > 0 &&
+      order.status !== OrderStatus.CANCELED,
+  };
+};
+
+const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
+  const authorized = order.totalAuthorized.amount;
+  const captured = order.totalCaptured.amount;
+  const total = order.total.gross.amount;
+
+  if (authorized && captured) {
+    // different amounts
+    return {
+      authorized: true,
+      captured: true,
+      any: true,
+    };
+  }
+
+  if (captured !== 0 && captured !== total) {
+    // partial capture
+    return {
+      authorized: false,
+      captured: true,
+      any: true,
+    };
+  }
+
+  if (authorized !== 0) {
+    // not fully authorized
+    return {
+      authorized: true,
+      captured: false,
+      any: true,
+    };
+  }
+
+  // fully paid / not paid at all
+  return {
+    authorized: false,
+    captured: false,
+    any: false,
   };
 };
 
@@ -73,6 +116,8 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
 
   const canSendRefund = true; // TODO: Check if order has granted refunds
+
+  const shouldDisplay = getShouldDisplayAmounts(order);
   const legacyActions = getLegacyOrderActions(order);
 
   return (
@@ -87,24 +132,30 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      <CardContent>
-        <SummaryList className={classes.amountGrid}>
-          <SummaryLine
-            vertical
-            text={<FormattedMessage {...orderPaymentMessages.authorized} />}
-            money={order.totalAuthorized}
-          />
+      {(shouldDisplay.any || legacyActions.canAnything) && (
+        <CardContent>
+          {shouldDisplay.any && (
+            <SummaryList className={classes.amountGrid}>
+              {shouldDisplay.authorized && (
+                <SummaryLine
+                  vertical
+                  text={
+                    <FormattedMessage {...orderPaymentMessages.authorized} />
+                  }
+                  money={order.totalAuthorized}
+                />
+              )}
 
-          {order.totalCaptured.amount !== 0 && (
-            <SummaryLine
-              vertical
-              text={<FormattedMessage {...orderPaymentMessages.captured} />}
-              money={order.totalCaptured}
-            />
+              {shouldDisplay.captured && (
+                <SummaryLine
+                  vertical
+                  text={<FormattedMessage {...orderPaymentMessages.captured} />}
+                  money={order.totalCaptured}
+                />
+              )}
+            </SummaryList>
           )}
-        </SummaryList>
-        {maybe(() => order.status) !== OrderStatus.CANCELED &&
-          legacyActions.canAnything && (
+          {legacyActions.canAnything && (
             <div className={classes.legacyActions}>
               {legacyActions.canCapture && (
                 <Button variant="tertiary" onClick={onCapture}>
@@ -132,7 +183,8 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
               )}
             </div>
           )}
-      </CardContent>
+        </CardContent>
+      )}
       <Hr />
       <CardTitle
         toolbar={
