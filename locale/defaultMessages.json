@@ -138,6 +138,9 @@
     "context": "order marked as paid event title",
     "string": "Order was marked as paid by"
   },
+  "/0gMCW": {
+    "string": "Try to refresh the page or go navigate to a different page and back."
+  },
   "/2OOMe": {
     "context": "product type shipping settings, section header",
     "string": "Shipping"
@@ -2806,10 +2809,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "Jz/Cb+": {
-    "context": "product type",
-    "string": "Simple"
   },
   "K+ROF8": {
     "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
@@ -6540,9 +6539,6 @@
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
-  },
-  "p0SUJj": {
-    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
   },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",

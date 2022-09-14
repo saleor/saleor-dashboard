@@ -35,7 +35,7 @@ program
     const testsStatus = await getTestsStatus(options.dashboard_url);
 
     const requestBody =
-      testsStatus === "success"
+      testsStatus === "PASSED"
         ? `Cypress tests passed. See results at ${options.dashboard_url}`
         : `Some tests failed, need manual approve. See results at ${options.dashboard_url}`;
     const event = "COMMENT";
@@ -56,7 +56,7 @@ program
     if (
       options.auto_release &&
       isPatchRelease(options.version) &&
-      testsStatus === "success"
+      testsStatus === "PASSED"
     ) {
       await octokit.request(
         "PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge",
@@ -81,11 +81,10 @@ async function getTestsStatus(dashboardUrl) {
 
   const requestVariables = {
     projectId: dashboardUrl.match(getProjectRegex)[1],
-    buildNumber: dashboardUrl.match(getRunRegex),
+    buildNumber: dashboardUrl.match(getRunRegex)[1],
   };
 
   const client = new GraphQLClient("https://dashboard.cypress.io/graphql");
-  const octokit = new Octokit();
 
   const response = await client.request(
     `query ($projectId: String!, $buildNumber: ID!) {

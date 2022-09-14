@@ -25276,6 +25276,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "FulfillmentApproved",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "FulfillmentCanceled",
             "ofType": null
           },
@@ -28633,6 +28638,95 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "FulfillmentApproved",
+        "description": "Event sent when fulfillment is approved.\n\nAdded in Saleor 3.7.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "fulfillment",
+            "description": "The fulfillment the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Fulfillment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "order",
+            "description": "The order the fulfillment belongs to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -104555,6 +104649,12 @@
             "deprecationReason": null
           },
           {
+            "name": "FULFILLMENT_APPROVED",
+            "description": "A fulfillment is approved.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "NOTIFY_USER",
             "description": "User notification triggered.",
             "isDeprecated": false,
@@ -105126,6 +105226,12 @@
           {
             "name": "FULFILLMENT_CANCELED",
             "description": "A fulfillment is cancelled.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FULFILLMENT_APPROVED",
+            "description": "A fulfillment is approved.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -105849,6 +105955,12 @@
           },
           {
             "name": "FULFILLMENT_CANCELED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FULFILLMENT_APPROVED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
