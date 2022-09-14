@@ -1,13 +1,13 @@
 import { CardContent, Divider, Typography } from "@material-ui/core";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { Channel, ProductChannelListing } from "@saleor/sdk/dist/apollo/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { variantDetailsChannelsAvailabilityCardMessages as messages } from "../messages";
+import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
+import { Channel, ProductChannelListing } from "./types";
 
 type ChannelsListItemProps = Pick<Channel, "id" | "name"> & {
-  listings: ProductChannelListing[];
+  listings: ProductChannelListing;
 };
 
 export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({

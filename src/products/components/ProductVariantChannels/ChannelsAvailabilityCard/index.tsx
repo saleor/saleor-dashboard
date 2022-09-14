@@ -1,0 +1,72 @@
+import React from "react";
+
+import { AvailabilityCard } from "./AvailabilityCard";
+import {
+  getAvailabilityCountForProduct,
+  getAvailabilityCountForVariant,
+} from "./availabilityCount";
+import { CardSkeleton } from "./CardSkeleton";
+import { CreateVariantTitle } from "./CreateVariantTitle";
+import { NotAvailable } from "./NotAvailable";
+import { Channel, Product, Variant } from "./types";
+
+interface VariantDetailsChannelsAvailabilityCardProps {
+  variant: Variant;
+}
+
+interface ProductDetailsChannelsAvailabilityCardProps {
+  product: Product;
+  onManageClick?: () => void;
+}
+
+interface WrapperProps {
+  item: Product | Variant;
+  children: ({ channels }: { channels: Channel[] }) => React.ReactElement;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
+  if (!item) {
+    return <CardSkeleton />;
+  }
+
+  const isAvailableInAnyChannels = !!item.channelListings.length;
+
+  if (!isAvailableInAnyChannels) {
+    return <NotAvailable />;
+  }
+
+  const channels = item.channelListings.map(({ channel }) => channel);
+
+  return children({ channels });
+};
+
+export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
+  variant,
+}) => (
+  <Wrapper item={variant}>
+    {({ channels }) => (
+      <AvailabilityCard
+        items={channels}
+        availabilityCount={getAvailabilityCountForVariant(variant)}
+        productChannelListings={variant.product.channelListings}
+      />
+    )}
+  </Wrapper>
+);
+
+export const ProductDetailsChannelsAvailabilityCard: React.FC<ProductDetailsChannelsAvailabilityCardProps> = ({
+  product,
+  onManageClick,
+}) => (
+  <Wrapper item={product}>
+    {({ channels }) => (
+      <AvailabilityCard
+        items={channels}
+        availabilityCount={getAvailabilityCountForProduct(product)}
+        productChannelListings={product.channelListings}
+      >
+        <CreateVariantTitle onManageClick={onManageClick} />
+      </AvailabilityCard>
+    )}
+  </Wrapper>
+);

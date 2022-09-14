@@ -43,6 +43,10 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@saleor/products/utils/handlers";
+import {
+  validateCostPrice,
+  validatePrice,
+} from "@saleor/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
@@ -50,6 +54,11 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import {
+  concatChannelsBySelection,
+  createChannelsWithPreorderInfo,
+  validateChannels,
+} from "./formOpretations";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
@@ -153,14 +162,9 @@ function useProductVariantCreateForm(
     setIsSubmitDisabled,
   } = form;
 
-  const currentChannelsWithPreorderInfo = product
-    ? product.channelListings.map(listing => ({
-        ...listing.channel,
-        currency: listing.channel.currencyCode,
-        price: "",
-      }))
-    : [];
-
+  const currentChannelsWithPreorderInfo = createChannelsWithPreorderInfo(
+    product,
+  );
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
   const attributes = useFormset(attributeInput);
@@ -254,11 +258,13 @@ function useProductVariantCreateForm(
   };
 
   const handleUpdateChannels = (selectedIds: string[]) => {
-    const updatedChannels = currentChannelsWithPreorderInfo.filter(d =>
-      selectedIds.includes(d.id),
+    channels.set(
+      concatChannelsBySelection(
+        selectedIds,
+        channels,
+        currentChannelsWithPreorderInfo,
+      ),
     );
-    const channelsInput = getChannelsInput(updatedChannels);
-    channels.set(channelsInput);
 
     triggerChange();
   };
@@ -296,12 +302,15 @@ function useProductVariantCreateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const formDisabled =
+  const invalidChannels = validateChannels(channels?.data);
+  const invalidPreorder =
     data.isPreorder &&
     data.hasPreorderEndDate &&
     !!form.errors.preorderEndDateTime;
 
+  const formDisabled = invalidPreorder || invalidChannels;
   const isSaveDisabled = disabled || formDisabled || !onSubmit;
+
   setIsSubmitDisabled(isSaveDisabled);
 
   return {

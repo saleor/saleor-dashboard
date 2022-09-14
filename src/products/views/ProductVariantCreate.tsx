@@ -74,20 +74,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
-    onCompleted: data => {
-      const variantId = data.productVariantCreate.productVariant.id;
-
-      notify({
-        status: "success",
-        text: intl.formatMessage(messages.variantCreatedSuccess),
-      });
-      navigate(productVariantEditUrl(productId, variantId), {
-        resetScroll: true,
-      });
-    },
-  });
-
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
   const [updateChannels] = useProductVariantChannelListingUpdateMutation({});
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -162,6 +149,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       ...getMutationErrors(result),
       ...getMutationErrors(updateChannelsResult),
     ];
+
+    notify({
+      status: "success",
+      text: intl.formatMessage(messages.variantCreatedSuccess),
+    });
+    navigate(productVariantEditUrl(productId, id), {
+      resetScroll: true,
+    });
 
     return { id, errors };
   };

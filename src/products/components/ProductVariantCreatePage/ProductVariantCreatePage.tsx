@@ -24,7 +24,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import VariantDetailsChannelsAvailabilityCard from "@saleor/products/components/ProductVariantChannels/VariantDetailsChannelsAvailabilityCard";
+import { ProductDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -191,8 +191,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
-              <VariantDetailsChannelsAvailabilityCard
-                variant={product}
+              <ProductDetailsChannelsAvailabilityCard
+                product={product}
                 onManageClick={toggleManageChannels}
               />
               <Attributes
