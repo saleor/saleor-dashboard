@@ -45,7 +45,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchVariant[]) => void;
+  onSubmit: (data: string[]) => void;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -84,7 +84,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       )
     : [];
 
-  const handleSubmit = () => onSubmit(variants);
+  const handleSubmit = () => onSubmit(variants.map(variant => variant.id));
 
   return (
     <Dialog

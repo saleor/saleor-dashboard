@@ -1,5 +1,6 @@
 const { Octokit } = require("@octokit/core");
 const { Command } = require("commander");
+const { GraphQLClient } = require("graphql-request");
 
 const program = new Command();
 
@@ -9,7 +10,6 @@ const owner = "saleor";
 program
   .name("Approve PR")
   .description("Approve and merge PR if patch release")
-  .option("--tests_status <tests_status>", `tests status`)
   .option("--version <version>", "version of a project")
   .option("--pull_request_number <pull_request_number>", "Pull Request number")
   .option("--auto_release <auto_release>", "is auto release")
@@ -31,9 +31,12 @@ program
     );
 
     const commitId = pullRequest.data.merge_commit_sha;
+
+    const testsStatus = await getTestsStatus(options.dashboard_url);
+
     const requestBody =
-      options.tests_status === "success"
-        ? `Cypress tests passed. . See results at ${options.dashboard_url}`
+      testsStatus === "success"
+        ? `Cypress tests passed. See results at ${options.dashboard_url}`
         : `Some tests failed, need manual approve. See results at ${options.dashboard_url}`;
     const event = "COMMENT";
 
@@ -53,7 +56,7 @@ program
     if (
       options.auto_release &&
       isPatchRelease(options.version) &&
-      options.tests_status === "success"
+      testsStatus === "success"
     ) {
       await octokit.request(
         "PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge",
@@ -70,4 +73,27 @@ program
 function isPatchRelease(version) {
   const regex = /\d+\.\d+\.[1-9]/;
   return version.match(regex) ? true : false;
+}
+
+async function getTestsStatus(dashboardUrl) {
+  const getProjectRegex = /\/projects\/([^\/]*)/;
+  const getRunRegex = /\/runs\/([^\/]*)/;
+
+  const requestVariables = {
+    projectId: dashboardUrl.match(getProjectRegex)[1],
+    buildNumber: dashboardUrl.match(getRunRegex),
+  };
+
+  const client = new GraphQLClient("https://dashboard.cypress.io/graphql");
+  const octokit = new Octokit();
+
+  const response = await client.request(
+    `query ($projectId: String!, $buildNumber: ID!) {
+      runByBuildNumber(buildNumber: $buildNumber, projectId: $projectId) {
+        status
+      }
+    }`,
+    requestVariables,
+  );
+  return response.runByBuildNumber.status;
 }

@@ -139,7 +139,7 @@ const MessageManagerProvider = ({ children }) => {
                     apiMessageContent: (
                       <pre
                         style={{
-                          wordWrap: "break-word",
+                          overflowWrap: "anywhere",
                           whiteSpace: "pre-wrap",
                         }}
                       >

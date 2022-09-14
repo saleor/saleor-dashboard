@@ -232,8 +232,7 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
             node .github/workflows/approveAndMergeReleasePR.js \
-            --tests_status $tests_status \
             --version $version \
             --pull_request_number $pull_request_number \
-            --auto_release $auto_release
+            --auto_release $auto_release \
             --dashboard_url $dashboard_url
