@@ -6,21 +6,14 @@ export const useStyles = makeStyles(
       display: "flex",
       gap: theme.spacing(1),
     },
-    list: {
-      listStyle: "none",
-      margin: 0,
-      padding: 0,
+    legacyActions: {
+      display: "flex",
+      gap: theme.spacing(1),
+      marginTop: theme.spacing(2),
+    },
+    amountGrid: {
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
-      gap: theme.spacing(2),
-
-      "& dl": {
-        margin: 0,
-      },
-
-      "& dd": {
-        margin: 0,
-      },
     },
     explainText: {
       color: theme.palette.saleor.main[3],

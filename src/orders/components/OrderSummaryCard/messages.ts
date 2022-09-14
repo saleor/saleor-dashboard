@@ -1,6 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const orderSummaryMessages = defineMessages({
+  orderSummary: {
+    defaultMessage: "Order summary",
+    id: "cpnYcM",
+    description: "Order summary card title",
+  },
   clickAndCollectShippingMethod: {
     id: "ghGLbJ",
     defaultMessage: "click&collect",
@@ -94,28 +99,5 @@ export const orderSummaryMessages = defineMessages({
     id: "vM9quW",
     defaultMessage: "Paid with Gift Card",
     description: "order payment",
-  },
-});
-
-export const paymentButtonMessages = defineMessages({
-  capture: {
-    id: "BZ7BkQ",
-    defaultMessage: "Capture",
-    description: "capture payment, button",
-  },
-  refund: {
-    id: "HaQ8cg",
-    defaultMessage: "Refund",
-    description: "button",
-  },
-  void: {
-    id: "HaQ8cg",
-    defaultMessage: "Refund",
-    description: "button",
-  },
-  markAsPaid: {
-    id: "+5HkZN",
-    defaultMessage: "Mark as paid",
-    description: "order, button",
   },
 });

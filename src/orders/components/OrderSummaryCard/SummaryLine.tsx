@@ -1,0 +1,90 @@
+import Money from "@saleor/components/Money";
+import Skeleton from "@saleor/components/Skeleton";
+import { makeStyles } from "@saleor/macaw-ui";
+import { IMoney } from "@saleor/utils/intl";
+import clsx from "classnames";
+import React from "react";
+
+interface SummaryLineProps {
+  text: React.ReactNode;
+  subText?: string;
+  negative?: boolean;
+  bold?: boolean;
+  vertical?: boolean;
+  money: IMoney | undefined;
+  className?: string;
+}
+
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      display: "flex",
+    },
+    subText: {
+      color: theme.palette.saleor.main[3],
+      marginLeft: theme.spacing(1),
+    },
+    bold: {
+      fontWeight: 600,
+    },
+    horizontal: {
+      "&& dl": {
+        display: "flex",
+        width: "100%",
+        gap: theme.spacing(2),
+      },
+      "&& dd": {
+        marginLeft: "auto",
+      },
+    },
+  }),
+  { name: "SummaryLine" },
+);
+
+const SummaryLine: React.FC<SummaryLineProps> = ({
+  text,
+  subText,
+  negative,
+  bold,
+  vertical = false,
+  money,
+  className,
+}) => {
+  const classes = useStyles();
+
+  return (
+    <li
+      className={clsx(
+        classes.root,
+        bold && classes.bold,
+        !vertical && classes.horizontal,
+        className,
+      )}
+    >
+      <dl>
+        <dt>
+          {text}
+          {subText && (
+            <span className={classes.subText}>
+              {/* zero-width space: spacing is provided by <span> styling, we want better text auto-select */}
+              &#8203;
+              {subText}
+            </span>
+          )}
+        </dt>
+        <dd>
+          {money === undefined ? (
+            <Skeleton />
+          ) : (
+            <>
+              {negative && "-"}
+              <Money money={money} />
+            </>
+          )}
+        </dd>
+      </dl>
+    </li>
+  );
+};
+
+export default SummaryLine;

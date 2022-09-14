@@ -53,6 +53,11 @@ const useStyles = makeStyles(
     date: {
       marginBottom: theme.spacing(3),
     },
+    cardGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gap: theme.spacing(2),
+    },
     header: {
       display: "flex",
       justifyContent: "space-between",
@@ -304,15 +309,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <OrderSummaryCard
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
-                <CardSpacer />
-                <OrderPayment order={order} />
+                <div className={classes.cardGrid}>
+                  <OrderSummaryCard order={order} />
+                  <OrderPayment
+                    order={order}
+                    onCapture={onPaymentCapture}
+                    onMarkAsPaid={onPaymentPaid}
+                    onRefund={onPaymentRefund}
+                    onVoid={onPaymentVoid}
+                  />
+                </div>
                 <CardSpacer />
                 {order?.transactions?.map(transaction => (
                   <React.Fragment key={transaction.id}>
