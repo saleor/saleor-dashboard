@@ -1,5 +1,6 @@
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { ProductVariantCreateDataQuery } from "@saleor/graphql";
+import { toggle } from "@saleor/utils/lists";
 import React, { useState } from "react";
 
 interface CreateVariantChannelsDialogProps {
@@ -30,22 +31,15 @@ export const CreateVariantChannelsDialog: React.FC<CreateVariantChannelsDialogPr
     onClose();
   };
 
+  const handleChange = ({ id }) => {
+    setSelected(state => toggle(id, state, (aId, bId) => aId === bId));
+  };
+
   return (
     <ChannelsAvailabilityDialog
       isSelected={isSelected}
       channels={allChannels}
-      onChange={eventItem => {
-        setSelected(state => {
-          const currentLength = state.length;
-          const filtered = state.filter(itemId => itemId !== eventItem.id);
-
-          if (filtered.length === currentLength) {
-            return state.concat(eventItem.id);
-          }
-
-          return filtered;
-        });
-      }}
+      onChange={handleChange}
       onClose={onClose}
       open={open}
       title="Manage Products Channel Availability"
