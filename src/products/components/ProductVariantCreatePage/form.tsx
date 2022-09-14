@@ -43,10 +43,6 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@saleor/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-} from "@saleor/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
