@@ -1384,6 +1384,7 @@ type AttributeDeleted implements Event {
 enum AttributeEntityTypeEnum {
   PAGE
   PRODUCT
+  PRODUCT_VARIANT
 }
 
 type AttributeError {
@@ -1823,7 +1824,7 @@ input AttributeValueFilterInput {
 
 input AttributeValueInput {
   """ID of the selected attribute."""
-  id: ID
+  id: ID!
 
   """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
@@ -2050,6 +2051,28 @@ type BulkStockError {
 
   """Index of an input list item that caused the error."""
   index: Int
+}
+
+"""
+Synchronous webhook for calculating checkout/order taxes.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CalculateTaxes implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+  taxBase: TaxableObject!
 }
 
 input CardInput {
@@ -5798,6 +5821,33 @@ type FulfillmentApprove {
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [OrderError!]!
+}
+
+"""
+Event sent when fulfillment is approved.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type FulfillmentApproved implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The fulfillment the event relates to."""
+  fulfillment: Fulfillment
+
+  """The order the fulfillment belongs to."""
+  order: Order
 }
 
 """
@@ -12540,7 +12590,7 @@ type Order implements Node & ObjectWithMetadata {
   isShippingRequired: Boolean!
 
   """
-  The delivery method selected for this checkout.
+  The delivery method selected for this order.
   
   Added in Saleor 3.1.
   
@@ -21189,6 +21239,10 @@ type Subscription {
   event: Event
 }
 
+union TaxSourceLine = CheckoutLine | OrderLine
+
+union TaxSourceObject = Checkout | Order
+
 """Representation of tax types fetched from tax gateway."""
 type TaxType {
   """Description of the tax type."""
@@ -21196,6 +21250,66 @@ type TaxType {
 
   """External tax code used to identify given tax group."""
   taxCode: String
+}
+
+"""Taxable object."""
+type TaxableObject {
+  """The source object related to this tax object."""
+  sourceObject: TaxSourceObject!
+
+  """Determines if prices contain entered tax.."""
+  pricesEnteredWithTax: Boolean!
+
+  """The currency of the object."""
+  currency: String!
+
+  """The price of shipping method."""
+  shippingPrice: Money!
+
+  """The address data."""
+  address: Address
+
+  """List of discounts."""
+  discounts: [TaxableObjectDiscount!]!
+
+  """List of lines assigned to the object."""
+  lines: [TaxableObjectLine!]!
+  channel: Channel!
+}
+
+"""Taxable object discount."""
+type TaxableObjectDiscount {
+  """The name of the discount."""
+  name: String
+
+  """The amount of the discount."""
+  amount: Money!
+}
+
+type TaxableObjectLine {
+  """The source line related to this tax line."""
+  sourceLine: TaxSourceLine!
+
+  """Number of items."""
+  quantity: Int!
+
+  """Determines if taxes are being charged for the product."""
+  chargeTaxes: Boolean!
+
+  """The product name."""
+  productName: String!
+
+  """The variant name."""
+  variantName: String!
+
+  """The product sku."""
+  productSku: String
+
+  """Price of the single item in the order line."""
+  unitPrice: Money!
+
+  """Price of the order line."""
+  totalPrice: Money!
 }
 
 """
@@ -23424,6 +23538,9 @@ enum WebhookEventTypeAsyncEnum {
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
 
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
+
   """User notification triggered."""
   NOTIFY_USER
 
@@ -23715,6 +23832,9 @@ enum WebhookEventTypeEnum {
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
 
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
+
   """User notification triggered."""
   NOTIFY_USER
 
@@ -23968,6 +24088,7 @@ enum WebhookSampleEventTypeEnum {
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
   FULFILLMENT_CANCELED
+  FULFILLMENT_APPROVED
   NOTIFY_USER
   PAGE_CREATED
   PAGE_UPDATED

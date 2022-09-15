@@ -390,7 +390,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
               ...paginationState,
               id,
               input: {
-                variants: variants.map(variant => variant.id),
+                variants,
               },
             },
           })
