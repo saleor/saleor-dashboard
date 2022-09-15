@@ -5,7 +5,7 @@ on: [pull_request]
 jobs:
 
   test-cli2:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
 
