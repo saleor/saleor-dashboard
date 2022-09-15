@@ -91,7 +91,10 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
 
       if (columnId === "balance") {
         return styled(
-          numberCell(change ?? dataRow?.balance ?? numberCellEmptyValue),
+          moneyCell(
+            change?.value ?? dataRow?.balance.amount ?? null,
+            dataRow?.balance.currency ?? "USD",
+          ),
         );
       }
 
