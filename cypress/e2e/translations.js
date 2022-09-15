@@ -11,7 +11,7 @@ import {
 import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
 import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
-xdescribe("As an admin I want to manage translations", () => {
+describe("As an admin I want to manage translations", () => {
   const startsWith = "TestTranslations";
   const randomNumber = faker.datatype.number();
 
@@ -31,7 +31,7 @@ xdescribe("As an admin I want to manage translations", () => {
 
   it(
     "should be able to create new translation. TC:SALEOR_1701",
-    { tags: ["@translations", "@stagedOnly"] },
+    { tags: ["@translations", "@stagedOnly", "@stable"] },
     () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
@@ -45,24 +45,20 @@ xdescribe("As an admin I want to manage translations", () => {
         translatedSeoTitle,
         translatedSeoDescription,
       });
-      getCategory(category.id, "PL").then(({ translation }) => {
-        expect(translation.name).to.eq(`TranslatedName${randomNumber}`);
-        expect(translation.description).to.includes(
-          `TranslatedDescription${randomNumber}`,
-        );
-        expect(translation.seoTitle).to.eq(`TranslatedSeoTitle${randomNumber}`);
-        expect(translation.seoDescription).to.eq(
-          `TranslatedSeoDescription${randomNumber}`,
-        );
-      });
+      getCategory(category.id, "PL")
+        .its("translation")
+        .should("include", { name: `${translatedName}` })
+        .and("include", { seoDescription: `${translatedSeoDescription}` })
+        .and("include", { seoTitle: `${translatedSeoTitle}` })
+        .its("description")
+        .should("have.string", `{"text": "${translatedDescription}"}`);
     },
   );
 
   it(
     "should be able to update translation. TC:SALEOR_1702",
-    { tags: ["@translations", "@stagedOnly"] },
+    { tags: ["@translations", "@stagedOnly", "@stable"] },
     () => {
-      const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
       const seoDescriptionUpdate = `${startWithUpdate}_seoDescription`;
@@ -76,23 +72,22 @@ xdescribe("As an admin I want to manage translations", () => {
         seoDescription: "test",
         name: "test",
         description: "test",
-      })
-        .then(() => {
-          updateTranslationToCategory({
-            categoryName: category.name,
-            translatedName: nameUpdate,
-            translatedDescription: descriptionUpdate,
-            translatedSeoTitle: seoTitleUpdate,
-            translatedSeoDescription: seoDescriptionUpdate,
-          });
-          getCategory(category.id, "PL");
-        })
-        .then(({ translation }) => {
-          expect(translation.name).to.eq(nameUpdate);
-          expect(translation.description).to.includes(descriptionUpdate);
-          expect(translation.seoTitle).to.eq(seoTitleUpdate);
-          expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
+      }).then(() => {
+        updateTranslationToCategory({
+          categoryName: category.name,
+          translatedName: nameUpdate,
+          translatedDescription: descriptionUpdate,
+          translatedSeoTitle: seoTitleUpdate,
+          translatedSeoDescription: seoDescriptionUpdate,
         });
+        getCategory(category.id, "PL")
+          .its("translation")
+          .should("include", { name: `${nameUpdate}` })
+          .and("include", { seoDescription: `${seoDescriptionUpdate}` })
+          .and("include", { seoTitle: `${seoTitleUpdate}` })
+          .its("description")
+          .should("have.string", `{"text": "${descriptionUpdate}"}`);
+      });
     },
   );
 });
