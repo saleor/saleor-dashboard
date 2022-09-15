@@ -1,6 +1,8 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   FulfillmentStatus,
+  OrderAction,
+  OrderDetailsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@saleor/graphql";
@@ -49,13 +51,21 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
+const getLegacyPaymentsOrder = (
+  actions: OrderAction[] = [],
+): OrderDetailsFragment => ({
+  ...props.order,
+  transactions: [],
+  payments: [{ __typename: "Payment", actions, id: "HFDDSVCGFGFHFD654DFDS" }],
+});
+
 storiesOf("Views / Orders / Order details / payments", module)
   .addDecorator(Decorator)
   .add("pending", () => (
     <OrderDetailsPage
       {...props}
       order={{
-        ...props.order,
+        ...getLegacyPaymentsOrder(),
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
@@ -64,7 +74,7 @@ storiesOf("Views / Orders / Order details / payments", module)
     <OrderDetailsPage
       {...props}
       order={{
-        ...props.order,
+        ...getLegacyPaymentsOrder([OrderAction.CAPTURE]),
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />
@@ -73,7 +83,7 @@ storiesOf("Views / Orders / Order details / payments", module)
     <OrderDetailsPage
       {...props}
       order={{
-        ...props.order,
+        ...getLegacyPaymentsOrder([OrderAction.REFUND]),
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
       }}
     />
@@ -100,7 +110,7 @@ storiesOf("Views / Orders / Order details / payments", module)
     <OrderDetailsPage
       {...props}
       order={{
-        ...props.order,
+        ...getLegacyPaymentsOrder([OrderAction.CAPTURE]),
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       }}
     />

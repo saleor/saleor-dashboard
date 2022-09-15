@@ -34,6 +34,7 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
+import OrderAddTransaction from "../OrderAddTransaction";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -314,21 +315,27 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   <OrderPayment
                     order={order}
                     onCapture={onPaymentCapture}
-                    onMarkAsPaid={onPaymentPaid}
                     onRefund={onPaymentRefund}
                     onVoid={onPaymentVoid}
                   />
                 </div>
                 <CardSpacer />
-                {order?.transactions?.map(transaction => (
+                {order?.transactions?.map((transaction, i) => (
                   <React.Fragment key={transaction.id}>
                     <OrderTransaction
                       transaction={transaction}
                       onTransactionAction={onTransactionAction}
                     />
-                    <CardSpacer />
+                    {i !== (order?.transactions?.length ?? 0) - 1 && (
+                      <CardSpacer />
+                    )}
                   </React.Fragment>
                 ))}
+                <OrderAddTransaction
+                  order={order}
+                  onMarkAsPaid={onPaymentPaid}
+                />
+                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

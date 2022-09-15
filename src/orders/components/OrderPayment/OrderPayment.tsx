@@ -24,7 +24,6 @@ import { extractRefundedAmount } from "./utils";
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
   onCapture: () => void;
-  onMarkAsPaid: () => void;
   onRefund: () => void;
   onVoid: () => void;
 }
@@ -35,7 +34,6 @@ const getLegacyOrderActions = (order: OrderDetailsFragment) => {
       canCapture: false,
       canVoid: false,
       canRefund: false,
-      canMarkAsPaid: false,
       canAnything: false,
     };
   }
@@ -44,14 +42,9 @@ const getLegacyOrderActions = (order: OrderDetailsFragment) => {
     canCapture: order.actions.includes(OrderAction.CAPTURE),
     canVoid: order.actions.includes(OrderAction.VOID),
     canRefund: order.actions.includes(OrderAction.REFUND),
-    canMarkAsPaid: order.actions.includes(OrderAction.MARK_AS_PAID),
   };
 
-  const anyAction =
-    results.canCapture ||
-    results.canVoid ||
-    results.canRefund ||
-    results.canMarkAsPaid;
+  const anyAction = results.canCapture || results.canVoid || results.canRefund;
 
   return {
     ...results,
@@ -107,7 +100,6 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   onCapture,
   onVoid,
   onRefund,
-  onMarkAsPaid,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -174,11 +166,6 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
               {legacyActions.canVoid && (
                 <Button variant="tertiary" onClick={onVoid}>
                   <FormattedMessage {...paymentButtonMessages.void} />
-                </Button>
-              )}
-              {legacyActions.canMarkAsPaid && (
-                <Button variant="tertiary" onClick={onMarkAsPaid}>
-                  <FormattedMessage {...paymentButtonMessages.markAsPaid} />
                 </Button>
               )}
             </div>
