@@ -516,6 +516,10 @@
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
   },
+  "2CBcub": {
+    "context": "CreateVariantTitle manage",
+    "string": "Manage"
+  },
   "2E1xZ0": {
     "context": "page header",
     "string": "Create Sale"
