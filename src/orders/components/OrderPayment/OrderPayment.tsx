@@ -29,6 +29,12 @@ interface OrderPaymementProps {
 }
 
 const getLegacyOrderActions = (order: OrderDetailsFragment) => {
+  if (!order) {
+    return {
+      canAnything: false,
+    };
+  }
+
   if (!order.actions) {
     return {
       canCapture: false,
@@ -56,9 +62,17 @@ const getLegacyOrderActions = (order: OrderDetailsFragment) => {
 };
 
 const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
-  const authorized = order.totalAuthorized.amount;
-  const captured = order.totalCaptured.amount;
-  const total = order.total.gross.amount;
+  if (!order) {
+    return {
+      authorized: false,
+      captured: false,
+      any: false,
+    };
+  }
+
+  const authorized = order.totalAuthorized?.amount ?? 0;
+  const captured = order.totalCaptured?.amount ?? 0;
+  const total = order.total.gross?.amount ?? 0;
 
   if (authorized && captured) {
     // different amounts
@@ -193,7 +207,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
         title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
       ></CardTitle>
       <CardContent>
-        {refundedAmount.amount !== 0 ? (
+        {refundedAmount?.amount !== 0 ? (
           <SummaryList className={classes.amountGrid}>
             <SummaryLine
               vertical

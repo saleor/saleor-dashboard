@@ -91,7 +91,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
                 ? intl.formatMessage(orderSummaryMessages.vatIncluded)
                 : intl.formatMessage(orderSummaryMessages.vatNotIncluded)
             }
-            money={order.total.tax}
+            money={order?.total?.tax}
           />
           {order?.discounts?.map(discount => (
             <SummaryLine
@@ -107,7 +107,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           <SummaryLine
             bold
             text={<FormattedMessage {...orderSummaryMessages.total} />}
-            money={order.total.gross}
+            money={order?.total?.gross}
           />
         </SummaryList>
       </CardContent>
