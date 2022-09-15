@@ -40,7 +40,7 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
 
   const canMarkAsPaid = order.actions.includes(OrderAction.MARK_AS_PAID);
 
-  if (order.payments.length !== 0) {
+  if (order.transactions.length === 0) {
     // order uses old payments
     if (canMarkAsPaid) {
       return (
@@ -51,8 +51,13 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
         </div>
       );
     }
-    return null;
+
+    if (order.payments.length > 0) {
+      // When payments are used, we don't create transactions
+      return null;
+    }
   }
+
   return (
     // TODO: Add transaction by staff members
     <div className={classes.wrapper}>
