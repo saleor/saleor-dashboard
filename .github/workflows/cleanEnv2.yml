@@ -1,11 +1,11 @@
-name: test-workflow
+name: test-workflow2
 
 on: [pull_request]
 
 jobs:
 
-  test-cli:
-    runs-on: ubuntu-latest
+  test-cli2:
+    runs-on: windows-latest
     timeout-minutes: 15
     steps:
 
@@ -13,6 +13,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Check node
+        run: node -v
 
       - name: Install saleor cli
         id: install-saleor-cli
@@ -27,6 +30,6 @@ jobs:
       - name: revert snapshot
         env:
           SALEOR_CLI_ENV: staging
-        run: saleor backup restore 6tOoEwCh
+        run: saleor backup restore 6tOoEwCh --skip-webhooks-update
 
   
