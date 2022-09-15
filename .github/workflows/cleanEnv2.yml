@@ -5,14 +5,14 @@ on: [pull_request]
 jobs:
 
   test-cli2:
-    runs-on: windows-latest
+    runs-on: macos-latest
     timeout-minutes: 15
     steps:
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 16.0.0
 
       - name: Check node
         run: node -v
