@@ -74,7 +74,19 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
+    onCompleted: data => {
+      const variantId = data.productVariantCreate.productVariant.id;
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(messages.variantCreatedSuccess),
+      });
+      navigate(productVariantEditUrl(productId, variantId), {
+        resetScroll: true,
+      });
+    },
+  });
   const [updateChannels] = useProductVariantChannelListingUpdateMutation({});
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -99,7 +111,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       uploadFilesResult,
     );
 
-    const result = await variantCreate({
+    const variantCreateResult = await variantCreate({
       variables: {
         input: {
           attributes: prepareAttributesInput({
@@ -131,7 +143,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         firstValues: 10,
       },
     });
-    const id = result.data?.productVariantCreate?.productVariant?.id || null;
+
+    const variantCreateResultErrors = getMutationErrors(variantCreateResult);
+
+    if (variantCreateResultErrors.length > 0) {
+      return { id: null, errors: variantCreateResultErrors };
+    }
+
+    const id = variantCreateResult.data.productVariantCreate.productVariant.id;
 
     const updateChannelsResult = await updateChannels({
       variables: {
@@ -145,20 +164,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       },
     });
 
-    const errors = [
-      ...getMutationErrors(result),
-      ...getMutationErrors(updateChannelsResult),
-    ];
+    const updateChannelsErrors = getMutationErrors(updateChannelsResult);
 
-    notify({
-      status: "success",
-      text: intl.formatMessage(messages.variantCreatedSuccess),
-    });
-    navigate(productVariantEditUrl(productId, id), {
-      resetScroll: true,
-    });
-
-    return { id, errors };
+    return { id, errors: updateChannelsErrors };
   };
 
   const handleSubmit = createMetadataCreateHandler(
