@@ -48,5 +48,6 @@ Tests will be re-run only when the "run e2e" label is added.
 16. [ ] orders
 17. [ ] products
 18. [ ] app
+19. [ ] plugins
 
 CONTAINERS=1
