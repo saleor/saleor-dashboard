@@ -1,4 +1,5 @@
 import { getAppDeepPathFromDashboardUrl } from "@saleor/apps/urls";
+import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -38,6 +39,16 @@ export const AppFrame: React.FC<Props> = ({
   const appOrigin = getOrigin(src);
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
+  const { locale } = useLocale();
+
+  useEffect(() => {
+    postToExtension({
+      type: "localeChanged",
+      payload: {
+        locale,
+      },
+    });
+  }, [locale, postToExtension]);
 
   useEffect(() => {
     postToExtension({
@@ -89,7 +100,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(
         src,
         window.location.search,
-        `?domain=${shop.domain.host}&id=${appId}`,
+        `?domain=${shop.domain.host}&id=${appId}&locale=${locale}`,
       )}
       onError={onError}
       onLoad={handleLoad}
