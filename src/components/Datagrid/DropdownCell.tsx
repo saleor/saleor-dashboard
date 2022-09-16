@@ -37,7 +37,7 @@ export const emptyDropdownCellValue: DropdownChoice = {
 };
 
 const useStyles = makeStyles(
-  theme => ({
+  {
     root: {
       "& > div": {
         padding: 0,
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
         height: "unset",
       },
     },
-  }),
+  },
   { name: "DropdownCell" },
 );
 
