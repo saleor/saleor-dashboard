@@ -167,8 +167,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     skip: params.action !== "export",
   });
   const availableProductKinds = getAvailableProductKinds();
-  const { channel, availableChannels } = useAppChannel(false);
-  const noChannel = !channel && typeof channel !== "undefined";
+  const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true,
@@ -517,25 +516,23 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onSubmit={handleFilterTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
-      {!noChannel && (
-        <ProductTypePickerDialog
-          confirmButtonState="success"
-          open={params.action === "create-product"}
-          productTypes={mapNodeToChoice(
-            mapEdgesToItems(searchDialogProductTypesOpts?.data?.search),
-          )}
-          fetchProductTypes={searchDialogProductTypes}
-          fetchMoreProductTypes={fetchMoreDialogProductTypes}
-          onClose={closeModal}
-          onConfirm={productTypeId =>
-            navigate(
-              productAddUrl({
-                "product-type-id": productTypeId,
-              }),
-            )
-          }
-        />
-      )}
+      <ProductTypePickerDialog
+        confirmButtonState="success"
+        open={params.action === "create-product"}
+        productTypes={mapNodeToChoice(
+          mapEdgesToItems(searchDialogProductTypesOpts?.data?.search),
+        )}
+        fetchProductTypes={searchDialogProductTypes}
+        fetchMoreProductTypes={fetchMoreDialogProductTypes}
+        onClose={closeModal}
+        onConfirm={productTypeId =>
+          navigate(
+            productAddUrl({
+              "product-type-id": productTypeId,
+            }),
+          )
+        }
+      />
     </PaginatorContext.Provider>
   );
 };

@@ -2,6 +2,7 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
@@ -34,6 +35,13 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   const productTypeDisplayValue = productTypes.find(
     productType => productType.value === choice,
   )?.label;
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      setChoice("");
+      fetchProductTypes("");
+    },
+  });
 
   return (
     <ActionDialog
