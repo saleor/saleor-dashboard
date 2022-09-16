@@ -157,7 +157,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           onCellEdited={onCellEditedEnh}
           columns={columns}
           rows={rows - removed.length + added.length}
-          freezeColumns={0}
+          freezeColumns={1}
           smoothScrollX
           rowMarkers="checkbox"
           rowSelect="multi"
