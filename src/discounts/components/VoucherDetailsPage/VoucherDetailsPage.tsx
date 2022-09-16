@@ -16,6 +16,7 @@ import {
   createDiscountTypeChangeHandler,
   createVoucherUpdateHandler,
 } from "@saleor/discounts/handlers";
+import { itemsQuantityMessages } from "@saleor/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { voucherListUrl } from "@saleor/discounts/urls";
 import {
@@ -254,17 +255,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         }
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "ppLwx3",
-                            defaultMessage: "Categories ({quantity})",
-                            description: "number of categories",
-                          },
-                          {
-                            quantity:
-                              tabItemsCount.categories?.toString() || "…",
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.categories, {
+                          quantity: tabItemsCount.categories?.toString() || "…",
+                        })}
                       </CategoriesTab>
                       <CollectionsTab
                         isActive={
@@ -272,32 +265,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         }
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "QdGzUf",
-                            defaultMessage: "Collections ({quantity})",
-                            description: "number of collections",
-                          },
-                          {
-                            quantity:
-                              tabItemsCount.collections?.toString() || "…",
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.collections, {
+                          quantity:
+                            tabItemsCount.collections?.toString() || "…",
+                        })}
                       </CollectionsTab>
                       <ProductsTab
                         isActive={activeTab === VoucherDetailsPageTab.products}
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "bNw8PM",
-                            defaultMessage: "Products ({quantity})",
-                            description: "number of products",
-                          },
-                          {
-                            quantity: tabItemsCount.products?.toString() || "…",
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.products, {
+                          quantity: tabItemsCount.products?.toString() || "…",
+                        })}
                       </ProductsTab>
                     </TabContainer>
                     <CardSpacer />

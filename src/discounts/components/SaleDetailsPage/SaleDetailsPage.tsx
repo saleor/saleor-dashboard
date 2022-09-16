@@ -13,6 +13,7 @@ import {
   createSaleChannelsChangeHandler,
   createSaleUpdateHandler,
 } from "@saleor/discounts/handlers";
+import { itemsQuantityMessages } from "@saleor/discounts/translations";
 import { saleListUrl } from "@saleor/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
 import {
@@ -214,66 +215,40 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 <CardSpacer />
                 <TabContainer>
                   <CategoriesTab
+                    testId="categories-tab"
                     isActive={activeTab === SaleDetailsPageTab.categories}
                     changeTab={onTabClick}
                   >
-                    {intl.formatMessage(
-                      {
-                        id: "ppLwx3",
-                        defaultMessage: "Categories ({quantity})",
-                        description: "number of categories",
-                      },
-                      {
-                        quantity: tabItemsCount.categories?.toString() || "…",
-                      },
-                    )}
+                    {intl.formatMessage(itemsQuantityMessages.categories, {
+                      quantity: tabItemsCount.categories?.toString() || "…",
+                    })}
                   </CategoriesTab>
                   <CollectionsTab
+                    testId="collections-tab"
                     isActive={activeTab === SaleDetailsPageTab.collections}
                     changeTab={onTabClick}
                   >
-                    {intl.formatMessage(
-                      {
-                        id: "QdGzUf",
-                        defaultMessage: "Collections ({quantity})",
-                        description: "number of collections",
-                      },
-                      {
-                        quantity: tabItemsCount.collections?.toString() || "…",
-                      },
-                    )}
+                    {intl.formatMessage(itemsQuantityMessages.collections, {
+                      quantity: tabItemsCount.collections?.toString() || "…",
+                    })}
                   </CollectionsTab>
                   <ProductsTab
                     testId="products-tab"
                     isActive={activeTab === SaleDetailsPageTab.products}
                     changeTab={onTabClick}
                   >
-                    {intl.formatMessage(
-                      {
-                        id: "bNw8PM",
-                        defaultMessage: "Products ({quantity})",
-                        description: "number of products",
-                      },
-                      {
-                        quantity: tabItemsCount.products?.toString() || "…",
-                      },
-                    )}
+                    {intl.formatMessage(itemsQuantityMessages.products, {
+                      quantity: tabItemsCount.products?.toString() || "…",
+                    })}
                   </ProductsTab>
                   <VariantsTab
                     testId="variants-tab"
                     isActive={activeTab === SaleDetailsPageTab.variants}
                     changeTab={onTabClick}
                   >
-                    {intl.formatMessage(
-                      {
-                        id: "HVlMK2",
-                        defaultMessage: "Variants ({quantity})",
-                        description: "number of variants",
-                      },
-                      {
-                        quantity: tabItemsCount.variants?.toString() || "…",
-                      },
-                    )}
+                    {intl.formatMessage(itemsQuantityMessages.variants, {
+                      quantity: tabItemsCount.variants?.toString() || "…",
+                    })}
                   </VariantsTab>
                 </TabContainer>
                 <CardSpacer />
