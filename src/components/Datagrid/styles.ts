@@ -56,8 +56,10 @@ const useStyles = makeStyles(
         "& .gdg-style": {
           background: theme.palette.background.default,
           border: "none",
-          boxShadow: "none",
-          padding: 0,
+          // Setting these with !important because we never intend to style
+          // this particular element, like, never ever
+          boxShadow: "none !important",
+          padding: "0 !important",
         },
         "& input, & textarea": {
           ...theme.typography.body1,
