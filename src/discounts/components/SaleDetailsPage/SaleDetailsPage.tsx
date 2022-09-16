@@ -30,7 +30,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe, splitDateTime } from "../../../misc";
+import { splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
@@ -64,6 +64,13 @@ export enum SaleDetailsPageTab {
   variants = "variants",
 }
 
+export interface SaleTabItemsCount {
+  [SaleDetailsPageTab.categories]?: number;
+  [SaleDetailsPageTab.collections]?: number;
+  [SaleDetailsPageTab.products]?: number;
+  [SaleDetailsPageTab.variants]?: number;
+}
+
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
@@ -74,6 +81,7 @@ export interface SaleDetailsPageProps
     >,
     ChannelProps {
   activeTab: SaleDetailsPageTab;
+  tabItemsCount: SaleTabItemsCount;
   errors: DiscountErrorFragment[];
   sale: SaleDetailsFragment;
   allChannelsCount: number;
@@ -101,6 +109,7 @@ const VariantsTab = Tab(SaleDetailsPageTab.variants);
 
 const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
+  tabItemsCount,
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -215,10 +224,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         description: "number of categories",
                       },
                       {
-                        quantity: maybe(
-                          () => sale.categories.totalCount.toString(),
-                          "…",
-                        ),
+                        quantity: tabItemsCount.categories?.toString() || "…",
                       },
                     )}
                   </CategoriesTab>
@@ -233,10 +239,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         description: "number of collections",
                       },
                       {
-                        quantity: maybe(
-                          () => sale.collections.totalCount.toString(),
-                          "…",
-                        ),
+                        quantity: tabItemsCount.collections?.toString() || "…",
                       },
                     )}
                   </CollectionsTab>
@@ -252,10 +255,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         description: "number of products",
                       },
                       {
-                        quantity: maybe(
-                          () => sale.products.totalCount.toString(),
-                          "…",
-                        ),
+                        quantity: tabItemsCount.products?.toString() || "…",
                       },
                     )}
                   </ProductsTab>
@@ -271,10 +271,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         description: "number of variants",
                       },
                       {
-                        quantity: maybe(
-                          () => sale.variants.totalCount.toString(),
-                          "…",
-                        ),
+                        quantity: tabItemsCount.variants?.toString() || "…",
                       },
                     )}
                   </VariantsTab>
