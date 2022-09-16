@@ -53,11 +53,9 @@ export enum VoucherDetailsPageTab {
   products = "products",
 }
 
-export interface VoucherTabItemsCount {
-  [VoucherDetailsPageTab.categories]?: number;
-  [VoucherDetailsPageTab.collections]?: number;
-  [VoucherDetailsPageTab.products]?: number;
-}
+export type VoucherTabItemsCount = Partial<
+  Record<VoucherDetailsPageTab, number>
+>;
 
 export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerCustomer: boolean;

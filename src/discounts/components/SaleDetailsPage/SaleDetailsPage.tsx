@@ -65,12 +65,7 @@ export enum SaleDetailsPageTab {
   variants = "variants",
 }
 
-export interface SaleTabItemsCount {
-  [SaleDetailsPageTab.categories]?: number;
-  [SaleDetailsPageTab.collections]?: number;
-  [SaleDetailsPageTab.products]?: number;
-  [SaleDetailsPageTab.variants]?: number;
-}
+export type SaleTabItemsCount = Partial<Record<SaleDetailsPageTab, number>>;
 
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
@@ -110,7 +105,7 @@ const VariantsTab = Tab(SaleDetailsPageTab.variants);
 
 const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
-  tabItemsCount,
+  tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
   disabled,
