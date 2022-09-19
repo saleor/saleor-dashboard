@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Channel, Product, Variant } from "./../types";
 import { AvailabilityCard } from "./AvailabilityCard";
 import {
   getAvailabilityCountForProduct,
@@ -8,7 +9,6 @@ import {
 import { CardSkeleton } from "./CardSkeleton";
 import { CreateVariantTitle } from "./CreateVariantTitle";
 import { NotAvailable } from "./NotAvailable";
-import { Channel, Product, Variant } from "./types";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
