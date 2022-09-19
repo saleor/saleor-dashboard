@@ -5,7 +5,7 @@ import {
   SearchAttributeValuesQueryVariables,
 } from "@saleor/graphql";
 import makeSearch from "@saleor/hooks/makeSearch";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 
 export const searchAttributeValues = gql`
   query SearchAttributeValues(
@@ -44,7 +44,10 @@ export function useSearchAttributeValuesSuggestions() {
         },
       })
       .then(({ data }) =>
-        mapNodeToChoice(mapEdgesToItems(data.attribute.choices)),
+        mapEdgesToItems(data.attribute.choices).map(({ name, slug }) => ({
+          label: name,
+          value: slug,
+        })),
       );
 }
 
