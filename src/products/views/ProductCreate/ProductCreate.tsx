@@ -8,6 +8,8 @@ import {
   VALUES_PAGINATE_BY,
 } from "@saleor/config";
 import {
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductCreateMutation,
@@ -24,6 +26,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { getMutationErrors } from "@saleor/misc";
 import ProductCreatePage, {
   ProductCreateData,
 } from "@saleor/products/components/ProductCreatePage";
@@ -289,14 +292,13 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     updateVariantChannelsOpts.loading;
 
   const channelsErrors = [
-    ...(updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
-      ?.errors || []),
-    ...(updateChannelsOpts.data?.productChannelListingUpdate?.errors || []),
-  ];
+    ...getMutationErrors(updateVariantChannelsOpts),
+    ...getMutationErrors(updateChannelsOpts),
+  ] as ProductChannelListingErrorFragment[];
   const errors = [
-    ...(productCreateOpts.data?.productCreate.errors || []),
-    ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
-  ];
+    ...getMutationErrors(productCreateOpts),
+    ...getMutationErrors(productVariantCreateOpts),
+  ] as ProductErrorWithAttributesFragment[];
 
   return (
     <>

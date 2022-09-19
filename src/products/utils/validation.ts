@@ -11,33 +11,25 @@ export const validatePrice = (price: string) =>
 export const validateCostPrice = (price: string) =>
   price !== "" && parseInt(price, 10) < 0;
 
+const createEmptyRequiredError = (
+  field: string,
+): ProductErrorWithAttributesFragment => ({
+  __typename: "ProductError",
+  code: ProductErrorCode.REQUIRED,
+  field,
+  message: null,
+  attributes: [],
+});
+
 export const validateProductCreateData = (data: ProductCreateData) => {
   let errors: ProductErrorWithAttributesFragment[] = [];
 
   if (!data.productType) {
-    errors = [
-      ...errors,
-      {
-        __typename: "ProductError",
-        code: ProductErrorCode.REQUIRED,
-        field: "productType",
-        message: null,
-        attributes: [],
-      },
-    ];
+    errors = [...errors, createEmptyRequiredError("productType")];
   }
 
   if (!data.name) {
-    errors = [
-      ...errors,
-      {
-        __typename: "ProductError",
-        code: ProductErrorCode.REQUIRED,
-        field: "name",
-        message: null,
-        attributes: [],
-      },
-    ];
+    errors = [...errors, createEmptyRequiredError("name")];
   }
 
   return errors;
