@@ -2,6 +2,8 @@ import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
 } from "@saleor/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { RequirementsPicker } from "@saleor/discounts/types";
 import {
   ChannelDetailsFragment,
   ChannelFragment,
@@ -415,3 +417,11 @@ export const validateSalePrice = (
       ? channel.percentageValue
       : channel.fixedValue,
   );
+
+export const validateVoucherPrice = (
+  data: VoucherDetailsPageFormData,
+  channel: ChannelVoucherData,
+) =>
+  validatePrice(channel.discountValue) ||
+  (data.requirementsPicker === RequirementsPicker.ORDER &&
+    validatePrice(channel.minSpent));
