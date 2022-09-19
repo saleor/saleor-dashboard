@@ -1,5 +1,6 @@
 import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
 import {
+  ProductChannelListingAddInput,
   ProductChannelListingUpdateInput,
   ProductFragment,
 } from "@saleor/graphql";
@@ -10,7 +11,7 @@ import { useCallback, useRef } from "react";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
-const emptyListing = {
+const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
   availableForPurchaseDate: null,
   isAvailableForPurchase: false,
   isPublished: false,

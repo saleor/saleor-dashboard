@@ -73,7 +73,7 @@ const DefaultStory: React.FC = () => {
         };
       }
 
-      const data = change ?? dataRow ? dataRow[columnId] : "";
+      const data = change ?? (dataRow ? dataRow[columnId] : "");
       return {
         ...errorProps,
         ...textCell(data),

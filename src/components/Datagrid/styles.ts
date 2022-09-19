@@ -42,10 +42,7 @@ const useStyles = makeStyles(
         },
       },
       portal: { position: "fixed", top: 0, left: 0 },
-      datagrid: {
-        // borderTop: `1px solid ${theme.palette.divider}`,
-        // borderBottom: `1px solid ${theme.palette.divider}`,
-      },
+      datagrid: {},
       root: {
         position: "relative",
       },
