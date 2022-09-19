@@ -1,4 +1,5 @@
 import DataEditor, {
+  DataEditorRef,
   EditableGridCell,
   GridCell,
   GridSelection,
@@ -6,6 +7,7 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { Button, MoreHorizontalIcon, PlusSmallIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
+import range from "lodash/range";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
@@ -57,6 +59,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 }): React.ReactElement => {
   const classes = useStyles();
   const datagridTheme = useDatagridTheme();
+  const editor = React.useRef<DataEditorRef>();
 
   const {
     availableColumnsChoices,
@@ -99,14 +102,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const onCellEditedEnh = React.useCallback(
-    ([column, row]: Item, newValue: EditableGridCell): void =>
+    ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited(
         [
           availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
           row,
         ],
         newValue,
-      ),
+      );
+      editor.current.updateCells(
+        range(displayedColumns.length).map(offset => ({
+          cell: [column + offset, row],
+        })),
+      );
+    },
     [onCellEdited, getCellContent, availableColumns, displayedColumns],
   );
 
@@ -171,7 +180,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           gridSelection={selection}
           rowHeight={48}
           headerHeight={48}
-          ref={undefined}
+          ref={editor}
           rightElementSticky
           rightElement={
             <div className={classes.rowActionBar}>
