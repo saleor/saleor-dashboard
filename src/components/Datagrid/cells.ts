@@ -52,6 +52,6 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
       value,
       currency,
     },
-    copyData: value !== null ? value.toString() : "",
+    copyData: value?.toString() ?? "",
   };
 }
