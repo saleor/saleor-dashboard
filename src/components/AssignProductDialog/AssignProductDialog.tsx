@@ -13,6 +13,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { SearchProductsQuery } from "@saleor/graphql";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -73,8 +74,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
-  const [query, onQueryChange] = useSearchQuery(onFetch);
+  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedProducts, setSelectedProducts] = React.useState<string[]>([]);
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      setSelectedProducts([]);
+      queryReset();
+    },
+  });
 
   const handleSubmit = () => onSubmit(selectedProducts);
 
