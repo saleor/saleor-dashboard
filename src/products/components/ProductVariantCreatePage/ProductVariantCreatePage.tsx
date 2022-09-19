@@ -318,9 +318,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               }
             />
           )}
-          {(product && product.channelListings.length) > 0 && (
+          {product && (
             <VariantChannelsDialog
               channelListings={product.channelListings}
+              selectedChannelListings={data.channelListings}
               open={isManageChannelsModalOpen}
               onClose={toggleManageChannels}
               onConfirm={handlers.updateChannels}
