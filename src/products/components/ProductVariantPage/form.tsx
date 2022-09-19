@@ -293,11 +293,15 @@ function useProductVariantUpdateForm(
       );
 
       if (variantChannel) {
+        const costPrice = variantChannel.costPrice
+          ? variantChannel.costPrice.amount.toString()
+          : null;
+
         return {
           ...variantChannel.channel,
           currency: variantChannel.channel.currencyCode,
           price: variantChannel.price.amount.toString(),
-          costPrice: variantChannel.costPrice.amount.toString(),
+          costPrice,
           preorderThreshold: variantChannel?.preorderThreshold.quantity,
           soldUnits: variantChannel?.preorderThreshold?.soldUnits,
         };

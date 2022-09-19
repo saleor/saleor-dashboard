@@ -23,7 +23,6 @@ export const VariantChannelsDialog: React.FC<VariantChannelsDialogProps> = ({
   const allChannelsIds = channelListings.map(c => c.channel.id);
   const allChannels = channelListings.map(c => c.channel);
   const preSelectedIds = selectedOrDefaults.map(c => c.channel.id);
-
   const [selected, setSelected] = useState(preSelectedIds);
 
   const isSelected = currentItem => selected.includes(currentItem.id);

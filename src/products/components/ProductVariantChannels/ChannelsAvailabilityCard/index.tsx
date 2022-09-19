@@ -8,7 +8,6 @@ import {
 } from "./availabilityCount";
 import { CardSkeleton } from "./CardSkeleton";
 import { CreateVariantTitle } from "./CreateVariantTitle";
-import { NotAvailable } from "./NotAvailable";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
@@ -28,12 +27,6 @@ interface WrapperProps {
 const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
   if (!item) {
     return <CardSkeleton />;
-  }
-
-  const isAvailableInAnyChannels = !!item.channelListings.length;
-
-  if (!isAvailableInAnyChannels) {
-    return <NotAvailable />;
   }
 
   const channels = item.channelListings.map(({ channel }) => channel);

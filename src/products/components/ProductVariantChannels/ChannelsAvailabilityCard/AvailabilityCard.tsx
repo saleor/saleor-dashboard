@@ -5,6 +5,7 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./..
 import { Channel, ProductChannelListing } from "./../types";
 import { ChannelsList } from "./ChannelsList";
 import { ChannelsListItem } from "./ChannelsListItem";
+import { NotAvailable } from "./NotAvailable";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
@@ -24,6 +25,14 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
     messages.subtitle,
     availabilityCount,
   );
+
+  if (items.length === 0) {
+    return (
+      <CardContainer cardTitle={children}>
+        <NotAvailable />
+      </CardContainer>
+    );
+  }
 
   return (
     <CardContainer cardTitle={children}>

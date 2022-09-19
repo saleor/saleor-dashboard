@@ -88,6 +88,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       firstValues: 10,
     },
   });
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
