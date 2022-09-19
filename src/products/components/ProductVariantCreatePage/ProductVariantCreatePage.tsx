@@ -32,7 +32,8 @@ import { defineMessages, useIntl } from "react-intl";
 
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
-import { CreateVariantChannelsDialog } from "../ProductVariantChannels/CreateVariantChannelsDialog";
+import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
+import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
@@ -40,7 +41,6 @@ import ProductVariantCreateForm, {
   ProductVariantCreateData,
   ProductVariantCreateHandlers,
 } from "./form";
-import { useManageChannels } from "./useManageChannels";
 
 const messages = defineMessages({
   attributesHeader: {
@@ -319,7 +319,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             />
           )}
           {(product && product.channelListings.length) > 0 && (
-            <CreateVariantChannelsDialog
+            <VariantChannelsDialog
               channelListings={product.channelListings}
               open={isManageChannelsModalOpen}
               onClose={toggleManageChannels}

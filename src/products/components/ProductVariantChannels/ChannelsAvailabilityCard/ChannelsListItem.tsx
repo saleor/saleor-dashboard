@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
-import { Channel, ProductChannelListing } from "./types";
+import { Channel, ProductChannelListing } from "./../types";
 
 type ChannelsListItemProps = Pick<Channel, "id" | "name"> & {
   listings: ProductChannelListing;

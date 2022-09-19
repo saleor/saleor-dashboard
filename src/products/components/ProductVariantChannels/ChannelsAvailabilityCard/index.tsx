@@ -12,6 +12,7 @@ import { Channel, Product, Variant } from "./types";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
+  onManageClick?: () => void;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
@@ -42,6 +43,7 @@ const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
 
 export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
   variant,
+  onManageClick,
 }) => (
   <Wrapper item={variant}>
     {({ channels }) => (
@@ -49,7 +51,9 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChan
         items={channels}
         availabilityCount={getAvailabilityCountForVariant(variant)}
         productChannelListings={variant.product.channelListings}
-      />
+      >
+        <CreateVariantTitle onManageClick={onManageClick} />
+      </AvailabilityCard>
     )}
   </Wrapper>
 );

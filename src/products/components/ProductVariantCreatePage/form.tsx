@@ -54,7 +54,7 @@ import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,
   validateChannels,
-} from "./formOpretations";
+} from "../ProductVariantChannels/formOpretations";
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
