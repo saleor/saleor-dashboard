@@ -364,7 +364,9 @@ export function getColumnData(
     return {
       ...common,
       width: 150,
-      title: `Price in ${channel.name} [${channel.currency}]`,
+      title: intl.formatMessage(messages.priceIn, {
+        channelName: channel.name,
+      }),
     };
   }
 
@@ -375,7 +377,9 @@ export function getColumnData(
     return {
       ...common,
       width: 80,
-      title: `Available in ${channel.name}`,
+      title: intl.formatMessage(messages.availableIn, {
+        channelName: channel.name,
+      }),
     };
   }
 
