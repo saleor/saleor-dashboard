@@ -50,5 +50,6 @@ Tests will be re-run only when the "run e2e" label is added.
 18. [ ] app
 19. [ ] plugins
 20. [ ] translations
+21. [ ] navigation
 
 CONTAINERS=1
