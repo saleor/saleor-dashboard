@@ -7,6 +7,8 @@ import {
   validatePrice,
 } from "@saleor/products/utils/validation";
 
+import { VariantChannelListing } from "./types";
+
 type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 
 export const validateChannels = (channels: FormChannels["data"]) =>
@@ -44,4 +46,15 @@ export const concatChannelsBySelection = (
   );
 
   return getChannelsInput(newlySelected).concat(includedAndSelected);
+};
+
+export const extractChannelPricesFromVariantChannel = (
+  variantChannel: VariantChannelListing[number],
+) => {
+  const { costPrice, price } = variantChannel;
+
+  return {
+    costPrice: costPrice ? costPrice.amount.toString() : null,
+    price: price ? price.amount.toString() : null,
+  };
 };

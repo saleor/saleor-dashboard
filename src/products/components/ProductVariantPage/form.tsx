@@ -61,7 +61,10 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockInput } from "../ProductStocks";
-import { concatChannelsBySelection } from "../ProductVariantChannels/formOpretations";
+import {
+  concatChannelsBySelection,
+  extractChannelPricesFromVariantChannel,
+} from "../ProductVariantChannels/formOpretations";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
@@ -293,17 +296,17 @@ function useProductVariantUpdateForm(
       );
 
       if (variantChannel) {
-        const costPrice = variantChannel.costPrice
-          ? variantChannel.costPrice.amount.toString()
-          : null;
+        const { costPrice, price } = extractChannelPricesFromVariantChannel(
+          variantChannel,
+        );
 
         return {
           ...variantChannel.channel,
           currency: variantChannel.channel.currencyCode,
-          price: variantChannel.price.amount.toString(),
-          costPrice,
           preorderThreshold: variantChannel?.preorderThreshold.quantity,
           soldUnits: variantChannel?.preorderThreshold?.soldUnits,
+          price,
+          costPrice,
         };
       }
 

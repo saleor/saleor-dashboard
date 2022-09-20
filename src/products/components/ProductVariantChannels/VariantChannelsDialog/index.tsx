@@ -37,7 +37,7 @@ export const VariantChannelsDialog: React.FC<VariantChannelsDialogProps> = ({
   const isSelected = currentItem => selected.includes(currentItem.id);
 
   const handleToggleAll = () => {
-    setSelected(allChannelsIds);
+    setSelected(prev => (prev.length > 0 ? [] : allChannelsIds));
   };
 
   const handleConfirm = () => {
