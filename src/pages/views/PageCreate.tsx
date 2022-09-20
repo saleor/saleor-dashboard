@@ -10,6 +10,7 @@ import {
   VALUES_PAGINATE_BY,
 } from "@saleor/config";
 import {
+  PageErrorWithAttributesFragment,
   useFileUploadMutation,
   usePageCreateMutation,
   usePageTypeQuery,
@@ -31,11 +32,11 @@ import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageCreateUrl, pageUrl, PageUrlQueryParams } from "../urls";
+import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from "../urls";
 
 export interface PageCreateProps {
   id: string;
-  params: PageUrlQueryParams;
+  params: PageCreateUrlQueryParams;
 }
 
 export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
@@ -45,7 +46,15 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const [selectedPageTypeId, setSelectedPageTypeId] = React.useState<string>();
+  const selectedPageTypeId = params["page-type-id"];
+
+  const handleSelectPageTypeId = (pageTypeId: string) =>
+    navigate(
+      pageCreateUrl({
+        ...params,
+        "page-type-id": pageTypeId,
+      }),
+    );
 
   const {
     loadMore: loadMorePageTypes,
@@ -178,6 +187,10 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     onFetchMore: loadMoreAttributeValues,
   };
 
+  const errors = getMutationErrors(
+    pageCreateOpts,
+  ) as PageErrorWithAttributesFragment[];
+
   return (
     <>
       <WindowTitle
@@ -189,7 +202,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       />
       <PageDetailsPage
         loading={pageCreateOpts.loading || uploadFileOpts.loading}
-        errors={pageCreateOpts.data?.pageCreate.errors || []}
+        errors={errors}
         saveButtonBarState={pageCreateOpts.status}
         page={null}
         attributeValues={attributeValues}
@@ -214,7 +227,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageCreateUrl())}
         selectedPageType={selectedPageType?.pageType}
-        onSelectPageType={id => setSelectedPageTypeId(id)}
+        onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
       />
     </>
