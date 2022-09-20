@@ -3,16 +3,15 @@ import DataEditor, {
   GridCell,
   GridSelection,
   Item,
-  Theme,
 } from "@glideapps/glide-data-grid";
-import { Button, MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
+import { Button, MoreHorizontalIcon, PlusSmallIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
 import CardMenu, { CardMenuItem } from "../CardMenu";
 import ColumnPicker from "../ColumnPicker";
-import useStyles from "./styles";
+import useStyles, { useDatagridTheme } from "./styles";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
 import useColumns from "./useColumns";
@@ -33,6 +32,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
+  addButtonLabel: string;
   availableColumns: readonly AvailableColumn[];
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
@@ -45,6 +45,7 @@ export interface DatagridProps {
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
+  addButtonLabel,
   availableColumns,
   getCellContent,
   menuItems,
@@ -53,26 +54,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onChange,
 }): React.ReactElement => {
   const classes = useStyles();
-  const theme = useTheme();
-  const datagridTheme = React.useMemo(
-    (): Partial<Theme> => ({
-      accentColor: theme.palette.saleor.main[1],
-      accentLight: theme.palette.divider,
-      accentFg: theme.palette.divider,
-      bgCell: theme.palette.background.default,
-      bgHeader: theme.palette.background.default,
-      bgHeaderHasFocus: theme.palette.background.default,
-      bgHeaderHovered: theme.palette.background.default,
-      bgBubbleSelected: theme.palette.background.default,
-      textHeader: theme.palette.saleor.main[3],
-      borderColor: theme.palette.divider,
-      fontFamily: theme.typography.fontFamily,
-      baseFontStyle: theme.typography.body1.fontSize as string,
-      headerFontStyle: theme.typography.body2.fontSize as string,
-      editorFontSize: theme.typography.body1.fontSize as string,
-    }),
-    [theme],
-  );
+  const datagridTheme = useDatagridTheme();
 
   const {
     availableColumnsChoices,
@@ -144,9 +126,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <div className={classes.root}>
-      <Button variant="tertiary" onClick={onRowAdded}>
-        Add
-      </Button>
+      <div className={classes.btnContainer}>
+        <Button
+          className={classes.addBtn}
+          variant="tertiary"
+          onClick={onRowAdded}
+        >
+          <PlusSmallIcon />
+          {addButtonLabel}
+        </Button>
+      </div>
       <ThemeProvider theme={datagridTheme}>
         {selection?.rows.length > 0 && (
           <div className={classes.actionBtnBar}>
@@ -155,6 +144,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         )}
         <DataEditor
           {...props}
+          className={classes.datagrid}
           getCellContent={getCellContentEnh}
           onCellEdited={onCellEditedEnh}
           columns={columns}
@@ -195,6 +185,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   query={picker.query}
                 />
               </div>
+              {columns.some(col => col.group) && (
+                <div className={classes.rowAction} />
+              )}
               {Array(rows - removed.length)
                 .fill(0)
                 .map((_, index) => (
@@ -204,6 +197,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         index,
                       ),
                     })}
+                    key={index}
                   >
                     <CardMenu
                       Icon={MoreHorizontalIcon}
@@ -218,6 +212,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 ))}
             </div>
           }
+          overscrollX={1}
+          rowMarkerWidth={48}
         />
       </ThemeProvider>
       <div id="portal" className={classes.portal} />

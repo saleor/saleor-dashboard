@@ -1,5 +1,8 @@
 import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
-import { NumberCell } from "@saleor/components/Datagrid/NumberCell";
+import {
+  NumberCell,
+  numberCellEmptyValue,
+} from "@saleor/components/Datagrid/NumberCell";
 
 import { MoneyCell } from "./MoneyCell";
 
@@ -17,7 +20,18 @@ export function textCell(value: string): GridCell {
   };
 }
 
-export function numberCell(value: number | null): NumberCell {
+export function booleanCell(value: boolean): GridCell {
+  return {
+    ...common,
+    allowOverlay: false,
+    kind: GridCellKind.Boolean,
+    data: value,
+  };
+}
+
+export function numberCell(
+  value: number | typeof numberCellEmptyValue,
+): NumberCell {
   return {
     ...common,
     data: {
@@ -25,11 +39,11 @@ export function numberCell(value: number | null): NumberCell {
       value,
     },
     kind: GridCellKind.Custom,
-    copyData: value !== null ? value.toString() : "",
+    copyData: value !== numberCellEmptyValue ? value.toString() : "",
   };
 }
 
-export function moneyCell(value: number, currency: string): MoneyCell {
+export function moneyCell(value: number | null, currency: string): MoneyCell {
   return {
     ...common,
     kind: GridCellKind.Custom,
@@ -38,6 +52,6 @@ export function moneyCell(value: number, currency: string): MoneyCell {
       value,
       currency,
     },
-    copyData: value.toString(),
+    copyData: value?.toString() ?? "",
   };
 }

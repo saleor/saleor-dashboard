@@ -15,14 +15,15 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@saleor/attributes/utils/handlers";
-import { ChannelData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  ProductChannelListingUpdateInput,
   ProductFragment,
   SearchPagesQuery,
   SearchProductsQuery,
@@ -44,13 +45,7 @@ import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
 } from "@saleor/products/utils/data";
-import { createChannelsChangeHandler } from "@saleor/products/utils/handlers";
-import {
-  validateCostPrice,
-  validatePrice,
-} from "@saleor/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -61,12 +56,12 @@ import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText"
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect, useMemo, useRef } from "react";
 
+import { useProductChannelListingsForm } from "./formChannels";
+import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
   changeTaxCode: boolean;
-  channelsData: ChannelData[];
-  channelsWithVariants: ChannelsWithVariantsData;
-  channelListings: ChannelData[];
   chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
@@ -99,11 +94,13 @@ export interface FileAttributesSubmitData {
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
+  channels: ProductChannelListingUpdateInput;
   description: OutputData;
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
+  channels: ProductChannelListingUpdateInput;
   collections: string[];
   description: OutputData;
   variants: DatagridChangeOpts;
@@ -120,20 +117,15 @@ export interface ProductUpdateHandlers
     Record<
       "selectAttribute" | "selectAttributeMultiple",
       FormsetChange<string>
-    >,
-    Record<
-      "changeChannels",
-      (
-        id: string,
-        data: Omit<ChannelData, "name" | "price" | "currency" | "id">,
-      ) => void
-    >,
-    Record<"selectAttributeReference", FormsetChange<string[]>>,
-    Record<"selectAttributeFile", FormsetChange<File>>,
-    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>> {
+    > {
+  changeChannels: (id: string, data: ChannelOpts) => void;
+  selectAttributeReference: FormsetChange<string[]>;
+  selectAttributeFile: FormsetChange<File>;
+  reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
+  updateChannelList: ProductChannelsListingDialogSubmit;
 }
 
 export interface UseProductUpdateFormOutput
@@ -162,11 +154,7 @@ export interface UseProductUpdateFormOpts
   setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  channelsData: ChannelData[];
   hasVariants: boolean;
-  currentChannels: ChannelData[];
-  setChannels: (data: ChannelData[]) => void;
-  setChannelsData: (data: ChannelData[]) => void;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
@@ -174,7 +162,6 @@ export interface UseProductUpdateFormOpts
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  channelsWithVariants: ChannelsWithVariantsData;
   isSimpleProduct: boolean;
 }
 
@@ -192,35 +179,14 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
   const initial = useMemo(
-    () =>
-      getProductUpdatePageFormData(
-        product,
-        product?.variants,
-        opts.currentChannels,
-        opts.channelsData,
-        opts.channelsWithVariants,
-      ),
-    [
-      product,
-      opts.currentChannels,
-      opts.channelsData,
-      opts.channelsWithVariants,
-    ],
+    () => getProductUpdatePageFormData(product, product?.variants),
+    [product],
   );
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
-  const variants = useRef<DatagridChangeOpts>({
-    added: [],
-    removed: [],
-    updates: [],
-  });
-  const handleVariantChange = React.useCallback(
-    (data: DatagridChangeOpts) => (variants.current = data),
-    [],
-  );
 
   const {
     handleChange,
@@ -229,6 +195,16 @@ function useProductUpdateForm(
     data: formData,
     setIsSubmitDisabled,
   } = form;
+
+  const variants = useRef<DatagridChangeOpts>({
+    added: [],
+    removed: [],
+    updates: [],
+  });
+  const handleVariantChange = React.useCallback((data: DatagridChangeOpts) => {
+    variants.current = data;
+    triggerChange();
+  }, []);
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const {
@@ -254,6 +230,13 @@ function useProductUpdateForm(
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
+
+  const {
+    channels,
+    handleChannelChange,
+    handleChannelListUpdate,
+    touched: touchedChannels,
+  } = useProductChannelListingsForm(product, triggerChange);
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
@@ -310,22 +293,15 @@ function useProductUpdateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const handleChannelsChange = createChannelsChangeHandler(
-    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
-    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
-    triggerChange,
-  );
-
   const data: ProductUpdateData = {
     ...formData,
-    channelListings: opts.currentChannels,
-    channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
     ),
+    channels,
     description: null,
   };
 
@@ -340,6 +316,12 @@ function useProductUpdateForm(
       ),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
+    channels: {
+      ...channels,
+      updateChannels: channels.updateChannels.filter(listing =>
+        touchedChannels.current.includes(listing.channelId),
+      ),
+    },
     description: await richText.getValue(),
     variants: variants.current,
   });
@@ -376,18 +358,6 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (opts.hasVariants) {
-      return true;
-    }
-
-    const hasInvalidChannelListingPrices = data.channelListings.some(
-      channel =>
-        validatePrice(channel.price) || validateCostPrice(channel.costPrice),
-    );
-
-    if (hasInvalidChannelListingPrices) {
-      return false;
-    }
     return true;
   };
 
@@ -403,7 +373,7 @@ function useProductUpdateForm(
     data,
     formErrors: form.errors,
     handlers: {
-      changeChannels: handleChannelsChange,
+      changeChannels: handleChannelChange,
       changeMetadata,
       changeVariants: handleVariantChange,
       fetchMoreReferences: handleFetchMoreReferences,
@@ -416,6 +386,7 @@ function useProductUpdateForm(
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect,
+      updateChannelList: handleChannelListUpdate,
     },
     submit,
     isSaveDisabled,

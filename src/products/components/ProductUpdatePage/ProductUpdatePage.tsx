@@ -44,12 +44,12 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import { productImageUrl, productListUrl } from "@saleor/products/urls";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
+import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelsWithVariantsAvailabilityCard from "../../../channels/ChannelsWithVariantsAvailabilityCard/ChannelsWithVariantsAvailabilityCard";
 import { getChoices } from "../../utils/data";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
@@ -61,18 +61,14 @@ import ProductUpdateForm, {
   ProductUpdateHandlers,
   ProductUpdateSubmitData,
 } from "./form";
+import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
-  channelsWithVariantsData: ChannelsWithVariantsData;
-  setChannelsData: (data: ChannelData[]) => void;
-  onChannelsChange: (data: ChannelData[]) => void;
-  channelsData: ChannelData[];
-  currentChannels: ChannelData[];
-  allChannelsCount: number;
   channelsErrors: ProductChannelListingErrorFragment[];
-  errors: ProductErrorWithAttributesFragment[];
+  variantListErrors: ProductVariantListError[];
+  errors: UseProductUpdateHandlerError[];
   placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
@@ -108,7 +104,6 @@ export interface ProductUpdatePageProps {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
-  openChannelsModal: () => void;
   onAttributeSelectBlur: () => void;
   onDelete();
   onImageReorder?(event: { oldIndex: number; newIndex: number });
@@ -121,7 +116,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   productId,
   disabled,
   categories: categoryChoiceList,
+  channels,
   channelsErrors,
+  variantListErrors,
   collections: collectionChoiceList,
   attributeValues,
   isSimpleProduct,
@@ -138,22 +135,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   warehouses,
-  setChannelsData,
   taxTypes,
   referencePages = [],
   referenceProducts = [],
   onDelete,
-  allChannelsCount,
-  currentChannels,
   onImageDelete,
   onImageReorder,
   onImageUpload,
   onMediaUrlUpload,
   onVariantShow,
-  openChannelsModal,
   onSeoClick,
   onSubmit,
-  channelsData,
   isMediaUrlModalVisible,
   assignReferencesAttributeId,
   onAssignReferencesClick,
@@ -164,12 +156,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onCloseDialog,
-  channelsWithVariantsData,
-  onChannelsChange,
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || "",
@@ -218,6 +209,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     extensionMountPoints.PRODUCT_DETAILS,
   );
 
+  const productErrors = React.useMemo(
+    () =>
+      errors.filter(
+        error => error.__typename === "ProductError",
+      ) as ProductErrorWithAttributesFragment[],
+    [errors],
+  );
+
   const extensionMenuItems = mapToMenuItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
@@ -226,19 +225,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
-      currentChannels={currentChannels}
-      channelsData={channelsData}
-      setChannelsData={setChannelsData}
       onSubmit={onSubmit}
       product={product}
       categories={categories}
       collections={collections}
-      channelsWithVariants={channelsWithVariantsData}
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxType={setSelectedTaxType}
-      setChannels={onChannelsChange}
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       hasVariants={hasVariants}
@@ -275,11 +269,24 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             }),
           },
           errors: channelsErrors,
-          allChannelsCount,
+          allChannelsCount: channels?.length,
           disabled,
           onChange: handlers.changeChannels,
-          openModal: openChannelsModal,
+          openModal: () => setChannelPickerOpen(true),
         };
+
+        const listings = data.channels.updateChannels.map<ChannelData>(
+          listing => {
+            const channel = channels?.find(ac => ac.id === listing.channelId);
+            return {
+              id: listing.channelId,
+              ...channel,
+              ...listing,
+              availableForPurchase: listing.availableForPurchaseDate,
+              currency: channel.currencyCode,
+            };
+          },
+        );
 
         return (
           <>
@@ -300,7 +307,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <ProductDetailsForm
                     data={data}
                     disabled={disabled}
-                    errors={errors}
+                    errors={productErrors}
                     onChange={change}
                   />
                   <CardSpacer />
@@ -320,7 +327,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <Attributes
                       attributes={data.attributes}
                       attributeValues={attributeValues}
-                      errors={errors}
+                      errors={productErrors}
                       loading={disabled}
                       disabled={disabled}
                       onChange={handlers.selectAttribute}
@@ -337,6 +344,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <ProductVariants
+                    errors={variantListErrors}
+                    channels={listings}
                     limits={limits}
                     variants={variants}
                     variantAttributes={product?.productType.variantAttributes}
@@ -346,7 +355,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                   <CardSpacer />
                   <SeoForm
-                    errors={errors}
+                    errors={productErrors}
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
                     description={data.seoDescription}
@@ -384,39 +393,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onCollectionChange={handlers.selectCollection}
                   />
                   <CardSpacer />
-                  {isSimpleProduct ? (
-                    <ChannelsAvailabilityCard
-                      {...availabilityCommonProps}
-                      channels={data.channelListings}
-                    />
-                  ) : product?.variants.length === 0 ? (
-                    <ChannelsAvailabilityCard
-                      {...availabilityCommonProps}
-                      channelsList={data.channelListings}
-                    />
-                  ) : (
-                    <ChannelsWithVariantsAvailabilityCard
-                      messages={{
-                        hiddenLabel: intl.formatMessage({
-                          id: "saKXY3",
-                          defaultMessage: "Not published",
-                          description: "product label",
-                        }),
-
-                        visibleLabel: intl.formatMessage({
-                          id: "qJedl0",
-                          defaultMessage: "Published",
-                          description: "product label",
-                        }),
-                      }}
-                      errors={channelsErrors}
-                      channels={data.channelsData}
-                      channelsWithVariantsData={channelsWithVariantsData}
-                      variants={variants}
-                      onChange={handlers.changeChannels}
-                      openModal={openChannelsModal}
-                    />
-                  )}
+                  <ChannelsAvailabilityCard
+                    {...availabilityCommonProps}
+                    channels={listings}
+                  />
                   <CardSpacer />
                   <ProductTaxes
                     data={data}
@@ -465,6 +445,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onClose={() => setMediaUrlModalStatus(false)}
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}
+              />
+              <ProductChannelsListingsDialog
+                channels={channels}
+                data={data}
+                onClose={() => setChannelPickerOpen(false)}
+                open={channelPickerOpen}
+                onConfirm={handlers.updateChannelList}
               />
             </Container>
           </>
