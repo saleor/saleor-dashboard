@@ -1384,6 +1384,7 @@ type AttributeDeleted implements Event {
 enum AttributeEntityTypeEnum {
   PAGE
   PRODUCT
+  PRODUCT_VARIANT
 }
 
 type AttributeError {
@@ -1422,6 +1423,7 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -2352,6 +2354,7 @@ input CategoryFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 input CategoryInput {
@@ -3010,6 +3013,15 @@ type Checkout implements Node & ObjectWithMetadata {
   """The price of the checkout before shipping, with taxes included."""
   subtotalPrice: TaxedMoney!
 
+  """
+  Returns True if checkout has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
+
   """The checkout's token."""
   token: UUID!
 
@@ -3440,6 +3452,13 @@ input CheckoutLineInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   forceNewLine: Boolean = false
+
+  """
+  Fields required to update the object's metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
 }
 
 input CheckoutLineUpdateInput {
@@ -3958,6 +3977,7 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -5839,6 +5859,33 @@ type FulfillmentApprove {
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [OrderError!]!
+}
+
+"""
+Event sent when fulfillment is approved.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type FulfillmentApproved implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The fulfillment the event relates to."""
+  fulfillment: Fulfillment
+
+  """The order the fulfillment belongs to."""
+  order: Order
 }
 
 """
@@ -8241,6 +8288,7 @@ input MenuFilterInput {
   search: String
   slug: [String!]
   metadata: [MetadataFilter!]
+  slugs: [String!]
 }
 
 input MenuInput {
@@ -8917,7 +8965,9 @@ type Mutation {
     """Country in which to update the tax class rates."""
     countryCode: CountryCode!
 
-    """List of tax rates per tax class to update."""
+    """
+    List of tax rates per tax class to update. When `{taxClass: id, rate: null`} is passed, it deletes the rate object for given taxClass ID. When `{rate: Int}` is passed without a tax class, it updates the default tax class for this country.
+    """
     updateTaxClassRates: [TaxClassRateInput!]!
   ): TaxCountryConfigurationUpdate
 
@@ -8934,6 +8984,23 @@ type Mutation {
     """Country in which to update the tax class rates."""
     countryCode: CountryCode!
   ): TaxCountryConfigurationDelete
+
+  """
+  Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TAXES.
+  """
+  taxExemptionManage(
+    """ID of the Checkout or Order object."""
+    id: ID!
+
+    """Determines if a taxes should be exempt."""
+    taxExemption: Boolean!
+  ): TaxExemptionManage
 
   """
   Creates a new staff notification recipient. 
@@ -11207,6 +11274,13 @@ type Mutation {
     """
     id: ID
 
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
     """Client-side generated data required to finalize the payment."""
     paymentData: JSONString
 
@@ -11614,6 +11688,20 @@ type Mutation {
   orderCreateFromCheckout(
     """ID of a checkout that will be converted to an order."""
     id: ID!
+
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
+    """
+    Fields required to update the checkout private metadata.
+    
+    Added in Saleor 3.8.
+    """
+    privateMetadata: [MetadataInput!]
 
     """
     Determines if checkout should be removed after creating an order. Default true.
@@ -12603,6 +12691,15 @@ type Order implements Node & ObjectWithMetadata {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   chargeStatus: OrderChargeStatusEnum!
+
+  """
+  Returns True if order has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
 
   """
   List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS.
@@ -14285,6 +14382,7 @@ input PageFilterInput {
   metadata: [MetadataFilter!]
   pageTypes: [ID!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 """
@@ -14671,6 +14769,7 @@ type PageTypeDeleted implements Event {
 
 input PageTypeFilterInput {
   search: String
+  slugs: [String!]
 }
 
 """
@@ -15310,10 +15409,11 @@ enum PermissionEnum {
   IMPERSONATE_USER
   MANAGE_APPS
   MANAGE_OBSERVABILITY
-  MANAGE_CHANNELS
   MANAGE_CHECKOUTS
   HANDLE_CHECKOUTS
   HANDLE_TAXES
+  MANAGE_TAXES
+  MANAGE_CHANNELS
   MANAGE_DISCOUNTS
   MANAGE_GIFT_CARD
   MANAGE_MENUS
@@ -15327,7 +15427,6 @@ enum PermissionEnum {
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
-  MANAGE_TAXES
 }
 
 """
@@ -15760,7 +15859,7 @@ type Product implements Node & ObjectWithMetadata {
   category: Category
   created: DateTime!
   updatedAt: DateTime!
-  chargeTaxes: Boolean!
+  chargeTaxes: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` field to determine whether tax collection is enabled.")
   weight: Weight
   defaultVariant: ProductVariant
   rating: Float
@@ -15811,7 +15910,7 @@ type Product implements Node & ObjectWithMetadata {
   ): Boolean
 
   """A type of tax. Assigned by enabled tax gateway"""
-  taxType: TaxType
+  taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
 
   """List of attributes assigned to this product."""
   attributes: [SelectedAttribute!]!
@@ -15871,7 +15970,7 @@ type Product implements Node & ObjectWithMetadata {
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 }
 
 """
@@ -16140,7 +16239,11 @@ input ProductCreateInput {
   """ID of the product's category."""
   category: ID
 
-  """Determine if taxes are being charged for the product."""
+  """
+  Determine if taxes are being charged for the product. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+  """
   chargeTaxes: Boolean
 
   """List of IDs of collections that the product belongs to."""
@@ -16164,7 +16267,11 @@ input ProductCreateInput {
   """
   taxClass: ID
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  """
   taxCode: String
 
   """Search engine optimization fields."""
@@ -16333,6 +16440,7 @@ input ProductFilterInput {
   giftCard: Boolean
   ids: [ID!]
   hasPreorderedVariants: Boolean
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -16378,7 +16486,11 @@ input ProductInput {
   """ID of the product's category."""
   category: ID
 
-  """Determine if taxes are being charged for the product."""
+  """
+  Determine if taxes are being charged for the product. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+  """
   chargeTaxes: Boolean
 
   """List of IDs of collections that the product belongs to."""
@@ -16402,7 +16514,11 @@ input ProductInput {
   """
   taxClass: ID
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  """
   taxCode: String
 
   """Search engine optimization fields."""
@@ -16809,14 +16925,14 @@ type ProductType implements Node & ObjectWithMetadata {
   ): ProductCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0. Use the top-level `products` query with the `productTypes` filter.")
 
   """A type of tax. Assigned by enabled tax gateway"""
-  taxType: TaxType
+  taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
 
   """
   Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 
   """Variant attributes of that product type."""
   variantAttributes(
@@ -16927,6 +17043,7 @@ input ProductTypeFilterInput {
   metadata: [MetadataFilter!]
   kind: ProductTypeKindEnum
   ids: [ID!]
+  slugs: [String!]
 }
 
 input ProductTypeInput {
@@ -16961,7 +17078,11 @@ input ProductTypeInput {
   """Weight of the ProductType items."""
   weight: WeightScalar
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type.
+  """
   taxCode: String
 
   """
@@ -18527,7 +18648,11 @@ type Query {
     """Sort menus."""
     sortBy: MenuSortingInput
 
-    """Filtering options for menus."""
+    """
+    Filtering options for menus. 
+    
+    `slug`: This field will be removed in Saleor 4.0. Use `slugs` instead.
+    """
     filter: MenuFilterInput
 
     """Return the elements in the list that come before the specified cursor."""
@@ -20150,7 +20275,7 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_SHIPPING.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 }
 
 """An enumeration."""
@@ -21559,11 +21684,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   """Name of the tax class."""
   name: String!
 
-  """
-  Determines whether a tax class is a default one. Default tax class is created by the system and cannot be removed.
-  """
-  isDefault: Boolean!
-
   """Country-specific tax rates for this tax class."""
   countries: [TaxClassCountryRate!]!
 }
@@ -21677,7 +21797,6 @@ type TaxClassDeleteError {
 
 """An enumeration."""
 enum TaxClassDeleteErrorCode {
-  CANNOT_DELETE_DEFAULT_CLASS
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -21694,7 +21813,7 @@ input TaxClassRateInput {
   taxClassId: ID
 
   """Tax rate value."""
-  rate: Float!
+  rate: Float
 }
 
 enum TaxClassSortField {
@@ -22057,6 +22176,42 @@ enum TaxCountryConfigurationUpdateErrorCode {
   INVALID
   NOT_FOUND
   ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED
+  CANNOT_CREATE_WITH_NULL_RATE
+}
+
+"""
+Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+
+Added in Saleor 3.8.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_TAXES.
+"""
+type TaxExemptionManage {
+  taxableObject: TaxSourceObject
+  errors: [TaxExemptionManageError!]!
+}
+
+type TaxExemptionManageError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TaxExemptionManageErrorCode!
+}
+
+"""An enumeration."""
+enum TaxExemptionManageErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  NOT_EDITABLE_ORDER
 }
 
 union TaxSourceLine = CheckoutLine | OrderLine
@@ -23888,6 +24043,7 @@ input WarehouseFilterInput {
   ids: [ID!]
   isPrivate: Boolean
   channels: [ID!]
+  slugs: [String!]
 }
 
 """
@@ -24358,6 +24514,9 @@ enum WebhookEventTypeAsyncEnum {
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
 
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
+
   """User notification triggered."""
   NOTIFY_USER
 
@@ -24649,6 +24808,9 @@ enum WebhookEventTypeEnum {
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
 
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
+
   """User notification triggered."""
   NOTIFY_USER
 
@@ -24902,6 +25064,7 @@ enum WebhookSampleEventTypeEnum {
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
   FULFILLMENT_CANCELED
+  FULFILLMENT_APPROVED
   NOTIFY_USER
   PAGE_CREATED
   PAGE_UPDATED
