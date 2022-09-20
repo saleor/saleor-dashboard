@@ -444,15 +444,15 @@ export const page: PageDetailsFragment = {
 
 export const pageTypesList: Array<Pick<PageType, "id" | "name">> = [
   {
-    id: "UHJvZHVjdFR5cGU6Nw==",
-    name: "Salt",
+    id: "1111ZHVjdFR5cGU6Nw==",
+    name: "General",
   },
   {
-    id: "UHJvZHVjdFR5cGU6Nw==",
-    name: "Sugar",
+    id: "2222ZHVjdFR5cGU6Nw==",
+    name: "Subpages",
   },
   {
-    id: "UHJvZHVjdFR5cGU6Nw==",
-    name: "Mushroom",
+    id: "3333ZHVjdFR5cGU6Nw==",
+    name: "Blog",
   },
 ];
