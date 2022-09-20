@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { Hr } from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsFragment, OrderDiscountType } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -10,7 +9,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
 import { SummaryList } from "./SummaryList";
-import { extractOrderGiftCardUsedAmount } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -36,8 +34,6 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const classes = useStyles();
 
   const intl = useIntl();
-
-  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const getDeliveryMethodName = order => {
     if (
@@ -111,26 +107,6 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           />
         </SummaryList>
       </CardContent>
-      {!!usedGiftCardAmount && (
-        <>
-          <Hr />
-          <CardContent>
-            <SummaryList>
-              <SummaryLine
-                text={
-                  <FormattedMessage
-                    {...orderSummaryMessages.paidWithGiftCard}
-                  />
-                }
-                money={{
-                  amount: usedGiftCardAmount,
-                  currency: order?.total?.gross?.currency,
-                }}
-              />
-            </SummaryList>
-          </CardContent>
-        </>
-      )}
     </Card>
   );
 };
