@@ -51,6 +51,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams,
 } from "../urls";
+import { getAssignedProductIdsToCollection } from "../utils";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
@@ -247,6 +248,26 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     variables => updatePrivateMetadata({ variables }),
   );
 
+  const handleAssignationChange = async products => {
+    const toUnassignIds = Object.keys(assignedProductDict).filter(
+      s => assignedProductDict[s] && !products.includes(s),
+    );
+
+    const baseVariables = { ...paginationState, collectionId: id };
+
+    await assignProduct({
+      variables: { ...baseVariables, productIds: products },
+    });
+
+    if (toUnassignIds.length > 0) {
+      await unassignProduct({
+        variables: { ...baseVariables, productIds: toUnassignIds },
+      });
+    }
+
+    await result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
+  };
+
   const formTransitionState = getMutationState(
     updateCollectionOpts.called,
     updateCollectionOpts.loading,
@@ -261,6 +282,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   if (collection === null) {
     return <NotFoundPage backHref={collectionListUrl()} />;
   }
+
+  const assignedProductDict = getAssignedProductIdsToCollection(
+    collection,
+    result.data?.search,
+  );
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
@@ -304,15 +330,17 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        onProductUnassign={(productId, event) => {
+        onProductUnassign={async (productId, event) => {
           event.stopPropagation();
-          unassignProduct({
+          await unassignProduct({
             variables: {
               collectionId: id,
               productIds: [productId],
               ...paginationState,
             },
           });
+
+          await result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
         }}
         saveButtonBarState={formTransitionState}
         toolbar={
@@ -340,30 +368,21 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />
-      {collection && (
-        <AssignProductDialog
-          selectedIds={collection.products.edges.map(p => p.node.id)}
-          confirmButtonState={assignProductOpts.status}
-          hasMore={result.data?.search?.pageInfo.hasNextPage}
-          open={params.action === "assign"}
-          onFetch={search}
-          onFetchMore={loadMore}
-          loading={result.loading}
-          onClose={closeModal}
-          onSubmit={products =>
-            assignProduct({
-              variables: {
-                ...paginationState,
-                collectionId: id,
-                productIds: products,
-              },
-            })
-          }
-          products={mapEdgesToItems(result?.data?.search)?.filter(
-            suggestedProduct => suggestedProduct.id,
-          )}
-        />
-      )}
+      <AssignProductDialog
+        selectedIds={assignedProductDict}
+        confirmButtonState={assignProductOpts.status}
+        hasMore={result.data?.search?.pageInfo.hasNextPage}
+        open={params.action === "assign"}
+        onFetch={search}
+        onFetchMore={loadMore}
+        loading={result.loading}
+        onClose={closeModal}
+        onSubmit={handleAssignationChange}
+        products={mapEdgesToItems(result?.data?.search)?.filter(
+          suggestedProduct => suggestedProduct.id,
+        )}
+      />
+
       <ActionDialog
         confirmButtonState={removeCollectionOpts.status}
         onClose={closeModal}
