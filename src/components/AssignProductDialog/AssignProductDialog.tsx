@@ -36,6 +36,7 @@ export interface AssignProductDialogFormData {
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
+  selectedIds?: string[];
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
@@ -69,18 +70,20 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onFetch,
     onFetchMore,
     onSubmit,
+    selectedIds,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
-
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<string[]>([]);
+  const [selectedProducts, setSelectedProducts] = React.useState<string[]>(
+    selectedIds || [],
+  );
 
   useModalDialogOpen(open, {
-    onClose: () => {
-      setSelectedProducts([]);
+    onOpen: () => {
       queryReset();
+      setSelectedProducts(selectedIds);
     },
   });
 

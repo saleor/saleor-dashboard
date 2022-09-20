@@ -340,27 +340,30 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
       />
-      <AssignProductDialog
-        confirmButtonState={assignProductOpts.status}
-        hasMore={result.data?.search?.pageInfo.hasNextPage}
-        open={params.action === "assign"}
-        onFetch={search}
-        onFetchMore={loadMore}
-        loading={result.loading}
-        onClose={closeModal}
-        onSubmit={products =>
-          assignProduct({
-            variables: {
-              ...paginationState,
-              collectionId: id,
-              productIds: products,
-            },
-          })
-        }
-        products={mapEdgesToItems(result?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id,
-        )}
-      />
+      {collection && (
+        <AssignProductDialog
+          selectedIds={collection.products.edges.map(p => p.node.id)}
+          confirmButtonState={assignProductOpts.status}
+          hasMore={result.data?.search?.pageInfo.hasNextPage}
+          open={params.action === "assign"}
+          onFetch={search}
+          onFetchMore={loadMore}
+          loading={result.loading}
+          onClose={closeModal}
+          onSubmit={products =>
+            assignProduct({
+              variables: {
+                ...paginationState,
+                collectionId: id,
+                productIds: products,
+              },
+            })
+          }
+          products={mapEdgesToItems(result?.data?.search)?.filter(
+            suggestedProduct => suggestedProduct.id,
+          )}
+        />
+      )}
       <ActionDialog
         confirmButtonState={removeCollectionOpts.status}
         onClose={closeModal}
