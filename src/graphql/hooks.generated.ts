@@ -1177,6 +1177,32 @@ export const OrderPaymentFragmentDoc = gql`
   actions
 }
     `;
+export const OrderGiftCardFragmentDoc = gql`
+    fragment OrderGiftCard on GiftCard {
+  id
+  last4CodeChars
+  events {
+    id
+    type
+    orderId
+    date
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1376,25 +1402,7 @@ export const OrderDetailsFragmentDoc = gql`
     ...OrderPayment
   }
   giftCards {
-    events {
-      id
-      type
-      orderId
-      balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-      }
-    }
+    ...OrderGiftCard
   }
   isShippingRequired
   canFinalize
@@ -1514,6 +1522,7 @@ export const OrderDetailsFragmentDoc = gql`
 ${AddressFragmentDoc}
 ${TransactionItemFragmentDoc}
 ${OrderPaymentFragmentDoc}
+${OrderGiftCardFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
