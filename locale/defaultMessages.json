@@ -2059,6 +2059,10 @@
     "context": "invoice create date prefix",
     "string": "created"
   },
+  "F0N1SC": {
+    "context": "dialog header",
+    "string": "Select a page type"
+  },
   "F3Upht": {
     "string": "Product type deleted"
   },
@@ -4210,6 +4214,10 @@
   "V3fvcD": {
     "context": "dialog content",
     "string": "Removed sale"
+  },
+  "V45+rx": {
+    "context": "input label",
+    "string": "Page type"
   },
   "V8FhTt": {
     "context": "collection label",
