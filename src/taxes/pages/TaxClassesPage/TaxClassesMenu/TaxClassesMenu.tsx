@@ -14,6 +14,7 @@ import {
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { taxClassesListUrl } from "@saleor/taxes/urls";
+import { isOnlyTaxClass } from "@saleor/taxes/utils/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -63,7 +64,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
             <ListItemCell>
               <div className={classes.spaceBetween}>
                 {taxClass.name}
-                {!taxClass.isDefault && (
+                {!isOnlyTaxClass(taxClasses) && (
                   <IconButton
                     variant="secondary"
                     onClick={event => {

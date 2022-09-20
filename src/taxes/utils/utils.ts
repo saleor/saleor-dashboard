@@ -1,20 +1,14 @@
 import {
   CountryFragment,
-  CountryWithCodeFragment,
   TaxClassFragment,
   TaxCountryConfigurationFragment,
   TaxRateFragment,
 } from "@saleor/graphql";
 import uniqBy from "lodash/uniqBy";
 
-export const getDefaultTaxRateInCountry = (
-  taxClasses: TaxClassFragment[] | undefined,
-  selectedCountry: CountryWithCodeFragment,
-): TaxRateFragment["rate"] | undefined =>
-  taxClasses
-    ?.find(taxClass => taxClass.isDefault)
-    .countries.find(country => country.country.code === selectedCountry.code)
-    .rate;
+export const getDefaultTaxRateInCountry = ():
+  | TaxRateFragment["rate"]
+  | undefined => 0; // @TODO: implement default tax rates in tax classes page
 
 export const encodeURIComponentOptional = (
   uriComponent: string | number | boolean | undefined,
@@ -75,3 +69,6 @@ export const mapUndefinedTaxRatesToCountries = (
       }
     })
     .sort((a, b) => a.country.country.localeCompare(b.country.country));
+
+export const isOnlyTaxClass = (taxClasses: TaxClassFragment[]) =>
+  taxClasses.length === 1;
