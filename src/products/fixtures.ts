@@ -1,3 +1,4 @@
+import { channelsList } from "@saleor/channels/fixtures";
 import {
   AttributeInputTypeEnum,
   ProductFragment,
@@ -221,12 +222,7 @@ export const product: (
     {
       __typename: "ProductChannelListing",
       availableForPurchase: null,
-      channel: {
-        __typename: "Channel",
-        currencyCode: "USD",
-        id: "123",
-        name: "Channel1",
-      },
+      channel: channelsList[0],
       isAvailableForPurchase: false,
       isPublished: true,
       pricing: {
@@ -257,12 +253,7 @@ export const product: (
     {
       __typename: "ProductChannelListing",
       availableForPurchase: null,
-      channel: {
-        __typename: "Channel",
-        currencyCode: "USD",
-        id: "124",
-        name: "Channel2",
-      },
+      channel: channelsList[1],
       isAvailableForPurchase: false,
       isPublished: false,
       pricing: {

@@ -3,7 +3,6 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@saleor/attributes/utils/data";
-import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
   VariantAttributeScope,
@@ -26,7 +25,6 @@ import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateFormData } from "../components/ProductUpdatePage/form";
-import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
 
 export interface Collection {
   id: string;
@@ -198,15 +196,10 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 export function getProductUpdatePageFormData(
   product: ProductFragment,
   variants: ProductDetailsVariantFragment[],
-  currentChannels: ChannelData[],
-  channelsData: ChannelData[],
-  channelsWithVariants: ChannelsWithVariantsData,
 ): ProductUpdateFormData {
   const variant = product?.variants[0];
 
   return {
-    channelsWithVariants,
-    channelsData,
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
@@ -214,7 +207,6 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       [],
     ),
-    channelListings: currentChannels.map(listing => ({ ...listing })),
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),

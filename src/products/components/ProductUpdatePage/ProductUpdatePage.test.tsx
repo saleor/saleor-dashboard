@@ -1,6 +1,5 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
@@ -13,7 +12,6 @@ import React from "react";
 import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
-const channels = createChannelsData(channelsList);
 
 import * as _useNavigator from "@saleor/hooks/useNavigator";
 import Adapter from "enzyme-adapter-react-16";
@@ -40,16 +38,12 @@ jest.mock("@saleor/utils/richText/useRichText");
 
 const props: ProductUpdatePageProps = {
   channels: channelsList,
+  variantListErrors: [],
   productId: "123",
-  allChannelsCount: 5,
   categories: [product.category],
-  channelsData: [],
-  channelsWithVariantsData: {},
   isSimpleProduct: false,
-  setChannelsData: () => undefined,
   channelsErrors: [],
   collections,
-  currentChannels: channels,
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,
@@ -63,7 +57,6 @@ const props: ProductUpdatePageProps = {
   media: product.media,
   limits,
   onAssignReferencesClick: () => undefined,
-  onChannelsChange: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
@@ -71,7 +64,6 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSubmit,
   onVariantShow: () => undefined,
-  openChannelsModal: () => undefined,
   placeholderImage,
   product,
   referencePages: [],

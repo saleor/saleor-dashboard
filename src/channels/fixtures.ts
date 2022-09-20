@@ -19,7 +19,7 @@ export const channelCreateErrors: ChannelErrorFragment[] = [
 export const channelsList: ChannelDetailsFragment[] = [
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbm5lcDoy",
     isActive: true,
@@ -49,7 +49,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbm7lbDoy213",
     isActive: true,
@@ -79,7 +79,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbn5lbDoytr",
     isActive: true,
@@ -109,7 +109,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbm5lbDo5bot",
     isActive: true,
@@ -139,7 +139,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbm7lbDoyr0tr",
     isActive: true,
@@ -169,7 +169,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbn5lbDoyya",
     isActive: true,
@@ -199,7 +199,7 @@ export const channelsList: ChannelDetailsFragment[] = [
   },
   {
     __typename: "Channel",
-    currencyCode: "euro",
+    currencyCode: "EUR",
     hasOrders: false,
     id: "Q2hhbm5lbDo5w0z",
     isActive: true,

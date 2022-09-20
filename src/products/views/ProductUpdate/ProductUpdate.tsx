@@ -1,15 +1,8 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import { DialogContentText } from "@material-ui/core";
-import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
-import {
-  ChannelData,
-  createChannelsDataWithPrice,
-  createSortedChannelsDataFromProduct,
-} from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -25,16 +18,12 @@ import {
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
   useProductVariantBulkDeleteMutation,
-  useProductVariantPreorderDeactivateMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -53,20 +42,13 @@ import {
   productUrl,
   ProductUrlDialog,
   ProductUrlQueryParams,
-  productVariantAddUrl,
-  productVariantCreatorUrl,
   productVariantEditUrl,
 } from "../../urls";
-import {
-  CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
-  PRODUCT_UPDATE_FORM_ID,
-} from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
 } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
-import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
   deleteProductDialogTitle: {
@@ -146,7 +128,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
 
-  const { availableChannels } = useAppChannel(!isSimpleProduct);
+  const { availableChannels } = useAppChannel(false);
 
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -218,64 +200,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
 
-  const [
-    isEndPreorderModalOpened,
-    setIsEndPreorderModalOpened,
-  ] = React.useState(false);
-
   const product = data?.product;
-
-  // useMemo saves, like, 46 rerenders here
-  const allChannels: ChannelData[] = React.useMemo(
-    () =>
-      createChannelsDataWithPrice(
-        product,
-        availableChannels,
-      ).sort((channel, nextChannel) =>
-        channel.name.localeCompare(nextChannel.name),
-      ),
-    [product, availableChannels],
-  );
-
-  const [channelsData, setChannelsData] = useStateFromProps(allChannels);
-  const {
-    channels: updatedChannels,
-    channelsWithVariantsData,
-    setChannelVariantListing,
-  } = useChannelVariantListings(allChannels);
-
-  const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
-    product,
-  );
-
-  const {
-    channelListElements,
-    channelsToggle,
-    currentChannels,
-    handleChannelsConfirm,
-    handleChannelsModalClose,
-    handleChannelsModalOpen,
-    isChannelSelected,
-    isChannelsModalOpen,
-    setCurrentChannels,
-    toggleAllChannels,
-  } = useChannels(
-    productChannelsChoices,
-    params?.action,
-    {
-      closeModal,
-      openModal,
-    },
-    { formId: PRODUCT_UPDATE_FORM_ID },
-  );
 
   const warehouses = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50,
-      filter: {
-        channels: currentChannels.map(channel => channel.id),
-      },
     },
   });
 
@@ -319,7 +249,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
 
-  const [submit, submitOpts] = useProductUpdateHandler(product, allChannels);
+  const [submit, submitOpts] = useProductUpdateHandler(product);
 
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
@@ -327,18 +257,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables }),
   );
-
-  const handleDeactivatePreorder = async () => {
-    await handleDeactivateVariantPreorder(product.variants[0].id);
-    setIsEndPreorderModalOpened(false);
-  };
-
-  const [
-    deactivatePreorder,
-    deactivatePreoderOpts,
-  ] = useProductVariantPreorderDeactivateMutation({});
-  const handleDeactivateVariantPreorder = (id: string) =>
-    deactivatePreorder({ variables: { id } });
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
@@ -354,7 +272,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    deactivatePreoderOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
 
@@ -407,52 +324,17 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   return (
     <>
       <WindowTitle title={data?.product?.name} />
-      {!!allChannels?.length &&
-        (isSimpleProduct || product?.variants.length === 0 ? (
-          <ChannelsAvailabilityDialog
-            isSelected={isChannelSelected}
-            channels={allChannels}
-            onChange={channelsToggle}
-            onClose={handleChannelsModalClose}
-            open={isChannelsModalOpen}
-            title={intl.formatMessage({
-              id: "Eau5AV",
-              defaultMessage: "Manage Products Channel Availability",
-            })}
-            confirmButtonState="default"
-            selected={channelListElements.length}
-            onConfirm={handleChannelsConfirm}
-            toggleAll={toggleAllChannels}
-          />
-        ) : (
-          <ChannelsWithVariantsAvailabilityDialog
-            channels={updatedChannels}
-            variants={product?.variants}
-            open={params.action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR}
-            onClose={closeModal}
-            onConfirm={listings => {
-              closeModal();
-              setChannelVariantListing(listings);
-            }}
-          />
-        ))}
       <ProductUpdatePage
         channels={availableChannels}
         productId={id}
         isSimpleProduct={isSimpleProduct}
-        openChannelsModal={handleChannelsModalOpen}
-        onChannelsChange={setCurrentChannels}
         channelsErrors={submitOpts.channelsErrors}
-        currentChannels={currentChannels}
-        allChannelsCount={allChannels?.length}
-        channelsData={channelsData}
-        setChannelsData={setChannelsData}
         categories={categories}
         collections={collections}
         attributeValues={attributeValues}
-        channelsWithVariantsData={channelsWithVariantsData}
         disabled={disableFormSave}
         errors={submitOpts.errors}
+        variantListErrors={submitOpts.variantListErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
@@ -533,15 +415,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
-      {isSimpleProduct && !!product?.variants?.[0]?.preorder && (
-        <ProductVariantEndPreorderDialog
-          confirmButtonState={deactivatePreoderOpts.status}
-          onClose={() => setIsEndPreorderModalOpened(false)}
-          onConfirm={handleDeactivatePreorder}
-          open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={product.variants[0].preorder.globalSoldUnits}
-        />
-      )}
     </>
   );
 };

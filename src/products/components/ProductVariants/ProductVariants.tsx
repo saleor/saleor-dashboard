@@ -1,4 +1,5 @@
 import { Item } from "@glideapps/glide-data-grid";
+import { ChannelData } from "@saleor/channels/utils";
 import Datagrid, {
   GetCellContentOpts,
 } from "@saleor/components/Datagrid/Datagrid";
@@ -12,6 +13,7 @@ import {
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
+import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 // import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,6 +21,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getColumnData, getData } from "./utils";
 
 interface ProductVariantsProps {
+  channels: ChannelData[];
+  errors: ProductVariantListError[];
   limits: RefreshLimitsQuery["shop"]["limits"];
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
@@ -28,6 +32,8 @@ interface ProductVariantsProps {
 }
 
 export const ProductVariants: React.FC<ProductVariantsProps> = ({
+  channels,
+  errors,
   variants,
   warehouses,
   variantAttributes,
@@ -39,11 +45,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
 
   const columns = React.useMemo(
     () =>
-      variantAttributes && warehouses
+      variantAttributes && warehouses && channels
         ? [
             "name",
             "sku",
-            // ...channels?.map(channel => `channel:${channel.id}`),
+            ...channels?.flatMap(channel => [
+              `availableInChannel:${channel.id}`,
+              `channel:${channel.id}`,
+            ]),
             ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
             ...variantAttributes
               .filter(attribute =>
@@ -53,9 +62,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
                 ].includes(attribute.inputType),
               )
               .map(attribute => `attribute:${attribute.id}`),
-          ].map(c => getColumnData(c, warehouses, variantAttributes, intl))
+          ].map(c =>
+            getColumnData(c, channels, warehouses, variantAttributes, intl),
+          )
         : [],
-    [variantAttributes, warehouses],
+    [variantAttributes, warehouses, channels],
   );
 
   const getCellContent = React.useCallback(
@@ -63,15 +74,22 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       getData({
         availableColumns: columns,
         column,
+        errors,
         row,
+        channels,
         variants,
         ...opts,
       }),
-    [columns, variants],
+    [columns, variants, errors],
   );
 
   return (
     <Datagrid
+      addButtonLabel={intl.formatMessage({
+        defaultMessage: "Add variant",
+        id: "3C3Nj5",
+        description: "button",
+      })}
       availableColumns={columns}
       getCellContent={getCellContent}
       menuItems={index => [
