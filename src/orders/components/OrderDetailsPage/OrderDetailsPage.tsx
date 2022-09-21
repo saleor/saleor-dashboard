@@ -321,28 +321,22 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   />
                 </div>
                 <CardSpacer />
-                {order?.transactions?.map((transaction, i) => (
-                  <React.Fragment key={transaction.id}>
+                <div>
+                  {order?.transactions?.map(transaction => (
                     <OrderTransaction
+                      key={transaction.id}
                       transaction={transaction}
                       onTransactionAction={onTransactionAction}
                     />
-                    {i !== (order?.transactions?.length ?? 0) - 1 && (
-                      <CardSpacer />
-                    )}
-                  </React.Fragment>
-                ))}
-                {order?.giftCards?.map((giftCard, i) => (
-                  <React.Fragment key={giftCard.id}>
+                  ))}
+                  {order?.giftCards?.map(giftCard => (
                     <OrderTransactionGiftCard
+                      key={giftCard.id}
                       order={order}
                       giftCard={giftCard}
                     />
-                    {i !== (order?.giftCards?.length ?? 0) - 1 && (
-                      <CardSpacer />
-                    )}
-                  </React.Fragment>
-                ))}
+                  ))}
+                </div>
                 <OrderAddTransaction
                   order={order}
                   onMarkAsPaid={onPaymentPaid}

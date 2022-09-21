@@ -1,6 +1,7 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   FulfillmentStatus,
+  GiftCardEventsEnum,
   OrderAction,
   OrderDetailsFragment,
   OrderStatus,
@@ -215,6 +216,53 @@ storiesOf("Views / Orders / Order details / transactions", module)
         totalCaptured: prepareMoney(ORDER_AMOUNT - 10),
         paymentStatus: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,
         transactions: transactions.refundPartial,
+      }}
+    />
+  ))
+  .add("paid with giftcard", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{
+        ...props.order,
+        isPaid: true,
+        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        giftCards: [
+          {
+            __typename: "GiftCard",
+            id: "R2lmdENhcmQ6Ng==",
+            last4CodeChars: "43FA",
+            events: [
+              {
+                __typename: "GiftCardEvent",
+                id: "R2lmdENhcmRFdmVudDo1",
+                type: GiftCardEventsEnum.ISSUED,
+                orderId: null,
+                date: "2022-09-20T13:00:42.676174+00:00",
+                balance: {
+                  __typename: "GiftCardEventBalance",
+                  initialBalance: prepareMoney(),
+                  currentBalance: prepareMoney(),
+                  oldInitialBalance: null,
+                  oldCurrentBalance: null,
+                },
+              },
+              {
+                __typename: "GiftCardEvent",
+                id: "R2lmdENhcmRFdmVudDo2",
+                type: GiftCardEventsEnum.USED_IN_ORDER,
+                orderId: props.order.id,
+                date: "2022-09-20T13:04:20.017419+00:00",
+                balance: {
+                  __typename: "GiftCardEventBalance",
+                  initialBalance: null,
+                  currentBalance: prepareMoney(0),
+                  oldInitialBalance: null,
+                  oldCurrentBalance: prepareMoney(),
+                },
+              },
+            ],
+          },
+        ],
       }}
     />
   ));
