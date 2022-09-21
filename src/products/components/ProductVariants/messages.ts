@@ -14,14 +14,14 @@ const messages = defineMessages({
     id: "Us9cA1",
     description: "profit margin",
   },
-  priceIn: {
-    defaultMessage: "Price in {channelName}",
-    id: "ttpOhP",
+  price: {
+    defaultMessage: "Price",
+    id: "4hl9rS",
     description: "variant price in channel",
   },
-  availableIn: {
-    defaultMessage: "Available in {channelName}",
-    id: "lKA5hy",
+  available: {
+    defaultMessage: "Available",
+    id: "BbP+k3",
     description: "variant availability in channel",
   },
   empty: {

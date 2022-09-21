@@ -125,7 +125,7 @@ export function useDatagridTheme() {
     (): Partial<Theme> => ({
       accentColor: theme.palette.saleor.main[1],
       accentLight: theme.palette.background.paper,
-      accentFg: theme.palette.divider,
+      accentFg: "transparent",
       bgCell: theme.palette.background.default,
       bgHeader: theme.palette.background.default,
       bgHeaderHasFocus: theme.palette.background.default,

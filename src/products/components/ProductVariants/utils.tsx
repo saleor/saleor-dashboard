@@ -346,6 +346,9 @@ export function getColumnData(
   const common = {
     id: name,
     width: 200,
+    // Now we don't weirdly merge top-left header with the frozen column (name),
+    // leaving rest unnamed group columns (sku in this case) unmerged
+    group: " ",
   };
 
   if (["name", "sku"].includes(name)) {
@@ -361,6 +364,7 @@ export function getColumnData(
       width: 100,
       title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))
         ?.name,
+      group: "Warehouses",
     };
   }
 
@@ -371,9 +375,8 @@ export function getColumnData(
     return {
       ...common,
       width: 150,
-      title: intl.formatMessage(messages.priceIn, {
-        channelName: channel.name,
-      }),
+      title: intl.formatMessage(messages.price),
+      group: channel.name,
     };
   }
 
@@ -384,9 +387,8 @@ export function getColumnData(
     return {
       ...common,
       width: 80,
-      title: intl.formatMessage(messages.availableIn, {
-        channelName: channel.name,
-      }),
+      title: intl.formatMessage(messages.available),
+      group: channel.name,
     };
   }
 
@@ -396,6 +398,7 @@ export function getColumnData(
       title: variantAttributes.find(
         attribute => attribute.id === getColumnAttribute(name),
       )?.name,
+      group: "Attributes",
     };
   }
 
