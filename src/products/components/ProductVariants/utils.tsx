@@ -249,7 +249,7 @@ export function getData({
   const styled = (props: GridCell) => ({
     ...props,
     themeOverride:
-      change !== undefined
+      change !== undefined || dataRow === undefined
         ? {
             bgCell: "#C1DBFF",
           }
