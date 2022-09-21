@@ -255,9 +255,11 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
 
     const baseVariables = { ...paginationState, collectionId: id };
 
-    await assignProduct({
-      variables: { ...baseVariables, productIds: products },
-    });
+    if (products.length > 0) {
+      await assignProduct({
+        variables: { ...baseVariables, productIds: products },
+      });
+    }
 
     if (toUnassignIds.length > 0) {
       await unassignProduct({
