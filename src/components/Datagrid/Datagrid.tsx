@@ -212,7 +212,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   {columns.some(col => col.group) && (
                     <div className={classes.rowAction} />
                   )}
-                  {Array(rows - removed.length)
+                  {Array(rowsTotal)
                     .fill(0)
                     .map((_, index) => (
                       <div
@@ -224,6 +224,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         key={index}
                       >
                         <CardMenu
+                          disabled={index >= rowsTotal - added.length}
                           Icon={MoreHorizontalIcon}
                           IconButtonProps={{
                             className: classes.columnPickerBtn,
