@@ -1384,7 +1384,6 @@ type AttributeDeleted implements Event {
 enum AttributeEntityTypeEnum {
   PAGE
   PRODUCT
-  PRODUCT_VARIANT
 }
 
 type AttributeError {
@@ -1824,7 +1823,7 @@ input AttributeValueFilterInput {
 
 input AttributeValueInput {
   """ID of the selected attribute."""
-  id: ID!
+  id: ID
 
   """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
@@ -2051,28 +2050,6 @@ type BulkStockError {
 
   """Index of an input list item that caused the error."""
   index: Int
-}
-
-"""
-Synchronous webhook for calculating checkout/order taxes.
-
-Added in Saleor 3.7.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type CalculateTaxes implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-  taxBase: TaxableObject!
 }
 
 input CardInput {
@@ -12590,7 +12567,7 @@ type Order implements Node & ObjectWithMetadata {
   isShippingRequired: Boolean!
 
   """
-  The delivery method selected for this order.
+  The delivery method selected for this checkout.
   
   Added in Saleor 3.1.
   
@@ -21239,10 +21216,6 @@ type Subscription {
   event: Event
 }
 
-union TaxSourceLine = CheckoutLine | OrderLine
-
-union TaxSourceObject = Checkout | Order
-
 """Representation of tax types fetched from tax gateway."""
 type TaxType {
   """Description of the tax type."""
@@ -21250,66 +21223,6 @@ type TaxType {
 
   """External tax code used to identify given tax group."""
   taxCode: String
-}
-
-"""Taxable object."""
-type TaxableObject {
-  """The source object related to this tax object."""
-  sourceObject: TaxSourceObject!
-
-  """Determines if prices contain entered tax.."""
-  pricesEnteredWithTax: Boolean!
-
-  """The currency of the object."""
-  currency: String!
-
-  """The price of shipping method."""
-  shippingPrice: Money!
-
-  """The address data."""
-  address: Address
-
-  """List of discounts."""
-  discounts: [TaxableObjectDiscount!]!
-
-  """List of lines assigned to the object."""
-  lines: [TaxableObjectLine!]!
-  channel: Channel!
-}
-
-"""Taxable object discount."""
-type TaxableObjectDiscount {
-  """The name of the discount."""
-  name: String
-
-  """The amount of the discount."""
-  amount: Money!
-}
-
-type TaxableObjectLine {
-  """The source line related to this tax line."""
-  sourceLine: TaxSourceLine!
-
-  """Number of items."""
-  quantity: Int!
-
-  """Determines if taxes are being charged for the product."""
-  chargeTaxes: Boolean!
-
-  """The product name."""
-  productName: String!
-
-  """The variant name."""
-  variantName: String!
-
-  """The product sku."""
-  productSku: String
-
-  """Price of the single item in the order line."""
-  unitPrice: Money!
-
-  """Price of the order line."""
-  totalPrice: Money!
 }
 
 """

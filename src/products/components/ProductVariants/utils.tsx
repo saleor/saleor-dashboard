@@ -72,9 +72,16 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
       change.row === index + data.removed.filter(r => r <= index).length,
   )?.data;
 
+  const name = data.updates.find(
+    change =>
+      change.column === "name" &&
+      change.row === index + data.removed.filter(r => r <= index).length,
+  )?.data;
+
   return {
     attributes,
     sku,
+    name,
   };
 }
 

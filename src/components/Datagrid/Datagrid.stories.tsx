@@ -135,6 +135,7 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
           availableColumns={availableColumns}
           getCellContent={getCellContent}
           getCellError={getCellError}
+          emptyText="Use button above to add new rows"
           menuItems={() => [
             {
               label: "Do something",
