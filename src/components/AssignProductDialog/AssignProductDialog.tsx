@@ -13,12 +13,13 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { SearchProductsQuery } from "@saleor/graphql";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
-import React from "react";
+import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,24 +36,10 @@ export interface AssignProductDialogFormData {
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
+  selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
-}
-
-function handleProductAssign(
-  productID: string,
-  isSelected: boolean,
-  selectedProducts: string[],
-  setSelectedProducts: (data: string[]) => void,
-) {
-  if (isSelected) {
-    setSelectedProducts(
-      selectedProducts.filter(selectedProduct => selectedProduct !== productID),
-    );
-  } else {
-    setSelectedProducts([...selectedProducts, productID]);
-  }
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -68,15 +55,50 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onFetch,
     onFetchMore,
     onSubmit,
+    selectedIds,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
-
   const intl = useIntl();
-  const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<string[]>([]);
+  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
+  const [productsDict, setProductsDict] = React.useState(selectedIds || {});
 
-  const handleSubmit = () => onSubmit(selectedProducts);
+  useEffect(() => {
+    if (selectedIds) {
+      setProductsDict(prev => {
+        const prevIds = Object.keys(prev);
+        const newIds = Object.keys(selectedIds);
+
+        const preSelected = newIds
+          .filter(n => !prevIds.includes(n))
+          .reduce((p, c) => ({ ...p, [c]: true }), {});
+
+        return { ...prev, ...preSelected };
+      });
+    }
+  }, [selectedIds]);
+
+  useModalDialogOpen(open, {
+    onOpen: () => {
+      queryReset();
+      setProductsDict(selectedIds);
+    },
+  });
+
+  const handleSubmit = () => {
+    const selectedProductsAsArray = Object.keys(productsDict)
+      .filter(key => productsDict[key])
+      .map(key => key);
+
+    onSubmit(selectedProductsAsArray);
+  };
+
+  const handleChange = productId => {
+    setProductsDict(prev => ({
+      ...prev,
+      [productId]: !prev[productId] ?? true,
+    }));
+  };
 
   return (
     <Dialog
@@ -123,9 +145,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             <TableBody>
               {products &&
                 products.map(product => {
-                  const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct === product.id,
-                  );
+                  const isSelected = productsDict[product.id] || false;
 
                   return (
                     <TableRow
@@ -145,14 +165,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                       >
                         <Checkbox
                           checked={isSelected}
-                          onChange={() =>
-                            handleProductAssign(
-                              product.id,
-                              isSelected,
-                              selectedProducts,
-                              setSelectedProducts,
-                            )
-                          }
+                          onChange={() => handleChange(product.id)}
                         />
                       </TableCell>
                     </TableRow>

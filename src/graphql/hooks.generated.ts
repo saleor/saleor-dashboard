@@ -13320,6 +13320,9 @@ export const SearchProductsDocument = gql`
             }
           }
         }
+        collections {
+          id
+        }
       }
     }
     pageInfo {
