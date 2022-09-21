@@ -2,6 +2,7 @@ import ChannelAllocationStrategy from "@saleor/channels/components/ChannelAlloca
 import ShippingZones from "@saleor/channels/components/ShippingZones";
 import Warehouses from "@saleor/channels/components/Warehouses";
 import { channelsListUrl } from "@saleor/channels/urls";
+import { validateChannelFormData } from "@saleor/channels/validation";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -39,7 +40,9 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
-export interface ChannelDetailsPageProps<TErrors> {
+export interface ChannelDetailsPageProps<
+  TErrors extends ChannelErrorFragment[]
+> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
@@ -56,13 +59,13 @@ export interface ChannelDetailsPageProps<TErrors> {
   allWarehousesCount: number;
   countries: CountryFragment[];
   onDelete?: () => void;
-  onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
+  onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
 }
 
-const ChannelDetailsPage = function<TErrors>({
+const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   channel,
   currencyCodes,
   disabled,
@@ -85,6 +88,10 @@ const ChannelDetailsPage = function<TErrors>({
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
+
+  const [validationErrors, setValidationErrors] = useState<
+    ChannelErrorFragment[]
+  >([]);
 
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [
@@ -132,6 +139,10 @@ const ChannelDetailsPage = function<TErrors>({
     );
 
   const checkIfSaveIsDisabled = (data: FormData) => {
+    if (!channel) {
+      return disabled;
+    }
+
     const isValid =
       !!data.name &&
       !!data.slug &&
@@ -142,10 +153,22 @@ const ChannelDetailsPage = function<TErrors>({
     return disabled || !isValid;
   };
 
+  const handleSubmit = async (data: FormData) => {
+    const errors = validateChannelFormData(data);
+
+    setValidationErrors(errors);
+
+    if (errors.length) {
+      return errors;
+    }
+
+    return onSubmit(data);
+  };
+
   return (
     <Form
       confirmLeave
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       initial={initialData}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
@@ -186,6 +209,8 @@ const ChannelDetailsPage = function<TErrors>({
         );
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
 
+        const allErrors = [...errors, ...validationErrors];
+
         return (
           <>
             <Grid>
@@ -200,7 +225,7 @@ const ChannelDetailsPage = function<TErrors>({
                   onChange={change}
                   onCurrencyCodeChange={handleCurrencyCodeSelect}
                   onDefaultCountryChange={handleDefaultCountrySelect}
-                  errors={errors}
+                  errors={allErrors}
                 />
               </div>
               <div>
