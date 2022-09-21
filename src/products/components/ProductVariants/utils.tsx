@@ -97,7 +97,10 @@ export function getVariantInputs(
       }),
     )
     .filter(
-      variables => variables.input.sku || variables.input.attributes.length > 0,
+      variables =>
+        variables.input.sku ||
+        variables.input.name ||
+        variables.input.attributes.length > 0,
     );
 }
 
