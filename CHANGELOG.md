@@ -7,6 +7,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Pass query params in `ORDER_DETAILS_MORE_ACTIONS` and `PRODUCT_DETAILS_MORE_ACTIONS` mounting points - #2100 by @witoszekdev
 - Add product variant reference attribute - #2268 by @droniu
 - Fix exit form dialog false positive - #2311 by @orzechdev
+- Enable save button on channel pages - #2328 by @orzechdev
 
 ## 3.4
 
