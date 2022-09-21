@@ -28,6 +28,14 @@ const messages = defineMessages({
     defaultMessage: "Use button above to add new product variants",
     id: "IH47ID",
   },
+  warehouses: {
+    defaultMessage: "Warehouses",
+    id: "U5Da30",
+  },
+  attributes: {
+    defaultMessage: "Attributes",
+    id: "+xTpT1",
+  },
 });
 
 export default messages;

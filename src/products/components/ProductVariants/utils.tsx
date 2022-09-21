@@ -364,7 +364,7 @@ export function getColumnData(
       width: 100,
       title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))
         ?.name,
-      group: "Warehouses",
+      group: intl.formatMessage(messages.warehouses),
     };
   }
 
@@ -398,7 +398,7 @@ export function getColumnData(
       title: variantAttributes.find(
         attribute => attribute.id === getColumnAttribute(name),
       )?.name,
-      group: "Attributes",
+      group: intl.formatMessage(messages.attributes),
     };
   }
 
