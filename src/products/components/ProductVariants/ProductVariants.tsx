@@ -19,6 +19,7 @@ import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/ha
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import messages from "./messages";
 import { getColumnData, getData, getError } from "./utils";
 
 interface ProductVariantsProps {
@@ -111,6 +112,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         description: "button",
       })}
       availableColumns={columns}
+      emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}
       getCellError={getCellError}
       menuItems={index => [

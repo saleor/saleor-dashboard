@@ -24,6 +24,10 @@ const messages = defineMessages({
     id: "lKA5hy",
     description: "variant availability in channel",
   },
+  empty: {
+    defaultMessage: "Use button above to add new product variants",
+    id: "IH47ID",
+  },
 });
 
 export default messages;

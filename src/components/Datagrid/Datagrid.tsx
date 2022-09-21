@@ -5,6 +5,7 @@ import DataEditor, {
   GridSelection,
   Item,
 } from "@glideapps/glide-data-grid";
+import { Typography } from "@material-ui/core";
 import { Button, MoreHorizontalIcon, PlusSmallIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import range from "lodash/range";
@@ -36,6 +37,7 @@ export interface MenuItemsActions {
 export interface DatagridProps {
   addButtonLabel: string;
   availableColumns: readonly AvailableColumn[];
+  emptyText: string;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
@@ -50,6 +52,7 @@ export interface DatagridProps {
 export const Datagrid: React.FC<DatagridProps> = ({
   addButtonLabel,
   availableColumns,
+  emptyText,
   getCellContent,
   getCellError,
   menuItems,
@@ -141,6 +144,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, selectionActions, removeRows],
   );
 
+  const rowsTotal = rows - removed.length + added.length;
+
   return (
     <div className={classes.root}>
       <div className={classes.btnContainer}>
@@ -153,86 +158,92 @@ export const Datagrid: React.FC<DatagridProps> = ({
           {addButtonLabel}
         </Button>
       </div>
-      <ThemeProvider theme={datagridTheme}>
-        {selection?.rows.length > 0 && (
-          <div className={classes.actionBtnBar}>
-            {selectionActionsComponent}
-          </div>
-        )}
-        <DataEditor
-          {...props}
-          className={classes.datagrid}
-          getCellContent={getCellContentEnh}
-          onCellEdited={onCellEditedEnh}
-          columns={columns}
-          rows={rows - removed.length + added.length}
-          freezeColumns={1}
-          smoothScrollX
-          rowMarkers="checkbox"
-          rowSelect="multi"
-          rowSelectionMode="multi"
-          rangeSelect="multi-rect"
-          columnSelect="none"
-          getCellsForSelection
-          onColumnMoved={onColumnMoved}
-          onColumnResize={onColumnResize}
-          onGridSelectionChange={setSelection}
-          gridSelection={selection}
-          rowHeight={48}
-          headerHeight={48}
-          ref={editor}
-          rightElementSticky
-          rightElement={
-            <div className={classes.rowActionBar}>
-              <div className={classes.columnPicker}>
-                <ColumnPicker
-                  IconButtonProps={{
-                    className: classes.columnPickerBtn,
-                    variant: "secondary",
-                    hoverOutline: false,
-                  }}
-                  availableColumns={availableColumnsChoices}
-                  initialColumns={columnChoices}
-                  defaultColumns={defaultColumns}
-                  onSave={onColumnsChange}
-                  hasMore={false}
-                  loading={false}
-                  onFetchMore={() => undefined}
-                  onQueryChange={picker.setQuery}
-                  query={picker.query}
-                />
+      {rowsTotal > 0 ? (
+        <>
+          <ThemeProvider theme={datagridTheme}>
+            {selection?.rows.length > 0 && (
+              <div className={classes.actionBtnBar}>
+                {selectionActionsComponent}
               </div>
-              {columns.some(col => col.group) && (
-                <div className={classes.rowAction} />
-              )}
-              {Array(rows - removed.length)
-                .fill(0)
-                .map((_, index) => (
-                  <div
-                    className={classNames(classes.rowAction, {
-                      [classes.rowActionSelected]: selection?.rows.hasIndex(
-                        index,
-                      ),
-                    })}
-                    key={index}
-                  >
-                    <CardMenu
-                      Icon={MoreHorizontalIcon}
+            )}
+            <DataEditor
+              {...props}
+              className={classes.datagrid}
+              getCellContent={getCellContentEnh}
+              onCellEdited={onCellEditedEnh}
+              columns={columns}
+              rows={rowsTotal}
+              freezeColumns={1}
+              smoothScrollX
+              rowMarkers="checkbox"
+              rowSelect="multi"
+              rowSelectionMode="multi"
+              rangeSelect="multi-rect"
+              columnSelect="none"
+              getCellsForSelection
+              onColumnMoved={onColumnMoved}
+              onColumnResize={onColumnResize}
+              onGridSelectionChange={setSelection}
+              gridSelection={selection}
+              rowHeight={48}
+              headerHeight={48}
+              ref={editor}
+              rightElementSticky
+              rightElement={
+                <div className={classes.rowActionBar}>
+                  <div className={classes.columnPicker}>
+                    <ColumnPicker
                       IconButtonProps={{
                         className: classes.columnPickerBtn,
+                        variant: "secondary",
                         hoverOutline: false,
-                        state: "default",
                       }}
-                      menuItems={menuItems(index)}
+                      availableColumns={availableColumnsChoices}
+                      initialColumns={columnChoices}
+                      defaultColumns={defaultColumns}
+                      onSave={onColumnsChange}
+                      hasMore={false}
+                      loading={false}
+                      onFetchMore={() => undefined}
+                      onQueryChange={picker.setQuery}
+                      query={picker.query}
                     />
                   </div>
-                ))}
-            </div>
-          }
-          overscrollX={1}
-          rowMarkerWidth={48}
-        />
-      </ThemeProvider>
+                  {columns.some(col => col.group) && (
+                    <div className={classes.rowAction} />
+                  )}
+                  {Array(rows - removed.length)
+                    .fill(0)
+                    .map((_, index) => (
+                      <div
+                        className={classNames(classes.rowAction, {
+                          [classes.rowActionSelected]: selection?.rows.hasIndex(
+                            index,
+                          ),
+                        })}
+                        key={index}
+                      >
+                        <CardMenu
+                          Icon={MoreHorizontalIcon}
+                          IconButtonProps={{
+                            className: classes.columnPickerBtn,
+                            hoverOutline: false,
+                            state: "default",
+                          }}
+                          menuItems={menuItems(index)}
+                        />
+                      </div>
+                    ))}
+                </div>
+              }
+              overscrollX={1}
+              rowMarkerWidth={48}
+            />
+          </ThemeProvider>
+        </>
+      ) : (
+        <Typography align="center">{emptyText}</Typography>
+      )}
       <div id="portal" className={classes.portal} />
     </div>
   );
