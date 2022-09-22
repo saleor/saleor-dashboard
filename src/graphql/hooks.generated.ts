@@ -12484,6 +12484,8 @@ export const ProductVariantCreateDataDocument = gql`
       url
     }
     channelListings {
+      isPublished
+      publicationDate
       channel {
         id
         name
