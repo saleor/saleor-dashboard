@@ -28,10 +28,10 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
 
   const refunded = total - captured - authorized;
 
-  const events = React.useMemo(
-    () => mapTransactionsToEvents(payment.transactions),
-    [payment.transactions],
-  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const events = React.useMemo(() => mapTransactionsToEvents(payment), [
+    payment.transactions,
+  ]);
 
   const transactionFromPayment: TransactionItemFragment = {
     id: payment.id,
@@ -52,10 +52,12 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     __typename: "TransactionItem",
   };
 
+  console.dir(payment);
+  console.dir(transactionFromPayment);
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
-      onTransactionAction={() => undefined}
+      onTransactionAction={() => undefined} // TODO: Add support for payment actions
     />
   );
 };

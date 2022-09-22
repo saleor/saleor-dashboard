@@ -2,6 +2,7 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionEventFragment,
+  TransactionKind,
   TransactionStatus,
 } from "@saleor/graphql";
 
@@ -29,14 +30,34 @@ export const findMethodName = (
   allMethods.find(method => method.id === gatewayId)?.name ?? gatewayId;
 
 export const mapTransactionsToEvents = (
-  transactions: OrderPaymentFragment["transactions"],
-): TransactionEventFragment[] =>
-  transactions
+  payment: OrderPaymentFragment,
+): TransactionEventFragment[] => {
+  const transactions = payment.transactions ?? [];
+
+  if (transactions.length === 0) {
+    return [
+      {
+        id: "",
+        reference: undefined,
+        name: TransactionKind.PENDING,
+        status: TransactionStatus.PENDING,
+        createdAt: payment.modified ?? new Date(),
+        __typename: "TransactionEvent" as const,
+      },
+    ];
+  }
+
+  return transactions
     .map(({ id, isSuccess, kind, created, token }) => ({
       id,
       reference: token,
       name: kind,
-      status: isSuccess ? TransactionStatus.SUCCESS : TransactionStatus.FAILURE,
+      status:
+        kind === TransactionKind.PENDING
+          ? TransactionStatus.PENDING
+          : isSuccess
+          ? TransactionStatus.SUCCESS
+          : TransactionStatus.FAILURE,
       createdAt: created,
       __typename: "TransactionEvent" as const,
     }))
@@ -44,3 +65,4 @@ export const mapTransactionsToEvents = (
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
+};

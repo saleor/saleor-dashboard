@@ -11,6 +11,7 @@ import {
   OrderEventsEnum,
   OrderFulfillLineFragment,
   OrderListQuery,
+  OrderPaymentFragment,
   OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -20,6 +21,7 @@ import {
   ShopOrderSettingsFragment,
   TransactionActionEnum,
   TransactionItemFragment,
+  TransactionKind,
   TransactionStatus,
   WeightUnitsEnum,
 } from "@saleor/graphql";
@@ -28,6 +30,8 @@ import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
+
+export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
 
 export const countries: CountryWithCodeFragment[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
@@ -42,6 +46,13 @@ export const shop: OrderDetailsQuery["shop"] = {
   defaultWeightUnit: WeightUnitsEnum.KG,
   fulfillmentAllowUnpaid: true,
   fulfillmentAutoApprove: true,
+  availablePaymentGateways: [
+    {
+      id: MOCK_PAYMENT_GATEWAY_ID,
+      name: "Mock Payment Gateway",
+      __typename: "PaymentGateway",
+    },
+  ],
 };
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
@@ -3043,3 +3054,142 @@ export const prepareMoney = (
   amount: amount ?? ORDER_AMOUNT,
   currency: "USD",
 });
+
+const paymentCommon = {
+  gateway: MOCK_PAYMENT_GATEWAY_ID,
+  id: "sdfgdfwe4sdSDFDS==",
+  __typename: "Payment",
+} as const;
+
+export const payments: Record<string, OrderPaymentFragment> = {
+  pending: {
+    ...paymentCommon,
+    actions: [OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.PENDING,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  authorized: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE],
+    paymentMethodType: "",
+    total: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    availableCaptureAmount: prepareMoney(),
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "pending",
+        __typename: "Transaction",
+      },
+    ],
+    modified: "2022-08-22T10:40:22.226875+00:00",
+  },
+  completed: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  refunded: {
+    ...paymentCommon,
+    actions: [],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(0), // refund = full
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  partialRefund: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(ORDER_AMOUNT - 1), // refunded = 1 USD
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  rejected: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE, OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+};

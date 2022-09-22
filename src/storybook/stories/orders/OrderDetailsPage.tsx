@@ -2,8 +2,6 @@ import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   FulfillmentStatus,
   GiftCardEventsEnum,
-  OrderAction,
-  OrderDetailsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@saleor/graphql";
@@ -16,6 +14,7 @@ import OrderDetailsPage, {
 import {
   order as orderFixture,
   ORDER_AMOUNT,
+  payments,
   prepareMoney,
   shop as shopFixture,
   transactions,
@@ -52,40 +51,38 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-const getLegacyPaymentsOrder = (
-  actions: OrderAction[] = [],
-): OrderDetailsFragment => ({
-  ...props.order,
-  transactions: [],
-  payments: [{ __typename: "Payment", actions, id: "HFDDSVCGFGFHFD654DFDS" }],
-});
-
 storiesOf("Views / Orders / Order details / payments", module)
   .addDecorator(Decorator)
   .add("pending", () => (
     <OrderDetailsPage
       {...props}
       order={{
-        ...getLegacyPaymentsOrder(),
+        ...props.order,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+        payments: [payments.pending],
       }}
     />
   ))
-  .add("error", () => (
+  .add("authorized", () => (
     <OrderDetailsPage
       {...props}
       order={{
-        ...getLegacyPaymentsOrder([OrderAction.CAPTURE]),
+        ...props.order,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+        payments: [payments.authorized],
       }}
     />
   ))
-  .add("confirmed", () => (
+  .add("completed", () => (
     <OrderDetailsPage
       {...props}
       order={{
-        ...getLegacyPaymentsOrder([OrderAction.REFUND]),
+        ...props.order,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        payments: [payments.completed],
       }}
     />
   ))
@@ -94,7 +91,9 @@ storiesOf("Views / Orders / Order details / payments", module)
       {...props}
       order={{
         ...props.order,
+        transactions: [],
         paymentStatus: null,
+        payments: [],
       }}
     />
   ))
@@ -103,7 +102,20 @@ storiesOf("Views / Orders / Order details / payments", module)
       {...props}
       order={{
         ...props.order,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED,
+        payments: [payments.refunded],
+      }}
+    />
+  ))
+  .add("partial refund", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{
+        ...props.order,
+        transactions: [],
+        paymentStatus: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,
+        payments: [payments.partialRefund],
       }}
     />
   ))
@@ -111,8 +123,10 @@ storiesOf("Views / Orders / Order details / payments", module)
     <OrderDetailsPage
       {...props}
       order={{
-        ...getLegacyPaymentsOrder([OrderAction.CAPTURE]),
+        ...props.order,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+        payments: [payments.rejected],
       }}
     />
   ));
