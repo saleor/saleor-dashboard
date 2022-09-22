@@ -121,7 +121,9 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   const refundedAmount = extractRefundedAmount(order);
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
 
-  const canSendRefund = true; // TODO: Check if order has granted refunds
+  const canGrantRefund =
+    order?.transactions?.length > 0 || order?.payments?.length > 0;
+  const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
 
   const shouldDisplay = getShouldDisplayAmounts(order);
   const legacyActions = getLegacyOrderActions(order);
@@ -186,41 +188,47 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
           )}
         </CardContent>
       )}
-      <Hr />
-      <CardTitle
-        toolbar={
-          <div className={classes.refundsButtons}>
-            <Button variant="secondary">
-              <FormattedMessage
-                {...orderPaymentActionButtonMessages.grantRefund}
-              />
-            </Button>
-            {canSendRefund && (
-              <Button variant="secondary">
-                <FormattedMessage
-                  {...orderPaymentActionButtonMessages.sendRefund}
+      {(canSendRefund || canGrantRefund) && (
+        <>
+          <Hr />
+          <CardTitle
+            toolbar={
+              <div className={classes.refundsButtons}>
+                <Button variant="secondary">
+                  <FormattedMessage
+                    {...orderPaymentActionButtonMessages.grantRefund}
+                  />
+                </Button>
+                {canSendRefund && (
+                  <Button variant="secondary">
+                    <FormattedMessage
+                      {...orderPaymentActionButtonMessages.sendRefund}
+                    />
+                  </Button>
+                )}
+              </div>
+            }
+            title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
+          ></CardTitle>
+          <CardContent>
+            {refundedAmount?.amount !== 0 ? (
+              <SummaryList className={classes.amountGrid}>
+                <SummaryLine
+                  vertical
+                  text={<FormattedMessage {...orderPaymentMessages.refunded} />}
+                  money={refundedAmount}
                 />
-              </Button>
+              </SummaryList>
+            ) : (
+              <Typography variant="body2" className={classes.explainText}>
+                <FormattedMessage
+                  {...orderPaymentMessages.refundsExplanation}
+                />
+              </Typography>
             )}
-          </div>
-        }
-        title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
-      ></CardTitle>
-      <CardContent>
-        {refundedAmount?.amount !== 0 ? (
-          <SummaryList className={classes.amountGrid}>
-            <SummaryLine
-              vertical
-              text={<FormattedMessage {...orderPaymentMessages.refunded} />}
-              money={refundedAmount}
-            />
-          </SummaryList>
-        ) : (
-          <Typography variant="body2" className={classes.explainText}>
-            <FormattedMessage {...orderPaymentMessages.refundsExplanation} />
-          </Typography>
-        )}
-      </CardContent>
+          </CardContent>
+        </>
+      )}
     </Card>
   );
 };
