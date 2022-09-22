@@ -313,6 +313,10 @@
     "context": "menu item name",
     "string": "Name"
   },
+  "0a0fLZ": {
+    "context": "countries list menu label when no countries are assigned",
+    "string": "There are no countries assigned"
+  },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
   },
@@ -1161,6 +1165,10 @@
   "7Oorx5": {
     "context": "navigator section header",
     "string": "Search in Catalog"
+  },
+  "7U/NPm": {
+    "context": "tax class rates list label when no country is selected",
+    "string": "Add country to access tax classes"
   },
   "7U8GRy": {
     "string": "Shipping method successfully updated"
@@ -6250,6 +6258,10 @@
   "lm9NSK": {
     "context": "password reset, button",
     "string": "Send an email with reset link"
+  },
+  "lnteBJ": {
+    "context": "country rates list label for the default rate",
+    "string": "Country default rate"
   },
   "lqIzC8": {
     "string": "This field needs to be unique"

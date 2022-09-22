@@ -5,12 +5,14 @@ export const useStyles = makeStyles(
     clickable: {
       cursor: "pointer",
     },
-    scrollWrapper: {
-      overflowY: "scroll",
-      maxHeight: 600,
-    },
     selected: {
-      borderLeft: `4px solid ${theme.palette.saleor.active[1]}`,
+      "&&&&::before": {
+        position: "absolute",
+        left: 0,
+        width: "4px",
+        height: "100%",
+        backgroundColor: theme.palette.saleor.active[1],
+      },
     },
     spaceBetween: {
       display: "flex",
@@ -19,6 +21,9 @@ export const useStyles = makeStyles(
     },
     tableRow: {
       minHeight: "48px",
+    },
+    greyText: {
+      color: theme.palette.text.hint,
     },
   }),
   { name: "TaxCountriesMenu" },
