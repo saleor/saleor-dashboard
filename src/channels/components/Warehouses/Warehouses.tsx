@@ -3,25 +3,19 @@ import { ChannelWarehouses } from "@saleor/channels/pages/ChannelDetailsPage/typ
 import CardTitle from "@saleor/components/CardTitle";
 import { SearchWarehousesQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import AssignmentList from "../AssignmentList";
-
-const messages = defineMessages({
-  subtitle: {
-    id: "ImTelT",
-    defaultMessage:
-      "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels.",
-    description: "card subtitle",
-  },
-});
+import { messages } from "./messages";
 
 export interface WarehousesProps {
   addWarehouse: (id: string) => void;
   removeWarehouse: (id: string) => void;
   searchWarehouses: (searchPhrase: string) => void;
+  reorderWarehouses: ReorderAction;
+  loading: boolean;
   totalCount: number;
   fetchMoreWarehouses: FetchMoreProps;
   warehouses: ChannelWarehouses;
@@ -33,6 +27,8 @@ const Warehouses: React.FC<WarehousesProps> = props => {
     addWarehouse,
     removeWarehouse,
     searchWarehouses,
+    reorderWarehouses,
+    loading,
     totalCount,
     fetchMoreWarehouses,
     warehouses,
@@ -48,11 +44,13 @@ const Warehouses: React.FC<WarehousesProps> = props => {
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
       <AssignmentList
+        loading={loading}
         items={warehouses}
         itemsChoices={warehousesChoices}
         addItem={addWarehouse}
         removeItem={removeWarehouse}
         searchItems={searchWarehouses}
+        reorderItem={reorderWarehouses}
         fetchMoreItems={fetchMoreWarehouses}
         totalCount={totalCount}
         dataTestId="warehouse"

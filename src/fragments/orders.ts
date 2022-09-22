@@ -93,14 +93,7 @@ export const fragmentOrderLine = gql`
       }
       product {
         id
-        channelListings {
-          id
-          isPublished
-          isAvailableForPurchase
-          channel {
-            id
-          }
-        }
+        isAvailableForPurchase
       }
     }
     productName
@@ -292,6 +285,9 @@ export const fragmentOrderDetails = gql`
       ...Money
     }
     totalCaptured {
+      ...Money
+    }
+    totalBalance {
       ...Money
     }
     undiscountedTotal {

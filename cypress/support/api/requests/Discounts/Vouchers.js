@@ -66,11 +66,15 @@ export function addChannelToVoucher(voucherId, channelId, value) {
         discountValue:"${value}"
       }
     }){
+      voucher{
+        id
+        code
+      }
       errors{
         field
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data");
 }

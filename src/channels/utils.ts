@@ -181,13 +181,13 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
-    isAvailableForPurchase: false,
+    isAvailableForPurchase: true,
     variantsIds: [],
-    isPublished: false,
+    isPublished: true,
     name: channel.name,
     price: "",
     publicationDate: null,
-    visibleInListings: false,
+    visibleInListings: true,
   })) || [];
 
 export const createChannelsDataWithPrice = (
@@ -196,8 +196,8 @@ export const createChannelsDataWithPrice = (
 ): ChannelData[] => {
   if (data && productData?.channelListings) {
     const dataArr = createChannelsData(data);
-
     const productDataArr = createChannelsDataFromProduct(productData);
+
     return uniqBy([...productDataArr, ...dataArr], obj => obj.id);
   }
   return [];
@@ -294,6 +294,13 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
       const variantChannel = productData.variants[0]?.channelListings.find(
         listing => listing.channel.id === channel.id,
       );
+      // Comparing explicitly to false because `hasVariants` can be undefined
+      const isSimpleProduct = productData.productType?.hasVariants === false;
+      const haveVariantsChannelListings = productData.variants.some(variant =>
+        variant.channelListings.some(
+          listing => listing.channel.id === channel.id,
+        ),
+      );
       const price = variantChannel?.price;
       const costPrice = variantChannel?.costPrice;
       const variantsIds = extractVariantsIdsForChannel(
@@ -302,10 +309,13 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
       );
       const soldUnits = variantChannel?.preorderThreshold?.soldUnits;
       const preorderThreshold = variantChannel?.preorderThreshold?.quantity;
+      // Published defaults to true if none of variants have set channel listing yet
+      const isProductPublished =
+        !isSimpleProduct && !haveVariantsChannelListings ? true : isPublished;
 
       return {
         availableForPurchase,
-        isPublished,
+        isPublished: isProductPublished,
         publicationDate,
         variantsIds,
         costPrice: costPrice?.amount.toString() ?? "",

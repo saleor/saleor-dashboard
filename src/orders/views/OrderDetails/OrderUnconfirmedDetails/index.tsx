@@ -301,7 +301,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
         products={mapEdgesToItems(variantSearchOpts?.data?.search)}
-        selectedChannelId={order?.channel?.id}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}

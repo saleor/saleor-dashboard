@@ -28,9 +28,11 @@ const baseProps: WarehousesProps = {
     onFetchMore: () => undefined,
     totalCount: 0,
   },
+  reorderWarehouses: () => undefined,
   warehouses: [],
   warehousesChoices: warehouses as ChannelWarehouses,
   totalCount: 10,
+  loading: false,
 };
 
 storiesOf("Warehouses", module)
@@ -38,4 +40,5 @@ storiesOf("Warehouses", module)
   .add("with no options selected", () => <Warehouses {...baseProps} />)
   .add("with options selected", () => (
     <Warehouses {...baseProps} warehouses={warehouses as ChannelWarehouses} />
-  ));
+  ))
+  .add("loading", () => <Warehouses {...baseProps} loading={true} />);

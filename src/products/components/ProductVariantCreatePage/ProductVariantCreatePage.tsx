@@ -1,5 +1,5 @@
 import {
-  getAttributeValuesFromReferences,
+  getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -24,6 +24,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ProductDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -31,6 +32,8 @@ import { defineMessages, useIntl } from "react-intl";
 
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
+import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
+import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
@@ -128,7 +131,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
+  const {
+    isOpen: isManageChannelsModalOpen,
+    toggle: toggleManageChannels,
+  } = useManageChannels();
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
@@ -185,6 +191,10 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
+              <ProductDetailsChannelsAvailabilityCard
+                product={product}
+                onManageClick={toggleManageChannels}
+              />
               <Attributes
                 title={intl.formatMessage(messages.attributesHeader)}
                 attributes={data.attributes.filter(
@@ -247,7 +257,16 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
               <CardSpacer />
               <ProductVariantPrice
-                disabledMessage={messages.pricingCardSubtitle}
+                disabled={!product}
+                ProductVariantChannelListings={data.channelListings.map(
+                  channel => ({
+                    ...channel.data,
+                    ...channel.value,
+                  }),
+                )}
+                errors={[]}
+                loading={!product}
+                onChange={handlers.changeChannels}
               />
               <CardSpacer />
               <ProductStocks
@@ -281,12 +300,13 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
           />
           {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog
-              attributeValues={getAttributeValuesFromReferences(
+              entityType={getReferenceAttributeEntityTypeFromAttribute(
                 assignReferencesAttributeId,
                 data.attributes,
-                referencePages,
-                referenceProducts,
               )}
+              confirmButtonState={"default"}
+              products={referenceProducts}
+              pages={referencePages}
               hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}
               onFetch={handlers.fetchReferences}
@@ -296,6 +316,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               onSubmit={attributeValues =>
                 handleAssignReferenceAttribute(attributeValues, data, handlers)
               }
+            />
+          )}
+          {product && (
+            <VariantChannelsDialog
+              channelListings={product.channelListings}
+              selectedChannelListings={data.channelListings}
+              open={isManageChannelsModalOpen}
+              onClose={toggleManageChannels}
+              onConfirm={handlers.updateChannels}
             />
           )}
         </Container>

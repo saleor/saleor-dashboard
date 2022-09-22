@@ -10,10 +10,25 @@ import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { appDetailsUrl, urlList } from "../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../fixtures/users";
 import { createApp, getApp, updateApp } from "../support/api/requests/Apps";
+import {
+  addShippingMethod,
+  createCheckout,
+  orderCreateFromCheckout,
+} from "../support/api/requests/Checkout";
 import { createVoucher } from "../support/api/requests/Discounts/Vouchers";
 import { createGiftCard } from "../support/api/requests/GiftCard";
 import { deleteAppsStartsWith } from "../support/api/utils/appUtils";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
+import { getShippingMethodIdFromCheckout } from "../support/api/utils/ordersUtils";
+import {
+  createProductInChannel,
+  createTypeAttributeAndCategoryForProduct,
+  deleteProductsStartsWith,
+} from "../support/api/utils/products/productsUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith,
+} from "../support/api/utils/shippingUtils";
 import { discountOptions } from "../support/pages/discounts/vouchersPage";
 
 describe("As a staff user I want to manage apps", () => {
@@ -22,16 +37,54 @@ describe("As a staff user I want to manage apps", () => {
 
   let createdApp;
   let defaultChannel;
+  let address;
+  let warehouse;
+  let shippingMethod;
+  let variantsList;
+  let checkout;
+  const email = `example@example.com`;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteAppsStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+
     createApp(name, "MANAGE_APPS").then(app => {
       createdApp = app;
     });
-    getDefaultChannel().then(channel => {
-      defaultChannel = channel;
-    });
+    cy.fixture("addresses")
+      .then(addresses => {
+        address = addresses.usAddress;
+        getDefaultChannel();
+      })
+      .then(channelResp => {
+        defaultChannel = channelResp;
+        createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address,
+          price: 10,
+        });
+      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+        },
+      );
+    createTypeAttributeAndCategoryForProduct({ name })
+      .then(({ productType, attribute, category }) => {
+        createProductInChannel({
+          name,
+          channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
+          productTypeId: productType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+        });
+      })
+      .then(({ variantsList: variants }) => (variantsList = variants));
   });
 
   beforeEach(() => {
@@ -154,6 +207,38 @@ describe("As a staff user I want to manage apps", () => {
       createGiftCard(giftCardData, token).then(resp => {
         expect(resp.code).to.be.not.empty;
         expect(resp.isActive).to.eq(true);
+      });
+    },
+  );
+
+  it(
+    "should be able to use app to create order from checkout. TC: SALEOR_3005",
+    { tags: ["@app", "@allEnv", "@stable"] },
+    () => {
+      const token = createdApp.authToken;
+
+      cy.clearSessionData().loginUserViaRequest();
+      updateApp(createdApp.app.id, "HANDLE_CHECKOUTS");
+
+      cy.clearSessionData();
+
+      createCheckout({
+        channelSlug: defaultChannel.slug,
+        email,
+        variantsList,
+        address,
+        billingAddress: address,
+        auth: "token",
+      }).then(({ checkout: checkoutResp }) => {
+        const shippingMethodId = getShippingMethodIdFromCheckout(
+          checkoutResp,
+          shippingMethod.name,
+        );
+        checkout = checkoutResp;
+        addShippingMethod(checkout.id, shippingMethodId);
+        orderCreateFromCheckout(checkout.id, token).then(resp => {
+          expect(resp.id).to.be.not.empty;
+        });
       });
     },
   );

@@ -541,8 +541,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "ProductVariant",
           product: {
             __typename: "Product",
+            isAvailableForPurchase: true,
             id: "UHJvZHVjdDo1",
-            channelListings: [],
           },
           stocks: [
             {
@@ -668,7 +668,7 @@ describe("Get the total value of all replaced products", () => {
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo1",
-            channelListings: [],
+            isAvailableForPurchase: true,
           },
         },
         productName: "Lake Tunes",
@@ -768,7 +768,7 @@ describe("Get the total value of all replaced products", () => {
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo1",
-            channelListings: [],
+            isAvailableForPurchase: true,
           },
         },
         productName: "T-shirt",
@@ -874,7 +874,7 @@ describe("Get the total value of all replaced products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -979,7 +979,7 @@ describe("Get the total value of all replaced products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -1084,7 +1084,7 @@ describe("Get the total value of all replaced products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "T-shirt",
@@ -1189,7 +1189,7 @@ describe("Get the total value of all replaced products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -1294,7 +1294,7 @@ describe("Get the total value of all replaced products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -1533,7 +1533,7 @@ describe("Get the total value of all selected products", () => {
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo1",
-            channelListings: [],
+            isAvailableForPurchase: true,
           },
         },
         productName: "Lake Tunes",
@@ -1633,7 +1633,7 @@ describe("Get the total value of all selected products", () => {
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo1",
-            channelListings: [],
+            isAvailableForPurchase: true,
           },
         },
         productName: "Lake Tunes",
@@ -1733,7 +1733,7 @@ describe("Get the total value of all selected products", () => {
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo1",
-            channelListings: [],
+            isAvailableForPurchase: true,
           },
         },
         productName: "T-shirt",
@@ -1839,7 +1839,7 @@ describe("Get the total value of all selected products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -1944,7 +1944,7 @@ describe("Get the total value of all selected products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -2049,7 +2049,7 @@ describe("Get the total value of all selected products", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "T-shirt",
@@ -2282,7 +2282,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -2387,7 +2387,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "Lake Tunes",
@@ -2492,7 +2492,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             product: {
               __typename: "Product",
               id: "UHJvZHVjdDo1",
-              channelListings: [],
+              isAvailableForPurchase: true,
             },
           },
           productName: "T-shirt",

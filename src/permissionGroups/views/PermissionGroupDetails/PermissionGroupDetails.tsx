@@ -23,7 +23,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
@@ -60,8 +60,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   const [membersList, setMembersList] = useStateFromProps(
     data?.permissionGroup.users,
   );
-
-  const [membersModified, setMembersModified] = useState(false);
 
   const { search, result: searchResult, loadMore } = useStaffMemberSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
@@ -104,7 +102,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const unassignMembers = () => {
     setMembersList(membersList?.filter(m => !listElements.includes(m.id)));
-    setMembersModified(true);
     closeModal();
   };
 
@@ -153,7 +150,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
         members={membersList || []}
-        membersModified={membersModified}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         errors={
@@ -198,7 +194,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
             ...membersList,
             ...formData.filter(member => !membersList.includes(member)),
           ]);
-          setMembersModified(true);
           closeModal();
         }}
       />

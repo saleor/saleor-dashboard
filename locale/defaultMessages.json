@@ -138,6 +138,9 @@
     "context": "order marked as paid event title",
     "string": "Order was marked as paid by"
   },
+  "/0gMCW": {
+    "string": "Try to refresh the page or go navigate to a different page and back."
+  },
   "/2OOMe": {
     "context": "product type shipping settings, section header",
     "string": "Shipping"
@@ -165,6 +168,10 @@
   "/C//FB": {
     "context": "header, allocated product quantity",
     "string": "Allocated"
+  },
+  "/DzBc6": {
+    "context": "section description",
+    "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
   "/JENWS": {
     "string": "Reduced Tax Rates"
@@ -302,9 +309,6 @@
   "0Vyr8h": {
     "context": "menu item name",
     "string": "Name"
-  },
-  "0cVk9I": {
-    "string": "Show in product listings"
   },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
@@ -512,6 +516,10 @@
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
   },
+  "2CBcub": {
+    "context": "CreateVariantTitle manage",
+    "string": "Manage"
+  },
   "2E1xZ0": {
     "context": "page header",
     "string": "Create Sale"
@@ -699,6 +707,10 @@
     "context": "gift card export type label",
     "string": "gift cards"
   },
+  "3oQzWR": {
+    "context": "product availability",
+    "string": "Set publication date"
+  },
   "3psvRS": {
     "context": "attribute values list: slug column header",
     "string": "Admin"
@@ -733,6 +745,10 @@
   "41z2Qi": {
     "context": "notification",
     "string": "Removed pages"
+  },
+  "423QsF": {
+    "context": "option title",
+    "string": "Prioritize warehouses with highest stock"
   },
   "43AOvZ": {
     "context": "alert group message",
@@ -786,6 +802,10 @@
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
+  },
+  "4VOIum": {
+    "context": "product availability",
+    "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
   "4W/CKn": {
     "context": "modal button",
@@ -876,6 +896,10 @@
     "context": "alert",
     "string": "Warehouse limit reached"
   },
+  "5I7Lc2": {
+    "context": "dialog header",
+    "string": "Assign page"
+  },
   "5JT4v2": {
     "context": "dialog header",
     "string": "Send Invoice"
@@ -945,10 +969,6 @@
     "context": "translations section name",
     "string": "Translations"
   },
-  "5ftg/B": {
-    "context": "button",
-    "string": "create permission group"
-  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
@@ -975,9 +995,6 @@
   "5u7b3V": {
     "context": "voucher is active from date",
     "string": "Starts"
-  },
-  "5ukAFZ": {
-    "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
   },
   "5x6yT9": {
     "context": "weight",
@@ -1124,6 +1141,10 @@
   "7JAAul": {
     "context": "product field",
     "string": "Export Product Weight"
+  },
+  "7KRGqz": {
+    "context": "Payment card title",
+    "string": "Payment balance"
   },
   "7NFfmz": {
     "string": "Products"
@@ -2102,6 +2123,10 @@
     "context": "selected customer gift card is sent to subtitle",
     "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
   },
+  "FSOOH7": {
+    "context": "option title",
+    "string": "Prioritize warehouses by sorting order"
+  },
   "FSinkL": {
     "context": "variant stock status",
     "string": "Available inventory at:"
@@ -2109,6 +2134,10 @@
   "FWWliu": {
     "context": "ExitFormPrompt title",
     "string": "You have unsaved changes"
+  },
+  "FYfoiF": {
+    "context": "section name",
+    "string": "Allocation strategy"
   },
   "Fbr4Vp": {
     "context": "dialog header",
@@ -2205,6 +2234,10 @@
     "context": "tab name",
     "string": "All Collections"
   },
+  "G5NKx6": {
+    "context": "tooltip",
+    "string": "Checkout reservation time threshold is enabled in settings."
+  },
   "G7mu0y": {
     "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
   },
@@ -2242,10 +2275,6 @@
   },
   "GOdq5V": {
     "string": "Catalog"
-  },
-  "GUlwXU": {
-    "context": "dialog header",
-    "string": "Assign Attribute Value"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -2385,6 +2414,10 @@
   },
   "HMD+ib": {
     "string": "Last order"
+  },
+  "HN1Gvw": {
+    "context": "option description",
+    "string": "Allocate order-line to a warehouse with the most stock. If not enough stock is available in a single warehouse, the remaining quantity is allocated in the next warehouse with the most stock and repeated if necessary."
   },
   "HP6m+q": {
     "string": "Attributes and Product Types"
@@ -2574,10 +2607,6 @@
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
   },
-  "ImTelT": {
-    "context": "card subtitle",
-    "string": "Select warehouses that will be used in this channel. You can assign warehouses to multiple channels."
-  },
   "IoCMjg": {
     "context": "no collections",
     "string": "No collections found"
@@ -2750,6 +2779,10 @@
     "context": "input description",
     "string": "{unitsLeft} units left"
   },
+  "JmdBa3": {
+    "context": "product availability publish date",
+    "string": "Publish on"
+  },
   "JnzDrI": {
     "context": "discount type",
     "string": "Fixed Amount"
@@ -2769,10 +2802,6 @@
     "context": "product type is digital or physical",
     "string": "Type"
   },
-  "Jt3DwJ": {
-    "context": "publish on date",
-    "string": "Publish on"
-  },
   "JtZ71e": {
     "context": "filtering option",
     "string": "All Warehouses"
@@ -2784,10 +2813,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "Jz/Cb+": {
-    "context": "product type",
-    "string": "Simple"
   },
   "K+ROF8": {
     "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
@@ -3213,10 +3238,6 @@
     "context": "navigator placeholder",
     "string": "Type Command"
   },
-  "NsgWhZ": {
-    "context": "placeholder",
-    "string": "Search by value name, etc..."
-  },
   "NtFVFS": {
     "context": "weight",
     "string": "{value} {unit}"
@@ -3270,6 +3291,10 @@
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
+  },
+  "OFW7nq": {
+    "context": "placeholder",
+    "string": "Search by page name, etc..."
   },
   "OGemtu": {
     "context": "payment status",
@@ -3735,10 +3760,6 @@
   "RlfqSV": {
     "string": "No orders found"
   },
-  "RoKOQJ": {
-    "context": "label",
-    "string": "Search Attribute Value"
-  },
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
   },
@@ -3788,9 +3809,9 @@
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
   },
-  "SC/eNC": {
-    "context": "Payment card title",
-    "string": "Payment status"
+  "SBb6Ej": {
+    "context": "select a warehouse to fulfill product from",
+    "string": "Select warehouse..."
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
@@ -3870,6 +3891,10 @@
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
   },
+  "Sxzua5": {
+    "context": "order payment",
+    "string": "Settled"
+  },
   "T/5OyA": {
     "string": "No translation yet"
   },
@@ -3919,6 +3944,10 @@
   },
   "TGX4T1": {
     "string": "Search Engine Preview"
+  },
+  "THpf1b": {
+    "context": "product availability available date",
+    "string": "Set available on"
   },
   "TKmub+": {
     "string": "This field is required"
@@ -4000,9 +4029,6 @@
   },
   "U2mOqA": {
     "string": "No vouchers found"
-  },
-  "U3BQKA": {
-    "string": "Set publication date"
   },
   "U5aVd8": {
     "context": "product",
@@ -4609,10 +4635,6 @@
     "context": "app extensions subsection",
     "string": "Apps"
   },
-  "Y7Vy19": {
-    "context": "available on date",
-    "string": "Set available on"
-  },
   "Y9lv8z": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
@@ -4679,6 +4701,10 @@
   "YgE6ga": {
     "context": "imperial unit system",
     "string": "Imperial"
+  },
+  "YiC3cn": {
+    "context": "option description",
+    "string": "Allocate stock in the first warehouse in the list assigned to this channel. If stock is insufficient, the remaining quantity is allocated in the next warehouse on the list and repeated if necessary."
   },
   "YicEbK": {
     "string": "Search Atrtibuttes"
@@ -4994,6 +5020,10 @@
     "context": "product type",
     "string": "Product Type"
   },
+  "bRJD/v": {
+    "context": "button",
+    "string": "Create permission group"
+  },
   "bS7A8u": {
     "context": "add tracking button",
     "string": "Add tracking"
@@ -5252,10 +5282,6 @@
   "dS8Adx": {
     "context": "product",
     "string": "Digital"
-  },
-  "dTCDMn": {
-    "context": "dialog header",
-    "string": "Assign Product"
   },
   "dTCWqt": {
     "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
@@ -5751,9 +5777,17 @@
     "context": "voucher country range",
     "string": "Countries"
   },
+  "icb1fc": {
+    "context": "tooltip",
+    "string": "Stock allocations occur when:"
+  },
   "icz/jb": {
     "context": "customer",
     "string": "Join Date"
+  },
+  "idr+JK": {
+    "context": "assign reference to a page, button",
+    "string": "Assign and save"
   },
   "ij7olm": {
     "context": "error message",
@@ -5784,6 +5818,10 @@
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+  },
+  "izJvcM": {
+    "context": "label",
+    "string": "Search pages"
   },
   "j/vV0n": {
     "context": "channel name",
@@ -5848,6 +5886,10 @@
   "jWna9Q": {
     "string": "Content Type Name"
   },
+  "jXf/9p": {
+    "context": "product availability",
+    "string": "Hide in product listings"
+  },
   "jZbT0O": {
     "string": "Add search engine title and description to make this page easier to find"
   },
@@ -5878,6 +5920,10 @@
   },
   "juBV+h": {
     "string": "End Hour"
+  },
+  "juxCV3": {
+    "context": "dialog header",
+    "string": "Assign product"
   },
   "jvKNMP": {
     "string": "Discount Code"
@@ -6208,6 +6254,10 @@
     "context": "voucher code, button",
     "string": "Generate Code"
   },
+  "mTEqYL": {
+    "context": "NoChannels content",
+    "string": "No channels to assign. Please first assign them for the product."
+  },
   "mUb8Gt": {
     "context": "section header",
     "string": "Taxes"
@@ -6498,9 +6548,6 @@
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
   },
-  "p0SUJj": {
-    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
-  },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
     "string": "Preview"
@@ -6528,6 +6575,10 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
+  "pEMxyy": {
+    "context": "alert message",
+    "string": "This product does no longer exist."
+  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
@@ -6538,6 +6589,10 @@
   "pNrF72": {
     "context": "tab name",
     "string": "All Vouchers"
+  },
+  "pPef6L": {
+    "context": "order payment",
+    "string": "Included in subtotal"
   },
   "pRYGUR": {
     "context": "section description",
@@ -6612,6 +6667,10 @@
   "q1shey": {
     "context": "key-value field input",
     "string": "Key"
+  },
+  "q5Lfp4": {
+    "context": "tooltip",
+    "string": "Order contains products that have \"Track inventory\" enabled."
   },
   "q8ep2I": {
     "context": "dialog header",
@@ -7201,6 +7260,10 @@
     "context": "voucher start date",
     "string": "Started"
   },
+  "ukYopn": {
+    "context": "order payment",
+    "string": "Included in prices"
+  },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",
     "string": "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
@@ -7210,6 +7273,9 @@
   },
   "umsU70": {
     "string": "Search Page Type"
+  },
+  "un+VWt": {
+    "string": "Search products"
   },
   "usSkzP": {
     "context": "navigator order mode description",
@@ -7249,6 +7315,10 @@
   },
   "v1pNHW": {
     "string": "Attribute Class"
+  },
+  "v2+u4c": {
+    "context": "card subtitle",
+    "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
   },
   "v3WWK+": {
     "string": "Status is invalid"
@@ -7476,6 +7546,10 @@
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
   },
+  "wsDF7X": {
+    "context": "product variant attribute entity type",
+    "string": "Product variants"
+  },
   "wyvzh9": {
     "context": "dialog header",
     "string": "Publish Pages"
@@ -7688,10 +7762,6 @@
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
-  },
-  "ylobu9": {
-    "context": "assign reference to product, button",
-    "string": "Assign"
   },
   "ypW4Mi": {
     "context": "button refreshing page",

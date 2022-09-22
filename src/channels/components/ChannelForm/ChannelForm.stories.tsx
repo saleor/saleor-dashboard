@@ -1,5 +1,5 @@
 import { countries } from "@saleor/fixtures";
-import { CountryCode } from "@saleor/graphql";
+import { AllocationStrategyEnum, CountryCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -17,6 +17,31 @@ const props: ChannelFormProps = {
     name: "Test",
     slug: "test",
     defaultCountry: CountryCode.PL,
+    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    warehousesToDisplay: [
+      {
+        __typename: "Warehouse",
+        id: "1",
+        name: "Warehouse 1",
+      },
+      {
+        __typename: "Warehouse",
+        id: "2",
+        name: "Warehouse 2",
+      },
+    ],
+    shippingZonesToDisplay: [
+      {
+        __typename: "ShippingZone",
+        id: "1",
+        name: "Shipping Zone 1",
+      },
+      {
+        __typename: "ShippingZone",
+        id: "2",
+        name: "Shipping Zone 2",
+      },
+    ],
   },
   disabled: false,
   errors: [],

@@ -1,3 +1,4 @@
+import { handleNestedMutationErrors } from "@saleor/auth";
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import {
   InvoiceEmailSendMutation,
@@ -8,6 +9,7 @@ import {
   OrderDraftCancelMutation,
   OrderDraftFinalizeMutation,
   OrderDraftUpdateMutation,
+  OrderErrorCode,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentCancelMutation,
   OrderFulfillmentUpdateTrackingMutation,
@@ -68,7 +70,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   params,
 }) => {
   const navigate = useNavigator();
-  const pushMessage = useNotifier();
+  const notify = useNotifier();
   const intl = useIntl();
 
   const [, closeModal] = createDialogActionHandlers(
@@ -80,7 +82,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handlePaymentCapture = (data: OrderCaptureMutation) => {
     const errs = data.orderCapture?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "9RCuN3",
@@ -93,7 +95,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaidMutation) => {
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "lL1HTg",
@@ -106,7 +108,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderCancel = (data: OrderCancelMutation) => {
     const errs = data.orderCancel?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "W/Es0H",
@@ -119,7 +121,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftCancel = (data: OrderDraftCancelMutation) => {
     const errs = data.draftOrderDelete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "W/Es0H",
@@ -132,7 +134,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderVoid = (data: OrderVoidMutation) => {
     const errs = data.orderVoid?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "L87bp7",
@@ -145,7 +147,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleNoteAdd = (data: OrderAddNoteMutation) => {
     const errs = data.orderAddNote?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "KmPicj",
@@ -157,7 +159,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleUpdate = (data: OrderUpdateMutation) => {
     const errs = data.orderUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "j2fPVo",
@@ -170,7 +172,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftUpdate = (data: OrderDraftUpdateMutation) => {
     const errs = data.draftOrderUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "j2fPVo",
@@ -185,7 +187,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   ) => {
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "7U8GRy",
@@ -198,7 +200,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLineDelete = (data: OrderLineDeleteMutation) => {
     const errs = data.orderLineDelete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "9OtpHt",
@@ -210,7 +212,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLinesAdd = (data: OrderLinesAddMutation) => {
     const errs = data.orderLinesCreate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "HlCkMT",
@@ -223,7 +225,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderLineUpdate = (data: OrderLineUpdateMutation) => {
     const errs = data.orderLineUpdate?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "Fn3bE0",
@@ -232,7 +234,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       });
     } else {
       errs.forEach(error =>
-        pushMessage({
+        notify({
           status: "error",
           text: getOrderErrorMessage(error, intl),
         }),
@@ -244,7 +246,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   ) => {
     const errs = data.orderFulfillmentApprove?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "+sX7yS",
@@ -252,6 +254,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         }),
       });
       closeModal();
+    } else {
+      if (!errs.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
+        handleNestedMutationErrors({ data, intl, notify });
+      }
     }
   };
   const handleOrderFulfillmentCancel = (
@@ -259,7 +265,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   ) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "uMpv1v",
@@ -274,7 +280,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   ) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "CZmloB",
@@ -287,7 +293,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleDraftFinalize = (data: OrderDraftFinalizeMutation) => {
     const errs = data.draftOrderComplete?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage({
           id: "c4gbXr",
@@ -299,7 +305,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceGeneratePending = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         text: intl.formatMessage({
           id: "ND5x+V",
           defaultMessage:
@@ -316,7 +322,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceGenerateFinished = (data: InvoiceRequestMutation) => {
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         status: "success",
         text: intl.formatMessage(messages.invoiceGenerateFinishedText),
         title: intl.formatMessage(messages.invoiceGenerateFinishedTitle),
@@ -327,7 +333,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleInvoiceSend = (data: InvoiceEmailSendMutation) => {
     const errs = data.invoiceSendNotification?.errors;
     if (errs.length === 0) {
-      pushMessage({
+      notify({
         text: intl.formatMessage({
           id: "3u+4NZ",
           defaultMessage: "Invoice email sent",

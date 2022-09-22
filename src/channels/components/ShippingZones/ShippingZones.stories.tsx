@@ -31,6 +31,7 @@ const baseProps: ShippingZonesProps = {
   shippingZones: [],
   shippingZonesChoices: shippingZones as ChannelShippingZones,
   totalCount: 10,
+  loading: false,
 };
 
 storiesOf("Shipping zones", module)
@@ -41,4 +42,5 @@ storiesOf("Shipping zones", module)
       {...baseProps}
       shippingZones={shippingZones as ChannelShippingZones}
     />
-  ));
+  ))
+  .add("loading", () => <ShippingZones {...baseProps} loading={true} />);

@@ -1,4 +1,4 @@
-import { FetchMoreProps } from "@saleor/types";
+import { FetchMoreProps, ReorderAction } from "@saleor/types";
 
 export interface AssignItem {
   id: string;
@@ -13,7 +13,9 @@ export interface AssignmentListProps {
   totalCount: number;
   inputName: string;
   dataTestId: string;
+  loading: boolean;
   addItem: (id: string) => void;
   removeItem: (id: string) => void;
+  reorderItem?: ReorderAction;
   searchItems: (searchPhrase: string) => void;
 }

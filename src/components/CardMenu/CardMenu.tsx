@@ -8,7 +8,7 @@ import {
   Popper,
   Typography,
 } from "@material-ui/core";
-import { makeStyles, MoreIcon } from "@saleor/macaw-ui";
+import { makeStyles, SettingsIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -134,7 +134,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         variant={outlined ? "primary" : "secondary"}
         state={open ? "active" : "default"}
       >
-        <MoreIcon />
+        <SettingsIcon />
       </IconButton>
       <Popper
         placement="bottom-end"

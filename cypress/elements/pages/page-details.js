@@ -3,9 +3,9 @@ export const PAGE_DETAILS = {
   pageTypesAutocompleteSelect:
     '[data-test-id="page-types-autocomplete-select"]',
   attributeValues: '[data-test-id="attribute-value"]',
-  isPublishedCheckbox: '[name="isPublished"][value=true]',
+  isNotPublishedCheckbox: '[name="isPublished"][value=false]',
   uploadFileButton: '[data-test-id="button-upload-file"]',
   richTextEditorAttributeValue: '[class*="ce-paragraph"]',
   booleanAttributeValueCheckbox: '[name*="attribute:"][type="checkbox"]',
-  numericAttributeValueInput: '[name*="attribute:"]'
+  numericAttributeValueInput: '[name*="attribute:"]',
 };
