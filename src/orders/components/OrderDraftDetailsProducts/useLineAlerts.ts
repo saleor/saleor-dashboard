@@ -14,18 +14,21 @@ const useLineAlerts = ({ line, error }: UseLineAlertsOpts) => {
   const intl = useIntl();
 
   const alerts = useMemo(() => {
-    const {
-      variant: {
-        product: { isAvailableForPurchase },
-      },
-    } = line;
-
     const alerts: string[] = [];
 
     if (error) {
       alerts.push(getOrderErrorMessage(error, intl));
     }
-    if (!isAvailableForPurchase) {
+
+    const product = line.variant?.product;
+
+    if (!product) {
+      alerts.push(intl.formatMessage(lineAlertMessages.notExists));
+    }
+
+    const isAvailableForPurchase = product?.isAvailableForPurchase;
+
+    if (product && !isAvailableForPurchase) {
       alerts.push(intl.formatMessage(lineAlertMessages.notAvailable));
     }
 
