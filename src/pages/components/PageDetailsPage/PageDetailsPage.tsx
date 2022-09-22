@@ -35,6 +35,7 @@ import { useIntl } from "react-intl";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
+import { messages } from "./messages";
 
 export interface PageDetailsPageProps {
   loading: boolean;
@@ -156,13 +157,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             </Backlink>
             <PageHeader
               title={
-                !pageExists
-                  ? intl.formatMessage({
-                      id: "gr53VQ",
-                      defaultMessage: "Create Page",
-                      description: "page header",
-                    })
-                  : page?.title
+                !pageExists ? intl.formatMessage(messages.title) : page?.title
               }
             />
             <Grid>
@@ -185,11 +180,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   slugPlaceholder={data.title}
                   title={data.seoTitle}
                   titlePlaceholder={data.title}
-                  helperText={intl.formatMessage({
-                    id: "jZbT0O",
-                    defaultMessage:
-                      "Add search engine title and description to make this page easier to find",
-                  })}
+                  helperText={intl.formatMessage(
+                    messages.seoOptionsDescription,
+                  )}
                 />
                 <CardSpacer />
                 {data.attributes.length > 0 && (
@@ -220,26 +213,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   errors={errors}
                   disabled={loading}
                   messages={{
-                    hiddenLabel: intl.formatMessage({
-                      id: "/TK7QD",
-                      defaultMessage: "Hidden",
-                      description: "page label",
-                    }),
+                    hiddenLabel: intl.formatMessage(messages.hiddenLabel),
                     hiddenSecondLabel: intl.formatMessage(
-                      {
-                        id: "GZgjK7",
-                        defaultMessage: "will be visible from {date}",
-                        description: "page",
-                      },
+                      messages.hiddenSecondLabel,
                       {
                         date: localizeDate(data.publicationDate),
                       },
                     ),
-                    visibleLabel: intl.formatMessage({
-                      id: "X26jCC",
-                      defaultMessage: "Visible",
-                      description: "page label",
-                    }),
+                    visibleLabel: intl.formatMessage(messages.visibleLabel),
                   }}
                   onChange={change}
                 />
