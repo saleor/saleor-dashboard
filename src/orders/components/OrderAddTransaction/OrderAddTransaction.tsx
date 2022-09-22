@@ -40,22 +40,14 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
 
   const canMarkAsPaid = order.actions.includes(OrderAction.MARK_AS_PAID);
 
-  if (order.transactions.length === 0) {
-    // order uses old payments
-    if (canMarkAsPaid) {
-      return (
-        <div className={classes.wrapper}>
-          <Button variant="primary" onClick={() => onMarkAsPaid()}>
-            <FormattedMessage {...addTransactionMessages.markAsPaid} />
-          </Button>
-        </div>
-      );
-    }
-
-    if (order.payments.length > 0) {
-      // When payments are used, we don't create transactions
-      return null;
-    }
+  if (canMarkAsPaid) {
+    return (
+      <div className={classes.wrapper}>
+        <Button variant="primary" onClick={() => onMarkAsPaid()}>
+          <FormattedMessage {...addTransactionMessages.markAsPaid} />
+        </Button>
+      </div>
+    );
   }
 
   return (
