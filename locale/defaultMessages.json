@@ -516,6 +516,10 @@
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
   },
+  "2CBcub": {
+    "context": "CreateVariantTitle manage",
+    "string": "Manage"
+  },
   "2E1xZ0": {
     "context": "page header",
     "string": "Create Sale"
@@ -6249,6 +6253,10 @@
   "mSLr9d": {
     "context": "voucher code, button",
     "string": "Generate Code"
+  },
+  "mTEqYL": {
+    "context": "NoChannels content",
+    "string": "No channels to assign. Please first assign them for the product."
   },
   "mUb8Gt": {
     "context": "section header",
