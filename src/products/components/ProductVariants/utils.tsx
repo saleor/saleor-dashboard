@@ -200,6 +200,10 @@ export function getError(
   errors: ProductVariantListError[],
   { availableColumns, removed, column, row, variants }: GetDataOrError,
 ): boolean {
+  if (column === -1) {
+    return false;
+  }
+
   const columnId = availableColumns[column].id;
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
