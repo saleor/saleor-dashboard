@@ -25,6 +25,7 @@ describe("As an admin I want to create content attribute", () => {
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0517" },
     { type: "PAGE", testCase: "SALEOR_0518" },
+    { type: "PRODUCT_VARIANT", testCase: "SALEOR_0539" },
   ];
   const attributeNumericType = [
     {
@@ -60,7 +61,7 @@ describe("As an admin I want to create content attribute", () => {
   attributesTypes.forEach(attributeType => {
     it(
       `should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable"] },
       () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
