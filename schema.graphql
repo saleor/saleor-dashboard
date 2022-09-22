@@ -2688,6 +2688,13 @@ input ChannelCreateInput {
   defaultCountry: CountryCode!
 }
 
+"""
+Event sent when new channel is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ChannelCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2701,13 +2708,7 @@ type ChannelCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The channel the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The channel the event relates to."""
   channel: Channel
 }
 
@@ -3971,6 +3972,13 @@ input CollectionCreateInput {
   products: [ID!]
 }
 
+"""
+Event sent when new collection is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CollectionCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3984,13 +3992,7 @@ type CollectionCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The collection the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The collection the event relates to."""
   collection(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -5357,6 +5359,13 @@ input DraftOrderCreateInput {
   lines: [OrderLineCreateInput!]
 }
 
+"""
+Event sent when new draft order is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type DraftOrderCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -5370,13 +5379,7 @@ type DraftOrderCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -6722,6 +6725,13 @@ input GiftCardCreateInput {
   note: String
 }
 
+"""
+Event sent when new gift card is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type GiftCardCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6735,13 +6745,7 @@ type GiftCardCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The gift card the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The gift card the event relates to."""
   giftCard: GiftCard
 }
 
@@ -14531,6 +14535,13 @@ input OrderUpdateShippingInput {
   shippingMethod: ID
 }
 
+"""
+Event sent when order is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14544,13 +14555,7 @@ type OrderUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -14798,6 +14803,13 @@ input PageCreateInput {
   pageType: ID!
 }
 
+"""
+Event sent when new page is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14811,13 +14823,7 @@ type PageCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page the event relates to."""
   page: Page
 }
 
@@ -15966,6 +15972,9 @@ enum PermissionEnum {
   MANAGE_CHANNELS
   MANAGE_CHECKOUTS
   HANDLE_CHECKOUTS
+  HANDLE_TAXES
+  MANAGE_TAXES
+  MANAGE_CHANNELS
   MANAGE_DISCOUNTS
   MANAGE_GIFT_CARD
   MANAGE_MENUS
@@ -16853,6 +16862,13 @@ input ProductCreateInput {
   productType: ID!
 }
 
+"""
+Event sent when new product is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -16866,25 +16882,13 @@ type ProductCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product the event relates to."""
   product(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
 
-  """
-  The category of the product.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category of the product."""
   category: Category
 }
 
@@ -17619,7 +17623,7 @@ type ProductType implements Node & ObjectWithMetadata {
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 
   """Variant attributes of that product type."""
   variantAttributes(
@@ -18292,6 +18296,13 @@ input ProductVariantCreateInput {
   stocks: [StockInput!]
 }
 
+"""
+Event sent when new product variant is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -18305,13 +18316,7 @@ type ProductVariantCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -21469,6 +21474,13 @@ input ShippingZoneCreateInput {
   addChannels: [ID!]
 }
 
+"""
+Event sent when new shipping zone is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingZoneCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -21482,13 +21494,7 @@ type ShippingZoneCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping zone the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the event relates to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -21631,6 +21637,13 @@ input ShippingZoneUpdateInput {
   removeChannels: [ID!]
 }
 
+"""
+Event sent when shipping zone is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingZoneUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -21644,13 +21657,7 @@ type ShippingZoneUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping zone the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the event relates to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String

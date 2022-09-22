@@ -151,4 +151,19 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Country",
     description: "searchbar placeholder",
   },
+  noCountriesAssigned: {
+    id: "0a0fLZ",
+    defaultMessage: "There are no countries assigned",
+    description: "countries list menu label when no countries are assigned",
+  },
+  addCountryToAccessClass: {
+    id: "7U/NPm",
+    defaultMessage: "Add country to access tax classes",
+    description: "tax class rates list label when no country is selected",
+  },
+  countryDefaultRate: {
+    id: "lnteBJ",
+    defaultMessage: "Country default rate",
+    description: "country rates list label for the default rate",
+  },
 });

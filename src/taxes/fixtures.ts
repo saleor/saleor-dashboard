@@ -90,7 +90,6 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
         taxClass: {
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
-          isDefault: true,
           name: "Default tax class",
         },
       },
@@ -100,7 +99,6 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
         taxClass: {
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
-          isDefault: false,
           name: "Perfume",
         },
       },
@@ -121,7 +119,6 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           name: "Default tax class",
-          isDefault: true,
         },
       },
       {
@@ -131,7 +128,6 @@ export const taxCountryConfigurations: TaxCountryConfigurationFragment[] = [
           __typename: "TaxClass",
           id: "taxCountryConfigurations.0.taxClassCountryRates.0.taxClass.id",
           name: "Food",
-          isDefault: false,
         },
       },
     ],
@@ -143,7 +139,6 @@ export const taxClasses: TaxClassFragment[] = [
     __typename: "TaxClass",
     id: "taxClassNode1",
     name: "Default tax class",
-    isDefault: true,
     countries: [
       {
         __typename: "TaxClassCountryRate",
@@ -169,7 +164,6 @@ export const taxClasses: TaxClassFragment[] = [
     __typename: "TaxClass",
     id: "taxClassesNode2",
     name: "Food",
-    isDefault: false,
     countries: [
       {
         __typename: "TaxClassCountryRate",

@@ -156,6 +156,20 @@ export enum AddressTypeEnum {
   SHIPPING = 'SHIPPING'
 }
 
+/**
+ * Determine the allocation strategy for the channel.
+ *
+ *     PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
+ *     within the channel
+ *
+ *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+ *
+ */
+export enum AllocationStrategyEnum {
+  PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER',
+  PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK'
+}
+
 /** An enumeration. */
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
@@ -320,7 +334,8 @@ export type AttributeCreateInput = {
 /** An enumeration. */
 export enum AttributeEntityTypeEnum {
   PAGE = 'PAGE',
-  PRODUCT = 'PRODUCT'
+  PRODUCT = 'PRODUCT',
+  PRODUCT_VARIANT = 'PRODUCT_VARIANT'
 }
 
 /** An enumeration. */
@@ -346,6 +361,7 @@ export type AttributeFilterInput = {
   type?: InputMaybe<AttributeTypeEnum>;
   inCollection?: InputMaybe<Scalars['ID']>;
   inCategory?: InputMaybe<Scalars['ID']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -572,6 +588,7 @@ export type CategoryFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type CategoryInput = {
@@ -630,6 +647,14 @@ export type CategorySortingInput = {
 export type ChannelCreateInput = {
   /** isActive flag. */
   isActive?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * The channel stock settings.
+   *
+   * Added in Saleor 3.7.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  stockSettings?: InputMaybe<StockSettingsInput>;
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -677,6 +702,14 @@ export enum ChannelErrorCode {
 export type ChannelUpdateInput = {
   /** isActive flag. */
   isActive?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * The channel stock settings.
+   *
+   * Added in Saleor 3.7.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  stockSettings?: InputMaybe<StockSettingsInput>;
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -793,13 +826,31 @@ export type CheckoutLineInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
+  /**
+   * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  forceNewLine?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the object's metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type CheckoutLineUpdateInput = {
+  /**
+   * ID of the product variant.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `lineId` instead.
+   */
+  variantId?: InputMaybe<Scalars['ID']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /** ID of the product variant. */
-  variantId: Scalars['ID'];
   /**
    * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
    *
@@ -808,6 +859,12 @@ export type CheckoutLineUpdateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
+  /**
+   * ID of the line.
+   *
+   * Added in Saleor 3.6.
+   */
+  lineId?: InputMaybe<Scalars['ID']>;
 };
 
 export enum CheckoutSortField {
@@ -897,6 +954,7 @@ export type CollectionFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -2745,6 +2803,7 @@ export type MenuFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Array<Scalars['String']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MenuInput = {
@@ -3104,6 +3163,12 @@ export type OrderFulfillInput = {
   notifyCustomer?: InputMaybe<Scalars['Boolean']>;
   /** If true, then allow proceed fulfillment when stock is exceeded. */
   allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fulfillment tracking number.
+   *
+   * Added in Saleor 3.6.
+   */
+  trackingNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type OrderFulfillLineInput = {
@@ -3125,6 +3190,14 @@ export type OrderLineCreateInput = {
   quantity: Scalars['Int'];
   /** Product variant ID. */
   variantId: Scalars['ID'];
+  /**
+   * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  forceNewLine?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type OrderLineInput = {
@@ -3326,6 +3399,7 @@ export type PageFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   pageTypes?: InputMaybe<Array<Scalars['ID']>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type PageInput = {
@@ -3422,6 +3496,7 @@ export type PageTypeCreateInput = {
 
 export type PageTypeFilterInput = {
   search?: InputMaybe<Scalars['String']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export enum PageTypeSortField {
@@ -3533,9 +3608,11 @@ export enum PermissionEnum {
   IMPERSONATE_USER = 'IMPERSONATE_USER',
   MANAGE_APPS = 'MANAGE_APPS',
   MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
-  MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
   HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
+  HANDLE_TAXES = 'HANDLE_TAXES',
+  MANAGE_TAXES = 'MANAGE_TAXES',
+  MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
@@ -3548,8 +3625,7 @@ export enum PermissionEnum {
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = 'MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES',
   MANAGE_SHIPPING = 'MANAGE_SHIPPING',
   MANAGE_SETTINGS = 'MANAGE_SETTINGS',
-  MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS',
-  MANAGE_TAXES = 'MANAGE_TAXES'
+  MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS'
 }
 
 export type PermissionGroupCreateInput = {
@@ -3755,7 +3831,11 @@ export type ProductCreateInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /** Determine if taxes are being charged for the product. */
+  /**
+   * Determine if taxes are being charged for the product.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -3771,7 +3851,11 @@ export type ProductCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -3839,6 +3923,7 @@ export type ProductFilterInput = {
   categories?: InputMaybe<Array<Scalars['ID']>>;
   hasCategory?: InputMaybe<Scalars['Boolean']>;
   attributes?: InputMaybe<Array<AttributeInput>>;
+  /** Filter by variants having specific stock status. */
   stockAvailability?: InputMaybe<StockAvailability>;
   stocks?: InputMaybe<ProductStockFilterInput>;
   search?: InputMaybe<Scalars['String']>;
@@ -3868,12 +3953,16 @@ export type ProductFilterInput = {
    */
   isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
   price?: InputMaybe<PriceRangeInput>;
+  /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
+  /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   productTypes?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter on whether product is a gift card or not. */
   giftCard?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -3887,7 +3976,11 @@ export type ProductInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /** Determine if taxes are being charged for the product. */
+  /**
+   * Determine if taxes are being charged for the product.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -3903,7 +3996,11 @@ export type ProductInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -4046,6 +4143,7 @@ export type ProductTypeFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ProductTypeInput = {
@@ -4067,7 +4165,11 @@ export type ProductTypeInput = {
   isDigital?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the ProductType items. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
   taxClass?: InputMaybe<Scalars['ID']>;
@@ -4100,6 +4202,8 @@ export type ProductVariantBulkCreateInput = {
   attributes: Array<BulkAttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4160,6 +4264,8 @@ export type ProductVariantCreateInput = {
   attributes: Array<AttributeValueInput>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4211,6 +4317,8 @@ export type ProductVariantInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
+  /** Variant name. */
+  name?: InputMaybe<Scalars['String']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
   /** Weight of the Product Variant. */
@@ -4517,16 +4625,6 @@ export type ShopSettingsInput = {
   headerText?: InputMaybe<Scalars['String']>;
   /** SEO description. */
   description?: InputMaybe<Scalars['String']>;
-  /** Include taxes in prices. */
-  includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Display prices with tax in store.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
-   */
-  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
-  /** Charge taxes on shipping. */
-  chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** Enable inventory tracking. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
   /** Default weight unit. */
@@ -4575,6 +4673,24 @@ export type ShopSettingsInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
+  /**
+   * Include taxes in prices.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   */
+  includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Display prices with tax in store.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   */
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Charge taxes on shipping.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+   */
+  chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ShopSettingsTranslationInput = {
@@ -4672,6 +4788,11 @@ export type StockInput = {
   quantity: Scalars['Int'];
 };
 
+export type StockSettingsInput = {
+  /** Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations. */
+  allocationStrategy: AllocationStrategyEnum;
+};
+
 /** Enum representing the type of a payment storage in a gateway. */
 export enum StorePaymentMethodEnum {
   /** On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow. */
@@ -4680,6 +4801,11 @@ export enum StorePaymentMethodEnum {
   OFF_SESSION = 'OFF_SESSION',
   /** Storage is disabled. The payment is not stored. */
   NONE = 'NONE'
+}
+
+export enum TaxCalculationStrategy {
+  FLAT_RATES = 'FLAT_RATES',
+  TAX_APP = 'TAX_APP'
 }
 
 /** An enumeration. */
@@ -4698,7 +4824,6 @@ export type TaxClassCreateInput = {
 
 /** An enumeration. */
 export enum TaxClassDeleteErrorCode {
-  CANNOT_DELETE_DEFAULT_CLASS = 'CANNOT_DELETE_DEFAULT_CLASS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
@@ -4712,9 +4837,9 @@ export type TaxClassFilterInput = {
 
 export type TaxClassRateInput = {
   /** ID of a tax class for which to update the tax rate */
-  taxClassId: Scalars['ID'];
+  taxClassId?: InputMaybe<Scalars['ID']>;
   /** Tax rate value. */
-  rate: Scalars['Float'];
+  rate?: InputMaybe<Scalars['Float']>;
 };
 
 export enum TaxClassSortField {
@@ -4756,6 +4881,8 @@ export type TaxConfigurationPerCountryInput = {
   countryCode: CountryCode;
   /** Determines whether taxes are charged in this country. */
   chargeTaxes: Scalars['Boolean'];
+  /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
+  taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /** Determines whether prices displayed in a storefront should include taxes for this country. */
   displayGrossPrices: Scalars['Boolean'];
 };
@@ -4771,6 +4898,8 @@ export enum TaxConfigurationUpdateErrorCode {
 export type TaxConfigurationUpdateInput = {
   /** Determines whether taxes are charged in the given channel. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
+  taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /** Determines whether prices displayed in a storefront should include taxes. */
   displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
   /** Determines whether prices are entered with the tax included. */
@@ -4792,7 +4921,17 @@ export enum TaxCountryConfigurationDeleteErrorCode {
 export enum TaxCountryConfigurationUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED = 'ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED',
+  CANNOT_CREATE_WITH_NULL_RATE = 'CANNOT_CREATE_WITH_NULL_RATE'
+}
+
+/** An enumeration. */
+export enum TaxExemptionManageErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  NOT_EDITABLE_ORDER = 'NOT_EDITABLE_ORDER'
 }
 
 /** An enumeration. */
@@ -5177,7 +5316,11 @@ export type WarehouseCreateInput = {
   name: Scalars['String'];
   /** Address of the warehouse. */
   address: AddressInput;
-  /** Shipping zones supported by the warehouse. */
+  /**
+   * Shipping zones supported by the warehouse.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.
+   */
   shippingZones?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -5197,6 +5340,7 @@ export type WarehouseFilterInput = {
   ids?: InputMaybe<Array<Scalars['ID']>>;
   isPrivate?: InputMaybe<Scalars['Boolean']>;
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export enum WarehouseSortField {
@@ -5257,7 +5401,11 @@ export type WebhookCreateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /** The secret key used to create a hash signature with each payload. */
+  /**
+   * The secret key used to create a hash signature with each payload.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /**
    * Subscription query used to define a webhook payload.
@@ -5372,11 +5520,17 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  /** A draft order is updated. */
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  /** A draft order is deleted. */
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  /** A sale is created. */
   SALE_CREATED = 'SALE_CREATED',
+  /** A sale is updated. */
   SALE_UPDATED = 'SALE_UPDATED',
+  /** A sale is deleted. */
   SALE_DELETED = 'SALE_DELETED',
+  /** A sale is activated or deactivated. */
   SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
@@ -5432,7 +5586,9 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   /** A product variant is deleted. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
   /**
    * A product variant metadata is updated.
@@ -5482,6 +5638,12 @@ export enum WebhookEventTypeAsyncEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page type is deleted. */
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new permission group is created. */
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  /** A permission group is updated. */
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  /** A permission group is deleted. */
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -5504,8 +5666,11 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
+  /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
+  /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
+  /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   /**
    * Transaction item metadata is updated.
@@ -5517,6 +5682,7 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   /** A new warehouse created. */
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
@@ -5644,11 +5810,17 @@ export enum WebhookEventTypeEnum {
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
+  /** A draft order is updated. */
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
+  /** A draft order is deleted. */
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
+  /** A sale is created. */
   SALE_CREATED = 'SALE_CREATED',
+  /** A sale is updated. */
   SALE_UPDATED = 'SALE_UPDATED',
+  /** A sale is deleted. */
   SALE_DELETED = 'SALE_DELETED',
+  /** A sale is activated or deactivated. */
   SALE_TOGGLE = 'SALE_TOGGLE',
   /** An invoice for order requested. */
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
@@ -5704,7 +5876,9 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   /** A product variant is deleted. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
   /**
    * A product variant metadata is updated.
@@ -5754,6 +5928,12 @@ export enum WebhookEventTypeEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page type is deleted. */
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  /** A new permission group is created. */
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  /** A permission group is updated. */
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  /** A permission group is deleted. */
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   /** A new shipping price is created. */
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   /** A shipping price is updated. */
@@ -5776,8 +5956,11 @@ export enum WebhookEventTypeEnum {
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
+  /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
+  /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
+  /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   /**
    * Transaction item metadata is updated.
@@ -5789,6 +5972,7 @@ export enum WebhookEventTypeEnum {
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
+  /** A translation is updated. */
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   /** A new warehouse created. */
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
@@ -5820,29 +6004,81 @@ export enum WebhookEventTypeEnum {
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY',
+  /** Authorize payment. */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
+  /** Capture payment. */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
+  /** Confirm payment. */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
+  /** Listing available payment gateways. */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
+  /** Process payment. */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
+  /** Refund payment. */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
+  /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
+  /**
+   * Event called for checkout tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
+  /**
+   * Event called for order tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
+  /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeSyncEnum {
+  /** Authorize payment. */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
+  /** Capture payment. */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
+  /** Confirm payment. */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
+  /** Listing available payment gateways. */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
+  /** Process payment. */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
+  /** Refund payment. */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
+  /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
+  /**
+   * Event called for checkout tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
+  /**
+   * Event called for order tax calculation.
+   *
+   * Added in Saleor 3.6.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
+  /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
+  /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
+  /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
 }
 
@@ -5928,6 +6164,9 @@ export enum WebhookSampleEventTypeEnum {
   PAGE_TYPE_CREATED = 'PAGE_TYPE_CREATED',
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   PAGE_TYPE_DELETED = 'PAGE_TYPE_DELETED',
+  PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
+  PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
+  PERMISSION_GROUP_DELETED = 'PERMISSION_GROUP_DELETED',
   SHIPPING_PRICE_CREATED = 'SHIPPING_PRICE_CREATED',
   SHIPPING_PRICE_UPDATED = 'SHIPPING_PRICE_UPDATED',
   SHIPPING_PRICE_DELETED = 'SHIPPING_PRICE_DELETED',
@@ -5972,7 +6211,11 @@ export type WebhookUpdateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /** Use to create a hash signature with each payload. */
+  /**
+   * Use to create a hash signature with each payload.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /**
    * Subscription query used to define a webhook payload.
@@ -6492,7 +6735,7 @@ export type SetCustomerDefaultAddressMutationVariables = Exact<{
 }>;
 
 
-export type SetCustomerDefaultAddressMutation = { __typename: 'Mutation', addressSetDefault: { __typename: 'AddressSetDefault', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type SetCustomerDefaultAddressMutation = { __typename: 'Mutation', addressSetDefault: { __typename: 'AddressSetDefault', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type CreateCustomerAddressMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -6500,7 +6743,7 @@ export type CreateCustomerAddressMutationVariables = Exact<{
 }>;
 
 
-export type CreateCustomerAddressMutation = { __typename: 'Mutation', addressCreate: { __typename: 'AddressCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type CreateCustomerAddressMutation = { __typename: 'Mutation', addressCreate: { __typename: 'AddressCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type UpdateCustomerAddressMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -6515,7 +6758,7 @@ export type RemoveCustomerAddressMutationVariables = Exact<{
 }>;
 
 
-export type RemoveCustomerAddressMutation = { __typename: 'Mutation', addressDelete: { __typename: 'AddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type RemoveCustomerAddressMutation = { __typename: 'Mutation', addressDelete: { __typename: 'AddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type BulkRemoveCustomersMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
@@ -6550,7 +6793,7 @@ export type CustomerAddressesQueryVariables = Exact<{
 }>;
 
 
-export type CustomerAddressesQuery = { __typename: 'Query', user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null };
+export type CustomerAddressesQuery = { __typename: 'Query', user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null };
 
 export type CustomerCreateDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6802,7 +7045,7 @@ export type CustomerFragment = { __typename: 'User', id: string, email: string, 
 
 export type CustomerDetailsFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
-export type CustomerAddressesFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }> | null, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null };
+export type CustomerAddressesFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null };
 
 export type SaleFragment = { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
@@ -6932,15 +7175,21 @@ export type ShippingPriceTranslateErrorFragmentFragment = { __typename: 'Transla
 
 export type TaxConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode };
 
+export type TaxCountryConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode };
+
+export type TaxCountryConfigurationDeleteErrorFragmentFragment = { __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode };
+
+export type TaxClassUpdateErrorFragmentFragment = { __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
 
 export type GiftCardEventFragment = { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null };
 
-export type GiftCardDataFragment = { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type GiftCardDataFragment = { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
-export type CustomerGiftCardFragment = { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } | null };
+export type CustomerGiftCardFragment = { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } };
 
 export type MetadataItemFragment = { __typename: 'MetadataItem', key: string, value: string };
 
@@ -7142,11 +7391,11 @@ export type TaxConfigurationPerCountryFragment = { __typename: 'TaxConfiguration
 
 export type TaxConfigurationFragment = { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
-export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> };
+export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> };
 
 export type TaxRateFragment = { __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
+export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
@@ -7233,21 +7482,21 @@ export type GiftCardResendMutationVariables = Exact<{
 }>;
 
 
-export type GiftCardResendMutation = { __typename: 'Mutation', giftCardResend: { __typename: 'GiftCardResend', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type GiftCardResendMutation = { __typename: 'Mutation', giftCardResend: { __typename: 'GiftCardResend', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardActivateMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GiftCardActivateMutation = { __typename: 'Mutation', giftCardActivate: { __typename: 'GiftCardActivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type GiftCardActivateMutation = { __typename: 'Mutation', giftCardActivate: { __typename: 'GiftCardActivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardDeactivateMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GiftCardDeactivateMutation = { __typename: 'Mutation', giftCardDeactivate: { __typename: 'GiftCardDeactivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type GiftCardDeactivateMutation = { __typename: 'Mutation', giftCardDeactivate: { __typename: 'GiftCardDeactivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7255,7 +7504,7 @@ export type GiftCardUpdateMutationVariables = Exact<{
 }>;
 
 
-export type GiftCardUpdateMutation = { __typename: 'Mutation', giftCardUpdate: { __typename: 'GiftCardUpdate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type GiftCardUpdateMutation = { __typename: 'Mutation', giftCardUpdate: { __typename: 'GiftCardUpdate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardAddNoteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7263,14 +7512,14 @@ export type GiftCardAddNoteMutationVariables = Exact<{
 }>;
 
 
-export type GiftCardAddNoteMutation = { __typename: 'Mutation', giftCardAddNote: { __typename: 'GiftCardAddNote', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, event: { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null } | null } | null };
+export type GiftCardAddNoteMutation = { __typename: 'Mutation', giftCardAddNote: { __typename: 'GiftCardAddNote', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, event: { __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null } | null } | null };
 
 export type GiftCardDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GiftCardDetailsQuery = { __typename: 'Query', giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type GiftCardDetailsQuery = { __typename: 'Query', giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: any | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: any | null, oldExpiryDate: any | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, user: { __typename: 'User', email: string, id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type GiftCardCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7315,7 +7564,7 @@ export type GiftCardListQueryVariables = Exact<{
 }>;
 
 
-export type GiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, usedByEmail: string | null, last4CodeChars: string, isActive: boolean, expiryDate: any | null, product: { __typename: 'Product', id: string, name: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type GiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, usedByEmail: string | null, last4CodeChars: string, isActive: boolean, expiryDate: any | null, product: { __typename: 'Product', id: string, name: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type GiftCardTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7333,7 +7582,7 @@ export type CustomerGiftCardListQueryVariables = Exact<{
 }>;
 
 
-export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } | null } }> } | null };
+export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null };
 
 export type HomeQueryVariables = Exact<{
   channel: Scalars['String'];
@@ -8721,6 +8970,29 @@ export type TaxConfigurationUpdateMutationVariables = Exact<{
 
 export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
 
+export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
+  countryCode: CountryCode;
+  updateTaxClassRates: Array<TaxClassRateInput> | TaxClassRateInput;
+}>;
+
+
+export type TaxCountryConfigurationUpdateMutation = { __typename: 'Mutation', taxCountryConfigurationUpdate: { __typename: 'TaxCountryConfigurationUpdate', errors: Array<{ __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
+
+export type TaxCountryConfigurationDeleteMutationVariables = Exact<{
+  countryCode: CountryCode;
+}>;
+
+
+export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
+
+export type TaxClassUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: TaxClassUpdateInput;
+}>;
+
+
+export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+
 export type CountryListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8745,7 +9017,7 @@ export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfiguration
 export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TaxCountriesListQuery = { __typename: 'Query', taxCountryConfigurations: Array<{ __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean } }> }> | null };
+export type TaxCountriesListQuery = { __typename: 'Query', taxCountryConfigurations: Array<{ __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> }> | null };
 
 export type TaxClassesListQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -8757,7 +9029,7 @@ export type TaxClassesListQueryVariables = Exact<{
 }>;
 
 
-export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, isDefault: boolean, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
 export type UpdateProductTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
