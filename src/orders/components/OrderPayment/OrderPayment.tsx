@@ -1,11 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import {
-  OrderAction,
-  OrderDetailsFragment,
-  OrderStatus,
-} from "@saleor/graphql";
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { Button, Pill } from "@saleor/macaw-ui";
 import { transformPaymentStatus } from "@saleor/misc";
 import React from "react";
@@ -16,50 +12,14 @@ import { SummaryList } from "../OrderSummaryCard/SummaryList";
 import {
   orderPaymentActionButtonMessages,
   orderPaymentMessages,
-  paymentButtonMessages,
 } from "./messages";
 import { useStyles } from "./styles";
 import { extractRefundedAmount } from "./utils";
 
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
-  onCapture: () => void;
   onRefund: () => void;
-  onVoid: () => void;
 }
-
-const getLegacyOrderActions = (order: OrderDetailsFragment) => {
-  if (!order) {
-    return {
-      canAnything: false,
-    };
-  }
-
-  if (!order.actions) {
-    return {
-      canCapture: false,
-      canVoid: false,
-      canRefund: false,
-      canAnything: false,
-    };
-  }
-
-  const results = {
-    canCapture: order.actions.includes(OrderAction.CAPTURE),
-    canVoid: order.actions.includes(OrderAction.VOID),
-    canRefund: order.actions.includes(OrderAction.REFUND),
-  };
-
-  const anyAction = results.canCapture || results.canVoid || results.canRefund;
-
-  return {
-    ...results,
-    canAnything:
-      anyAction &&
-      order.payments?.length > 0 &&
-      order.status !== OrderStatus.CANCELED,
-  };
-};
 
 const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   if (!order) {
@@ -109,12 +69,7 @@ const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   };
 };
 
-const OrderPayment: React.FC<OrderPaymementProps> = ({
-  order,
-  onCapture,
-  onVoid,
-  onRefund,
-}) => {
+const OrderPayment: React.FC<OrderPaymementProps> = ({ order, onRefund }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -126,7 +81,6 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
 
   const shouldDisplay = getShouldDisplayAmounts(order);
-  const legacyActions = getLegacyOrderActions(order);
 
   return (
     <Card>
@@ -140,7 +94,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      {(shouldDisplay.any || legacyActions.canAnything) && (
+      {shouldDisplay.any && (
         <CardContent>
           {shouldDisplay.any && (
             <SummaryList className={classes.amountGrid}>
@@ -163,29 +117,6 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
               )}
             </SummaryList>
           )}
-          {legacyActions.canAnything && (
-            <div className={classes.legacyActions}>
-              {legacyActions.canCapture && (
-                <Button variant="tertiary" onClick={onCapture}>
-                  <FormattedMessage {...paymentButtonMessages.capture} />
-                </Button>
-              )}
-              {legacyActions.canRefund && (
-                <Button
-                  variant="tertiary"
-                  onClick={onRefund}
-                  data-test-id="refund-button"
-                >
-                  <FormattedMessage {...paymentButtonMessages.refund} />
-                </Button>
-              )}
-              {legacyActions.canVoid && (
-                <Button variant="tertiary" onClick={onVoid}>
-                  <FormattedMessage {...paymentButtonMessages.void} />
-                </Button>
-              )}
-            </div>
-          )}
         </CardContent>
       )}
       {(canSendRefund || canGrantRefund) && (
@@ -194,13 +125,19 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
           <CardTitle
             toolbar={
               <div className={classes.refundsButtons}>
-                <Button variant="secondary">
-                  <FormattedMessage
-                    {...orderPaymentActionButtonMessages.grantRefund}
-                  />
-                </Button>
-                {canSendRefund && (
+                {canGrantRefund && (
                   <Button variant="secondary">
+                    <FormattedMessage
+                      {...orderPaymentActionButtonMessages.grantRefund}
+                    />
+                  </Button>
+                )}
+                {canSendRefund && (
+                  <Button
+                    variant="secondary"
+                    onClick={onRefund}
+                    data-test-id="refund-button"
+                  >
                     <FormattedMessage
                       {...orderPaymentActionButtonMessages.sendRefund}
                     />
@@ -211,6 +148,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
             title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
           ></CardTitle>
           <CardContent>
+            {/* TODO: Add granted refund amount */}
             {refundedAmount?.amount !== 0 ? (
               <SummaryList className={classes.amountGrid}>
                 <SummaryLine

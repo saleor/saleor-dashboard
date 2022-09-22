@@ -1,6 +1,7 @@
 import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
+  TransactionActionEnum,
   TransactionItemFragment,
 } from "@saleor/graphql";
 import React from "react";
@@ -9,17 +10,22 @@ import OrderTransaction from "../OrderTransaction/OrderTransaction";
 import {
   findMethodName,
   getTransactionAmount,
+  mapOrderActionsToTransactionActions,
   mapTransactionsToEvents,
 } from "./utils";
 
 interface OrderTransactionPaymentProps {
   payment: OrderPaymentFragment;
   allPaymentMethods: PaymentGatewayFragment[];
+  onCapture: () => void;
+  onVoid: () => void;
 }
 
 const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   payment,
   allPaymentMethods,
+  onCapture,
+  onVoid,
 }) => {
   const currency = payment.total.currency;
   const total = payment?.total?.amount ?? 0;
@@ -37,7 +43,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     id: payment.id,
     type: findMethodName(payment.gateway, allPaymentMethods),
     events,
-    actions: [], // TODO: Add support for payment actions (?) - handled in order actions for now
+    actions: mapOrderActionsToTransactionActions(payment.actions),
     reference: "",
     chargedAmount: getTransactionAmount(payment.capturedAmount, currency),
     authorizedAmount: getTransactionAmount(
@@ -52,12 +58,17 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     __typename: "TransactionItem",
   };
 
-  console.dir(payment);
-  console.dir(transactionFromPayment);
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
-      onTransactionAction={() => undefined} // TODO: Add support for payment actions
+      onTransactionAction={(_, action) => {
+        if (action === TransactionActionEnum.CHARGE) {
+          onCapture();
+        }
+        if (action === TransactionActionEnum.VOID) {
+          onVoid();
+        }
+      }}
     />
   );
 };

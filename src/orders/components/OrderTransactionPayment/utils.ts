@@ -1,6 +1,8 @@
 import {
+  OrderAction,
   OrderPaymentFragment,
   PaymentGatewayFragment,
+  TransactionActionEnum,
   TransactionEventFragment,
   TransactionKind,
   TransactionStatus,
@@ -66,3 +68,21 @@ export const mapTransactionsToEvents = (
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
 };
+
+export const mapOrderActionsToTransactionActions = (
+  orderActions: OrderAction[],
+): TransactionActionEnum[] =>
+  orderActions
+    .map(action => {
+      switch (action) {
+        case OrderAction.VOID:
+          return TransactionActionEnum.VOID;
+        case OrderAction.CAPTURE:
+          return TransactionActionEnum.CHARGE;
+        case OrderAction.REFUND:
+          return TransactionActionEnum.REFUND;
+        default:
+          return null;
+      }
+    })
+    .filter(mappedAction => mappedAction !== null);

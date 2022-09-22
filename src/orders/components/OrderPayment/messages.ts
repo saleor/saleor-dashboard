@@ -45,19 +45,9 @@ export const orderPaymentActionButtonMessages = defineMessages({
 });
 
 export const paymentButtonMessages = defineMessages({
-  capture: {
-    id: "BZ7BkQ",
-    defaultMessage: "Capture",
-    description: "capture payment, button",
-  },
   refund: {
     id: "HaQ8cg",
     defaultMessage: "Refund",
-    description: "button",
-  },
-  void: {
-    id: "Mj3KaU",
-    defaultMessage: "Void",
     description: "button",
   },
   markAsPaid: {
