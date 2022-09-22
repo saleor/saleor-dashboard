@@ -46,6 +46,7 @@ import OrderPayment from "../OrderPayment";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
+import OrderTransactionPayment from "../OrderTransactionPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
@@ -327,6 +328,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       key={transaction.id}
                       transaction={transaction}
                       onTransactionAction={onTransactionAction}
+                    />
+                  ))}
+                  {order?.payments?.map(payment => (
+                    <OrderTransactionPayment
+                      key={payment.id}
+                      payment={payment}
+                      allPaymentMethods={shop?.availablePaymentGateways}
                     />
                   ))}
                   {order?.giftCards?.map(giftCard => (

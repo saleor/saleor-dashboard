@@ -223,6 +223,25 @@ export const fragmentPayment = gql`
   fragment OrderPayment on Payment {
     id
     actions
+    gateway
+    paymentMethodType
+    availableCaptureAmount {
+      ...Money
+    }
+    capturedAmount {
+      ...Money
+    }
+    total {
+      ...Money
+    }
+    modified
+    transactions {
+      id
+      token
+      created
+      kind
+      isSuccess
+    }
   }
 `;
 
