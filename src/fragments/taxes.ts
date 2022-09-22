@@ -78,7 +78,6 @@ export const taxCountryConfigurationFragment = gql`
       taxClass {
         id
         name
-        isDefault
       }
     }
   }
@@ -97,7 +96,6 @@ export const taxClassFragment = gql`
   fragment TaxClass on TaxClass {
     id
     name
-    isDefault
     countries {
       ...TaxRate
     }

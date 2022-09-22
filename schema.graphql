@@ -221,6 +221,13 @@ type AddressCreate {
   address: Address
 }
 
+"""
+Event sent when new address is created.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AddressCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -234,13 +241,7 @@ type AddressCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The address the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The address the event relates to."""
   address: Address
 }
 
@@ -257,6 +258,13 @@ type AddressDelete {
   address: Address
 }
 
+"""
+Event sent when address is deleted.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AddressDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -270,13 +278,7 @@ type AddressDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The address the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The address the event relates to."""
   address: Address
 }
 
@@ -346,6 +348,13 @@ type AddressUpdate {
   address: Address
 }
 
+"""
+Event sent when address is updated.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AddressUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -359,13 +368,7 @@ type AddressUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The address the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The address the event relates to."""
   address: Address
 }
 
@@ -406,6 +409,20 @@ type Allocation implements Node {
   Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
   """
   warehouse: Warehouse!
+}
+
+"""
+Determine the allocation strategy for the channel.
+
+    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
+    within the channel
+
+    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+    
+"""
+enum AllocationStrategyEnum {
+  PRIORITIZE_SORTING_ORDER
+  PRIORITIZE_HIGH_STOCK
 }
 
 """Represents app data."""
@@ -603,6 +620,13 @@ type AppDeleteFailedInstallation {
   appInstallation: AppInstallation
 }
 
+"""
+Event sent when app is deleted.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AppDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -616,13 +640,7 @@ type AppDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The application the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The application the event relates to."""
   app: App
 }
 
@@ -803,6 +821,13 @@ type AppInstallation implements Node & Job {
   manifestUrl: String!
 }
 
+"""
+Event sent when new app is installed.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AppInstalled implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -816,13 +841,7 @@ type AppInstalled implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The application the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The application the event relates to."""
   app: App
 }
 
@@ -887,6 +906,13 @@ input AppSortingInput {
   field: AppSortField!
 }
 
+"""
+Event sent when app status has changed.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AppStatusChanged implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -900,13 +926,7 @@ type AppStatusChanged implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The application the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The application the event relates to."""
   app: App
 }
 
@@ -985,6 +1005,13 @@ type AppUpdate {
   app: App
 }
 
+"""
+Event sent when app is updated.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AppUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -998,13 +1025,7 @@ type AppUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The application the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The application the event relates to."""
   app: App
 }
 
@@ -1300,6 +1321,13 @@ input AttributeCreateInput {
   availableInGrid: Boolean
 }
 
+"""
+Event sent when new attribute is created.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1313,13 +1341,7 @@ type AttributeCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute the event relates to."""
   attribute: Attribute
 }
 
@@ -1334,6 +1356,13 @@ type AttributeDelete {
   attribute: Attribute
 }
 
+"""
+Event sent when attribute is deleted.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1347,13 +1376,7 @@ type AttributeDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute the event relates to."""
   attribute: Attribute
 }
 
@@ -1361,6 +1384,7 @@ type AttributeDeleted implements Event {
 enum AttributeEntityTypeEnum {
   PAGE
   PRODUCT
+  PRODUCT_VARIANT
 }
 
 type AttributeError {
@@ -1399,6 +1423,7 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -1586,6 +1611,13 @@ input AttributeUpdateInput {
   availableInGrid: Boolean
 }
 
+"""
+Event sent when attribute is updated.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1599,13 +1631,7 @@ type AttributeUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute the event relates to."""
   attribute: Attribute
 }
 
@@ -1731,6 +1757,13 @@ input AttributeValueCreateInput {
   name: String!
 }
 
+"""
+Event sent when new attribute value is created.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeValueCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1744,13 +1777,7 @@ type AttributeValueCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute value the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute value the event relates to."""
   attributeValue: AttributeValue
 }
 
@@ -1767,6 +1794,13 @@ type AttributeValueDelete {
   attributeValue: AttributeValue
 }
 
+"""
+Event sent when attribute value is deleted.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeValueDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1780,13 +1814,7 @@ type AttributeValueDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute value the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute value the event relates to."""
   attributeValue: AttributeValue
 }
 
@@ -1937,6 +1965,13 @@ input AttributeValueUpdateInput {
   name: String
 }
 
+"""
+Event sent when attribute value is updated.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type AttributeValueUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -1950,13 +1985,7 @@ type AttributeValueUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The attribute value the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The attribute value the event relates to."""
   attributeValue: AttributeValue
 }
 
@@ -2023,6 +2052,28 @@ type BulkStockError {
 
   """Index of an input list item that caused the error."""
   index: Int
+}
+
+"""
+Synchronous webhook for calculating checkout/order taxes.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CalculateTaxes implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+  taxBase: TaxableObject!
 }
 
 input CardInput {
@@ -2240,6 +2291,13 @@ type CategoryCreate {
   category: Category
 }
 
+"""
+Event sent when new category is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CategoryCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2253,13 +2311,7 @@ type CategoryCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The category the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category the event relates to."""
   category: Category
 }
 
@@ -2274,6 +2326,13 @@ type CategoryDelete {
   category: Category
 }
 
+"""
+Event sent when category is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CategoryDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2287,13 +2346,7 @@ type CategoryDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The category the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category the event relates to."""
   category: Category
 }
 
@@ -2301,6 +2354,7 @@ input CategoryFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 input CategoryInput {
@@ -2429,6 +2483,13 @@ type CategoryUpdate {
   category: Category
 }
 
+"""
+Event sent when category is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CategoryUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2442,23 +2503,37 @@ type CategoryUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The category the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category the event relates to."""
   category: Category
 }
 
 """Represents channel."""
 type Channel implements Node {
   id: ID!
-  name: String!
-  isActive: Boolean!
-  currencyCode: String!
+
+  """Slug of the channel."""
   slug: String!
+
+  """
+  Name of the channel.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  name: String!
+
+  """
+  Whether the channel is active.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  isActive: Boolean!
+
+  """
+  A currency that is assigned to the channel.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  currencyCode: String!
 
   """
   Whether a channel has associated orders.
@@ -2471,6 +2546,8 @@ type Channel implements Node {
   Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
   
   Added in Saleor 3.1.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   defaultCountry: CountryDisplay!
 
@@ -2480,8 +2557,39 @@ type Channel implements Node {
   Added in Saleor 3.5.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   warehouses: [Warehouse!]!
+
+  """
+  List of shippable countries for the channel.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  countries: [CountryDisplay!]
+
+  """
+  Shipping methods that are available for the channel.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  availableShippingMethodsPerCountry(countries: [CountryCode!]): [ShippingMethodsPerCountry!]
+
+  """
+  Define the stock setting for this channel.
+  
+  Added in Saleor 3.7.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
+  """
+  stockSettings: StockSettings!
 }
 
 """
@@ -2510,6 +2618,15 @@ type ChannelCreate {
 input ChannelCreateInput {
   """isActive flag."""
   isActive: Boolean
+
+  """
+  The channel stock settings.
+  
+  Added in Saleor 3.7.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  stockSettings: StockSettingsInput
 
   """List of shipping zones to assign to the channel."""
   addShippingZones: [ID!]
@@ -2542,6 +2659,13 @@ input ChannelCreateInput {
   defaultCountry: CountryCode!
 }
 
+"""
+Event sent when new channel is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ChannelCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2555,13 +2679,7 @@ type ChannelCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The channel the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The channel the event relates to."""
   channel: Channel
 }
 
@@ -2593,6 +2711,13 @@ input ChannelDeleteInput {
   channelId: ID!
 }
 
+"""
+Event sent when channel is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ChannelDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2606,13 +2731,7 @@ type ChannelDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The channel the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The channel the event relates to."""
   channel: Channel
 }
 
@@ -2648,6 +2767,28 @@ enum ChannelErrorCode {
   DUPLICATED_INPUT_ITEM
 }
 
+"""
+Reorder the warehouses of a channel.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_CHANNELS.
+"""
+type ChannelReorderWarehouses {
+  """Channel within the warehouses are reordered."""
+  channel: Channel
+  errors: [ChannelError!]!
+}
+
+"""
+Event sent when channel status has changed.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ChannelStatusChanged implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2661,13 +2802,7 @@ type ChannelStatusChanged implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The channel the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The channel the event relates to."""
   channel: Channel
 }
 
@@ -2685,6 +2820,15 @@ type ChannelUpdate {
 input ChannelUpdateInput {
   """isActive flag."""
   isActive: Boolean
+
+  """
+  The channel stock settings.
+  
+  Added in Saleor 3.7.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  stockSettings: StockSettingsInput
 
   """List of shipping zones to assign to the channel."""
   addShippingZones: [ID!]
@@ -2724,6 +2868,13 @@ input ChannelUpdateInput {
   removeWarehouses: [ID!]
 }
 
+"""
+Event sent when channel is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ChannelUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -2737,13 +2888,7 @@ type ChannelUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The channel the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The channel the event relates to."""
   channel: Channel
 }
 
@@ -2867,6 +3012,15 @@ type Checkout implements Node & ObjectWithMetadata {
 
   """The price of the checkout before shipping, with taxes included."""
   subtotalPrice: TaxedMoney!
+
+  """
+  Returns True if checkout has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
 
   """The checkout's token."""
   token: UUID!
@@ -3010,6 +3164,13 @@ input CheckoutCreateInput {
   validationRules: CheckoutValidationRules
 }
 
+"""
+Event sent when new checkout is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CheckoutCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3023,13 +3184,7 @@ type CheckoutCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The checkout the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The checkout the event relates to."""
   checkout: Checkout
 }
 
@@ -3137,6 +3292,39 @@ input CheckoutFilterInput {
   search: String
   metadata: [MetadataFilter!]
   channels: [ID!]
+}
+
+"""
+Filter shipping methods for checkout.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CheckoutFilterShippingMethods implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The checkout the event relates to."""
+  checkout: Checkout
+
+  """
+  Shipping methods that can be used with this checkout.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  shippingMethods: [ShippingMethod!]
 }
 
 """Update language code in the existing checkout."""
@@ -3255,16 +3443,36 @@ input CheckoutLineInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   price: PositiveDecimal
+
+  """
+  Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. 
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  forceNewLine: Boolean = false
+
+  """
+  Fields required to update the object's metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
 }
 
 input CheckoutLineUpdateInput {
   """
+  ID of the product variant. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `lineId` instead.
+  """
+  variantId: ID
+
+  """
   The number of items purchased. Optional for apps, required for any other users.
   """
   quantity: Int
-
-  """ID of the product variant."""
-  variantId: ID!
 
   """
   Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
@@ -3274,6 +3482,13 @@ input CheckoutLineUpdateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   price: PositiveDecimal
+
+  """
+  ID of the line.
+  
+  Added in Saleor 3.6.
+  """
+  lineId: ID
 }
 
 """
@@ -3355,6 +3570,13 @@ input CheckoutSortingInput {
   field: CheckoutSortField!
 }
 
+"""
+Event sent when checkout is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CheckoutUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3368,13 +3590,7 @@ type CheckoutUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The checkout the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The checkout the event relates to."""
   checkout: Checkout
 }
 
@@ -3664,6 +3880,13 @@ input CollectionCreateInput {
   products: [ID!]
 }
 
+"""
+Event sent when new collection is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CollectionCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3677,13 +3900,7 @@ type CollectionCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The collection the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The collection the event relates to."""
   collection(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -3701,6 +3918,13 @@ type CollectionDelete {
   collection: Collection
 }
 
+"""
+Event sent when collection is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CollectionDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3714,13 +3938,7 @@ type CollectionDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The collection the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The collection the event relates to."""
   collection(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -3759,6 +3977,7 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -3951,6 +4170,13 @@ type CollectionUpdate {
   collection: Collection
 }
 
+"""
+Event sent when collection is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CollectionUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -3964,13 +4190,7 @@ type CollectionUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The collection the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The collection the event relates to."""
   collection(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -4373,6 +4593,13 @@ type CustomerCreate {
   user: User
 }
 
+"""
+Event sent when new customer user is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CustomerCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -4386,13 +4613,7 @@ type CustomerCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The user the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The user the event relates to."""
   user: User
 }
 
@@ -4501,6 +4722,13 @@ type CustomerUpdate {
   user: User
 }
 
+"""
+Event sent when customer user is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type CustomerUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -4514,13 +4742,7 @@ type CustomerUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The user the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The user the event relates to."""
   user: User
 }
 
@@ -4908,6 +5130,13 @@ input DraftOrderCreateInput {
   lines: [OrderLineCreateInput!]
 }
 
+"""
+Event sent when new draft order is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type DraftOrderCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -4921,13 +5150,7 @@ type DraftOrderCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -4942,6 +5165,13 @@ type DraftOrderDelete {
   order: Order
 }
 
+"""
+Event sent when draft order is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type DraftOrderDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -4955,13 +5185,7 @@ type DraftOrderDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -5022,6 +5246,13 @@ type DraftOrderUpdate {
   order: Order
 }
 
+"""
+Event sent when draft order is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type DraftOrderUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -5035,13 +5266,7 @@ type DraftOrderUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -5637,6 +5862,33 @@ type FulfillmentApprove {
 }
 
 """
+Event sent when fulfillment is approved.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type FulfillmentApproved implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The fulfillment the event relates to."""
+  fulfillment: Fulfillment
+
+  """The order the fulfillment belongs to."""
+  order: Order
+}
+
+"""
 Cancels existing fulfillment and optionally restocks items. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -5658,6 +5910,13 @@ input FulfillmentCancelInput {
   warehouseId: ID
 }
 
+"""
+Event sent when fulfillment is canceled.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type FulfillmentCanceled implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -5671,25 +5930,20 @@ type FulfillmentCanceled implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The fulfillment the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The fulfillment the event relates to."""
   fulfillment: Fulfillment
 
-  """
-  The order the fulfillment belongs to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the fulfillment belongs to."""
   order: Order
 }
 
+"""
+Event sent when new fulfillment is created.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type FulfillmentCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -5703,22 +5957,10 @@ type FulfillmentCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The fulfillment the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The fulfillment the event relates to."""
   fulfillment: Fulfillment
 
-  """
-  The order the fulfillment belongs to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the fulfillment belongs to."""
   order: Order
 }
 
@@ -5973,8 +6215,8 @@ type GiftCard implements Node & ObjectWithMetadata {
   """
   boughtInChannel: String
   isActive: Boolean!
-  initialBalance: Money
-  currentBalance: Money
+  initialBalance: Money!
+  currentBalance: Money!
 
   """The customer who bought a gift card."""
   user: User @deprecated(reason: "This field will be removed in Saleor 4.0. Use `createdBy` field instead.")
@@ -6203,6 +6445,13 @@ input GiftCardCreateInput {
   note: String
 }
 
+"""
+Event sent when new gift card is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type GiftCardCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6216,13 +6465,7 @@ type GiftCardCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The gift card the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The gift card the event relates to."""
   giftCard: GiftCard
 }
 
@@ -6253,6 +6496,13 @@ type GiftCardDelete {
   giftCard: GiftCard
 }
 
+"""
+Event sent when gift card is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type GiftCardDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6266,13 +6516,7 @@ type GiftCardDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The gift card the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The gift card the event relates to."""
   giftCard: GiftCard
 }
 
@@ -6505,6 +6749,13 @@ input GiftCardSortingInput {
   field: GiftCardSortField!
 }
 
+"""
+Event sent when gift card status has changed.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type GiftCardStatusChanged implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6518,13 +6769,7 @@ type GiftCardStatusChanged implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The gift card the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The gift card the event relates to."""
   giftCard: GiftCard
 }
 
@@ -6624,6 +6869,13 @@ input GiftCardUpdateInput {
   balanceAmount: PositiveDecimal
 }
 
+"""
+Event sent when gift card is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type GiftCardUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6637,13 +6889,7 @@ type GiftCardUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The gift card the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The gift card the event relates to."""
   giftCard: GiftCard
 }
 
@@ -6795,6 +7041,13 @@ type InvoiceDelete {
   invoice: Invoice
 }
 
+"""
+Event sent when invoice is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type InvoiceDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6808,13 +7061,7 @@ type InvoiceDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The invoice the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The invoice the event relates to."""
   invoice: Invoice
 }
 
@@ -6867,6 +7114,13 @@ type InvoiceRequestDelete {
   invoice: Invoice
 }
 
+"""
+Event sent when invoice is requested.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type InvoiceRequested implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6880,13 +7134,7 @@ type InvoiceRequested implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The invoice the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The invoice the event relates to."""
   invoice: Invoice
 }
 
@@ -6901,6 +7149,13 @@ type InvoiceSendNotification {
   invoice: Invoice
 }
 
+"""
+Event sent when invoice is sent.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type InvoiceSent implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -6914,13 +7169,7 @@ type InvoiceSent implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The invoice the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The invoice the event relates to."""
   invoice: Invoice
 }
 
@@ -7944,6 +8193,13 @@ input MenuCreateInput {
   items: [MenuItemInput!]
 }
 
+"""
+Event sent when new menu is created.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -7957,13 +8213,7 @@ type MenuCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu the event relates to."""
   menu(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -7981,6 +8231,13 @@ type MenuDelete {
   menu: Menu
 }
 
+"""
+Event sent when menu is deleted.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -7994,13 +8251,7 @@ type MenuDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu the event relates to."""
   menu(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -8037,6 +8288,7 @@ input MenuFilterInput {
   search: String
   slug: [String!]
   metadata: [MetadataFilter!]
+  slugs: [String!]
 }
 
 input MenuInput {
@@ -8188,6 +8440,13 @@ input MenuItemCreateInput {
   parent: ID
 }
 
+"""
+Event sent when new menu item is created.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuItemCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -8201,13 +8460,7 @@ type MenuItemCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu item the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu item the event relates to."""
   menuItem(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -8225,6 +8478,13 @@ type MenuItemDelete {
   menuItem: MenuItem
 }
 
+"""
+Event sent when menu item is deleted.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuItemDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -8238,13 +8498,7 @@ type MenuItemDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu item the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu item the event relates to."""
   menuItem(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -8352,6 +8606,13 @@ type MenuItemUpdate {
   menuItem: MenuItem
 }
 
+"""
+Event sent when menu item is updated.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuItemUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -8365,13 +8626,7 @@ type MenuItemUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu item the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu item the event relates to."""
   menuItem(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -8410,6 +8665,13 @@ type MenuUpdate {
   menu: Menu
 }
 
+"""
+Event sent when menu is updated.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type MenuUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -8423,13 +8685,7 @@ type MenuUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The menu the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The menu the event relates to."""
   menu(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -8709,7 +8965,9 @@ type Mutation {
     """Country in which to update the tax class rates."""
     countryCode: CountryCode!
 
-    """List of tax rates per tax class to update."""
+    """
+    List of tax rates per tax class to update. When `{taxClass: id, rate: null`} is passed, it deletes the rate object for given taxClass ID. When `{rate: Int}` is passed without a tax class, it updates the default tax class for this country.
+    """
     updateTaxClassRates: [TaxClassRateInput!]!
   ): TaxCountryConfigurationUpdate
 
@@ -8726,6 +8984,23 @@ type Mutation {
     """Country in which to update the tax class rates."""
     countryCode: CountryCode!
   ): TaxCountryConfigurationDelete
+
+  """
+  Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TAXES.
+  """
+  taxExemptionManage(
+    """ID of the Checkout or Order object."""
+    id: ID!
+
+    """Determines if a taxes should be exempt."""
+    taxExemption: Boolean!
+  ): TaxExemptionManage
 
   """
   Creates a new staff notification recipient. 
@@ -8785,7 +9060,7 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
-  shopFetchTaxRates: ShopFetchTaxRates
+  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
 
   """
   Creates/updates translations for shop settings. 
@@ -10999,6 +11274,13 @@ type Mutation {
     """
     id: ID
 
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
     """Client-side generated data required to finalize the payment."""
     paymentData: JSONString
 
@@ -11408,6 +11690,20 @@ type Mutation {
     id: ID!
 
     """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
+    """
+    Fields required to update the checkout private metadata.
+    
+    Added in Saleor 3.8.
+    """
+    privateMetadata: [MetadataInput!]
+
+    """
     Determines if checkout should be removed after creating an order. Default true.
     """
     removeCheckout: Boolean = true
@@ -11468,6 +11764,23 @@ type Mutation {
     """ID of the channel to deactivate."""
     id: ID!
   ): ChannelDeactivate
+
+  """
+  Reorder the warehouses of a channel.
+  
+  Added in Saleor 3.7.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_CHANNELS.
+  """
+  channelReorderWarehouses(
+    """ID of a channel."""
+    channelId: ID!
+
+    """The list of reordering operations for the given channel warehouses."""
+    moves: [ReorderInput!]!
+  ): ChannelReorderWarehouses
 
   """Creates an attribute."""
   attributeCreate(
@@ -12380,6 +12693,15 @@ type Order implements Node & ObjectWithMetadata {
   chargeStatus: OrderChargeStatusEnum!
 
   """
+  Returns True if order has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
+
+  """
   List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
@@ -12448,7 +12770,7 @@ type Order implements Node & ObjectWithMetadata {
   isShippingRequired: Boolean!
 
   """
-  The delivery method selected for this checkout.
+  The delivery method selected for this order.
   
   Added in Saleor 3.1.
   
@@ -12565,6 +12887,13 @@ type OrderCancel {
   errors: [OrderError!]!
 }
 
+"""
+Event sent when order is canceled.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderCancelled implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -12578,13 +12907,7 @@ type OrderCancelled implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -12632,6 +12955,13 @@ type OrderConfirm {
   errors: [OrderError!]!
 }
 
+"""
+Event sent when order is confirmed.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderConfirmed implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -12645,13 +12975,7 @@ type OrderConfirmed implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -12722,6 +13046,13 @@ enum OrderCreateFromCheckoutErrorCode {
   UNAVAILABLE_VARIANT_IN_CHANNEL
 }
 
+"""
+Event sent when new order is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -12735,13 +13066,7 @@ type OrderCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -13115,6 +13440,39 @@ input OrderFilterInput {
 }
 
 """
+Filter shipping methods for order.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderFilterShippingMethods implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
+
+  """
+  Shipping methods that can be used with this checkout.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  shippingMethods: [ShippingMethod!]
+}
+
+"""
 Creates new fulfillments for an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -13138,6 +13496,13 @@ input OrderFulfillInput {
 
   """If true, then allow proceed fulfillment when stock is exceeded."""
   allowStockToBeExceeded: Boolean = false
+
+  """
+  Fulfillment tracking number.
+  
+  Added in Saleor 3.6.
+  """
+  trackingNumber: String
 }
 
 input OrderFulfillLineInput {
@@ -13156,6 +13521,13 @@ input OrderFulfillStockInput {
   warehouse: ID!
 }
 
+"""
+Event sent when order is fulfilled.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderFulfilled implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -13169,16 +13541,17 @@ type OrderFulfilled implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
+"""
+Event sent when order is fully paid.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderFullyPaid implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -13192,13 +13565,7 @@ type OrderFullyPaid implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -13329,6 +13696,15 @@ input OrderLineCreateInput {
 
   """Product variant ID."""
   variantId: ID!
+
+  """
+  Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. 
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  forceNewLine: Boolean = false
 }
 
 """
@@ -13668,6 +14044,13 @@ input OrderUpdateShippingInput {
   shippingMethod: ID
 }
 
+"""
+Event sent when order is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type OrderUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -13681,13 +14064,7 @@ type OrderUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The order the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The order the event relates to."""
   order: Order
 }
 
@@ -13911,6 +14288,13 @@ input PageCreateInput {
   pageType: ID!
 }
 
+"""
+Event sent when new page is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -13924,13 +14308,7 @@ type PageCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page the event relates to."""
   page: Page
 }
 
@@ -13945,6 +14323,13 @@ type PageDelete {
   page: Page
 }
 
+"""
+Event sent when page is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -13958,13 +14343,7 @@ type PageDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page the event relates to."""
   page: Page
 }
 
@@ -14003,6 +14382,7 @@ input PageFilterInput {
   metadata: [MetadataFilter!]
   pageTypes: [ID!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 """
@@ -14328,6 +14708,13 @@ input PageTypeCreateInput {
   addAttributes: [ID!]
 }
 
+"""
+Event sent when new page type is created.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageTypeCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14341,13 +14728,7 @@ type PageTypeCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page type the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page type the event relates to."""
   pageType: PageType
 }
 
@@ -14362,6 +14743,13 @@ type PageTypeDelete {
   pageType: PageType
 }
 
+"""
+Event sent when page type is deleted.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageTypeDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14375,18 +14763,13 @@ type PageTypeDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page type the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page type the event relates to."""
   pageType: PageType
 }
 
 input PageTypeFilterInput {
   search: String
+  slugs: [String!]
 }
 
 """
@@ -14442,6 +14825,13 @@ input PageTypeUpdateInput {
   removeAttributes: [ID!]
 }
 
+"""
+Event sent when page type is updated.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageTypeUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14455,13 +14845,7 @@ type PageTypeUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page type the event relates to.
-  
-  Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page type the event relates to."""
   pageType: PageType
 }
 
@@ -14476,6 +14860,13 @@ type PageUpdate {
   page: Page
 }
 
+"""
+Event sent when page is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type PageUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -14489,13 +14880,7 @@ type PageUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The page the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The page the event relates to."""
   page: Page
 }
 
@@ -14618,6 +15003,30 @@ type Payment implements Node & ObjectWithMetadata {
 }
 
 """
+Authorize payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentAuthorize implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
+}
+
+"""
 Captures the authorized payment amount. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -14627,6 +15036,30 @@ type PaymentCapture {
   payment: Payment
   paymentErrors: [PaymentError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [PaymentError!]!
+}
+
+"""
+Capture payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentCaptureEvent implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
 }
 
 """An enumeration."""
@@ -14663,6 +15096,30 @@ input PaymentCheckBalanceInput {
   card: CardInput!
 }
 
+"""
+Confirm payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentConfirmEvent implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
+}
+
 type PaymentCountableConnection {
   """Pagination data for this connection."""
   pageInfo: PageInfo!
@@ -14692,7 +15149,7 @@ type PaymentError {
   """The error code."""
   code: PaymentErrorCode!
 
-  """List of varint IDs which causes the error."""
+  """List of variant IDs which causes the error."""
   variants: [ID!]
 }
 
@@ -14794,6 +15251,54 @@ input PaymentInput {
 }
 
 """
+List payment gateways.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentListGateways implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The checkout the event relates to."""
+  checkout: Checkout
+}
+
+"""
+Process payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentProcessEvent implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
+}
+
+"""
 Refunds the captured payment amount. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -14803,6 +15308,30 @@ type PaymentRefund {
   payment: Payment
   paymentErrors: [PaymentError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [PaymentError!]!
+}
+
+"""
+Refund payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentRefundEvent implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
 }
 
 """
@@ -14840,6 +15369,30 @@ type PaymentVoid {
   errors: [PaymentError!]!
 }
 
+"""
+Void payment.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PaymentVoidEvent implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """Look up a payment."""
+  payment: Payment
+}
+
 """Represents a permission object in a friendly form."""
 type Permission {
   """Internal code for permission."""
@@ -14856,9 +15409,11 @@ enum PermissionEnum {
   IMPERSONATE_USER
   MANAGE_APPS
   MANAGE_OBSERVABILITY
-  MANAGE_CHANNELS
   MANAGE_CHECKOUTS
   HANDLE_CHECKOUTS
+  HANDLE_TAXES
+  MANAGE_TAXES
+  MANAGE_CHANNELS
   MANAGE_DISCOUNTS
   MANAGE_GIFT_CARD
   MANAGE_MENUS
@@ -14872,7 +15427,6 @@ enum PermissionEnum {
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
-  MANAGE_TAXES
 }
 
 """
@@ -14898,6 +15452,30 @@ input PermissionGroupCreateInput {
 }
 
 """
+Event sent when new permission group is created.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PermissionGroupCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The permission group the event relates to."""
+  permissionGroup: Group
+}
+
+"""
 Delete permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
@@ -14906,6 +15484,30 @@ type PermissionGroupDelete {
   permissionGroupErrors: [PermissionGroupError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [PermissionGroupError!]!
   group: Group
+}
+
+"""
+Event sent when permission group is deleted.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PermissionGroupDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The permission group the event relates to."""
+  permissionGroup: Group
 }
 
 type PermissionGroupError {
@@ -14983,6 +15585,30 @@ input PermissionGroupUpdateInput {
 
   """List of users to unassign from this group."""
   removeUsers: [ID!]
+}
+
+"""
+Event sent when permission group is updated.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type PermissionGroupUpdated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The permission group the event relates to."""
+  permissionGroup: Group
 }
 
 """Plugin."""
@@ -15233,7 +15859,7 @@ type Product implements Node & ObjectWithMetadata {
   category: Category
   created: DateTime!
   updatedAt: DateTime!
-  chargeTaxes: Boolean!
+  chargeTaxes: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` field to determine whether tax collection is enabled.")
   weight: Weight
   defaultVariant: ProductVariant
   rating: Float
@@ -15284,7 +15910,7 @@ type Product implements Node & ObjectWithMetadata {
   ): Boolean
 
   """A type of tax. Assigned by enabled tax gateway"""
-  taxType: TaxType
+  taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
 
   """List of attributes assigned to this product."""
   attributes: [SelectedAttribute!]!
@@ -15344,7 +15970,7 @@ type Product implements Node & ObjectWithMetadata {
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 }
 
 """
@@ -15613,7 +16239,11 @@ input ProductCreateInput {
   """ID of the product's category."""
   category: ID
 
-  """Determine if taxes are being charged for the product."""
+  """
+  Determine if taxes are being charged for the product. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+  """
   chargeTaxes: Boolean
 
   """List of IDs of collections that the product belongs to."""
@@ -15637,7 +16267,11 @@ input ProductCreateInput {
   """
   taxClass: ID
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  """
   taxCode: String
 
   """Search engine optimization fields."""
@@ -15653,6 +16287,13 @@ input ProductCreateInput {
   productType: ID!
 }
 
+"""
+Event sent when new product is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -15666,25 +16307,13 @@ type ProductCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product the event relates to."""
   product(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
 
-  """
-  The category of the product.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category of the product."""
   category: Category
 }
 
@@ -15699,6 +16328,13 @@ type ProductDelete {
   product: Product
 }
 
+"""
+Event sent when product is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -15712,25 +16348,13 @@ type ProductDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product the event relates to."""
   product(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
 
-  """
-  The category of the product.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category of the product."""
   category: Category
 }
 
@@ -15797,17 +16421,26 @@ input ProductFilterInput {
   categories: [ID!]
   hasCategory: Boolean
   attributes: [AttributeInput!]
+
+  """Filter by variants having specific stock status."""
   stockAvailability: StockAvailability
   stocks: ProductStockFilterInput
   search: String
   metadata: [MetadataFilter!]
   price: PriceRangeInput
+
+  """Filter by the lowest variant price after discounts."""
   minimalPrice: PriceRangeInput
+
+  """Filter by when was the most recent update."""
   updatedAt: DateTimeRangeInput
   productTypes: [ID!]
+
+  """Filter on whether product is a gift card or not."""
   giftCard: Boolean
   ids: [ID!]
   hasPreorderedVariants: Boolean
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -15853,7 +16486,11 @@ input ProductInput {
   """ID of the product's category."""
   category: ID
 
-  """Determine if taxes are being charged for the product."""
+  """
+  Determine if taxes are being charged for the product. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+  """
   chargeTaxes: Boolean
 
   """List of IDs of collections that the product belongs to."""
@@ -15877,7 +16514,11 @@ input ProductInput {
   """
   taxClass: ID
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  """
   taxCode: String
 
   """Search engine optimization fields."""
@@ -16284,14 +16925,14 @@ type ProductType implements Node & ObjectWithMetadata {
   ): ProductCountableConnection @deprecated(reason: "This field will be removed in Saleor 4.0. Use the top-level `products` query with the `productTypes` filter.")
 
   """A type of tax. Assigned by enabled tax gateway"""
-  taxType: TaxType
+  taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
 
   """
   Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 
   """Variant attributes of that product type."""
   variantAttributes(
@@ -16402,6 +17043,7 @@ input ProductTypeFilterInput {
   metadata: [MetadataFilter!]
   kind: ProductTypeKindEnum
   ids: [ID!]
+  slugs: [String!]
 }
 
 input ProductTypeInput {
@@ -16436,7 +17078,11 @@ input ProductTypeInput {
   """Weight of the ProductType items."""
   weight: WeightScalar
 
-  """Tax rate for enabled tax gateway."""
+  """
+  Tax rate for enabled tax gateway. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type.
+  """
   taxCode: String
 
   """
@@ -16504,6 +17150,13 @@ type ProductUpdate {
   product: Product
 }
 
+"""
+Event sent when product is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -16517,25 +17170,13 @@ type ProductUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product the event relates to."""
   product(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
 
-  """
-  The category of the product.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The category of the product."""
   category: Category
 }
 
@@ -16707,6 +17348,13 @@ type ProductVariant implements Node & ObjectWithMetadata {
   updatedAt: DateTime!
 }
 
+"""
+Event sent when product variant is back in stock.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantBackInStock implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -16720,25 +17368,13 @@ type ProductVariantBackInStock implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): ProductVariant
 
-  """
-  Look up a warehouse.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """Look up a warehouse."""
   warehouse: Warehouse
 }
 
@@ -16763,6 +17399,9 @@ input ProductVariantBulkCreateInput {
 
   """Stock keeping unit."""
   sku: String
+
+  """Variant name."""
+  name: String
 
   """
   Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.
@@ -16902,6 +17541,9 @@ input ProductVariantCreateInput {
   """Stock keeping unit."""
   sku: String
 
+  """Variant name."""
+  name: String
+
   """
   Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.
   """
@@ -16935,6 +17577,13 @@ input ProductVariantCreateInput {
   stocks: [StockInput!]
 }
 
+"""
+Event sent when new product variant is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -16948,13 +17597,7 @@ type ProductVariantCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -16972,6 +17615,13 @@ type ProductVariantDelete {
   productVariant: ProductVariant
 }
 
+"""
+Event sent when product variant is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -16985,13 +17635,7 @@ type ProductVariantDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -17012,6 +17656,9 @@ input ProductVariantInput {
 
   """Stock keeping unit."""
   sku: String
+
+  """Variant name."""
+  name: String
 
   """
   Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item.
@@ -17040,6 +17687,13 @@ input ProductVariantInput {
   quantityLimitPerCustomer: Int
 }
 
+"""
+Event sent when product variant is out of stock.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantOutOfStock implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -17053,25 +17707,13 @@ type ProductVariantOutOfStock implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): ProductVariant
 
-  """
-  Look up a warehouse.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """Look up a warehouse."""
   warehouse: Warehouse
 }
 
@@ -17220,6 +17862,13 @@ type ProductVariantUpdate {
   productVariant: ProductVariant
 }
 
+"""
+Event sent when product variant is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ProductVariantUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -17233,13 +17882,7 @@ type ProductVariantUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The product variant the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The product variant the event relates to."""
   productVariant(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -17814,6 +18457,20 @@ type Query {
     last: Int
   ): PaymentCountableConnection
 
+  """
+  Look up a transaction by ID.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transaction(
+    """ID of a transaction."""
+    id: ID!
+  ): TransactionItem
+
   """Look up a page by ID or slug."""
   page(
     """ID of the page."""
@@ -17991,7 +18648,11 @@ type Query {
     """Sort menus."""
     sortBy: MenuSortingInput
 
-    """Filtering options for menus."""
+    """
+    Filtering options for menus. 
+    
+    `slug`: This field will be removed in Saleor 4.0. Use `slugs` instead.
+    """
     filter: MenuFilterInput
 
     """Return the elements in the list that come before the specified cursor."""
@@ -18365,14 +19026,19 @@ type Query {
     last: Int
   ): CheckoutLineCountableConnection
 
-  """
-  Look up a channel by ID.
-  
-  Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
-  """
+  """Look up a channel by ID or slug."""
   channel(
     """ID of the channel."""
     id: ID
+
+    """
+    Slug of the channel.
+    
+    Added in Saleor 3.6.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    slug: String
   ): Channel
 
   """
@@ -18917,6 +19583,13 @@ type SaleCreate {
   sale: Sale
 }
 
+"""
+Event sent when new sale is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type SaleCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -18930,13 +19603,7 @@ type SaleCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The sale the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The sale the event relates to."""
   sale(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -18954,6 +19621,13 @@ type SaleDelete {
   sale: Sale
 }
 
+"""
+Event sent when sale is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type SaleDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -18967,13 +19641,7 @@ type SaleDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The sale the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The sale the event relates to."""
   sale(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19156,6 +19824,13 @@ type SaleUpdate {
   sale: Sale
 }
 
+"""
+Event sent when sale is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type SaleUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -19169,13 +19844,7 @@ type SaleUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The sale the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The sale the event relates to."""
   sale(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19247,6 +19916,39 @@ enum ShippingErrorCode {
   REQUIRED
   UNIQUE
   DUPLICATED_INPUT_ITEM
+}
+
+"""
+List shipping methods for checkout.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type ShippingListMethodsForCheckout implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The checkout the event relates to."""
+  checkout: Checkout
+
+  """
+  Shipping methods that can be used with this checkout.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  shippingMethods: [ShippingMethod!]
 }
 
 """
@@ -19573,13 +20275,28 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   
   Requires one of the following permissions: MANAGE_TAXES, MANAGE_SHIPPING.
   """
-  taxClass: TaxClass!
+  taxClass: TaxClass
 }
 
 """An enumeration."""
 enum ShippingMethodTypeEnum {
   PRICE
   WEIGHT
+}
+
+"""
+List of shipping methods available for the country.
+
+Added in Saleor 3.6.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type ShippingMethodsPerCountry {
+  """The country code."""
+  countryCode: CountryCode!
+
+  """List of available shipping methods."""
+  shippingMethods: [ShippingMethod!]
 }
 
 input ShippingPostalCodeRulesCreateInputRange {
@@ -19615,6 +20332,13 @@ type ShippingPriceCreate {
   errors: [ShippingError!]!
 }
 
+"""
+Event sent when new shipping price is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingPriceCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -19628,25 +20352,13 @@ type ShippingPriceCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping method the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping method the event relates to."""
   shippingMethod(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): ShippingMethodType
 
-  """
-  The shipping zone the shipping method belongs to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the shipping method belongs to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19668,6 +20380,13 @@ type ShippingPriceDelete {
   errors: [ShippingError!]!
 }
 
+"""
+Event sent when shipping price is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingPriceDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -19681,25 +20400,13 @@ type ShippingPriceDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping method the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping method the event relates to."""
   shippingMethod(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): ShippingMethodType
 
-  """
-  The shipping zone the shipping method belongs to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the shipping method belongs to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19810,6 +20517,13 @@ type ShippingPriceUpdate {
   errors: [ShippingError!]!
 }
 
+"""
+Event sent when shipping price is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingPriceUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -19823,25 +20537,13 @@ type ShippingPriceUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping method the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping method the event relates to."""
   shippingMethod(
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): ShippingMethodType
 
-  """
-  The shipping zone the shipping method belongs to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the shipping method belongs to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19985,6 +20687,13 @@ input ShippingZoneCreateInput {
   addChannels: [ID!]
 }
 
+"""
+Event sent when new shipping zone is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingZoneCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -19998,13 +20707,7 @@ type ShippingZoneCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping zone the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the event relates to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -20022,6 +20725,13 @@ type ShippingZoneDelete {
   shippingZone: ShippingZone
 }
 
+"""
+Event sent when shipping zone is deleted.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingZoneDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -20035,13 +20745,7 @@ type ShippingZoneDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping zone the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the event relates to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -20092,6 +20796,13 @@ input ShippingZoneUpdateInput {
   removeChannels: [ID!]
 }
 
+"""
+Event sent when shipping zone is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type ShippingZoneUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -20105,13 +20816,7 @@ type ShippingZoneUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The shipping zone the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The shipping zone the event relates to."""
   shippingZone(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -20207,9 +20912,6 @@ type Shop {
   """Header text."""
   headerText: String
 
-  """Include taxes in prices."""
-  includeTaxesInPrices: Boolean!
-
   """
   Automatically approve all new fulfillments.
   
@@ -20223,12 +20925,6 @@ type Shop {
   Added in Saleor 3.1.
   """
   fulfillmentAllowUnpaid: Boolean!
-
-  """Display prices with tax in store."""
-  displayGrossPrices: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to determine whether to display gross or net prices.")
-
-  """Charge taxes on shipping."""
-  chargeTaxesOnShipping: Boolean!
 
   """Enable inventory tracking."""
   trackInventoryByDefault: Boolean
@@ -20318,6 +21014,15 @@ type Shop {
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   version: String!
+
+  """Include taxes in prices."""
+  includeTaxesInPrices: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration.pricesEnteredWithTax` to determine whether prices are entered with tax.")
+
+  """Display prices with tax in store."""
+  displayGrossPrices: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to determine whether to display gross or net prices.")
+
+  """Charge taxes on shipping."""
+  chargeTaxesOnShipping: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `ShippingMethodType.taxClass` to determine whether taxes are calculated for shipping methods; if a tax class is set, the taxes will be calculated, otherwise no tax rate will be applied.")
 }
 
 """
@@ -20387,19 +21092,6 @@ input ShopSettingsInput {
   """SEO description."""
   description: String
 
-  """Include taxes in prices."""
-  includeTaxesInPrices: Boolean
-
-  """
-  Display prices with tax in store. 
-  
-  DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
-  """
-  displayGrossPrices: Boolean
-
-  """Charge taxes on shipping."""
-  chargeTaxesOnShipping: Boolean
-
   """Enable inventory tracking."""
   trackInventoryByDefault: Boolean
 
@@ -20460,6 +21152,27 @@ input ShopSettingsInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   limitQuantityPerCheckout: Int
+
+  """
+  Include taxes in prices. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+  """
+  includeTaxesInPrices: Boolean
+
+  """
+  Display prices with tax in store. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+  """
+  displayGrossPrices: Boolean
+
+  """
+  Charge taxes on shipping. 
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+  """
+  chargeTaxesOnShipping: Boolean
 }
 
 """
@@ -20556,6 +21269,13 @@ input StaffCreateInput {
   redirectUrl: String
 }
 
+"""
+Event sent when new staff user is created.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type StaffCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -20569,13 +21289,7 @@ type StaffCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The user the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The user the event relates to."""
   user: User
 }
 
@@ -20590,6 +21304,13 @@ type StaffDelete {
   user: User
 }
 
+"""
+Event sent when staff user is deleted.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type StaffDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -20603,13 +21324,7 @@ type StaffDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The user the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The user the event relates to."""
   user: User
 }
 
@@ -20740,6 +21455,13 @@ input StaffUpdateInput {
   removeGroups: [ID!]
 }
 
+"""
+Event sent when staff user is updated.
+
+Added in Saleor 3.5.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type StaffUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -20753,13 +21475,7 @@ type StaffUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The user the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The user the event relates to."""
   user: User
 }
 
@@ -20855,6 +21571,27 @@ input StockInput {
   quantity: Int!
 }
 
+"""
+Represents the channel stock settings.
+
+Added in Saleor 3.7.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type StockSettings {
+  """
+  Allocation strategy defines the preference of warehouses for allocations and reservations.
+  """
+  allocationStrategy: AllocationStrategyEnum!
+}
+
+input StockSettingsInput {
+  """
+  Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations.
+  """
+  allocationStrategy: AllocationStrategyEnum!
+}
+
 """Enum representing the type of a payment storage in a gateway."""
 enum StorePaymentMethodEnum {
   """
@@ -20880,6 +21617,11 @@ type Subscription {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   event: Event
+}
+
+enum TaxCalculationStrategy {
+  FLAT_RATES
+  TAX_APP
 }
 
 """
@@ -20942,11 +21684,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   """Name of the tax class."""
   name: String!
 
-  """
-  Determines whether a tax class is a default one. Default tax class is created by the system and cannot be removed.
-  """
-  isDefault: Boolean!
-
   """Country-specific tax rates for this tax class."""
   countries: [TaxClassCountryRate!]!
 }
@@ -20969,7 +21706,7 @@ type TaxClassCountableEdge {
 }
 
 """
-Country-specific tax rate value for a tax class.
+Tax rate for a country. When tax class is null, it represents the default tax rate for that country; otherwise it's a country tax rate specific to the given tax class.
 
 Added in Saleor 3.5.
 
@@ -20983,7 +21720,7 @@ type TaxClassCountryRate {
   rate: Float!
 
   """Related tax class."""
-  taxClass: TaxClass!
+  taxClass: TaxClass
 }
 
 """
@@ -21060,7 +21797,6 @@ type TaxClassDeleteError {
 
 """An enumeration."""
 enum TaxClassDeleteErrorCode {
-  CANNOT_DELETE_DEFAULT_CLASS
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
@@ -21074,10 +21810,10 @@ input TaxClassFilterInput {
 
 input TaxClassRateInput {
   """ID of a tax class for which to update the tax rate"""
-  taxClassId: ID!
+  taxClassId: ID
 
   """Tax rate value."""
-  rate: Float!
+  rate: Float
 }
 
 enum TaxClassSortField {
@@ -21208,6 +21944,11 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   chargeTaxes: Boolean!
 
   """
+  The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.
+  """
+  taxCalculationStrategy: TaxCalculationStrategy
+
+  """
   Determines whether prices displayed in a storefront should include taxes.
   """
   displayGrossPrices: Boolean!
@@ -21256,6 +21997,11 @@ type TaxConfigurationPerCountry {
   chargeTaxes: Boolean!
 
   """
+  A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
+  """
+  taxCalculationStrategy: TaxCalculationStrategy
+
+  """
   Determines whether prices displayed in a storefront should include taxes for this country.
   """
   displayGrossPrices: Boolean!
@@ -21267,6 +22013,11 @@ input TaxConfigurationPerCountryInput {
 
   """Determines whether taxes are charged in this country."""
   chargeTaxes: Boolean!
+
+  """
+  A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration.
+  """
+  taxCalculationStrategy: TaxCalculationStrategy
 
   """
   Determines whether prices displayed in a storefront should include taxes for this country.
@@ -21315,6 +22066,11 @@ enum TaxConfigurationUpdateErrorCode {
 input TaxConfigurationUpdateInput {
   """Determines whether taxes are charged in the given channel."""
   chargeTaxes: Boolean
+
+  """
+  The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated.
+  """
+  taxCalculationStrategy: TaxCalculationStrategy
 
   """
   Determines whether prices displayed in a storefront should include taxes.
@@ -21419,7 +22175,48 @@ enum TaxCountryConfigurationUpdateErrorCode {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED
+  CANNOT_CREATE_WITH_NULL_RATE
 }
+
+"""
+Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+
+Added in Saleor 3.8.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_TAXES.
+"""
+type TaxExemptionManage {
+  taxableObject: TaxSourceObject
+  errors: [TaxExemptionManageError!]!
+}
+
+type TaxExemptionManageError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TaxExemptionManageErrorCode!
+}
+
+"""An enumeration."""
+enum TaxExemptionManageErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  NOT_EDITABLE_ORDER
+}
+
+union TaxSourceLine = CheckoutLine | OrderLine
+
+union TaxSourceObject = Checkout | Order
 
 """Representation of tax types fetched from tax gateway."""
 type TaxType {
@@ -21428,6 +22225,66 @@ type TaxType {
 
   """External tax code used to identify given tax group."""
   taxCode: String
+}
+
+"""Taxable object."""
+type TaxableObject {
+  """The source object related to this tax object."""
+  sourceObject: TaxSourceObject!
+
+  """Determines if prices contain entered tax.."""
+  pricesEnteredWithTax: Boolean!
+
+  """The currency of the object."""
+  currency: String!
+
+  """The price of shipping method."""
+  shippingPrice: Money!
+
+  """The address data."""
+  address: Address
+
+  """List of discounts."""
+  discounts: [TaxableObjectDiscount!]!
+
+  """List of lines assigned to the object."""
+  lines: [TaxableObjectLine!]!
+  channel: Channel!
+}
+
+"""Taxable object discount."""
+type TaxableObjectDiscount {
+  """The name of the discount."""
+  name: String
+
+  """The amount of the discount."""
+  amount: Money!
+}
+
+type TaxableObjectLine {
+  """The source line related to this tax line."""
+  sourceLine: TaxSourceLine!
+
+  """Number of items."""
+  quantity: Int!
+
+  """Determines if taxes are being charged for the product."""
+  chargeTaxes: Boolean!
+
+  """The product name."""
+  productName: String!
+
+  """The variant name."""
+  variantName: String!
+
+  """The product sku."""
+  productSku: String
+
+  """Price of the single item in the order line."""
+  unitPrice: Money!
+
+  """Price of the order line."""
+  totalPrice: Money!
 }
 
 """
@@ -21523,6 +22380,13 @@ enum TransactionActionEnum {
   VOID
 }
 
+"""
+Event sent when transaction action is requested.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type TransactionActionRequest implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -21733,6 +22597,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """Reference of transaction."""
   reference: String!
 
+  """
+  The related order.
+  
+  Added in Saleor 3.6.
+  """
+  order: Order
+
   """List of all transaction's events."""
   events: [TransactionEvent!]!
 }
@@ -21892,6 +22763,13 @@ enum TranslatableKinds {
   VOUCHER
 }
 
+"""
+Event sent when new translation is created.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type TranslationCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -21905,13 +22783,7 @@ type TranslationCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The translation the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The translation the event relates to."""
   translation: TranslationTypes
 }
 
@@ -21951,6 +22823,13 @@ input TranslationInput {
 
 union TranslationTypes = ProductTranslation | CollectionTranslation | CategoryTranslation | AttributeTranslation | AttributeValueTranslation | ProductVariantTranslation | PageTranslation | ShippingMethodTranslation | SaleTranslation | VoucherTranslation | MenuItemTranslation
 
+"""
+Event sent when translation is updated.
+
+Added in Saleor 3.2.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type TranslationUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -21964,13 +22843,7 @@ type TranslationUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The translation the event relates to.
-  
-  Added in Saleor 3.2.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The translation the event relates to."""
   translation: TranslationTypes
 }
 
@@ -22081,7 +22954,7 @@ type User implements Node & ObjectWithMetadata {
   isActive: Boolean!
 
   """List of all user's addresses."""
-  addresses: [Address!]
+  addresses: [Address!]!
 
   """Returns the last open checkout of this user."""
   checkout: Checkout @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `checkoutTokens` field to fetch the user checkouts.")
@@ -22668,6 +23541,13 @@ type VoucherCreate {
   voucher: Voucher
 }
 
+"""
+Event sent when new voucher is created.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type VoucherCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -22681,13 +23561,7 @@ type VoucherCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The voucher the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The voucher the event relates to."""
   voucher(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -22705,6 +23579,13 @@ type VoucherDelete {
   voucher: Voucher
 }
 
+"""
+Event sent when voucher is deleted.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type VoucherDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -22718,13 +23599,7 @@ type VoucherDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The voucher the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The voucher the event relates to."""
   voucher(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -22913,6 +23788,13 @@ type VoucherUpdate {
   voucher: Voucher
 }
 
+"""
+Event sent when voucher is updated.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type VoucherUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -22926,13 +23808,7 @@ type VoucherUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The voucher the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The voucher the event relates to."""
   voucher(
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -23068,10 +23944,21 @@ input WarehouseCreateInput {
   """Address of the warehouse."""
   address: AddressInput!
 
-  """Shipping zones supported by the warehouse."""
+  """
+  Shipping zones supported by the warehouse.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.
+  """
   shippingZones: [ID!]
 }
 
+"""
+Event sent when new warehouse is created.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type WarehouseCreated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -23085,13 +23972,7 @@ type WarehouseCreated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The warehouse the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The warehouse the event relates to."""
   warehouse: Warehouse
 }
 
@@ -23106,6 +23987,13 @@ type WarehouseDelete {
   warehouse: Warehouse
 }
 
+"""
+Event sent when warehouse is deleted.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type WarehouseDeleted implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -23119,13 +24007,7 @@ type WarehouseDeleted implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The warehouse the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The warehouse the event relates to."""
   warehouse: Warehouse
 }
 
@@ -23140,6 +24022,9 @@ type WarehouseError {
 
   """The error code."""
   code: WarehouseErrorCode!
+
+  """List of shipping zones IDs which causes the error."""
+  shippingZones: [ID!]
 }
 
 """An enumeration."""
@@ -23158,6 +24043,7 @@ input WarehouseFilterInput {
   ids: [ID!]
   isPrivate: Boolean
   channels: [ID!]
+  slugs: [String!]
 }
 
 """
@@ -23238,6 +24124,13 @@ input WarehouseUpdateInput {
   isPrivate: Boolean
 }
 
+"""
+Event sent when warehouse is updated.
+
+Added in Saleor 3.4.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
 type WarehouseUpdated implements Event {
   """Time of the event."""
   issuedAt: DateTime
@@ -23251,13 +24144,7 @@ type WarehouseUpdated implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """
-  The warehouse the event relates to.
-  
-  Added in Saleor 3.4.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
+  """The warehouse the event relates to."""
   warehouse: Warehouse
 }
 
@@ -23303,12 +24190,8 @@ type Webhook implements Node {
   """Informs if webhook is activated."""
   isActive: Boolean!
 
-  """
-  Used to create a hash signature with each payload.
-  
-  If not set, since Saleor 3.5, your payload will be signed using private key used also to sign JWT tokens.
-  """
-  secretKey: String
+  """Used to create a hash signature for each payload."""
+  secretKey: String @deprecated(reason: "This field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.")
 
   """Used to define payloads for specific events."""
   subscriptionQuery: String
@@ -23351,7 +24234,11 @@ input WebhookCreateInput {
   """Determine if webhook will be set active or not."""
   isActive: Boolean
 
-  """The secret key used to create a hash signature with each payload."""
+  """
+  The secret key used to create a hash signature with each payload.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+  """
   secretKey: String
 
   """
@@ -23540,12 +24427,26 @@ enum WebhookEventTypeAsyncEnum {
 
   """An order is fulfilled."""
   ORDER_FULFILLED
+
+  """A draft order is created."""
   DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
   DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
   DRAFT_ORDER_DELETED
+
+  """A sale is created."""
   SALE_CREATED
+
+  """A sale is updated."""
   SALE_UPDATED
+
+  """A sale is deleted."""
   SALE_DELETED
+
+  """A sale is activated or deactivated."""
   SALE_TOGGLE
 
   """An invoice for order requested."""
@@ -23592,7 +24493,11 @@ enum WebhookEventTypeAsyncEnum {
 
   """A product variant is deleted."""
   PRODUCT_VARIANT_DELETED
+
+  """A product variant is out of stock."""
   PRODUCT_VARIANT_OUT_OF_STOCK
+
+  """A product variant is back in stock."""
   PRODUCT_VARIANT_BACK_IN_STOCK
 
   """A new checkout is created."""
@@ -23608,6 +24513,9 @@ enum WebhookEventTypeAsyncEnum {
 
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
+
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
 
   """User notification triggered."""
   NOTIFY_USER
@@ -23630,6 +24538,15 @@ enum WebhookEventTypeAsyncEnum {
   """A page type is deleted."""
   PAGE_TYPE_DELETED
 
+  """A new permission group is created."""
+  PERMISSION_GROUP_CREATED
+
+  """A permission group is updated."""
+  PERMISSION_GROUP_UPDATED
+
+  """A permission group is deleted."""
+  PERMISSION_GROUP_DELETED
+
   """A new shipping price is created."""
   SHIPPING_PRICE_CREATED
 
@@ -23648,12 +24565,22 @@ enum WebhookEventTypeAsyncEnum {
   """A shipping zone is deleted."""
   SHIPPING_ZONE_DELETED
 
-  """A staff user is deleted"""
+  """A new staff user is created."""
   STAFF_CREATED
+
+  """A staff user is updated."""
   STAFF_UPDATED
+
+  """A staff user is deleted."""
   STAFF_DELETED
+
+  """An action requested for transaction."""
   TRANSACTION_ACTION_REQUEST
+
+  """A new translation is created."""
   TRANSLATION_CREATED
+
+  """A translation is updated."""
   TRANSLATION_UPDATED
 
   """A new warehouse created."""
@@ -23794,12 +24721,26 @@ enum WebhookEventTypeEnum {
 
   """An order is fulfilled."""
   ORDER_FULFILLED
+
+  """A draft order is created."""
   DRAFT_ORDER_CREATED
+
+  """A draft order is updated."""
   DRAFT_ORDER_UPDATED
+
+  """A draft order is deleted."""
   DRAFT_ORDER_DELETED
+
+  """A sale is created."""
   SALE_CREATED
+
+  """A sale is updated."""
   SALE_UPDATED
+
+  """A sale is deleted."""
   SALE_DELETED
+
+  """A sale is activated or deactivated."""
   SALE_TOGGLE
 
   """An invoice for order requested."""
@@ -23846,7 +24787,11 @@ enum WebhookEventTypeEnum {
 
   """A product variant is deleted."""
   PRODUCT_VARIANT_DELETED
+
+  """A product variant is out of stock."""
   PRODUCT_VARIANT_OUT_OF_STOCK
+
+  """A product variant is back in stock."""
   PRODUCT_VARIANT_BACK_IN_STOCK
 
   """A new checkout is created."""
@@ -23862,6 +24807,9 @@ enum WebhookEventTypeEnum {
 
   """A fulfillment is cancelled."""
   FULFILLMENT_CANCELED
+
+  """A fulfillment is approved."""
+  FULFILLMENT_APPROVED
 
   """User notification triggered."""
   NOTIFY_USER
@@ -23884,6 +24832,15 @@ enum WebhookEventTypeEnum {
   """A page type is deleted."""
   PAGE_TYPE_DELETED
 
+  """A new permission group is created."""
+  PERMISSION_GROUP_CREATED
+
+  """A permission group is updated."""
+  PERMISSION_GROUP_UPDATED
+
+  """A permission group is deleted."""
+  PERMISSION_GROUP_DELETED
+
   """A new shipping price is created."""
   SHIPPING_PRICE_CREATED
 
@@ -23902,12 +24859,22 @@ enum WebhookEventTypeEnum {
   """A shipping zone is deleted."""
   SHIPPING_ZONE_DELETED
 
-  """A staff user is deleted"""
+  """A new staff user is created."""
   STAFF_CREATED
+
+  """A staff user is updated."""
   STAFF_UPDATED
+
+  """A staff user is deleted."""
   STAFF_DELETED
+
+  """An action requested for transaction."""
   TRANSACTION_ACTION_REQUEST
+
+  """A new translation is created."""
   TRANSLATION_CREATED
+
+  """A translation is updated."""
   TRANSLATION_UPDATED
 
   """A new warehouse created."""
@@ -23930,29 +24897,104 @@ enum WebhookEventTypeEnum {
 
   """An observability event is created."""
   OBSERVABILITY
+
+  """Authorize payment."""
   PAYMENT_AUTHORIZE
+
+  """Capture payment."""
   PAYMENT_CAPTURE
+
+  """Confirm payment."""
   PAYMENT_CONFIRM
+
+  """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+
+  """Process payment."""
   PAYMENT_PROCESS
+
+  """Refund payment."""
   PAYMENT_REFUND
+
+  """Void payment."""
   PAYMENT_VOID
+
+  """
+  Event called for checkout tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  CHECKOUT_CALCULATE_TAXES
+
+  """
+  Event called for order tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_CALCULATE_TAXES
+
+  """Fetch external shipping methods for checkout."""
   SHIPPING_LIST_METHODS_FOR_CHECKOUT
+
+  """Filter shipping methods for order."""
   ORDER_FILTER_SHIPPING_METHODS
+
+  """Filter shipping methods for checkout."""
   CHECKOUT_FILTER_SHIPPING_METHODS
 }
 
 """Enum determining type of webhook."""
 enum WebhookEventTypeSyncEnum {
+  """Authorize payment."""
   PAYMENT_AUTHORIZE
+
+  """Capture payment."""
   PAYMENT_CAPTURE
+
+  """Confirm payment."""
   PAYMENT_CONFIRM
+
+  """Listing available payment gateways."""
   PAYMENT_LIST_GATEWAYS
+
+  """Process payment."""
   PAYMENT_PROCESS
+
+  """Refund payment."""
   PAYMENT_REFUND
+
+  """Void payment."""
   PAYMENT_VOID
+
+  """
+  Event called for checkout tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  CHECKOUT_CALCULATE_TAXES
+
+  """
+  Event called for order tax calculation.
+  
+  Added in Saleor 3.6.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_CALCULATE_TAXES
+
+  """Fetch external shipping methods for checkout."""
   SHIPPING_LIST_METHODS_FOR_CHECKOUT
+
+  """Filter shipping methods for order."""
   ORDER_FILTER_SHIPPING_METHODS
+
+  """Filter shipping methods for checkout."""
   CHECKOUT_FILTER_SHIPPING_METHODS
 }
 
@@ -24022,6 +25064,7 @@ enum WebhookSampleEventTypeEnum {
   CHECKOUT_UPDATED
   FULFILLMENT_CREATED
   FULFILLMENT_CANCELED
+  FULFILLMENT_APPROVED
   NOTIFY_USER
   PAGE_CREATED
   PAGE_UPDATED
@@ -24029,6 +25072,9 @@ enum WebhookSampleEventTypeEnum {
   PAGE_TYPE_CREATED
   PAGE_TYPE_UPDATED
   PAGE_TYPE_DELETED
+  PERMISSION_GROUP_CREATED
+  PERMISSION_GROUP_UPDATED
+  PERMISSION_GROUP_DELETED
   SHIPPING_PRICE_CREATED
   SHIPPING_PRICE_UPDATED
   SHIPPING_PRICE_DELETED
@@ -24087,7 +25133,11 @@ input WebhookUpdateInput {
   """Determine if webhook will be set active or not."""
   isActive: Boolean
 
-  """Use to create a hash signature with each payload."""
+  """
+  Use to create a hash signature with each payload.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+  """
   secretKey: String
 
   """

@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ListItemLink from "@saleor/components/ListItemLink";
 import Skeleton from "@saleor/components/Skeleton";
@@ -13,7 +13,7 @@ import {
   ListItemCell,
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
-import { countriesListUrl } from "@saleor/taxes/urls";
+import { taxCountriesListUrl } from "@saleor/taxes/urls";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,12 +24,14 @@ interface TaxCountriesMenuProps {
   configurations: TaxCountryConfigurationFragment[] | undefined;
   selectedCountryId: string;
   onCountryDelete: (countryId: string) => void;
+  onCountryAdd: () => void;
 }
 
 export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
   configurations,
   selectedCountryId,
   onCountryDelete,
+  onCountryAdd,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -39,12 +41,16 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
       <CardTitle
         title={intl.formatMessage(taxesMessages.countryList)}
         toolbar={
-          <Button variant="secondary">
+          <Button onClick={onCountryAdd} variant="secondary">
             <FormattedMessage {...taxesMessages.addCountryLabel} />
           </Button>
         }
       />
-      <div className={classes.scrollWrapper}>
+      {configurations?.length === 0 ? (
+        <CardContent className={classes.greyText}>
+          <FormattedMessage {...taxesMessages.noCountriesAssigned} />
+        </CardContent>
+      ) : (
         <List gridTemplate={["1fr"]}>
           <ListHeader>
             <ListItem className={classes.tableRow}>
@@ -59,7 +65,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
               className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]: config.country.code === selectedCountryId,
               })}
-              href={countriesListUrl(config.country.code)}
+              href={taxCountriesListUrl(config.country.code)}
             >
               <ListItemCell>
                 <div className={classes.spaceBetween}>
@@ -68,6 +74,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
                     variant="secondary"
                     onClick={event => {
                       event.stopPropagation();
+                      event.preventDefault();
                       onCountryDelete(config.country.code);
                     }}
                   >
@@ -78,7 +85,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
             </ListItemLink>
           )) ?? <Skeleton />}
         </List>
-      </div>
+      )}
     </Card>
   );
 };
