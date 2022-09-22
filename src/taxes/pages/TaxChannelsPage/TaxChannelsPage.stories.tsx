@@ -7,7 +7,7 @@ import React from "react";
 
 import TaxChannelsPage from "./TaxChannelsPage";
 
-const castedCountries = countries.map(
+export const castedCountries = countries.map(
   ({ code, name }): CountryFragment => ({
     code,
     country: name,

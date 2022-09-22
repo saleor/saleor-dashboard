@@ -43,3 +43,48 @@ export const taxConfigurationUpdate = gql`
     }
   }
 `;
+
+export const taxCountryConfigurationUpdate = gql`
+  mutation TaxCountryConfigurationUpdate(
+    $countryCode: CountryCode!
+    $updateTaxClassRates: [TaxClassRateInput!]!
+  ) {
+    taxCountryConfigurationUpdate(
+      countryCode: $countryCode
+      updateTaxClassRates: $updateTaxClassRates
+    ) {
+      errors {
+        ...TaxCountryConfigurationUpdateErrorFragment
+      }
+      taxCountryConfiguration {
+        ...TaxCountryConfiguration
+      }
+    }
+  }
+`;
+
+export const taxCountryConfigurationDelete = gql`
+  mutation TaxCountryConfigurationDelete($countryCode: CountryCode!) {
+    taxCountryConfigurationDelete(countryCode: $countryCode) {
+      errors {
+        ...TaxCountryConfigurationDeleteErrorFragment
+      }
+      taxCountryConfiguration {
+        ...TaxCountryConfiguration
+      }
+    }
+  }
+`;
+
+export const taxClassUpdate = gql`
+  mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
+    taxClassUpdate(id: $id, input: $input) {
+      errors {
+        ...TaxClassUpdateErrorFragment
+      }
+      taxClass {
+        ...TaxClass
+      }
+    }
+  }
+`;

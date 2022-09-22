@@ -6,9 +6,9 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  countriesListUrl,
   taxClassesListUrl,
   taxConfigurationListPath,
+  taxCountriesListPath,
   TaxesUrlQueryParams,
 } from "./urls";
 import ChannelsListComponent from "./views/ChannelsList";
@@ -31,7 +31,16 @@ const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
 
 const CountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
-}) => <CountriesListComponent id={decodeURIComponent(match.params.id)} />;
+}) => {
+  const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
+
+  return (
+    <CountriesListComponent
+      id={decodeURIComponent(match.params.id)}
+      params={qs}
+    />
+  );
+};
 
 const TaxClassesList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
@@ -49,8 +58,8 @@ const Component = () => {
           component={ChannelsList}
         />
         <Route path={taxConfigurationListPath()} component={ChannelsList} />
-        <Route path={countriesListUrl(":id")} component={CountriesList} />
-        <Route path={countriesListUrl()} component={CountriesList} />
+        <Route path={taxCountriesListPath(":id")} component={CountriesList} />
+        <Route path={taxCountriesListPath()} component={CountriesList} />
         <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />
         <Route path={taxClassesListUrl()} component={TaxClassesList} />
       </Switch>

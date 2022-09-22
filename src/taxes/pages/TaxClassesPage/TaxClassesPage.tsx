@@ -97,7 +97,6 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 placeholder={intl.formatMessage(taxesMessages.taxRateName)}
                 fullWidth
                 inputProps={{ className: classes.namePadding }}
-                disabled={currentTaxClass?.isDefault ?? true}
               />
             </CardContent>
           </Card>
@@ -139,10 +138,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                   <ListItemCell>{countryRate.country.country}</ListItemCell>
                   <ListItemCell>
                     <TaxInput
-                      placeholder={getDefaultTaxRateInCountry(
-                        taxClasses,
-                        countryRate.country,
-                      )}
+                      placeholder={getDefaultTaxRateInCountry().toString()}
                       value={(countryRate.rate * 100).toString()}
                       change={() => null} // TODO: add change function from form
                     />
