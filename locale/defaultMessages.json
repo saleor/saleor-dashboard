@@ -6567,6 +6567,10 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
+  "pEMxyy": {
+    "context": "alert message",
+    "string": "This product does no longer exist."
+  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
