@@ -6,7 +6,7 @@ export const ATTRIBUTES_DETAILS = {
   valueRequired: '[name="valueRequired"]',
   valueNameInput: '[data-test-id="value-name"]',
   dashboardProperties: {
-    useInFilteringCheckbox: '[name="filterableInDashboard"]'
+    useInFilteringCheckbox: '[name="filterableInDashboard"]',
   },
   attributesInputTypes: {
     DROPDOWN: '[data-test-id="select-field-option-DROPDOWN"]',
@@ -18,31 +18,32 @@ export const ATTRIBUTES_DETAILS = {
     RICH_TEXT: '[data-test-id="select-field-option-RICH_TEXT"]',
     NUMERIC: '[data-test-id="select-field-option-NUMERIC"]',
     BOOLEAN: '[data-test-id="select-field-option-BOOLEAN"]',
-    SWATCH: '[data-test-id="select-field-option-SWATCH"]'
+    SWATCH: '[data-test-id="select-field-option-SWATCH"]',
   },
   entityTypeSelect: '[id="mui-component-select-entityType"]',
   entityTypeOptions: {
-    PRODUCT: '[data-test-id*="PRODUCT"]',
-    PAGE: '[data-test-id*="PAGE"]'
+    PRODUCT: '[data-test-id="select-field-option-PRODUCT"]',
+    PRODUCT_VARIANT: '[data-test-id="select-field-option-PRODUCT_VARIANT"]',
+    PAGE: '[data-test-id*="PAGE"]',
   },
   selectUnitCheckbox: '[name="selectUnit"]',
   unitSystemSelect: '[data-test-id="unit-system"]',
   unitSystemsOptions: {
     IMPERIAL: '[data-test-id="select-field-option-imperial"]',
-    METRIC: '[data-test-id="select-field-option-metric"]'
+    METRIC: '[data-test-id="select-field-option-metric"]',
   },
   unitOfSelect: '[data-test-id="unit-of"]',
   unitsOfOptions: {
     VOLUME: '[data-test-id="select-field-option-volume"]',
-    DISTANCE: '[data-test-id="select-field-option-distance"]'
+    DISTANCE: '[data-test-id="select-field-option-distance"]',
   },
   unitSelect: '[data-test-id="unit"]',
   unitsOptions: {
     CUBIC_CENTIMETER: '[data-test-id="select-field-option-CUBIC_CENTIMETER"]',
-    FT: '[data-test-id="select-field-option-FT"]'
+    FT: '[data-test-id="select-field-option-FT"]',
   },
   imageCheckbox: '[value= "image"]',
   uploadFileButton: '[data-test-id="button-upload-file"]',
   pageTypeAttributeCheckbox: '[value="PAGE_TYPE"]',
-  swatchValueImage: '[data-test-id="swatch-image"]'
+  swatchValueImage: '[data-test-id="swatch-image"]',
 };
