@@ -2,6 +2,7 @@ import { MenuItem } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { Choice } from "@saleor/components/SingleSelectField";
 import useChoiceSearch from "@saleor/hooks/useChoiceSearch";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -29,6 +30,13 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
     defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : ""),
   );
   const { result, search } = useChoiceSearch(channelsChoices);
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      search("");
+      setChoice(defaultChoice);
+    },
+  });
 
   return (
     <ActionDialog
