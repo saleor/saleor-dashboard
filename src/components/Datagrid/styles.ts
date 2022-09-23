@@ -8,6 +8,7 @@ const useStyles = makeStyles(
       background: theme.palette.background.paper,
       color: theme.palette.saleor.main[1],
     };
+    const activeBorderColor = "#D4D4D4";
 
     return {
       actionBtnBar: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(
         width: "calc(100% - 64px - 35px)",
         marginTop: 1,
         marginLeft: 50,
-        height: 48,
+        height: 47,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
@@ -84,7 +85,8 @@ const useStyles = makeStyles(
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
         },
-        // border: `1px solid ${theme.palette.divider}`,
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: 8,
         boxSizing: "content-box",
       },
       root: {
@@ -93,8 +95,11 @@ const useStyles = makeStyles(
       rowActionBar: {
         height: "100%",
         background: theme.palette.background.paper,
-        borderLeft: `1px solid ${theme.palette.divider}`,
+        borderLeft: `1px solid ${activeBorderColor}`,
         width: 48,
+      },
+      rowActionBarScrolledToRight: {
+        borderLeftColor: theme.palette.divider,
       },
       rowAction: {
         "&:hover, $rowActionSelected": {
@@ -104,6 +109,7 @@ const useStyles = makeStyles(
           marginBottom: -1,
         },
         border: `1px solid ${theme.palette.divider}`,
+        borderLeftColor: activeBorderColor,
         borderRight: "none",
         cursor: "pointer",
         color: theme.palette.saleor.main[5],
@@ -112,6 +118,33 @@ const useStyles = makeStyles(
         alignItems: "center",
         justifyContent: "center",
         height: 47,
+      },
+      rowActionScrolledToRight: {
+        borderLeftColor: theme.palette.divider,
+      },
+      columnGroupFixer: {
+        position: "absolute",
+        top: 5,
+        left: 1,
+        height: 44,
+        width: 2,
+        background: theme.palette.background.paper,
+      },
+      editorContainer: {
+        position: "relative",
+      },
+      rowActionBarShadow: {
+        height: "100%",
+        width: 1,
+        position: "absolute",
+        zIndex: -1,
+        transition: theme.transitions.create("box-shadow", {
+          duration: theme.transitions.duration.short,
+        }),
+        boxShadow: "-1px 0px 12px transparent",
+      },
+      rowActionBarShadowActive: {
+        boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
       },
       rowActionSelected,
     };

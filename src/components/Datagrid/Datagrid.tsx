@@ -1,3 +1,5 @@
+import "@glideapps/glide-data-grid/dist/index.css";
+
 import DataEditor, {
   DataEditorRef,
   EditableGridCell,
@@ -9,8 +11,8 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { Button, MoreHorizontalIcon, PlusSmallIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import range from "lodash/range";
+import throttle from "lodash/throttle";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import CardMenu, { CardMenuItem } from "../CardMenu";
 import CardTitle from "../CardTitle";
@@ -89,6 +91,26 @@ export const Datagrid: React.FC<DatagridProps> = ({
     onRowAdded,
   } = useDatagridChange(availableColumns, rows, onChange);
 
+  const [scrolledToRight, setScrolledToRight] = React.useState(false);
+  const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
+  const scrollerInner: HTMLDivElement = document.querySelector(
+    ".dvn-scroll-inner",
+  );
+  React.useEffect(() => {
+    if (!(scroller && scrollerInner)) {
+      return;
+    }
+
+    const handler = throttle(() => {
+      const isScrolledToRight =
+        scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
+      setScrolledToRight(isScrolledToRight);
+    }, 100);
+    scroller.addEventListener("scroll", handler);
+
+    return () => scroller.removeEventListener("scroll", handler);
+  }, [scroller, scrollerInner]);
+
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell => {
       const item = [
@@ -148,6 +170,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const rowsTotal = rows - removed.length + added.length;
+  const hasColumnGroups = columns.some(col => col.group);
 
   return (
     <Card className={classes.root}>
@@ -169,14 +192,15 @@ export const Datagrid: React.FC<DatagridProps> = ({
       <CardContent>
         {rowsTotal > 0 ? (
           <>
-            <ThemeProvider theme={datagridTheme}>
-              {selection?.rows.length > 0 && (
-                <div className={classes.actionBtnBar}>
-                  {selectionActionsComponent}
-                </div>
-              )}
+            {selection?.rows.length > 0 && (
+              <div className={classes.actionBtnBar}>
+                {selectionActionsComponent}
+              </div>
+            )}
+            <div className={classes.editorContainer}>
               <DataEditor
                 {...props}
+                theme={datagridTheme}
                 className={classes.datagrid}
                 getCellContent={getCellContentEnh}
                 onCellEdited={onCellEditedEnh}
@@ -197,9 +221,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 rowHeight={48}
                 headerHeight={48}
                 ref={editor}
-                rightElementSticky
+                rightElementProps={{
+                  sticky: true,
+                }}
                 rightElement={
-                  <div className={classes.rowActionBar}>
+                  <div
+                    className={classNames(classes.rowActionBar, {
+                      [classes.rowActionBarScrolledToRight]: scrolledToRight,
+                    })}
+                  >
+                    <div
+                      className={classNames(classes.rowActionBarShadow, {
+                        [classes.rowActionBarShadowActive]: !scrolledToRight,
+                      })}
+                    />
                     <div className={classes.columnPicker}>
                       <ColumnPicker
                         IconButtonProps={{
@@ -218,8 +253,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         query={picker.query}
                       />
                     </div>
-                    {columns.some(col => col.group) && (
-                      <div className={classes.rowAction} />
+                    {hasColumnGroups && (
+                      <div
+                        className={classNames(classes.rowAction, {
+                          [classes.rowActionScrolledToRight]: scrolledToRight,
+                        })}
+                      />
                     )}
                     {Array(rowsTotal)
                       .fill(0)
@@ -229,6 +268,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                             [classes.rowActionSelected]: selection?.rows.hasIndex(
                               index,
                             ),
+                            [classes.rowActionScrolledToRight]: scrolledToRight,
                           })}
                           key={index}
                         >
@@ -246,10 +286,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       ))}
                   </div>
                 }
-                overscrollX={1}
                 rowMarkerWidth={48}
               />
-            </ThemeProvider>
+              {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
+              {hasColumnGroups && <div className={classes.columnGroupFixer} />}
+            </div>
           </>
         ) : (
           <Typography align="center">{emptyText}</Typography>
