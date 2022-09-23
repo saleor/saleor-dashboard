@@ -240,6 +240,13 @@ storiesOf("Views / Orders / Order details / transactions", module)
         ...props.order,
         isPaid: true,
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        // gift cards are treated as dicounts
+        total: {
+          net: prepareMoney(0),
+          gross: prepareMoney(0),
+          tax: prepareMoney(0),
+          __typename: "TaxedMoney",
+        },
         giftCards: [
           {
             __typename: "GiftCard",

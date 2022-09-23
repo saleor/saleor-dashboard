@@ -9,6 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
 import { SummaryList } from "./SummaryList";
+import { extractOrderGiftCardUsedAmount } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -34,6 +35,8 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const classes = useStyles();
 
   const intl = useIntl();
+
+  const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const getDeliveryMethodName = order => {
     if (
@@ -100,6 +103,18 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
               money={discount.amount}
             />
           ))}
+          {/* TODO: Remove when gift cards are not treated as discounts */}
+          {giftCardAmount > 0 && (
+            <SummaryLine
+              text={
+                <FormattedMessage {...orderSummaryMessages.paidWithGiftCard} />
+              }
+              money={{
+                amount: -1 * giftCardAmount,
+                currency: order?.total?.gross?.currency,
+              }}
+            />
+          )}
           <SummaryLine
             bold
             text={<FormattedMessage {...orderSummaryMessages.total} />}
