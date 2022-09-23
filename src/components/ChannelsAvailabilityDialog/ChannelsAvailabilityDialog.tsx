@@ -5,6 +5,7 @@ import React from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
 import ChannelsAvailabilityDialogWrapper from "../ChannelsAvailabilityDialogWrapper";
+import { NoChannels } from "./NoChannels";
 import { useChannelsSearch } from "./utils";
 
 export interface ChannelsAvailabilityDialogProps {
@@ -39,6 +40,7 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(
     channels,
   );
+  const hasChannels = channels.length > 0;
 
   const handleToggleAll = () => toggleAll(channels, selected);
 
@@ -53,20 +55,24 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
       title={title}
       disabled={disabled}
     >
-      <ChannelsAvailabilityDialogWrapper
-        hasAnyChannelsToDisplay={!!filteredChannels.length}
-        hasAllSelected={hasAllSelected}
-        query={query}
-        onQueryChange={onQueryChange}
-        toggleAll={handleToggleAll}
-        contentType={contentType}
-      >
-        <ChannelsAvailabilityDialogChannelsList
-          channels={filteredChannels}
-          isChannelSelected={isSelected}
-          onChange={onChange}
-        />
-      </ChannelsAvailabilityDialogWrapper>
+      {hasChannels ? (
+        <ChannelsAvailabilityDialogWrapper
+          hasAnyChannelsToDisplay={!!filteredChannels.length}
+          hasAllSelected={hasAllSelected}
+          query={query}
+          onQueryChange={onQueryChange}
+          toggleAll={handleToggleAll}
+          contentType={contentType}
+        >
+          <ChannelsAvailabilityDialogChannelsList
+            channels={filteredChannels}
+            isChannelSelected={isSelected}
+            onChange={onChange}
+          />
+        </ChannelsAvailabilityDialogWrapper>
+      ) : (
+        <NoChannels />
+      )}
     </ActionDialog>
   );
 };
