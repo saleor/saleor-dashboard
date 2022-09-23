@@ -327,6 +327,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     data-test-id="menu"
                   />
                 )}
+
+                <a
+                  target="_blank"
+                  style={{ textDecoration: "underline" }}
+                  href={`https://pages-git-feat-incorporate-ecommerce-jutro.vercel.app/sklep/products/${data.slug}`}
+                >
+                  przejdź do strony produktu w sklepie
+                </a>
               </PageHeader>
               <Grid richText>
                 <div>
