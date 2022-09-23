@@ -138,6 +138,9 @@
     "context": "order marked as paid event title",
     "string": "Order was marked as paid by"
   },
+  "/0gMCW": {
+    "string": "Try to refresh the page or go navigate to a different page and back."
+  },
   "/2OOMe": {
     "context": "product type shipping settings, section header",
     "string": "Shipping"
@@ -512,6 +515,10 @@
   "29L5Yq": {
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
+  },
+  "2CBcub": {
+    "context": "CreateVariantTitle manage",
+    "string": "Manage"
   },
   "2E1xZ0": {
     "context": "page header",
@@ -2806,10 +2813,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "Jz/Cb+": {
-    "context": "product type",
-    "string": "Simple"
   },
   "K+ROF8": {
     "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
@@ -6251,6 +6254,10 @@
     "context": "voucher code, button",
     "string": "Generate Code"
   },
+  "mTEqYL": {
+    "context": "NoChannels content",
+    "string": "No channels to assign. Please first assign them for the product."
+  },
   "mUb8Gt": {
     "context": "section header",
     "string": "Taxes"
@@ -6541,9 +6548,6 @@
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
   },
-  "p0SUJj": {
-    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
-  },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
     "string": "Preview"
@@ -6570,6 +6574,10 @@
   "pCy5EP": {
     "context": "gift card history message",
     "string": "Gift card was activated"
+  },
+  "pEMxyy": {
+    "context": "alert message",
+    "string": "This product does no longer exist."
   },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"

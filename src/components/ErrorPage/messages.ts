@@ -6,9 +6,9 @@ const messages = defineMessages({
     defaultMessage: "We’ve encountered an unexpected error",
   },
   content: {
-    id: "p0SUJj",
+    id: "/0gMCW",
     defaultMessage:
-      "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard.",
+      "Try to refresh the page or go navigate to a different page and back.",
   },
   btnDashboard: {
     id: "9mGA/Q",

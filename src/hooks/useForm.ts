@@ -133,7 +133,7 @@ function useForm<T extends FormData, TErrors>(
     setExitDialogSubmitRef(submit);
   };
 
-  useEffect(setExitDialogData, [onSubmit]);
+  useEffect(setExitDialogData, [onSubmit, data]);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
