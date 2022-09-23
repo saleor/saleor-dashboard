@@ -8,6 +8,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add product variant reference attribute - #2268 by @droniu
 - Fix exit form dialog false positive - #2311 by @orzechdev
 - Handle form errors before product creation - #2299 by @orzechdev
+- Fix no product error on unconfirmed order lines - #2324 by @orzechdev
 
 ## 3.4
 

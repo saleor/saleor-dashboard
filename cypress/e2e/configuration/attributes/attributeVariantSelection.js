@@ -79,6 +79,8 @@ describe("As an admin I want to use attributes in variant selection", () => {
               sku: name,
               attributeName: attributeValues[0],
               attributeType: inputType,
+              costPrice: 10,
+              price: 10,
             });
 
             cy.wait("@VariantCreate");

@@ -12484,6 +12484,8 @@ export const ProductVariantCreateDataDocument = gql`
       url
     }
     channelListings {
+      isPublished
+      publicationDate
       channel {
         id
         name
@@ -13319,6 +13321,9 @@ export const SearchProductsDocument = gql`
               currency
             }
           }
+        }
+        collections {
+          id
         }
       }
     }

@@ -17,11 +17,17 @@ export function createVariant({
   attributeName,
   price,
   costPrice = price,
-  channelName,
   quantity = 10,
 }) {
   cy.get(PRODUCT_DETAILS.addVariantButton).click();
-  fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
+  fillUpVariantDetails({
+    attributeName,
+    sku,
+    warehouseName,
+    quantity,
+    costPrice,
+    price,
+  });
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
     .get(VARIANTS_SELECTORS.skuInput)
@@ -30,12 +36,6 @@ export function createVariant({
     .click()
     .get(PRODUCT_DETAILS.productNameInput)
     .should("be.enabled");
-  selectChannelForVariantAndFillUpPrices({
-    channelName,
-    variantName: attributeName,
-    price,
-    costPrice,
-  });
 }
 
 export function fillUpGeneralVariantInputs({
@@ -64,6 +64,8 @@ export function fillUpVariantDetails({
   sku,
   warehouseName,
   quantity,
+  costPrice,
+  price,
 }) {
   selectAttributeWithType({ attributeType, attributeName });
   if (sku) {
@@ -78,6 +80,16 @@ export function fillUpVariantDetails({
       .get(VARIANTS_SELECTORS.stockInput)
       .type(quantity);
   }
+
+  cy.get(PRICE_LIST.priceInput)
+    .each(input => {
+      cy.wrap(input).type(price);
+    })
+    .get(PRICE_LIST.costPriceInput)
+    .each(input => {
+      cy.wrap(input).type(costPrice);
+    });
+
   cy.get(VARIANTS_SELECTORS.saveButton).click();
 }
 
