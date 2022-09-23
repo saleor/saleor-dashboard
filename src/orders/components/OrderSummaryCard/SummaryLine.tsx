@@ -4,6 +4,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { IMoney } from "@saleor/utils/intl";
 import clsx from "classnames";
 import React from "react";
+import { useIntl } from "react-intl";
+
+import { orderSummaryMessages } from "./messages";
 
 interface SummaryLineProps {
   text: React.ReactNode;
@@ -35,7 +38,13 @@ const useStyles = makeStyles(
       },
       "&& dd": {
         marginLeft: "auto",
+        display: "flex",
+        alignItems: "baseline",
       },
+    },
+    moneySkeleton: {
+      width: "6ch",
+      alignSelf: "center",
     },
   }),
   { name: "SummaryLine" },
@@ -51,6 +60,7 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
   className,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
 
   return (
     <li
@@ -74,10 +84,16 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
         </dt>
         <dd>
           {money === undefined ? (
-            <Skeleton />
+            <Skeleton className={classes.moneySkeleton} />
           ) : (
             <>
-              {negative && "-"}
+              {negative && (
+                <span
+                  aria-label={intl.formatMessage(orderSummaryMessages.negative)}
+                >
+                  –&nbsp;
+                </span>
+              )}
               <Money money={money} />
             </>
           )}

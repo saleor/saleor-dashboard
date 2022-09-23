@@ -100,4 +100,9 @@ export const orderSummaryMessages = defineMessages({
     defaultMessage: "Paid with Gift Card",
     description: "order payment",
   },
+  negative: {
+    defaultMessage: "minus",
+    id: "GcbFa9",
+    description: "aria-label, negative money amount",
+  },
 });

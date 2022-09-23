@@ -91,6 +91,20 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
 
   const shouldDisplay = getShouldDisplayAmounts(order);
 
+  if (!order) {
+    return (
+      <Card>
+        <CardTitle
+          title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
+          toolbar={<Skeleton />}
+        ></CardTitle>
+        <CardContent>
+          <Skeleton />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className={classes.root}>
       <CardTitle

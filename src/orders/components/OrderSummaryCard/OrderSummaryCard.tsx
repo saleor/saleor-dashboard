@@ -38,37 +38,30 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
 
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
-  const getDeliveryMethodName = order => {
+  const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
       order?.shippingMethodName === undefined &&
       order?.shippingPrice === undefined &&
       order?.collectionPointName === undefined
     ) {
-      return <Skeleton />;
+      return null;
     }
 
     if (order.shippingMethodName === null) {
-      return order.collectionPointName == null ? (
-        <FormattedMessage {...orderSummaryMessages.shippingDoesNotApply} />
-      ) : (
-        <FormattedMessage
-          {...orderSummaryMessages.clickAndCollectShippingMethod}
-        />
-      );
+      return order.collectionPointName == null
+        ? intl.formatMessage(orderSummaryMessages.shippingDoesNotApply)
+        : intl.formatMessage(
+            orderSummaryMessages.clickAndCollectShippingMethod,
+          );
     }
+
     return order.shippingMethodName;
   };
 
   return (
     <Card>
       <CardTitle
-        title={
-          !order?.paymentStatus ? (
-            <Skeleton />
-          ) : (
-            <FormattedMessage {...orderSummaryMessages.orderSummary} />
-          )
-        }
+        title={<FormattedMessage {...orderSummaryMessages.orderSummary} />}
       />
       <CardContent>
         <SummaryList className={classes.list}>
@@ -109,8 +102,9 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
               text={
                 <FormattedMessage {...orderSummaryMessages.paidWithGiftCard} />
               }
+              negative
               money={{
-                amount: -1 * giftCardAmount,
+                amount: giftCardAmount,
                 currency: order?.total?.gross?.currency,
               }}
             />
