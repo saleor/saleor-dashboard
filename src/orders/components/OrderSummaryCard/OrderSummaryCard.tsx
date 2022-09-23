@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsFragment, OrderDiscountType } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

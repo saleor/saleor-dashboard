@@ -3058,6 +3058,7 @@ export const prepareMoney = (
 const paymentCommon = {
   gateway: MOCK_PAYMENT_GATEWAY_ID,
   id: "sdfgdfwe4sdSDFDS==",
+  isActive: true,
   __typename: "Payment",
 } as const;
 
