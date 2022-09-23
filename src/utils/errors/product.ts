@@ -1,6 +1,7 @@
 import {
   BulkProductErrorFragment,
   CollectionErrorFragment,
+  ProductChannelListingErrorFragment,
   ProductErrorCode,
   ProductErrorFragment,
 } from "@saleor/graphql";
@@ -74,7 +75,12 @@ const messages = defineMessages({
 
 function getProductErrorMessage(
   err:
-    | Omit<ProductErrorFragment | CollectionErrorFragment, "__typename">
+    | Omit<
+        | ProductErrorFragment
+        | CollectionErrorFragment
+        | ProductChannelListingErrorFragment,
+        "__typename"
+      >
     | undefined,
   intl: IntlShape,
 ): string {
