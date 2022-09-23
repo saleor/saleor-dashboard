@@ -127,6 +127,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
       )}
+      title={intl.formatMessage(messages.title)}
       onChange={onChange}
     />
   );

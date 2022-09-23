@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       actionBtnBar: {
         position: "absolute",
         zIndex: 1,
-        background: theme.palette.background.default,
+        background: theme.palette.background.paper,
         // Right and left toolbars
         width: "calc(100% - 64px - 35px)",
         marginTop: 1,
@@ -54,7 +54,7 @@ const useStyles = makeStyles(
           border: `1px solid ${theme.palette.saleor.main[1]}`,
         },
         "& .gdg-style": {
-          background: theme.palette.background.default,
+          background: theme.palette.background.paper,
           border: "none",
           // Setting these with !important because we never intend to style
           // this particular element, like, never ever
@@ -84,7 +84,7 @@ const useStyles = makeStyles(
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
         },
-        border: `1px solid ${theme.palette.divider}`,
+        // border: `1px solid ${theme.palette.divider}`,
         boxSizing: "content-box",
       },
       root: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles(
       },
       rowActionBar: {
         height: "100%",
-        background: theme.palette.background.default,
+        background: theme.palette.background.paper,
         borderLeft: `1px solid ${theme.palette.divider}`,
         width: 48,
       },
@@ -124,13 +124,13 @@ export function useDatagridTheme() {
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
       accentColor: theme.palette.saleor.main[1],
-      accentLight: theme.palette.background.paper,
+      accentLight: theme.palette.background.default,
       accentFg: "transparent",
-      bgCell: theme.palette.background.default,
-      bgHeader: theme.palette.background.default,
-      bgHeaderHasFocus: theme.palette.background.default,
-      bgHeaderHovered: theme.palette.background.default,
-      bgBubbleSelected: theme.palette.background.paper,
+      bgCell: theme.palette.background.paper,
+      bgHeader: theme.palette.background.paper,
+      bgHeaderHasFocus: theme.palette.background.paper,
+      bgHeaderHovered: theme.palette.background.paper,
+      bgBubbleSelected: theme.palette.background.default,
       textHeader: theme.palette.saleor.main[3],
       borderColor: theme.palette.divider,
       fontFamily: theme.typography.fontFamily,

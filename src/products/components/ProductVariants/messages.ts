@@ -36,6 +36,11 @@ const messages = defineMessages({
     defaultMessage: "Attributes",
     id: "+xTpT1",
   },
+  title: {
+    defaultMessage: "Variants",
+    id: "1WbTJ5",
+    description: "product variants, title",
+  },
 });
 
 export default messages;

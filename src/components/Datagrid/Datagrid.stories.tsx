@@ -154,6 +154,7 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
             </Button>
           )}
           rows={initialData.length}
+          title="Datagrid"
         />
       </div>
     </DatagridChangeStateContext.Provider>
