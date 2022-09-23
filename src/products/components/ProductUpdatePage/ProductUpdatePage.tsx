@@ -25,6 +25,7 @@ import {
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductDetailsVariantFragment,
+  ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
   RefreshLimitsQuery,
@@ -217,6 +218,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     [errors],
   );
 
+  const productOrganizationErrors = React.useMemo(
+    () =>
+      [...errors, ...channelsErrors].filter(err =>
+        ["ProductChannelListingError", "ProductError"].includes(err.__typename),
+      ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
+    [errors, channelsErrors],
+  );
+
   const extensionMenuItems = mapToMenuItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
@@ -383,7 +392,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     collectionsInputDisplayValue={selectedCollections}
                     data={data}
                     disabled={disabled}
-                    errors={[...errors, ...channelsErrors]}
+                    errors={productOrganizationErrors}
                     fetchCategories={fetchCategories}
                     fetchCollections={fetchCollections}
                     fetchMoreCategories={fetchMoreCategories}
