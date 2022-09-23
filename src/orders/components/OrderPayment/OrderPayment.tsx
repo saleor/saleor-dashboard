@@ -1,7 +1,8 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import Skeleton from "@saleor/components/Skeleton";
+import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
 import { Button, Pill } from "@saleor/macaw-ui";
 import { transformPaymentStatus } from "@saleor/misc";
 import React from "react";
@@ -19,6 +20,7 @@ import { extractRefundedAmount } from "./utils";
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
   onRefund: () => void;
+  onMarkAsPaid: () => void;
 }
 
 const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
@@ -69,7 +71,11 @@ const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   };
 };
 
-const OrderPayment: React.FC<OrderPaymementProps> = ({ order, onRefund }) => {
+const OrderPayment: React.FC<OrderPaymementProps> = ({
+  order,
+  onRefund,
+  onMarkAsPaid,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -79,11 +85,14 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({ order, onRefund }) => {
   const canGrantRefund =
     order?.transactions?.length > 0 || order?.payments?.length > 0;
   const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
+  const canAnyRefund = canGrantRefund || canSendRefund;
+
+  const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
 
   const shouldDisplay = getShouldDisplayAmounts(order);
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardTitle
         toolbar={
           <Pill
@@ -94,6 +103,20 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({ order, onRefund }) => {
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
+      {!canAnyRefund && !shouldDisplay.any && (
+        <CardContent className={classes.noPaymentContent}>
+          <Typography variant="h5" className={classes.noPaymentTitle}>
+            <FormattedMessage {...orderPaymentMessages.noPayments} />
+          </Typography>
+          {canMarkAsPaid && (
+            <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
+              <FormattedMessage
+                {...orderPaymentActionButtonMessages.markAsPaid}
+              />
+            </Button>
+          )}
+        </CardContent>
+      )}
       {shouldDisplay.any && (
         <CardContent>
           {shouldDisplay.any && (
@@ -119,7 +142,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({ order, onRefund }) => {
           )}
         </CardContent>
       )}
-      {(canSendRefund || canGrantRefund) && (
+      {canAnyRefund && (
         <>
           <Hr />
           <CardTitle

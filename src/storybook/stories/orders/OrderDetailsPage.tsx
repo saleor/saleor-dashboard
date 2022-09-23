@@ -92,8 +92,9 @@ storiesOf("Views / Orders / Order details / payments", module)
       order={{
         ...props.order,
         transactions: [],
-        paymentStatus: null,
+        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
         payments: [],
+        totalAuthorized: prepareMoney(0),
       }}
     />
   ))

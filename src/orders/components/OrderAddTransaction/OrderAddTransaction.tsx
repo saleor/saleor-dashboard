@@ -10,7 +10,6 @@ interface OrderAddTransactionProps {
   order: OrderDetailsFragment;
   // TODO: Add transactions by staff members
   // onAddTransaction: () => void;
-  onMarkAsPaid: () => void;
 }
 
 const useStyles = makeStyles(
@@ -24,10 +23,7 @@ const useStyles = makeStyles(
   { name: "OrderAddTransaction" },
 );
 
-const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
-  order,
-  onMarkAsPaid,
-}) => {
+const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order }) => {
   const classes = useStyles();
 
   if (!order) {
@@ -41,13 +37,7 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
   const canMarkAsPaid = order.actions.includes(OrderAction.MARK_AS_PAID);
 
   if (canMarkAsPaid) {
-    return (
-      <div className={classes.wrapper}>
-        <Button variant="primary" onClick={() => onMarkAsPaid()}>
-          <FormattedMessage {...addTransactionMessages.markAsPaid} />
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   return (

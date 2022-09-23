@@ -322,7 +322,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ))}
                 <div className={classes.cardGrid}>
                   <OrderSummaryCard order={order} />
-                  <OrderPayment order={order} onRefund={onPaymentRefund} />
+                  <OrderPayment
+                    order={order}
+                    onRefund={onPaymentRefund}
+                    onMarkAsPaid={onPaymentPaid}
+                  />
                 </div>
                 <CardSpacer />
                 <div>
@@ -350,10 +354,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   ))}
                 </div>
-                <OrderAddTransaction
-                  order={order}
-                  onMarkAsPaid={onPaymentPaid}
-                />
+                <OrderAddTransaction order={order} />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory

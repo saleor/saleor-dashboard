@@ -2,6 +2,10 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    root: {
+      display: "flex",
+      flexDirection: "column",
+    },
     refundsButtons: {
       display: "flex",
       gap: theme.spacing(1),
@@ -20,6 +24,18 @@ export const useStyles = makeStyles(
     },
     paymentStatus: {
       alignSelf: "flex-end",
+    },
+    noPaymentContent: {
+      display: "flex",
+      height: "100%",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: theme.spacing(4),
+    },
+    noPaymentTitle: {
+      color: theme.palette.saleor.main[3],
+      fontWeight: 400,
     },
   }),
   { name: "styles" },

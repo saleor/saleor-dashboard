@@ -31,6 +31,11 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage:
       "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction.",
   },
+  noPayments: {
+    defaultMessage: "This order has no payment yet.",
+    id: "T34dJq",
+    description: "Displayed when order has no payment",
+  },
 });
 
 export const orderPaymentActionButtonMessages = defineMessages({
@@ -42,17 +47,8 @@ export const orderPaymentActionButtonMessages = defineMessages({
     defaultMessage: "Send refund",
     id: "2WenNh",
   },
-});
-
-export const paymentButtonMessages = defineMessages({
-  refund: {
-    id: "HaQ8cg",
-    defaultMessage: "Refund",
-    description: "button",
-  },
   markAsPaid: {
-    id: "+5HkZN",
     defaultMessage: "Mark as paid",
-    description: "order, button",
+    id: "01+5kQ",
   },
 });
