@@ -71,6 +71,7 @@ const useStyles = makeStyles(
           ? theme.palette.grey[50]
           : theme.palette.grey[900],
       bottom: 0,
+      color: theme.palette.grey[500],
       display: "flex",
       height: 30,
       justifyContent: "center",
