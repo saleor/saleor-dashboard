@@ -240,6 +240,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
       order={{
         ...props.order,
         isPaid: true,
+        transactions: [],
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
         // gift cards are treated as dicounts
         total: {
