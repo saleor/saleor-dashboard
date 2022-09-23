@@ -20,18 +20,30 @@ export const useExpanderStyles = makeStyles(
   { name: "Expander" },
 );
 
-export const useHeaderStyles = makeStyles(
-  theme => ({
+export const useHeaderContainerStyles = makeStyles(
+  () => ({
     container: {
       width: "100%",
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
     },
+  }),
+  { name: "styles" },
+);
+
+export const useHeaderSkeletonStyles = makeStyles(
+  theme => ({
     skeleton: {
       width: "100%",
       marginRight: theme.spacing(4),
     },
+  }),
+  { name: "styles" },
+);
+
+export const useHeaderStyles = makeStyles(
+  theme => ({
     // empty expanded needed for mui to use root styles
     expanded: {},
     root: {

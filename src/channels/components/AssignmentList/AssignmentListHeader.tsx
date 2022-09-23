@@ -4,7 +4,11 @@ import Skeleton from "@saleor/components/Skeleton";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import React from "react";
 
-import { useHeaderStyles } from "./styles";
+import {
+  useHeaderContainerStyles,
+  useHeaderSkeletonStyles,
+  useHeaderStyles,
+} from "./styles";
 
 interface AssignmentListHeaderProps {
   assignCount: number;
@@ -17,13 +21,18 @@ const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
   itemsName,
   loading,
 }) => {
-  const classes = useHeaderStyles();
+  const acordionSUmmaryClasses = useHeaderStyles();
+  const containerClases = useHeaderContainerStyles();
+  const skeletonClasses = useHeaderSkeletonStyles();
 
   return (
-    <div className={classes.container}>
-      <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
+    <div className={containerClases.container}>
+      <AccordionSummary
+        expandIcon={<IconChevronDown />}
+        classes={acordionSUmmaryClasses}
+      >
         {loading ? (
-          <Skeleton className={classes.skeleton} />
+          <Skeleton className={skeletonClasses.skeleton} />
         ) : (
           <Typography variant="subtitle2" color="textSecondary">
             {`${assignCount} ${itemsName.toLowerCase()}`}

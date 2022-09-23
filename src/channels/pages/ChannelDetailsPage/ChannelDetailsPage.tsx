@@ -5,6 +5,7 @@ import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
@@ -13,6 +14,7 @@ import {
   ChannelErrorFragment,
   CountryCode,
   CountryFragment,
+  PermissionEnum,
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
   StockSettingsInput,
@@ -214,18 +216,22 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices(
-                    data.shippingZonesToDisplay,
-                  )}
-                  shippingZones={data.shippingZonesToDisplay}
-                  addShippingZone={addShippingZone}
-                  removeShippingZone={removeShippingZone}
-                  searchShippingZones={searchShippingZones}
-                  fetchMoreShippingZones={fetchMoreShippingZones}
-                  totalCount={allShippingZonesCount}
-                  loading={disabled}
-                />
+                <RequirePermissions
+                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                >
+                  <ShippingZones
+                    shippingZonesChoices={getFilteredShippingZonesChoices(
+                      data.shippingZonesToDisplay,
+                    )}
+                    shippingZones={data.shippingZonesToDisplay}
+                    addShippingZone={addShippingZone}
+                    removeShippingZone={removeShippingZone}
+                    searchShippingZones={searchShippingZones}
+                    fetchMoreShippingZones={fetchMoreShippingZones}
+                    totalCount={allShippingZonesCount}
+                    loading={disabled}
+                  />
+                </RequirePermissions>
                 <CardSpacer />
                 <Warehouses
                   warehousesChoices={getFilteredWarehousesChoices(

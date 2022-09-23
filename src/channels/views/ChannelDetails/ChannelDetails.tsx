@@ -15,10 +15,8 @@ import {
   useChannelDeleteMutation,
   useChannelQuery,
   useChannelReorderWarehousesMutation,
-  useChannelShippingZonesQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
-  useShippingZonesCountQuery,
   useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -28,7 +26,6 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -44,6 +41,7 @@ import {
   ChannelUrlQueryParams,
 } from "../../urls";
 import { calculateItemsOrderMoves } from "./handlers";
+import { useShippingZones } from "./useShippingZones";
 
 interface ChannelDetailsProps {
   id: string;
@@ -203,28 +201,14 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const {
-    data: shippingZonesCountData,
-    loading: shippingZonesCountLoading,
-  } = useShippingZonesCountQuery();
-
-  const {
-    data: channelShippingZonesData,
-    loading: channelsShippingZonesLoading,
-  } = useChannelShippingZonesQuery({
-    variables: {
-      filter: {
-        channels: [id],
-      },
-    },
-  });
-
-  const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult,
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+    shippingZonesCountData,
+    shippingZonesCountLoading,
+    channelShippingZonesData,
+    channelsShippingZonesLoading,
+    fetchMoreShippingZones,
+    searchShippingZones,
+    searchShippingZonesResult,
+  } = useShippingZones(id);
 
   const {
     data: warehousesCountData,
