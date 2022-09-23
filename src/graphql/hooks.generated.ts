@@ -1174,6 +1174,7 @@ ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
     fragment OrderPayment on Payment {
   id
+  isActive
   actions
   gateway
   paymentMethodType

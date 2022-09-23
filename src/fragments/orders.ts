@@ -222,6 +222,7 @@ export const transactionItemFragment = gql`
 export const fragmentPayment = gql`
   fragment OrderPayment on Payment {
     id
+    isActive
     actions
     gateway
     paymentMethodType

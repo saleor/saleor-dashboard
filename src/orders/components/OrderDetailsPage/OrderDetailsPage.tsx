@@ -241,6 +241,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
+  const filteredPayments = React.useMemo(
+    () =>
+      (order?.payments ?? []).filter(
+        payment => payment.isActive || payment.transactions.length > 0,
+      ),
+    [order?.payments],
+  );
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
@@ -325,7 +333,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       onTransactionAction={onTransactionAction}
                     />
                   ))}
-                  {order?.payments?.map(payment => (
+                  {filteredPayments.map(payment => (
                     <OrderTransactionPayment
                       key={payment.id}
                       payment={payment}
