@@ -105,52 +105,64 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
             <CardTitle
               title={intl.formatMessage(taxesMessages.taxClassRates)}
             />
-            <CardContent>
-              <TextField
-                value={query}
-                variant="outlined"
-                onChange={e => setQuery(e.target.value)}
-                placeholder={intl.formatMessage(taxesMessages.searchTaxClasses)}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{ className: classes.searchPadding }}
-              />
-            </CardContent>
-            <List gridTemplate={["5fr 2fr"]}>
-              <ListHeader>
-                <ListItem>
-                  <ListItemCell>
-                    <FormattedMessage {...taxesMessages.countryNameHeader} />
-                  </ListItemCell>
-                  <ListItemCell>
-                    <FormattedMessage {...taxesMessages.taxRateHeader} />
-                  </ListItemCell>
-                </ListItem>
-              </ListHeader>
-              {filteredRates?.map(countryRate => (
-                <ListItem key={countryRate.country.code} hover={false}>
-                  <ListItemCell>{countryRate.country.country}</ListItemCell>
-                  <ListItemCell>
-                    <TaxInput
-                      placeholder={getDefaultTaxRateInCountry().toString()}
-                      value={(countryRate.rate * 100).toString()}
-                      change={() => null} // TODO: add change function from form
-                    />
-                  </ListItemCell>
-                </ListItem>
-              )) ?? (
-                <>
-                  <Skeleton />
-                  <VerticalSpacer />
-                </>
-              )}
-            </List>
+            {currentTaxClass?.countries.length === 0 ? (
+              <CardContent className={classes.supportText}>
+                <FormattedMessage {...taxesMessages.noRatesInTaxClass} />
+              </CardContent>
+            ) : (
+              <>
+                <CardContent>
+                  <TextField
+                    value={query}
+                    variant="outlined"
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder={intl.formatMessage(
+                      taxesMessages.searchTaxClasses,
+                    )}
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputProps={{ className: classes.searchPadding }}
+                  />
+                </CardContent>
+                <List gridTemplate={["5fr 2fr"]}>
+                  <ListHeader>
+                    <ListItem>
+                      <ListItemCell>
+                        <FormattedMessage
+                          {...taxesMessages.countryNameHeader}
+                        />
+                      </ListItemCell>
+                      <ListItemCell>
+                        <FormattedMessage {...taxesMessages.taxRateHeader} />
+                      </ListItemCell>
+                    </ListItem>
+                  </ListHeader>
+                  {filteredRates?.map(countryRate => (
+                    <ListItem key={countryRate.country.code} hover={false}>
+                      <ListItemCell>{countryRate.country.country}</ListItemCell>
+                      <ListItemCell>
+                        <TaxInput
+                          placeholder={getDefaultTaxRateInCountry().toString()}
+                          value={(countryRate.rate * 100).toString()}
+                          change={() => null} // TODO: add change function from form
+                        />
+                      </ListItemCell>
+                    </ListItem>
+                  )) ?? (
+                    <>
+                      <Skeleton />
+                      <VerticalSpacer />
+                    </>
+                  )}
+                </List>
+              </>
+            )}
           </Card>
         </div>
       </Grid>

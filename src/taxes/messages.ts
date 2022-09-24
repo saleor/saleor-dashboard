@@ -166,4 +166,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Country default rate",
     description: "country rates list label for the default rate",
   },
+  noRatesInTaxClass: {
+    id: "+/IT7H",
+    defaultMessage: "There are no countries using this tax class",
+    description: "tax class rates list label when no countries are assigned",
+  },
 });
