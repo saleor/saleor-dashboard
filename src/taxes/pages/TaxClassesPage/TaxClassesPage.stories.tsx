@@ -9,6 +9,9 @@ const props = {
   taxClasses,
   selectedTaxClassId: taxClasses[0].id,
   handleTabChange: () => undefined,
+  onSubmit: () => undefined,
+  savebarState: "default" as const,
+  disabled: false,
 };
 
 storiesOf("Views / Taxes / Tax classes view", module)
