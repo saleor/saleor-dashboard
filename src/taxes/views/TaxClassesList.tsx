@@ -37,6 +37,9 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       taxClasses={taxClasses}
       handleTabChange={handleTabChange}
       selectedTaxClassId={id}
+      savebarState={"default"}
+      disabled={false}
+      onSubmit={() => null}
     />
   );
 };
