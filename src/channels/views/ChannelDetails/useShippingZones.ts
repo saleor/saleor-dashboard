@@ -8,7 +8,7 @@ import {
 } from "@saleor/graphql";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 
-export const useShippingZones = (channelId: string) => {
+export const useShippingZones = (channelId?: string) => {
   const userPermissions = useUserPermissions();
   const canLoadShippingZones = hasPermissions(userPermissions, [
     PermissionEnum.MANAGE_SHIPPING,
@@ -28,7 +28,7 @@ export const useShippingZones = (channelId: string) => {
         channels: [channelId],
       },
     },
-    skip: !canLoadShippingZones,
+    skip: !channelId || !canLoadShippingZones,
   });
 
   const {

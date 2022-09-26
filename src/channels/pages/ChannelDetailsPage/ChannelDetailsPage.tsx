@@ -231,22 +231,30 @@ const ChannelDetailsPage = function<TErrors>({
                     totalCount={allShippingZonesCount}
                     loading={disabled}
                   />
+                  <CardSpacer />
                 </RequirePermissions>
-                <CardSpacer />
-                <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices(
-                    data.warehousesToDisplay,
-                  )}
-                  warehouses={data.warehousesToDisplay}
-                  addWarehouse={addWarehouse}
-                  removeWarehouse={removeWarehouse}
-                  searchWarehouses={searchWarehouses}
-                  fetchMoreWarehouses={fetchMoreWarehouses}
-                  totalCount={allWarehousesCount}
-                  reorderWarehouses={reorderWarehouse}
-                  loading={disabled}
-                />
-                <CardSpacer />
+                <RequirePermissions
+                  oneOfPermissions={[
+                    PermissionEnum.MANAGE_SHIPPING,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PRODUCTS,
+                  ]}
+                >
+                  <Warehouses
+                    warehousesChoices={getFilteredWarehousesChoices(
+                      data.warehousesToDisplay,
+                    )}
+                    warehouses={data.warehousesToDisplay}
+                    addWarehouse={addWarehouse}
+                    removeWarehouse={removeWarehouse}
+                    searchWarehouses={searchWarehouses}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    totalCount={allWarehousesCount}
+                    reorderWarehouses={reorderWarehouse}
+                    loading={disabled}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
                 <ChannelAllocationStrategy
                   data={data}
                   disabled={disabled}

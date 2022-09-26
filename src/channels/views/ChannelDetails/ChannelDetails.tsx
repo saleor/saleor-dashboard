@@ -5,7 +5,6 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
@@ -17,7 +16,6 @@ import {
   useChannelReorderWarehousesMutation,
   useChannelsQuery,
   useChannelUpdateMutation,
-  useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -26,7 +24,6 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -42,6 +39,7 @@ import {
 } from "../../urls";
 import { calculateItemsOrderMoves } from "./handlers";
 import { useShippingZones } from "./useShippingZones";
+import { useWarehouses } from "./useWarehouses";
 
 interface ChannelDetailsProps {
   id: string;
@@ -211,17 +209,12 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   } = useShippingZones(id);
 
   const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery();
-
-  const {
-    loadMore: fetchMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesResult,
-  } = useWarehouseSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+    warehousesCountData,
+    warehousesCountLoading,
+    fetchMoreWarehouses,
+    searchWarehouses,
+    searchWarehousesResult,
+  } = useWarehouses();
 
   const channelWarehouses = data?.channel?.warehouses || [];
   const channelShippingZones = mapEdgesToItems(
