@@ -28,6 +28,10 @@ export const useHeaderStyles = makeStyles(
       flexDirection: "row",
       alignItems: "center",
     },
+    skeleton: {
+      width: "100%",
+      marginRight: theme.spacing(4),
+    },
     // empty expanded needed for mui to use root styles
     expanded: {},
     root: {
@@ -61,12 +65,26 @@ export const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      background: theme.palette.background.paper,
+    },
+    containerContent: {
+      display: "flex",
+      overflow: "auto",
+    },
+    sortableHandle: {
+      marginRight: theme.spacing(1),
+    },
+    grabbing: {
+      cursor: "grabbing",
     },
     root: {
       paddingRight: theme.spacing(1),
     },
     infoMessage: {
       padding: theme.spacing(3),
+    },
+    skeleton: {
+      margin: theme.spacing(4, 0),
     },
   }),
   { name: "AssignmentList" },

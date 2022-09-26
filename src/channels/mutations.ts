@@ -61,3 +61,16 @@ export const channelDeactivateMutation = gql`
     }
   }
 `;
+
+export const ChannelReorderWarehousesMutation = gql`
+  mutation ChannelReorderWarehouses($channelId: ID!, $moves: [ReorderInput!]!) {
+    channelReorderWarehouses(channelId: $channelId, moves: $moves) {
+      channel {
+        ...ChannelDetails
+      }
+      errors {
+        ...ChannelError
+      }
+    }
+  }
+`;

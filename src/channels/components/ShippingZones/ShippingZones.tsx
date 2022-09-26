@@ -5,23 +5,16 @@ import { SearchShippingZonesQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import AssignmentList from "../AssignmentList";
-
-const messages = defineMessages({
-  subtitle: {
-    id: "Ic7Wln",
-    defaultMessage:
-      "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
-    description: "card subtitle",
-  },
-});
+import { messages } from "./messages";
 
 export interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
   removeShippingZone: (id: string) => void;
   searchShippingZones: (searchPhrase: string) => void;
+  loading: boolean;
   totalCount: number;
   fetchMoreShippingZones: FetchMoreProps;
   shippingZones: ChannelShippingZones;
@@ -33,6 +26,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
     addShippingZone,
     removeShippingZone,
     searchShippingZones,
+    loading,
     totalCount,
     fetchMoreShippingZones,
     shippingZones,
@@ -48,6 +42,7 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
       <AssignmentList
+        loading={loading}
         items={shippingZones}
         itemsChoices={shippingZonesChoices}
         addItem={addShippingZone}

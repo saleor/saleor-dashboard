@@ -114,7 +114,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://docs.saleor.io/docs/3.x/developer/extending/apps/synchronous-webhooks#payload-signature"
+                      href="https://docs.saleor.io/docs/3.x/developer/extending/apps/synchronous-webhooks/key-concepts#payload-signature"
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>

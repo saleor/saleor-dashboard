@@ -1,4 +1,5 @@
 import { getAppDeepPathFromDashboardUrl } from "@saleor/apps/urls";
+import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -33,11 +34,30 @@ export const AppFrame: React.FC<Props> = ({
 }) => {
   const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
-  const { sendThemeToExtension } = useTheme();
+  const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
+  const { locale } = useLocale();
+
+  useEffect(() => {
+    postToExtension({
+      type: "localeChanged",
+      payload: {
+        locale,
+      },
+    });
+  }, [locale, postToExtension]);
+
+  useEffect(() => {
+    postToExtension({
+      type: "theme",
+      payload: {
+        theme: themeType,
+      },
+    });
+  }, [themeType, postToExtension]);
 
   useEffect(() => {
     postToExtension({
@@ -58,7 +78,12 @@ export const AppFrame: React.FC<Props> = ({
         version: 1,
       },
     });
-    sendThemeToExtension();
+    postToExtension({
+      type: "theme",
+      payload: {
+        theme: themeType,
+      },
+    });
 
     if (onLoad) {
       onLoad();
@@ -75,7 +100,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(
         src,
         window.location.search,
-        `?domain=${shop.domain.host}&id=${appId}`,
+        `?domain=${shop.domain.host}&id=${appId}&locale=${locale}`,
       )}
       onError={onError}
       onLoad={handleLoad}

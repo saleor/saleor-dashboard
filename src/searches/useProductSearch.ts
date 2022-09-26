@@ -33,6 +33,9 @@ export const searchProducts = gql`
               }
             }
           }
+          collections {
+            id
+          }
         }
       }
       pageInfo {

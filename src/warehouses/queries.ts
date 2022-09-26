@@ -37,20 +37,6 @@ export const warehouseDetails = gql`
   }
 `;
 
-// first: 100 - to be removed when we implement pagintion in ui for this query
-export const channelWarehouses = gql`
-  query ChannelWarehouses($filter: WarehouseFilterInput) {
-    warehouses(filter: $filter, first: 100) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
 export const warehousesCount = gql`
   query WarehousesCount {
     warehouses {

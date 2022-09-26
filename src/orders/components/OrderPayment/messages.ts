@@ -36,6 +36,21 @@ export const orderPaymentMessages = defineMessages({
     id: "T34dJq",
     description: "Displayed when order has no payment",
   },
+  includedInSubtotal: {
+    id: "pPef6L",
+    defaultMessage: "Included in subtotal",
+    description: "order payment",
+  },
+  includedInPrices: {
+    id: "ukYopn",
+    defaultMessage: "Included in prices",
+    description: "order payment",
+  },
+  settled: {
+    id: "Sxzua5",
+    defaultMessage: "Settled",
+    description: "order payment",
+  },
 });
 
 export const orderPaymentActionButtonMessages = defineMessages({

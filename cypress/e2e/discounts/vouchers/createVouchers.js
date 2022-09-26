@@ -13,7 +13,6 @@ import {
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import filterTests from "../../../support/filterTests";
 import {
   createVoucher,
   discountOptions,
@@ -24,19 +23,17 @@ describe("As an admin I want to create voucher", () => {
   const startsWith = "CyVou-";
   const productPrice = 100;
   const shippingPrice = 100;
+  const voucherValue = 50;
+  const name = `${startsWith}${faker.datatype.number()}`;
 
-  let defaultChannel;
   let createdChannel;
-  let shippingMethod;
-  let variants;
-  let address;
   let dataForCheckout;
+  let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     channelsUtils.deleteChannelsStartsWith(startsWith);
     deleteVouchersStartsWith(startsWith);
-    const name = `${startsWith}${faker.datatype.number()}`;
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
@@ -46,30 +43,23 @@ describe("As an admin I want to create voucher", () => {
           shippingMethod: shippingMethodResp,
           address: addressResp,
         }) => {
-          variants = variantsResp;
           defaultChannel = channel;
-          shippingMethod = shippingMethodResp;
-          address = addressResp;
-          createChannel({ name });
+
+          dataForCheckout = {
+            channelSlug: defaultChannel.slug,
+            variantsList: variantsResp,
+            address: addressResp,
+            shippingMethodName: shippingMethodResp.name,
+            auth: "token",
+          };
         },
-      )
-      .then(channel => {
-        createdChannel = channel;
-        dataForCheckout = {
-          channelSlug: defaultChannel.slug,
-          variantsList: variants,
-          address,
-          shippingMethodName: shippingMethod.name,
-          auth: "token",
-        };
-      });
+      );
   });
 
   it(
     "should be able to create fixed price voucher. TC: SALEOR_1901",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
-      const voucherValue = 50;
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const expectedAmount = productPrice + shippingPrice - voucherValue;
       let checkout;
@@ -80,21 +70,18 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-      })
-        .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-          expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount,
-          );
-          dataForCheckout.voucherCode = voucherCode;
-          checkout = checkoutResp;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
+      }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
+          expectedAmount,
+        );
+        dataForCheckout.voucherCode = voucherCode;
+        checkout = checkoutResp;
+
+        addPayment(checkout.id);
+        completeCheckout(checkout.id)
+          .its("order.total.gross.amount")
+          .should("eq", expectedAmount);
+      });
     },
   );
 
@@ -102,7 +89,6 @@ describe("As an admin I want to create voucher", () => {
     "should be able to create percentage voucher. TC: SALEOR_1902",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
-      const voucherValue = 50;
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const expectedAmount =
         (productPrice * voucherValue) / 100 + shippingPrice;
@@ -114,21 +100,18 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-      })
-        .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-          expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount,
-          );
-          dataForCheckout.voucherCode = voucherCode;
-          checkout = checkoutResp;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
+      }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
+          expectedAmount,
+        );
+        dataForCheckout.voucherCode = voucherCode;
+        checkout = checkoutResp;
+
+        addPayment(checkout.id);
+        completeCheckout(checkout.id)
+          .its("order.total.gross.amount")
+          .should("eq", expectedAmount);
+      });
     },
   );
 
@@ -145,21 +128,18 @@ describe("As an admin I want to create voucher", () => {
         voucherCode,
         channelName: defaultChannel.name,
         dataForCheckout,
-      })
-        .then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-          expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-            expectedAmount,
-          );
-          dataForCheckout.voucherCode = voucherCode;
-          checkout = checkoutResp;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
+      }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
+          expectedAmount,
+        );
+        dataForCheckout.voucherCode = voucherCode;
+        checkout = checkoutResp;
+
+        addPayment(checkout.id);
+        completeCheckout(checkout.id)
+          .its("order.total.gross.amount")
+          .should("eq", productPrice);
+      });
     },
   );
 
@@ -167,26 +147,30 @@ describe("As an admin I want to create voucher", () => {
     "should be able to create voucher not available for selected channel. TC: SALEOR_1904",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
-      const randomName = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
+      const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.vouchers);
       cy.expectSkeletonIsVisible();
-      createVoucher({
-        voucherCode: randomName,
-        voucherValue,
-        discountOption: discountOptions.PERCENTAGE,
-        channelName: createdChannel.name,
+      createChannel({ name }).then(channel => {
+        createdChannel = channel;
+
+        cy.reload();
+        createVoucher({
+          voucherCode,
+          voucherValue,
+          discountOption: discountOptions.PERCENTAGE,
+          channelName: createdChannel.name,
+        });
       });
-      dataForCheckout.voucherCode = randomName;
-      createCheckoutWithVoucher(dataForCheckout).then(
-        ({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.errors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-        },
-      );
+
+      dataForCheckout.voucherCode = voucherCode;
+
+      createCheckoutWithVoucher(dataForCheckout)
+        .its("addPromoCodeResp.errors.0")
+        .should("include", { field: "promoCode" })
+        .and("include", { message: "Promo code is invalid" });
     },
   );
 });

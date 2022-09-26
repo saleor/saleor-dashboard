@@ -61,6 +61,10 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockInput } from "../ProductStocks";
+import {
+  concatChannelsBySelection,
+  extractChannelPricesFromVariantChannel,
+} from "../ProductVariantChannels/formOpretations";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
@@ -120,6 +124,7 @@ export interface ProductVariantUpdateHandlers
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
+  updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -284,6 +289,41 @@ function useProductVariantUpdateForm(
     intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
 
+  const handleUpdateChannels = (selectedIds: string[]) => {
+    const allChannels = variant.product.channelListings.map(listing => {
+      const variantChannel = variant?.channelListings?.find(
+        channelListing => channelListing.channel.id === listing.channel.id,
+      );
+
+      if (variantChannel) {
+        const { costPrice, price } = extractChannelPricesFromVariantChannel(
+          variantChannel,
+        );
+
+        return {
+          ...variantChannel.channel,
+          currency: variantChannel.channel.currencyCode,
+          preorderThreshold: variantChannel?.preorderThreshold.quantity,
+          soldUnits: variantChannel?.preorderThreshold?.soldUnits,
+          price,
+          costPrice,
+        };
+      }
+
+      return {
+        ...listing.channel,
+        currency: listing.channel.currencyCode,
+        price: "",
+        preorderThreshold: null,
+        soldUnits: null,
+      };
+    });
+
+    channels.set(concatChannelsBySelection(selectedIds, channels, allChannels));
+
+    triggerChange();
+  };
+
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = arrayDiff(variantStocks, dataStocks);
@@ -364,6 +404,7 @@ function useProductVariantUpdateForm(
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,
+      updateChannels: handleUpdateChannels,
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,

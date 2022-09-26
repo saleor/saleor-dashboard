@@ -2,7 +2,7 @@ import {
   getDefaultAddress,
   getPaymentDataLine,
   getValueWithDefault,
-  getVariantsLines
+  getVariantsLines,
 } from "./utils/Utils";
 
 export function createCheckout({
@@ -13,13 +13,13 @@ export function createCheckout({
   address,
   billingAddress,
   auth = "auth",
-  returnAvailableCollectionPoints = false
+  returnAvailableCollectionPoints = false,
 }) {
   const lines = getVariantsLines(variantsList, productQuantity);
   const shippingAddress = getDefaultAddress(address, "shippingAddress");
   const billingAddressLines = getDefaultAddress(
     billingAddress,
-    "billingAddress"
+    "billingAddress",
   );
 
   const availableCollectionPointsLines = getValueWithDefault(
@@ -29,7 +29,7 @@ export function createCheckout({
     name
     clickAndCollectOption
     isPrivate
-  }`
+  }`,
   );
 
   const emailLine = getValueWithDefault(email, `email: "${email}"`);
@@ -233,7 +233,7 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
 export function addProductsToCheckout(
   checkoutId,
   variantsList,
-  productQuantity
+  productQuantity,
 ) {
   const lines = getVariantsLines(variantsList, productQuantity);
   const mutation = `mutation{
@@ -279,4 +279,26 @@ export function getCheckout(token) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.checkout");
+}
+
+export function orderCreateFromCheckout(
+  checkoutId,
+  token,
+  removeCheckoutFlag = true,
+) {
+  const mutation = `mutation {
+    orderCreateFromCheckout(id: "${checkoutId}", removeCheckout: ${removeCheckoutFlag})
+    {
+          order{
+              id
+          }
+          errors{
+              field
+              message
+          }
+      }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation, token)
+    .its("body.data.orderCreateFromCheckout.order");
 }

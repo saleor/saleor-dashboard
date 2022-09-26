@@ -23,7 +23,7 @@ import {
 } from "../../../support/pages/shippingMethodPage";
 
 describe("As a user I want to create shipping method with postal codes", () => {
-  const startsWith = "CyShippingMethods-";
+  const startsWith = "postalCodes-";
   const name = `${startsWith}${faker.datatype.number()}`;
 
   const price = 10;

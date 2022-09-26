@@ -197,7 +197,9 @@ export function useExitFormDialogProvider() {
     setCurrentLocation(navAction.current);
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
-    routerHistory.push(navAction.current.pathname + navAction.current.search);
+    if (navAction.current !== null) {
+      routerHistory.push(navAction.current.pathname + navAction.current.search);
+    }
     setStateDefaultValues();
   };
 

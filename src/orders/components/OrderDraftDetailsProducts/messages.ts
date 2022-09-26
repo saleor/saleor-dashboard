@@ -11,4 +11,9 @@ export const lineAlertMessages = defineMessages({
     defaultMessage: "This product is not available for sale in this channel.",
     description: "alert message",
   },
+  notExists: {
+    id: "pEMxyy",
+    defaultMessage: "This product does no longer exist.",
+    description: "alert message",
+  },
 });

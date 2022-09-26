@@ -16,10 +16,8 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ProductErrorWithAttributesFragment,
-  ProductVariantFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
-  useProductVariantChannelListingUpdateMutation,
   useProductVariantDetailsQuery,
   useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
@@ -36,6 +34,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { weight } from "@saleor/misc";
 import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -47,18 +46,18 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { extractMutationErrors, weight } from "../../misc";
-import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
-import ProductVariantPage from "../components/ProductVariantPage";
-import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
+import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import ProductVariantPage from "../../components/ProductVariantPage";
+import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import {
   productUrl,
   productVariantEditUrl,
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams,
-} from "../urls";
-import { mapFormsetStockToStockInput } from "../utils/data";
-import { createVariantReorderHandler } from "./ProductUpdate/handlers";
+} from "../../urls";
+import { mapFormsetStockToStockInput } from "../../utils/data";
+import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
+import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
   variantId: string;
@@ -91,11 +90,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation({});
 
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
@@ -142,49 +136,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     deleteAttributeValueOpts,
   ] = useAttributeValueDeleteMutation({});
 
-  const handleSubmitChannels = async (
-    data: ProductVariantUpdateSubmitData,
-    variant: ProductVariantFragment,
-  ) => {
-    const channelsHaveChanged = data.channelListings.some(channel => {
-      const variantChannel = variant.channelListings.find(
-        variantChannel => variantChannel.channel.id === channel.id,
-      );
-
-      const priceHasChanged =
-        channel.value.price !== variantChannel?.price?.amount.toString();
-
-      const costPriceHasChanged =
-        channel.value.costPrice !==
-        variantChannel?.costPrice?.amount.toString();
-
-      const preorderThresholdHasChanged =
-        channel.value?.preorderThreshold !==
-        variantChannel.preorderThreshold.quantity;
-
-      return (
-        priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged
-      );
-    });
-
-    if (channelsHaveChanged) {
-      return extractMutationErrors(
-        updateChannels({
-          variables: {
-            id: variant.id,
-            input: data.channelListings.map(listing => ({
-              channelId: listing.id,
-              costPrice: listing.value.costPrice || null,
-              price: listing.value.price,
-              preorderThreshold: listing.value.preorderThreshold,
-            })),
-          },
-        }),
-      );
-    }
-
-    return [];
-  };
+  const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
@@ -292,7 +244,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         firstValues: 10,
       },
     });
-    await handleSubmitChannels(data, variant);
+
+    const channelErrors = await handleSubmitChannels(data, variant);
 
     return [
       ...mergeFileUploadErrors(uploadFilesResult),
@@ -301,6 +254,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,
       ...result.data?.productVariantUpdate.errors,
+      ...channelErrors,
     ];
   };
   const handleSubmit = createMetadataUpdateHandler(
@@ -386,12 +340,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onDelete={() => openModal("remove")}
         onMediaSelect={handleMediaSelect}
-        onSubmit={async data => {
-          const errors = await handleSubmit(data);
-          const channelErrors = await handleSubmitChannels(data, variant);
-
-          return [...errors, ...channelErrors];
-        }}
+        onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}

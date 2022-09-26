@@ -1,5 +1,5 @@
 import {
-  getAttributeValuesFromReferences,
+  getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
@@ -27,6 +27,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { VariantDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@saleor/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -34,6 +35,8 @@ import { defineMessages, useIntl } from "react-intl";
 
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
+import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
@@ -46,7 +49,6 @@ import ProductVariantUpdateForm, {
   ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData,
 } from "./form";
-import VariantDetailsChannelsAvailabilityCard from "./VariantDetailsChannelsAvailabilityCard";
 
 const messages = defineMessages({
   nonSelectionAttributes: {
@@ -157,7 +159,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-
+  const {
+    isOpen: isManageChannelsModalOpen,
+    toggle: toggleManageChannels,
+  } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
@@ -254,7 +259,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                   </div>
                   <div>
-                    <VariantDetailsChannelsAvailabilityCard variant={variant} />
+                    <VariantDetailsChannelsAvailabilityCard
+                      variant={variant}
+                      onManageClick={toggleManageChannels}
+                    />
                     {nonSelectionAttributes.length > 0 && (
                       <>
                         <Attributes
@@ -381,12 +389,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 />
                 {canOpenAssignReferencesAttributeDialog && (
                   <AssignAttributeValueDialog
-                    attributeValues={getAttributeValuesFromReferences(
+                    entityType={getReferenceAttributeEntityTypeFromAttribute(
                       assignReferencesAttributeId,
                       data.attributes,
-                      referencePages,
-                      referenceProducts,
                     )}
+                    confirmButtonState={"default"}
+                    products={referenceProducts}
+                    pages={referencePages}
                     hasMore={handlers.fetchMoreReferences?.hasMore}
                     open={canOpenAssignReferencesAttributeDialog}
                     onFetch={handlers.fetchReferences}
@@ -400,6 +409,15 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         handlers,
                       )
                     }
+                  />
+                )}
+                {variant && (
+                  <VariantChannelsDialog
+                    channelListings={variant.product.channelListings}
+                    selectedChannelListings={data.channelListings}
+                    open={isManageChannelsModalOpen}
+                    onClose={toggleManageChannels}
+                    onConfirm={handlers.updateChannels}
                   />
                 )}
               </>

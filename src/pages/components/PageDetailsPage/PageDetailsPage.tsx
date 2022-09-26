@@ -1,5 +1,5 @@
 import {
-  getAttributeValuesFromReferences,
+  getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -212,7 +212,6 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>
             <div>
-              <CardSpacer />
               <VisibilityCard
                 data={data}
                 errors={errors}
@@ -265,12 +264,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
           />
           {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog
-              attributeValues={getAttributeValuesFromReferences(
+              entityType={getReferenceAttributeEntityTypeFromAttribute(
                 assignReferencesAttributeId,
                 data.attributes,
-                referencePages,
-                referenceProducts,
               )}
+              confirmButtonState={"default"}
+              products={referenceProducts}
+              pages={referencePages}
               hasMore={handlers.fetchMoreReferences?.hasMore}
               open={canOpenAssignReferencesAttributeDialog}
               onFetch={handlers.fetchReferences}

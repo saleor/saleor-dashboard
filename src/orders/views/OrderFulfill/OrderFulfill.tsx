@@ -1,3 +1,4 @@
+import { handleNestedMutationErrors } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   useFulfillOrderMutation,
@@ -59,8 +60,17 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
             description: "order fulfilled success message",
           }),
         });
+      } else {
+        if (
+          !data.orderFulfill.errors.every(
+            err => err.code === "INSUFFICIENT_STOCK",
+          )
+        ) {
+          handleNestedMutationErrors({ data, intl, notify });
+        }
       }
     },
+    disableErrorHandling: true,
   });
 
   return (

@@ -16,6 +16,7 @@ import {
 import TablePagination from "@saleor/components/TablePagination";
 import {
   AttributeInputTypeEnum,
+  AttributeValueFragment,
   AttributeValueListFragment,
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -74,6 +75,15 @@ const useStyles = makeStyles(
   }),
   { name: "AttributeValues" },
 );
+
+const getSwatchCellStyle = (value: AttributeValueFragment) => {
+  if (!value) {
+    return;
+  }
+  return value.file
+    ? { backgroundImage: `url(${value.file.url})` }
+    : { backgroundColor: value.value };
+};
 
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
@@ -179,11 +189,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     <div
                       data-test-id="swatch-image"
                       className={classes.swatch}
-                      style={
-                        value?.file
-                          ? { backgroundImage: `url(${value.file.url})` }
-                          : { backgroundColor: value.value }
-                      }
+                      style={getSwatchCellStyle(value)}
                     />
                   </TableCell>
                 )}

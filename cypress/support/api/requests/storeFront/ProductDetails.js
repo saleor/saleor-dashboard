@@ -3,7 +3,7 @@ import { getValueWithDefault } from "../utils/Utils";
 export function getProductDetails(productId, channelSlug, auth = "token") {
   const privateMetadataLine = getValueWithDefault(
     auth === "auth",
-    `privateMetadata{key value}`
+    `privateMetadata{key value}`,
   );
 
   const query = `fragment BasicProductFields on Product {
@@ -80,14 +80,14 @@ export function getProductMetadata({
   productId,
   channelSlug,
   auth,
-  withPrivateMetadata
+  withPrivateMetadata,
 }) {
   const privateMetadata = getValueWithDefault(
     withPrivateMetadata,
     `privateMetadata{
     key
     value
-  }`
+  }`,
   );
 
   const query = `query{
