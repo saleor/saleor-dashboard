@@ -10,7 +10,11 @@ import MultiAutocompleteSelectField, {
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductErrorFragment } from "@saleor/graphql";
+import {
+  ProductChannelListingErrorFragment,
+  ProductErrorCode,
+  ProductErrorFragment,
+} from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -55,7 +59,7 @@ interface ProductOrganizationProps {
     productType?: ProductType;
   };
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   productType?: ProductType;
   productTypeInputDisplayValue?: string;
   productTypes?: SingleAutocompleteChoiceType[];
@@ -98,9 +102,13 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(
-    ["productType", "category", "collections"],
+    ["productType", "category", "collections", "isPublished"],
     errors,
   );
+  const noCategoryError =
+    formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
+      ? formErrors.isPublished
+      : null;
 
   return (
     <Card className={classes.card}>
@@ -163,8 +171,11 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
         <FormSpacer />
         <SingleAutocompleteSelectField
           displayValue={categoryInputDisplayValue}
-          error={!!formErrors.category}
-          helperText={getProductErrorMessage(formErrors.category, intl)}
+          error={!!(formErrors.category || noCategoryError)}
+          helperText={getProductErrorMessage(
+            formErrors.category || noCategoryError,
+            intl,
+          )}
           disabled={disabled}
           label={intl.formatMessage({
             id: "ccXLVi",

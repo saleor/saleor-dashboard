@@ -2,10 +2,13 @@ import { MenuItem } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { Choice } from "@saleor/components/SingleSelectField";
 import useChoiceSearch from "@saleor/hooks/useChoiceSearch";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 export interface ChannelPickerDialogProps {
   channelsChoices: Array<Choice<string, string>>;
@@ -30,26 +33,25 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
   );
   const { result, search } = useChoiceSearch(channelsChoices);
 
+  useModalDialogOpen(open, {
+    onClose: () => {
+      search("");
+      setChoice(defaultChoice);
+    },
+  });
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={() => onConfirm(choice)}
-      title={intl.formatMessage({
-        id: "G/pgG3",
-        defaultMessage: "Select a channel",
-        description: "dialog header",
-      })}
+      title={intl.formatMessage(messages.selectChannel)}
     >
       <Autocomplete
         choices={result}
         fullWidth
-        label={intl.formatMessage({
-          defaultMessage: "Channel name",
-          id: "nKwgxY",
-          description: "select label",
-        })}
+        label={intl.formatMessage(messages.channelName)}
         data-test-id="channel-autocomplete"
         value={choice}
         onChange={e => setChoice(e.target.value)}

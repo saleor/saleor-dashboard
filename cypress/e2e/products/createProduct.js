@@ -19,7 +19,10 @@ import {
   fillUpPriceList,
   priceInputLists,
 } from "../../support/pages/catalog/products/priceListComponent";
-import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
+import {
+  fillUpCommonFieldsForAllProductTypes,
+  fillUpProductTypeDialog,
+} from "../../support/pages/catalog/products/productDetailsPage";
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
 describe("As an admin I should be able to create product", () => {
@@ -156,6 +159,8 @@ describe("As an admin I should be able to create product", () => {
       .visit(urlList.products)
       .get(PRODUCTS_LIST.createProductBtn)
       .click();
+    fillUpProductTypeDialog(productData);
+    cy.get(BUTTON_SELECTORS.submit).click();
     return fillUpCommonFieldsForAllProductTypes(productData);
   }
 });
