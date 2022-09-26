@@ -25,6 +25,7 @@
       "AttributeValueCreated",
       "AttributeValueDeleted",
       "AttributeValueUpdated",
+      "CalculateTaxes",
       "CategoryCreated",
       "CategoryDeleted",
       "CategoryUpdated",
@@ -43,6 +44,7 @@
       "DraftOrderCreated",
       "DraftOrderDeleted",
       "DraftOrderUpdated",
+      "FulfillmentApproved",
       "FulfillmentCanceled",
       "FulfillmentCreated",
       "GiftCardCreated",
@@ -236,6 +238,14 @@
       "User",
       "Voucher",
       "Warehouse"
+    ],
+    "TaxSourceLine": [
+      "CheckoutLine",
+      "OrderLine"
+    ],
+    "TaxSourceObject": [
+      "Checkout",
+      "Order"
     ],
     "TranslatableItem": [
       "ProductTranslatableContent",

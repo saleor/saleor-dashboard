@@ -1223,6 +1223,27 @@ export const OrderGiftCardFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const OrderGrantedRefundFragmentDoc = gql`
+    fragment OrderGrantedRefund on OrderGrantedRefund {
+  createdAt
+  amount {
+    currency
+    amount
+  }
+  reason
+  user {
+    email
+    avatar {
+      url
+      alt
+    }
+  }
+  app {
+    id
+    name
+  }
+}
+    `;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1424,6 +1445,9 @@ export const OrderDetailsFragmentDoc = gql`
   giftCards {
     ...OrderGiftCard
   }
+  grantedRefunds {
+    ...OrderGrantedRefund
+  }
   isShippingRequired
   canFinalize
   created
@@ -1543,6 +1567,7 @@ ${AddressFragmentDoc}
 ${TransactionItemFragmentDoc}
 ${OrderPaymentFragmentDoc}
 ${OrderGiftCardFragmentDoc}
+${OrderGrantedRefundFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}

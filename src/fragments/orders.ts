@@ -273,6 +273,28 @@ export const fragmentOrderGiftcard = gql`
   }
 `;
 
+export const fragmentOrderGrantedRefunds = gql`
+  fragment OrderGrantedRefund on OrderGrantedRefund {
+    createdAt
+    amount {
+      currency
+      amount
+    }
+    reason
+    user {
+      email
+      avatar {
+        url
+        alt
+      }
+    }
+    app {
+      id
+      name
+    }
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
@@ -289,6 +311,9 @@ export const fragmentOrderDetails = gql`
     }
     giftCards {
       ...OrderGiftCard
+    }
+    grantedRefunds {
+      ...OrderGrantedRefund
     }
     isShippingRequired
     canFinalize
