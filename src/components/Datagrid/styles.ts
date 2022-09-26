@@ -68,10 +68,9 @@ const useStyles = makeStyles(
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: theme.typography.body2.fontSize,
-          fontWeight: 700,
-          letterSpacing: "0.6px",
-          padding: `1.3rem ${theme.spacing(1)}`,
+          fontSize: theme.typography.body1.fontSize,
+          letterSpacing: "0.44px",
+          padding: `1.4rem ${theme.spacing(1)}`,
           outline: 0,
         },
         '& input[type="number"]': {
@@ -157,14 +156,14 @@ export function useDatagridTheme() {
   const theme = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.palette.saleor.main[1],
+      accentColor: theme.palette.primary.main,
       accentLight: theme.palette.background.default,
       accentFg: "transparent",
       bgCell: theme.palette.background.paper,
       bgHeader: theme.palette.background.paper,
       bgHeaderHasFocus: theme.palette.background.paper,
       bgHeaderHovered: theme.palette.background.paper,
-      bgBubbleSelected: theme.palette.background.default,
+      bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.saleor.main[4],
       borderColor: theme.palette.divider,
       fontFamily: theme.typography.fontFamily,
