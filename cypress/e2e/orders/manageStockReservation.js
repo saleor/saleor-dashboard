@@ -40,6 +40,9 @@ describe("As an admin I want to manage stock reservation", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    deleteWarehouseStartsWith(startsWith);
     cy.fixture("addresses").then(addresses => {
       address = addresses.usAddress;
 
@@ -73,9 +76,6 @@ describe("As an admin I want to manage stock reservation", () => {
     updateStockReservation({})
       .its("errors")
       .should("be.empty");
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
   });
 
   beforeEach(() => {
