@@ -77,6 +77,6 @@ export function dropdownCell(
       value,
     },
     kind: GridCellKind.Custom,
-    copyData: value.value,
+    copyData: value.label,
   };
 }

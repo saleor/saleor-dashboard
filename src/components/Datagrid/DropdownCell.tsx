@@ -55,9 +55,12 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   onFinishedEditing,
 }) => {
   const [data, setData] = React.useState<DropdownChoice[]>([]);
-  const getChoices = React.useCallback(async (text: string) => {
-    setData(await cell.data.update(text));
-  }, []);
+  const getChoices = React.useCallback(
+    async (text: string) => {
+      setData(await cell.data.update(text));
+    },
+    [cell.data],
+  );
   const classes = useStyles();
 
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);

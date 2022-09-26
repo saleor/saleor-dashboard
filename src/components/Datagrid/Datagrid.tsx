@@ -221,6 +221,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 rowHeight={48}
                 headerHeight={48}
                 ref={editor}
+                onPaste
                 rightElementProps={{
                   sticky: true,
                 }}
