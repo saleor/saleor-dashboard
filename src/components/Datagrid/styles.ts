@@ -8,7 +8,8 @@ const useStyles = makeStyles(
       background: theme.palette.background.paper,
       color: theme.palette.saleor.main[1],
     };
-    const activeBorderColor = "#D4D4D4";
+    const activeBorderColor =
+      theme.palette.saleor.theme === "light" ? "#D4D4D4" : "#232323";
 
     return {
       actionBtnBar: {
@@ -164,14 +165,17 @@ export function useDatagridTheme() {
       bgHeaderHasFocus: theme.palette.background.paper,
       bgHeaderHovered: theme.palette.background.paper,
       bgBubbleSelected: theme.palette.background.paper,
-      textHeader: theme.palette.saleor.main[4],
+      textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
       fontFamily: theme.typography.fontFamily,
       baseFontStyle: theme.typography.body1.fontSize as string,
       headerFontStyle: theme.typography.body2.fontSize as string,
       editorFontSize: theme.typography.body1.fontSize as string,
       textMedium: theme.palette.text.primary,
-      textGroupHeader: theme.palette.text.disabled,
+      textGroupHeader: theme.palette.text.secondary,
+      textBubble: theme.palette.text.primary,
+      textDark: theme.palette.text.primary,
+      textLight: theme.palette.text.primary,
     }),
     [theme],
   );
