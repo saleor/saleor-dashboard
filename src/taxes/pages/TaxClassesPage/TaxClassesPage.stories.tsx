@@ -12,6 +12,7 @@ const props = {
   onSubmit: () => undefined,
   savebarState: "default" as const,
   disabled: false,
+  onTaxClassDelete: () => undefined,
 };
 
 storiesOf("Views / Taxes / Tax classes view", module)
