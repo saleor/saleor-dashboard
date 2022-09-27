@@ -8,7 +8,7 @@ import {
   SaleDetailsPageFormData,
 } from "@saleor/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { DiscountTypeEnum } from "@saleor/discounts/types";
 import {
   DiscountErrorCode,
   DiscountErrorFragment,
@@ -18,6 +18,8 @@ import {
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import { RequireOnlyOne } from "@saleor/misc";
 import { arrayDiff } from "@saleor/utils/arrays";
+
+import { getAddedChannelsInputFromFormData } from "./data";
 
 export interface ChannelArgs {
   discountValue: string;
@@ -125,22 +127,7 @@ export const getChannelsVariables = (
   return {
     id,
     input: {
-      addChannels:
-        formData.channelListings
-          ?.map(channel => ({
-            channelId: channel.id,
-            discountValue:
-              formData.discountType.toString() === "SHIPPING"
-                ? 100
-                : channel.discountValue,
-            minAmountSpent:
-              formData.requirementsPicker === RequirementsPicker.NONE
-                ? null
-                : formData.requirementsPicker === RequirementsPicker.ITEM
-                ? 0
-                : channel.minSpent,
-          }))
-          .filter(channel => !!channel.discountValue) || [],
+      addChannels: getAddedChannelsInputFromFormData(formData),
       removeChannels: idsDiff.removed,
     },
   };
