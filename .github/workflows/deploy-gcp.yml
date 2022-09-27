@@ -38,7 +38,8 @@ jobs:
           gcloud storage cp -r build/dashboard/*  gs://saleor-cloud-eu-dashboard/${ENVIRONMENT}/static/
           gcloud storage cp build/dashboard/index.html gs://saleor-cloud-eu-dashboard/${ENVIRONMENT}/index.html
 
-          gcloud compute url-maps invalidate-cdn-cache saleor-cloud-eu --path "/*"
+          gcloud compute url-maps invalidate-cdn-cache saleor-cloud-eu --path "/dashboard" --async
+          gcloud compute url-maps invalidate-cdn-cache saleor-cloud-eu --path "/dashboard/*" --async
       - name: Notify Slack
         if: ${{ always() }}
         env:
