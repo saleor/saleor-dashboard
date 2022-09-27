@@ -17,7 +17,6 @@ import {
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
-  useProductVariantBulkDeleteMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
@@ -118,7 +117,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const { data, loading, refetch } = useProductDetailsQuery({
+  const { data, loading } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
       id,
@@ -182,19 +181,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       }),
   });
 
-  const [
-    bulkProductVariantDelete,
-    bulkProductVariantDeleteOpts,
-  ] = useProductVariantBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productVariantBulkDelete.errors.length === 0) {
-        closeModal();
-        refetch();
-        limitOpts.refetch();
-      }
-    },
-  });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
@@ -202,7 +188,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const product = data?.product;
 
-  const warehouses = useWarehouseListQuery({
+  const warehousesQuery = useWarehouseListQuery({
     displayLoader: true,
     variables: {
       first: 50,
@@ -250,6 +236,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteProductImage({ variables: { id } });
 
   const [submit, submitOpts] = useProductUpdateHandler(product);
+
+  const warehouses = React.useMemo(
+    () => mapEdgesToItems(warehousesQuery.data?.warehouses) || [],
+    [warehousesQuery.data],
+  );
 
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
@@ -344,7 +335,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+        warehouses={warehouses}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
         onDelete={() => openModal("remove")}
@@ -388,30 +379,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           <FormattedMessage
             {...messages.deleteProductDialogSubtitle}
             values={{ name: product?.name }}
-          />
-        </DialogContentText>
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove-variants"}
-        onClose={closeModal}
-        confirmButtonState={bulkProductVariantDeleteOpts.status}
-        onConfirm={() =>
-          bulkProductVariantDelete({
-            variables: {
-              ids: params.ids,
-            },
-          })
-        }
-        variant="delete"
-        title={intl.formatMessage(messages.deleteVariantDialogTitle)}
-      >
-        <DialogContentText>
-          <FormattedMessage
-            {...messages.deleteVariantDialogSubtitle}
-            values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
-            }}
           />
         </DialogContentText>
       </ActionDialog>

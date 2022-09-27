@@ -8,7 +8,7 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
 } from "@saleor/graphql";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
 import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/utils";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
@@ -86,6 +86,7 @@ export function getProductChannelsUpdateVariables(
       addVariants: data.variants.updates
         .filter(
           change =>
+            !data.variants.added.includes(change.row) &&
             channelId === getColumnChannelAvailability(change.column) &&
             change.data,
         )
@@ -109,7 +110,7 @@ export function getProductChannelsUpdateVariables(
       channelId => dataUpdated.has(channelId) || variantsUpdates.has(channelId),
     )
     .map(channelId => ({
-      ...variantsUpdates.get(channelId),
+      ...dataUpdated.get(channelId),
       ...variantsUpdates.get(channelId),
     }));
 

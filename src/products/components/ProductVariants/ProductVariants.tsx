@@ -18,7 +18,7 @@ import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/ha
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getColumnData, getData } from "./utils";
+import { getColumnData, getData, getError } from "./utils";
 
 interface ProductVariantsProps {
   channels: ChannelData[];
@@ -74,7 +74,19 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       getData({
         availableColumns: columns,
         column,
-        errors,
+        row,
+        channels,
+        variants,
+        ...opts,
+      }),
+    [columns, variants],
+  );
+
+  const getCellError = React.useCallback(
+    ([column, row]: Item, opts: GetCellContentOpts) =>
+      getError(errors, {
+        availableColumns: columns,
+        column,
         row,
         channels,
         variants,
@@ -92,6 +104,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       })}
       availableColumns={columns}
       getCellContent={getCellContent}
+      getCellError={getCellError}
       menuItems={index => [
         {
           label: "Edit Variant",

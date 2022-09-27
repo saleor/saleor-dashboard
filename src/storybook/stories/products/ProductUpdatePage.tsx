@@ -6,7 +6,7 @@ import { ProductErrorCode } from "@saleor/graphql";
 import ProductUpdatePage, {
   ProductUpdatePageProps,
 } from "@saleor/products/components/ProductUpdatePage";
-import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/types";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
@@ -21,6 +21,7 @@ const props: ProductUpdatePageProps = {
   channels: channelsList,
   variantListErrors: [
     {
+      __typename: "DatagridError",
       variantId: product.variants[0].id,
       type: "channel",
       channelIds: [channelsList[1].id],

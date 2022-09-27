@@ -7,7 +7,7 @@ import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ProductUpdateData } from "./form";
+import { ProductUpdateData } from "./types";
 
 export type ProductChannelsListingDialogSubmit = (
   update: Record<"added" | "removed", string[]>,

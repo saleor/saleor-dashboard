@@ -57,12 +57,13 @@ import ProductMedia from "../ProductMedia";
 import ProductOrganization from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ProductUpdateForm, {
+import ProductUpdateForm from "./form";
+import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import {
   ProductUpdateData,
   ProductUpdateHandlers,
   ProductUpdateSubmitData,
-} from "./form";
-import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+} from "./types";
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
