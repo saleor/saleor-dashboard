@@ -282,11 +282,7 @@ export const fragmentOrderGrantedRefunds = gql`
     }
     reason
     user {
-      email
-      avatar {
-        url
-        alt
-      }
+      ...UserBaseAvatar
     }
     app {
       id
@@ -384,6 +380,12 @@ export const fragmentOrderDetails = gql`
       tax {
         ...Money
       }
+    }
+    totalRemainingGrant {
+      ...Money
+    }
+    totalGrantedRefund {
+      ...Money
     }
     actions
     totalAuthorized {

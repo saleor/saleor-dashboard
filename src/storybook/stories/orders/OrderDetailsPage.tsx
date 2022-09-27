@@ -12,6 +12,7 @@ import OrderDetailsPage, {
   OrderDetailsPageProps,
 } from "../../../orders/components/OrderDetailsPage";
 import {
+  grantedRefunds,
   order as orderFixture,
   ORDER_AMOUNT,
   payments,
@@ -195,12 +196,28 @@ storiesOf("Views / Orders / Order details / transactions", module)
       }}
     />
   ))
+  .add("refund granted", () => (
+    <OrderDetailsPage
+      {...props}
+      order={{
+        ...props.order,
+        isPaid: true,
+        grantedRefunds,
+        totalRemainingGrant: prepareMoney(),
+        totalAuthorized: prepareMoney(0),
+        totalCaptured: prepareMoney(),
+        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+        transactions: transactions.chargeSuccess,
+      }}
+    />
+  ))
   .add("refund requested", () => (
     <OrderDetailsPage
       {...props}
       order={{
         ...props.order,
         isPaid: true,
+        grantedRefunds,
         totalAuthorized: prepareMoney(0),
         totalCaptured: prepareMoney(),
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
@@ -214,6 +231,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
       order={{
         ...props.order,
         isPaid: true,
+        grantedRefunds,
         totalAuthorized: prepareMoney(0),
         totalCaptured: prepareMoney(0),
         paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED,
@@ -227,6 +245,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
       order={{
         ...props.order,
         isPaid: true,
+        grantedRefunds,
         totalAuthorized: prepareMoney(0),
         totalCaptured: prepareMoney(ORDER_AMOUNT - 10),
         paymentStatus: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,

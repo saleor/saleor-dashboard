@@ -1223,6 +1223,18 @@ export const OrderGiftCardFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const UserBaseAvatarFragmentDoc = gql`
+    fragment UserBaseAvatar on User {
+  id
+  firstName
+  lastName
+  email
+  avatar {
+    url
+    alt
+  }
+}
+    `;
 export const OrderGrantedRefundFragmentDoc = gql`
     fragment OrderGrantedRefund on OrderGrantedRefund {
   createdAt
@@ -1232,18 +1244,14 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
   reason
   user {
-    email
-    avatar {
-      url
-      alt
-    }
+    ...UserBaseAvatar
   }
   app {
     id
     name
   }
 }
-    `;
+    ${UserBaseAvatarFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1517,6 +1525,9 @@ export const OrderDetailsFragmentDoc = gql`
     tax {
       ...Money
     }
+  }
+  totalRemainingGrant {
+    ...Money
   }
   actions
   totalAuthorized {
