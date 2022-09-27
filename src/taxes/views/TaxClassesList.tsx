@@ -1,6 +1,7 @@
 import {
   useTaxClassDeleteMutation,
   useTaxClassesListQuery,
+  useTaxClassUpdateMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -38,10 +39,30 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
+  const [taxClassUpdateMutation] = useTaxClassUpdateMutation({
+    onCompleted: data => {
+      const errors = data?.taxClassUpdate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
+
   const handleDeleteTaxClass = async (id: string) =>
     taxClassDeleteMutation({
       variables: {
         id,
+      },
+    });
+
+  const handleUpdateTaxClass = async (id: string, input: any) =>
+    taxClassUpdateMutation({
+      variables: {
+        id,
+        input,
       },
     });
 
@@ -66,7 +87,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       selectedTaxClassId={id}
       savebarState={"default"}
       disabled={false}
-      onSubmit={() => null}
+      onSubmit={handleUpdateTaxClass}
       onTaxClassDelete={handleDeleteTaxClass}
     />
   );

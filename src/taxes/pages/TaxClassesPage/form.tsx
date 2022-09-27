@@ -1,5 +1,6 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import {
+  CountryCode,
   TaxClassFragment,
   TaxClassRateInput,
   TaxClassUpdateInput,
@@ -22,7 +23,7 @@ export interface UseTaxClassesFormResult {
 interface TaxClassesFormProps {
   children: (props: any) => React.ReactNode;
   taxClass: TaxClassFragment;
-  onSubmit: (data: TaxClassUpdateInput) => SubmitPromise;
+  onSubmit: (id: string, data: TaxClassUpdateInput) => SubmitPromise;
   disabled: boolean;
 }
 
@@ -58,18 +59,18 @@ function useTaxClassesForm(
   // Submit
   const submitData = {
     name: data.name,
-    updateTaxClasses: formset.data.map(item => {
+    updateCountryRates: formset.data.map(item => {
       const { id, value } = item;
       const parsedRate = parseFloat(value);
       return {
         rate: parsedRate,
-        countryCode: id,
+        countryCode: id as CountryCode,
       };
     }),
   };
 
   const handleSubmit = async (data: TaxClassUpdateInput) => {
-    const errors = await onSubmit(data);
+    const errors = await onSubmit(taxClass.id, data);
 
     return errors;
   };

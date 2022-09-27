@@ -42,7 +42,7 @@ interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
   selectedTaxClassId: string;
   handleTabChange: (tab: string) => void;
-  onSubmit: (input: TaxClassUpdateInput) => SubmitPromise;
+  onSubmit: (id: string, input: TaxClassUpdateInput) => SubmitPromise;
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
   onTaxClassDelete: (id: string) => SubmitPromise;
@@ -174,7 +174,12 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                               <TaxInput
                                 placeholder={getDefaultTaxRateInCountry().toString()}
                                 value={countryRate.value}
-                                change={handlers.handleRateChange}
+                                change={e =>
+                                  handlers.handleRateChange(
+                                    countryRate.id,
+                                    e.target.value,
+                                  )
+                                }
                               />
                             </ListItemCell>
                           </ListItem>
