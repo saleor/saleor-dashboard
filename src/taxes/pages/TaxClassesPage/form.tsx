@@ -5,7 +5,7 @@ import {
   TaxClassRateInput,
   TaxClassUpdateInput,
 } from "@saleor/graphql";
-import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
+import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
@@ -17,6 +17,7 @@ export interface TaxClassesPageFormData {
 export interface UseTaxClassesFormResult {
   data: TaxClassesPageFormData;
   submit: () => SubmitPromise;
+  change: FormChange;
   handlers: { handleRateChange: (id: string, value: string) => void };
 }
 
@@ -44,9 +45,13 @@ function useTaxClassesForm(
     data: null,
   }));
 
-  const { formId, triggerChange, data } = useForm(initialFormData, undefined, {
-    confirmLeave: true,
-  });
+  const { formId, triggerChange, data, handleChange } = useForm(
+    initialFormData,
+    undefined,
+    {
+      confirmLeave: true,
+    },
+  );
 
   const formset = useFormset(initialFormsetData);
 
@@ -97,6 +102,7 @@ function useTaxClassesForm(
   return {
     data: { ...data, updateTaxClassRates: formset.data },
     handlers: { handleRateChange },
+    change: handleChange,
     submit,
   };
 }

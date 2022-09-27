@@ -75,7 +75,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data, handlers, submit }) => {
+      {({ data, handlers, submit, change }) => {
         const filteredRates = data.updateTaxClassRates.filter(
           rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
@@ -111,8 +111,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                   />
                   <CardContent>
                     <TextField
-                      value={currentTaxClass?.name}
-                      onChange={() => null}
+                      value={data?.name}
+                      onChange={change}
+                      name="name"
                       variant="outlined"
                       placeholder={intl.formatMessage(
                         taxesMessages.taxRateName,
