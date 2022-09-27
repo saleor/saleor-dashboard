@@ -11247,18 +11247,14 @@ export type ProductVariantSetDefaultMutationHookResult = ReturnType<typeof usePr
 export type ProductVariantSetDefaultMutationResult = Apollo.MutationResult<Types.ProductVariantSetDefaultMutation>;
 export type ProductVariantSetDefaultMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>;
 export const ProductUpdateDocument = gql`
-    mutation ProductUpdate($id: ID!, $input: ProductInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    mutation ProductUpdate($id: ID!, $input: ProductInput!) {
   productUpdate(id: $id, input: $input) {
     errors {
       ...ProductErrorWithAttributes
     }
-    product {
-      ...Product
-    }
   }
 }
-    ${ProductErrorWithAttributesFragmentDoc}
-${ProductFragmentDoc}`;
+    ${ProductErrorWithAttributesFragmentDoc}`;
 export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>;
 
 /**
@@ -11276,10 +11272,6 @@ export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdat
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
  *   },
  * });
  */
@@ -11845,6 +11837,45 @@ export function useProductBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
+export const ProductVariantBulkCreateDocument = gql`
+    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
+  productVariantBulkCreate(product: $id, variants: $inputs) {
+    errors {
+      ...BulkProductError
+    }
+    productVariants {
+      id
+    }
+  }
+}
+    ${BulkProductErrorFragmentDoc}`;
+export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
+
+/**
+ * __useProductVariantBulkCreateMutation__
+ *
+ * To run a mutation, you first call `useProductVariantBulkCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantBulkCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [productVariantBulkCreateMutation, { data, loading, error }] = useProductVariantBulkCreateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      inputs: // value for 'inputs'
+ *   },
+ * });
+ */
+export function useProductVariantBulkCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>(ProductVariantBulkCreateDocument, options);
+      }
+export type ProductVariantBulkCreateMutationHookResult = ReturnType<typeof useProductVariantBulkCreateMutation>;
+export type ProductVariantBulkCreateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkCreateMutation>;
+export type ProductVariantBulkCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
 export const ProductVariantBulkDeleteDocument = gql`
     mutation ProductVariantBulkDelete($ids: [ID!]!) {
   productVariantBulkDelete(ids: $ids) {
@@ -11922,26 +11953,12 @@ export type ProductExportMutationOptions = Apollo.BaseMutationOptions<Types.Prod
 export const ProductChannelListingUpdateDocument = gql`
     mutation ProductChannelListingUpdate($id: ID!, $input: ProductChannelListingUpdateInput!) {
   productChannelListingUpdate(id: $id, input: $input) {
-    product {
-      id
-      channelListings {
-        ...ChannelListingProductWithoutPricing
-      }
-      variants {
-        id
-        channelListings {
-          ...ChannelListingProductVariant
-        }
-      }
-    }
     errors {
       ...ProductChannelListingError
     }
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${ChannelListingProductVariantFragmentDoc}
-${ProductChannelListingErrorFragmentDoc}`;
+    ${ProductChannelListingErrorFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
 
 /**

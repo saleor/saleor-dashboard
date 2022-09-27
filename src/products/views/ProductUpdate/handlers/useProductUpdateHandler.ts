@@ -9,17 +9,19 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
-  BulkStockErrorFragment,
+  BulkProductErrorFragment,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
+  ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  StockErrorFragment,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
+  useProductVariantBulkCreateMutation,
+  useProductVariantBulkDeleteMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantDatagridChannelListingUpdateMutation,
@@ -28,11 +30,13 @@ import {
 } from "@saleor/graphql";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationErrors } from "@saleor/misc";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/form";
+import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
 import {
+  getStockInputs,
   getStocks,
   getVariantChannels,
+  getVariantChannelsInputs,
+  getVariantInput,
   getVariantInputs,
 } from "@saleor/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@saleor/utils/errors";
@@ -48,11 +52,12 @@ import {
 
 export type UseProductUpdateHandlerError =
   | ProductErrorWithAttributesFragment
+  | ProductErrorFragment
+  | BulkProductErrorFragment
   | AttributeErrorFragment
   | UploadErrorFragment
-  | StockErrorFragment
-  | BulkStockErrorFragment
-  | ProductChannelListingErrorFragment;
+  | ProductChannelListingErrorFragment
+  | ProductVariantListError;
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
@@ -80,6 +85,8 @@ export function useProductUpdateHandler(
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [updateStocks] = useVariantDatagridStockUpdateMutation({});
   const [updateVariant] = useVariantDatagridUpdateMutation();
+  const [createVariants] = useProductVariantBulkCreateMutation();
+  const [deleteVariants] = useProductVariantBulkDeleteMutation();
 
   const [uploadFile] = useFileUploadMutation();
 
@@ -127,6 +134,20 @@ export function useProductUpdateHandler(
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
     ];
 
+    if (data.variants.removed.length > 0) {
+      errors.push(
+        ...(
+          await deleteVariants({
+            variables: {
+              ids: data.variants.removed.map(
+                index => product.variants[index].id,
+              ),
+            },
+          })
+        ).data.productVariantBulkDelete.errors,
+      );
+    }
+
     const result = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
@@ -136,7 +157,7 @@ export function useProductUpdateHandler(
       variables: getProductChannelsUpdateVariables(product, data),
     });
 
-    const variantUpdateResults = await Promise.all<FetchResult>([
+    const mutations: Array<Promise<FetchResult>> = [
       ...getStocks(product.variants, data.variants).map(variables =>
         updateStocks({ variables }),
       ),
@@ -148,21 +169,33 @@ export function useProductUpdateHandler(
           variables,
         }),
       ),
-    ]);
-
-    errors = [
-      ...errors,
-      ...(variantUpdateResults.flatMap(
-        getMutationErrors,
-      ) as UseProductUpdateHandlerError[]),
     ];
 
-    setVariantListErrors(
-      getProductVariantListErrors(
-        productChannelsUpdateResult,
-        variantUpdateResults,
-      ),
+    if (data.variants.added.length > 0) {
+      mutations.push(
+        createVariants({
+          variables: {
+            id: product.id,
+            inputs: data.variants.added.map(index => ({
+              ...getVariantInput(data.variants, index),
+              channelListings: getVariantChannelsInputs(data.variants, index),
+              stocks: getStockInputs(data.variants, index).stocks,
+            })),
+          },
+        }),
+      );
+    }
+
+    const variantMutationResults = await Promise.all<FetchResult>(mutations);
+
+    const variantErrors = getProductVariantListErrors(
+      productChannelsUpdateResult,
+      variantMutationResults,
     );
+
+    errors = [...errors, ...variantErrors];
+
+    setVariantListErrors(variantErrors);
 
     return errors;
   };

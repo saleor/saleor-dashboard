@@ -37,7 +37,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductCreateData } from "../ProductCreatePage";
-import { ProductUpdateSubmitData } from "../ProductUpdatePage/form";
 import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
 import { ProductVariantUpdateData } from "../ProductVariantPage/form";
 import { messages } from "./messages";
@@ -68,7 +67,6 @@ export interface ProductStocksProps {
   formErrors:
     | FormErrors<ProductVariantCreateData>
     | FormErrors<ProductVariantUpdateData>
-    | FormErrors<ProductUpdateSubmitData>
     | FormErrors<ProductCreateData>;
   hasVariants: boolean;
   stocks: ProductStockInput[];

@@ -34,6 +34,7 @@ export interface MenuItemsActions {
 export interface DatagridProps {
   addButtonLabel: string;
   availableColumns: readonly AvailableColumn[];
+  getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
@@ -48,6 +49,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   addButtonLabel,
   availableColumns,
   getCellContent,
+  getCellError,
   menuItems,
   rows,
   selectionActions,
@@ -79,14 +81,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
   } = useDatagridChange(availableColumns, rows, onChange);
 
   const getCellContentEnh = React.useCallback(
-    ([column, row]: Item): GridCell =>
-      getCellContent(
-        [
-          availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-          row,
-        ],
-        { changes, added, removed, getChangeIndex },
-      ),
+    ([column, row]: Item): GridCell => {
+      const item = [
+        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
+        row,
+      ] as const;
+      const opts = { changes, added, removed, getChangeIndex };
+
+      return {
+        ...getCellContent(item, opts),
+        ...(getCellError(item, opts)
+          ? { themeOverride: { bgCell: "#F4DDBA" } }
+          : {}),
+      };
+    },
     [getCellContent, availableColumns, displayedColumns, added, removed],
   );
 
