@@ -8,7 +8,12 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button, MoreHorizontalIcon, PlusSmallIcon } from "@saleor/macaw-ui";
+import {
+  Button,
+  MoreHorizontalIcon,
+  PlusSmallIcon,
+  useTheme,
+} from "@saleor/macaw-ui";
 import classNames from "classnames";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
@@ -91,6 +96,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
     onRowAdded,
   } = useDatagridChange(availableColumns, rows, onChange);
 
+  const theme = useTheme();
+
   const [scrolledToRight, setScrolledToRight] = React.useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
   const scrollerInner: HTMLDivElement = document.querySelector(
@@ -118,11 +125,23 @@ export const Datagrid: React.FC<DatagridProps> = ({
         row,
       ] as const;
       const opts = { changes, added, removed, getChangeIndex };
+      const columnId = availableColumns[column].id;
+      const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
 
       return {
         ...getCellContent(item, opts),
+        ...(changed
+          ? { themeOverride: { bgCell: theme.palette.saleor.active[5] } }
+          : {}),
         ...(getCellError(item, opts)
-          ? { themeOverride: { bgCell: "#F4DDBA" } }
+          ? {
+              themeOverride: {
+                bgCell:
+                  theme.palette.saleor.theme === "light"
+                    ? theme.palette.saleor.fail.light
+                    : theme.palette.saleor.errorAction[5],
+              },
+            }
           : {}),
       };
     },

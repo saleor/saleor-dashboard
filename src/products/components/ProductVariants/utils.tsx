@@ -260,21 +260,11 @@ export function getData({
     ? undefined
     : variants[row + removed.filter(r => r <= row).length];
 
-  const styled = (props: GridCell) => ({
-    ...props,
-    themeOverride:
-      change !== undefined || dataRow === undefined
-        ? {
-            bgCell: "#C1DBFF",
-          }
-        : {},
-  });
-
   switch (columnId) {
     case "name":
     case "sku":
       const value = change ?? (dataRow ? dataRow[columnId] : "");
-      return styled(textCell(value || ""));
+      return textCell(value || "");
   }
 
   if (getColumnStock(columnId)) {
@@ -285,7 +275,7 @@ export function getData({
       )?.quantity ??
       numberCellEmptyValue;
 
-    return styled(numberCell(value));
+    return numberCell(value);
   }
 
   if (getColumnChannel(columnId)) {
@@ -298,18 +288,18 @@ export function getData({
         ?.data ?? !!listing;
 
     if (!available) {
-      return styled({
+      return {
         ...numberCell(numberCellEmptyValue),
         readonly: true,
         allowOverlay: false,
-      });
+      };
     }
 
     const currency = channels.find(channel => channelId === channel.id)
       ?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return styled(moneyCell(value, currency));
+    return moneyCell(value, currency);
   }
 
   if (getColumnChannelAvailability(columnId)) {
@@ -319,7 +309,7 @@ export function getData({
     );
     const value = change ?? !!listing;
 
-    return styled(booleanCell(value));
+    return booleanCell(value);
   }
 
   if (getColumnAttribute(columnId)) {
@@ -332,14 +322,11 @@ export function getData({
       )[0] ??
       emptyDropdownCellValue;
 
-    return styled(
-      dropdownCell(value, {
-        allowCustomValues: true,
-        emptyOption: true,
-        update: text =>
-          searchAttributeValues(getColumnAttribute(columnId), text),
-      }),
-    );
+    return dropdownCell(value, {
+      allowCustomValues: true,
+      emptyOption: true,
+      update: text => searchAttributeValues(getColumnAttribute(columnId), text),
+    });
   }
 }
 
