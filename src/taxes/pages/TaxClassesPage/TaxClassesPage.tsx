@@ -45,6 +45,7 @@ interface TaxClassesPageProps {
   onSubmit: (input: TaxClassUpdateInput) => SubmitPromise;
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
+  onTaxClassDelete: (id: string) => SubmitPromise;
 }
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
@@ -55,6 +56,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     savebarState,
     disabled,
     onSubmit,
+    onTaxClassDelete,
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
@@ -100,7 +102,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
               <TaxClassesMenu
                 taxClasses={taxClasses}
                 selectedTaxClassId={selectedTaxClassId}
-                onTaxClassDelete={() => null}
+                onTaxClassDelete={onTaxClassDelete}
               />
               <div>
                 <Card>
