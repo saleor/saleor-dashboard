@@ -39,7 +39,10 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
-  const [taxClassUpdateMutation] = useTaxClassUpdateMutation({
+  const [
+    taxClassUpdateMutation,
+    taxClassUpdateMutationState,
+  ] = useTaxClassUpdateMutation({
     onCompleted: data => {
       const errors = data?.taxClassUpdate?.errors;
       if (errors.length === 0) {
@@ -85,7 +88,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       taxClasses={taxClasses}
       handleTabChange={handleTabChange}
       selectedTaxClassId={id}
-      savebarState={"default"}
+      savebarState={taxClassUpdateMutationState.status}
       disabled={false}
       onSubmit={handleUpdateTaxClass}
       onTaxClassDelete={handleDeleteTaxClass}
