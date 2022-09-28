@@ -1,3 +1,5 @@
+// TODO
+// @ts-nocheck
 import { MenuDetailsFragment } from "@saleor/graphql";
 
 import { TreeOperation } from "../MenuItems";
