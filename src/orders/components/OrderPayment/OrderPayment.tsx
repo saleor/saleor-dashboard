@@ -1,10 +1,12 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
-import { Button, Pill } from "@saleor/macaw-ui";
+import { Pill } from "@saleor/macaw-ui";
 import { transformPaymentStatus } from "@saleor/misc";
+import { orderGrantRefundUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -163,7 +165,10 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
             toolbar={
               <div className={classes.refundsButtons}>
                 {canGrantRefund && (
-                  <Button variant="secondary">
+                  <Button
+                    href={orderGrantRefundUrl(order.id)}
+                    variant="secondary"
+                  >
                     <FormattedMessage
                       {...orderPaymentActionButtonMessages.grantRefund}
                     />
