@@ -56,6 +56,11 @@ export const useStyles = makeStyles(
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "repeat(2, 1fr)",
     },
+    skuInputWithError: {
+      display: "flex",
+      flexDirection: "column",
+      gap: theme.spacing(1),
+    },
     dateTimeInputs: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),

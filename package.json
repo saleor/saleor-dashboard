@@ -79,7 +79,8 @@
     "semver-compare": "^1.0.0",
     "slugify": "^1.4.6",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7"
+    "use-react-router": "^1.0.7",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@apollo/react-testing": "^3.1.4",

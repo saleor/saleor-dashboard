@@ -47,3 +47,4 @@ cypress/reports
 
 # Exported results file
 django-queries-results.html
+.vercel

@@ -74,6 +74,7 @@ import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { useValidateSku } from "../ProductStocks/hooks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -295,6 +296,8 @@ function useProductUpdateForm(
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
+  const { isSkuValid } = useValidateSku();
+
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
     opts.setSelectedCollections,
@@ -469,7 +472,7 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveDisabled = disabled || !isValid();
+  const isSaveDisabled = disabled || !isValid() || !isSkuValid(data.sku);
 
   useEffect(() => {
     setIsSubmitDisabled(isSaveDisabled);

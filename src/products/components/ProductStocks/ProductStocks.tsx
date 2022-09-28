@@ -29,7 +29,13 @@ import { ProductErrorFragment, WarehouseFragment } from "@saleor/graphql";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { sectionNames } from "@saleor/intl";
-import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
+import {
+  Alert,
+  Button,
+  DeleteIcon,
+  IconButton,
+  PlusIcon,
+} from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
@@ -40,6 +46,7 @@ import { ProductCreateData } from "../ProductCreatePage";
 import { ProductUpdateSubmitData } from "../ProductUpdatePage/form";
 import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
 import { ProductVariantUpdateData } from "../ProductVariantPage/form";
+import { useValidateSku } from "./hooks";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -133,22 +140,39 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     }
   };
 
+  const { error, handleValidateSku } = useValidateSku();
+
+  const handleOnSkuChange = () => (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    handleValidateSku(event.target.value);
+    onFormDataChange(event);
+  };
+
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent>
-        <div className={classes.skuInputContainer}>
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.sku}
-            fullWidth
-            helperText={getProductErrorMessage(formErrors.sku, intl)}
-            label={intl.formatMessage(messages.sku)}
-            name="sku"
-            onChange={onFormDataChange}
-            value={data.sku}
-          />
+        <div className={classes.skuInputWithError}>
+          <div className={classes.skuInputContainer}>
+            <TextField
+              disabled={disabled}
+              error={!!formErrors.sku || Boolean(error)}
+              fullWidth
+              helperText={getProductErrorMessage(formErrors.sku, intl)}
+              label={intl.formatMessage(messages.sku)}
+              name="sku"
+              onChange={handleOnSkuChange()}
+              value={data.sku}
+            />
+          </div>
+          {error ? (
+            <Alert variant="error" close={false}>
+              <Typography>{error}</Typography>
+            </Alert>
+          ) : null}
         </div>
+
         <ControlledCheckbox
           checked={data.isPreorder}
           name="isPreorder"
