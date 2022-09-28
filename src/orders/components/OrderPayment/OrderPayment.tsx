@@ -10,6 +10,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import SummaryLine from "../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../OrderSummaryCard/SummaryList";
+import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import {
   orderPaymentActionButtonMessages,
   orderPaymentMessages,
@@ -81,11 +82,13 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
 
   const refundedAmount = extractRefundedAmount(order);
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
+  const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const canGrantRefund =
     order?.transactions?.length > 0 || order?.payments?.length > 0;
   const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
   const canAnyRefund = canGrantRefund || canSendRefund;
+  const hasGiftCards = giftCardAmount > 0;
 
   const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
 
@@ -117,7 +120,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      {!canAnyRefund && !shouldDisplay.any && (
+      {!canAnyRefund && !shouldDisplay.any && !hasGiftCards && (
         <CardContent className={classes.noPaymentContent}>
           <Typography variant="h5" className={classes.noPaymentTitle}>
             <FormattedMessage {...orderPaymentMessages.noPayments} />
