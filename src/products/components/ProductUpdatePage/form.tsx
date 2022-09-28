@@ -19,6 +19,7 @@ import {
   useDatagridChangeState,
 } from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { VALUES_PAGINATE_BY } from "@saleor/config";
 import { ProductFragment, useProductDetailsQuery } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useFormset from "@saleor/hooks/useFormset";
@@ -51,6 +52,7 @@ function useProductUpdateForm(
   product: ProductFragment,
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult,
   disabled: boolean,
+  refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
   const initial = useMemo(
@@ -113,10 +115,6 @@ function useProductUpdateForm(
     handleChannelListUpdate,
     touched: touchedChannels,
   } = useProductChannelListingsForm(product, triggerChange);
-
-  const { refetch } = useProductDetailsQuery({
-    skip: true,
-  });
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
@@ -223,7 +221,7 @@ function useProductUpdateForm(
 
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
-    await refetch({ id: product.id });
+    await refetch();
 
     datagrid.setAdded(prevAdded =>
       prevAdded.filter((_, index) =>
@@ -312,6 +310,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   children,
   product,
   onSubmit,
+  refetch,
   disabled,
   ...rest
 }) => {
@@ -319,6 +318,7 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
     product,
     onSubmit,
     disabled,
+    refetch,
     rest,
   );
 
