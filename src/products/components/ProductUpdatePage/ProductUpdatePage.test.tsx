@@ -56,6 +56,7 @@ const props: ProductUpdatePageProps = {
   header: product.name,
   media: product.media,
   limits,
+  refetch: () => undefined,
   onAttributeValuesSearch: () => Promise.resolve([]),
   onAssignReferencesClick: () => undefined,
   onCloseDialog: () => undefined,

@@ -19,8 +19,7 @@ import {
   useDatagridChangeState,
 } from "@saleor/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { VALUES_PAGINATE_BY } from "@saleor/config";
-import { ProductFragment, useProductDetailsQuery } from "@saleor/graphql";
+import { ProductFragment } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
