@@ -66,8 +66,10 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
     <li
       className={clsx(
         classes.root,
-        bold && classes.bold,
-        !vertical && classes.horizontal,
+        {
+            [classes.bold]: bold,
+            [classes.horizontal]: !vertical,
+        },
         className,
       )}
     >

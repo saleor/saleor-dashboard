@@ -23,7 +23,7 @@ enum RenderStep {
   final,
 }
 
-/** Calculate statis width:
+/** Calculate static width:
   - must fit at least "Copied"
   - cannot shrink when text changes from pspReference to "Copied"
 
