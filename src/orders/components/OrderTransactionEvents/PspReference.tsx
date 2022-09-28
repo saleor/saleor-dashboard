@@ -17,44 +17,77 @@ const useStyles = makeStyles(
   },
 );
 
-const useInitialWidth = (watch: string[] = []) => {
+enum RenderStep {
+  initial,
+  checkedMinimal,
+  final,
+}
+
+/** Calculate statis width:
+  - must fit at least "Copied"
+  - cannot shrink when text changes from pspReference to "Copied"
+
+1. `RenderStep.initial` = Render with text "Copied", save width
+2. `RenderStep.checkMinimal` = Render with actual pspReference, save width if larger than "Copied"
+
+If pspReference changes to back to step 1.
+*/
+const useStaticWidth = (watch: string[] = []) => {
   const ref = useRef<HTMLElement | undefined>();
+  const [renderStep, setRenderStep] = useState<RenderStep>(RenderStep.initial);
   const [width, setWidth] = useState<number>(null);
 
   const onMount = (el: HTMLElement | undefined) => {
-    if (el) {
+    // Initial render, text = "Copied"
+    if (el && renderStep === RenderStep.initial) {
       const { width } = el.getBoundingClientRect();
       setWidth(width);
-    } else {
-      setWidth(null);
+      setRenderStep(RenderStep.checkedMinimal);
     }
     ref.current = el;
   };
 
   useEffect(() => {
-    if (ref.current) {
+    if (renderStep === RenderStep.checkedMinimal && ref.current) {
       const { width } = ref.current.getBoundingClientRect();
-      setWidth(width);
+      // Update width if psp reference is logner than "Copied"
+      setWidth(prevWidth => (prevWidth > width ? prevWidth : width));
+      setRenderStep(RenderStep.final);
+    }
+  }, [renderStep]);
+
+  useEffect(() => {
+    if (ref.current && renderStep === RenderStep.final) {
+      // Forces re-calculation of width when text changes
+      setWidth(null);
+      setRenderStep(RenderStep.initial);
     }
   }, watch);
 
-  return { ref: onMount, width };
+  return { ref: onMount, width, renderStep };
 };
 
 const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
-  const { ref, width } = useInitialWidth([reference]);
+  const { ref, width, renderStep } = useStaticWidth([reference]);
 
   return (
     <Pill
       icon={<CopyIcon />}
       outlined
-      // preserve width when text changes to "Copied"
-      style={{ width: width ? `${width}px` : undefined }}
+      // preserve width, see useStaticWidth hook
+      style={{
+        width:
+          width && renderStep === RenderStep.final ? `${width}px` : undefined,
+      }}
       color="generic"
-      label={copied ? intl.formatMessage(messages.copied) : reference}
+      label={
+        copied || renderStep === RenderStep.initial
+          ? intl.formatMessage(messages.copied)
+          : reference
+      }
       onClick={event => {
         event.preventDefault();
         copy(reference);
