@@ -71,6 +71,7 @@ import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { useValidateSku } from "../ProductStocks/hooks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
@@ -397,6 +398,8 @@ function useProductCreateForm(
     onSubmit: handleSubmit,
   });
 
+  const { isSkuValid } = useValidateSku();
+
   const submit = async () => {
     const errors = await handleFormSubmit(await getData());
 
@@ -446,8 +449,9 @@ function useProductCreateForm(
     return true;
   };
 
-  const isSaveDisabled = loading || !onSubmit;
-  const isSubmitDisabled = isSaveDisabled || !isValid();
+  const isSaveDisabled = loading || !onSubmit || !isSkuValid(data.sku);
+  const isSubmitDisabled =
+    isSaveDisabled || !isValid() || !isSkuValid(data.sku);
 
   useEffect(() => {
     setIsSubmitDisabled(isSubmitDisabled);
