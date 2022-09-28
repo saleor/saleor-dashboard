@@ -10,6 +10,7 @@ interface SaleValueTextFieldProps {
   dataType: SaleType;
   helperText: string;
   disabled: boolean;
+  error: boolean;
   listing: ChannelSaleFormData;
   onChange: SaleValueInputOnChangeType;
 }
@@ -18,6 +19,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
   dataType,
   helperText,
   disabled,
+  error,
   listing,
   onChange,
 }) => {
@@ -32,6 +34,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
     <TextField
       disabled={disabled}
       helperText={helperText || ""}
+      error={error}
       name="value"
       onChange={e => {
         onChange(id, e.target.value);

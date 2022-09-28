@@ -9,7 +9,10 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import {
+  createSaleChannelsChangeHandler,
+  createSaleUpdateHandler,
+} from "@saleor/discounts/handlers";
 import { saleListUrl } from "@saleor/discounts/urls";
 import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
 import {
@@ -130,6 +133,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>(
+    [],
+  );
+
   const {
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
@@ -159,7 +166,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
       formId={SALE_UPDATE_FORM_ID}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, submit, triggerChange, isSaveDisabled }) => {
+      {({ change, data, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -167,6 +174,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
           data.type,
         );
         const changeMetadata = makeMetadataChangeHandler(change);
+
+        const handleSubmit = createSaleUpdateHandler(submit, setLocalErrors);
+
+        const allErrors = [...localErrors, ...errors];
 
         return (
           <Container>
@@ -188,7 +199,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 <SaleValue
                   data={data}
                   disabled={disabled}
-                  errors={errors}
+                  errors={allErrors}
                   onChange={handleChannelChange}
                 />
                 <CardSpacer />
@@ -346,10 +357,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={isSaveDisabled}
+              disabled={disabled}
               onCancel={() => navigate(saleListUrl())}
               onDelete={onRemove}
-              onSubmit={submit}
+              onSubmit={() => handleSubmit(data)}
               state={saveButtonBarState}
             />
           </Container>
