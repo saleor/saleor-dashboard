@@ -94,7 +94,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
       formId={SALE_CREATE_FORM_ID}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, submit, triggerChange, isSaveDisabled }) => {
+      {({ change, data, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -155,7 +155,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={isSaveDisabled}
+              disabled={disabled}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}

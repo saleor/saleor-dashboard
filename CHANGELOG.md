@@ -12,6 +12,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix exit form dialog false positive - #2311 by @orzechdev
 - Handle form errors before product creation - #2299 by @orzechdev
 - Fix no product error on unconfirmed order lines - #2324 by @orzechdev
+- Enable save button on discount pages - #2319 by @orzechdev
 
 ## 3.4
 

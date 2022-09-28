@@ -92,6 +92,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
               const error = formErrors.value?.channels?.find(
                 id => id === listing.id,
               );
+
               return (
                 <TableRow
                   key={listing?.id || `skeleton-${index}`}
@@ -109,6 +110,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
                             ? getDiscountErrorMessage(formErrors.value, intl)
                             : ""
                         }
+                        error={!!error}
                         disabled={disabled}
                         listing={listing}
                         onChange={onChange}
