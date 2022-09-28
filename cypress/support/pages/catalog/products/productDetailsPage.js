@@ -1,4 +1,5 @@
 import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-details";
+import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
 import { addMetadataField } from "../metadataComponent";
@@ -88,6 +89,16 @@ export function fillUpProductGeneralInfo({ name, description, rating }) {
     .clearAndType(description)
     .get(PRODUCT_DETAILS.ratingInput)
     .clearAndType(rating);
+}
+
+export function fillUpProductTypeDialog({ productType }) {
+  const organization = {};
+  return cy
+    .fillAutocompleteSelect(PRODUCTS_LIST.dialogProductTypeInput, productType)
+    .then(selected => {
+      organization.productType = selected;
+      return organization;
+    });
 }
 
 export function fillUpProductOrganization({

@@ -7,6 +7,7 @@ import {
   ProductVariantFragment,
   WeightUnitsEnum,
 } from "@saleor/graphql";
+import { ProductType } from "@saleor/sdk/dist/apollo/types";
 import { RelayToFlat } from "@saleor/types";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
@@ -3531,3 +3532,24 @@ export const variantProductImages = (placeholderImage: string) =>
   variant(placeholderImage).product.media;
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
+
+export const productTypesList: Array<Pick<
+  ProductType,
+  "id" | "name" | "hasVariants"
+>> = [
+  {
+    hasVariants: true,
+    id: "UHJvZHVjdFR5cGU6Nw==",
+    name: "Salt",
+  },
+  {
+    hasVariants: true,
+    id: "UHJvZHVjdFR5cGU6Nw==",
+    name: "Sugar",
+  },
+  {
+    hasVariants: true,
+    id: "UHJvZHVjdFR5cGU6Nw==",
+    name: "Mushroom",
+  },
+];

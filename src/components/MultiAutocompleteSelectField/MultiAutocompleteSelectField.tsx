@@ -4,10 +4,9 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
-import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
@@ -18,75 +17,7 @@ import MultiAutocompleteSelectFieldContent, {
   MultiAutocompleteActionType,
   MultiAutocompleteChoiceType,
 } from "./MultiAutocompleteSelectFieldContent";
-
-const useStyles = makeStyles(
-  theme => ({
-    chip: {
-      width: "100%",
-    },
-    chipClose: {
-      height: 32,
-      padding: 0,
-      width: 32,
-    },
-    chipContainer: {
-      display: "flex",
-      flexDirection: "column",
-      marginTop: theme.spacing(1),
-    },
-    chipInner: {
-      "& svg": {
-        color: theme.palette.primary.contrastText,
-      },
-      alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.8),
-      borderRadius: 18,
-      color: theme.palette.primary.contrastText,
-      display: "flex",
-      justifyContent: "space-between",
-      margin: theme.spacing(1, 0),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    chipLabel: {
-      color: theme.palette.primary.contrastText,
-    },
-    container: {
-      flexGrow: 1,
-      position: "relative",
-    },
-    disabledChipInner: {
-      "& svg": {
-        color: theme.palette.grey[200],
-      },
-      alignItems: "center",
-      background: fade(theme.palette.grey[400], 0.8),
-      borderRadius: 18,
-      color: theme.palette.primary.contrastText,
-      display: "flex",
-      justifyContent: "space-between",
-      margin: theme.spacing(1, 0),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    adornment: {
-      color: theme.palette.saleor.main[3],
-      cursor: "pointer",
-      userSelect: "none",
-      display: "flex",
-      alignItems: "center",
-      "& svg": {
-        transition: theme.transitions.duration.shorter + "ms",
-      },
-    },
-    adornmentRotate: {
-      "& svg": {
-        transform: "rotate(180deg)",
-      },
-    },
-  }),
-  { name: "MultiAutocompleteSelectField" },
-);
+import { useStyles } from "./styles";
 
 export interface MultiAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
@@ -141,14 +72,20 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     ...rest
   } = props;
   const classes = useStyles(props);
-  const anchor = React.useRef<HTMLInputElement | null>(null);
+  const anchor = React.useRef<HTMLDivElement | null>(null);
+  const input = React.useRef<HTMLInputElement | null>(null);
+
+  const [inputValue, setInputValue] = React.useState("");
 
   const handleSelect = (
     item: string,
     downshiftOpts?: ControllerStateAndHelpers<string>,
   ) => {
     if (downshiftOpts) {
-      downshiftOpts.reset({ inputValue: "", isOpen: true });
+      downshiftOpts.reset({
+        inputValue: downshiftOpts.inputValue,
+        isOpen: true,
+      });
     }
     onChange({
       target: { name, value: item },
@@ -157,12 +94,17 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
 
   return (
     <>
-      <DebounceAutocomplete debounceFn={fetchChoices}>
+      <DebounceAutocomplete
+        debounceFn={value => {
+          setInputValue(value);
+          fetchChoices(value);
+        }}
+      >
         {debounceFn => (
           <Downshift
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
-            itemToString={() => ""}
+            itemToString={() => inputValue}
             // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
             // which downshift interprets as the value being updated with an empty string, causing side-effects
             stateReducer={(state, changes) => {
@@ -181,7 +123,6 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               getMenuProps,
               highlightedIndex,
               inputValue,
-              getToggleButtonProps,
             }) => {
               const displayCustomValue =
                 inputValue &&
@@ -192,13 +133,30 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     choice.label.toLowerCase() === inputValue.toLowerCase(),
                 );
 
+              const handleFocus = () => {
+                if (fetchOnFocus) {
+                  fetchChoices(inputValue);
+                }
+                input.current.select();
+              };
+
+              const handleToggleMenu = () => {
+                if (disabled) {
+                  return;
+                }
+                toggleMenu();
+              };
+
               return (
                 <div className={classes.container} {...rest}>
                   <TextField
                     InputProps={{
                       endAdornment: (
                         <div
-                          {...getToggleButtonProps()}
+                          onClick={() => {
+                            handleToggleMenu();
+                            handleFocus();
+                          }}
                           className={classNames(classes.adornment, {
                             [classes.adornmentRotate]: isOpen,
                           })}
@@ -207,18 +165,15 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                           <ChevronIcon />
                         </div>
                       ),
+                      id: undefined,
+                      onFocus: handleFocus,
                       ref: anchor,
-                      onFocus: () => {
-                        if (fetchOnFocus) {
-                          fetchChoices(inputValue);
-                        }
-                      },
                     }}
                     inputProps={{
                       ...getInputProps({
                         placeholder,
                         testId,
-                        onClick: toggleMenu,
+                        onClick: handleToggleMenu,
                       }),
                       ...getMenuProps(),
                     }}
@@ -227,7 +182,9 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     label={label}
                     fullWidth={true}
                     disabled={disabled}
+                    autoFocus={true}
                     onBlur={onBlur}
+                    inputRef={input}
                   />
                   {isOpen && (
                     <Popper
@@ -241,7 +198,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     >
                       <MultiAutocompleteSelectFieldContent
                         add={
-                          add && {
+                          !!add && {
                             ...add,
                             onClick: () => {
                               add.onClick();

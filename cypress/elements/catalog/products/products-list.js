@@ -1,6 +1,7 @@
 export const PRODUCTS_LIST = {
   productsList: "[data-test-id*='id']",
   productsNames: "[data-test-id='name']",
+  dialogProductTypeInput: "[data-test-id='dialog-product-type']",
   createProductBtn: "[data-test-id='add-product']",
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",

@@ -472,11 +472,13 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveDisabled = disabled || !isValid() || !isSkuValid(data.sku);
+  const isSaveDisabled = disabled || !isSkuValid(data.sku);
+  const isSubmitDisabled =
+    isSaveDisabled || !isValid() || !isSkuValid(data.sku);
 
   useEffect(() => {
-    setIsSubmitDisabled(isSaveDisabled);
-  }, [isSaveDisabled]);
+    setIsSubmitDisabled(isSubmitDisabled);
+  }, [isSubmitDisabled]);
 
   return {
     change: handleChange,
