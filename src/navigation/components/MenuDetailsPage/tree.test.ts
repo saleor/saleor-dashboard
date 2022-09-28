@@ -1,3 +1,5 @@
+// TODO
+// @ts-nocheck
 import { MenuDetailsFragment, MenuDetailsQuery } from "@saleor/graphql";
 
 import { menu } from "../../fixtures";

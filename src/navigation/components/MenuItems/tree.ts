@@ -1,3 +1,5 @@
+// TODO
+// @ts-nocheck
 import { MenuDetailsFragment } from "@saleor/graphql";
 import { getPatch } from "fast-array-diff";
 import { TreeItem } from "react-sortable-tree";
