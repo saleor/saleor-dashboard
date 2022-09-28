@@ -1,12 +1,12 @@
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/macaw-ui";
 import { IMoney } from "@saleor/utils/intl";
 import clsx from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { orderSummaryMessages } from "./messages";
+import { useSummaryLineStyles } from "./styles";
 
 interface SummaryLineProps {
   text: React.ReactNode;
@@ -18,38 +18,6 @@ interface SummaryLineProps {
   className?: string;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      display: "flex",
-    },
-    subText: {
-      color: theme.palette.saleor.main[3],
-      marginLeft: theme.spacing(1),
-    },
-    bold: {
-      fontWeight: 600,
-    },
-    horizontal: {
-      "&& dl": {
-        display: "flex",
-        width: "100%",
-        gap: theme.spacing(2),
-      },
-      "&& dd": {
-        marginLeft: "auto",
-        display: "flex",
-        alignItems: "baseline",
-      },
-    },
-    moneySkeleton: {
-      width: "6ch",
-      alignSelf: "center",
-    },
-  }),
-  { name: "SummaryLine" },
-);
-
 const SummaryLine: React.FC<SummaryLineProps> = ({
   text,
   subText,
@@ -59,7 +27,7 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
   money,
   className,
 }) => {
-  const classes = useStyles();
+  const classes = useSummaryLineStyles();
   const intl = useIntl();
 
   return (
@@ -67,8 +35,8 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
       className={clsx(
         classes.root,
         {
-            [classes.bold]: bold,
-            [classes.horizontal]: !vertical,
+          [classes.bold]: bold,
+          [classes.horizontal]: !vertical,
         },
         className,
       )}

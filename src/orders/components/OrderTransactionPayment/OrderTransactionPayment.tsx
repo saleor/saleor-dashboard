@@ -4,6 +4,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@saleor/graphql";
+import { OrderTransactionProps } from "@saleor/orders/components/OrderTransaction/OrderTransaction";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";
@@ -58,17 +59,22 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     __typename: "TransactionItem",
   };
 
+  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (
+    _,
+    action,
+  ) => {
+    if (action === TransactionActionEnum.CHARGE) {
+      onCapture();
+    }
+    if (action === TransactionActionEnum.VOID) {
+      onVoid();
+    }
+  };
+
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
-      onTransactionAction={(_, action) => {
-        if (action === TransactionActionEnum.CHARGE) {
-          onCapture();
-        }
-        if (action === TransactionActionEnum.VOID) {
-          onVoid();
-        }
-      }}
+      onTransactionAction={handleTransactionAction}
     />
   );
 };
