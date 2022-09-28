@@ -16,6 +16,9 @@ export const searchProducts = gql`
           thumbnail {
             url
           }
+          productType {
+            name
+          }
           variants {
             id
             name
