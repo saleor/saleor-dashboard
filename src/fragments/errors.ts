@@ -495,3 +495,11 @@ export const transactionRequestActionErrorFragment = gql`
     code
   }
 `;
+
+export const orderGrantRefundCreateErrorFragment = gql`
+  fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
+    field
+    message
+    code
+  }
+`;

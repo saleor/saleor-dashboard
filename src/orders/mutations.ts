@@ -500,3 +500,20 @@ export const orderTransactionRequestActionMutation = gql`
     }
   }
 `;
+
+export const orderGrantRefundAddMutation = gql`
+  mutation OrderGrantRefundAdd(
+    $orderId: ID!
+    $amount: Decimal!
+    $reason: String
+  ) {
+    orderGrantRefundCreate(
+      id: $orderId
+      input: { amount: $amount, reason: $reason }
+    ) {
+      errors {
+        ...OrderGrantRefundCreateError
+      }
+    }
+  }
+`;

@@ -952,6 +952,13 @@ export const TransactionRequestActionErrorFragmentDoc = gql`
   code
 }
     `;
+export const OrderGrantRefundCreateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -1527,6 +1534,9 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   totalRemainingGrant {
+    ...Money
+  }
+  totalGrantedRefund {
     ...Money
   }
   actions
@@ -9212,6 +9222,43 @@ export function useOrderTransactionRequestActionMutation(baseOptions?: ApolloRea
 export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof useOrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
+export const OrderGrantRefundAddDocument = gql`
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal!, $reason: String) {
+  orderGrantRefundCreate(id: $orderId, input: {amount: $amount, reason: $reason}) {
+    errors {
+      ...OrderGrantRefundCreateError
+    }
+  }
+}
+    ${OrderGrantRefundCreateErrorFragmentDoc}`;
+export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
+
+/**
+ * __useOrderGrantRefundAddMutation__
+ *
+ * To run a mutation, you first call `useOrderGrantRefundAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderGrantRefundAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderGrantRefundAddMutation, { data, loading, error }] = useOrderGrantRefundAddMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      reason: // value for 'reason'
+ *   },
+ * });
+ */
+export function useOrderGrantRefundAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>(OrderGrantRefundAddDocument, options);
+      }
+export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGrantRefundAddMutation>;
+export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
+export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(
