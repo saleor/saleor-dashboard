@@ -5,6 +5,7 @@ import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
@@ -13,6 +14,7 @@ import {
   ChannelErrorFragment,
   CountryCode,
   CountryFragment,
+  PermissionEnum,
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
   StockSettingsInput,
@@ -214,33 +216,45 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices(
-                    data.shippingZonesToDisplay,
-                  )}
-                  shippingZones={data.shippingZonesToDisplay}
-                  addShippingZone={addShippingZone}
-                  removeShippingZone={removeShippingZone}
-                  searchShippingZones={searchShippingZones}
-                  fetchMoreShippingZones={fetchMoreShippingZones}
-                  totalCount={allShippingZonesCount}
-                  loading={disabled}
-                />
-                <CardSpacer />
-                <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices(
-                    data.warehousesToDisplay,
-                  )}
-                  warehouses={data.warehousesToDisplay}
-                  addWarehouse={addWarehouse}
-                  removeWarehouse={removeWarehouse}
-                  searchWarehouses={searchWarehouses}
-                  fetchMoreWarehouses={fetchMoreWarehouses}
-                  totalCount={allWarehousesCount}
-                  reorderWarehouses={reorderWarehouse}
-                  loading={disabled}
-                />
-                <CardSpacer />
+                <RequirePermissions
+                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                >
+                  <ShippingZones
+                    shippingZonesChoices={getFilteredShippingZonesChoices(
+                      data.shippingZonesToDisplay,
+                    )}
+                    shippingZones={data.shippingZonesToDisplay}
+                    addShippingZone={addShippingZone}
+                    removeShippingZone={removeShippingZone}
+                    searchShippingZones={searchShippingZones}
+                    fetchMoreShippingZones={fetchMoreShippingZones}
+                    totalCount={allShippingZonesCount}
+                    loading={disabled}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
+                <RequirePermissions
+                  oneOfPermissions={[
+                    PermissionEnum.MANAGE_SHIPPING,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PRODUCTS,
+                  ]}
+                >
+                  <Warehouses
+                    warehousesChoices={getFilteredWarehousesChoices(
+                      data.warehousesToDisplay,
+                    )}
+                    warehouses={data.warehousesToDisplay}
+                    addWarehouse={addWarehouse}
+                    removeWarehouse={removeWarehouse}
+                    searchWarehouses={searchWarehouses}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    totalCount={allWarehousesCount}
+                    reorderWarehouses={reorderWarehouse}
+                    loading={disabled}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
                 <ChannelAllocationStrategy
                   data={data}
                   disabled={disabled}
