@@ -118,7 +118,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const { data, loading } = useProductDetailsQuery({
+  const { data, loading, refetch } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
       id,
@@ -331,6 +331,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
+        refetch={refetch}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}

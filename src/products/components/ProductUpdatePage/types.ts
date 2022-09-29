@@ -148,5 +148,6 @@ export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult;
+  refetch: () => Promise<any>;
   disabled: boolean;
 }

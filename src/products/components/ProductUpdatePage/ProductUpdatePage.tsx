@@ -102,6 +102,7 @@ export interface ProductUpdatePageProps {
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
+  refetch: () => Promise<any>;
   onAttributeValuesSearch: (
     id: string,
     query: string,
@@ -163,6 +164,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreReferenceProducts,
   fetchAttributeValues,
   fetchMoreAttributeValues,
+  refetch,
   onCloseDialog,
   onAttributeSelectBlur,
 }) => {
@@ -260,6 +262,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
+      refetch={refetch}
     >
       {({
         change,
