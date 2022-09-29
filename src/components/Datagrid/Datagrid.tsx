@@ -198,6 +198,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         toolbar={
           <div className={classes.btnContainer}>
             <Button
+              data-test-id="button-add-variant"
               className={classes.addBtn}
               variant="tertiary"
               onClick={onRowAdded}
