@@ -1,10 +1,11 @@
-import { gql } from "@apollo/client";
+import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchAttributeValuesDocument,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
 } from "@saleor/graphql";
 import makeSearch from "@saleor/hooks/makeSearch";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 
 export const searchAttributeValues = gql`
   query SearchAttributeValues(
@@ -28,6 +29,27 @@ export const searchAttributeValues = gql`
     }
   }
 `;
+
+export function useSearchAttributeValuesSuggestions() {
+  const client = useApolloClient();
+
+  return (id: string, query: string) =>
+    client
+      .query<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>({
+        query: SearchAttributeValuesDocument,
+        variables: {
+          id,
+          first: 10,
+          query,
+        },
+      })
+      .then(({ data }) =>
+        mapEdgesToItems(data.attribute.choices).map(({ name, slug }) => ({
+          label: name,
+          value: slug,
+        })),
+      );
+}
 
 export default makeSearch<
   SearchAttributeValuesQuery,

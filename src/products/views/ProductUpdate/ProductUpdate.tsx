@@ -23,6 +23,7 @@ import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils"
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { useSearchAttributeValuesSuggestions } from "@saleor/searches/useAttributeValueSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -188,6 +189,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const product = data?.product;
 
+  const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const warehousesQuery = useWarehouseListQuery({
     displayLoader: true,
     variables: {
@@ -366,6 +368,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
+        onAttributeValuesSearch={getAttributeValuesSuggestions}
       />
       <ActionDialog
         open={params.action === "remove"}

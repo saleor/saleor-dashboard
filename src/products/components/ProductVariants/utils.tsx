@@ -2,16 +2,19 @@ import { GridCell } from "@glideapps/glide-data-grid";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   booleanCell,
+  dropdownCell,
   moneyCell,
   numberCell,
   textCell,
 } from "@saleor/components/Datagrid/cells";
+import { emptyDropdownCellValue } from "@saleor/components/Datagrid/DropdownCell";
 import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@saleor/components/Datagrid/types";
 import {
   DatagridChange,
   DatagridChangeOpts,
 } from "@saleor/components/Datagrid/useDatagridChange";
+import { Choice } from "@saleor/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
@@ -22,6 +25,7 @@ import {
   WarehouseFragment,
 } from "@saleor/graphql";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
@@ -58,7 +62,7 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
 
       return {
         id: attributeId,
-        values: [change.data],
+        values: [change.data.value.value],
       };
     });
 
@@ -212,6 +216,10 @@ interface GetDataOrError {
   channels: ChannelData[];
   added: number[];
   removed: number[];
+  searchAttributeValues: (
+    id: string,
+    text: string,
+  ) => Promise<Array<Choice<string, string>>>;
   getChangeIndex: (column: string, row: number) => number;
 }
 
@@ -225,6 +233,7 @@ export function getData({
   row,
   channels,
   variants,
+  searchAttributeValues,
 }: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
@@ -301,16 +310,22 @@ export function getData({
 
   if (getColumnAttribute(columnId)) {
     const value =
-      change ??
-      dataRow?.attributes
-        .find(
+      change?.value ??
+      mapNodeToChoice(
+        dataRow?.attributes.find(
           attribute => attribute.attribute.id === getColumnAttribute(columnId),
-        )
-        ?.values.map(v => v.name)
-        .join(", ") ??
-      "";
+        )?.values,
+      )[0] ??
+      emptyDropdownCellValue;
 
-    return styled(textCell(value || ""));
+    return styled(
+      dropdownCell(value, {
+        allowCustomValues: true,
+        emptyOption: true,
+        update: text =>
+          searchAttributeValues(getColumnAttribute(columnId), text),
+      }),
+    );
   }
 }
 
