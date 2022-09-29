@@ -45,7 +45,7 @@ export function useLocalPaginationState(
   };
 
   useEffect(() => {
-    setPaginationState(state);
+    setState({ first: paginateBy });
   }, [paginateBy]);
 
   return [state, setPaginationState];
