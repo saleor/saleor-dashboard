@@ -1,4 +1,8 @@
 {
+  "+/IT7H": {
+    "context": "tax class rates list label when no countries are assigned",
+    "string": "There are no countries using this tax class"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -1239,6 +1243,10 @@
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"
+  },
+  "8BBMRj": {
+    "context": "default tax class name for new tax classes",
+    "string": "New tax class"
   },
   "8EGagh": {
     "context": "search box label",
