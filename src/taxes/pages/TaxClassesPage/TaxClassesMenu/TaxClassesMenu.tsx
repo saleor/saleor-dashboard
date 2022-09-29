@@ -25,12 +25,14 @@ interface TaxClassesMenuProps {
   taxClasses: TaxClassFragment[] | undefined;
   selectedTaxClassId: string;
   onTaxClassDelete: (taxClassId: string) => void;
+  onCreateNew: () => void;
 }
 
 export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
   taxClasses,
   selectedTaxClassId,
   onTaxClassDelete,
+  onCreateNew,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -40,7 +42,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
       <CardTitle
         title={intl.formatMessage(taxesMessages.taxClassList)}
         toolbar={
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={onCreateNew}>
             <FormattedMessage {...taxesMessages.addTaxClassLabel} />
           </Button>
         }
@@ -69,6 +71,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                     variant="secondary"
                     onClick={event => {
                       event.stopPropagation();
+                      event.preventDefault();
                       onTaxClassDelete(taxClass.id);
                     }}
                   >

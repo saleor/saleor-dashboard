@@ -12,7 +12,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { configurationMenuUrl } from "@saleor/configuration";
-import { TaxClassFragment, TaxClassUpdateInput } from "@saleor/graphql";
+import {
+  TaxClassCreateInput,
+  TaxClassFragment,
+  TaxClassUpdateInput,
+} from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -42,10 +46,12 @@ interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
   selectedTaxClassId: string;
   handleTabChange: (tab: string) => void;
-  onSubmit: (id: string, input: TaxClassUpdateInput) => SubmitPromise;
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
+  onCreateNewButtonClick: () => void;
   onTaxClassDelete: (id: string) => SubmitPromise;
+  onTaxClassCreate: (input: TaxClassCreateInput) => SubmitPromise;
+  onTaxClassUpdate: (id: string, input: TaxClassUpdateInput) => SubmitPromise;
 }
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
@@ -55,8 +61,10 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     handleTabChange,
     savebarState,
     disabled,
-    onSubmit,
+    onCreateNewButtonClick,
     onTaxClassDelete,
+    onTaxClassCreate,
+    onTaxClassUpdate,
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
@@ -72,7 +80,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   return (
     <TaxClassesForm
       taxClass={currentTaxClass}
-      onSubmit={onSubmit}
+      onTaxClassCreate={onTaxClassCreate}
+      onTaxClassUpdate={onTaxClassUpdate}
       disabled={disabled}
     >
       {({ data, handlers, submit, change }) => {
@@ -103,6 +112,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 taxClasses={taxClasses}
                 selectedTaxClassId={selectedTaxClassId}
                 onTaxClassDelete={onTaxClassDelete}
+                onCreateNew={onCreateNewButtonClick}
               />
               <div>
                 <Card>

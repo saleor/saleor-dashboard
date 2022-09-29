@@ -171,4 +171,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "There are no countries using this tax class",
     description: "tax class rates list label when no countries are assigned",
   },
+  newTaxClass: {
+    id: "8BBMRj",
+    defaultMessage: "New tax class",
+    description: "default tax class name for new tax classes",
+  },
 });

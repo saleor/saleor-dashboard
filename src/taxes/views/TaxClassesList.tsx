@@ -1,4 +1,8 @@
 import {
+  TaxClassCreateInput,
+  TaxClassFragment,
+  TaxClassUpdateInput,
+  useTaxClassCreateMutation,
   useTaxClassDeleteMutation,
   useTaxClassesListQuery,
   useTaxClassUpdateMutation,
@@ -10,6 +14,7 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { taxesMessages } from "../messages";
 import TaxClassesPage from "../pages/TaxClassesPage";
 import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
@@ -26,6 +31,20 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const handleTabChange = (tab: TaxTab) => {
     navigate(taxTabPath(tab));
   };
+
+  const newTaxClass = React.useMemo(
+    () => ({
+      __typename: "TaxClass" as const,
+      id: "new",
+      name: intl.formatMessage(taxesMessages.newTaxClass),
+      countries: [],
+    }),
+    [intl],
+  );
+
+  const [includeNewTaxClass, setIncludeNewTaxClass] = React.useState(
+    id === "new",
+  );
 
   const [taxClassDeleteMutation] = useTaxClassDeleteMutation({
     onCompleted: data => {
@@ -54,14 +73,49 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
-  const handleDeleteTaxClass = async (id: string) =>
-    taxClassDeleteMutation({
+  const [
+    taxClassCreateMutation,
+    taxClassCreateMutationState,
+  ] = useTaxClassCreateMutation({
+    onCompleted: data => {
+      const errors = data?.taxClassCreate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+        setIncludeNewTaxClass(false);
+        navigate(taxClassesListUrl(data?.taxClassCreate?.taxClass?.id));
+      }
+    },
+  });
+
+  const handleCreateTaxClass = async (input: TaxClassCreateInput) => {
+    const res = await taxClassCreateMutation({
       variables: {
-        id,
+        input,
       },
     });
+    refetch();
+    navigate(res?.data?.taxClassCreate?.taxClass?.id);
+    return res;
+  };
 
-  const handleUpdateTaxClass = async (id: string, input: any) =>
+  const handleDeleteTaxClass = async (id: string) => {
+    if (id === "new") {
+      setIncludeNewTaxClass(false);
+    } else {
+      await taxClassDeleteMutation({
+        variables: {
+          id,
+        },
+      });
+      refetch();
+      navigate(taxClassesListUrl());
+    }
+  };
+
+  const handleUpdateTaxClass = async (id: string, input: TaxClassUpdateInput) =>
     taxClassUpdateMutation({
       variables: {
         id,
@@ -69,8 +123,25 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       },
     });
 
-  const { data } = useTaxClassesListQuery({ variables: { first: 20 } });
-  const taxClasses = mapEdgesToItems(data?.taxClasses);
+  const { data, refetch } = useTaxClassesListQuery({
+    variables: { first: 20 },
+  });
+
+  const taxClasses = React.useMemo(() => {
+    if (!data?.taxClasses) {
+      return undefined;
+    }
+    const apiTaxClasses = mapEdgesToItems(data.taxClasses);
+    if (includeNewTaxClass) {
+      return [...apiTaxClasses, newTaxClass];
+    }
+    return apiTaxClasses;
+  }, [data?.taxClasses, includeNewTaxClass, newTaxClass]);
+
+  const savebarState =
+    id === "new"
+      ? taxClassCreateMutationState.status
+      : taxClassUpdateMutationState.status;
 
   useTaxUrlRedirect({
     id,
@@ -88,9 +159,14 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       taxClasses={taxClasses}
       handleTabChange={handleTabChange}
       selectedTaxClassId={id}
-      savebarState={taxClassUpdateMutationState.status}
+      savebarState={savebarState}
       disabled={false}
-      onSubmit={handleUpdateTaxClass}
+      onCreateNewButtonClick={() => {
+        setIncludeNewTaxClass(true);
+        navigate(taxClassesListUrl("new"));
+      }}
+      onTaxClassCreate={handleCreateTaxClass}
+      onTaxClassUpdate={handleUpdateTaxClass}
       onTaxClassDelete={handleDeleteTaxClass}
     />
   );

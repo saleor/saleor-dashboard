@@ -1,6 +1,7 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import {
   CountryCode,
+  TaxClassCreateInput,
   TaxClassFragment,
   TaxClassRateInput,
   TaxClassUpdateInput,
@@ -23,20 +24,24 @@ export interface UseTaxClassesFormResult {
 
 interface TaxClassesFormProps {
   children: (props: any) => React.ReactNode;
-  taxClass: TaxClassFragment;
-  onSubmit: (id: string, data: TaxClassUpdateInput) => SubmitPromise;
+  taxClass: TaxClassFragment | undefined;
+  onTaxClassCreate: (data: TaxClassCreateInput) => SubmitPromise;
+  onTaxClassUpdate: (id: string, data: TaxClassUpdateInput) => SubmitPromise;
   disabled: boolean;
 }
 
 function useTaxClassesForm(
   taxClass: TaxClassFragment,
-  onSubmit,
+  onTaxClassCreate,
+  onTaxClassUpdate,
   disabled,
 ): UseTaxClassesFormResult {
   // Initial
   const initialFormData: TaxClassUpdateInput = {
     name: taxClass?.name ?? "",
   };
+
+  const isNewTaxClass = taxClass?.id === "new";
 
   const initialFormsetData = taxClass?.countries.map(item => ({
     id: item.country.code,
@@ -64,7 +69,9 @@ function useTaxClassesForm(
   // Submit
   const submitData = {
     name: data.name,
-    updateCountryRates: formset.data.map(item => {
+    [isNewTaxClass
+      ? "createCountryRates"
+      : "updateCountryRates"]: formset.data.map(item => {
       const { id, value } = item;
       const parsedRate = parseFloat(value);
       return {
@@ -75,7 +82,9 @@ function useTaxClassesForm(
   };
 
   const handleSubmit = async (data: TaxClassUpdateInput) => {
-    const errors = await onSubmit(taxClass.id, data);
+    const errors = isNewTaxClass
+      ? await onTaxClassCreate(data)
+      : await onTaxClassUpdate(taxClass.id, data);
 
     return errors;
   };
@@ -110,10 +119,16 @@ function useTaxClassesForm(
 const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
   children,
   taxClass,
-  onSubmit,
+  onTaxClassCreate,
+  onTaxClassUpdate,
   disabled,
 }) => {
-  const props = useTaxClassesForm(taxClass, onSubmit, disabled);
+  const props = useTaxClassesForm(
+    taxClass,
+    onTaxClassCreate,
+    onTaxClassUpdate,
+    disabled,
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
