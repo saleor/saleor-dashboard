@@ -4,6 +4,7 @@ import {
   getMiddleCenterBias,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
+import { makeStyles } from "@saleor/macaw-ui";
 import pick from "lodash/pick";
 import React from "react";
 
@@ -35,14 +36,32 @@ export const emptyDropdownCellValue: DropdownChoice = {
   value: null,
 };
 
+const useStyles = makeStyles(
+  {
+    root: {
+      "& > div": {
+        padding: 0,
+      },
+      "& input": {
+        height: "unset",
+      },
+    },
+  },
+  { name: "DropdownCell" },
+);
+
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
 }) => {
   const [data, setData] = React.useState<DropdownChoice[]>([]);
-  const getChoices = React.useCallback(async (text: string) => {
-    setData(await cell.data.update(text));
-  }, []);
+  const getChoices = React.useCallback(
+    async (text: string) => {
+      setData(await cell.data.update(text));
+    },
+    [cell.data],
+  );
+  const classes = useStyles();
 
   const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
@@ -53,6 +72,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     <SingleAutocompleteSelectField
       {...userProps}
       {...props}
+      className={classes.root}
       nakedInput
       onChange={event =>
         onFinishedEditing({
@@ -80,10 +100,9 @@ export const dropdownCellRenderer: CustomCellRenderer<DropdownCell> = {
     const { value } = cell.data;
 
     ctx.fillStyle = theme.textDark;
-    ctx.textAlign = "right";
     ctx.fillText(
       value.label,
-      rect.x + rect.width - 8,
+      rect.x + 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
 

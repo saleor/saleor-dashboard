@@ -4,7 +4,6 @@ import {
   getMiddleCenterBias,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { Locale } from "../Locale";
@@ -18,26 +17,10 @@ interface MoneyCellProps {
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
 
-const useMoneyCellStyles = makeStyles(
-  theme => ({
-    input: {
-      ...theme.typography.body1,
-      appearance: "none",
-      background: "none",
-      border: "none",
-      padding: theme.spacing(1.5, 1),
-      outline: 0,
-      textAlign: "right",
-    },
-  }),
-  { name: "MoneyCell" },
-);
-
 const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   value: cell,
   onChange: onChangeBase,
 }) => {
-  const classes = useMoneyCellStyles();
   const { onChange, onKeyDown, minValue, step } = usePriceField(
     cell.data.currency,
     event =>
@@ -52,7 +35,6 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
 
   return (
     <input
-      className={classes.input}
       type="number"
       onChange={onChange}
       onKeyDown={onKeyDown}
@@ -88,6 +70,20 @@ export const moneyCellRenderer = (
       rect.x + rect.width - 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
+
+    ctx.save();
+    ctx.fillStyle = theme.textMedium;
+    ctx.textAlign = "left";
+    ctx.font = [
+      theme.baseFontStyle.replace(/bold/g, "normal"),
+      theme.fontFamily,
+    ].join(" ");
+    ctx.fillText(
+      value ? currency : "-",
+      rect.x + 8,
+      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
+    );
+    ctx.restore();
 
     return true;
   },

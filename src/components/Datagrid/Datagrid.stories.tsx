@@ -66,51 +66,38 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
         ? undefined
         : initialData[row + removed.filter(r => r <= row).length];
 
-      const styled = (props: GridCell) => ({
-        ...props,
-        themeOverride:
-          change !== undefined
-            ? {
-                bgCell: "#C1DBFF",
-              }
-            : {},
-      });
-
       if (columnId === "loan-active") {
-        return styled(booleanCell(change ?? dataRow?.loan.active ?? null));
+        return booleanCell(change ?? dataRow?.loan.active ?? null);
       }
 
       if (columnId === "loan") {
-        return styled(
-          moneyCell(
-            change?.value ?? dataRow?.loan.amount ?? null,
-            dataRow?.loan.currency ?? "USD",
-          ),
+        return moneyCell(
+          change?.value ?? dataRow?.loan.amount ?? null,
+          dataRow?.loan.currency ?? "USD",
         );
       }
 
       if (columnId === "balance") {
-        return styled(
-          numberCell(change ?? dataRow?.balance ?? numberCellEmptyValue),
+        return moneyCell(
+          change?.value ?? dataRow?.balance.amount ?? null,
+          dataRow?.balance.currency ?? "USD",
         );
       }
 
       if (columnId === "job") {
-        return styled(
-          dropdownCell(change?.value ?? dataRow?.job, {
-            update: getJobChoices,
-          }),
-        );
+        return dropdownCell(change?.value ?? dataRow?.job, {
+          update: getJobChoices,
+        });
       }
 
       if (columnId === "age") {
-        return styled(
-          numberCell(change?.value ?? dataRow?.age ?? numberCellEmptyValue),
+        return numberCell(
+          change?.value ?? dataRow?.age ?? numberCellEmptyValue,
         );
       }
 
       const data = change ?? (dataRow ? dataRow[columnId] : "");
-      return styled(textCell(data));
+      return textCell(data);
     },
     [],
   );
@@ -132,6 +119,7 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
           availableColumns={availableColumns}
           getCellContent={getCellContent}
           getCellError={getCellError}
+          emptyText="Use button above to add new rows"
           menuItems={() => [
             {
               label: "Do something",
@@ -150,6 +138,7 @@ const DefaultStory: React.FC<{ error?: boolean }> = ({ error }) => {
             </Button>
           )}
           rows={initialData.length}
+          title="Datagrid"
         />
       </div>
     </DatagridChangeStateContext.Provider>
