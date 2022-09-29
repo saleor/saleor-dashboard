@@ -14,6 +14,33 @@ const messages = defineMessages({
     id: "Us9cA1",
     description: "profit margin",
   },
+  price: {
+    defaultMessage: "Price",
+    id: "4hl9rS",
+    description: "variant price in channel",
+  },
+  available: {
+    defaultMessage: "Available",
+    id: "BbP+k3",
+    description: "variant availability in channel",
+  },
+  empty: {
+    defaultMessage: "Use button above to add new product variants",
+    id: "IH47ID",
+  },
+  warehouses: {
+    defaultMessage: "Warehouses",
+    id: "U5Da30",
+  },
+  attributes: {
+    defaultMessage: "Attributes",
+    id: "+xTpT1",
+  },
+  title: {
+    defaultMessage: "Variants",
+    id: "1WbTJ5",
+    description: "product variants, title",
+  },
 });
 
 export default messages;

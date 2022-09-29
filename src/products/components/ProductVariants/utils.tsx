@@ -72,9 +72,16 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
       change.row === index + data.removed.filter(r => r <= index).length,
   )?.data;
 
+  const name = data.updates.find(
+    change =>
+      change.column === "name" &&
+      change.row === index + data.removed.filter(r => r <= index).length,
+  )?.data;
+
   return {
     attributes,
     sku,
+    name,
   };
 }
 
@@ -90,7 +97,10 @@ export function getVariantInputs(
       }),
     )
     .filter(
-      variables => variables.input.sku || variables.input.attributes.length > 0,
+      variables =>
+        variables.input.sku ||
+        variables.input.name ||
+        variables.input.attributes.length > 0,
     );
 }
 
@@ -190,6 +200,10 @@ export function getError(
   errors: ProductVariantListError[],
   { availableColumns, removed, column, row, variants }: GetDataOrError,
 ): boolean {
+  if (column === -1) {
+    return false;
+  }
+
   const columnId = availableColumns[column].id;
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
@@ -246,21 +260,11 @@ export function getData({
     ? undefined
     : variants[row + removed.filter(r => r <= row).length];
 
-  const styled = (props: GridCell) => ({
-    ...props,
-    themeOverride:
-      change !== undefined
-        ? {
-            bgCell: "#C1DBFF",
-          }
-        : {},
-  });
-
   switch (columnId) {
     case "name":
     case "sku":
       const value = change ?? (dataRow ? dataRow[columnId] : "");
-      return styled(textCell(value || ""));
+      return textCell(value || "");
   }
 
   if (getColumnStock(columnId)) {
@@ -271,7 +275,7 @@ export function getData({
       )?.quantity ??
       numberCellEmptyValue;
 
-    return styled(numberCell(value));
+    return numberCell(value);
   }
 
   if (getColumnChannel(columnId)) {
@@ -284,18 +288,18 @@ export function getData({
         ?.data ?? !!listing;
 
     if (!available) {
-      return styled({
+      return {
         ...numberCell(numberCellEmptyValue),
         readonly: true,
         allowOverlay: false,
-      });
+      };
     }
 
     const currency = channels.find(channel => channelId === channel.id)
       ?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return styled(moneyCell(value, currency));
+    return moneyCell(value, currency);
   }
 
   if (getColumnChannelAvailability(columnId)) {
@@ -305,7 +309,7 @@ export function getData({
     );
     const value = change ?? !!listing;
 
-    return styled(booleanCell(value));
+    return booleanCell(value);
   }
 
   if (getColumnAttribute(columnId)) {
@@ -318,14 +322,11 @@ export function getData({
       )[0] ??
       emptyDropdownCellValue;
 
-    return styled(
-      dropdownCell(value, {
-        allowCustomValues: true,
-        emptyOption: true,
-        update: text =>
-          searchAttributeValues(getColumnAttribute(columnId), text),
-      }),
-    );
+    return dropdownCell(value, {
+      allowCustomValues: true,
+      emptyOption: true,
+      update: text => searchAttributeValues(getColumnAttribute(columnId), text),
+    });
   }
 }
 
@@ -339,6 +340,9 @@ export function getColumnData(
   const common = {
     id: name,
     width: 200,
+    // Now we don't weirdly merge top-left header with the frozen column (name),
+    // leaving rest unnamed group columns (sku in this case) unmerged
+    group: " ",
   };
 
   if (["name", "sku"].includes(name)) {
@@ -354,6 +358,7 @@ export function getColumnData(
       width: 100,
       title: warehouses.find(warehouse => warehouse.id === getColumnStock(name))
         ?.name,
+      group: intl.formatMessage(messages.warehouses),
     };
   }
 
@@ -364,7 +369,8 @@ export function getColumnData(
     return {
       ...common,
       width: 150,
-      title: `Price in ${channel.name} [${channel.currency}]`,
+      title: intl.formatMessage(messages.price),
+      group: channel.name,
     };
   }
 
@@ -375,7 +381,8 @@ export function getColumnData(
     return {
       ...common,
       width: 80,
-      title: `Available in ${channel.name}`,
+      title: intl.formatMessage(messages.available),
+      group: channel.name,
     };
   }
 
@@ -385,6 +392,7 @@ export function getColumnData(
       title: variantAttributes.find(
         attribute => attribute.id === getColumnAttribute(name),
       )?.name,
+      group: intl.formatMessage(messages.attributes),
     };
   }
 

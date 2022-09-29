@@ -2,7 +2,7 @@ export const initialData = [
   {
     id: "1",
     uuid: "627bd0e7476cd1000ecef6b4",
-    balance: 3067.88,
+    balance: { amount: 3067.88, currency: "EUR" },
     age: 40,
     eyeColor: "green",
     name: "Melba Keller",
@@ -19,7 +19,7 @@ export const initialData = [
   {
     id: "2",
     uuid: "627bd0e763eb9e68f3800b9f",
-    balance: 3523.57,
+    balance: { amount: 3523.57, currency: "EUR" },
     age: 39,
     eyeColor: "green",
     name: "Dixie Rivera",
@@ -36,7 +36,7 @@ export const initialData = [
   {
     id: "3",
     uuid: "627bd0e785b17c7a9b406c62",
-    balance: 3240.22,
+    balance: { amount: 3240.22, currency: "EUR" },
     age: 38,
     eyeColor: "brown",
     name: "Lamb Clayton",
@@ -53,7 +53,7 @@ export const initialData = [
   {
     id: "4",
     uuid: "627bd0e7c6460044c736e00a",
-    balance: 3450.59,
+    balance: { amount: 3450.59, currency: "EUR" },
     age: 30,
     eyeColor: "blue",
     name: "Charity Mcgee",
@@ -70,7 +70,7 @@ export const initialData = [
   {
     id: "5",
     uuid: "627bd0e77792e92a1b00d09c",
-    balance: 3196.74,
+    balance: { amount: 3196.74, currency: "EUR" },
     age: 39,
     eyeColor: "brown",
     name: "Ward Hayden",
@@ -87,7 +87,7 @@ export const initialData = [
   {
     id: "6",
     uuid: "627bd0e78ff0fc7e94570ecd",
-    balance: 2222.02,
+    balance: { amount: 2222.02, currency: "EUR" },
     age: 30,
     eyeColor: "blue",
     name: "Emily Parrish",
@@ -104,7 +104,7 @@ export const initialData = [
   {
     id: "7",
     uuid: "627bd0e7d0b1a0050a83619b",
-    balance: 3558.55,
+    balance: { amount: 3558.55, currency: "EUR" },
     age: 37,
     eyeColor: "blue",
     name: "Wood Hensley",
@@ -121,7 +121,7 @@ export const initialData = [
   {
     id: "8",
     uuid: "627bd0e7138637a41c457158",
-    balance: 1955.85,
+    balance: { amount: 1955.85, currency: "EUR" },
     age: 29,
     eyeColor: "green",
     name: "Karin Cote",
@@ -138,7 +138,7 @@ export const initialData = [
   {
     id: "9",
     uuid: "627bd0e7c3502435bc459efe",
-    balance: -2358.54,
+    balance: { amount: -2358.54, currency: "EUR" },
     age: 37,
     eyeColor: "green",
     name: "Roberta Rollins",
@@ -155,7 +155,7 @@ export const initialData = [
   {
     id: "10",
     uuid: "627bd0e7da2e10b6154b85cf",
-    balance: 2048.1,
+    balance: { amount: 2048.1, currency: "EUR" },
     age: 26,
     eyeColor: "green",
     name: "Francis Talley",

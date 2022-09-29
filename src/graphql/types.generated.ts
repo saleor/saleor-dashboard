@@ -361,6 +361,7 @@ export type AttributeFilterInput = {
   type?: InputMaybe<AttributeTypeEnum>;
   inCollection?: InputMaybe<Scalars['ID']>;
   inCategory?: InputMaybe<Scalars['ID']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -486,7 +487,7 @@ export type AttributeValueFilterInput = {
 
 export type AttributeValueInput = {
   /** ID of the selected attribute. */
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
   /** URL of the file attribute. Every time, a new value is created. */
@@ -575,6 +576,7 @@ export type CategoryFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type CategoryInput = {
@@ -808,6 +810,12 @@ export type CheckoutLineInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the object's metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type CheckoutLineUpdateInput = {
@@ -910,6 +918,7 @@ export type CollectionFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -2703,6 +2712,7 @@ export type MenuFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Array<Scalars['String']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MenuInput = {
@@ -3298,6 +3308,7 @@ export type PageFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   pageTypes?: InputMaybe<Array<Scalars['ID']>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type PageInput = {
@@ -3384,6 +3395,7 @@ export type PageTypeCreateInput = {
 
 export type PageTypeFilterInput = {
   search?: InputMaybe<Scalars['String']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export enum PageTypeSortField {
@@ -3489,6 +3501,10 @@ export enum PermissionEnum {
   IMPERSONATE_USER = 'IMPERSONATE_USER',
   MANAGE_APPS = 'MANAGE_APPS',
   MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
+  MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
+  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
+  HANDLE_TAXES = 'HANDLE_TAXES',
+  MANAGE_TAXES = 'MANAGE_TAXES',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_PLUGINS = 'MANAGE_PLUGINS',
@@ -3502,10 +3518,7 @@ export enum PermissionEnum {
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = 'MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES',
   MANAGE_SHIPPING = 'MANAGE_SHIPPING',
   MANAGE_SETTINGS = 'MANAGE_SETTINGS',
-  MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS',
-  MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
-  HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
-  HANDLE_TAXES = 'HANDLE_TAXES'
+  MANAGE_TRANSLATIONS = 'MANAGE_TRANSLATIONS'
 }
 
 export type PermissionGroupCreateInput = {
@@ -3796,6 +3809,7 @@ export type ProductFilterInput = {
   giftCard?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
@@ -3948,6 +3962,7 @@ export type ProductTypeFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ProductTypeInput = {
@@ -4552,6 +4567,14 @@ export enum StorePaymentMethodEnum {
 }
 
 /** An enumeration. */
+export enum TaxExemptionManageErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  NOT_EDITABLE_ORDER = 'NOT_EDITABLE_ORDER'
+}
+
+/** An enumeration. */
 export enum ThumbnailFormatEnum {
   WEBP = 'WEBP'
 }
@@ -4957,6 +4980,7 @@ export type WarehouseFilterInput = {
   ids?: InputMaybe<Array<Scalars['ID']>>;
   isPrivate?: InputMaybe<Scalars['Boolean']>;
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  slugs?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export enum WarehouseSortField {

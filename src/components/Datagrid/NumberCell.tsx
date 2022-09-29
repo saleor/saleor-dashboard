@@ -4,7 +4,6 @@ import {
   getMiddleCenterBias,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { Locale } from "../Locale";
@@ -17,45 +16,25 @@ interface NumberCellProps {
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const useNumberCellStyles = makeStyles(
-  theme => ({
-    input: {
-      ...theme.typography.body1,
-      appearance: "none",
-      background: "none",
-      border: "none",
-      padding: theme.spacing(1.5, 1),
-      outline: 0,
-      textAlign: "right",
-    },
-  }),
-  { name: "NumberCell" },
-);
-
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
   onChange,
-}) => {
-  const classes = useNumberCellStyles();
-
-  return (
-    <input
-      className={classes.input}
-      type="number"
-      onChange={event =>
-        onChange({
-          ...cell,
-          data: {
-            ...cell.data,
-            value: event.target.value ? parseFloat(event.target.value) : null,
-          },
-        })
-      }
-      value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
-      autoFocus
-    />
-  );
-};
+}) => (
+  <input
+    type="number"
+    onChange={event =>
+      onChange({
+        ...cell,
+        data: {
+          ...cell.data,
+          value: event.target.value ? parseFloat(event.target.value) : null,
+        },
+      })
+    }
+    value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
+    autoFocus
+  />
+);
 
 export const numberCellRenderer = (
   locale: Locale,
