@@ -46,7 +46,12 @@ Original component from `@glideapps/glide-data-grid` requires user to provide ca
 
 - we introduces `getCellError` accessor to be able to map validation errors to their respective cells - this way we can handle partial save (let's say save 3 out of 4 updated variants) and display red background where validation failed. It uses the same `GetCellContentOpts` object as second argument as `getCellContent`.
 
-- `selectionActions` prop is used for all actions that appear after selecting rows, such as deletion or publication.
+## Adding and removing rows
+
+Datagrid component fully supports adding and removing rows on the fly.
+
+- Adding rows work out-of-the-box by passing `addButtonLabel` as prop to component.
+- `selectionActions` prop is used for all actions that appear after selecting rows, such as deletion or publication. You can pass a list of buttons that use actions from `MenuItemsActions` interface. Currently only deleting rows is supported out of the box.
 
 ## API
 
@@ -57,3 +62,13 @@ After we set up form and accessors, we need a way to send this data to API. This
 This part is also greatly affected by the API as it requires mapping potentially various GraphQL objects to combination of row and column ID. What we found useful during implementing datagrid in variants list is creating objects, which contain data like variant ID, warehouse/channel ID and error code, which then `getCellError` can easily interpret and pin to particular cell. This code can be found in `src/products/views/ProductUpdate/handlers/errors.ts` file.
 
 After successful submission to API we need to clean all changes that were saved and leave those which weren't. In `src/products/components/ProductUpdatePage/form.tsx` we can see that after submission changes are cleared if no error was found. Beacuse of possibility that data in one row can be saved using multiple mutations, developers should write their own logic to specify which fields were saved and which were not, given the list of errors.
+
+## Summary
+
+Wrapping everything up - to use datagrid component, you need to take care of:
+
+1. connecting it to form
+2. create accessors `getCellContent`
+3. create save handler
+4. update list of errors
+5. clean changes array from already saved ones.
