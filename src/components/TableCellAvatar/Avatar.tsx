@@ -42,7 +42,7 @@ export interface AvatarProps {
   thumbnail?: string;
   alignRight?: boolean;
   avatarProps?: string;
-  children?: React.ReactNode | React.ReactNodeArray;
+  children?: React.ReactNode | React.ReactNode[];
   badge?: React.ReactNode;
 }
 
