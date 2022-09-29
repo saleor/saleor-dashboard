@@ -4,6 +4,7 @@ import Datagrid, {
   GetCellContentOpts,
 } from "@saleor/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
+import { Choice } from "@saleor/components/SingleSelectField";
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
@@ -27,6 +28,10 @@ interface ProductVariantsProps {
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
+  onAttributeValuesSearch: (
+    id: string,
+    query: string,
+  ) => Promise<Array<Choice<string, string>>>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
 }
@@ -37,6 +42,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   variants,
   warehouses,
   variantAttributes,
+  onAttributeValuesSearch,
   onChange,
   onRowClick,
 }) => {
@@ -77,6 +83,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
+        searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
     [columns, variants],
@@ -90,6 +97,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
+        searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
     [columns, variants, errors],
