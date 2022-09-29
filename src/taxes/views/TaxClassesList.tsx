@@ -32,7 +32,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     navigate(taxTabPath(tab));
   };
 
-  const newTaxClass = React.useMemo(
+  const newTaxClass: TaxClassFragment = React.useMemo(
     () => ({
       __typename: "TaxClass" as const,
       id: "new",
