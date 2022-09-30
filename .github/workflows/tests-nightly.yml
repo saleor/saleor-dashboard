@@ -144,9 +144,31 @@ jobs:
           record: true
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
+  get-domain:
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.environment != 'DEMO' && github.event.client_payload.project != 'DEMO'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      domain: ${{ steps.get-domain.outputs.domain }}
+    env:
+      TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+      VERSION: ${{github.event.client_payload.version}}
+    steps:
+      - name: Install dependencies
+        run: |
+              cd .github/workflows
+              npm ci
+
+      - name: get-domain
+        id: get-domain
+        run: |
+              node .github/workflows/getDomainForReleaseTests.js \
+              --version $VERSION \
+              --token $TOKEN 
 
   run-tests-on-release:
-    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.project != 'DEMO'}}
+    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.environment != 'DEMO' && github.event.client_payload.project != 'DEMO'}}
+    needs: get-domain
     runs-on: ubuntu-latest
     outputs:
       status: ${{ steps.cypress.outcome }}
@@ -164,27 +186,21 @@ jobs:
         env:
           version: ${{github.event.client_payload.version}}
         run: |
-              echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )" 
+              echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )"
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.branch.outputs.ref }}
-      
-      - name: Get formatted version
-        id: version
-        env:
-          version: ${{github.event.client_payload.version}}
-        run: |
-              echo "::set-output name=formatted_version::$(echo $version | grep -ohE "[0-9]\.[0-9]+" | sed s/\\.// )" 
               
       - name: Cypress run - automatically
         id: cypress
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
-          API_URI: https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud/graphql/
+          API_URI: ${{ needs.get-domain.outputs.domain }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud/dashboard/
+          CYPRESS_baseUrl: ${{ needs.get-domain.outputs.domain }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
@@ -220,6 +236,7 @@ jobs:
         run: |
               cd .github/workflows
               npm ci
+
       - name: Add review and merge if patch DASHBOARD
         env: 
          tests_status: ${{ needs.run-tests-on-release.outputs.status}}
