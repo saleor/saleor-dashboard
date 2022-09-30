@@ -124,7 +124,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     });
 
   const { data, refetch } = useTaxClassesListQuery({
-    variables: { first: 20 },
+    variables: { first: 100 },
   });
 
   const taxClasses = React.useMemo(() => {
