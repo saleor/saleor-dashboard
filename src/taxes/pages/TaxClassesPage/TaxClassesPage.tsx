@@ -33,7 +33,6 @@ import {
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
-import { getDefaultTaxRateInCountry } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -183,7 +182,6 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                             <ListItemCell>{countryRate.label}</ListItemCell>
                             <ListItemCell>
                               <TaxInput
-                                placeholder={getDefaultTaxRateInCountry().toString()}
                                 value={countryRate.value}
                                 change={e =>
                                   handlers.handleRateChange(
