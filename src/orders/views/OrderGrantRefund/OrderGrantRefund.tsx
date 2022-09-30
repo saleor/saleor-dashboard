@@ -31,7 +31,12 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
         )}
       />
 
-      <OrderGrantRefundPage order={data?.order} loading={loading} />
+      <OrderGrantRefundPage
+        order={data?.order}
+        loading={loading}
+        // TODO: handle form submit
+        onSubmit={() => undefined}
+      />
     </>
   );
 };

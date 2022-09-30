@@ -21,9 +21,17 @@ const props: OrderGrantRefundPageProps = {
     grantedRefunds,
   },
   loading: false,
+  // eslint-disable-next-line no-console
+  onSubmit: data => console.log("onSubmit", data),
 };
 
 storiesOf("Views / Orders / Grant refund order", module)
   .addDecorator(Decorator)
   .add("grant refund", () => <OrderGrantRefundPage {...props} />)
-  .add("loading", () => <OrderGrantRefundPage order={null} loading={true} />);
+  .add("loading", () => (
+    <OrderGrantRefundPage
+      order={null}
+      loading={true}
+      onSubmit={() => undefined}
+    />
+  ));
