@@ -94,16 +94,19 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   const taxCountryConfigurations = data?.taxCountryConfigurations;
   const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
 
-  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(
-    () => [
-      ...mapUndefinedTaxRatesToCountries(
-        taxCountryConfigurations ?? [],
-        taxClasses ?? [],
-      ),
-      ...newCountries,
-    ],
-    [taxCountryConfigurations, newCountries, taxClasses],
-  );
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(() => {
+    if (taxClasses && taxCountryConfigurations) {
+      return [
+        ...mapUndefinedTaxRatesToCountries(
+          taxCountryConfigurations ?? [],
+          taxClasses ?? [],
+        ),
+        ...newCountries,
+      ];
+    } else {
+      return undefined;
+    }
+  }, [taxCountryConfigurations, newCountries, taxClasses]);
 
   const handleDeleteConfiguration = async (countryCode: CountryCode) => {
     if (newCountries.some(config => config.country.code === countryCode)) {
@@ -132,10 +135,6 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
       navigate(taxCountriesListUrl(allCountryTaxes[0].country.code));
     }
   }, [allCountryTaxes, id, navigate]);
-
-  if (id === "undefined" && allCountryTaxes?.length) {
-    return null;
-  }
 
   return (
     <>
@@ -166,7 +165,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
           open={params?.action === "add-country"}
           countries={filterChosenCountries(
             shop?.countries,
-            allCountryTaxes,
+            allCountryTaxes ?? [],
           ).map(country => ({
             checked: false,
             ...country,
