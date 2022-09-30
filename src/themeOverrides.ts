@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core/styles";
 
-const fontFamily = "Fira Sans, sans-serif";
+const fontFamily = "Source Sans Pro, sans-serif";
 const themeOverrides: Partial<Theme> = {
   // @ts-ignore
   typography: {
