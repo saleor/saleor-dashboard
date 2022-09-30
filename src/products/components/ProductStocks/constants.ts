@@ -4,6 +4,8 @@ export const SKU_ERROR_MESSAGE = {
   required: "SKU jest wymagany",
   invalidType: "SKU może zawierać wyłącznie cyfry",
   positive: "SKU musi być większe od 0",
+  skuIsInvalid: "SKU jest nieprawidłowe",
+  sthWentWrong: "Coś poszło nie tak",
 };
 
 export const SkuSchema = z

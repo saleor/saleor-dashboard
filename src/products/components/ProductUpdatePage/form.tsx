@@ -74,6 +74,7 @@ import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { useSku } from "../ProductStocks/context";
 import { useValidateSku } from "../ProductStocks/hooks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
@@ -256,6 +257,8 @@ function useProductUpdateForm(
       opts.channelsWithVariants,
     ],
   );
+
+  const { isLoading, isValid: isSkuValidFromApi } = useSku();
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
@@ -472,9 +475,9 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveDisabled = disabled || !isSkuValid(data.sku);
-  const isSubmitDisabled =
-    isSaveDisabled || !isValid() || !isSkuValid(data.sku);
+  const isSaveDisabled =
+    disabled || !isSkuValid(data.sku) || isLoading || !isSkuValidFromApi;
+  const isSubmitDisabled = isSaveDisabled || !isValid();
 
   useEffect(() => {
     setIsSubmitDisabled(isSubmitDisabled);
