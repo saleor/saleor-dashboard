@@ -60,7 +60,6 @@ export interface ProductListPageProps
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
-  totalGridAttributes: number;
   products: RelayToFlat<ProductListQuery["products"]>;
   onAdd: () => void;
   onExport: () => void;
@@ -101,7 +100,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     loading,
     settings,
     tabs,
-    totalGridAttributes,
     onAdd,
     onAll,
     onColumnQueryChange,

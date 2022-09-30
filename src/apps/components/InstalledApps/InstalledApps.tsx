@@ -32,9 +32,6 @@ export interface InstalledAppsProps extends ListProps {
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
-  settings,
-  disabled,
-  onUpdateListSettings,
   ...props
 }) => {
   const intl = useIntl();

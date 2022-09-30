@@ -27,14 +27,12 @@ import { useStyles } from "../../styles";
 
 export interface AppsInProgressProps {
   appsList: AppsInstallationsQuery["appsInstallations"];
-  disabled: boolean;
   onAppInstallRetry: (id: string) => void;
   onRemove: (id: string) => void;
 }
 
 const AppsInProgress: React.FC<AppsInProgressProps> = ({
   appsList,
-  disabled,
   onAppInstallRetry,
   onRemove,
   ...props
