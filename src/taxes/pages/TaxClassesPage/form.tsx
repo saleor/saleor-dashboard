@@ -43,12 +43,14 @@ function useTaxClassesForm(
 
   const isNewTaxClass = taxClass?.id === "new";
 
-  const initialFormsetData = taxClass?.countries.map(item => ({
-    id: item.country.code,
-    label: item.country.country,
-    value: item.rate.toString(),
-    data: null,
-  }));
+  const initialFormsetData = taxClass?.countries
+    .map(item => ({
+      id: item.country.code,
+      label: item.country.country,
+      value: item.rate.toString(),
+      data: null,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   const { formId, triggerChange, data, handleChange } = useForm(
     initialFormData,
