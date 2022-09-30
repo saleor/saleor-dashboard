@@ -150,10 +150,6 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     urlFunction: taxClassesListUrl,
   });
 
-  if (id === "undefined" && taxClasses) {
-    return null;
-  }
-
   return (
     <TaxClassesPage
       taxClasses={taxClasses}
