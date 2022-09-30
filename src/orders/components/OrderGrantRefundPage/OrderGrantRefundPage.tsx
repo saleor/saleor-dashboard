@@ -9,23 +9,23 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Money from "@saleor/components/Money";
 import PageHeader from "@saleor/components/PageHeader";
-import PriceField from "@saleor/components/PriceField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { GrantRefundContext } from "./context";
 import { grantRefundPageMessages } from "./messages";
 import {
   getGrantRefundReducerInitialState,
   grantRefundDefaultState,
   grantRefundReducer,
 } from "./reducer";
+import { RefundCard } from "./RefundCard";
+// import { useStyles } from "./styles";
 import { calculateTotalPrice } from "./utils";
 
 export interface OrderGrantRefundPageProps {
@@ -34,7 +34,7 @@ export interface OrderGrantRefundPageProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
 }
 
-interface OrderGrantRefundFormData {
+export interface OrderGrantRefundFormData {
   amount: string;
   reason: string;
 }
@@ -49,9 +49,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   loading,
   onSubmit,
 }) => {
+  // const classes = useStyles();
   const intl = useIntl();
-
-  const currency = order?.total?.gross?.currency ?? "USD";
 
   const unfulfilledLines = (order?.lines ?? []).filter(
     line => line.quantityToFulfill > 0,
@@ -71,7 +70,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
-  const totalSelectedPrice = calculateTotalPrice([...state.lines.values()]);
+  const totalSelectedPrice = calculateTotalPrice(state, order);
 
   return (
     <Container>
@@ -90,121 +89,70 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         onSubmit={onSubmit}
       >
         {({ change, data, set }) => (
-          <Grid>
-            <div>
-              {loading && <Skeleton />}
-              {unfulfilledLines.length > 0 && (
+          <GrantRefundContext.Provider
+            value={{
+              dispatch,
+              state,
+              form: { change, data, set },
+              totalSelectedPrice,
+            }}
+          >
+            <Grid>
+              <div>
+                {loading && <Skeleton />}
+                {unfulfilledLines.length > 0 && (
+                  <Card>
+                    <CardTitle title="Unfulfilled products" />
+                    <CardContent>
+                      {unfulfilledLines.map(line => (
+                        <div>
+                          <p>{line.id}</p>
+                          <input
+                            type="number"
+                            value={state.lines.get(line.id)?.selectedQuantity}
+                            onChange={e => {
+                              const value = parseInt(e.target.value, 10);
+                              dispatch({
+                                type: "setQuantity",
+                                lineId: line.id,
+                                amount: value,
+                              });
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {order?.fulfillments?.map?.(fulfillment => (
+                  <Card>
+                    <CardTitle title={"Fulfilment"}></CardTitle>
+                    <CardContent>
+                      <p>{fulfillment.id}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+
                 <Card>
-                  <CardTitle title="Unfulfilled products" />
                   <CardContent>
-                    {unfulfilledLines.map(line => (
-                      <div>
-                        <p>{line.id}</p>
-                        <input
-                          type="number"
-                          value={state.lines.get(line.id)?.selectedQuantity}
-                          onChange={e => {
-                            const value = parseInt(e.target.value, 10);
-                            dispatch({
-                              type: "setQuantity",
-                              lineId: line.id,
-                              amount: value,
-                            });
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
-
-              {order?.fulfillments?.map?.(fulfillment => (
-                <Card>
-                  <CardTitle title={"Fulfilment"}></CardTitle>
-                  <CardContent>
-                    <p>{fulfillment.id}</p>
-                  </CardContent>
-                </Card>
-              ))}
-
-              <Card>
-                <CardContent>
-                  <TextField
-                    value={data.reason}
-                    name={"reason" as keyof OrderGrantRefundFormData}
-                    onChange={change}
-                    type="text"
-                    placeholder={intl.formatMessage(
-                      grantRefundPageMessages.reasonForRefund,
-                    )}
-                  />
-                </CardContent>
-              </Card>
-            </div>
-            <div>
-              <Card>
-                <CardTitle
-                  title={
-                    <FormattedMessage
-                      {...grantRefundPageMessages.refundTitle}
-                    />
-                  }
-                />
-                <CardContent>
-                  <p>
-                    <FormattedMessage
-                      {...grantRefundPageMessages.refundSubtitle}
-                    />
-                  </p>
-                  {/* toggle */}
-                  <p>
-                    <FormattedMessage
-                      {...grantRefundPageMessages.refundShipment}
-                    />
-                  </p>
-
-                  <div>
-                    <span>
-                      <FormattedMessage
-                        {...grantRefundPageMessages.refundSelectedValue}
-                      />
-                    </span>
-                    <Money
-                      money={{
-                        amount: totalSelectedPrice,
-                        currency,
-                      }}
-                    />
-                    {/* calculated value */}
-                    <Button
-                      onClick={() =>
-                        set({ amount: totalSelectedPrice.toString() })
-                      }
-                    >
-                      <FormattedMessage {...buttonMessages.apply} />
-                    </Button>
-                  </div>
-                  <div>
-                    <PriceField
+                    <TextField
+                      value={data.reason}
+                      name={"reason" as keyof OrderGrantRefundFormData}
                       onChange={change}
-                      name={"amount" as keyof OrderGrantRefundFormData}
-                      currencySymbol={currency}
-                      value={data.amount}
-                      inputProps={{ "data-test-id": "amountInput" }}
+                      type="text"
+                      placeholder={intl.formatMessage(
+                        grantRefundPageMessages.reasonForRefund,
+                      )}
                     />
-                  </div>
-                  <div>
-                    <p>
-                      <FormattedMessage
-                        {...grantRefundPageMessages.refundStepExplanation}
-                      />
-                    </p>
-                    <Button type="submit">Grant refund</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </Grid>
+                  </CardContent>
+                </Card>
+              </div>
+              <div>
+                <RefundCard order={order} />
+              </div>
+            </Grid>
+          </GrantRefundContext.Provider>
         )}
       </Form>
     </Container>

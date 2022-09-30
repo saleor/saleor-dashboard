@@ -8,6 +8,7 @@ export interface ReducerOrderLine {
 
 export interface GrantRefundState {
   lines: Map<string, ReducerOrderLine>;
+  refundShipping: boolean;
 }
 
 export type GrantRefundLineKeyValue = [string, ReducerOrderLine];
@@ -25,6 +26,9 @@ export type GrantRefundAction =
   | {
       type: "initState";
       state: GrantRefundState;
+    }
+  | {
+      type: "toggleRefundShipping";
     };
 
 export const getGrantRefundReducerInitialState = (
@@ -54,17 +58,19 @@ export const getGrantRefundReducerInitialState = (
 
   return {
     lines: new Map([...unfulfilledLines, ...fulfilmentLines]),
+    refundShipping: false,
   };
 };
 
 export const grantRefundDefaultState: GrantRefundState = {
   lines: new Map(),
+  refundShipping: false,
 };
 
 export function grantRefundReducer(
   state: GrantRefundState,
   action: GrantRefundAction,
-) {
+): GrantRefundState {
   switch (action.type) {
     case "setQuantity": {
       if (!state.lines.has(action.lineId)) {
@@ -105,6 +111,13 @@ export function grantRefundReducer(
 
     case "initState": {
       return action.state;
+    }
+
+    case "toggleRefundShipping": {
+      return {
+        ...state,
+        refundShipping: !state.refundShipping,
+      };
     }
 
     default: {
