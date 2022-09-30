@@ -4,7 +4,7 @@ export const COLLECTION_SELECTORS = {
   saveButton: "[data-test='button-bar-confirm']",
   addProductButton: "[data-test-id='add-product']",
   descriptionInput: '[data-test-id="rich-text-editor-description"]',
-  placeholder: "[data-placeholder]"
+  placeholder: "[data-placeholder]",
 };
 
 export const collectionRow = collectionId =>

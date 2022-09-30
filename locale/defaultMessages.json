@@ -250,6 +250,10 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "/yJJvI": {
+    "context": "dialog header",
+    "string": "Select a product type"
+  },
   "/z9uo1": {
     "context": "order returned success message",
     "string": "Successfully returned products!"
@@ -515,6 +519,10 @@
   "29L5Yq": {
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
+  },
+  "2CBcub": {
+    "context": "CreateVariantTitle manage",
+    "string": "Manage"
   },
   "2E1xZ0": {
     "context": "page header",
@@ -6250,6 +6258,10 @@
     "context": "voucher code, button",
     "string": "Generate Code"
   },
+  "mTEqYL": {
+    "context": "NoChannels content",
+    "string": "No channels to assign. Please first assign them for the product."
+  },
   "mUb8Gt": {
     "context": "section header",
     "string": "Taxes"
@@ -6566,6 +6578,10 @@
   "pCy5EP": {
     "context": "gift card history message",
     "string": "Gift card was activated"
+  },
+  "pEMxyy": {
+    "context": "alert message",
+    "string": "This product does no longer exist."
   },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
@@ -7438,6 +7454,10 @@
   "vzgZ3U": {
     "context": "card header",
     "string": "Sign In"
+  },
+  "w+3Q3e": {
+    "context": "input label",
+    "string": "Product type"
   },
   "w+5Djm": {
     "string": "Min. Order Weight"

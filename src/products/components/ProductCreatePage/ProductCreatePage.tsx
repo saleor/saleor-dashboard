@@ -104,7 +104,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   categories: categoryChoiceList,
   collections: collectionChoiceList,
   attributeValues,
-  errors,
+  errors: apiErrors,
   fetchCategories,
   fetchCollections,
   fetchMoreCategories,
@@ -210,6 +210,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         change,
         data,
         formErrors,
+        validationErrors,
         handlers,
         submit,
         isSaveDisabled,
@@ -217,6 +218,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
+
+        const errors = [...apiErrors, ...validationErrors];
 
         return (
           <Container>
@@ -315,7 +318,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   collections={collections}
                   data={data}
                   disabled={loading}
-                  errors={errors}
+                  errors={[...errors, ...channelsErrors]}
                   fetchCategories={fetchCategories}
                   fetchCollections={fetchCollections}
                   fetchMoreCategories={fetchMoreCategories}

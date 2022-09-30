@@ -469,11 +469,12 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveDisabled = disabled || !isValid();
+  const isSaveDisabled = disabled;
+  const isSubmitDisabled = isSaveDisabled || !isValid();
 
   useEffect(() => {
-    setIsSubmitDisabled(isSaveDisabled);
-  }, [isSaveDisabled]);
+    setIsSubmitDisabled(isSubmitDisabled);
+  }, [isSubmitDisabled]);
 
   return {
     change: handleChange,

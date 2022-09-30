@@ -81,7 +81,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   useModalDialogOpen(open, {
     onOpen: () => {
       queryReset();
-      setProductsDict(selectedIds);
+      setProductsDict(selectedIds || {});
     },
   });
 
