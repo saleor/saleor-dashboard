@@ -1,6 +1,6 @@
 const { Command } = require("commander");
 const core = require("@actions/core");
-var request = require("xhr-request");
+const fetch = require("node-fetch");
 
 const program = new Command();
 
@@ -20,11 +20,16 @@ program
       const throwErrorAfterTimeout = setTimeout(function() {
         throw new Error("Environment didn't upgraded after 20 minutes");
       }, 1200000);
-      waitUntilTaskInProgress(taskId, options.token, throwErrorAfterTimeout);
+      await waitUntilTaskInProgress(
+        taskId,
+        options.token,
+        throwErrorAfterTimeout,
+      );
       const domain = await getDomainForUpdatedEnvironment(
         environmentId,
         options.token,
       );
+      clearTimeout(throwErrorAfterTimeout);
       core.setOutput("domain", `https://${domain}/`);
     } else {
       core.setOutput(
@@ -38,52 +43,55 @@ program
   .parse();
 
 async function updateEnvironment(environmentId, version, token) {
-  return new Promise((resolve, reject) => {
-    request(
-      `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}/upgrade/`,
-      {
-        method: "PUT",
-        json: true,
-        body: { service: `saleor-staging-v${getFormattedVersion(version)}` },
-        responseType: "json",
-        headers: {
-          Authorization: `Token ${token}`,
-        },
+  const response = await fetch(
+    `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}/upgrade/`,
+    {
+      method: "PUT",
+      body: `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
+      headers: {
+        Authorization: `Token ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
       },
-      function(err, data) {
-        if (err) throw err;
-        console.log(data);
-        if (!data.task_id)
-          throw new Error(`Can't update environment- ${JSON.stringify(data)}`);
-        resolve(data.task_id);
-      },
+    },
+  );
+  const responseInJson = await response.json();
+  if (!responseInJson.task_id)
+    throw new Error(
+      `Can't update environment- ${JSON.stringify(responseInJson)}`,
     );
-  });
+  return responseInJson.task_id;
 }
 
-function waitUntilTaskInProgress(taskId, token, throwErrorAfterTimeout) {
-  request(
+async function waitUntilTaskInProgress(taskId, token, throwErrorAfterTimeout) {
+  const response = await fetch(
     `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
     {
       method: "GET",
-      responseType: "json",
-    },
-    function(err, data) {
-      console.log(data.status);
-      if (err) throw err;
-      if (data.status == "PENDING" || data.status == "IN_PROGRESS") {
-        setTimeout(function() {
-          waitUntilTaskInProgress(taskId, token);
-        }, 10000);
-      } else if (data.status == "SUCCEEDED") {
-        clearTimeout(throwErrorAfterTimeout);
-      } else if (data.status !== "SUCCEEDED") {
-        throw new Error(
-          `Job ended with status - ${data.status} - ${data.job_name}`,
-        );
-      }
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
     },
   );
+  const responseInJson = await response.json();
+  console.log(`Job status - ${responseInJson.status}`);
+  if (
+    responseInJson.status == "PENDING" ||
+    responseInJson.status == "IN_PROGRESS"
+  ) {
+    setTimeout(function() {
+      waitUntilTaskInProgress(taskId, token);
+    }, 10000);
+  } else if (responseInJson.status == "SUCCEEDED") {
+    return responseInJson.status;
+  } else if (responseInJson.status !== "SUCCEEDED") {
+    console.log("error");
+
+    throw new Error(
+      `Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
+    );
+  }
 }
 
 function isPatchRelease(version) {
@@ -97,21 +105,17 @@ function getFormattedVersion(version) {
 }
 
 async function getDomainForUpdatedEnvironment(environmentId, token) {
-  return new Promise((resolve, reject) => {
-    request(
-      `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}`,
-      {
-        method: "GET",
-        json: true,
-        responseType: "json",
-        headers: {
-          Authorization: `Token ${token}`,
-        },
+  const response = await fetch(
+    `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}`,
+    {
+      method: "GET",
+      json: true,
+      responseType: "json",
+      headers: {
+        Authorization: `Token ${token}`,
       },
-      function(err, data) {
-        if (err) throw err;
-        resolve(data.domain);
-      },
-    );
-  });
+    },
+  );
+  const responseInJson = await response.json();
+  return responseInJson.domain;
 }

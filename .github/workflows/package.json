@@ -8,7 +8,6 @@
     "commander": "^9.4.0",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
-    "xhr-request": "^1.1.0",
-    "xhr2": "^0.2.1"
+    "node-fetch": "^2.6.7"
   }
 }

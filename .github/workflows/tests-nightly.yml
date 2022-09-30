@@ -145,7 +145,7 @@ jobs:
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
   get-domain:
-    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.environment != 'DEMO' && github.event.client_payload.project != 'DEMO'}}
+    if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
@@ -164,10 +164,10 @@ jobs:
         run: |
               node .github/workflows/getDomainForReleaseTests.js \
               --version $VERSION \
-              --token $TOKEN 
+              --token "$TOKEN"
 
   run-tests-on-release:
-    if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.environment != 'PROD' && github.event.client_payload.environment != 'ENTERPRISE' && github.event.client_payload.environment != 'DEMO' && github.event.client_payload.project != 'DEMO'}}
+    if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     needs: get-domain
     runs-on: ubuntu-latest
     outputs:
