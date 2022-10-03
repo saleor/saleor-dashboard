@@ -82,6 +82,7 @@ export const useValidateSku = () => {
 
       setError(null);
     } catch (error) {
+      debouncedValidateSku.cancel();
       setLoading(false);
 
       if (error instanceof ZodError) {
