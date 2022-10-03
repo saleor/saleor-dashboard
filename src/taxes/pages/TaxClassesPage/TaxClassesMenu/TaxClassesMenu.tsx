@@ -37,12 +37,18 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
+  const isCreatingNew = selectedTaxClassId === "new";
+
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage(taxesMessages.taxClassList)}
         toolbar={
-          <Button variant="secondary" onClick={onCreateNew}>
+          <Button
+            variant="secondary"
+            onClick={onCreateNew}
+            disabled={isCreatingNew}
+          >
             <FormattedMessage {...taxesMessages.addTaxClassLabel} />
           </Button>
         }

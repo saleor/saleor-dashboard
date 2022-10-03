@@ -60,6 +60,10 @@ function useTaxClassesForm(
     },
   );
 
+  if (isNewTaxClass) {
+    triggerChange();
+  }
+
   const formset = useFormset(initialFormsetData);
 
   // Handlers

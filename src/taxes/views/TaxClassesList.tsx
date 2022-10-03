@@ -42,9 +42,7 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     [intl],
   );
 
-  const [includeNewTaxClass, setIncludeNewTaxClass] = React.useState(
-    id === "new",
-  );
+  const isNewTaxClass = id === "new";
 
   const [taxClassDeleteMutation] = useTaxClassDeleteMutation({
     onCompleted: data => {
@@ -84,7 +82,6 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        setIncludeNewTaxClass(false);
         navigate(taxClassesListUrl(data?.taxClassCreate?.taxClass?.id));
       }
     },
@@ -102,8 +99,8 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   };
 
   const handleDeleteTaxClass = async (id: string) => {
-    if (id === "new") {
-      setIncludeNewTaxClass(false);
+    if (isNewTaxClass) {
+      navigate(taxClassesListUrl());
     } else {
       await taxClassDeleteMutation({
         variables: {
@@ -132,11 +129,11 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       return undefined;
     }
     const apiTaxClasses = mapEdgesToItems(data.taxClasses);
-    if (includeNewTaxClass) {
-      return [...apiTaxClasses, newTaxClass];
+    if (isNewTaxClass) {
+      return [newTaxClass, ...apiTaxClasses];
     }
     return apiTaxClasses;
-  }, [data?.taxClasses, includeNewTaxClass, newTaxClass]);
+  }, [data?.taxClasses, isNewTaxClass, newTaxClass]);
 
   const savebarState =
     id === "new"
@@ -158,7 +155,6 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       savebarState={savebarState}
       disabled={false}
       onCreateNewButtonClick={() => {
-        setIncludeNewTaxClass(true);
         navigate(taxClassesListUrl("new"));
       }}
       onTaxClassCreate={handleCreateTaxClass}
