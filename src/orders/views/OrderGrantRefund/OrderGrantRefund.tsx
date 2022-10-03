@@ -1,5 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useOrderDetailsQuery } from "@saleor/graphql";
+import { useOrderDetailsGrantRefundQuery } from "@saleor/graphql";
 import OrderGrantRefundPage from "@saleor/orders/components/OrderGrantRefundPage";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,7 +13,7 @@ interface OrderGrantRefundProps {
 const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
   const intl = useIntl();
 
-  const { data, loading } = useOrderDetailsQuery({
+  const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
     variables: {
       id: orderId,

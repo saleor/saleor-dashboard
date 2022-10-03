@@ -1,11 +1,11 @@
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import currency from "currency.js";
 
 import { GrantRefundState } from "./reducer";
 
 export const calculateTotalPrice = (
   state: GrantRefundState,
-  order: OrderDetailsFragment,
+  order: OrderDetailsGrantRefundFragment,
 ): number => {
   const shippingCost = order?.shippingPrice?.gross?.amount ?? 0;
   const lines = [...state.lines.values()];

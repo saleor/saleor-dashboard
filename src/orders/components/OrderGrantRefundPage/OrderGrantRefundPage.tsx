@@ -6,17 +6,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
-import CardTitle from "@saleor/components/CardTitle";
+import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getTitle } from "../OrderRefundFulfilledProducts/messages";
+import { ProductsCard, RefundCard } from "./components";
 import { GrantRefundContext } from "./context";
 import { grantRefundPageMessages } from "./messages";
 import {
@@ -24,12 +26,11 @@ import {
   grantRefundDefaultState,
   grantRefundReducer,
 } from "./reducer";
-import { RefundCard } from "./RefundCard";
-// import { useStyles } from "./styles";
+import { useStyles } from "./styles";
 import { calculateTotalPrice } from "./utils";
 
 export interface OrderGrantRefundPageProps {
-  order: OrderDetailsFragment;
+  order: OrderDetailsGrantRefundFragment;
   loading: boolean;
   onSubmit: (data: OrderGrantRefundFormData) => void;
 }
@@ -49,7 +50,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   loading,
   onSubmit,
 }) => {
-  // const classes = useStyles();
+  const classes = useStyles();
   const intl = useIntl();
 
   const unfulfilledLines = (order?.lines ?? []).filter(
@@ -83,6 +84,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       <Typography variant="subtitle1">
         <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
       </Typography>
+      <CardSpacer />
       <Form<OrderGrantRefundFormData, {}>
         confirmLeave
         initial={initialFormData}
@@ -98,46 +100,42 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
             }}
           >
             <Grid>
-              <div>
+              <div className={classes.cardsContainer}>
                 {loading && <Skeleton />}
-                {unfulfilledLines.length > 0 && (
-                  <Card>
-                    <CardTitle title="Unfulfilled products" />
-                    <CardContent>
-                      {unfulfilledLines.map(line => (
-                        <div>
-                          <p>{line.id}</p>
-                          <input
-                            type="number"
-                            value={state.lines.get(line.id)?.selectedQuantity}
-                            onChange={e => {
-                              const value = parseInt(e.target.value, 10);
-                              dispatch({
-                                type: "setQuantity",
-                                lineId: line.id,
-                                amount: value,
-                              });
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                )}
-
+                <ProductsCard
+                  title={
+                    <FormattedMessage
+                      {...grantRefundPageMessages.unfulfilledProducts}
+                    />
+                  }
+                  lines={unfulfilledLines}
+                />
                 {order?.fulfillments?.map?.(fulfillment => (
-                  <Card>
-                    <CardTitle title={"Fulfilment"}></CardTitle>
-                    <CardContent>
-                      <p>{fulfillment.id}</p>
-                    </CardContent>
-                  </Card>
+                  <ProductsCard
+                    title={getTitle(fulfillment.status, intl)}
+                    subtitle={
+                      <Typography
+                        variant="body1"
+                        className={classes.fulfilmentNumber}
+                      >
+                        {`#${order.number}-${fulfillment.fulfillmentOrder}`}
+                      </Typography>
+                    }
+                    lines={fulfillment.lines.map(
+                      ({ orderLine, id, quantity }) => ({
+                        ...orderLine,
+                        id,
+                        quantity,
+                      }),
+                    )}
+                  />
                 ))}
 
                 <Card>
                   <CardContent>
                     <TextField
                       value={data.reason}
+                      fullWidth
                       name={"reason" as keyof OrderGrantRefundFormData}
                       onChange={change}
                       type="text"
@@ -149,7 +147,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 </Card>
               </div>
               <div>
-                <RefundCard order={order} />
+                <RefundCard order={order} loading={loading} />
               </div>
             </Grid>
           </GrantRefundContext.Provider>

@@ -1148,6 +1148,62 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const OrderLineGrantRefundFragmentDoc = gql`
+    fragment OrderLineGrantRefund on OrderLine {
+  id
+  thumbnail {
+    url
+  }
+  productName
+  quantity
+  quantityToFulfill
+  variantName
+  productName
+  unitPrice {
+    gross {
+      ...Money
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderFulfillmentGrantRefundFragmentDoc = gql`
+    fragment OrderFulfillmentGrantRefund on Fulfillment {
+  id
+  fulfillmentOrder
+  status
+  lines {
+    id
+    quantity
+    orderLine {
+      ...OrderLineGrantRefund
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}`;
+export const OrderDetailsGrantRefundFragmentDoc = gql`
+    fragment OrderDetailsGrantRefund on Order {
+  id
+  number
+  lines {
+    ...OrderLineGrantRefund
+  }
+  fulfillments {
+    ...OrderFulfillmentGrantRefund
+  }
+  shippingPrice {
+    gross {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}
+${OrderFulfillmentGrantRefundFragmentDoc}
+${MoneyFragmentDoc}`;
 export const TransactionEventFragmentDoc = gql`
     fragment TransactionEvent on TransactionEvent {
   id
@@ -9455,6 +9511,41 @@ export function useOrderDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery>;
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
+export const OrderDetailsGrantRefundDocument = gql`
+    query OrderDetailsGrantRefund($id: ID!) {
+  order(id: $id) {
+    ...OrderDetailsGrantRefund
+  }
+}
+    ${OrderDetailsGrantRefundFragmentDoc}`;
+
+/**
+ * __useOrderDetailsGrantRefundQuery__
+ *
+ * To run a query within a React component, call `useOrderDetailsGrantRefundQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderDetailsGrantRefundQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderDetailsGrantRefundQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderDetailsGrantRefundQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+      }
+export function useOrderDetailsGrantRefundLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+        }
+export type OrderDetailsGrantRefundQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundQuery>;
+export type OrderDetailsGrantRefundLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundLazyQuery>;
+export type OrderDetailsGrantRefundQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>;
 export const OrderFulfillDataDocument = gql`
     query OrderFulfillData($orderId: ID!) {
   order(id: $orderId) {

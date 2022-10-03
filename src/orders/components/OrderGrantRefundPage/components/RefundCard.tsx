@@ -3,7 +3,8 @@ import { useId } from "@reach/auto-id";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import PriceField from "@saleor/components/PriceField";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import Skeleton from "@saleor/components/Skeleton";
+import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
 import { buttonMessages } from "@saleor/intl";
 import { Button, LayoutButton } from "@saleor/macaw-ui";
@@ -11,16 +12,17 @@ import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { useGrantRefundContext } from "./context";
-import { grantRefundPageMessages } from "./messages";
-import { OrderGrantRefundFormData } from "./OrderGrantRefundPage";
-import { useRefundCardStyles } from "./styles";
+import { useGrantRefundContext } from "../context";
+import { grantRefundPageMessages } from "../messages";
+import { OrderGrantRefundFormData } from "../OrderGrantRefundPage";
+import { useRefundCardStyles } from "../styles";
 
 interface RefundCardProps {
-  order: OrderDetailsFragment | null;
+  order: OrderDetailsGrantRefundFragment | null;
+  loading: boolean;
 }
 
-export const RefundCard = ({ order }: RefundCardProps) => {
+export const RefundCard = ({ order, loading }: RefundCardProps) => {
   const classes = useRefundCardStyles();
   const { state, dispatch, form, totalSelectedPrice } = useGrantRefundContext();
   const { locale } = useLocale();
@@ -28,6 +30,20 @@ export const RefundCard = ({ order }: RefundCardProps) => {
   const id = useId();
 
   const currency = order?.total?.gross?.currency ?? "USD";
+
+  if (loading || !order) {
+    return (
+      <Card>
+        <CardTitle
+          className={classes.refundCardHeader}
+          title={<FormattedMessage {...grantRefundPageMessages.refundTitle} />}
+        />
+        <CardContent>
+          <Skeleton />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>

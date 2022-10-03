@@ -1,9 +1,17 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  {},
-  // theme => ({
-  // }),
+  theme => ({
+    fulfilmentNumber: {
+      display: "inline",
+      marginLeft: theme.spacing(1),
+    },
+    cardsContainer: {
+      display: "flex",
+      flexDirection: "column",
+      gap: theme.spacing(2),
+    },
+  }),
   { name: "OrderGrantRefund" },
 );
 
@@ -50,4 +58,44 @@ export const useRefundCardStyles = makeStyles(
     },
   }),
   { name: "RefundCard" },
+);
+
+export const useProductsCardStyles = makeStyles(
+  theme => {
+    const inputPadding = {
+      paddingBottom: theme.spacing(2),
+      paddingTop: theme.spacing(2),
+    };
+    return {
+      colProduct: {
+        width: "auto",
+      },
+      productVariantName: {},
+      productName: {
+        display: "flex",
+        flexDirection: "column",
+        "& $productVariantName": {
+          color: theme.palette.saleor.main[3],
+          fontSize: "1.25rem",
+        },
+      },
+      colQuantityInput: {
+        textAlign: "right",
+        width: `${100 + 32 + 32}px`, // 32 = td padding
+      },
+      colQuantity: {
+        textAlign: "right",
+        width: `${75 + 32 + 32}px`,
+      },
+      quantityInnerInput: {
+        ...inputPadding,
+      },
+      remainingQuantity: {
+        ...inputPadding,
+        color: theme.palette.text.secondary,
+        whiteSpace: "nowrap",
+      },
+    };
+  },
+  { name: "ProductsCard" },
 );

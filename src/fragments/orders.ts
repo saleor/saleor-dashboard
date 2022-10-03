@@ -291,6 +291,63 @@ export const fragmentOrderGrantedRefunds = gql`
   }
 `;
 
+export const orderLineGrantRefund = gql`
+  fragment OrderLineGrantRefund on OrderLine {
+    id
+    thumbnail {
+      url
+    }
+    productName
+    quantity
+    quantityToFulfill
+    variantName
+    productName
+    unitPrice {
+      gross {
+        ...Money
+      }
+    }
+  }
+`;
+
+export const grantRefundFulfillment = gql`
+  fragment OrderFulfillmentGrantRefund on Fulfillment {
+    id
+    fulfillmentOrder
+    status
+    lines {
+      id
+      quantity
+      orderLine {
+        ...OrderLineGrantRefund
+      }
+    }
+  }
+`;
+
+export const fragmentOrderDetailsGrantRefund = gql`
+  fragment OrderDetailsGrantRefund on Order {
+    id
+    number
+    lines {
+      ...OrderLineGrantRefund
+    }
+    fulfillments {
+      ...OrderFulfillmentGrantRefund
+    }
+    shippingPrice {
+      gross {
+        ...Money
+      }
+    }
+    total {
+      gross {
+        ...Money
+      }
+    }
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id

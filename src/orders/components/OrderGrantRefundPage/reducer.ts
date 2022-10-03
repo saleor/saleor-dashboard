@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;
@@ -32,7 +32,7 @@ export type GrantRefundAction =
     };
 
 export const getGrantRefundReducerInitialState = (
-  order: OrderDetailsFragment,
+  order: OrderDetailsGrantRefundFragment,
 ): GrantRefundState => {
   const unfulfilledLines = order?.lines
     .filter(line => line.quantityToFulfill > 0)

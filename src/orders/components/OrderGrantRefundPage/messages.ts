@@ -42,4 +42,18 @@ export const grantRefundPageMessages = defineMessages({
     id: "C035fF",
     description: "grant refund, refund card explanation next to submit button",
   },
+  setMaxQuantity: {
+    defaultMessage: "Set max. quantities",
+    id: "xGC2Ge",
+    description: "grant refund, button",
+  },
+  unfulfilledProducts: {
+    defaultMessage: "Unfulfilled products",
+    id: "zfjAc7",
+    description: "grant refund, card header",
+  },
+  fulfilment: {
+    defaultMessage: "Fulfillment",
+    id: "WK62MN",
+  },
 });

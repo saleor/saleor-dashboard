@@ -118,6 +118,14 @@ export const orderDetailsQuery = gql`
   }
 `;
 
+export const orderDetailsGrantedRefund = gql`
+  query OrderDetailsGrantRefund($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+    }
+  }
+`;
+
 export const orderFulfillData = gql`
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {
