@@ -67,7 +67,7 @@
     "react-gtm-module": "^2.0.11",
     "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-inlinesvg": "^2.1.1",
+    "react-inlinesvg": "^3.0.1",
     "react-intl": "^5.21.2",
     "react-jss": "^10.0.0",
     "react-markdown": "^4.3.1",
