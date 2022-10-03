@@ -15,3 +15,5 @@ export const SkuSchema = z
   })
   .int({ message: SKU_ERROR_MESSAGE.invalidType })
   .positive({ message: SKU_ERROR_MESSAGE.positive });
+
+export const ONE_SECOND = 1000;

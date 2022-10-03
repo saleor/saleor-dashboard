@@ -1,66 +1,70 @@
+import { useJutroDoctorClient } from "@saleor/graphql/client";
 import { useValidateSkuLazyQuery } from "@saleor/graphql/saleorDashboard";
 import debounce from "lodash/debounce";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ZodError } from "zod";
 
-import { SKU_ERROR_MESSAGE } from "./constants";
+import { ONE_SECOND, SKU_ERROR_MESSAGE } from "./constants";
 import { useSku } from "./context";
 import { containsDot, parseSkuSchema } from "./tools";
 
 export const useValidateSku = () => {
   const [error, setError] = useState<string | null>(null);
   const { setLoading, setValidity } = useSku();
+  const { client } = useJutroDoctorClient();
 
-  const [validateSku] = useValidateSkuLazyQuery();
+  const [
+    validateSku,
+    { error: apiError, called: apiCalled, loading: apiLoading, data: apiData },
+  ] = useValidateSkuLazyQuery({
+    client,
+  });
 
-  const isSkuValid = (skuValue: string) => {
-    try {
-      if (containsDot(skuValue)) {
-        throw new Error();
-      }
-
-      parseSkuSchema(skuValue);
-
-      return true;
-    } catch {
-      return false;
+  useEffect(() => {
+    if (!apiCalled || !apiError) {
+      return;
     }
-  };
+
+    setValidity(false);
+    setError(SKU_ERROR_MESSAGE.sthWentWrong);
+  }, [apiCalled, apiError, setValidity]);
+
+  useEffect(() => {
+    if (apiCalled && !apiLoading) {
+      setLoading(false);
+
+      return;
+    }
+
+    if (apiCalled && apiLoading) {
+      setLoading(true);
+    }
+  }, [apiCalled, apiLoading, setLoading]);
+
+  useEffect(() => {
+    if (apiCalled && apiData?.validateSku && !apiLoading) {
+      setValidity(true);
+      setError(null);
+
+      return;
+    }
+
+    if (apiCalled && !apiData?.validateSku && !apiLoading) {
+      setValidity(false);
+      setError(SKU_ERROR_MESSAGE.skuIsInvalid);
+    }
+  }, [apiCalled, apiData, apiLoading, setValidity]);
 
   const debouncedValidateSku = useCallback(
-    debounce(async (skuValue: string) => {
-      try {
-        setLoading(true);
+    debounce((skuValue: string) => {
+      setLoading(false);
 
-        const { error: apiError, data } = (await validateSku({
-          variables: {
-            sku: skuValue,
-          },
-        })) as any;
-
-        setLoading(false);
-
-        if (apiError) {
-          setValidity(false);
-          setError(SKU_ERROR_MESSAGE.sthWentWrong);
-
-          return;
-        }
-
-        if (!data.validateSku) {
-          setValidity(false);
-          setError(SKU_ERROR_MESSAGE.skuIsInvalid);
-
-          return;
-        }
-
-        setValidity(true);
-        setError(null);
-      } catch {
-        setValidity(false);
-        setError(SKU_ERROR_MESSAGE.sthWentWrong);
-      }
-    }, 1000),
+      validateSku({
+        variables: {
+          sku: skuValue,
+        },
+      });
+    }, ONE_SECOND),
     [],
   );
 
@@ -70,14 +74,16 @@ export const useValidateSku = () => {
         throw new Error(SKU_ERROR_MESSAGE.invalidType);
       }
 
-      const result = parseSkuSchema(skuValue);
+      parseSkuSchema(skuValue);
+
+      setLoading(true);
 
       debouncedValidateSku(skuValue);
 
       setError(null);
-
-      return result;
     } catch (error) {
+      setLoading(false);
+
       if (error instanceof ZodError) {
         setError(error.errors[0].message);
 
@@ -88,5 +94,5 @@ export const useValidateSku = () => {
     }
   };
 
-  return { error, handleValidateSku, isSkuValid };
+  return { error, handleValidateSku };
 };

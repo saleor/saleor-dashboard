@@ -72,7 +72,7 @@ import { useIntl } from "react-intl";
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 import { useSku } from "../ProductStocks/context";
-import { useValidateSku } from "../ProductStocks/hooks";
+import { isSkuValid } from "../ProductStocks/tools";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
@@ -399,8 +399,6 @@ function useProductCreateForm(
     formId,
     onSubmit: handleSubmit,
   });
-
-  const { isSkuValid } = useValidateSku();
 
   const submit = async () => {
     const errors = await handleFormSubmit(await getData());

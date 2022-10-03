@@ -3,8 +3,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
+import { useMemo } from "react";
 
-import { API_URI } from "../config";
+import { API_URI, JUTRO_DOCTOR_API_URL } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
@@ -37,6 +38,20 @@ export const apolloClient = new ApolloClient({
   }),
   link,
 });
+
+const createJutroGraphQLClient = () =>
+  new ApolloClient({
+    uri: JUTRO_DOCTOR_API_URL,
+    cache: new InMemoryCache(),
+  });
+
+export const useJutroDoctorClient = () => {
+  const client = useMemo(() => createJutroGraphQLClient(), []);
+
+  return {
+    client,
+  };
+};
 
 export const saleorClient = createSaleorClient({
   apiUrl: API_URI,

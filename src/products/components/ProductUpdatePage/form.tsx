@@ -75,7 +75,7 @@ import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 import { useSku } from "../ProductStocks/context";
-import { useValidateSku } from "../ProductStocks/hooks";
+import { isSkuValid } from "../ProductStocks/tools";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -298,8 +298,6 @@ function useProductUpdateForm(
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
-  const { isSkuValid } = useValidateSku();
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),

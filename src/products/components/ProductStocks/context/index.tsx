@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useContext, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from "react";
 
 import { initialState, reducer, State } from "./reducer";
 
@@ -22,17 +28,17 @@ const ProductSkuContext = createContext<ProductSkuContextProps>({
 export const ProductSkuProvider = ({ children }: ProductSkuProviderProps) => {
   const [{ isLoading, isValid }, dispatch] = useReducer(reducer, initialState);
 
-  const setLoading = (isLoading: boolean) => {
+  const setLoading = useCallback((isLoading: boolean) => {
     dispatch({ type: "sku/isLoading", payload: isLoading });
-  };
+  }, []);
 
-  const setValidity = (isValid: boolean) => {
+  const setValidity = useCallback((isValid: boolean) => {
     dispatch({ type: "sku/isValid", payload: isValid });
-  };
+  }, []);
 
   const memoizedValue = useMemo<ProductSkuContextProps>(
     () => ({ isLoading, isValid, setLoading, setValidity }),
-    [isLoading, isValid],
+    [isLoading, isValid, setLoading, setValidity],
   );
 
   return (
