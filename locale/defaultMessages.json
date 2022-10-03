@@ -5020,10 +5020,6 @@
     "context": "number of products",
     "string": "Products ({quantity})"
   },
-  "bP7ZLP": {
-    "context": "voucher discount",
-    "string": "Entire order"
-  },
   "bPFp8B": {
     "context": "product type",
     "string": "Product Type"
@@ -7763,6 +7759,10 @@
   "ylobu9": {
     "context": "assign reference to product, button",
     "string": "Assign"
+  },
+  "ymo+cm": {
+    "context": "voucher discount",
+    "string": "All products"
   },
   "ypW4Mi": {
     "context": "button refreshing page",
