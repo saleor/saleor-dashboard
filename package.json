@@ -66,7 +66,7 @@
     "react-draggable": "^4.4.5",
     "react-dropzone": "^11.2.4",
     "react-editor-js": "^2.0.6",
-    "react-error-boundary": "^1.2.5",
+    "react-error-boundary": "^3.1.4",
     "react-gtm-module": "^2.0.11",
     "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
