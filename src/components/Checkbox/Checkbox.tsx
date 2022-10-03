@@ -23,6 +23,11 @@ export type CheckboxProps = Omit<
   error?: boolean;
 };
 
+const firefoxHandler = (event, onChange, checked) => {
+  event.preventDefault();
+  onChange(event, checked);
+};
+
 const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
   const { disableClickPropagation, ...rest } = props;
   const classes = useStyles();
@@ -32,7 +37,17 @@ const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
       <MuiCheckbox
         {...rest}
         onClick={
-          disableClickPropagation ? event => event.stopPropagation() : undefined
+          disableClickPropagation
+            ? event => {
+                event.stopPropagation();
+
+                /*
+              Workaround for firefox
+              ref: https://bugzilla.mozilla.org/show_bug.cgi?id=62151
+            */
+                firefoxHandler(event, rest.onChange, rest.checked);
+              }
+            : undefined
         }
       />
       {helperText && (
