@@ -17,7 +17,7 @@
     "npm": ">=6.11.0 <7"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.15",
+    "@apollo/client": "^3.5.10",
     "@editorjs/editorjs": "^2.24.3",
     "@editorjs/header": "^2.6.2",
     "@editorjs/image": "^2.6.2",
@@ -36,7 +36,7 @@
     "@uiw/react-color-hue": "0.0.34",
     "@uiw/react-color-material": "^0.1.0",
     "@uiw/react-color-saturation": "0.0.34",
-    "apollo-upload-client": "^9.1.0",
+    "apollo-upload-client": "^17.0.0",
     "classnames": "^2.2.6",
     "color-convert": "^2.0.1",
     "crc-32": "^1.2.0",
@@ -82,7 +82,6 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
-    "@apollo/react-testing": "^3.1.4",
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
@@ -115,6 +114,7 @@
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
     "@testing-library/react-hooks": "^1.1.0",
+    "@types/apollo-upload-client": "^17.0.1",
     "@types/classnames": "^2.2.9",
     "@types/color-convert": "^2.0.0",
     "@types/enzyme": "^3.10.8",
@@ -179,7 +179,6 @@
     "mochawesome": "^7.0.1",
     "mochawesome-merge": "^4.2.1",
     "mochawesome-report-generator": "^6.0.1",
-    "mock-apollo-client": "^0.4.0",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.11.1",
