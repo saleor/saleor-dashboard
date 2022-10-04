@@ -208,7 +208,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           </div>
         }
       />
-      <CardContent>
+      <CardContent classes={{ root: classes.cardContentRoot }}>
         {rowsTotal > 0 ? (
           <>
             {selection?.rows.length > 0 && (
@@ -227,7 +227,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 rows={rowsTotal}
                 freezeColumns={1}
                 smoothScrollX
-                rowMarkers="checkbox"
+                rowMarkers="both"
                 rowSelect="multi"
                 rowSelectionMode="multi"
                 rangeSelect="multi-rect"
