@@ -23,6 +23,13 @@ const props: VoucherDetailsPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   activeTab: VoucherDetailsPageTab.products,
+  tabItemsCount: {
+    [VoucherDetailsPageTab.categories]:
+      voucherDetails.categoriesCount.totalCount,
+    [VoucherDetailsPageTab.collections]:
+      voucherDetails.collectionsCount.totalCount,
+    [VoucherDetailsPageTab.products]: voucherDetails.productsCount.totalCount,
+  },
   allChannelsCount: channels.length,
   categoryListToolbar: null,
   channelListings: channels,

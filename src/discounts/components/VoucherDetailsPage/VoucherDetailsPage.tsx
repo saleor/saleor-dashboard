@@ -16,6 +16,7 @@ import {
   createDiscountTypeChangeHandler,
   createVoucherUpdateHandler,
 } from "@saleor/discounts/handlers";
+import { itemsQuantityMessages } from "@saleor/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { voucherListUrl } from "@saleor/discounts/urls";
 import {
@@ -33,7 +34,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, splitDateTime } from "../../../misc";
+import { splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
@@ -51,6 +52,10 @@ export enum VoucherDetailsPageTab {
   collections = "collections",
   products = "products",
 }
+
+export type VoucherTabItemsCount = Partial<
+  Record<VoucherDetailsPageTab, number>
+>;
 
 export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
@@ -79,6 +84,7 @@ export interface VoucherDetailsPageProps
     >,
     ChannelProps {
   activeTab: VoucherDetailsPageTab;
+  tabItemsCount: VoucherTabItemsCount;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetailsFragment;
@@ -105,6 +111,7 @@ const ProductsTab = Tab(VoucherDetailsPageTab.products);
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
+  tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -246,19 +253,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         }
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "ppLwx3",
-                            defaultMessage: "Categories ({quantity})",
-                            description: "number of categories",
-                          },
-                          {
-                            quantity: maybe(
-                              () => voucher.categories.totalCount.toString(),
-                              "…",
-                            ),
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.categories, {
+                          quantity: tabItemsCount.categories?.toString() || "…",
+                        })}
                       </CategoriesTab>
                       <CollectionsTab
                         isActive={
@@ -266,37 +263,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         }
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "QdGzUf",
-                            defaultMessage: "Collections ({quantity})",
-                            description: "number of collections",
-                          },
-                          {
-                            quantity: maybe(
-                              () => voucher.collections.totalCount.toString(),
-                              "…",
-                            ),
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.collections, {
+                          quantity:
+                            tabItemsCount.collections?.toString() || "…",
+                        })}
                       </CollectionsTab>
                       <ProductsTab
                         isActive={activeTab === VoucherDetailsPageTab.products}
                         changeTab={onTabClick}
                       >
-                        {intl.formatMessage(
-                          {
-                            id: "bNw8PM",
-                            defaultMessage: "Products ({quantity})",
-                            description: "number of products",
-                          },
-                          {
-                            quantity: maybe(
-                              () => voucher.products.totalCount.toString(),
-                              "…",
-                            ),
-                          },
-                        )}
+                        {intl.formatMessage(itemsQuantityMessages.products, {
+                          quantity: tabItemsCount.products?.toString() || "…",
+                        })}
                       </ProductsTab>
                     </TabContainer>
                     <CardSpacer />
@@ -342,7 +320,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <CardSpacer />
                 {data.discountType.toString() === "SHIPPING" ? (
                   <CountryList
-                    countries={maybe(() => voucher.countries)}
+                    countries={voucher?.countries}
                     disabled={disabled}
                     emptyText={intl.formatMessage({
                       id: "jd/LWa",

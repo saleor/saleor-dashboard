@@ -211,6 +211,22 @@ export const sale: SaleDetailsFragment = {
   __typename: "Sale",
   metadata: [],
   privateMetadata: [],
+  categoriesCount: {
+    __typename: "CategoryCountableConnection",
+    totalCount: 2,
+  },
+  collectionsCount: {
+    __typename: "CollectionCountableConnection",
+    totalCount: 4,
+  },
+  productsCount: {
+    __typename: "ProductCountableConnection",
+    totalCount: 4,
+  },
+  variantsCount: {
+    __typename: "ProductVariantCountableConnection",
+    totalCount: 3,
+  },
   categories: {
     __typename: "CategoryCountableConnection",
     edges: [
@@ -234,7 +250,6 @@ export const sale: SaleDetailsFragment = {
       hasPreviousPage: false,
       startCursor: null,
     },
-    totalCount: 2,
   },
   channelListings: [
     {
@@ -273,7 +288,6 @@ export const sale: SaleDetailsFragment = {
       hasPreviousPage: false,
       startCursor: null,
     },
-    totalCount: 4,
   },
   endDate: null,
   id: "U2FsZTo1",
@@ -421,7 +435,6 @@ export const sale: SaleDetailsFragment = {
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 4,
   },
   variants: {
     edges: [
@@ -561,7 +574,6 @@ export const sale: SaleDetailsFragment = {
       startCursor: "W251bGwsICIxMDQwNDk0NiJd",
       __typename: "PageInfo",
     },
-    totalCount: 3,
     __typename: "ProductVariantCountableConnection",
   },
   startDate: "2019-01-03",
@@ -575,6 +587,18 @@ export const voucherDetails: VoucherDetailsFragment = {
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
   onlyForStaff: false,
+  categoriesCount: {
+    __typename: "CategoryCountableConnection",
+    totalCount: 0,
+  },
+  collectionsCount: {
+    __typename: "CollectionCountableConnection",
+    totalCount: 0,
+  },
+  productsCount: {
+    __typename: "ProductCountableConnection",
+    totalCount: 0,
+  },
   categories: {
     __typename: "CategoryCountableConnection",
     edges: [],
@@ -585,7 +609,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0,
   },
   channelListings: [
     {
@@ -617,7 +640,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0,
   },
   countries: [
     {
@@ -640,7 +662,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
-    totalCount: 0,
   },
   startDate: "2018-11-27",
   type: VoucherTypeEnum.ENTIRE_ORDER,

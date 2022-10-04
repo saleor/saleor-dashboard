@@ -14,6 +14,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix no product error on unconfirmed order lines - #2324 by @orzechdev
 - Enable save button on discount pages - #2319 by @orzechdev
 - Enable save button on page pages - #2325 by @orzechdev
+- Fix pagination errors on voucher and sale pages - #2317 by @orzechdev
 
 ## 3.4
 
