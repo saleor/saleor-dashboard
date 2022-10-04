@@ -118,7 +118,7 @@
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
     "@testing-library/react-hooks": "^1.1.0",
-    "@types/apollo-upload-client": "^17.0.1",
+    "@types/apollo-upload-client": "^17.0.0",
     "@types/classnames": "^2.2.9",
     "@types/color-convert": "^2.0.0",
     "@types/enzyme": "^3.10.8",
