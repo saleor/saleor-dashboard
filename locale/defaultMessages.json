@@ -1,8 +1,4 @@
 {
-  "+/IT7H": {
-    "context": "tax class rates list label when no countries are assigned",
-    "string": "There are no countries using this tax class"
-  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -308,6 +304,10 @@
   "0TQuo4": {
     "context": "dialog header",
     "string": "Unassign Collection From Sale"
+  },
+  "0V1q0d": {
+    "context": "add country dialog header",
+    "string": "Choose country you want to add"
   },
   "0VDwAP": {
     "context": "checkbox label",
@@ -1615,6 +1615,10 @@
   "BHQrgz": {
     "context": "number of subcategories",
     "string": "Subcategories"
+  },
+  "BJtUQI": {
+    "context": "button",
+    "string": "Add"
   },
   "BL/Lbk": {
     "context": "install app permissions",
@@ -6483,6 +6487,10 @@
     "context": "attribute internal name",
     "string": "Slug"
   },
+  "ngAgBy": {
+    "context": "tax class rates list label when no countries are assigned",
+    "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
+  },
   "njBulj": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
@@ -7021,10 +7029,6 @@
   "s6oAC+": {
     "context": "search label",
     "string": "Search products"
-  },
-  "s6p+rD": {
-    "context": "add country dialog header",
-    "string": "Choose countries you want to assign"
   },
   "s8FlDW": {
     "context": "hide error log label in notification",

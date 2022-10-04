@@ -141,9 +141,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "There are no exceptions for this channel",
     description: "label for empty list in channels list",
   },
-  chooseCountries: {
-    id: "s6p+rD",
-    defaultMessage: "Choose countries you want to assign",
+  chooseCountryDialogTitle: {
+    id: "0V1q0d",
+    defaultMessage: "Choose country you want to add",
     description: "add country dialog header",
   },
   country: {
@@ -167,8 +167,9 @@ export const taxesMessages = defineMessages({
     description: "country rates list label for the default rate",
   },
   noRatesInTaxClass: {
-    id: "+/IT7H",
-    defaultMessage: "There are no countries using this tax class",
+    id: "ngAgBy",
+    defaultMessage:
+      "There are no countries using this tax class yet, use {tab} tab to assign tax rates.",
     description: "tax class rates list label when no countries are assigned",
   },
   newTaxClass: {

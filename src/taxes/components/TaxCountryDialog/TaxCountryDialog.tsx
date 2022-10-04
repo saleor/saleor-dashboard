@@ -54,7 +54,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
       <DialogHeader onClose={onClose}>
-        <FormattedMessage {...taxesMessages.chooseCountries} />
+        <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
       </DialogHeader>
       <DialogContent className={classes.wrapper}>
         <TextField
@@ -95,7 +95,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           }}
           disabled={!selectedCountry}
         >
-          <FormattedMessage {...buttonMessages.select} />
+          <FormattedMessage {...buttonMessages.add} />
         </Button>
       </DialogActions>
     </Dialog>

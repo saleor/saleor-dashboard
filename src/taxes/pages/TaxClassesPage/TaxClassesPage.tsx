@@ -139,7 +139,18 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                   />
                   {currentTaxClass?.countries.length === 0 ? (
                     <CardContent className={classes.supportText}>
-                      <FormattedMessage {...taxesMessages.noRatesInTaxClass} />
+                      <FormattedMessage
+                        {...taxesMessages.noRatesInTaxClass}
+                        values={{
+                          tab: (
+                            <b>
+                              {intl.formatMessage(
+                                taxesMessages.countriesSection,
+                              )}
+                            </b>
+                          ),
+                        }}
+                      />
                     </CardContent>
                   ) : (
                     <>
