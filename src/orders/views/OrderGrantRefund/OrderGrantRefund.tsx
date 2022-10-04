@@ -6,9 +6,8 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
-import OrderGrantRefundPage, {
-  OrderGrantRefundFormData,
-} from "@saleor/orders/components/OrderGrantRefundPage";
+import OrderGrantRefundPage from "@saleor/orders/components/OrderGrantRefundPage";
+import { OrderGrantRefundFormData } from "@saleor/orders/components/OrderGrantRefundPage/form";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";

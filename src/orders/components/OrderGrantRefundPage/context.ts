@@ -1,7 +1,7 @@
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { createContext, useContext } from "react";
 
-import { OrderGrantRefundFormData } from ".";
+import { OrderGrantRefundFormData } from "./form";
 import { GrantRefundAction, GrantRefundState } from "./reducer";
 
 interface GrantRefundContext {

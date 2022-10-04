@@ -14,8 +14,8 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useGrantRefundContext } from "../context";
+import { OrderGrantRefundFormData } from "../form";
 import { grantRefundPageMessages } from "../messages";
-import { OrderGrantRefundFormData } from "../OrderGrantRefundPage";
 import { useRefundCardStyles } from "../styles";
 
 interface RefundCardProps {
