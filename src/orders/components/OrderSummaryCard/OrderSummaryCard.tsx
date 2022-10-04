@@ -57,6 +57,16 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
     return order.shippingMethodName;
   };
 
+  const getTaxTypeText = () => {
+    if (order?.total?.tax === undefined) {
+      return "";
+    }
+    if (order.total.tax.amount > 0) {
+      return intl.formatMessage(orderSummaryMessages.vatIncluded);
+    }
+    return intl.formatMessage(orderSummaryMessages.vatNotIncluded);
+  };
+
   return (
     <Card>
       <CardTitle
@@ -75,13 +85,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           />
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.taxes} />}
-            subText={
-              order?.total?.tax === undefined
-                ? ""
-                : order.total.tax.amount > 0
-                ? intl.formatMessage(orderSummaryMessages.vatIncluded)
-                : intl.formatMessage(orderSummaryMessages.vatNotIncluded)
-            }
+            subText={getTaxTypeText()}
             money={order?.total?.tax}
           />
           {order?.discounts?.map(discount => (
