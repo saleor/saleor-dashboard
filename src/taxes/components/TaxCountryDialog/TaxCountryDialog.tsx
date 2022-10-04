@@ -2,12 +2,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Divider,
+  FormControlLabel,
   InputAdornment,
+  Radio,
   TextField,
 } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { CountryFragment } from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
 import { useLocalSearch } from "@saleor/hooks/useLocalSearch";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
@@ -17,15 +19,11 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
-import { TaxCountryDialogLine } from "./TaxCountryDialogLine";
 
-export interface CountryFragmentWithState extends CountryFragment {
-  checked: boolean;
-}
 interface TaxCountryDialogProps {
   open: boolean;
-  countries: CountryFragmentWithState[];
-  onConfirm: (countries: CountryFragment[]) => void;
+  countries: CountryFragment[];
+  onConfirm: (countries: CountryFragment) => void;
   onClose: () => void;
 }
 
@@ -38,37 +36,20 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const [countriesWithState, setCountriesWithState] = React.useState<
-    CountryFragmentWithState[]
-  >([]);
-  React.useEffect(() => setCountriesWithState(countries), [countries, open]);
-
-  const handleChange = React.useCallback(
-    (e: ChangeEvent) => {
-      setCountriesWithState(prevCountries =>
-        prevCountries.map(country =>
-          country.code === e.target.name
-            ? {
-                ...country,
-                checked: e.target.value,
-              }
-            : country,
-        ),
-      );
-    },
-    [countries, setCountriesWithState],
-  );
+  const [selectedCountry, setSelectedCountry] = React.useState<
+    CountryFragment
+  >();
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setCountriesWithState([]);
+      setSelectedCountry(undefined);
       setQuery("");
     },
   });
 
   const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
-    CountryFragmentWithState
-  >(countriesWithState, country => country.country);
+    CountryFragment
+  >(countries, country => country.country);
 
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
@@ -94,12 +75,15 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
         <VerticalSpacer spacing={2} />
         <div className={classes.scrollable}>
           {filteredCountries.map(country => (
-            <TaxCountryDialogLine
-              key={country.code}
-              country={country}
-              checked={country.checked}
-              handleChange={handleChange}
-            />
+            <React.Fragment key={country.code}>
+              <FormControlLabel
+                label={country.country}
+                checked={country.code === selectedCountry?.code}
+                onChange={() => setSelectedCountry(country)}
+                control={<Radio />}
+              />
+              <Divider />
+            </React.Fragment>
           ))}
         </div>
       </DialogContent>
@@ -107,9 +91,9 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
         <Button
           variant="primary"
           onClick={() => {
-            onConfirm(countriesWithState.filter(country => country.checked));
-            onClose();
+            onConfirm(selectedCountry);
           }}
+          disabled={!selectedCountry}
         >
           <FormattedMessage {...buttonMessages.select} />
         </Button>

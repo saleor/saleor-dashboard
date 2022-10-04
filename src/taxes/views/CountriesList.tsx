@@ -78,9 +78,9 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     TaxesUrlQueryParams
   >(navigate, params => taxCountriesListUrl(id, params), params);
 
-  const [newCountries, setNewCountries] = React.useState<
-    TaxCountryConfigurationFragment[]
-  >([]);
+  const [newCountry, setNewCountry] = React.useState<
+    TaxCountryConfigurationFragment
+  >();
 
   const {
     data,
@@ -97,22 +97,20 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(() => {
     if (taxClasses && taxCountryConfigurations) {
       return [
+        ...(newCountry ? [newCountry] : []),
         ...mapUndefinedTaxRatesToCountries(
           taxCountryConfigurations ?? [],
           taxClasses ?? [],
         ),
-        ...newCountries,
       ];
     } else {
       return undefined;
     }
-  }, [taxCountryConfigurations, newCountries, taxClasses]);
+  }, [taxCountryConfigurations, newCountry, taxClasses]);
 
   const handleDeleteConfiguration = async (countryCode: CountryCode) => {
-    if (newCountries.some(config => config.country.code === countryCode)) {
-      setNewCountries(
-        newCountries.filter(config => config.country.code !== countryCode),
-      );
+    if (newCountry.country.code === countryCode) {
+      setNewCountry(undefined);
       return;
     }
     const res = await taxCountryConfigurationDeleteMutation({
@@ -123,18 +121,6 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     refetch();
     return res;
   };
-
-  React.useEffect(() => {
-    if (
-      allCountryTaxes?.length > 0 &&
-      (id === "undefined" ||
-        allCountryTaxes.every(
-          configuration => configuration.country.code !== id,
-        ))
-    ) {
-      navigate(taxCountriesListUrl(allCountryTaxes[0].country.code));
-    }
-  }, [allCountryTaxes, id, navigate]);
 
   return (
     <>
@@ -151,9 +137,7 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
             },
           });
           refetch();
-          setNewCountries(
-            newCountries.filter(config => config.country.code !== id),
-          );
+          setNewCountry(undefined);
           return res;
         }}
         onDeleteConfiguration={handleDeleteConfiguration}
@@ -163,35 +147,25 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
       {shop?.countries && (
         <TaxCountryDialog
           open={params?.action === "add-country"}
-          countries={filterChosenCountries(
-            shop?.countries,
-            allCountryTaxes ?? [],
-          ).map(country => ({
-            checked: false,
-            ...country,
-          }))}
+          countries={shop?.countries}
           onConfirm={data => {
             closeDialog();
-            return setNewCountries(prevState => [
-              ...prevState,
-              ...data.map(country => {
-                const taxClassCountryRates = taxClasses.map(taxClass => ({
-                  __typename: "TaxClassCountryRate" as const,
-                  rate: undefined,
-                  taxClass,
-                }));
-                taxClassCountryRates.unshift({
-                  rate: undefined,
-                  taxClass: null,
-                  __typename: "TaxClassCountryRate" as const,
-                });
-                return {
-                  country,
-                  taxClassCountryRates,
-                  __typename: "TaxCountryConfiguration" as const,
-                };
-              }),
-            ]);
+            const taxClassCountryRates = taxClasses.map(taxClass => ({
+              __typename: "TaxClassCountryRate" as const,
+              rate: undefined,
+              taxClass,
+            }));
+            taxClassCountryRates.unshift({
+              rate: undefined,
+              taxClass: null,
+              __typename: "TaxClassCountryRate" as const,
+            });
+            setNewCountry({
+              country: data,
+              taxClassCountryRates,
+              __typename: "TaxCountryConfiguration" as const,
+            });
+            navigate(taxCountriesListUrl(data.code));
           }}
           onClose={closeDialog}
         />
