@@ -55,7 +55,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   );
   const [hue, setHue] = useState<number>(convert.hex.hsv(hex)[0]);
 
-  const [_, s, v] = convert.hex.hsv(hex);
+  const [, s, v] = convert.hex.hsv(hex);
   const [r, g, b] = convert.hex.rgb(hex);
   const isValidColor = hex.match(/^(?:[0-9a-fA-F]{3}){1,2}$/);
 

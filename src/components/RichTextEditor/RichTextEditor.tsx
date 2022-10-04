@@ -46,7 +46,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   helperText,
   editorRef,
   onInitialize,
-  onReady,
   ...props
 }) => {
   const classes = useStyles({});
