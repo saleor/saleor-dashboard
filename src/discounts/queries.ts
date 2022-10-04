@@ -69,6 +69,10 @@ export const saleDetails = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeVariants: Boolean!
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     sale(id: $id) {
       ...SaleDetails
@@ -83,6 +87,9 @@ export const voucherDetails = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     voucher(id: $id) {
       ...VoucherDetails
