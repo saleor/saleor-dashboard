@@ -1,6 +1,7 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { Button } from "@saleor/components/Button";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
@@ -17,16 +18,19 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
+import PageTypePickerDialog from "@saleor/pages/components/PageTypePickerDialog";
+import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
+  pageCreateUrl,
   pageListUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
@@ -114,6 +118,20 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, pageListUrl, params);
 
+  const {
+    loadMore: loadMoreDialogPageTypes,
+    search: searchDialogPageTypes,
+    result: searchDialogPageTypesOpts,
+  } = usePageTypeSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const fetchMoreDialogPageTypes = {
+    hasMore: searchDialogPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchDialogPageTypesOpts.loading,
+    onFetchMore: loadMoreDialogPageTypes,
+  };
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <PageListPage
@@ -121,6 +139,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         settings={settings}
         pages={mapEdgesToItems(data?.pages)}
         onUpdateListSettings={updateListSettings}
+        onAdd={() => openModal("create-page")}
         onSort={handleSort}
         actionDialogOpts={{
           open: openModal,
@@ -262,6 +281,23 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           }}
         />
       </ActionDialog>
+      <PageTypePickerDialog
+        confirmButtonState="success"
+        open={params.action === "create-page"}
+        pageTypes={mapNodeToChoice(
+          mapEdgesToItems(searchDialogPageTypesOpts?.data?.search),
+        )}
+        fetchPageTypes={searchDialogPageTypes}
+        fetchMorePageTypes={fetchMoreDialogPageTypes}
+        onClose={closeModal}
+        onConfirm={pageTypeId =>
+          navigate(
+            pageCreateUrl({
+              "page-type-id": pageTypeId,
+            }),
+          )
+        }
+      />
     </PaginatorContext.Provider>
   );
 };

@@ -11,6 +11,17 @@ export const attributesTypes = {
   BOOLEAN: addBooleanAttributeValue,
   NUMERIC: addNumericAttributeValue,
 };
+
+export function fillUpPageTypeDialog({ pageTypeName }) {
+  const organization = {};
+  return cy
+    .fillAutocompleteSelect(PAGES_LIST.dialogPageTypeInput, pageTypeName)
+    .then(selected => {
+      organization.pageType = selected;
+      return organization;
+    });
+}
+
 export function createPage({
   pageName,
   pageTypeName,
@@ -52,6 +63,9 @@ function openCreatePageAndFillUpGeneralFields({
 }) {
   cy.visit(urlList.pages)
     .get(PAGES_LIST.createPageButton)
+    .click();
+  fillUpPageTypeDialog({ pageTypeName });
+  cy.get(BUTTON_SELECTORS.submit)
     .click()
     .get(PAGE_DETAILS.nameInput)
     .type(pageName);

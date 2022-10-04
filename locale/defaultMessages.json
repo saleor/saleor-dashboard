@@ -2059,6 +2059,10 @@
     "context": "invoice create date prefix",
     "string": "created"
   },
+  "F0N1SC": {
+    "context": "dialog header",
+    "string": "Select a page type"
+  },
   "F3Upht": {
     "string": "Product type deleted"
   },
@@ -2595,6 +2599,10 @@
   "Id7C0X": {
     "context": "section header",
     "string": "You are about to install {name}"
+  },
+  "Id9vlh": {
+    "context": "page seo options description",
+    "string": "Add search engine title and description to make this page easier to find"
   },
   "IeoGgH": {
     "context": "variant created success message",
@@ -4210,6 +4218,10 @@
   "V3fvcD": {
     "context": "dialog content",
     "string": "Removed sale"
+  },
+  "V45+rx": {
+    "context": "input label",
+    "string": "Page type"
   },
   "V8FhTt": {
     "context": "collection label",
@@ -5889,9 +5901,6 @@
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
-  },
-  "jZbT0O": {
-    "string": "Add search engine title and description to make this page easier to find"
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
