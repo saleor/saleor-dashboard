@@ -227,7 +227,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 rows={rowsTotal}
                 freezeColumns={1}
                 smoothScrollX
-                rowMarkers="both"
+                rowMarkers="checkbox"
                 rowSelect="multi"
                 rowSelectionMode="multi"
                 rangeSelect="multi-rect"
