@@ -59,11 +59,8 @@ export const ChannelCreateView = ({}) => {
 
   const handleSubmit = async ({
     shippingZonesIdsToAdd,
-    shippingZonesIdsToRemove,
     warehousesIdsToAdd,
-    warehousesIdsToRemove,
     warehousesToDisplay,
-    shippingZonesToDisplay,
     currencyCode,
     allocationStrategy,
     ...rest

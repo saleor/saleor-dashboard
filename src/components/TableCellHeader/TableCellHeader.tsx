@@ -74,7 +74,6 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
       textAlign,
       disabled = false,
       onClick,
-      title,
       ...rest
     } = props;
 

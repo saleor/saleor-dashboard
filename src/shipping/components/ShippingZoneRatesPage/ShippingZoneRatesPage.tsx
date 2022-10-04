@@ -46,7 +46,6 @@ export interface ShippingZoneRatesPageProps
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  havePostalCodesChanged?: boolean;
   rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
@@ -75,7 +74,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   channelErrors,
   disabled,
   errors,
-  havePostalCodesChanged,
   backHref,
   onDelete,
   onSubmit,
