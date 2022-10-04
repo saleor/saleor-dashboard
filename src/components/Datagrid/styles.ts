@@ -87,7 +87,7 @@ const useStyles = makeStyles(
           overscrollBehaviorX: "none",
         },
         borderTop: `1px solid ${theme.palette.divider}`,
-        borderRadius: "0 0 8px 8px",
+        borderRadius: 0,
         boxSizing: "content-box",
       },
       root: {
@@ -149,7 +149,7 @@ const useStyles = makeStyles(
       },
       rowActionSelected,
       cardContentRoot: {
-        padding: 0,
+        padding: "0 0 2.4rem 0",
       },
     };
   },
