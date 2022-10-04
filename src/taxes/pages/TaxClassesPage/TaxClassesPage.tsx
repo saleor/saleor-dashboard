@@ -129,6 +129,11 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                       )}
                       fullWidth
                       inputProps={{ className: classes.namePadding }}
+                      inputRef={input => {
+                        if (input != null && selectedTaxClassId === "new") {
+                          input.focus();
+                        }
+                      }}
                     />
                   </CardContent>
                 </Card>
