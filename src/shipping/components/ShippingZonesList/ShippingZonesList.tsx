@@ -70,7 +70,6 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   return (
     <Card>
       <CardTitle
-        height="const"
         title={intl.formatMessage({
           id: "h5r9+x",
           defaultMessage: "Shipping By Zone",

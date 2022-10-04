@@ -93,6 +93,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
     }),
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, ...headerTooltipItemProps } = headerTooltipItem;
 
   return (

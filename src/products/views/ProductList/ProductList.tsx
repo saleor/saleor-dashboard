@@ -387,12 +387,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
-        totalGridAttributes={maybe(
-          () =>
-            availableInGridAttributesOpts.result.data.availableInGrid
-              .totalCount,
-          0,
-        )}
         settings={settings}
         loading={
           availableInGridAttributesOpts.result.loading || gridAttributes.loading

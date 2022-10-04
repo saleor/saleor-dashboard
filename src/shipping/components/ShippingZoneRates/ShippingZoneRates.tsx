@@ -77,7 +77,6 @@ const ShippingZoneRates: React.FC<ShippingZoneRatesProps> = props => {
   return (
     <Card>
       <CardTitle
-        height="const"
         title={
           variant === "price"
             ? intl.formatMessage({

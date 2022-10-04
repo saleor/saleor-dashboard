@@ -104,7 +104,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
             <Skeleton />
           )
         }
-        height="const"
         toolbar={
           <CardMenu
             disabled={disabled}
