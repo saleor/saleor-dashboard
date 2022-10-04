@@ -13,6 +13,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -32,6 +33,7 @@ import { calculateTotalPrice } from "./utils";
 export interface OrderGrantRefundPageProps {
   order: OrderDetailsGrantRefundFragment;
   loading: boolean;
+  submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
 }
 
@@ -48,6 +50,7 @@ const initialFormData: OrderGrantRefundFormData = {
 const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   order,
   loading,
+  submitState,
   onSubmit,
 }) => {
   const classes = useStyles();
@@ -147,7 +150,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 </Card>
               </div>
               <div>
-                <RefundCard order={order} loading={loading} />
+                <RefundCard
+                  order={order}
+                  loading={loading}
+                  submitState={submitState}
+                />
               </div>
             </Grid>
           </GrantRefundContext.Provider>

@@ -1,6 +1,15 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useOrderDetailsGrantRefundQuery } from "@saleor/graphql";
-import OrderGrantRefundPage from "@saleor/orders/components/OrderGrantRefundPage";
+import {
+  useOrderDetailsGrantRefundQuery,
+  useOrderGrantRefundAddMutation,
+} from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { extractMutationErrors } from "@saleor/misc";
+import OrderGrantRefundPage, {
+  OrderGrantRefundFormData,
+} from "@saleor/orders/components/OrderGrantRefundPage";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,6 +21,8 @@ interface OrderGrantRefundProps {
 
 const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+  const notify = useNotifier();
 
   const { data, loading } = useOrderDetailsGrantRefundQuery({
     displayLoader: true,
@@ -19,6 +30,32 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
       id: orderId,
     },
   });
+
+  const [grantRefund, grantRefundOptions] = useOrderGrantRefundAddMutation({
+    onCompleted: submitData => {
+      if (submitData.orderGrantRefundCreate.errors.length === 0) {
+        navigate(orderUrl(orderId), { replace: true });
+        notify({
+          status: "success",
+          text: intl.formatMessage(orderGrantRefundMessages.formSubmitted, {
+            orderNumber: data?.order?.number,
+          }),
+        });
+      }
+    },
+  });
+
+  const handleSubmit = async ({ amount, reason }: OrderGrantRefundFormData) => {
+    extractMutationErrors(
+      grantRefund({
+        variables: {
+          orderId,
+          amount,
+          reason,
+        },
+      }),
+    );
+  };
 
   return (
     <>
@@ -34,8 +71,8 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
       <OrderGrantRefundPage
         order={data?.order}
         loading={loading}
-        // TODO: handle form submit
-        onSubmit={() => undefined}
+        submitState={grantRefundOptions.status}
+        onSubmit={handleSubmit}
       />
     </>
   );

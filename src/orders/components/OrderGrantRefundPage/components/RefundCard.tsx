@@ -2,12 +2,13 @@ import { Card, CardContent } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
 import { buttonMessages } from "@saleor/intl";
-import { Button, LayoutButton } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, LayoutButton } from "@saleor/macaw-ui";
 import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -20,9 +21,14 @@ import { useRefundCardStyles } from "../styles";
 interface RefundCardProps {
   order: OrderDetailsGrantRefundFragment | null;
   loading: boolean;
+  submitState: ConfirmButtonTransitionState;
 }
 
-export const RefundCard = ({ order, loading }: RefundCardProps) => {
+export const RefundCard = ({
+  order,
+  loading,
+  submitState,
+}: RefundCardProps) => {
   const classes = useRefundCardStyles();
   const { state, dispatch, form, totalSelectedPrice } = useGrantRefundContext();
   const { locale } = useLocale();
@@ -108,9 +114,13 @@ export const RefundCard = ({ order, loading }: RefundCardProps) => {
               {...grantRefundPageMessages.refundStepExplanation}
             />
           </span>
-          <Button variant="primary" type="submit">
+          <ConfirmButton
+            transitionState={submitState}
+            variant="primary"
+            type="submit"
+          >
             Grant refund
-          </Button>
+          </ConfirmButton>
         </div>
       </CardContent>
     </Card>

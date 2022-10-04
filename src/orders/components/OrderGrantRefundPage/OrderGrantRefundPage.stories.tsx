@@ -9,6 +9,7 @@ import OrderGrantRefundPage, {
 } from "./OrderGrantRefundPage";
 
 const props: OrderGrantRefundPageProps = {
+  submitState: "default",
   order: {
     id: "T3JkZXI6MjRhNmU0NWUtYzQ3Ny00Y2QxLTlhMDAtNmUzNTdjMDNmYTgz",
     number: "20",
@@ -252,6 +253,7 @@ storiesOf("Views / Orders / Grant refund order", module)
   .add("grant refund", () => <OrderGrantRefundPage {...props} />)
   .add("loading", () => (
     <OrderGrantRefundPage
+      submitState="loading"
       order={null}
       loading={true}
       onSubmit={() => undefined}
