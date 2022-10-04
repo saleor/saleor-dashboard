@@ -1,6 +1,6 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
-import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
@@ -35,7 +35,7 @@ export const apolloClient = new ApolloClient({
       },
     } as TypedTypePolicies,
   }),
-  link: (link as unknown) as ApolloLink,
+  link,
 });
 
 export const saleorClient = createSaleorClient({
