@@ -2,6 +2,9 @@ import { subtractMoney } from "@saleor/components/Money";
 import { GiftCardEventsEnum, OrderDetailsFragment } from "@saleor/graphql";
 import { IMoney } from "@saleor/utils/intl";
 import compact from "lodash/compact";
+import { IntlShape } from "react-intl";
+
+import { orderSummaryMessages } from "./messages";
 
 // TODO: This should be removed once gift cards are not treated as discounts
 export const extractOrderGiftCardUsedAmount = (
@@ -41,3 +44,37 @@ export const extractOutstandingBalance = (
   order?.totalCaptured &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, order.totalCaptured);
+
+export const getDeliveryMethodName = (
+  order: OrderDetailsFragment,
+  intl: IntlShape,
+) => {
+  if (
+    order?.shippingMethodName === undefined &&
+    order?.shippingPrice === undefined &&
+    order?.collectionPointName === undefined
+  ) {
+    return null;
+  }
+
+  if (order.shippingMethodName === null) {
+    return order.collectionPointName == null
+      ? intl.formatMessage(orderSummaryMessages.shippingDoesNotApply)
+      : intl.formatMessage(orderSummaryMessages.clickAndCollectShippingMethod);
+  }
+
+  return order.shippingMethodName;
+};
+
+export const getTaxTypeText = (
+  order: OrderDetailsFragment,
+  intl: IntlShape,
+) => {
+  if (order?.total?.tax === undefined) {
+    return "";
+  }
+  if (order.total.tax.amount > 0) {
+    return intl.formatMessage(orderSummaryMessages.vatIncluded);
+  }
+  return intl.formatMessage(orderSummaryMessages.vatNotIncluded);
+};

@@ -1,6 +1,5 @@
 import Skeleton from "@saleor/components/Skeleton";
 import {
-  GiftCardEventsEnum,
   OrderDetailsFragment,
   OrderGiftCardFragment,
   TransactionItemFragment,
@@ -11,6 +10,7 @@ import { useIntl } from "react-intl";
 
 import OrderTransaction from "../OrderTransaction";
 import { transactionGiftCardMessages } from "./messages";
+import { getGiftCardAmount, getUsedInGiftCardEvents } from "./utils";
 
 interface OrderTransactionGiftCardProps {
   order: OrderDetailsFragment;
@@ -27,22 +27,12 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
     return <Skeleton />;
   }
 
-  const usedInOrderEvents = giftCard.events.filter(
-    ({ orderId, type }) =>
-      type === GiftCardEventsEnum.USED_IN_ORDER && orderId === order.id,
-  );
+  const usedInOrderEvents = getUsedInGiftCardEvents(giftCard, order?.id);
+  const amount = getGiftCardAmount(usedInOrderEvents);
 
   if (usedInOrderEvents.length === 0) {
     return null;
   }
-
-  const amount = usedInOrderEvents.reduce((resultAmount, { balance }) => {
-    const { currentBalance, oldCurrentBalance } = balance;
-
-    const amountToAdd = oldCurrentBalance.amount - currentBalance.amount;
-
-    return resultAmount + amountToAdd;
-  }, 0);
 
   const currency = usedInOrderEvents[0].balance.currentBalance.currency;
 
