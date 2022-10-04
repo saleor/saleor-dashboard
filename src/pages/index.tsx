@@ -8,6 +8,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   pageCreatePath,
+  PageCreateUrlQueryParams,
   pageListPath,
   PageListUrlQueryParams,
   PageListUrlSortField,
@@ -30,7 +31,7 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 
 const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: PageUrlQueryParams = qs;
+  const params: PageCreateUrlQueryParams = qs;
 
   return (
     <PageCreateComponent
