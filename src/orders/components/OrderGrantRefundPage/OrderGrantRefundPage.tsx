@@ -110,7 +110,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         >
           <Grid>
             <div className={classes.cardsContainer}>
-              {loading && <Skeleton />}
+              {loading && <Skeleton className={classes.cardLoading} />}
               <ProductsCard
                 title={
                   <FormattedMessage
@@ -143,14 +143,15 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               <Card>
                 <CardContent>
                   <TextField
+                    label={intl.formatMessage(
+                      grantRefundPageMessages.reasonForRefund,
+                    )}
+                    disabled={loading}
                     value={data.reason}
                     fullWidth
                     name={"reason" as keyof OrderGrantRefundFormData}
                     onChange={change}
                     type="text"
-                    placeholder={intl.formatMessage(
-                      grantRefundPageMessages.reasonForRefund,
-                    )}
                   />
                 </CardContent>
               </Card>
@@ -160,6 +161,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 order={order}
                 loading={loading}
                 submitState={submitState}
+                isEdit={isEdit}
               />
             </div>
           </Grid>

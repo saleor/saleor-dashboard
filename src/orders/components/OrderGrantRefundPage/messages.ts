@@ -61,4 +61,19 @@ export const grantRefundPageMessages = defineMessages({
     defaultMessage: "Fulfillment",
     id: "WK62MN",
   },
+  refundAmountLabel: {
+    defaultMessage: "Refund amount",
+    id: "5JUEIh",
+    description: "field label, refund amount",
+  },
+  grantRefundBtn: {
+    defaultMessage: "Grant refund",
+    id: "fsBsMy",
+    description: "button, form submit, grant refund create",
+  },
+  editRefundBtn: {
+    defaultMessage: "Edit granted refund",
+    id: "TBftMD",
+    description: "button. form submit, grant refund edit",
+  },
 });

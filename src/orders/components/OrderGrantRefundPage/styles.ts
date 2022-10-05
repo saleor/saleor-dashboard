@@ -11,6 +11,10 @@ export const useStyles = makeStyles(
       flexDirection: "column",
       gap: theme.spacing(2),
     },
+    cardLoading: {
+      height: "20em",
+      background: "white",
+    },
   }),
   { name: "OrderGrantRefund" },
 );
@@ -55,6 +59,10 @@ export const useRefundCardStyles = makeStyles(
         // when line overflows
         marginLeft: "auto",
       },
+    },
+    shippingCostLineLoading: {
+      height: "21px",
+      marginBottom: theme.spacing(1),
     },
   }),
   { name: "RefundCard" },

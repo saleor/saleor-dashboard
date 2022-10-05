@@ -11,7 +11,7 @@ import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, LayoutButton } from "@saleor/macaw-ui";
 import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useGrantRefundContext } from "../context";
 import { OrderGrantRefundFormData } from "../form";
@@ -22,34 +22,23 @@ interface RefundCardProps {
   order: OrderDetailsGrantRefundFragment | null;
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
+  isEdit: boolean;
 }
 
 export const RefundCard = ({
   order,
   loading,
   submitState,
+  isEdit,
 }: RefundCardProps) => {
-  const classes = useRefundCardStyles();
-  const { state, dispatch, form, totalSelectedPrice } = useGrantRefundContext();
+  const intl = useIntl();
   const { locale } = useLocale();
-
+  const classes = useRefundCardStyles();
   const id = useId();
 
-  const currency = order?.total?.gross?.currency ?? "USD";
+  const { state, dispatch, form, totalSelectedPrice } = useGrantRefundContext();
 
-  if (loading || !order) {
-    return (
-      <Card>
-        <CardTitle
-          className={classes.refundCardHeader}
-          title={<FormattedMessage {...grantRefundPageMessages.refundTitle} />}
-        />
-        <CardContent>
-          <Skeleton />
-        </CardContent>
-      </Card>
-    );
-  }
+  const currency = order?.total?.gross?.currency ?? "USD";
 
   return (
     <Card>
@@ -61,22 +50,31 @@ export const RefundCard = ({
         <p>
           <FormattedMessage {...grantRefundPageMessages.refundSubtitle} />
         </p>
-        <div className={classes.shippingCostLine}>
-          <Checkbox
-            id={`checkbox-${id}`}
-            value={state.refundShipping}
-            onChange={() => dispatch({ type: "toggleRefundShipping" })}
-          />
-          <label htmlFor={`checkbox-${id}`}>
-            <FormattedMessage
-              {...grantRefundPageMessages.refundShipment}
-              values={{
-                currency,
-                amount: getMoneyFormatted(locale, order?.shippingPrice?.gross),
-              }}
+        {order ? (
+          <div className={classes.shippingCostLine}>
+            <Checkbox
+              id={`checkbox-${id}`}
+              value={state.refundShipping}
+              onChange={() => dispatch({ type: "toggleRefundShipping" })}
             />
-          </label>
-        </div>
+            <label htmlFor={`checkbox-${id}`}>
+              <FormattedMessage
+                {...grantRefundPageMessages.refundShipment}
+                values={{
+                  currency,
+                  amount: getMoneyFormatted(
+                    locale,
+                    order?.shippingPrice?.gross,
+                  ),
+                }}
+              />
+            </label>
+          </div>
+        ) : (
+          <div className={classes.shippingCostLineLoading}>
+            <Skeleton />
+          </div>
+        )}
 
         <div className={classes.suggestedValue}>
           <span>
@@ -92,7 +90,8 @@ export const RefundCard = ({
             })}
           </span>
           <LayoutButton
-            state="hover"
+            state={!loading && "hover"}
+            disabled={loading}
             className={classes.applyButton}
             onClick={() => form.set({ amount: totalSelectedPrice.toString() })}
           >
@@ -101,7 +100,11 @@ export const RefundCard = ({
         </div>
         <div>
           <PriceField
+            label={intl.formatMessage(
+              grantRefundPageMessages.refundAmountLabel,
+            )}
             onChange={form.change}
+            disabled={loading}
             name={"amount" as keyof OrderGrantRefundFormData}
             currencySymbol={currency}
             value={form.data.amount}
@@ -119,7 +122,11 @@ export const RefundCard = ({
             variant="primary"
             type="submit"
           >
-            Grant refund
+            {isEdit ? (
+              <FormattedMessage {...grantRefundPageMessages.editRefundBtn} />
+            ) : (
+              <FormattedMessage {...grantRefundPageMessages.grantRefundBtn} />
+            )}
           </ConfirmButton>
         </div>
       </CardContent>
