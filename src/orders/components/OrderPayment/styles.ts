@@ -2,39 +2,40 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
     root: {
-      ...theme.typography.body1,
-      lineHeight: 1.9,
-      width: "100%",
-      "& > div": {
-        display: "flex",
-        justifyContent: "flex-end",
-      },
-    },
-    leftmostRightAlignedElement: {
-      marginLeft: "auto",
-    },
-    rightmostLeftAlignedElement: {
-      marginRight: "auto",
-    },
-    totalRow: {
-      fontWeight: 600,
-    },
-    titleContainer: {
       display: "flex",
+      flexDirection: "column",
     },
-    supportText: {
+    refundsButtons: {
+      display: "flex",
+      gap: theme.spacing(1),
+    },
+    legacyActions: {
+      display: "flex",
+      gap: theme.spacing(1),
+      marginTop: theme.spacing(2),
+    },
+    amountGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 1fr)",
+    },
+    explainText: {
       color: theme.palette.saleor.main[3],
     },
-    smallFont: {
-      fontSize: theme.typography.body2.fontSize,
+    paymentStatus: {
+      alignSelf: "flex-end",
     },
-    success: {
-      color: theme.palette.success.dark,
+    noPaymentContent: {
+      display: "flex",
+      height: "100%",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: theme.spacing(4),
+    },
+    noPaymentTitle: {
+      color: theme.palette.saleor.main[3],
+      fontWeight: 400,
     },
   }),
   { name: "OrderPayment" },

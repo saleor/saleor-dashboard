@@ -57,3 +57,10 @@ export const pluginsDetailsFragment = gql`
     }
   }
 `;
+
+export const paymentGatewayFragment = gql`
+  fragment PaymentGateway on PaymentGateway {
+    name
+    id
+  }
+`;
