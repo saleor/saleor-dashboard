@@ -140,21 +140,6 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
         !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
 
-  const checkIfSaveIsDisabled = (data: FormData) => {
-    if (!channel) {
-      return disabled;
-    }
-
-    const isValid =
-      !!data.name &&
-      !!data.slug &&
-      !!data.currencyCode &&
-      !!data.defaultCountry &&
-      data.name.trim().length > 0;
-
-    return disabled || !isValid;
-  };
-
   const handleSubmit = async (data: FormData) => {
     const errors = validateChannelFormData(data);
 
@@ -168,13 +153,8 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   };
 
   return (
-    <Form
-      confirmLeave
-      onSubmit={handleSubmit}
-      initial={initialData}
-      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
-    >
-      {({ change, data, submit, set, isSaveDisabled, triggerChange }) => {
+    <Form confirmLeave onSubmit={handleSubmit} initial={initialData}>
+      {({ change, data, submit, set, triggerChange }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -292,7 +272,7 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
               onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}
-              disabled={isSaveDisabled}
+              disabled={disabled}
             />
           </>
         );
