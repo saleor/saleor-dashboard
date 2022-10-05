@@ -66,12 +66,16 @@ export const ChannelCreateView = ({}) => {
     shippingZonesToDisplay,
     currencyCode,
     allocationStrategy,
-    ...rest
+    name,
+    slug,
+    defaultCountry,
   }: FormData) => {
     const createChannelMutation = createChannel({
       variables: {
         input: {
-          ...rest,
+          defaultCountry,
+          name,
+          slug,
           currencyCode: currencyCode.toUpperCase(),
           addShippingZones: shippingZonesIdsToAdd,
           addWarehouses: warehousesIdsToAdd,
