@@ -1,10 +1,13 @@
 import { Accordion, Divider, Typography } from "@material-ui/core";
+import Skeleton from "@saleor/components/Skeleton";
+import { ReorderEvent } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignmentListFooter from "./AssignmentListFooter";
 import AssignmentListHeader from "./AssignmentListHeader";
 import Item from "./Item";
+import SortableContainer from "./SortableContainer";
 import { useExpanderStyles, useStyles } from "./styles";
 import { AssignmentListProps } from "./types";
 
@@ -17,33 +20,75 @@ const messages = defineMessages({
 });
 
 const AssignmentList: React.FC<AssignmentListProps> = props => {
-  const { items, itemsName, totalCount = 0, removeItem } = props;
+  const {
+    items,
+    itemsName,
+    totalCount = 0,
+    loading,
+    removeItem,
+    reorderItem,
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles();
   const expanderClasses = useExpanderStyles();
 
+  const handleSortStart = () => {
+    document.body.classList.add(classes.grabbing);
+  };
+
+  const handleSortEnd = (event: ReorderEvent) => {
+    document.body.classList.remove(classes.grabbing);
+    reorderItem(event);
+  };
+
   const hasMoreItemsToBeSelected = totalCount !== items.length;
 
   return (
     <Accordion classes={expanderClasses}>
-      <AssignmentListHeader assignCount={items.length} itemsName={itemsName} />
+      <AssignmentListHeader
+        assignCount={items.length}
+        itemsName={itemsName}
+        loading={loading}
+      />
       <Divider />
-      {items.map(item => (
-        <Item key={item.id} item={item} onDelete={removeItem} />
-      ))}
-      {hasMoreItemsToBeSelected ? (
-        <AssignmentListFooter {...props} />
+      {loading ? (
+        <Skeleton className={classes.skeleton} />
       ) : (
-        <Typography
-          color="textSecondary"
-          variant="subtitle1"
-          className={classes.infoMessage}
-        >
-          {intl.formatMessage(messages.allSelectedMessage, {
-            itemsName: itemsName.toLowerCase(),
-          })}
-        </Typography>
+        <>
+          <SortableContainer
+            axis="xy"
+            lockAxis="xy"
+            useDragHandle
+            onSortStart={handleSortStart}
+            onSortEnd={handleSortEnd}
+          >
+            <div>
+              {items.map((item, itemIndex) => (
+                <Item
+                  key={itemIndex}
+                  index={itemIndex}
+                  item={item}
+                  onDelete={removeItem}
+                  sortable={!!reorderItem}
+                />
+              ))}
+            </div>
+          </SortableContainer>
+          {hasMoreItemsToBeSelected ? (
+            <AssignmentListFooter {...props} />
+          ) : (
+            <Typography
+              color="textSecondary"
+              variant="subtitle1"
+              className={classes.infoMessage}
+            >
+              {intl.formatMessage(messages.allSelectedMessage, {
+                itemsName: itemsName.toLowerCase(),
+              })}
+            </Typography>
+          )}
+        </>
       )}
     </Accordion>
   );

@@ -5,13 +5,21 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import {
+  ChannelShippingZones,
+  ChannelWarehouses,
+} from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
-import { ChannelErrorFragment, CountryCode } from "@saleor/graphql";
+import {
+  ChannelErrorFragment,
+  CountryCode,
+  StockSettingsInput,
+} from "@saleor/graphql";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -23,7 +31,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../styles";
 import { ExtendedFormHelperTextProps } from "./types";
 
-export interface FormData {
+export interface FormData extends StockSettingsInput {
   name: string;
   currencyCode: string;
   slug: string;
@@ -31,6 +39,8 @@ export interface FormData {
   shippingZonesIdsToRemove: string[];
   warehousesIdsToAdd: string[];
   warehousesIdsToRemove: string[];
+  shippingZonesToDisplay: ChannelShippingZones;
+  warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
 }
 

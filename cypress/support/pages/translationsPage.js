@@ -9,7 +9,7 @@ export function updateTranslationToCategory({
   translatedName,
   translatedDescription,
   translatedSeoTitle,
-  translatedSeoDescription
+  translatedSeoDescription,
 }) {
   cy.visit(urlList.translations);
   enterCategoryTranslation(LANGUAGES_LIST.polishLanguageButton, categoryName);
@@ -28,7 +28,6 @@ export function updateTranslationToCategory({
     .should("not.exist")
     .get(ELEMENT_TRANSLATION.translationTextEditor)
     .clearAndType(translatedDescription)
-    .wait(500)
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
@@ -50,23 +49,22 @@ export function updateTranslationToCategory({
 
 export function enterCategoryTranslation(language, categoryName) {
   cy.addAliasToGraphRequest("CategoryTranslations");
-  cy.get(language).click();
+  cy.get(language)
+    .click()
+    .waitForProgressBarToNotExist();
   getCategoryFromTable(categoryName);
 }
 
 function getCategoryFromTable(categoryName) {
   cy.wait("@CategoryTranslations")
-    .its("response.body")
-    .then(bodies => {
-      const body = bodies[0];
-      const edges = body.data.translations.edges;
+    .its("response.body.data.translations.edges")
+    .then(edges => {
       const isCategoryInResp = edges.find(
-        edge => edge.node.category.name === categoryName
+        edge => edge.node.category.name === categoryName,
       );
+
       if (isCategoryInResp) {
-        cy.contains(SHARED_ELEMENTS.tableRow, categoryName).click({
-          force: true
-        });
+        cy.contains(SHARED_ELEMENTS.tableRow, categoryName).click();
       } else {
         cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
         getCategoryFromTable(categoryName);

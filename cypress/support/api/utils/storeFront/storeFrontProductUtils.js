@@ -24,13 +24,13 @@ export const getProductVariants = (productId, channelSlug) => {
     return variantsList.map(element => ({
       id: element.id,
       name: element.name,
-      price: element.pricing.price.gross.amount
+      price: element.pricing.price.gross.amount,
     }));
   });
 };
 
 export const getProductPrice = (productId, channelSlug) => {
   getProductDetails(productId, channelSlug).then(
-    resp => resp.body.data.product.variants[0].pricing.price.gross.amount
+    resp => resp.body.data.product.variants[0].pricing.price.gross.amount,
   );
 };

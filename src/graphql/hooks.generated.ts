@@ -185,14 +185,27 @@ export const ChannelFragmentDoc = gql`
     code
     country
   }
+  stockSettings {
+    allocationStrategy
+  }
+}
+    `;
+export const WarehouseFragmentDoc = gql`
+    fragment Warehouse on Warehouse {
+  id
+  name
 }
     `;
 export const ChannelDetailsFragmentDoc = gql`
     fragment ChannelDetails on Channel {
   ...Channel
   hasOrders
+  warehouses {
+    ...Warehouse
+  }
 }
-    ${ChannelFragmentDoc}`;
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -344,7 +357,19 @@ export const PageInfoFragmentDoc = gql`
 export const SaleDetailsFragmentDoc = gql`
     fragment SaleDetails on Sale {
   ...Sale
-  variants(after: $after, before: $before, first: $first, last: $last) {
+  variantsCount: variants {
+    totalCount
+  }
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  variants(after: $after, before: $before, first: $first, last: $last) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -368,9 +393,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  products(after: $after, before: $before, first: $first, last: $last) {
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -390,9 +414,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -405,9 +428,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -420,7 +442,6 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
 }
     ${SaleFragmentDoc}
@@ -466,7 +487,16 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerOrder
   applyOncePerCustomer
   onlyForStaff
-  products(after: $after, before: $before, first: $first, last: $last) {
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -483,12 +513,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -498,12 +527,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -513,7 +541,6 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
@@ -1392,12 +1419,6 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
-export const WarehouseFragmentDoc = gql`
-    fragment Warehouse on Warehouse {
-  id
-  name
-}
-    `;
 export const StockFragmentDoc = gql`
     fragment Stock on Stock {
   id
@@ -1431,14 +1452,7 @@ export const OrderLineFragmentDoc = gql`
     }
     product {
       id
-      channelListings {
-        id
-        isPublished
-        isAvailableForPurchase
-        channel {
-          id
-        }
-      }
+      isAvailableForPurchase
     }
   }
   productName
@@ -1608,6 +1622,9 @@ export const OrderDetailsFragmentDoc = gql`
     ...Money
   }
   totalCaptured {
+    ...Money
+  }
+  totalBalance {
     ...Money
   }
   undiscountedTotal {
@@ -4590,6 +4607,46 @@ export function useChannelDeactivateMutation(baseOptions?: ApolloReactHooks.Muta
 export type ChannelDeactivateMutationHookResult = ReturnType<typeof useChannelDeactivateMutation>;
 export type ChannelDeactivateMutationResult = Apollo.MutationResult<Types.ChannelDeactivateMutation>;
 export type ChannelDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelDeactivateMutation, Types.ChannelDeactivateMutationVariables>;
+export const ChannelReorderWarehousesDocument = gql`
+    mutation ChannelReorderWarehouses($channelId: ID!, $moves: [ReorderInput!]!) {
+  channelReorderWarehouses(channelId: $channelId, moves: $moves) {
+    channel {
+      ...ChannelDetails
+    }
+    errors {
+      ...ChannelError
+    }
+  }
+}
+    ${ChannelDetailsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
+export type ChannelReorderWarehousesMutationFn = Apollo.MutationFunction<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
+
+/**
+ * __useChannelReorderWarehousesMutation__
+ *
+ * To run a mutation, you first call `useChannelReorderWarehousesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChannelReorderWarehousesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [channelReorderWarehousesMutation, { data, loading, error }] = useChannelReorderWarehousesMutation({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *      moves: // value for 'moves'
+ *   },
+ * });
+ */
+export function useChannelReorderWarehousesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>(ChannelReorderWarehousesDocument, options);
+      }
+export type ChannelReorderWarehousesMutationHookResult = ReturnType<typeof useChannelReorderWarehousesMutation>;
+export type ChannelReorderWarehousesMutationResult = Apollo.MutationResult<Types.ChannelReorderWarehousesMutation>;
+export type ChannelReorderWarehousesMutationOptions = Apollo.BaseMutationOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
 export const BaseChannelsDocument = gql`
     query BaseChannels {
   channels {
@@ -5970,7 +6027,7 @@ export type SaleUpdateMutationHookResult = ReturnType<typeof useSaleUpdateMutati
 export type SaleUpdateMutationResult = Apollo.MutationResult<Types.SaleUpdateMutation>;
 export type SaleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SaleUpdateMutation, Types.SaleUpdateMutationVariables>;
 export const SaleCataloguesAddDocument = gql`
-    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6003,6 +6060,10 @@ export type SaleCataloguesAddMutationFn = Apollo.MutationFunction<Types.SaleCata
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6014,7 +6075,7 @@ export type SaleCataloguesAddMutationHookResult = ReturnType<typeof useSaleCatal
 export type SaleCataloguesAddMutationResult = Apollo.MutationResult<Types.SaleCataloguesAddMutation>;
 export type SaleCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>;
 export const SaleCataloguesRemoveDocument = gql`
-    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6047,6 +6108,10 @@ export type SaleCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.SaleC
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6287,7 +6352,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6320,6 +6385,9 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6331,7 +6399,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6364,6 +6432,9 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6598,7 +6669,7 @@ export type VoucherListQueryHookResult = ReturnType<typeof useVoucherListQuery>;
 export type VoucherListLazyQueryHookResult = ReturnType<typeof useVoucherListLazyQuery>;
 export type VoucherListQueryResult = Apollo.QueryResult<Types.VoucherListQuery, Types.VoucherListQueryVariables>;
 export const SaleDetailsDocument = gql`
-    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   sale(id: $id) {
     ...SaleDetails
   }
@@ -6622,6 +6693,10 @@ export const SaleDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6637,7 +6712,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -6661,6 +6736,9 @@ export const VoucherDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -8963,12 +9041,15 @@ export const OrderLineDeleteDocument = gql`
       ...OrderError
     }
     order {
-      ...OrderDetails
+      id
+      lines {
+        ...OrderLine
+      }
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 
 /**
@@ -9002,12 +9083,15 @@ export const OrderLinesAddDocument = gql`
       ...OrderError
     }
     order {
-      ...OrderDetails
+      id
+      lines {
+        ...OrderLine
+      }
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 
 /**
@@ -9041,13 +9125,13 @@ export const OrderLineUpdateDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
+    orderLine {
+      ...OrderLine
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+${OrderLineFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 
 /**
@@ -12823,6 +12907,8 @@ export const ProductVariantCreateDataDocument = gql`
       url
     }
     channelListings {
+      isPublished
+      publicationDate
       channel {
         id
         name
@@ -13450,18 +13536,6 @@ export const SearchOrderVariantDocument = gql`
             }
             onSale
           }
-          channelListings {
-            channel {
-              id
-              isActive
-              name
-              currencyCode
-            }
-            price {
-              amount
-              currency
-            }
-          }
         }
       }
     }
@@ -13670,6 +13744,9 @@ export const SearchProductsDocument = gql`
               currency
             }
           }
+        }
+        collections {
+          id
         }
       }
     }
@@ -14589,7 +14666,7 @@ export type ShippingZonesCountQueryHookResult = ReturnType<typeof useShippingZon
 export type ShippingZonesCountLazyQueryHookResult = ReturnType<typeof useShippingZonesCountLazyQuery>;
 export type ShippingZonesCountQueryResult = Apollo.QueryResult<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>;
 export const ShopSettingsUpdateDocument = gql`
-    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $isCloudInstance: Boolean!) {
+    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
@@ -14629,7 +14706,6 @@ export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ShopSet
  *   variables: {
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *      addressInput: // value for 'addressInput'
- *      isCloudInstance: // value for 'isCloudInstance'
  *   },
  * });
  */
@@ -16889,46 +16965,6 @@ export function useWarehouseDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type WarehouseDetailsQueryHookResult = ReturnType<typeof useWarehouseDetailsQuery>;
 export type WarehouseDetailsLazyQueryHookResult = ReturnType<typeof useWarehouseDetailsLazyQuery>;
 export type WarehouseDetailsQueryResult = Apollo.QueryResult<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>;
-export const ChannelWarehousesDocument = gql`
-    query ChannelWarehouses($filter: WarehouseFilterInput) {
-  warehouses(filter: $filter, first: 100) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useChannelWarehousesQuery__
- *
- * To run a query within a React component, call `useChannelWarehousesQuery` and pass it any options that fit your needs.
- * When your component renders, `useChannelWarehousesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChannelWarehousesQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useChannelWarehousesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
-      }
-export function useChannelWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>(ChannelWarehousesDocument, options);
-        }
-export type ChannelWarehousesQueryHookResult = ReturnType<typeof useChannelWarehousesQuery>;
-export type ChannelWarehousesLazyQueryHookResult = ReturnType<typeof useChannelWarehousesLazyQuery>;
-export type ChannelWarehousesQueryResult = Apollo.QueryResult<Types.ChannelWarehousesQuery, Types.ChannelWarehousesQueryVariables>;
 export const WarehousesCountDocument = gql`
     query WarehousesCount {
   warehouses {

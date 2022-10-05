@@ -17,7 +17,7 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage attributes in product types", () => {
-  const startsWith = "productType";
+  const startsWith = "attrProdType";
   let category;
   let channel;
   let attribute;
@@ -48,7 +48,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false)
+            .assignElements(startsWith, false, true)
             .confirmationMessageShouldAppear()
             .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
@@ -71,11 +71,12 @@ describe("As an admin I want to manage attributes in product types", () => {
             productTypeDetailsUrl(productType.id),
           )
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
+            .should("be.enabled")
             .click({ force: true })
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false)
+            .assignElements(startsWith, false, true)
             .confirmationMessageShouldAppear()
             .wait("@AssignProductAttribute");
           getProductType(productType.id);

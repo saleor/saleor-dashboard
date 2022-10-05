@@ -3,12 +3,11 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelCreateMutation,
+  ChannelErrorFragment,
   useChannelCreateMutation,
-  useShippingZonesCountQuery,
-  useWarehousesCountQuery,
+  useChannelReorderWarehousesMutation,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -17,14 +16,16 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import currencyCodes from "currency-codes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath, channelsListUrl } from "../../urls";
+import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
+import { useShippingZones } from "../ChannelDetails/useShippingZones";
+import { useWarehouses } from "../ChannelDetails/useWarehouses";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
@@ -32,64 +33,91 @@ export const ChannelCreateView = ({}) => {
   const intl = useIntl();
   const shop = useShop();
 
-  const [createChannel, createChannelOpts] = useChannelCreateMutation({
-    onCompleted: ({
-      channelCreate: { errors, channel },
-    }: ChannelCreateMutation) => {
-      notify(getDefaultNotifierSuccessErrorData(errors, intl));
+  const handleError = (error: ChannelErrorFragment) => {
+    notify({
+      status: "error",
+      text: getChannelsErrorMessage(error, intl),
+    });
+  };
 
-      if (!errors.length) {
-        navigate(channelPath(channel.id));
-      }
+  const [createChannel, createChannelOpts] = useChannelCreateMutation({
+    onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
+      notify(getDefaultNotifierSuccessErrorData(errors, intl));
     },
   });
 
-  const handleSubmit = ({
+  const [reorderChannelWarehouses] = useChannelReorderWarehousesMutation({
+    onCompleted: data => {
+      const errors = data.channelReorderWarehouses.errors;
+      if (errors.length) {
+        errors.forEach(error => handleError(error));
+      }
+
+      navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+    },
+  });
+
+  const handleSubmit = async ({
     shippingZonesIdsToAdd,
-    shippingZonesIdsToRemove,
     warehousesIdsToAdd,
-    warehousesIdsToRemove,
+    warehousesToDisplay,
     currencyCode,
-    ...rest
-  }: FormData) =>
-    extractMutationErrors(
-      createChannel({
-        variables: {
-          input: {
-            ...rest,
-            currencyCode: currencyCode.toUpperCase(),
-            addShippingZones: shippingZonesIdsToAdd,
-            addWarehouses: warehousesIdsToAdd,
+    allocationStrategy,
+    name,
+    slug,
+    defaultCountry,
+  }: FormData) => {
+    const createChannelMutation = createChannel({
+      variables: {
+        input: {
+          defaultCountry,
+          name,
+          slug,
+          currencyCode: currencyCode.toUpperCase(),
+          addShippingZones: shippingZonesIdsToAdd,
+          addWarehouses: warehousesIdsToAdd,
+          stockSettings: {
+            allocationStrategy,
           },
         },
-      }),
-    );
+      },
+    });
+
+    const result = await createChannelMutation;
+    const errors = await extractMutationErrors(createChannelMutation);
+
+    if (!errors?.length) {
+      const moves = calculateItemsOrderMoves(
+        result.data?.channelCreate.channel?.warehouses,
+        warehousesToDisplay,
+      );
+
+      await reorderChannelWarehouses({
+        variables: {
+          channelId: result.data?.channelCreate.channel?.id,
+          moves,
+        },
+      });
+    }
+
+    return errors;
+  };
 
   const {
-    data: shippingZonesCountData,
-    loading: shippingZonesCountLoading,
-  } = useShippingZonesCountQuery();
+    shippingZonesCountData,
+    shippingZonesCountLoading,
+    fetchMoreShippingZones,
+    searchShippingZones,
+    searchShippingZonesResult,
+  } = useShippingZones();
 
   const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult,
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery();
-
-  const {
-    loadMore: fetchMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesResult,
-  } = useWarehouseSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+    warehousesCountData,
+    warehousesCountLoading,
+    fetchMoreWarehouses,
+    searchWarehouses,
+    searchWarehousesResult,
+  } = useWarehouses();
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(

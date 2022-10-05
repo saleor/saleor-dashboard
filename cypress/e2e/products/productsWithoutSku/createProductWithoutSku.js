@@ -29,7 +29,7 @@ import {
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
-  const startsWith = "CyCreateVariants-";
+  const startsWith = "CreateProdSku";
   const attributeValues = ["value1", "value2"];
 
   let defaultChannel;
@@ -193,10 +193,11 @@ describe("Creating variants", () => {
   );
 
   it(
-    "should create simple product without sku",
+    "should create simple product without sku SALEOR_2806",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
         .click()
@@ -208,15 +209,21 @@ describe("Creating variants", () => {
         )
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
-      cy.get(PRODUCT_DETAILS.addWarehouseButton).click();
+      cy.get(PRODUCT_DETAILS.costPriceInput)
+        .type(10)
+        .get(PRODUCT_DETAILS.sellingPriceInput)
+        .type(10)
+        .addAliasToGraphRequest("VariantCreate")
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationMessageShouldDisappear()
+        .wait("@VariantCreate")
+        .get(PRODUCT_DETAILS.addWarehouseButton)
+        .click();
       cy.contains(PRODUCT_DETAILS.warehouseOption, warehouse.name)
         .click()
         .get(PRODUCT_DETAILS.stockInput)
         .clearAndType(10)
-        .get(PRODUCT_DETAILS.costPriceInput)
-        .type(10)
-        .get(PRODUCT_DETAILS.sellingPriceInput)
-        .type(10)
         .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
         .click()
         .get(
@@ -227,22 +234,22 @@ describe("Creating variants", () => {
           `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
         )
         .click()
-        .addAliasToGraphRequest("VariantCreate")
+        .addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@VariantCreate")
+        .wait("@ProductDetails")
         .then(({ response }) => {
-          const variants = [
-            response.body.data.productVariantCreate.productVariant,
-          ];
+          const variants = [response.body.data.product.variants[0]];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList: variants,
             shippingMethodName: shippingMethod.name,
             address,
-          });
+          })
+            .its("order.id")
+            .should("be.ok");
         });
     },
   );

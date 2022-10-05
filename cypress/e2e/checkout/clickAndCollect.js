@@ -30,7 +30,7 @@ import {
 } from "../../support/pages/warehousePage";
 
 describe("Warehouses in checkout", () => {
-  const startsWith = `CyWarehouseCheckout`;
+  const startsWith = `clickAndCollect`;
   let defaultChannel;
   let usAddress;
   let secondUsAddress;

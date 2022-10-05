@@ -25,13 +25,13 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { orderListUrl } from "@saleor/orders/urls";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
 import OrderAddTransaction from "../OrderAddTransaction";
@@ -49,29 +49,10 @@ import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    date: {
-      marginBottom: theme.spacing(3),
-    },
-    cardGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(2, 1fr)",
-      gap: theme.spacing(2),
-    },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: 0,
-    },
-  }),
-  {
-    name: "OrderDetailsPage",
-  },
-);
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment;
@@ -111,24 +92,6 @@ export interface OrderDetailsPageProps {
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
-
-const messages = defineMessages({
-  cancelOrder: {
-    id: "9ZtJhn",
-    defaultMessage: "Cancel order",
-    description: "cancel button",
-  },
-  confirmOrder: {
-    id: "maxT+q",
-    defaultMessage: "Confirm order",
-    description: "save button",
-  },
-  returnOrder: {
-    id: "+RjQjs",
-    defaultMessage: "Return / Replace order",
-    description: "return button",
-  },
-});
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {

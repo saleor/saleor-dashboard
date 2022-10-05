@@ -8,7 +8,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
 import { SummaryList } from "./SummaryList";
-import { extractOrderGiftCardUsedAmount } from "./utils";
+import {
+  extractOrderGiftCardUsedAmount,
+  getDeliveryMethodName,
+  getTaxTypeText,
+} from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -37,26 +41,6 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
 
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
-  const getDeliveryMethodName = (order: OrderDetailsFragment) => {
-    if (
-      order?.shippingMethodName === undefined &&
-      order?.shippingPrice === undefined &&
-      order?.collectionPointName === undefined
-    ) {
-      return null;
-    }
-
-    if (order.shippingMethodName === null) {
-      return order.collectionPointName == null
-        ? intl.formatMessage(orderSummaryMessages.shippingDoesNotApply)
-        : intl.formatMessage(
-            orderSummaryMessages.clickAndCollectShippingMethod,
-          );
-    }
-
-    return order.shippingMethodName;
-  };
-
   return (
     <Card>
       <CardTitle
@@ -70,18 +54,12 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
           />
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.shipping} />}
-            subText={getDeliveryMethodName(order)}
+            subText={getDeliveryMethodName(order, intl)}
             money={order?.shippingPrice?.gross}
           />
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.taxes} />}
-            subText={
-              order?.total?.tax === undefined
-                ? ""
-                : order.total.tax.amount > 0
-                ? intl.formatMessage(orderSummaryMessages.vatIncluded)
-                : intl.formatMessage(orderSummaryMessages.vatNotIncluded)
-            }
+            subText={getTaxTypeText(order, intl)}
             money={order?.total?.tax}
           />
           {order?.discounts?.map(discount => (

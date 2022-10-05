@@ -252,6 +252,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           window.open(
             order.invoices.find(invoice => invoice.id === id)?.url,
             "_blank",
+            "rel=noopener",
           )
         }
         onInvoiceGenerate={() =>

@@ -1,10 +1,12 @@
 export const PRODUCTS_LIST = {
   productsList: "[data-test-id*='id']",
   productsNames: "[data-test-id='name']",
+  dialogProductTypeInput: "[data-test-id='dialog-product-type']",
   createProductBtn: "[data-test-id='add-product']",
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",
   productImage: "[class='MuiAvatar-img']",
+  imageIcon: '[data-test-id="imageIcon"]',
   tableCellAvatar: "[data-test-id='table-cell-avatar']",
   productRowElements: {
     name: '[data-test-id="name"]',

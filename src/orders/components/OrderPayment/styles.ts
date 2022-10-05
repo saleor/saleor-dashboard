@@ -38,5 +38,5 @@ export const useStyles = makeStyles(
       fontWeight: 400,
     },
   }),
-  { name: "styles" },
+  { name: "OrderPayment" },
 );

@@ -5,19 +5,22 @@ about: Create a report to help us improve
 ---
 
 ### What I'm trying to achieve
+
 …
 
 ### Steps to reproduce the problem
-1. 
-2. 
+
+1.
+2.
 
 ### What I expected to happen
+
 …
 
 ### Screenshots
 <!-- If applicable, add screenshots to help explain your problem. -->
 
-### Http request and response from inspector
+### HTTP request and response from inspector
 <!-- Tutorial how to find this in Chrome https://developers.google.com/web/tools/chrome-devtools/network -->
 
 ```
@@ -31,22 +34,26 @@ about: Create a report to help us improve
 // insert console output here 
 ```
 
-**System information**
+### System information
 
-Saleor version:
-- [ ] dev (current main)
-- [ ] 3.0
-- [ ] 2.11
-- [ ] 2.10
+Dashboard version:
 
-Operating system: 
+`v?.?.?` (e.g. `v3.6.0`)
+
+Core version:
+
+`v?.?.?`
+
+Operating system:
+
 - [ ] Windows
 - [ ] Linux
 - [ ] MacOS
-- [ ] Other 
+- [ ] Other
 
 Browser:
+
 - [ ] Safari
 - [ ] Chrome
 - [ ] Edge
-- [ ] Other 
+- [ ] Other

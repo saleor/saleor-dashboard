@@ -8,7 +8,7 @@ function getPublicationData({
   isPublished,
 }: PublicationData): PublicationData {
   return {
-    isPublished: !!publicationDate || isPublished,
+    isPublished,
     publicationDate: publicationDate || null,
   };
 }

@@ -13,7 +13,7 @@ function useHandleFormSubmit<TData, TErrors>({
   formId,
   onSubmit,
 }: UseHandleFormSubmitProps<TData, TErrors>) {
-  const { setIsSubmitting } = useExitFormDialog({
+  const { setIsSubmitting, setIsDirty } = useExitFormDialog({
     formId,
   });
   const messageContext = useContext(MessageContext);
@@ -36,6 +36,8 @@ function useHandleFormSubmit<TData, TErrors>({
     setIsSubmitting(false);
 
     if (errors?.length === 0) {
+      setIsDirty(false);
+
       return [];
     }
 

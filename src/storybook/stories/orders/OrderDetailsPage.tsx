@@ -211,20 +211,6 @@ storiesOf("Views / Orders / Order details / transactions", module)
       }}
     />
   ))
-  .add("refund requested", () => (
-    <OrderDetailsPage
-      {...props}
-      order={{
-        ...props.order,
-        isPaid: true,
-        grantedRefunds,
-        totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(),
-        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-        transactions: transactions.refundRequested,
-      }}
-    />
-  ))
   .add("refund completed", () => (
     <OrderDetailsPage
       {...props}

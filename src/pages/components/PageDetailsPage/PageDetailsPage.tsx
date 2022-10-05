@@ -1,5 +1,5 @@
 import {
-  getAttributeValuesFromReferences,
+  getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@saleor/attributes/utils/data";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
@@ -35,6 +35,7 @@ import { useIntl } from "react-intl";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
+import { messages } from "./messages";
 
 export interface PageDetailsPageProps {
   loading: boolean;
@@ -68,7 +69,7 @@ export interface PageDetailsPageProps {
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   loading,
-  errors,
+  errors: apiErrors,
   page,
   pageTypes: pageTypeChoiceList,
   referencePages,
@@ -142,148 +143,136 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       {({
         change,
         data,
+        validationErrors,
         handlers,
         submit,
-        isSaveDisabled,
         attributeRichTextGetters,
-      }) => (
-        <Container>
-          <Backlink href={pageListUrl()}>
-            {intl.formatMessage(sectionNames.pages)}
-          </Backlink>
-          <PageHeader
-            title={
-              !pageExists
-                ? intl.formatMessage({
-                    id: "gr53VQ",
-                    defaultMessage: "Create Page",
-                    description: "page header",
-                  })
-                : page?.title
-            }
-          />
-          <Grid>
-            <div>
-              <PageInfo
-                data={data}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <SeoForm
-                errors={errors}
-                allowEmptySlug={!pageExists}
-                description={data.seoDescription}
-                disabled={loading}
-                descriptionPlaceholder={""} // TODO: Cast description to string and trim it
-                onChange={change}
-                slug={data.slug}
-                slugPlaceholder={data.title}
-                title={data.seoTitle}
-                titlePlaceholder={data.title}
-                helperText={intl.formatMessage({
-                  id: "jZbT0O",
-                  defaultMessage:
-                    "Add search engine title and description to make this page easier to find",
-                })}
-              />
-              <CardSpacer />
-              {data.attributes.length > 0 && (
-                <Attributes
-                  attributes={data.attributes}
-                  attributeValues={attributeValues}
-                  disabled={loading}
-                  loading={loading}
-                  errors={errors}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMulti}
-                  onFileChange={handlers.selectAttributeFile}
-                  onReferencesRemove={handlers.selectAttributeReference}
-                  onReferencesAddClick={onAssignReferencesClick}
-                  onReferencesReorder={handlers.reorderAttributeValue}
-                  fetchAttributeValues={fetchAttributeValues}
-                  fetchMoreAttributeValues={fetchMoreAttributeValues}
-                  onAttributeSelectBlur={onAttributeSelectBlur}
-                  richTextGetters={attributeRichTextGetters}
-                />
-              )}
-              <CardSpacer />
-              <Metadata data={data} onChange={handlers.changeMetadata} />
-            </div>
-            <div>
-              <CardSpacer />
-              <VisibilityCard
-                data={data}
-                errors={errors}
-                disabled={loading}
-                messages={{
-                  hiddenLabel: intl.formatMessage({
-                    id: "/TK7QD",
-                    defaultMessage: "Hidden",
-                    description: "page label",
-                  }),
-                  hiddenSecondLabel: intl.formatMessage(
-                    {
-                      id: "GZgjK7",
-                      defaultMessage: "will be visible from {date}",
-                      description: "page",
-                    },
-                    {
-                      date: localizeDate(data.publicationDate),
-                    },
-                  ),
-                  visibleLabel: intl.formatMessage({
-                    id: "X26jCC",
-                    defaultMessage: "Visible",
-                    description: "page label",
-                  }),
-                }}
-                onChange={change}
-              />
-              <CardSpacer />
-              <PageOrganizeContent
-                data={data}
-                errors={errors}
-                disabled={loading}
-                pageTypes={pageTypes}
-                pageType={data.pageType}
-                pageTypeInputDisplayValue={data.pageType?.name || ""}
-                onPageTypeChange={handlers.selectPageType}
-                fetchPageTypes={fetchPageTypes}
-                fetchMorePageTypes={fetchMorePageTypes}
-                canChangeType={!page?.pageType}
-              />
-            </div>
-          </Grid>
-          <Savebar
-            disabled={isSaveDisabled}
-            state={saveButtonBarState}
-            onCancel={() => navigate(pageListUrl())}
-            onDelete={page === null ? undefined : onRemove}
-            onSubmit={submit}
-          />
-          {canOpenAssignReferencesAttributeDialog && (
-            <AssignAttributeValueDialog
-              attributeValues={getAttributeValuesFromReferences(
-                assignReferencesAttributeId,
-                data.attributes,
-                referencePages,
-                referenceProducts,
-              )}
-              hasMore={handlers.fetchMoreReferences?.hasMore}
-              open={canOpenAssignReferencesAttributeDialog}
-              onFetch={handlers.fetchReferences}
-              onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
-              loading={handlers.fetchMoreReferences?.loading}
-              onClose={onCloseDialog}
-              onSubmit={attributeValues =>
-                handleAssignReferenceAttribute(attributeValues, data, handlers)
+      }) => {
+        const errors = [...apiErrors, ...validationErrors];
+
+        return (
+          <Container>
+            <Backlink href={pageListUrl()}>
+              {intl.formatMessage(sectionNames.pages)}
+            </Backlink>
+            <PageHeader
+              title={
+                !pageExists ? intl.formatMessage(messages.title) : page?.title
               }
             />
-          )}
-        </Container>
-      )}
+            <Grid>
+              <div>
+                <PageInfo
+                  data={data}
+                  disabled={loading}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <SeoForm
+                  errors={errors}
+                  allowEmptySlug={!pageExists}
+                  description={data.seoDescription}
+                  disabled={loading}
+                  descriptionPlaceholder={""} // TODO: Cast description to string and trim it
+                  onChange={change}
+                  slug={data.slug}
+                  slugPlaceholder={data.title}
+                  title={data.seoTitle}
+                  titlePlaceholder={data.title}
+                  helperText={intl.formatMessage(
+                    messages.seoOptionsDescription,
+                  )}
+                />
+                <CardSpacer />
+                {data.attributes.length > 0 && (
+                  <Attributes
+                    attributes={data.attributes}
+                    attributeValues={attributeValues}
+                    disabled={loading}
+                    loading={loading}
+                    errors={errors}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMulti}
+                    onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
+                  />
+                )}
+                <CardSpacer />
+                <Metadata data={data} onChange={handlers.changeMetadata} />
+              </div>
+              <div>
+                <VisibilityCard
+                  data={data}
+                  errors={errors}
+                  disabled={loading}
+                  messages={{
+                    hiddenLabel: intl.formatMessage(messages.hiddenLabel),
+                    hiddenSecondLabel: intl.formatMessage(
+                      messages.hiddenSecondLabel,
+                      {
+                        date: localizeDate(data.publicationDate),
+                      },
+                    ),
+                    visibleLabel: intl.formatMessage(messages.visibleLabel),
+                  }}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <PageOrganizeContent
+                  data={data}
+                  errors={errors}
+                  disabled={loading}
+                  pageTypes={pageTypes}
+                  pageType={data.pageType}
+                  pageTypeInputDisplayValue={data.pageType?.name || ""}
+                  onPageTypeChange={handlers.selectPageType}
+                  fetchPageTypes={fetchPageTypes}
+                  fetchMorePageTypes={fetchMorePageTypes}
+                  canChangeType={!page?.pageType}
+                />
+              </div>
+            </Grid>
+            <Savebar
+              disabled={loading}
+              state={saveButtonBarState}
+              onCancel={() => navigate(pageListUrl())}
+              onDelete={page === null ? undefined : onRemove}
+              onSubmit={submit}
+            />
+            {canOpenAssignReferencesAttributeDialog && (
+              <AssignAttributeValueDialog
+                entityType={getReferenceAttributeEntityTypeFromAttribute(
+                  assignReferencesAttributeId,
+                  data.attributes,
+                )}
+                confirmButtonState={"default"}
+                products={referenceProducts}
+                pages={referencePages}
+                hasMore={handlers.fetchMoreReferences?.hasMore}
+                open={canOpenAssignReferencesAttributeDialog}
+                onFetch={handlers.fetchReferences}
+                onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                loading={handlers.fetchMoreReferences?.loading}
+                onClose={onCloseDialog}
+                onSubmit={attributeValues =>
+                  handleAssignReferenceAttribute(
+                    attributeValues,
+                    data,
+                    handlers,
+                  )
+                }
+              />
+            )}
+          </Container>
+        );
+      }}
     </PageForm>
   );
 };

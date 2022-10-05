@@ -154,12 +154,13 @@ describe("Tests for pages", () => {
     createPageRequest({
       pageTypeId: pageType.id,
       title: randomName,
+      isPublished: true,
     })
       .then(({ page }) => {
         cy.visit(pageDetailsUrl(page.id))
           .get(PAGE_DETAILS.nameInput)
           .clearAndType(updatedName)
-          .get(PAGE_DETAILS.isPublishedCheckbox)
+          .get(PAGE_DETAILS.isNotPublishedCheckbox)
           .click()
           .addAliasToGraphRequest("PageUpdate")
           .get(BUTTON_SELECTORS.confirm)
@@ -169,7 +170,7 @@ describe("Tests for pages", () => {
       })
       .then(page => {
         expect(page.title).to.eq(updatedName);
-        expect(page.isPublished).to.eq(true);
+        expect(page.isPublished).to.eq(false);
       });
   });
 });

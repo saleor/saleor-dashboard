@@ -38,8 +38,8 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
           data-test-id="create-permission-group"
         >
           <FormattedMessage
-            id="5ftg/B"
-            defaultMessage="create permission group"
+            id="bRJD/v"
+            defaultMessage="Create permission group"
             description="button"
           />
         </Button>

@@ -468,3 +468,67 @@ export function createShippingProductTypeAttributeAndCategory(
       defaultChannel,
     }));
 }
+
+export function sendRequestForMediaThumbnails(thumbnailUrl, productId) {
+  return cy
+    .request({
+      url: thumbnailUrl,
+      followRedirect: false,
+      failOnStatusCode: false,
+    })
+    .then(response => {
+      if (response.status !== 302) {
+        return `product: ${productId}, expectedStatus: 302, status: ${response.status}`;
+      } else {
+        cy.request({
+          url: response.redirectedToUrl,
+          failOnStatusCode: false,
+        }).then(resp => {
+          if (resp.status !== 200) {
+            return `product: ${productId}, expectedStatus: 200, status: ${resp.status}`;
+          } else {
+            return null;
+          }
+        });
+      }
+    });
+}
+
+export function sendRequestForThumbnails(thumbnailUrl, productId) {
+  return cy
+    .request({ url: thumbnailUrl, failOnStatusCode: false })
+    .then(response => {
+      if (response.status !== 200) {
+        return `product: ${productId}, expectedStatus: 200, status: ${response.status}`;
+      } else {
+        return null;
+      }
+    });
+}
+
+export function checkThumbnailTypeAndSendRequest(thumbnailUrl, productId) {
+  if (!thumbnailUrl.includes("/media/thumbnails")) {
+    return sendRequestForMediaThumbnails(thumbnailUrl, productId).then(
+      notCorrectStatus => notCorrectStatus,
+    );
+  } else {
+    return sendRequestForThumbnails(thumbnailUrl, productId).then(
+      notCorrectStatus => notCorrectStatus,
+    );
+  }
+}
+
+export function iterateThroughThumbnails(productsWithThumbnails) {
+  const failedRequests = [];
+  productsWithThumbnails.forEach(product => {
+    const thumbnailUrl = product.node.thumbnail.url;
+    checkThumbnailTypeAndSendRequest(thumbnailUrl, product.node.id).then(
+      notCorrectStatus => {
+        if (notCorrectStatus) {
+          failedRequests.push(notCorrectStatus);
+        }
+      },
+    );
+  });
+  return failedRequests;
+}

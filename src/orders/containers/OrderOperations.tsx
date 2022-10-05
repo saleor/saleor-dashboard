@@ -221,6 +221,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   });
   const approveFulfillment = useOrderFulfillmentApproveMutation({
     onCompleted: onOrderFulfillmentApprove,
+    disableErrorHandling: true,
   });
   const cancelFulfillment = useOrderFulfillmentCancelMutation({
     onCompleted: onOrderFulfillmentCancel,

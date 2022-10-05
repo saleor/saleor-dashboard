@@ -1,8 +1,23 @@
-# Saleor Dashboard
+![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
 
-![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)
 
-A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/saleor/saleor/).
+<div align="center">
+  <h1>Saleor Dashboard</h1>
+</div>
+
+<div align="center">
+  <p>A GraphQL-powered, single-page dashboard application for <a href="https://github.com/saleor/saleor">Saleor</a>.</p>
+</div>
+
+<div align="center">
+  <a href="https://saleor.io/">🏠 Website</a>
+  <span> • </span>
+  <a href="https://docs.saleor.io/docs/3.x/">📚 Docs</a>
+  <span> • </span>
+  <a href="https://saleor.io/blog/">📰 Blog</a>
+  <span> • </span>
+  <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
+</div>
 
 ## Demo
 
@@ -37,13 +52,8 @@ $ cd saleor-dashboard
 
 #### Using stable release
 
-To use the official stable release, checkout to a release tag:
+Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release
 
-```
-$ git checkout 2.11.1
-```
-
-See the list of all releases here: https://github.com/saleor/saleor-dashboard/releases/
 
 #### Using development version
 
@@ -79,6 +89,7 @@ To start the development server run:
 ```
 $ npm start
 ```
+In case you see CORS errors make sure to check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ### Production
 

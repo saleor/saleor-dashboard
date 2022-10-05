@@ -309,8 +309,8 @@ export const paginatorContextValues: PaginatorContextValues = {
   startCursor: "",
   hasNextPage: false,
   hasPreviousPage: false,
-  nextPageHref: "",
-  prevPageHref: "",
+  nextHref: "",
+  prevHref: "",
   paginatorType: "link",
 };
 

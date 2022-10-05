@@ -64,7 +64,7 @@ const Avatar: React.FC<AvatarProps> = ({
       {badge}
       {!thumbnail ? (
         <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
-          <ImageIcon color="primary" />
+          <ImageIcon color="primary" data-test-id="imageIcon" />
         </MuiAvatar>
       ) : (
         <MuiAvatar

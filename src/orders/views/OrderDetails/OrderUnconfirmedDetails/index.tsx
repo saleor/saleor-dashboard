@@ -256,6 +256,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
               window.open(
                 order.invoices.find(invoice => invoice.id === id)?.url,
                 "_blank",
+                "rel=noopener",
               )
             }
             onInvoiceGenerate={() =>
@@ -316,7 +317,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
         products={mapEdgesToItems(variantSearchOpts?.data?.search)}
-        selectedChannelId={order?.channel?.id}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
