@@ -28,6 +28,7 @@ import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
+import { haveValuesRestricted } from "@saleor/shipping/views/utils";
 import { ListActions, ListProps } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -107,7 +108,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
       minDays: rate?.minimumDeliveryDays?.toString() || "",
       minValue: rate?.minimumOrderWeight?.value.toString() || "",
       name: rate?.name || "",
-      orderValueRestricted: !!rate?.channelListings.length,
+      orderValueRestricted: haveValuesRestricted(variant, rate),
       privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
       type: rate?.type || null,
     }),
