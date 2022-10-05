@@ -168,6 +168,15 @@ export const orderGrantRefundPath = (id: string) =>
 export const orderGrantRefundUrl = (id: string) =>
   orderGrantRefundPath(encodeURIComponent(id));
 
+export const orderGrantRefundEditPath = (orderId: string, refundId: string) =>
+  urlJoin(orderGrantRefundPath(orderId), refundId);
+
+export const orderGrantRefundEditUrl = (orderId: string, refundId: string) =>
+  orderGrantRefundEditPath(
+    encodeURIComponent(orderId),
+    encodeURIComponent(refundId),
+  );
+
 export const orderReturnUrl = (id: string) =>
   orderReturnPath(encodeURIComponent(id));
 

@@ -517,3 +517,20 @@ export const orderGrantRefundAddMutation = gql`
     }
   }
 `;
+
+export const orderGrantRefundEditMutation = gql`
+  mutation OrderGrantRefundEdit(
+    $refundId: ID!
+    $amount: Decimal!
+    $reason: String
+  ) {
+    orderGrantRefundUpdate(
+      id: $refundId
+      input: { amount: $amount, reason: $reason }
+    ) {
+      errors {
+        ...OrderGrantRefundUpdateError
+      }
+    }
+  }
+`;

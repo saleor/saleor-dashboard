@@ -275,6 +275,7 @@ export const fragmentOrderGiftcard = gql`
 
 export const fragmentOrderGrantedRefunds = gql`
   fragment OrderGrantedRefund on OrderGrantedRefund {
+    id
     createdAt
     amount {
       currency

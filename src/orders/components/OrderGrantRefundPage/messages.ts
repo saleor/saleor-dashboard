@@ -6,6 +6,11 @@ export const grantRefundPageMessages = defineMessages({
     id: "+mmPxn",
     description: "page header",
   },
+  pageHeaderEdit: {
+    defaultMessage: "Edit grant refund",
+    id: "TxYWkD",
+    description: "page header, edit view",
+  },
   pageSubtitle: {
     defaultMessage:
       "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order.",

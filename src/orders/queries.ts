@@ -126,6 +126,21 @@ export const orderDetailsGrantedRefund = gql`
   }
 `;
 
+export const orderDetailsGrantedRefundEdit = gql`
+  query OrderDetailsGrantRefundEdit($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+      grantedRefunds {
+        id
+        reason
+        amount {
+          ...Money
+        }
+      }
+    }
+  }
+`;
+
 export const orderFulfillData = gql`
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {

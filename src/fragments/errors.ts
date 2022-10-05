@@ -503,3 +503,11 @@ export const orderGrantRefundCreateErrorFragment = gql`
     code
   }
 `;
+
+export const orderGrantRefundUpdateErrorFragment = gql`
+  fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
+    field
+    message
+    code
+  }
+`;

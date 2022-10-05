@@ -3205,6 +3205,7 @@ export const payments: Record<string, OrderPaymentFragment> = {
 
 export const grantedRefunds: OrderGrantedRefundFragment[] = [
   {
+    id: "1234",
     amount: prepareMoney(),
     reason: "Products returned",
     app: { id: "123", name: "Saleor Checkout", __typename: "App" },
@@ -3213,6 +3214,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
   },
   {
+    id: "12344",
     amount: prepareMoney(),
     reason: "Products arrived damaged",
     app: null,

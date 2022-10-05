@@ -35,6 +35,8 @@ export interface OrderGrantRefundPageProps {
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
+  isEdit?: boolean;
+  initialData?: OrderGrantRefundFormData;
 }
 
 const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
@@ -42,6 +44,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   loading,
   submitState,
   onSubmit,
+  isEdit,
+  initialData,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -64,7 +68,10 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
-  const { set, change, data, submit } = useGrantRefundForm({ onSubmit });
+  const { set, change, data, submit } = useGrantRefundForm({
+    onSubmit,
+    initialData,
+  });
 
   const totalSelectedPrice = calculateTotalPrice(state, order);
 
@@ -80,7 +87,13 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         <FormattedMessage {...buttonMessages.back} />
       </Backlink>
       <PageHeader
-        title={<FormattedMessage {...grantRefundPageMessages.pageHeader} />}
+        title={
+          <FormattedMessage
+            {...(isEdit
+              ? grantRefundPageMessages.pageHeaderEdit
+              : grantRefundPageMessages.pageHeader)}
+          />
+        }
       />
       <Typography variant="subtitle1">
         <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />

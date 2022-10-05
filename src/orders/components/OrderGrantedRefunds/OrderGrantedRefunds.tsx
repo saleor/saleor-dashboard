@@ -10,6 +10,7 @@ import useLocale from "@saleor/hooks/useLocale";
 import { buttonMessages } from "@saleor/intl";
 import { Avatar, Pill } from "@saleor/macaw-ui";
 import { getUserInitials, renderCollection } from "@saleor/misc";
+import { orderGrantRefundEditUrl } from "@saleor/orders/urls";
 import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -86,7 +87,9 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
               ) : null}
             </TableCell>
             <TableCell className={classes.colAction}>
-              <Button>
+              <Button
+                href={orderGrantRefundEditUrl(order.id, grantedRefund.id)}
+              >
                 <FormattedMessage {...buttonMessages.edit} />
               </Button>
             </TableCell>

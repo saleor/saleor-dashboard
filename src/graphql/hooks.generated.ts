@@ -959,6 +959,13 @@ export const OrderGrantRefundCreateErrorFragmentDoc = gql`
   code
 }
     `;
+export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -1300,6 +1307,7 @@ export const UserBaseAvatarFragmentDoc = gql`
     `;
 export const OrderGrantedRefundFragmentDoc = gql`
     fragment OrderGrantedRefund on OrderGrantedRefund {
+  id
   createdAt
   amount {
     currency
@@ -9315,6 +9323,43 @@ export function useOrderGrantRefundAddMutation(baseOptions?: ApolloReactHooks.Mu
 export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
+export const OrderGrantRefundEditDocument = gql`
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal!, $reason: String) {
+  orderGrantRefundUpdate(id: $refundId, input: {amount: $amount, reason: $reason}) {
+    errors {
+      ...OrderGrantRefundUpdateError
+    }
+  }
+}
+    ${OrderGrantRefundUpdateErrorFragmentDoc}`;
+export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
+
+/**
+ * __useOrderGrantRefundEditMutation__
+ *
+ * To run a mutation, you first call `useOrderGrantRefundEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderGrantRefundEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderGrantRefundEditMutation, { data, loading, error }] = useOrderGrantRefundEditMutation({
+ *   variables: {
+ *      refundId: // value for 'refundId'
+ *      amount: // value for 'amount'
+ *      reason: // value for 'reason'
+ *   },
+ * });
+ */
+export function useOrderGrantRefundEditMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>(OrderGrantRefundEditDocument, options);
+      }
+export type OrderGrantRefundEditMutationHookResult = ReturnType<typeof useOrderGrantRefundEditMutation>;
+export type OrderGrantRefundEditMutationResult = Apollo.MutationResult<Types.OrderGrantRefundEditMutation>;
+export type OrderGrantRefundEditMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(
@@ -9546,6 +9591,49 @@ export function useOrderDetailsGrantRefundLazyQuery(baseOptions?: ApolloReactHoo
 export type OrderDetailsGrantRefundQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundQuery>;
 export type OrderDetailsGrantRefundLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundLazyQuery>;
 export type OrderDetailsGrantRefundQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>;
+export const OrderDetailsGrantRefundEditDocument = gql`
+    query OrderDetailsGrantRefundEdit($id: ID!) {
+  order(id: $id) {
+    ...OrderDetailsGrantRefund
+    grantedRefunds {
+      id
+      reason
+      amount {
+        ...Money
+      }
+    }
+  }
+}
+    ${OrderDetailsGrantRefundFragmentDoc}
+${MoneyFragmentDoc}`;
+
+/**
+ * __useOrderDetailsGrantRefundEditQuery__
+ *
+ * To run a query within a React component, call `useOrderDetailsGrantRefundEditQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderDetailsGrantRefundEditQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderDetailsGrantRefundEditQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderDetailsGrantRefundEditQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+      }
+export function useOrderDetailsGrantRefundEditLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+        }
+export type OrderDetailsGrantRefundEditQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditQuery>;
+export type OrderDetailsGrantRefundEditLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditLazyQuery>;
+export type OrderDetailsGrantRefundEditQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>;
 export const OrderFulfillDataDocument = gql`
     query OrderFulfillData($orderId: ID!) {
   order(id: $orderId) {

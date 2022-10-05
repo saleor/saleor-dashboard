@@ -8,19 +8,27 @@ export interface OrderGrantRefundFormData {
   reason: string;
 }
 
-const initialFormData: OrderGrantRefundFormData = {
+const defaultInitialData: OrderGrantRefundFormData = {
   amount: "0",
   reason: "",
 };
 
 interface GrantRefundFormHookProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
+  initialData?: OrderGrantRefundFormData;
 }
 
-export const useGrantRefundForm = ({ onSubmit }: GrantRefundFormHookProps) => {
-  const { set, change, data, formId } = useForm(initialFormData, undefined, {
-    confirmLeave: true,
-  });
+export const useGrantRefundForm = ({
+  onSubmit,
+  initialData,
+}: GrantRefundFormHookProps) => {
+  const { set, change, data, formId } = useForm(
+    initialData ?? defaultInitialData,
+    undefined,
+    {
+      confirmLeave: true,
+    },
+  );
 
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
