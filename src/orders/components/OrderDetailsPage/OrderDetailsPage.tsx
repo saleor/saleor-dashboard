@@ -34,6 +34,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
+import OrderAddTransaction from "../OrderAddTransaction";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -41,8 +42,11 @@ import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDeta
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPayment from "../OrderPayment/OrderPayment";
+import OrderPayment from "../OrderPayment";
+import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
+import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
+import OrderTransactionPayment from "../OrderTransactionPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -200,6 +204,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
+  const filteredPayments = React.useMemo(
+    () =>
+      (order?.payments ?? []).filter(
+        payment => payment.isActive || payment.transactions.length > 0,
+      ),
+    [order?.payments],
+  );
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
@@ -271,23 +283,42 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <OrderPayment
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
+                <div className={classes.cardGrid}>
+                  <OrderSummaryCard order={order} />
+                  <OrderPayment
+                    order={order}
+                    onRefund={onPaymentRefund}
+                    onMarkAsPaid={onPaymentPaid}
+                  />
+                </div>
                 <CardSpacer />
-                {order?.transactions?.map(transaction => (
-                  <React.Fragment key={transaction.id}>
+                <div>
+                  {order?.transactions?.map(transaction => (
                     <OrderTransaction
+                      key={transaction.id}
                       transaction={transaction}
                       onTransactionAction={onTransactionAction}
                     />
-                    <CardSpacer />
-                  </React.Fragment>
-                ))}
+                  ))}
+                  {filteredPayments.map(payment => (
+                    <OrderTransactionPayment
+                      key={payment.id}
+                      payment={payment}
+                      allPaymentMethods={shop?.availablePaymentGateways}
+                      onCapture={onPaymentCapture}
+                      onVoid={onPaymentVoid}
+                    />
+                  ))}
+                  {order?.giftCards?.map(giftCard => (
+                    <OrderTransactionGiftCard
+                      key={giftCard.id}
+                      order={order}
+                      giftCard={giftCard}
+                    />
+                  ))}
+                </div>
+                <OrderAddTransaction order={order} />
+                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

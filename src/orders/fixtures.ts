@@ -11,6 +11,7 @@ import {
   OrderEventsEnum,
   OrderFulfillLineFragment,
   OrderListQuery,
+  OrderPaymentFragment,
   OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -18,6 +19,9 @@ import {
   SearchOrderVariantQuery,
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
+  TransactionActionEnum,
+  TransactionItemFragment,
+  TransactionKind,
   TransactionStatus,
   WeightUnitsEnum,
 } from "@saleor/graphql";
@@ -26,6 +30,8 @@ import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
+
+export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
 
 export const countries: CountryWithCodeFragment[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
@@ -40,6 +46,13 @@ export const shop: OrderDetailsQuery["shop"] = {
   defaultWeightUnit: WeightUnitsEnum.KG,
   fulfillmentAllowUnpaid: true,
   fulfillmentAutoApprove: true,
+  availablePaymentGateways: [
+    {
+      id: MOCK_PAYMENT_GATEWAY_ID,
+      name: "Mock Payment Gateway",
+      __typename: "PaymentGateway",
+    },
+  ],
 };
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
@@ -776,6 +789,8 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     userEmail: "curtis.bailey@example.com",
   },
 ];
+
+export const ORDER_AMOUNT = 234.93;
 export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   giftCards: [],
@@ -785,6 +800,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.REFUND,
     OrderAction.VOID,
   ],
+  payments: [],
   transactions: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
@@ -1682,6 +1698,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
+  payments: [],
   transactions: [],
   channel: {
     __typename: "Channel",
@@ -2416,5 +2433,582 @@ export const channelUsabilityData: ChannelUsabilityDataQuery = {
   products: {
     __typename: "ProductCountableConnection",
     totalCount: 50,
+  },
+};
+
+export const transactions: Record<
+  | "preauthorized"
+  | "pendingCharge"
+  | "chargeSuccess"
+  | "chargePartial"
+  | "chargeFail"
+  | "refundRequested"
+  | "refundCompleted"
+  | "refundPartial",
+  TransactionItemFragment[]
+> = {
+  preauthorized: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [TransactionActionEnum.VOID, TransactionActionEnum.CHARGE],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  pendingCharge: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  chargeSuccess: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [TransactionActionEnum.REFUND],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  chargePartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [TransactionActionEnum.REFUND],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: ORDER_AMOUNT - 10,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 10,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  chargeFail: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [TransactionActionEnum.CHARGE],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.FAILURE,
+          name: "Capture failed",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  refundRequested: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Refund reqested",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  refundCompleted: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Refunded",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Refund reqested",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 58.98,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+  refundPartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      reference: "ord_3d41ih",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Refunded",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Refund reqested",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Captured",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          status: TransactionStatus.PENDING,
+          name: "Requested capture",
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          reference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          status: TransactionStatus.SUCCESS,
+          name: "Authorized",
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: {
+        amount: 0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      refundedAmount: {
+        amount: 10.0,
+        currency: "USD",
+        __typename: "Money",
+      },
+      chargedAmount: {
+        amount: ORDER_AMOUNT - 10,
+        currency: "USD",
+        __typename: "Money",
+      },
+      __typename: "TransactionItem",
+    },
+  ],
+};
+
+export const prepareMoney = (
+  amount?: number,
+): OrderDetailsQuery["order"]["totalCaptured"] => ({
+  __typename: "Money",
+  amount: amount ?? ORDER_AMOUNT,
+  currency: "USD",
+});
+
+const paymentCommon = {
+  gateway: MOCK_PAYMENT_GATEWAY_ID,
+  id: "sdfgdfwe4sdSDFDS==",
+  isActive: true,
+  __typename: "Payment",
+} as const;
+
+export const payments: Record<string, OrderPaymentFragment> = {
+  pending: {
+    ...paymentCommon,
+    actions: [OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.PENDING,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  authorized: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE],
+    paymentMethodType: "",
+    total: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    availableCaptureAmount: prepareMoney(),
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "pending",
+        __typename: "Transaction",
+      },
+    ],
+    modified: "2022-08-22T10:40:22.226875+00:00",
+  },
+  completed: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  refunded: {
+    ...paymentCommon,
+    actions: [],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(0), // refund = full
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  partialRefund: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(ORDER_AMOUNT - 1), // refunded = 1 USD
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  rejected: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE, OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
   },
 };

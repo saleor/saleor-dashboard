@@ -7,6 +7,7 @@ import React from "react";
 
 import OrderTransactionCardTitle from "../OrderTransactionCardTitle";
 import OrderTransactionEvents from "../OrderTransactionEvents";
+import { useStyles } from "./styles";
 
 export interface OrderTransactionProps {
   transaction: TransactionItemFragment;
@@ -19,21 +20,25 @@ export interface OrderTransactionProps {
 const OrderTransaction: React.FC<OrderTransactionProps> = ({
   transaction,
   onTransactionAction,
-}) => (
-  <Card>
-    <OrderTransactionCardTitle
-      title={transaction.type}
-      // TODO: Add transaction link
-      // link={}
-      id={transaction.id}
-      actions={transaction.actions}
-      authorizedAmount={transaction.authorizedAmount}
-      refundedAmount={transaction.refundedAmount}
-      chargedAmount={transaction.chargedAmount}
-      onTransactionAction={onTransactionAction}
-    />
-    <OrderTransactionEvents events={transaction.events} />
-  </Card>
-);
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Card className={classes.card}>
+      <OrderTransactionCardTitle
+        title={transaction.type}
+        // TODO: Add transaction link
+        // link={}
+        id={transaction.id}
+        actions={transaction.actions}
+        authorizedAmount={transaction.authorizedAmount}
+        refundedAmount={transaction.refundedAmount}
+        chargedAmount={transaction.chargedAmount}
+        onTransactionAction={onTransactionAction}
+      />
+      <OrderTransactionEvents events={transaction.events} />
+    </Card>
+  );
+};
 
 export default OrderTransaction;
