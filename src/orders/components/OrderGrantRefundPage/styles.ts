@@ -21,15 +21,19 @@ export const useStyles = makeStyles(
 
 export const useRefundCardStyles = makeStyles(
   theme => ({
+    cardContent: {
+      display: "flex",
+      flexDirection: "column",
+      gap: theme.spacing(1.5),
+    },
     refundCardHeader: {
-      paddingBottom: 0,
+      paddingBottom: theme.spacing(1),
     },
     suggestedValue: {
       display: "flex",
       alignItems: "baseline",
       gap: theme.spacing(1),
       flexWrap: "wrap",
-      marginBottom: theme.spacing(1),
     },
     totalMoney: {
       fontWeight: 600,
@@ -41,7 +45,6 @@ export const useRefundCardStyles = makeStyles(
     shippingCostLine: {
       display: "flex",
       gap: theme.spacing(1),
-      marginBottom: theme.spacing(1),
       "& .MuiCheckbox-root": {
         padding: 0,
       },
@@ -50,7 +53,6 @@ export const useRefundCardStyles = makeStyles(
       display: "flex",
       justifyContent: "space-between",
       flexWrap: "wrap",
-      marginTop: theme.spacing(1.5),
       gap: theme.spacing(1),
       "& > span": {
         color: theme.palette.saleor.warning.dark,
@@ -62,7 +64,6 @@ export const useRefundCardStyles = makeStyles(
     },
     shippingCostLineLoading: {
       height: "21px",
-      marginBottom: theme.spacing(1),
     },
   }),
   { name: "RefundCard" },

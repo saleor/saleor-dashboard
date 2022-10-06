@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -46,10 +46,10 @@ export const RefundCard = ({
         className={classes.refundCardHeader}
         title={<FormattedMessage {...grantRefundPageMessages.refundTitle} />}
       />
-      <CardContent>
-        <p>
+      <CardContent className={classes.cardContent}>
+        <Typography variant="body2">
           <FormattedMessage {...grantRefundPageMessages.refundSubtitle} />
-        </p>
+        </Typography>
         {order ? (
           <div className={classes.shippingCostLine}>
             <Checkbox
