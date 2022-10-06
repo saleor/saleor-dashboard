@@ -4,12 +4,12 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderLineGrantRefundFragment } from "@saleor/graphql";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
@@ -88,7 +88,7 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           {renderCollection(
             lines,
             line => (
-              <TableRow key={line?.id}>
+              <TableRowLink key={line?.id}>
                 <TableCellAvatar
                   thumbnail={line?.thumbnail?.url}
                   className={classes.colProduct}
@@ -134,17 +134,17 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                     }}
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={3}>
                   <FormattedMessage
                     id="Q1Uzbb"
                     defaultMessage="No products found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>
