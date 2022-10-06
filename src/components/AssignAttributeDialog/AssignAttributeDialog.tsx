@@ -7,13 +7,13 @@ import {
   DialogTitle,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AvailableAttributeFragment } from "@saleor/graphql";
 import useElementScroll, {
   isScrolledToBottom,
@@ -170,7 +170,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   );
 
                   return (
-                    <TableRow key={maybe(() => attribute.id)}>
+                    <TableRowLink key={maybe(() => attribute.id)}>
                       <TableCell
                         padding="checkbox"
                         className={classes.checkboxCell}
@@ -186,16 +186,16 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                           {attribute.slug}
                         </Typography>
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   );
                 },
                 () =>
                   !loading && (
-                    <TableRow>
+                    <TableRowLink>
                       <TableCell colSpan={2}>
                         <FormattedMessage {...messages.noMembersFound} />
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   ),
               )}
             </TableBody>

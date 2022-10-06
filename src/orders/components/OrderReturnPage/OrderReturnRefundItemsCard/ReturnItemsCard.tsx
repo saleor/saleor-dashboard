@@ -5,12 +5,12 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   OrderDetailsFragment,
   OrderErrorFragment,
@@ -134,7 +134,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
       </CardContent>
       <ResponsiveTable>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell>
               <FormattedMessage
                 id="aAAxKp"
@@ -164,7 +164,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 description="table column header"
               />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -196,7 +196,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 : "50%";
 
               return (
-                <TableRow key={id}>
+                <TableRowLink key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
                     style={{ width: productNameCellWidth }}
@@ -251,15 +251,15 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                       />
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={4}>
                   <Skeleton />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

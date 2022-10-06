@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableRowLink from "@saleor/components/TableRowLink";
@@ -42,7 +36,7 @@ const CountryList: React.FC<CountryListProps> = props => {
     <Card>
       <ResponsiveTable>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell>
               <FormattedMessage id="07KB2d" defaultMessage="Country Code" />
             </TableCell>
@@ -55,7 +49,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                 defaultMessage="Reduced Tax Rates"
               />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -84,14 +78,14 @@ const CountryList: React.FC<CountryListProps> = props => {
               </TableRowLink>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={3}>
                   <FormattedMessage
                     id="3BTtL2"
                     defaultMessage="No countries found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

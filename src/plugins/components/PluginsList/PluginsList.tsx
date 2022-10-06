@@ -1,7 +1,8 @@
-import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { TablePaginationWithContext } from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PluginBaseFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
@@ -49,21 +50,21 @@ const PluginList: React.FC<PluginListProps> = props => {
     <ResponsiveTable>
       <PluginListTableHead sort={sort} onSort={onSort} />
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={totalColSpan}
             onUpdateListSettings={onUpdateListSettings}
             settings={settings}
             disabled={disabled}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
           plugins,
           plugin =>
             plugin ? (
-              <TableRow
+              <TableRowLink
                 data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
@@ -78,23 +79,23 @@ const PluginList: React.FC<PluginListProps> = props => {
                 <TableCell align="right">
                   <EditIcon />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ) : (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={totalColSpan}>
                   <Skeleton />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={totalColSpan}>
                 {intl.formatMessage({
                   id: "Co2U4u",
                   defaultMessage: "No plugins found",
                 })}
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

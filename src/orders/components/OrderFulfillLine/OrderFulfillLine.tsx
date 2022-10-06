@@ -1,6 +1,7 @@
-import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
+import { TableCell, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderFulfillLineFragment } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import {
@@ -60,7 +61,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
 
   if (!line) {
     return (
-      <TableRow key={lineIndex}>
+      <TableRowLink key={lineIndex}>
         <TableCellAvatar className={classes.colName}>
           <Skeleton />
         </TableCellAvatar>
@@ -76,12 +77,12 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         <TableCell className={classes.colWarehouse}>
           <Skeleton />
         </TableCell>
-      </TableRow>
+      </TableRowLink>
     );
   }
 
   return (
-    <TableRow key={line.id}>
+    <TableRowLink key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={line?.thumbnail?.url}
@@ -180,7 +181,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           </div>
         </IconButton>
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 OrderFulfillLine.displayName = "OrderFulfillLine";

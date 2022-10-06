@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -132,14 +126,14 @@ const PageList: React.FC<PageListProps> = props => {
           </TableCellHeader>
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
               disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}
             />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <TableBody>
           {renderCollection(
@@ -196,14 +190,14 @@ const PageList: React.FC<PageListProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="iMJka8"
                     defaultMessage="No pages found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

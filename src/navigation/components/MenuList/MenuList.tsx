@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -117,13 +111,13 @@ const MenuList: React.FC<MenuListProps> = props => {
           <TableCell className={classes.colAction} />
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
             />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <TableBody>
           {renderCollection(
@@ -169,14 +163,14 @@ const MenuList: React.FC<MenuListProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="DWs4ba"
                     defaultMessage="No menus found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

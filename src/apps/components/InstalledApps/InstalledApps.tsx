@@ -3,7 +3,6 @@ import {
   Switch,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { useAppListContext } from "@saleor/apps/context";
@@ -102,7 +101,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <AppsSkeleton key={index} />
               ),
             () => (
-              <TableRow className={classes.tableRow}>
+              <TableRowLink className={classes.tableRow}>
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
@@ -112,7 +111,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     />
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

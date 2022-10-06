@@ -7,7 +7,6 @@ import {
   DialogTitle,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -16,6 +15,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SearchStaffMembersQuery } from "@saleor/graphql";
 import useElementScroll, {
   isScrolledToBottom,
@@ -235,7 +235,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                   );
 
                   return (
-                    <TableRow key={member.id} data-test-id="user-row">
+                    <TableRowLink key={member.id} data-test-id="user-row">
                       <TableCell
                         padding="checkbox"
                         className={classes.checkboxCell}
@@ -286,16 +286,16 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                           )}
                         </Typography>
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   );
                 },
                 () =>
                   !loading && (
-                    <TableRow>
+                    <TableRowLink>
                       <TableCell colSpan={2}>
                         <FormattedMessage {...messages.noMembersFound} />
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   ),
               )}
             </TableBody>
