@@ -13,12 +13,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import SummaryLine from "../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../OrderSummaryCard/SummaryList";
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
+import { RefundsSummary } from "./components";
 import {
   orderPaymentActionButtonMessages,
   orderPaymentMessages,
 } from "./messages";
 import { useStyles } from "./styles";
-import { extractRefundedAmount } from "./utils";
 
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
@@ -82,13 +82,12 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const refundedAmount = extractRefundedAmount(order);
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const canGrantRefund =
     order?.transactions?.length > 0 || order?.payments?.length > 0;
-  const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
+  const canSendRefund = order?.grantedRefunds?.length > 0;
   const canAnyRefund = canGrantRefund || canSendRefund;
   const hasGiftCards = giftCardAmount > 0;
 
@@ -193,22 +192,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
             title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
           ></CardTitle>
           <CardContent>
-            {/* TODO: Add granted refund amount */}
-            {refundedAmount?.amount !== 0 ? (
-              <SummaryList className={classes.amountGrid}>
-                <SummaryLine
-                  vertical
-                  text={<FormattedMessage {...orderPaymentMessages.refunded} />}
-                  money={refundedAmount}
-                />
-              </SummaryList>
-            ) : (
-              <Typography variant="body2" className={classes.explainText}>
-                <FormattedMessage
-                  {...orderPaymentMessages.refundsExplanation}
-                />
-              </Typography>
-            )}
+            <RefundsSummary order={order} />
           </CardContent>
         </>
       )}

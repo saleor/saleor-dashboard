@@ -1617,6 +1617,12 @@ export const OrderDetailsFragmentDoc = gql`
   totalGrantedRefund {
     ...Money
   }
+  totalPendingRefund {
+    ...Money
+  }
+  totalRefunded {
+    ...Money
+  }
   actions
   totalAuthorized {
     ...Money

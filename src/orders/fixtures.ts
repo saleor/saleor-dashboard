@@ -804,6 +804,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   payments: [],
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalPendingRefund: prepareMoney(0),
   transactions: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
@@ -1707,6 +1709,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   transactions: [],
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalPendingRefund: prepareMoney(0),
   channel: {
     __typename: "Channel",
     slug: "channel-default",
