@@ -85,8 +85,10 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
+          overflowY: "hidden",
         },
         borderTop: `1px solid ${theme.palette.divider}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
         borderRadius: 0,
         boxSizing: "content-box",
       },
