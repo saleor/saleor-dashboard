@@ -116,7 +116,9 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
                     fullWidth
                     value={state.lines.get(line.id)?.selectedQuantity}
                     onChange={e => {
-                      const value = parseInt(e.target.value, 10);
+                      const parsedValue = parseInt(e.target.value, 10);
+                      const value = Number.isNaN(parsedValue) ? 0 : parsedValue;
+
                       dispatch({
                         type: "setQuantity",
                         lineId: line.id,
