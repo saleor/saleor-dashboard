@@ -25,10 +25,7 @@ import {
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
-import {
-  filterChosenCountries,
-  mapUndefinedTaxRatesToCountries,
-} from "../utils/utils";
+import { mapUndefinedTaxRatesToCountries } from "../utils/utils";
 
 interface CountriesListProps {
   id: string | undefined;
