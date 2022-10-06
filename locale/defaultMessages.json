@@ -4406,6 +4406,10 @@
   "WHkx+F": {
     "string": "Price cannot be lower than 0"
   },
+  "WIxSDm": {
+    "context": "card header",
+    "string": "{country} class rates"
+  },
   "WMGoqz": {
     "context": "used by filter label",
     "string": "Used by"
@@ -6775,10 +6779,6 @@
   "qEZ463": {
     "context": "export selected items to csv file",
     "string": "Selected products ({number})"
-  },
-  "qHb6xK": {
-    "context": "card header",
-    "string": "Tax class rates"
   },
   "qIgdO6": {
     "string": "Custom Filter"

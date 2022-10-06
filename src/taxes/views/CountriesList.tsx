@@ -24,6 +24,7 @@ import {
   TaxTab,
   taxTabPath,
 } from "../urls";
+import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import {
   filterChosenCountries,
   mapUndefinedTaxRatesToCountries,
@@ -121,6 +122,13 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
     refetch();
     return res;
   };
+
+  useTaxUrlRedirect({
+    id,
+    data: allCountryTaxes,
+    navigate,
+    urlFunction: taxCountriesListUrl,
+  });
 
   return (
     <>

@@ -87,8 +87,8 @@ export const taxesMessages = defineMessages({
     description: "card header title",
   },
   taxClassRatesHeader: {
-    id: "qHb6xK",
-    defaultMessage: "Tax class rates",
+    id: "WIxSDm",
+    defaultMessage: "{country} class rates",
     description: "card header",
   },
   searchTaxClasses: {
