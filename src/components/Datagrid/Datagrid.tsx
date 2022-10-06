@@ -208,7 +208,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           </div>
         }
       />
-      <CardContent>
+      <CardContent classes={{ root: classes.cardContentRoot }}>
         {rowsTotal > 0 ? (
           <>
             {selection?.rows.length > 0 && (
