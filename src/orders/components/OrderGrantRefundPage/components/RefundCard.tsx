@@ -112,11 +112,6 @@ export const RefundCard = ({
           />
         </div>
         <div className={classes.submitLine}>
-          <span>
-            <FormattedMessage
-              {...grantRefundPageMessages.refundStepExplanation}
-            />
-          </span>
           <ConfirmButton
             transitionState={submitState}
             variant="primary"

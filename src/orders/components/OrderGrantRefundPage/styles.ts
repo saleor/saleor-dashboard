@@ -51,12 +51,6 @@ export const useRefundCardStyles = makeStyles(
     },
     submitLine: {
       display: "flex",
-      justifyContent: "space-between",
-      flexWrap: "wrap",
-      gap: theme.spacing(1),
-      "& > span": {
-        color: theme.palette.saleor.warning.dark,
-      },
       "& button": {
         // when line overflows
         marginLeft: "auto",
