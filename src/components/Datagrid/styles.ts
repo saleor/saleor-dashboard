@@ -85,9 +85,11 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
+          overflowY: "hidden",
         },
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 8,
+        borderTop: `1px solid ${theme.palette.divider}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        borderRadius: 0,
         boxSizing: "content-box",
       },
       root: {
@@ -148,6 +150,9 @@ const useStyles = makeStyles(
         boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
       },
       rowActionSelected,
+      cardContentRoot: {
+        padding: "0 0 2.4rem 0",
+      },
     };
   },
   { name: "Datagrid" },
