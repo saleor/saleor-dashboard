@@ -9,7 +9,7 @@ export interface OrderGrantRefundFormData {
 }
 
 const defaultInitialData: OrderGrantRefundFormData = {
-  amount: "0",
+  amount: "",
   reason: "",
 };
 

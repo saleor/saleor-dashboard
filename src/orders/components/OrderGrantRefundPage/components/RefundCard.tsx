@@ -23,6 +23,7 @@ interface RefundCardProps {
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
   isEdit: boolean;
+  submitDisabled: boolean;
 }
 
 export const RefundCard = ({
@@ -30,6 +31,7 @@ export const RefundCard = ({
   loading,
   submitState,
   isEdit,
+  submitDisabled,
 }: RefundCardProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
@@ -113,6 +115,7 @@ export const RefundCard = ({
         </div>
         <div className={classes.submitLine}>
           <ConfirmButton
+            disabled={submitDisabled || loading}
             transitionState={submitState}
             variant="primary"
             type="submit"

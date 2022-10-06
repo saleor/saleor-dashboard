@@ -73,6 +73,9 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     initialData,
   });
 
+  const amount = parseFloat(data.amount);
+  const submitDisabled = Number.isNaN(amount) || amount <= 0;
+
   const totalSelectedPrice = calculateTotalPrice(state, order);
 
   const handleSubmit = (e: React.FormEvent<any>) => {
@@ -162,6 +165,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 loading={loading}
                 submitState={submitState}
                 isEdit={isEdit}
+                submitDisabled={submitDisabled}
               />
             </div>
           </Grid>
