@@ -144,12 +144,12 @@ jobs:
           record: true
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ github.event.inputs.tags }}
 
-  get-domain:
+  get-url:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
-      domain: ${{ steps.get-domain.outputs.domain }}
+      url: ${{ steps.get-url.outputs.url }}
     env:
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
       VERSION: ${{github.event.client_payload.version}}
@@ -159,16 +159,16 @@ jobs:
               cd .github/workflows
               npm ci
 
-      - name: get-domain
-        id: get-domain
+      - name: get-url
+        id: get-url
         run: |
-              node .github/workflows/getDomainForReleaseTests.js \
+              node .github/workflows/getUrlForReleaseTests.js \
               --version $VERSION \
               --token "$TOKEN"
 
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
-    needs: get-domain
+    needs: get-url
     runs-on: ubuntu-latest
     outputs:
       status: ${{ steps.cypress.outcome }}
@@ -198,9 +198,9 @@ jobs:
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{ needs.get-domain.outputs.domain }}graphql/
+          API_URI: ${{ needs.get-url.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: ${{ needs.get-domain.outputs.domain }}dashboard/
+          CYPRESS_baseUrl: ${{ needs.get-url.outputs.url }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
