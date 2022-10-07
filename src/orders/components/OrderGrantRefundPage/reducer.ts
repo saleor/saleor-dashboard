@@ -1,4 +1,5 @@
 import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
+import { exhaustiveCheck } from "@saleor/utils/ts";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;
@@ -120,8 +121,7 @@ export function grantRefundReducer(
       };
     }
 
-    default: {
-      throw new Error(`Unhandled reducer action ${action}`);
-    }
+    default:
+      exhaustiveCheck(action);
   }
 }
