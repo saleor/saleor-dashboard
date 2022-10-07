@@ -71,6 +71,7 @@ jobs:
 
       - name: revert snapshot
         env:
+          CI: true
           SALEOR_CLI_ENV: staging
         run: npx saleor backup restore 9S4PckyI --skip-webhooks-update
 
