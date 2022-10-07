@@ -1,7 +1,11 @@
 import { act, renderHook } from "@testing-library/react-hooks";
+import React from "react";
 
 import { AvailableColumn } from "./types";
-import useDatagridChange from "./useDatagridChange";
+import useDatagridChange, {
+  DatagridChangeStateContext,
+  useDatagridChangeState,
+} from "./useDatagridChange";
 
 const columns: AvailableColumn[] = [
   { id: "name", title: "Name", width: 100 },
@@ -9,8 +13,20 @@ const columns: AvailableColumn[] = [
   { id: "size", title: "Size", width: 100 },
 ];
 
+const GridContext = ({ children }) => {
+  const stateProps = useDatagridChangeState();
+
+  return (
+    <DatagridChangeStateContext.Provider value={stateProps}>
+      {children}
+    </DatagridChangeStateContext.Provider>
+  );
+};
+
 function setupHook() {
-  return renderHook(() => useDatagridChange(columns, 10));
+  return renderHook(() => useDatagridChange(columns, 10), {
+    wrapper: GridContext,
+  });
 }
 
 describe("useDatagridChange", () => {
