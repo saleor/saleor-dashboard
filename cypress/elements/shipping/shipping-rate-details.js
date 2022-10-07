@@ -6,11 +6,10 @@ export const SHIPPING_RATE_DETAILS = {
   addPostalCodesButton: '[data-test-id="add-postal-code-range"]',
   postalCodesForm: {
     min: '[name="min"]',
-    max: '[name="max"]'
+    max: '[name="max"]',
   },
   maxValueInput: '[name*="maxValue"]',
   minValueInput: '[name*="minValue"]',
   minDeliveryTimeInput: '[name="minDays"]',
   maxDeliveryTimeInput: '[name="maxDays"]',
-  restrictWeightLimitCheckbox: '[name="orderValueRestricted"]'
 };

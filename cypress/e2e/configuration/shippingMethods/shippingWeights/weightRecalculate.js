@@ -94,10 +94,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
           );
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
-          cy.get(SHIPPING_RATE_DETAILS.restrictWeightLimitCheckbox)
-            .click()
-            .get(SHIPPING_RATE_DETAILS.minValueInput)
-            .invoke("val");
+          cy.get(SHIPPING_RATE_DETAILS.minValueInput).invoke("val");
         })
         .then(actualMinWeight => {
           expect(parseInt(actualMinWeight, 10)).to.eq(minWeightInG);
