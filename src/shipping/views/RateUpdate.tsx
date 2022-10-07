@@ -248,7 +248,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          formData.orderValueRestricted,
           formData.channelListings,
           shippingChannels,
         ),

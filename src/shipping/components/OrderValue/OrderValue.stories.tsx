@@ -12,7 +12,6 @@ const props: OrderValueProps = {
   ),
   disabled: false,
   errors: [],
-  orderValueRestricted: true,
   onChange: () => undefined,
   onChannelsChange: () => undefined,
 };

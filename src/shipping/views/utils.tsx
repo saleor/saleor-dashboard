@@ -1,8 +1,4 @@
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum,
-  ShippingZoneQuery,
-} from "@saleor/graphql";
+import { PostalCodeRuleInclusionTypeEnum } from "@saleor/graphql";
 import { MinMax } from "@saleor/types";
 
 export const filterPostalCodes = (postalCodes, codeToFilterOut) =>
@@ -24,17 +20,3 @@ export const getRuleObject = (
   inclusionType,
   start: rule.min,
 });
-
-export const haveValuesRestricted = (
-  variant: ShippingMethodTypeEnum,
-  rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0],
-) => {
-  if (variant === ShippingMethodTypeEnum.PRICE) {
-    return rate.channelListings.some(
-      ({ minimumOrderPrice, maximumOrderPrice }) =>
-        minimumOrderPrice || maximumOrderPrice,
-    );
-  }
-
-  return !!rate?.minimumOrderWeight || !!rate?.maximumOrderWeight;
-};

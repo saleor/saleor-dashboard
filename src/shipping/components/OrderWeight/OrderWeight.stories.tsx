@@ -10,7 +10,6 @@ const props: OrderWeightProps = {
   errors: [],
   maxValue: "2",
   minValue: "1",
-  orderValueRestricted: true,
   onChange: () => undefined,
 };
 

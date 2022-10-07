@@ -85,7 +85,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     minValue: "",
     name: "",
     description: null,
-    orderValueRestricted: true,
     type: null,
   };
 
@@ -169,14 +168,11 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 <OrderValue
                   channels={data.channelListings}
                   errors={channelErrors}
-                  orderValueRestricted={data.orderValueRestricted}
                   disabled={disabled}
-                  onChange={change}
                   onChannelsChange={handleChannelsChange}
                 />
               ) : (
                 <OrderWeight
-                  orderValueRestricted={data.orderValueRestricted}
                   disabled={disabled}
                   minValue={data.minValue}
                   maxValue={data.maxValue}

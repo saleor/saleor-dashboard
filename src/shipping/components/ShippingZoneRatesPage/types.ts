@@ -7,7 +7,6 @@ export interface ShippingZoneRateCommonFormData {
   channelListings: ChannelShippingData[];
   name: string;
   description: OutputData;
-  orderValueRestricted: boolean;
   minValue: string;
   maxValue: string;
   minDays: string;
