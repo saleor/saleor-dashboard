@@ -1,8 +1,8 @@
 import createGenerateClassName from "@material-ui/styles/createGenerateClassName";
 import initStoryshots from "@storybook/addon-storyshots";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 // tslint:disable no-submodule-imports
 import { configure, render } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import toJSON from "enzyme-to-json";
 import React from "react";
 

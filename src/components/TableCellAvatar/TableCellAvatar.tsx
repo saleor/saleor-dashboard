@@ -19,7 +19,9 @@ const useStyles = makeStyles(
   { name: "TableCellAvatar" },
 );
 
-interface TableCellAvatarProps extends AvatarProps, TableCellProps {
+interface TableCellAvatarProps
+  extends TableCellProps,
+    Omit<AvatarProps, "children"> {
   className?: string;
 }
 
