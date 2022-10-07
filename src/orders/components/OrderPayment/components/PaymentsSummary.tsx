@@ -12,9 +12,18 @@ interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
 }
 
+enum PaymentState {
+  NO_DATA,
+  AMOUNTS_MISMATCH,
+  PARTIAL_CAPTURE,
+  PARTIAL_AUTHORIZED,
+  FULLY_SETTLED,
+}
+
 export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   if (!order) {
     return {
+      state: PaymentState.NO_DATA,
       authorized: false,
       captured: false,
     };
@@ -25,33 +34,33 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   const total = order.total.gross?.amount ?? 0;
 
   if (authorized && captured) {
-    // different amounts
     return {
+      state: PaymentState.AMOUNTS_MISMATCH,
       authorized: true,
       captured: true,
     };
   }
 
   if (captured !== 0 && captured !== total) {
-    // partial capture
     return {
+      state: PaymentState.PARTIAL_CAPTURE,
       authorized: false,
       captured: true,
     };
   }
 
   if (authorized !== 0) {
-    // not fully authorized
     return {
+      state: PaymentState.PARTIAL_AUTHORIZED,
       authorized: true,
       captured: false,
     };
   }
 
-  // fully paid / not paid at all
   return {
-    authorized: false,
+    state: PaymentState.FULLY_SETTLED,
     captured: false,
+    authorized: false,
   };
 };
 
@@ -59,7 +68,11 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
   const classes = useStyles();
   const shouldDisplay = getShouldDisplayAmounts(order);
 
-  if (!(shouldDisplay.authorized || shouldDisplay.captured)) {
+  if (
+    [PaymentState.FULLY_SETTLED, PaymentState.NO_DATA].includes(
+      shouldDisplay.state,
+    )
+  ) {
     return null;
   }
 
