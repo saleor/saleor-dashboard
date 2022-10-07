@@ -5,7 +5,6 @@ import PageHeader from "@saleor/components/PageHeader";
 import { PageFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import {
-  pageCreateUrl,
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField,
@@ -28,11 +27,13 @@ export interface PageListPageProps
   pages: PageFragment[];
   params: PageListUrlQueryParams;
   actionDialogOpts: PageListActionDialogOpts;
+  onAdd: () => void;
 }
 
 const PageListPage: React.FC<PageListPageProps> = ({
   params,
   actionDialogOpts,
+  onAdd,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -40,11 +41,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button
-          href={pageCreateUrl()}
-          variant="primary"
-          data-test-id="create-page"
-        >
+        <Button onClick={onAdd} variant="primary" data-test-id="create-page">
           <FormattedMessage
             id="AHRDWt"
             defaultMessage="Create page"

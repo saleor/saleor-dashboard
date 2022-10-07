@@ -16,6 +16,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import SaleDetailsPage, {
   SaleDetailsPageTab,
+  SaleTabItemsCount,
 } from "@saleor/discounts/components/SaleDetailsPage";
 import {
   saleListUrl,
@@ -24,6 +25,7 @@ import {
   SaleUrlQueryParams,
 } from "@saleor/discounts/urls";
 import {
+  SaleDetailsQueryVariables,
   useSaleCataloguesAddMutation,
   useSaleCataloguesRemoveMutation,
   useSaleDeleteMutation,
@@ -107,11 +109,25 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     setActiveTab(tab);
   };
 
+  const detailsQueryInclude: Pick<
+    SaleDetailsQueryVariables,
+    | "includeCategories"
+    | "includeCollections"
+    | "includeProducts"
+    | "includeVariants"
+  > = {
+    includeCategories: activeTab === SaleDetailsPageTab.categories,
+    includeCollections: activeTab === SaleDetailsPageTab.collections,
+    includeProducts: activeTab === SaleDetailsPageTab.products,
+    includeVariants: activeTab === SaleDetailsPageTab.variants,
+  };
+
   const { data, loading } = useSaleDetailsQuery({
     displayLoader: true,
     variables: {
       id,
       ...paginationState,
+      ...detailsQueryInclude,
     },
   });
 
@@ -212,6 +228,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     saleCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           categories: ids,
@@ -223,6 +240,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     saleCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           collections: ids,
@@ -234,6 +252,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     saleCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           products: ids,
@@ -245,6 +264,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     saleCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           variants: ids,
@@ -256,6 +276,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     tabPageInfo,
     paginationState,
   );
+
+  const tabItemsCount: SaleTabItemsCount = {
+    categories: data?.sale?.categoriesCount?.totalCount,
+    collections: data?.sale?.collectionsCount?.totalCount,
+    products: data?.sale?.productsCount?.totalCount,
+    variants: data?.sale?.variantsCount?.totalCount,
+  };
 
   const handleUpdate = createUpdateHandler(
     data?.sale,
@@ -323,6 +350,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           })
         }
         activeTab={activeTab}
+        tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}
@@ -388,6 +416,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           saleCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 variants,
@@ -411,6 +440,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           saleCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 products,
@@ -437,6 +467,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           saleCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 categories,
@@ -460,6 +491,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           saleCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 collections,

@@ -20,6 +20,7 @@ import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import {
   PageDetailsFragment,
+  PageErrorWithAttributesFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
@@ -39,6 +40,7 @@ import {
   getAttributeInputFromPageType,
 } from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
+import { validatePageCreateData } from "@saleor/pages/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -47,7 +49,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -85,6 +87,7 @@ export interface UsePageUpdateFormOutput
   extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
     RichTextProps {
   valid: boolean;
+  validationErrors: PageErrorWithAttributesFragment[];
 }
 
 export type UsePageUpdateFormRenderProps = Omit<
@@ -142,6 +145,9 @@ function usePageForm(
       confirmLeave: true,
     },
   );
+  const [validationErrors, setValidationErrors] = useState<
+    PageErrorWithAttributesFragment[]
+  >([]);
 
   const attributes = useFormset(
     pageExists
@@ -160,7 +166,11 @@ function usePageForm(
   });
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
-  const { setExitDialogSubmitRef, setIsSubmitDisabled } = useExitFormDialog({
+  const {
+    setExitDialogSubmitRef,
+    setIsSubmitDisabled,
+    setIsDirty,
+  } = useExitFormDialog({
     formId,
   });
 
@@ -247,7 +257,15 @@ function usePageForm(
   });
 
   const handleSubmit = async (data: PageData) => {
-    const errors = await onSubmit(data);
+    let errors = validatePageCreateData(data);
+
+    setValidationErrors(errors);
+
+    if (errors.length) {
+      return errors;
+    }
+
+    errors = await onSubmit(data);
 
     if (!errors?.length && pageExists) {
       attributesWithNewFileValue.set([]);
@@ -261,18 +279,34 @@ function usePageForm(
     onSubmit: handleSubmit,
   });
 
-  const submit = async () => handleFormSubmit(await getSubmitData());
+  const submit = async () => {
+    const errors = await handleFormSubmit(await getSubmitData());
+
+    if (errors.length) {
+      setIsSubmitDisabled(isSaveDisabled);
+      setIsDirty(true);
+    }
+
+    return errors;
+  };
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const valid = pageExists || !!opts.selectedPageType;
 
   const isSaveDisabled = disabled || !valid;
-  setIsSubmitDisabled(isSaveDisabled);
+
+  useEffect(() => {
+    setIsSubmitDisabled(isSaveDisabled);
+    if (!pageExists) {
+      setIsDirty(true);
+    }
+  }, [isSaveDisabled]);
 
   return {
     change: handleChange,
     data,
+    validationErrors,
     valid,
     handlers: {
       changeMetadata,
