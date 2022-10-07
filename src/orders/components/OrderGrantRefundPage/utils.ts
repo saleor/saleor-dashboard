@@ -8,7 +8,7 @@ export const calculateTotalPrice = (
   order: OrderDetailsGrantRefundFragment,
 ): number => {
   const shippingCost = order?.shippingPrice?.gross?.amount ?? 0;
-  const lines = [...state.lines.values()];
+  const lines = Array.from(state.lines.values());
 
   const linesValue = lines.reduce((total, line) => {
     const price = currency(line.unitPrice).multiply(line.selectedQuantity);
