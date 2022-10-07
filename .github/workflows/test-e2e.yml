@@ -1,13 +1,12 @@
-name: E2E
+name: TEST-E2E
 
 on:
   pull_request:
     types: [edited, labeled]
 
 jobs:
-  
   get-selected-tags-and-containers:
-    if:  ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run e2e') }}
     runs-on: ubuntu-latest
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
@@ -17,26 +16,26 @@ jobs:
       - name: Get tags
         id: get_tags
         uses: actions/github-script@v6
-        env: 
+        env:
           pullRequestBody: ${{ github.event.pull_request.body }}
         with:
           result-encoding: string
           script: |
-                  const { pullRequestBody } = process.env
-                  const tags = ["@critical"];
-                  try{
-                    const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
-                    const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`CONTAINERS`);
-                    let tagsInString = removedPullRequestBodyAfterTests[0];
-                    tagsInString = tagsInString.split('\n');
-                    tagsInString.forEach(line => {
-                      if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
-                    });
-                    const tagsToReturn = tags.join(",").toString();
-                    return tagsToReturn.replace(/\r/g, '')
-                  }catch{
-                    return '@critical'
-                  }
+            const { pullRequestBody } = process.env
+            const tags = ["@critical"];
+            try{
+              const removedPullRequestBodyBeforeTests = pullRequestBody.split(`### Do you want to run more stable tests?`);
+              const removedPullRequestBodyAfterTests = removedPullRequestBodyBeforeTests[1].split(`CONTAINERS`);
+              let tagsInString = removedPullRequestBodyAfterTests[0];
+              tagsInString = tagsInString.split('\n');
+              tagsInString.forEach(line => {
+                if (line.includes('[x]')) tags.push(line.replace(/[0-9]+\. \[x\] /, "@stable+@"))
+              });
+              const tagsToReturn = tags.join(",").toString();
+              return tagsToReturn.replace(/\r/g, '')
+            }catch{
+              return '@critical'
+            }
       - name: get-containers
         id: get_containers
         uses: actions/github-script@v6
@@ -44,19 +43,18 @@ jobs:
           pullRequestBody: ${{ github.event.pull_request.body }}
         with:
           script: |
-                  const { pullRequestBody } = process.env
-                  const containers = [];
-                    const numberOfContainersRegex = /CONTAINERS=(\d*)/
-                    const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
-                    for(let i=1; i<=numberOfContainers[1]; i++){
-                      containers.push(i)
-                    }
-                  return {"containers": containers}
+            const { pullRequestBody } = process.env
+            const containers = [];
+              const numberOfContainersRegex = /CONTAINERS=(\d*)/
+              const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
+              for(let i=1; i<=numberOfContainers[1]; i++){
+                containers.push(i)
+              }
+            return {"containers": containers}
   install-cypress:
     needs: get-selected-tags-and-containers
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -64,7 +62,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-          
+
       - name: Wait for Deploy and tests
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
@@ -79,7 +77,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-    
+
   run-tests-in-parallel-on-label:
     needs: [get-selected-tags-and-containers, install-cypress]
     runs-on: ubuntu-latest
@@ -87,16 +85,16 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 10
-      matrix: ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
+      matrix:
+        ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
         # run copies of the current job in parallel
     steps:
-
       - uses: rlespinasse/github-slug-action@3.1.0
 
       - name: Set domain
         id: set-domain
         run: |
-          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"  
+          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
@@ -125,6 +123,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.get-selected-tags-and-containers.outputs.tags }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: e2eTestsOnPR
