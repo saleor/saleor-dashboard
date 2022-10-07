@@ -28,7 +28,7 @@ import {
   grantRefundReducer,
 } from "./reducer";
 import { useStyles } from "./styles";
-import { calculateTotalPrice } from "./utils";
+import { calculateTotalPrice, getFulfilmentSubtitle } from "./utils";
 
 export interface OrderGrantRefundPageProps {
   order: OrderDetailsGrantRefundFragment;
@@ -130,7 +130,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                       variant="body1"
                       className={classes.fulfilmentNumber}
                     >
-                      {`#${order.number}-${fulfillment.fulfillmentOrder}`}
+                      {getFulfilmentSubtitle(order, fulfillment)}
                     </Typography>
                   }
                   lines={fulfillment.lines.map(

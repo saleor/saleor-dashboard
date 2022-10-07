@@ -21,3 +21,8 @@ export const calculateTotalPrice = (
 
   return linesValue.value;
 };
+
+export const getFulfilmentSubtitle = (
+  order: OrderDetailsGrantRefundFragment,
+  fulfillment: OrderDetailsGrantRefundFragment["fulfillments"][0],
+) => `#${order.number}-${fulfillment.fulfillmentOrder}`;
