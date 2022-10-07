@@ -174,6 +174,7 @@
     "graphql-request": "^3.7.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "jest-file": "^1.0.0",
     "jest-localstorage-mock": "^2.4.3",
@@ -231,6 +232,7 @@
       "node"
     ],
     "moduleNameMapper": {
+      "\\.(css)$": "identity-obj-proxy",
       "@assets(.*)$": "<rootDir>/assets/$1",
       "@locale(.*)$": "<rootDir>/locale/$1",
       "@saleor(?!.*macaw)(?!.*sdk)(.*)$": "<rootDir>/src/$1",

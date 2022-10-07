@@ -24,6 +24,7 @@ const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
 jest.mock("@saleor/components/RichTextEditor/RichTextEditor");
 jest.mock("@saleor/utils/richText/useRichText");
+jest.mock("@glideapps/glide-data-grid");
 
 (global as any).document.createRange = () => ({
   // eslint-disable-next-line
@@ -85,6 +86,7 @@ const selectors = {
 
 describe("Product details page", () => {
   useNavigator.mockImplementation();
+  // DataEditor.mockImplementation();
   it("can select empty option on attribute", async () => {
     const component = mount(
       <MemoryRouter>
