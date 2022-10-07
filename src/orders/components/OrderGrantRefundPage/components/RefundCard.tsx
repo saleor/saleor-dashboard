@@ -40,7 +40,7 @@ export const RefundCard = ({
 
   const { state, dispatch, form, totalSelectedPrice } = useGrantRefundContext();
 
-  const currency = order?.total?.gross?.currency ?? "USD";
+  const currency = order?.total?.gross?.currency ?? "";
 
   return (
     <Card>
