@@ -1072,10 +1072,6 @@
     "context": "button",
     "string": "Create page type"
   },
-  "6Joy8j": {
-    "context": "sum of all refunds from transactions in order",
-    "string": "Refunded"
-  },
   "6L6Fy2": {
     "context": "header",
     "string": "Disclaimer"
@@ -2676,6 +2672,10 @@
     "context": "variant created success message",
     "string": "Variant created"
   },
+  "IfiR4M": {
+    "context": "heading, sum of all pending refunds from transactions in order",
+    "string": "Pending"
+  },
   "IhK1F3": {
     "string": "No shipping zones found"
   },
@@ -3282,6 +3282,10 @@
   "NNT3Lp": {
     "context": "collections section name",
     "string": "Collections"
+  },
+  "NPIBGp": {
+    "context": "heading, sum of all granted refunds from transactions in order",
+    "string": "Granted"
   },
   "NPfmdK": {
     "context": "webhook input label",
@@ -5849,6 +5853,10 @@
   "ho75Lr": {
     "context": "status label deactivated",
     "string": "Deactivated"
+  },
+  "hoii+4": {
+    "context": "heading, sum of all completed refunds from transactions in order",
+    "string": "Refunded"
   },
   "hpMcW8": {
     "string": "Define how users can navigate through your store"
