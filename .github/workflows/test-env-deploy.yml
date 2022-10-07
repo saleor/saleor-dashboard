@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: rlespinasse/github-slug-action@3.1.0
+      - uses: rlespinasse/github-slug-action@e4699e49fcf890a3172a02c56ba78d867dbb9fd5 # 3.1.0
 
       - name: Start deployment
         uses: bobheadxi/deployments@v0.4.2

@@ -65,7 +65,7 @@ jobs:
           node-version: 14
 
       - name: Wait for Deploy and tests
-        uses: lewagon/wait-on-check-action@v1.0.0
+        uses: lewagon/wait-on-check-action@0179dfc359f90a703c41240506f998ee1603f9ea # v1.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -90,7 +90,7 @@ jobs:
         ${{ fromJson(needs.get-selected-tags-and-containers.outputs.containers) }}
         # run copies of the current job in parallel
     steps:
-      - uses: rlespinasse/github-slug-action@3.1.0
+      - uses: rlespinasse/github-slug-action@e4699e49fcf890a3172a02c56ba78d867dbb9fd5 # 3.1.0
 
       - name: Set domain
         id: set-domain
@@ -105,7 +105,7 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+          echo "::set-output name=custom_api_uri::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed "s/$prefix//" | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
       - name: Checkout
         uses: actions/checkout@v2
 
