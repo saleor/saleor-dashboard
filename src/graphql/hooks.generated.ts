@@ -996,6 +996,18 @@ export const TaxClassUpdateErrorFragmentFragmentDoc = gql`
   code
 }
     `;
+export const TaxClassCreateErrorFragmentFragmentDoc = gql`
+    fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+  field
+  code
+}
+    `;
+export const TaxClassDeleteErrorFragmentFragmentDoc = gql`
+    fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+  field
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -15009,6 +15021,80 @@ export function useTaxClassUpdateMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type TaxClassUpdateMutationHookResult = ReturnType<typeof useTaxClassUpdateMutation>;
 export type TaxClassUpdateMutationResult = Apollo.MutationResult<Types.TaxClassUpdateMutation>;
 export type TaxClassUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>;
+export const TaxClassCreateDocument = gql`
+    mutation TaxClassCreate($input: TaxClassCreateInput!) {
+  taxClassCreate(input: $input) {
+    errors {
+      ...TaxClassCreateErrorFragment
+    }
+    taxClass {
+      ...TaxClass
+    }
+  }
+}
+    ${TaxClassCreateErrorFragmentFragmentDoc}
+${TaxClassFragmentDoc}`;
+export type TaxClassCreateMutationFn = Apollo.MutationFunction<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>;
+
+/**
+ * __useTaxClassCreateMutation__
+ *
+ * To run a mutation, you first call `useTaxClassCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTaxClassCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [taxClassCreateMutation, { data, loading, error }] = useTaxClassCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useTaxClassCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>(TaxClassCreateDocument, options);
+      }
+export type TaxClassCreateMutationHookResult = ReturnType<typeof useTaxClassCreateMutation>;
+export type TaxClassCreateMutationResult = Apollo.MutationResult<Types.TaxClassCreateMutation>;
+export type TaxClassCreateMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>;
+export const TaxClassDeleteDocument = gql`
+    mutation TaxClassDelete($id: ID!) {
+  taxClassDelete(id: $id) {
+    errors {
+      ...TaxClassDeleteErrorFragment
+    }
+  }
+}
+    ${TaxClassDeleteErrorFragmentFragmentDoc}`;
+export type TaxClassDeleteMutationFn = Apollo.MutationFunction<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>;
+
+/**
+ * __useTaxClassDeleteMutation__
+ *
+ * To run a mutation, you first call `useTaxClassDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTaxClassDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [taxClassDeleteMutation, { data, loading, error }] = useTaxClassDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTaxClassDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>(TaxClassDeleteDocument, options);
+      }
+export type TaxClassDeleteMutationHookResult = ReturnType<typeof useTaxClassDeleteMutation>;
+export type TaxClassDeleteMutationResult = Apollo.MutationResult<Types.TaxClassDeleteMutation>;
+export type TaxClassDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>;
 export const CountryListDocument = gql`
     query CountryList {
   shop {

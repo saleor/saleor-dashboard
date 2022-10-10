@@ -88,3 +88,26 @@ export const taxClassUpdate = gql`
     }
   }
 `;
+
+export const taxClassCreate = gql`
+  mutation TaxClassCreate($input: TaxClassCreateInput!) {
+    taxClassCreate(input: $input) {
+      errors {
+        ...TaxClassCreateErrorFragment
+      }
+      taxClass {
+        ...TaxClass
+      }
+    }
+  }
+`;
+
+export const taxClassDelete = gql`
+  mutation TaxClassDelete($id: ID!) {
+    taxClassDelete(id: $id) {
+      errors {
+        ...TaxClassDeleteErrorFragment
+      }
+    }
+  }
+`;
