@@ -84,6 +84,8 @@ describe("As an admin I should be able to create variant", () => {
             .get(PRODUCT_DETAILS.addVariantButton)
             .should("exist")
             .click()
+            .get(PRODUCT_DETAILS.dataGridTable)
+            .should("be.visible")
             .get(PRODUCT_DETAILS.firstRowDataGrid)
             .click({ force: true })
             .type(name)
