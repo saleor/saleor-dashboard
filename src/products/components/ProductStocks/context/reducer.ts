@@ -15,7 +15,7 @@ export type Action =
 
 export const initialState: State = {
   isLoading: false,
-  isValid: false,
+  isValid: true,
 };
 
 export const reducer = (state: State, action: Action) => {
