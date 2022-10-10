@@ -94,6 +94,8 @@ describe("As an admin I should be able to create variant", () => {
             .confirmationMessageShouldAppear()
             .reload()
             .waitForProgressBarToNotBeVisible()
+            .get(PRODUCT_DETAILS.dataGridTable)
+            .should("be.visible")
             .get(BUTTON_SELECTORS.showMoreButton)
             .click()
             .get(PRODUCT_DETAILS.editVariant)
