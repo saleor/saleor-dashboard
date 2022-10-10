@@ -22,7 +22,7 @@ export function updateShopWeightUnit(weightUnit) {
 
 export function updateStockReservation({
   authenticatedUserStock = 0,
-  anonymousUserStock = 0
+  anonymousUserStock = 0,
 }) {
   const mutation = `mutation{
     shopSettingsUpdate(input:{
