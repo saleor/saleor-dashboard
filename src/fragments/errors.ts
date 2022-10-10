@@ -514,3 +514,15 @@ export const taxClassUpdateError = gql`
     code
   }
 `;
+export const taxClassCreateError = gql`
+  fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+    field
+    code
+  }
+`;
+export const taxClassDeleteError = gql`
+  fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+    field
+    code
+  }
+`;
