@@ -10,7 +10,7 @@ on:
         type: string
       tags:
         required: true
-        description: 'Build dashboard and run test with this API url'
+        description: 'Run tests with typed tags'
         type: string
         default: "@stable"
 
@@ -22,10 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: rlespinasse/github-slug-action@3.1.0
+      - uses: rlespinasse/github-slug-action@e4699e49fcf890a3172a02c56ba78d867dbb9fd5
 
       - name: Start deployment
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@2666faab9444f09ccd666f2dbe67687a5f6512f0
         id: deployment
         with:
           step: start
@@ -62,7 +62,7 @@ jobs:
         id: set-domain
         # Set test instance domain based on branch name slug
         run: |
-          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+          echo "::set-output name=domain::test-deploy-${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -79,7 +79,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
 
       - name: Update deployment status
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@2666faab9444f09ccd666f2dbe67687a5f6512f0
         if: always()
         with:
           step: finish
