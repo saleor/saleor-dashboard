@@ -96,6 +96,7 @@ describe("As an admin I should be able to create variant", () => {
             .waitForProgressBarToNotBeVisible()
             .get(PRODUCT_DETAILS.dataGridTable)
             .should("be.visible")
+            .wait(1000)
             .get(BUTTON_SELECTORS.showMoreButton)
             .click()
             .get(PRODUCT_DETAILS.editVariant)
@@ -156,22 +157,27 @@ describe("As an admin I should be able to create variant", () => {
             .get(PRODUCT_DETAILS.editVariant)
             .click()
             .get(PRODUCT_DETAILS.addVariantButton)
-            .click();
-          createVariant({
-            sku: secondVariantSku,
-            attributeName: variants[1].name,
-            price: variants[1].price,
-            channelName: defaultChannel.name,
-          });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(firstVariant).to.have.property("name", "value");
-          expect(firstVariant).to.have.property("currency", "USD");
-          expect(secondVariant).to.have.property("name", "value2");
-          expect(secondVariant).to.have.property("price", variants[1].price);
-          expect(secondVariant).to.have.property("currency", "USD");
+            .click()
+            .then(() => {
+              createVariant({
+                sku: secondVariantSku,
+                attributeName: variants[1].name,
+                price: variants[1].price,
+                channelName: defaultChannel.name,
+              });
+              getProductVariants(createdProduct.id, defaultChannel.slug);
+            })
+            .then(([firstVariant, secondVariant]) => {
+              expect(firstVariant).to.have.property("price", variants[0].price);
+              expect(firstVariant).to.have.property("name", "value");
+              expect(firstVariant).to.have.property("currency", "USD");
+              expect(secondVariant).to.have.property("name", "value2");
+              expect(secondVariant).to.have.property(
+                "price",
+                variants[1].price,
+              );
+              expect(secondVariant).to.have.property("currency", "USD");
+            });
         });
     },
   );
