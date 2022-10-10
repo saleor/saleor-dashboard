@@ -46,6 +46,19 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 };
 
+const getFractionDigits = (locale: Locale, currency: string) => {
+  try {
+    const numberFormat = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+    });
+
+    return numberFormat.resolvedOptions().maximumFractionDigits;
+  } catch (e) {
+    return 2;
+  }
+};
+
 export const moneyCellRenderer = (
   locale: Locale,
 ): CustomCellRenderer<MoneyCell> => ({
@@ -53,10 +66,7 @@ export const moneyCellRenderer = (
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { currency, value } = cell.data;
-    const currencyFractionDigits = new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-    }).resolvedOptions().maximumFractionDigits;
+    const currencyFractionDigits = getFractionDigits(locale, currency);
     const formatted =
       value?.toLocaleString(locale, {
         maximumFractionDigits: currencyFractionDigits,

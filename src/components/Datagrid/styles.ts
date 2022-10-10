@@ -91,6 +91,7 @@ const useStyles = makeStyles(
         borderBottom: `1px solid ${theme.palette.divider}`,
         borderRadius: 0,
         boxSizing: "content-box",
+        width: "100%",
       },
       root: {
         position: "relative",
