@@ -1,7 +1,6 @@
-overwrite: true
-schema: ./introspection.json
 generates:
   ./src/graphql/fragmentTypes.generated.ts:
+    schema: ./introspection.json
     plugins:
       - add:
           content: /* eslint-disable */
@@ -9,12 +8,25 @@ generates:
     config:
       minify: false
       apolloClientVersion: 3
+  ./src/graphql/saleorDashboard.ts:
+    schema:
+      - https://tmp-nsl-api.st.jutromedical.com/doctor
+    documents: "src/api/patient/*.{graphql,js,ts,jsx,tsx}"
+    config:
+      skipTypename: true
+      namingConvention: keep
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
   ./src/graphql/typePolicies.generated.ts:
+    schema: ./introspection.json
     plugins:
       - add:
           content: /* eslint-disable */
       - typescript-apollo-client-helpers
   ./src/graphql/types.generated.ts:
+    schema: ./introspection.json
     documents:
       - ./src/**/queries.ts
       - ./src/**/mutations.ts
@@ -36,6 +48,7 @@ generates:
       - typescript
       - typescript-operations
   ./src/graphql/hooks.generated.ts:
+    schema: ./introspection.json
     documents:
       - ./src/**/queries.ts
       - ./src/**/mutations.ts

@@ -49,6 +49,7 @@ import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { ProductSkuProvider } from "@saleor/products/components/ProductStocks/context";
 import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
@@ -557,81 +558,87 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             }}
           />
         ))}
-      <ProductUpdatePage
-        productId={id}
-        isSimpleProduct={isSimpleProduct}
-        openChannelsModal={handleChannelsModalOpen}
-        onChannelsChange={setCurrentChannels}
-        channelsErrors={channelsErrors}
-        currentChannels={currentChannels}
-        allChannelsCount={allChannels?.length}
-        channelsData={channelsData}
-        setChannelsData={setChannelsData}
-        categories={categories}
-        collections={collections}
-        attributeValues={attributeValues}
-        channelsWithVariantsData={channelsWithVariantsData}
-        defaultWeightUnit={shop?.defaultWeightUnit}
-        disabled={disableFormSave}
-        onSetDefaultVariant={onSetDefaultVariant}
-        errors={errors}
-        fetchCategories={searchCategories}
-        fetchCollections={searchCollections}
-        fetchAttributeValues={searchAttributeValues}
-        limits={limitOpts.data?.shop.limits}
-        saveButtonBarState={formTransitionState}
-        media={data?.product?.media}
-        header={product?.name}
-        placeholderImage={placeholderImg}
-        product={product}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
-        taxTypes={data?.taxTypes}
-        variants={product?.variants}
-        onDelete={() => openModal("remove")}
-        onImageReorder={handleImageReorder}
-        onMediaUrlUpload={handleMediaUrlUpload}
-        onSubmit={handleSubmit}
-        onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantReorder={handleVariantReorder}
-        onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
-        onImageUpload={handleImageUpload}
-        onImageDelete={handleImageDelete}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove-variants", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        fetchMoreCategories={fetchMoreCategories}
-        fetchMoreCollections={fetchMoreCollections}
-        selectedChannelId={channel?.id}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
-        onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
-        fetchReferencePages={searchPages}
-        fetchMoreReferencePages={fetchMoreReferencePages}
-        fetchReferenceProducts={searchProducts}
-        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
-        onAttributeSelectBlur={searchAttributeReset}
-      />
+
+      <ProductSkuProvider>
+        <ProductUpdatePage
+          productId={id}
+          isSimpleProduct={isSimpleProduct}
+          openChannelsModal={handleChannelsModalOpen}
+          onChannelsChange={setCurrentChannels}
+          channelsErrors={channelsErrors}
+          currentChannels={currentChannels}
+          allChannelsCount={allChannels?.length}
+          channelsData={channelsData}
+          setChannelsData={setChannelsData}
+          categories={categories}
+          collections={collections}
+          attributeValues={attributeValues}
+          channelsWithVariantsData={channelsWithVariantsData}
+          defaultWeightUnit={shop?.defaultWeightUnit}
+          disabled={disableFormSave}
+          onSetDefaultVariant={onSetDefaultVariant}
+          errors={errors}
+          fetchCategories={searchCategories}
+          fetchCollections={searchCollections}
+          fetchAttributeValues={searchAttributeValues}
+          limits={limitOpts.data?.shop.limits}
+          saveButtonBarState={formTransitionState}
+          media={data?.product?.media}
+          header={product?.name}
+          placeholderImage={placeholderImg}
+          product={product}
+          warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
+          taxTypes={data?.taxTypes}
+          variants={product?.variants}
+          onDelete={() => openModal("remove")}
+          onImageReorder={handleImageReorder}
+          onMediaUrlUpload={handleMediaUrlUpload}
+          onSubmit={handleSubmit}
+          onWarehouseConfigure={() => navigate(warehouseAddPath)}
+          onVariantReorder={handleVariantReorder}
+          onVariantEndPreorderDialogOpen={() =>
+            setIsEndPreorderModalOpened(true)
+          }
+          onImageUpload={handleImageUpload}
+          onImageDelete={handleImageDelete}
+          toolbar={
+            <IconButton
+              variant="secondary"
+              color="primary"
+              onClick={() =>
+                openModal("remove-variants", {
+                  ids: listElements,
+                })
+              }
+            >
+              <DeleteIcon />
+            </IconButton>
+          }
+          isChecked={isSelected}
+          selected={listElements.length}
+          toggle={toggle}
+          toggleAll={toggleAll}
+          fetchMoreCategories={fetchMoreCategories}
+          fetchMoreCollections={fetchMoreCollections}
+          selectedChannelId={channel?.id}
+          assignReferencesAttributeId={
+            params.action === "assign-attribute-value" && params.id
+          }
+          onAssignReferencesClick={handleAssignAttributeReferenceClick}
+          referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+          referenceProducts={
+            mapEdgesToItems(searchProductsOpts?.data?.search) || []
+          }
+          fetchReferencePages={searchPages}
+          fetchMoreReferencePages={fetchMoreReferencePages}
+          fetchReferenceProducts={searchProducts}
+          fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+          fetchMoreAttributeValues={fetchMoreAttributeValues}
+          onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
+          onAttributeSelectBlur={searchAttributeReset}
+        />
+      </ProductSkuProvider>
+
       <ActionDialog
         open={params.action === "remove"}
         onClose={closeModal}

@@ -1875,6 +1875,10 @@ export const products: RelayToFlat<SearchProductsQuery["search"]> = [
       url: "",
     },
     collections: [{ __typename: "Collection", id: "Q29sbGVjdGlvbjo0" }],
+    productType: {
+      name: "",
+      __typename: "ProductType",
+    },
     variants: [
       {
         __typename: "ProductVariant",

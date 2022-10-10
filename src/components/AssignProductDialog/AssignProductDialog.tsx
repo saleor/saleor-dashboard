@@ -25,6 +25,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
+import { Packet } from "./constants";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -145,6 +146,10 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             <TableBody>
               {products &&
                 products.map(product => {
+                  if (product.productType.name === Packet.EXAMINATION_PACKET) {
+                    return null;
+                  }
+
                   const isSelected = productsDict[product.id] || false;
 
                   return (

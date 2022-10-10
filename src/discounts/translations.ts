@@ -3,8 +3,8 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   order: {
-    id: "bP7ZLP",
-    defaultMessage: "Entire order",
+    id: "ymo+cm",
+    defaultMessage: "All products",
     description: "voucher discount",
   },
   products: {

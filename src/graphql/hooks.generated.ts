@@ -13305,6 +13305,9 @@ export const SearchProductsDocument = gql`
         thumbnail {
           url
         }
+        productType {
+          name
+        }
         variants {
           id
           name

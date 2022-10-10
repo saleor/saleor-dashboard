@@ -74,7 +74,8 @@ import React, { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
-import { useValidateSku } from "../ProductStocks/hooks";
+import { useSku } from "../ProductStocks/context";
+import { isSkuValid } from "../ProductStocks/tools";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -257,6 +258,8 @@ function useProductUpdateForm(
     ],
   );
 
+  const { isLoading, isValid: isSkuValidFromApi } = useSku();
+
   const form = useForm(initial, undefined, {
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
@@ -295,8 +298,6 @@ function useProductUpdateForm(
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
-
-  const { isSkuValid } = useValidateSku();
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     event => toggleValue(event),
@@ -472,9 +473,9 @@ function useProductUpdateForm(
     return true;
   };
 
-  const isSaveDisabled = disabled || !isSkuValid(data.sku);
-  const isSubmitDisabled =
-    isSaveDisabled || !isValid() || !isSkuValid(data.sku);
+  const isSaveDisabled =
+    disabled || !isSkuValid(data.sku) || isLoading || !isSkuValidFromApi;
+  const isSubmitDisabled = isSaveDisabled || !isValid();
 
   useEffect(() => {
     setIsSubmitDisabled(isSubmitDisabled);

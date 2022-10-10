@@ -1,0 +1,3 @@
+query ValidateSku($sku: String!) {
+  validateSku(sku: $sku)
+}
