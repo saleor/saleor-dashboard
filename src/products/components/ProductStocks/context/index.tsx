@@ -19,8 +19,7 @@ type ProductSkuContextProps = State & {
 };
 
 const ProductSkuContext = createContext<ProductSkuContextProps>({
-  isLoading: false,
-  isValid: false,
+  ...initialState,
   setLoading: () => {},
   setValidity: () => {},
 });

@@ -405,6 +405,7 @@ export type DeclarationSubmittedEvent = NfzEventBase & {
   createdAt: Scalars["DateTime"];
   source: DeclarationSource;
   date: Scalars["DateTime"];
+  doctor: Doctor;
   comment: Scalars["String"];
   files: Array<Scalars["String"]>;
 };
@@ -569,7 +570,6 @@ export interface DrugWithPackageInput {
   psychoSubstances: Scalars["Boolean"];
   interval: Scalars["String"];
   payment: Scalars["String"];
-  additionalRefundRight?: InputMaybe<AdditionalRefundRight>;
 }
 
 export interface DynamicPositionData {
@@ -863,6 +863,7 @@ export interface IssuePrescriptionInput {
   in365days: Scalars["Boolean"];
   insuredIn: StateInsurance;
   drugs: DrugWithPackageInput[];
+  additionalRefundRight?: InputMaybe<AdditionalRefundRight>;
 }
 
 export interface IssuePrescriptionWithOperationResult {
@@ -1070,6 +1071,7 @@ export interface Mutation {
   unpinProcedure: ProcedureEntity;
   markPostsAsSeen: Array<Scalars["String"]>;
   createPatientTag: Scalars["String"];
+  checkPatientEwusStatus: Scalars["String"];
   createPatient: Scalars["String"];
   sendRecommendation: ChatMessageEntity;
   getContentFromImage: Scalars["String"];
@@ -1175,6 +1177,11 @@ export interface MutationmarkPostsAsSeenArgs {
 export interface MutationcreatePatientTagArgs {
   fileIds?: InputMaybe<Array<Scalars["String"]>>;
   input: PatientTagInput;
+}
+
+export interface MutationcheckPatientEwusStatusArgs {
+  organizationId: Scalars["String"];
+  patientId: Scalars["String"];
 }
 
 export interface MutationcreatePatientArgs {
