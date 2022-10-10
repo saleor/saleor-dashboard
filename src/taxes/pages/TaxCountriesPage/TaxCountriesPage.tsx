@@ -130,7 +130,9 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
               />
               <Card>
                 <CardTitle
-                  title={intl.formatMessage(taxesMessages.taxClassRatesHeader)}
+                  title={intl.formatMessage(taxesMessages.taxClassRatesHeader, {
+                    country: currentCountry?.country?.country,
+                  })}
                 />
                 {countryTaxesData?.length === 0 ? (
                   <CardContent className={classes.greyText}>
