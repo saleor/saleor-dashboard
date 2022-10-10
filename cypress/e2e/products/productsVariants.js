@@ -42,7 +42,7 @@ describe("As an admin I should be able to create variant", () => {
         defaultChannel = resp.defaultChannel;
         warehouse = resp.warehouse;
 
-        createChannel({ isActive: true, name, currencyCode: "PL" });
+        createChannel({ isActive: true, name, currencyCode: "PLN" });
       })
       .then(resp => (newChannel = resp));
   });
@@ -85,6 +85,7 @@ describe("As an admin I should be able to create variant", () => {
             .should("exist")
             .click()
             .get(PRODUCT_DETAILS.dataGridTable)
+            .scrollIntoView()
             .should("be.visible")
             .get(PRODUCT_DETAILS.firstRowDataGrid)
             .click({ force: true })
@@ -95,10 +96,14 @@ describe("As an admin I should be able to create variant", () => {
             .reload()
             .waitForProgressBarToNotBeVisible()
             .get(PRODUCT_DETAILS.dataGridTable)
+            .scrollIntoView()
             .should("be.visible")
+            .wait(1000)
             .get(BUTTON_SELECTORS.showMoreButton)
+            .scrollIntoView()
             .click()
             .get(PRODUCT_DETAILS.editVariant)
+            .scrollIntoView()
             .click()
             .get(VARIANTS_SELECTORS.manageChannels)
             .click()
@@ -123,7 +128,7 @@ describe("As an admin I should be able to create variant", () => {
         .then(([variant]) => {
           expect(variant).to.have.property("name", name);
           expect(variant).to.have.property("price", price);
-          expect(variant).to.have.property("currency", "PL");
+          expect(variant).to.have.property("currency", "PLN");
         });
     },
   );
@@ -156,22 +161,27 @@ describe("As an admin I should be able to create variant", () => {
             .get(PRODUCT_DETAILS.editVariant)
             .click()
             .get(PRODUCT_DETAILS.addVariantButton)
-            .click();
-          createVariant({
-            sku: secondVariantSku,
-            attributeName: variants[1].name,
-            price: variants[1].price,
-            channelName: defaultChannel.name,
-          });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(firstVariant).to.have.property("name", "value");
-          expect(firstVariant).to.have.property("currency", "USD");
-          expect(secondVariant).to.have.property("name", "value2");
-          expect(secondVariant).to.have.property("price", variants[1].price);
-          expect(secondVariant).to.have.property("currency", "USD");
+            .click()
+            .then(() => {
+              createVariant({
+                sku: secondVariantSku,
+                attributeName: variants[1].name,
+                price: variants[1].price,
+                channelName: defaultChannel.name,
+              });
+              getProductVariants(createdProduct.id, defaultChannel.slug);
+            })
+            .then(([firstVariant, secondVariant]) => {
+              expect(firstVariant).to.have.property("price", variants[0].price);
+              expect(firstVariant).to.have.property("name", "value");
+              expect(firstVariant).to.have.property("currency", "USD");
+              expect(secondVariant).to.have.property(
+                "price",
+                variants[1].price,
+              );
+              expect(secondVariant).to.have.property("name", "value2");
+              expect(secondVariant).to.have.property("currency", "USD");
+            });
         });
     },
   );
