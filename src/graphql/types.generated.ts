@@ -6795,6 +6795,10 @@ export type TaxCountryConfigurationDeleteErrorFragmentFragment = { __typename: '
 
 export type TaxClassUpdateErrorFragmentFragment = { __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode };
 
+export type TaxClassCreateErrorFragmentFragment = { __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode };
+
+export type TaxClassDeleteErrorFragmentFragment = { __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode };
+
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
 export type GiftCardsSettingsFragment = { __typename: 'GiftCardSettings', expiryType: GiftCardSettingsExpiryTypeEnum, expiryPeriod: { __typename: 'TimePeriod', type: TimePeriodTypeEnum, amount: number } | null };
@@ -8598,6 +8602,20 @@ export type TaxClassUpdateMutationVariables = Exact<{
 
 
 export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+
+export type TaxClassCreateMutationVariables = Exact<{
+  input: TaxClassCreateInput;
+}>;
+
+
+export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+
+export type TaxClassDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type TaxClassDeleteMutation = { __typename: 'Mutation', taxClassDelete: { __typename: 'TaxClassDelete', errors: Array<{ __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode }> } | null };
 
 export type CountryListQueryVariables = Exact<{ [key: string]: never; }>;
 

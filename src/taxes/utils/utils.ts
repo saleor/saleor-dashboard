@@ -2,13 +2,8 @@ import {
   CountryFragment,
   TaxClassFragment,
   TaxCountryConfigurationFragment,
-  TaxRateFragment,
 } from "@saleor/graphql";
 import uniqBy from "lodash/uniqBy";
-
-export const getDefaultTaxRateInCountry = ():
-  | TaxRateFragment["rate"]
-  | undefined => 0; // @TODO: implement default tax rates in tax classes page
 
 export const encodeURIComponentOptional = (
   uriComponent: string | number | boolean | undefined,

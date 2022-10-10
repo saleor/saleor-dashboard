@@ -87,8 +87,8 @@ export const taxesMessages = defineMessages({
     description: "card header title",
   },
   taxClassRatesHeader: {
-    id: "qHb6xK",
-    defaultMessage: "Tax class rates",
+    id: "WIxSDm",
+    defaultMessage: "{country} class rates",
     description: "card header",
   },
   searchTaxClasses: {
@@ -141,9 +141,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "There are no exceptions for this channel",
     description: "label for empty list in channels list",
   },
-  chooseCountries: {
-    id: "s6p+rD",
-    defaultMessage: "Choose countries you want to assign",
+  chooseCountryDialogTitle: {
+    id: "0V1q0d",
+    defaultMessage: "Choose country you want to add",
     description: "add country dialog header",
   },
   country: {
@@ -165,5 +165,16 @@ export const taxesMessages = defineMessages({
     id: "lnteBJ",
     defaultMessage: "Country default rate",
     description: "country rates list label for the default rate",
+  },
+  noRatesInTaxClass: {
+    id: "ngAgBy",
+    defaultMessage:
+      "There are no countries using this tax class yet, use {tab} tab to assign tax rates.",
+    description: "tax class rates list label when no countries are assigned",
+  },
+  newTaxClass: {
+    id: "8BBMRj",
+    defaultMessage: "New tax class",
+    description: "default tax class name for new tax classes",
   },
 });

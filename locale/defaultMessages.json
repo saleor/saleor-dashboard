@@ -305,6 +305,10 @@
     "context": "dialog header",
     "string": "Unassign Collection From Sale"
   },
+  "0V1q0d": {
+    "context": "add country dialog header",
+    "string": "Choose country you want to add"
+  },
   "0VDwAP": {
     "context": "checkbox label",
     "string": "Send shipment details to customer"
@@ -1240,6 +1244,10 @@
     "context": "navigator placeholder",
     "string": "Order Number"
   },
+  "8BBMRj": {
+    "context": "default tax class name for new tax classes",
+    "string": "New tax class"
+  },
   "8EGagh": {
     "context": "search box label",
     "string": "Filter Countries"
@@ -1607,6 +1615,10 @@
   "BHQrgz": {
     "context": "number of subcategories",
     "string": "Subcategories"
+  },
+  "BJtUQI": {
+    "context": "button",
+    "string": "Add"
   },
   "BL/Lbk": {
     "context": "install app permissions",
@@ -4406,6 +4418,10 @@
   "WHkx+F": {
     "string": "Price cannot be lower than 0"
   },
+  "WIxSDm": {
+    "context": "card header",
+    "string": "{country} class rates"
+  },
   "WMGoqz": {
     "context": "used by filter label",
     "string": "Used by"
@@ -6480,6 +6496,10 @@
     "context": "attribute internal name",
     "string": "Slug"
   },
+  "ngAgBy": {
+    "context": "tax class rates list label when no countries are assigned",
+    "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
+  },
   "njBulj": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
@@ -6765,10 +6785,6 @@
     "context": "export selected items to csv file",
     "string": "Selected products ({number})"
   },
-  "qHb6xK": {
-    "context": "card header",
-    "string": "Tax class rates"
-  },
   "qIgdO6": {
     "string": "Custom Filter"
   },
@@ -7018,10 +7034,6 @@
   "s6oAC+": {
     "context": "search label",
     "string": "Search products"
-  },
-  "s6p+rD": {
-    "context": "add country dialog header",
-    "string": "Choose countries you want to assign"
   },
   "s8FlDW": {
     "context": "hide error log label in notification",
