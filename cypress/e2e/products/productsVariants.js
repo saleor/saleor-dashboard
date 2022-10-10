@@ -171,11 +171,11 @@ describe("As an admin I should be able to create variant", () => {
               expect(firstVariant).to.have.property("price", variants[0].price);
               expect(firstVariant).to.have.property("name", "value");
               expect(firstVariant).to.have.property("currency", "USD");
-              expect(secondVariant).to.have.property("name", "value2");
               expect(secondVariant).to.have.property(
                 "price",
                 variants[1].price,
               );
+              expect(secondVariant).to.have.property("name", "value2");
               expect(secondVariant).to.have.property("currency", "USD");
             });
         });
