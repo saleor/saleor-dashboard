@@ -27,4 +27,5 @@ export const PRODUCT_DETAILS = {
   saveUploadUrlButton: '[data-test-id="upload-url-button"]',
   editVariant: '[id="menu-list-grow"]',
   firstRowDataGrid: "[data-testid='glide-cell-1-0']",
+  dataGridTable: "[data-testid='data-grid-canvas']",
 };
