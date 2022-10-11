@@ -92,6 +92,7 @@ const useStyles = makeStyles(
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
+        paddingBottom: "1px",
       },
       root: {
         position: "relative",
@@ -128,10 +129,11 @@ const useStyles = makeStyles(
       },
       columnGroupFixer: {
         position: "absolute",
-        top: 5,
-        left: 1,
-        height: 44,
-        width: 2,
+        top: 1,
+        left: 0,
+        height: 48,
+        width: 10,
+        borderLeft: 0,
         background: theme.palette.background.paper,
       },
       editorContainer: {
