@@ -2,7 +2,6 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { isInDevelopment } from "@saleor/misc";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import useRouter from "use-react-router";
 
 import ExitFormDialog from "./ExitFormDialog";
 import useBeforeUnload from "./useBeforeUnload";
@@ -59,7 +58,6 @@ const defaultValues = {
 
 export function useExitFormDialogProvider() {
   const history = useHistory();
-  const { history: routerHistory } = useRouter();
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
   const isSubmitDisabled = useRef(false);
@@ -198,7 +196,7 @@ export function useExitFormDialogProvider() {
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
     if (navAction.current !== null) {
-      routerHistory.push(navAction.current.pathname + navAction.current.search);
+      history.push(navAction.current.pathname + navAction.current.search);
     }
     setStateDefaultValues();
   };

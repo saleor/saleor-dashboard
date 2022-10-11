@@ -3,8 +3,8 @@ import { useAvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React, { useEffect } from "react";
+import { useLocation } from "react-router";
 import urlJoin from "url-join";
-import useRouter from "use-react-router";
 
 import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
@@ -17,7 +17,7 @@ interface LoginViewProps {
 
 const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const navigate = useNavigator();
-  const { location } = useRouter();
+  const location = useLocation();
   const {
     login,
     requestLoginByExternalPlugin,

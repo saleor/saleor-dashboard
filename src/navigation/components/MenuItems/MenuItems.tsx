@@ -1,5 +1,9 @@
 import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import SortableTree, {
+  NodeRendererProps,
+  TreeItem,
+} from "@nosferatu500/react-sortable-tree";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { MenuDetailsFragment } from "@saleor/graphql";
@@ -8,7 +12,6 @@ import { Button, DeleteIcon, IconButton, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import SortableTree, { NodeRendererProps, TreeItem } from "react-sortable-tree";
 
 import Draggable from "../../../icons/Draggable";
 import { MenuItemType } from "../MenuItemDialog";

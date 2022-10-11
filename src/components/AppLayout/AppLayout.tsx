@@ -15,7 +15,7 @@ import { isDarkTheme } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
-import useRouter from "use-react-router";
+import { useLocation } from "react-router";
 
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
@@ -135,7 +135,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const navigate = useNavigator();
   const intl = useIntl();
   const [appState, dispatchAppState] = useAppState();
-  const { location } = useRouter();
+  const location = useLocation();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: SaleorTheme) =>
     theme.breakpoints.up("md"),
