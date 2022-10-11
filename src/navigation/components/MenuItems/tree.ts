@@ -3,6 +3,7 @@ import { getPatch } from "fast-array-diff";
 import { TreeItem } from "react-sortable-tree";
 
 import { MenuItemType } from "../MenuItemDialog";
+import { MenuItemNode, MenuItemNodeProps } from "./MenuItems";
 
 export type TreeOperationType = "move" | "remove";
 export interface TreeOperation {
@@ -15,11 +16,17 @@ export interface TreeOperation {
 
 export const unknownTypeError = Error("Unknown type");
 
-function treeToMap(tree: TreeItem[], parent: string): Record<string, string[]> {
+function treeToMap(
+  tree: Array<TreeItem<MenuItemNode>>,
+  parent: string,
+): Record<string, string[]> {
   const childrenList = tree.map(node => node.id);
   const childrenMaps = tree.map(node => ({
     id: node.id,
-    mappedNodes: treeToMap(node.children as TreeItem[], node.id),
+    mappedNodes: treeToMap(
+      node.children as Array<TreeItem<MenuItemNode>>,
+      node.id,
+    ),
   }));
 
   return {
@@ -65,8 +72,8 @@ export function getItemId(item: MenuDetailsFragment["items"][0]): string {
 }
 
 export function getDiff(
-  originalTree: TreeItem[],
-  newTree: TreeItem[],
+  originalTree: Array<TreeItem<MenuItemNode>>,
+  newTree: Array<TreeItem<MenuItemNode>>,
 ): TreeOperation[] {
   const originalMap = treeToMap(originalTree, "root");
   const newMap = treeToMap(newTree, "root");
@@ -131,10 +138,15 @@ export function getNodeData(
   onChange: (operations: TreeOperation[]) => void,
   onClick: (id: string, type: MenuItemType) => void,
   onEdit: (id: string) => void,
-): TreeItem {
+): TreeItem<MenuItemNodeProps> {
   return {
     children: item.children.map(child =>
-      getNodeData(child, onChange, onClick, onEdit),
+      getNodeData(
+        child as MenuDetailsFragment["items"][0],
+        onChange,
+        onClick,
+        onEdit,
+      ),
     ),
     expanded: true,
     id: item.id,
@@ -147,7 +159,8 @@ export function getNodeData(
 
 export function getNodeQuantity(items: MenuDetailsFragment["items"]): number {
   return items.reduce(
-    (acc, curr) => acc + getNodeQuantity(curr.children),
+    (acc, curr) =>
+      acc + getNodeQuantity(curr.children as MenuDetailsFragment["items"]),
     items.length,
   );
 }

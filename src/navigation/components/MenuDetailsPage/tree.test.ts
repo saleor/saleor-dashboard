@@ -1161,13 +1161,19 @@ function innerTreeToString(
     "··".repeat(level) +
     tree.name +
     tree.children.reduce(
-      (acc, node) => acc + innerTreeToString(node, level + 1),
+      (acc, node) =>
+        acc +
+        innerTreeToString(node as MenuDetailsFragment["items"][0], level + 1),
       "",
     )
   );
 }
 function treeToString(tree: MenuDetailsFragment["items"]): string {
-  return tree.reduce((acc, node) => acc + innerTreeToString(node, 0), "");
+  return tree.reduce(
+    (acc, node) =>
+      acc + innerTreeToString(node as MenuDetailsFragment["items"][0], 0),
+    "",
+  );
 }
 
 describe("Properly computes trees", () => {

@@ -15,7 +15,7 @@ export function findNode(
   }
   const nodeMap = tree.map((node, nodeIndex) => [
     nodeIndex,
-    ...findNode(node.children, id),
+    ...findNode(node.children as MenuDetailsFragment["items"], id),
   ]);
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
@@ -27,7 +27,10 @@ export function getNode(
   if (path.length === 1) {
     return tree[path[0]];
   }
-  return getNode([...tree[path[0]].children], path.slice(1));
+  return getNode(
+    [...(tree[path[0]].children as MenuDetailsFragment["items"])],
+    path.slice(1),
+  );
 }
 
 function removeNode(
@@ -43,7 +46,10 @@ function removeNode(
   const newTree = [...tree];
   newTree[removeIndex] = {
     ...tree[path[0]],
-    children: removeNode(tree[path[0]].children, path.slice(1)),
+    children: removeNode(
+      tree[path[0]].children as MenuDetailsFragment["items"],
+      path.slice(1),
+    ),
   };
 
   return newTree;
@@ -68,7 +74,7 @@ function insertNode({
 
   if (path[0] in tree) {
     tree[path[0]].children = insertNode({
-      tree: tree[path[0]].children,
+      tree: tree[path[0]].children as MenuDetailsFragment["items"],
       path: path.slice(1),
       node,
       position,
@@ -87,7 +93,7 @@ function removeNodeAndChildren(
   if (node.children) {
     const treeAfterChildrenRemoval = node.children.reduce(
       (acc, child) =>
-        removeNodeAndChildren(acc, {
+        removeNodeAndChildren(acc as MenuDetailsFragment["items"], {
           id: child.id,
           type: "remove",
         }),

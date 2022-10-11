@@ -75,9 +75,12 @@ export const useShopLimitsQuery = (
   >,
 ) =>
   useRefreshLimitsQuery({
-    ...opts,
+    ...(opts as QueryHookOptions<
+      RefreshLimitsQuery,
+      RefreshLimitsQueryVariables
+    >),
     variables: {
       ...limitVariables,
       ...opts.variables,
-    },
+    } as RefreshLimitsQueryVariables,
   });

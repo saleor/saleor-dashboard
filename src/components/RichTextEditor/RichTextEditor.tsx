@@ -18,6 +18,7 @@ export interface EditorCore {
   clear(): Promise<void>;
   save(): Promise<OutputData>;
   render(data: OutputData): Promise<void>;
+  dangerouslyLowLevelInstance(): any | null;
 }
 
 export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
