@@ -1,7 +1,5 @@
 import notFoundImage from "@assets/images/what.svg";
 import { Typography } from "@material-ui/core";
-import useAppState from "@saleor/hooks/useAppState";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -11,28 +9,13 @@ import messages from "./messages";
 import useStyles from "./styles";
 
 export interface ErrorPageProps {
+  id?: string | null;
   onBack: () => void;
   onRefresh: () => void;
 }
 
-const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
+const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh, id }) => {
   const classes = useStyles();
-  const navigate = useNavigator();
-  const [appState, dispatchAppState] = useAppState();
-
-  const handleOnBack = () => {
-    navigate("/", { replace: true });
-    dispatchAppState({
-      payload: {
-        error: null,
-      },
-      type: "displayError",
-    });
-    onBack();
-  };
-
-  const errorTrackingId =
-    appState.error?.type === "unhandled" ? appState.error.id : null;
 
   return (
     <div className={classes.root}>
@@ -46,7 +29,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
             <Typography>
               <FormattedMessage {...messages.content} />
             </Typography>
-            {!!errorTrackingId && (
+            {!!id && (
               <div>
                 <Typography
                   variant="caption"
@@ -55,12 +38,12 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
                 >
                   Error ID
                 </Typography>
-                <Typography variant="body1">{errorTrackingId}</Typography>
+                <Typography variant="body1">{id}</Typography>
               </div>
             )}
           </div>
           <div className={classes.buttonContainer}>
-            <Button variant="primary" onClick={handleOnBack}>
+            <Button variant="primary" onClick={onBack}>
               <FormattedMessage {...messages.btnDashboard} />
             </Button>
             <div className={classes.conjunction}>
