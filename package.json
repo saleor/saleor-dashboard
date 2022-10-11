@@ -17,7 +17,7 @@
     "npm": ">=6.11.0 <7"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.10",
+    "@apollo/client": "3.4.15",
     "@editorjs/editorjs": "^2.24.3",
     "@editorjs/header": "^2.6.2",
     "@editorjs/image": "^2.6.2",
