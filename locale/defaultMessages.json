@@ -839,6 +839,10 @@
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
   },
+  "4p3bjX": {
+    "context": "tax strategy combobox choice",
+    "string": "Use flat rates"
+  },
   "4prRLv": {
     "string": "Permission is out of your scope"
   },
@@ -1035,6 +1039,10 @@
   "6G41zU": {
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
+  },
+  "6HHPFy": {
+    "context": "tax strategy combobox hint",
+    "string": "Select the method of tax calculation"
   },
   "6JlXeD": {
     "context": "button",
@@ -3997,6 +4005,10 @@
     "context": "product availability available date",
     "string": "Set available on"
   },
+  "TJ7WHA": {
+    "context": "tax strategy combobox choice",
+    "string": "Use tax app"
+  },
   "TKmub+": {
     "string": "This field is required"
   },
@@ -5373,10 +5385,6 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
-  },
-  "di0qi8": {
-    "context": "card subtitle",
-    "string": "Tax charging"
   },
   "diOQm7": {
     "context": "product status",
@@ -7244,6 +7252,9 @@
   "ttMauu": {
     "context": "window title",
     "string": "Create collection"
+  },
+  "tthToS": {
+    "string": "Disabled"
   },
   "ttk0w7": {
     "context": "resend code to customer description",
