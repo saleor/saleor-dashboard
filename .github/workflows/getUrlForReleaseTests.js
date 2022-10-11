@@ -30,10 +30,10 @@ program
         options.token,
       );
       clearTimeout(throwErrorAfterTimeout);
-      core.setOutput("domain", `https://${domain}/`);
+      core.setOutput("url", `https://${domain}/`);
     } else {
       core.setOutput(
-        "domain",
+        "url",
         `https://v${getFormattedVersion(
           options.version,
         )}.staging.saleor.cloud/`,
