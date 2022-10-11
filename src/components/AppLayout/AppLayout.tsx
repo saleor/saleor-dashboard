@@ -1,6 +1,7 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { useUser } from "@saleor/auth";
 import useAppState from "@saleor/hooks/useAppState";
+import useNavigator from "@saleor/hooks/useNavigator";
 import {
   makeStyles,
   SaleorTheme,
@@ -17,6 +18,7 @@ import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import Container from "../Container";
+import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import UserChip from "../UserChip";
@@ -130,8 +132,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
+  const navigate = useNavigator();
   const intl = useIntl();
-  const [appState] = useAppState();
+  const [appState, dispatchAppState] = useAppState();
   const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
   const isMdUp = useMediaQuery((theme: SaleorTheme) =>
@@ -148,6 +151,21 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const activeMenu = menuStructure.find(menuItem =>
     isMenuActive(location.pathname, menuItem),
   )?.id;
+
+  const reloadWindow = () => {
+    window.location.reload();
+  };
+
+  const handleErrorBack = () => {
+    navigate("/", { replace: true });
+    dispatchAppState({
+      payload: {
+        error: null,
+      },
+      type: "displayError",
+    });
+    reloadWindow();
+  };
 
   const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
@@ -216,7 +234,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                 [classes.viewMargins]: !fullSize,
               })}
             >
-              {children}
+              {appState.error
+                ? appState.error.type === "unhandled" && (
+                    <ErrorPage
+                      id={appState.error.id}
+                      onBack={handleErrorBack}
+                      onRefresh={() => window.location.reload()}
+                    />
+                  )
+                : children}
             </main>
           </div>
           <div className={classes.appAction} ref={appActionAnchor} />

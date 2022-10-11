@@ -66,15 +66,12 @@ function useQuickSearch(
 
   useEffect(() => {
     setQuery("");
-
-    const inputInstance = input.current;
-
     if (mode !== "default" && input.current) {
-      inputInstance.addEventListener("keyup", handleBack);
+      input.current.addEventListener("keyup", handleBack);
 
       return () => {
-        if (inputInstance) {
-          inputInstance.removeEventListener("keyup", handleBack);
+        if (input.current) {
+          input.current.removeEventListener("keyup", handleBack);
         }
       };
     }

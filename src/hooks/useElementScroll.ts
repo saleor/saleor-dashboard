@@ -28,18 +28,16 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
   const [scroll, setScroll] = useState(getPosition(anchor.current));
 
   useEffect(() => {
-    const anchorInstance = anchor.current;
-
-    if (!!anchorInstance) {
+    if (!!anchor.current) {
       const handleScroll = throttle(
-        () => setScroll(getPosition(anchorInstance)),
+        () => setScroll(getPosition(anchor.current)),
         100,
       );
-      anchorInstance.addEventListener("scroll", handleScroll);
+      anchor.current.addEventListener("scroll", handleScroll);
 
       return () => {
-        if (!!anchorInstance) {
-          anchorInstance.removeEventListener("scroll", handleScroll);
+        if (!!anchor.current) {
+          anchor.current.removeEventListener("scroll", handleScroll);
         }
       };
     }
