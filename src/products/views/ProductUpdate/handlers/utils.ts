@@ -94,6 +94,7 @@ export function getProductChannelsUpdateVariables(
       removeVariants: data.variants.updates
         .filter(
           change =>
+            product.variants[change.row] &&
             channelId === getColumnChannelAvailability(change.column) &&
             !change.data,
         )

@@ -158,7 +158,13 @@ export function getVariantChannelsInputs(
       channelId: getColumnChannel(change.column),
       price: change.data.value,
     }))
-    .filter(change => change.price !== numberCellEmptyValue);
+    .filter(change => {
+      const availableInChannel = data.updates.find(
+        ({ column }) => column === `availableInChannel:${change.channelId}`,
+      )?.data;
+
+      return availableInChannel && change.price !== numberCellEmptyValue;
+    });
 }
 
 export function getVariantChannels(
@@ -290,7 +296,7 @@ export function getData({
     if (!available) {
       return {
         ...numberCell(numberCellEmptyValue),
-        readonly: true,
+        readonly: false,
         allowOverlay: false,
       };
     }

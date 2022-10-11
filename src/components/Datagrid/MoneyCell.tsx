@@ -66,6 +66,7 @@ export const moneyCellRenderer = (
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { currency, value } = cell.data;
+    const hasValue = value === 0 ? true : !!value;
     const currencyFractionDigits = getFractionDigits(locale, currency);
     const formatted =
       value?.toLocaleString(locale, {
@@ -89,7 +90,7 @@ export const moneyCellRenderer = (
       theme.fontFamily,
     ].join(" ");
     ctx.fillText(
-      value ? currency : "-",
+      hasValue ? currency : "-",
       rect.x + 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
