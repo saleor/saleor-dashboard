@@ -2421,6 +2421,7 @@ export const TaxConfigurationPerCountryFragmentDoc = gql`
     ...CountryWithCode
   }
   chargeTaxes
+  taxCalculationStrategy
   displayGrossPrices
 }
     ${CountryWithCodeFragmentDoc}`;
@@ -2434,6 +2435,7 @@ export const TaxConfigurationFragmentDoc = gql`
   displayGrossPrices
   pricesEnteredWithTax
   chargeTaxes
+  taxCalculationStrategy
   countries {
     ...TaxConfigurationPerCountry
   }
