@@ -19,7 +19,6 @@ export function createVariant({
   costPrice = price,
   quantity = 10,
 }) {
-  cy.get(PRODUCT_DETAILS.addVariantButton).click();
   fillUpVariantDetails({
     attributeName,
     sku,
