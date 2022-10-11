@@ -31,11 +31,6 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Country exceptions",
     description: "card title",
   },
-  taxCharging: {
-    id: "di0qi8",
-    defaultMessage: "Tax charging",
-    description: "card subtitle",
-  },
   enteredPrices: {
     id: "puRlnN",
     defaultMessage: "Entered prices",
@@ -176,5 +171,20 @@ export const taxesMessages = defineMessages({
     id: "8BBMRj",
     defaultMessage: "New tax class",
     description: "default tax class name for new tax classes",
+  },
+  taxStrategyTaxApp: {
+    id: "TJ7WHA",
+    defaultMessage: "Use tax app",
+    description: "tax strategy combobox choice",
+  },
+  taxStrategyFlatRates: {
+    id: "4p3bjX",
+    defaultMessage: "Use flat rates",
+    description: "tax strategy combobox choice",
+  },
+  taxStrategyHint: {
+    id: "6HHPFy",
+    defaultMessage: "Select the method of tax calculation",
+    description: "tax strategy combobox hint",
   },
 });

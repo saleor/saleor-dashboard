@@ -50,6 +50,10 @@ export const commonMessages = defineMessages({
     id: "bZenNC",
     defaultMessage: "Description (optional)",
   },
+  disabled: {
+    id: "tthToS",
+    defaultMessage: "Disabled",
+  },
   discounts: {
     id: "n+Gwbu",
     defaultMessage: "Discounts",

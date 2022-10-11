@@ -11,6 +11,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import {
   CountryCode,
   CountryFragment,
+  TaxCalculationStrategy,
   TaxConfigurationFragment,
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
@@ -52,6 +53,7 @@ interface TaxChannelsPageProps {
 
 export interface TaxConfigurationFormData {
   chargeTaxes: boolean;
+  taxCalculationStrategy: TaxCalculationStrategy;
   displayGrossPrices: boolean;
   pricesEnteredWithTax: boolean;
   updateCountriesConfiguration: TaxConfigurationPerCountryFragment[];
@@ -82,6 +84,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   const initialForm: TaxConfigurationFormData = {
     chargeTaxes: currentTaxConfiguration?.chargeTaxes ?? false,
+    taxCalculationStrategy: currentTaxConfiguration?.taxCalculationStrategy,
     displayGrossPrices: currentTaxConfiguration?.displayGrossPrices ?? false,
     pricesEnteredWithTax:
       currentTaxConfiguration?.pricesEnteredWithTax ?? false,
@@ -95,11 +98,15 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
       config => ({
         countryCode: config.country.code as CountryCode,
         chargeTaxes: config.chargeTaxes,
+        taxCalculationStrategy: config.taxCalculationStrategy,
         displayGrossPrices: config.displayGrossPrices,
       }),
     );
     onSubmit({
       chargeTaxes: data.chargeTaxes,
+      taxCalculationStrategy: data.chargeTaxes
+        ? data.taxCalculationStrategy
+        : null,
       displayGrossPrices: data.displayGrossPrices,
       pricesEnteredWithTax: data.pricesEnteredWithTax,
       updateCountriesConfiguration: parsedUpdate,
@@ -107,8 +114,19 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     });
   };
 
+  const taxStrategyChoices = [
+    {
+      label: intl.formatMessage(taxesMessages.taxStrategyTaxApp),
+      value: TaxCalculationStrategy.TAX_APP,
+    },
+    {
+      label: intl.formatMessage(taxesMessages.taxStrategyFlatRates),
+      value: TaxCalculationStrategy.FLAT_RATES,
+    },
+  ];
+
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+    <Form initial={initialForm} onSubmit={handleSubmit} mergeData={false}>
       {({ data, change, submit, set, triggerChange }) => {
         const countryExceptions = data.updateCountriesConfiguration;
 
@@ -150,7 +168,11 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 />
               </div>
               <div>
-                <TaxSettingsCard values={data} onChange={change} />
+                <TaxSettingsCard
+                  values={data}
+                  strategyChoices={taxStrategyChoices}
+                  onChange={change}
+                />
                 <VerticalSpacer spacing={3} />
                 <Card>
                   <CardTitle
@@ -201,6 +223,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           divider={
                             countryIndex + 1 !== countryExceptions.length
                           }
+                          strategyChoices={taxStrategyChoices}
                           country={country}
                           key={country.country.code}
                           onDelete={() => {
