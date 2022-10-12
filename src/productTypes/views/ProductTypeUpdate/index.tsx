@@ -26,6 +26,7 @@ import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
 import useAvailableProductAttributeSearch from "@saleor/searches/useAvailableProductAttributeSearch";
+import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import { ReorderEvent } from "@saleor/types";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -163,23 +164,12 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     params,
   });
 
-  const { data, loading: dataLoading, fetchMore } = useProductTypeDetailsQuery({
+  const { data, loading: dataLoading } = useProductTypeDetailsQuery({
     displayLoader: true,
     variables: { id, first: 20 },
   });
 
-  const fetchMoreTaxClasses = {
-    hasMore: data?.taxClasses.pageInfo.hasNextPage,
-    loading: dataLoading,
-    onFetchMore: () =>
-      fetchMore({
-        variables: {
-          after: data?.taxClasses.pageInfo.endCursor,
-        },
-      }),
-  };
-
-  const taxClasses = mapEdgesToItems(data?.taxClasses);
+  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   const productType = data?.productType;
 

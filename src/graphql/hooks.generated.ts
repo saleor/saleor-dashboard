@@ -11110,24 +11110,12 @@ export type ProductTypeListQueryHookResult = ReturnType<typeof useProductTypeLis
 export type ProductTypeListLazyQueryHookResult = ReturnType<typeof useProductTypeListLazyQuery>;
 export type ProductTypeListQueryResult = Apollo.QueryResult<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>;
 export const ProductTypeDetailsDocument = gql`
-    query ProductTypeDetails($id: ID!, $first: Int, $after: String) {
+    query ProductTypeDetails($id: ID!) {
   productType(id: $id) {
     ...ProductTypeDetails
   }
   shop {
     defaultWeightUnit
-  }
-  taxClasses(first: $first, after: $after) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
   }
 }
     ${ProductTypeDetailsFragmentDoc}`;
@@ -11145,8 +11133,6 @@ export const ProductTypeDetailsDocument = gql`
  * const { data, loading, error } = useProductTypeDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      first: // value for 'first'
- *      after: // value for 'after'
  *   },
  * });
  */
@@ -11162,21 +11148,9 @@ export type ProductTypeDetailsQueryHookResult = ReturnType<typeof useProductType
 export type ProductTypeDetailsLazyQueryHookResult = ReturnType<typeof useProductTypeDetailsLazyQuery>;
 export type ProductTypeDetailsQueryResult = Apollo.QueryResult<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>;
 export const ProductTypeCreateDataDocument = gql`
-    query ProductTypeCreateData($first: Int, $after: String) {
+    query ProductTypeCreateData {
   shop {
     defaultWeightUnit
-  }
-  taxClasses(first: $first, after: $after) {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
   }
 }
     `;
@@ -11193,8 +11167,6 @@ export const ProductTypeCreateDataDocument = gql`
  * @example
  * const { data, loading, error } = useProductTypeCreateDataQuery({
  *   variables: {
- *      first: // value for 'first'
- *      after: // value for 'after'
  *   },
  * });
  */

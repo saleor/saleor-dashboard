@@ -8,8 +8,8 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -44,25 +44,14 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
       }),
     );
 
-  const { data, loading, fetchMore } = useProductTypeCreateDataQuery({
+  const { data, loading } = useProductTypeCreateDataQuery({
     displayLoader: true,
     variables: {
       first: 20,
     },
   });
 
-  const fetchMoreTaxClasses = {
-    hasMore: data?.taxClasses.pageInfo.hasNextPage,
-    loading,
-    onFetchMore: () =>
-      fetchMore({
-        variables: {
-          after: data?.taxClasses.pageInfo.endCursor,
-        },
-      }),
-  };
-
-  const taxClasses = mapEdgesToItems(data?.taxClasses);
+  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   const [
     createProductType,
