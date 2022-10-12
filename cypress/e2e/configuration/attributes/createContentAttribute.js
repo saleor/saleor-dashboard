@@ -25,7 +25,6 @@ describe("As an admin I want to create content attribute", () => {
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0517" },
     { type: "PAGE", testCase: "SALEOR_0518" },
-    { type: "PRODUCT_VARIANT", testCase: "SALEOR_0539" },
   ];
   const attributeNumericType = [
     {

@@ -32,7 +32,6 @@ describe("As an admin I want to create product attribute", () => {
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0506" },
     { type: "PAGE", testCase: "SALEOR_0507" },
-    { type: "PRODUCT_VARIANT", testCase: "SALEOR_0539" },
   ];
   const attributeNumericType = [
     {
