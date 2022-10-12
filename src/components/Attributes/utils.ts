@@ -18,7 +18,7 @@ export function getSingleChoices(
 ): SingleAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
-    value: value.slug,
+    value: value.name,
   }));
 }
 

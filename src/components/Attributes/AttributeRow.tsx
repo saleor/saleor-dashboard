@@ -11,7 +11,6 @@ import {
   getMultiDisplayValue,
   getReferenceDisplayValue,
   getSingleChoices,
-  getSingleDisplayValue,
 } from "@saleor/components/Attributes/utils";
 import Checkbox from "@saleor/components/Checkbox";
 import { DateTimeField } from "@saleor/components/DateTimeField";
@@ -96,7 +95,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           <SingleAutocompleteSelectField
             choices={getSingleChoices(attributeValues)}
             disabled={disabled}
-            displayValue={getSingleDisplayValue(attribute, attributeValues)}
+            displayValue={attribute.value[0]}
             emptyOption={!attribute.data.isRequired}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
