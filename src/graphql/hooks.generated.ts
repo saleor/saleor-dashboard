@@ -5174,7 +5174,6 @@ export const ShopInfoDocument = gql`
       ...CountryWithCode
     }
     defaultWeightUnit
-    displayGrossPrices
     domain {
       host
       url
@@ -5182,7 +5181,6 @@ export const ShopInfoDocument = gql`
     languages {
       ...Language
     }
-    includeTaxesInPrices
     name
     trackInventoryByDefault
     permissions {
