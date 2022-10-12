@@ -2227,6 +2227,10 @@ export const ShippingMethodTypeFragmentDoc = gql`
     fragment ShippingMethodType on ShippingMethodType {
   ...ShippingMethodWithPostalCodes
   ...Metadata
+  taxClass {
+    name
+    id
+  }
   minimumOrderWeight {
     unit
     value
@@ -15321,6 +15325,51 @@ export function useTaxClassesListLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type TaxClassesListQueryHookResult = ReturnType<typeof useTaxClassesListQuery>;
 export type TaxClassesListLazyQueryHookResult = ReturnType<typeof useTaxClassesListLazyQuery>;
 export type TaxClassesListQueryResult = Apollo.QueryResult<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>;
+export const TaxClassAssignDocument = gql`
+    query TaxClassAssign($first: Int, $after: String) {
+  taxClasses(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useTaxClassAssignQuery__
+ *
+ * To run a query within a React component, call `useTaxClassAssignQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxClassAssignQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxClassAssignQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useTaxClassAssignQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignDocument, options);
+      }
+export function useTaxClassAssignLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignDocument, options);
+        }
+export type TaxClassAssignQueryHookResult = ReturnType<typeof useTaxClassAssignQuery>;
+export type TaxClassAssignLazyQueryHookResult = ReturnType<typeof useTaxClassAssignLazyQuery>;
+export type TaxClassAssignQueryResult = Apollo.QueryResult<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>;
 export const UpdateProductTranslationsDocument = gql`
     mutation UpdateProductTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   productTranslate(id: $id, input: $input, languageCode: $language) {

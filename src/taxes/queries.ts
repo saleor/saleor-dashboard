@@ -76,3 +76,20 @@ export const taxClassesList = gql`
     }
   }
 `;
+
+export const taxClassAssign = gql`
+  query TaxClassAssign($first: Int, $after: String) {
+    taxClasses(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
