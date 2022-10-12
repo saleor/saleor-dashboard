@@ -14,6 +14,8 @@ jobs:
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
       ENVIRONMENT: ${{ github.event.client_payload.deployment_name }}
+      DEPLOYMENT_TARGET: ${{ github.event.client_payload.deployment_target }}
+      VERSION_FAMILY: ${{ github.event.client_payload.version_family }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       IS_CLOUD_INSTANCE: true
@@ -35,8 +37,10 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
       - name: Deploy
         run: |
-          gcloud storage cp -r build/dashboard/*  gs://saleor-cloud-eu-dashboard/${ENVIRONMENT}/static/
-          gcloud storage cp build/dashboard/index.html gs://saleor-cloud-eu-dashboard/${ENVIRONMENT}/index.html
+          DOTLESS_VERSION_FAMILY=$(echo $VERSION_FAMILY | sed "s/\.//")
+
+          gcloud storage cp -r build/dashboard/*  gs://saleor-cloud-eu-dashboard/${DEPLOYMENT_TARGET}-v${DOTLESS_VERSION_FAMILY}/static/
+          gcloud storage cp build/dashboard/index.html gs://saleor-cloud-eu-dashboard/${DEPLOYMENT_TARGET}-v${DOTLESS_VERSION_FAMILY}/index.html
 
           gcloud compute url-maps invalidate-cdn-cache saleor-cloud-eu --path "/dashboard" --async
           gcloud compute url-maps invalidate-cdn-cache saleor-cloud-eu --path "/dashboard/*" --async
