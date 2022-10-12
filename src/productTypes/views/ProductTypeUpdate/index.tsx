@@ -142,7 +142,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           productAttributes: formData.productAttributes.map(
             choice => choice.value,
           ),
-          taxCode: formData.taxType,
+          taxClass: formData.taxClassId,
           variantAttributes: formData.variantAttributes.map(
             choice => choice.value,
           ),
@@ -163,10 +163,23 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     params,
   });
 
-  const { data, loading: dataLoading } = useProductTypeDetailsQuery({
+  const { data, loading: dataLoading, fetchMore } = useProductTypeDetailsQuery({
     displayLoader: true,
-    variables: { id },
+    variables: { id, first: 20 },
   });
+
+  const fetchMoreTaxClasses = {
+    hasMore: data?.taxClasses.pageInfo.hasNextPage,
+    loading: dataLoading,
+    onFetchMore: () =>
+      fetchMore({
+        variables: {
+          after: data?.taxClasses.pageInfo.endCursor,
+        },
+      }),
+  };
+
+  const taxClasses = mapEdgesToItems(data?.taxClasses);
 
   const productType = data?.productType;
 
@@ -321,7 +334,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
         saveButtonBarState={
           updateProductTypeOpts.status || updateProductAttributesOpts.status
         }
-        taxTypes={maybe(() => data.taxTypes, [])}
+        taxClasses={taxClasses ?? []}
         selectedVariantAttributes={selectedVariantAttributes}
         setSelectedVariantAttributes={setSelectedVariantAttributes}
         onAttributeAdd={type =>
@@ -398,6 +411,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             </Button>
           ),
         }}
+        onFetchMoreTaxClasses={fetchMoreTaxClasses}
       />
       {!dataLoading && (
         <>

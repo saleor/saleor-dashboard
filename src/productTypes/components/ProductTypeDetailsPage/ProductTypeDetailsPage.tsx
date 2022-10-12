@@ -14,14 +14,21 @@ import {
   ProductTypeKindEnum,
   WeightUnitsEnum,
 } from "@saleor/graphql";
-import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
+import { handleTaxClassChange } from "@saleor/productTypes/handlers";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
-import { ListActions, ReorderEvent, UserError } from "@saleor/types";
+import {
+  FetchMoreProps,
+  ListActions,
+  RelayToFlat,
+  ReorderEvent,
+  UserError,
+} from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -43,7 +50,7 @@ export interface ProductTypeForm extends MetadataFormData {
   kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
-  taxType: string;
+  taxClassId: string;
   productAttributes: ChoiceType[];
   variantAttributes: ChoiceType[];
   weight: number;
@@ -57,7 +64,7 @@ export interface ProductTypeDetailsPageProps {
   pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxTypes: ProductTypeDetailsQuery["taxTypes"];
+  taxClasses: RelayToFlat<ProductTypeDetailsQuery["taxClasses"]>;
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
@@ -67,19 +74,7 @@ export interface ProductTypeDetailsPageProps {
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
   setSelectedVariantAttributes: (data: string[]) => void;
   selectedVariantAttributes: string[];
-}
-
-function handleTaxTypeChange(
-  event: ChangeEvent,
-  taxTypes: ProductTypeDetailsQuery["taxTypes"],
-  formChange: FormChange,
-  displayChange: (name: string) => void,
-) {
-  formChange(event);
-  displayChange(
-    taxTypes.find(taxType => taxType.taxCode === event.target.value)
-      .description,
-  );
+  onFetchMoreTaxClasses: FetchMoreProps;
 }
 
 const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
@@ -90,7 +85,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   productType,
   productAttributeList,
   saveButtonBarState,
-  taxTypes,
+  taxClasses,
   variantAttributeList,
   onAttributeAdd,
   onAttributeUnassign,
@@ -100,6 +95,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onSubmit,
   setSelectedVariantAttributes,
   selectedVariantAttributes,
+  onFetchMoreTaxClasses,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -110,8 +106,8 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
-  const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
-    maybe(() => productType.taxType.description, ""),
+  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
+    productType?.taxClass?.name ?? "",
   );
   const formInitialData: ProductTypeForm = {
     hasVariants:
@@ -133,7 +129,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
             value: attribute.id,
           }))
         : [],
-    taxType: maybe(() => productType.taxType.taxCode, ""),
+    taxClassId: productType?.taxClass?.id ?? "",
     variantAttributes:
       maybe(() => productType.variantAttributes) !== undefined
         ? productType.variantAttributes.map(attribute => ({
@@ -186,16 +182,17 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 <ProductTypeTaxes
                   disabled={disabled}
                   data={data}
-                  taxTypes={taxTypes}
-                  taxTypeDisplayName={taxTypeDisplayName}
+                  taxClasses={taxClasses}
+                  taxClassDisplayName={taxClassDisplayName}
                   onChange={event =>
-                    handleTaxTypeChange(
+                    handleTaxClassChange(
                       event,
-                      taxTypes,
+                      taxClasses,
                       change,
-                      setTaxTypeDisplayName,
+                      setTaxClassDisplayName,
                     )
                   }
+                  onFetchMore={onFetchMoreTaxClasses}
                 />
                 <CardSpacer />
                 <ProductTypeAttributes

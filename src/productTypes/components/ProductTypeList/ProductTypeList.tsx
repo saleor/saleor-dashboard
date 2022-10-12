@@ -116,9 +116,9 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
         </TableCellHeader>
         <TableCell className={classes.colTax}>
           <FormattedMessage
-            id="TalJlD"
-            defaultMessage="Tax"
-            description="tax rate for a product type"
+            id="+Jgot0"
+            defaultMessage="Tax class"
+            description="tax class for a product type"
           />
         </TableCell>
       </TableHead>
@@ -195,11 +195,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                   )}
                 </TableCell>
                 <TableCell className={classes.colTax}>
-                  {maybe(() => productType.taxType) ? (
-                    productType.taxType.description
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {productType?.taxClass?.name ?? "-"}
                 </TableCell>
               </TableRowLink>
             );

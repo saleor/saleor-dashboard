@@ -3,20 +3,21 @@ import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductTypeDetailsQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
+import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { ProductTypeForm } from "../ProductTypeDetailsPage/ProductTypeDetailsPage";
 
 interface ProductTypeTaxesProps {
   data: {
-    taxType: string;
+    taxClassId: string;
   };
-  taxTypeDisplayName: string;
-  taxTypes: ProductTypeDetailsQuery["taxTypes"];
+  taxClassDisplayName: string;
+  taxClasses: RelayToFlat<ProductTypeDetailsQuery["taxClasses"]>;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onFetchMore: FetchMoreProps;
 }
 
 const useStyles = makeStyles(
@@ -29,7 +30,14 @@ const useStyles = makeStyles(
 );
 
 const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
-  const { data, disabled, taxTypes, taxTypeDisplayName, onChange } = props;
+  const {
+    data,
+    disabled,
+    taxClasses,
+    taxClassDisplayName,
+    onChange,
+    onFetchMore,
+  } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -46,22 +54,22 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
       <CardContent>
         <SingleAutocompleteSelectField
           disabled={disabled}
-          displayValue={taxTypeDisplayName}
+          displayValue={taxClassDisplayName}
           label={intl.formatMessage({
-            id: "9xUIAh",
-            defaultMessage: "Tax group",
+            id: "kQjY56",
+            defaultMessage: "Tax class",
           })}
-          name={"taxType" as keyof ProductTypeForm}
+          name={"taxClassId" as keyof ProductTypeForm}
           onChange={onChange}
-          value={data.taxType}
-          choices={maybe(
-            () =>
-              taxTypes.map(c => ({ label: c.description, value: c.taxCode })),
-            [],
-          )}
+          value={data.taxClassId}
+          choices={taxClasses.map(choice => ({
+            label: choice.name,
+            value: choice.id,
+          }))}
           InputProps={{
             autoComplete: "off",
           }}
+          {...onFetchMore}
         />
       </CardContent>
     </Card>

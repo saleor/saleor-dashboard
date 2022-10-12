@@ -30,28 +30,44 @@ export const productTypeListQuery = gql`
 `;
 
 export const productTypeDetailsQuery = gql`
-  query ProductTypeDetails($id: ID!) {
+  query ProductTypeDetails($id: ID!, $first: Int, $after: String) {
     productType(id: $id) {
       ...ProductTypeDetails
     }
     shop {
       defaultWeightUnit
     }
-    taxTypes {
-      taxCode
-      description
+    taxClasses(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `;
 
 export const productTypeCreateDataQuery = gql`
-  query ProductTypeCreateData {
+  query ProductTypeCreateData($first: Int, $after: String) {
     shop {
       defaultWeightUnit
     }
-    taxTypes {
-      taxCode
-      description
+    taxClasses(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `;

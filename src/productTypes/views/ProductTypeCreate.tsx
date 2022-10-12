@@ -9,6 +9,7 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -43,9 +44,25 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
       }),
     );
 
-  const { data, loading } = useProductTypeCreateDataQuery({
+  const { data, loading, fetchMore } = useProductTypeCreateDataQuery({
     displayLoader: true,
+    variables: {
+      first: 20,
+    },
   });
+
+  const fetchMoreTaxClasses = {
+    hasMore: data?.taxClasses.pageInfo.hasNextPage,
+    loading,
+    onFetchMore: () =>
+      fetchMore({
+        variables: {
+          after: data?.taxClasses.pageInfo.endCursor,
+        },
+      }),
+  };
+
+  const taxClasses = mapEdgesToItems(data?.taxClasses);
 
   const [
     createProductType,
@@ -73,7 +90,7 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
           isShippingRequired: formData.isShippingRequired,
           name: formData.name,
           kind: formData.kind,
-          taxCode: formData.taxType,
+          taxClass: formData.taxClassId,
           weight: formData.weight,
         },
       },
@@ -110,7 +127,8 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
           description: "header",
         })}
         saveButtonBarState={createProductTypeOpts.status}
-        taxTypes={data?.taxTypes || []}
+        taxClasses={taxClasses ?? []}
+        onFetchMoreTaxClasses={fetchMoreTaxClasses}
         kind={params.kind}
         onChangeKind={handleChangeKind}
         onSubmit={handleSubmit}
