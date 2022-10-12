@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 type AvailableStates = "initial" | "input-open";
 
@@ -24,6 +24,7 @@ interface Props {
 
 export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
   const styles = useStyles();
+  const intl = useIntl();
 
   const [state, setState] = useState<AvailableStates>("initial");
 
@@ -62,11 +63,18 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
       return (
         <form onSubmit={handleFormSubmit}>
           <TextField
+            required
             type="url"
             name="manifest-url"
-            label="App manifest url"
+            label={intl.formatMessage({
+              id: "QVraQY",
+              defaultMessage: "App manifest URL",
+            })}
             defaultValue=""
-            helperText="Usually ends with /api/manifest"
+            helperText={intl.formatMessage({
+              id: "o/q4fc",
+              defaultMessage: "Usually ends with /api/manifest",
+            })}
           />
           <Button
             size="medium"
@@ -74,7 +82,10 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
             className={styles.installButton}
             variant="primary"
           >
-            Install
+            {intl.formatMessage({
+              id: "ubmFc8",
+              defaultMessage: "Install",
+            })}
           </Button>
         </form>
       );
