@@ -35,6 +35,10 @@
     "context": "variant sku",
     "string": "SKU {sku}"
   },
+  "+Jgot0": {
+    "context": "tax class for a product type",
+    "string": "Tax class"
+  },
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
@@ -1461,9 +1465,6 @@
   "9vQR6c": {
     "context": "collection label",
     "string": "Visible"
-  },
-  "9xUIAh": {
-    "string": "Tax group"
   },
   "9xlPgt": {
     "context": "used staff users counter",
@@ -4043,10 +4044,6 @@
     "context": "orders section name",
     "string": "Orders"
   },
-  "TalJlD": {
-    "context": "tax rate for a product type",
-    "string": "Tax"
-  },
   "TfY/Pi": {
     "context": "checkbox",
     "string": "Charge taxes on this product"
@@ -6105,6 +6102,9 @@
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
+  },
+  "kQjY56": {
+    "string": "Tax class"
   },
   "kQq6/o": {
     "context": "info when addresses search is unsuccessful",
