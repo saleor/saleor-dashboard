@@ -1,9 +1,9 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { ProductTypeDetailsQuery } from "@saleor/graphql";
+import { TaxClassFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,7 @@ interface ProductTypeTaxesProps {
     taxClassId: string;
   };
   taxClassDisplayName: string;
-  taxClasses: RelayToFlat<ProductTypeDetailsQuery["taxClasses"]>;
+  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onFetchMore: FetchMoreProps;
