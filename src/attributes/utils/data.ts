@@ -175,7 +175,7 @@ export function getSelectedAttributeValues(
       return [attribute.values[0]?.dateTime];
 
     default:
-      return attribute.values.map(value => value.slug);
+      return attribute.values.map(value => value.name);
   }
 }
 
