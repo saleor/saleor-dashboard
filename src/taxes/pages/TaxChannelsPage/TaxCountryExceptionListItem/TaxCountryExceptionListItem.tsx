@@ -44,6 +44,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           onChange={onChange}
         />
         <SingleSelectField
+          className={classes.selectField}
           choices={strategyChoices}
           disabled={!country.chargeTaxes}
           value={country.taxCalculationStrategy}
