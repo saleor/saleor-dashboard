@@ -46,7 +46,7 @@ import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromProductType,
-  ProductType,
+  ProductType as SaleorProductType,
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
@@ -60,6 +60,7 @@ import {
 } from "@saleor/products/utils/validation";
 import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/consts";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
+import { ProductType } from "@saleor/utils/constants";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -83,7 +84,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   description: OutputData;
   isAvailable: boolean;
   name: string;
-  productType: ProductType;
+  productType: SaleorProductType;
   rating: number;
   seoDescription: string;
   seoTitle: string;
@@ -257,7 +258,10 @@ function useProductCreateForm(
     initial: null,
     triggerChange,
   });
-  const { isLoading, isValid: isSkuValidFromApi } = useSku();
+  const {
+    isLoading: isSkuApiValidating,
+    isValid: isSkuValidFromApi,
+  } = useSku();
 
   const {
     makeChangeHandler: makeMetadataChangeHandler,
@@ -422,7 +426,7 @@ function useProductCreateForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const isValid = () => {
-    if (!data.name || !data.productType) {
+    if (!data.name || !data?.productType) {
       return false;
     }
 
@@ -449,12 +453,19 @@ function useProductCreateForm(
     return true;
   };
 
-  const isSaveDisabled =
-    loading ||
-    !onSubmit ||
+  const isSaveDisabledForExaminationPacket = loading || !onSubmit;
+
+  const isSaveDisabledForExamination =
+    isSaveDisabledForExaminationPacket ||
     !isSkuValid(data.sku) ||
-    isLoading ||
+    isSkuApiValidating ||
     !isSkuValidFromApi;
+
+  const isSaveDisabled =
+    data?.productType?.name === ProductType.EXAMINATION_PACKET
+      ? isSaveDisabledForExaminationPacket
+      : isSaveDisabledForExamination;
+
   const isSubmitDisabled = isSaveDisabled || !isValid();
 
   useEffect(() => {

@@ -427,6 +427,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         data={data}
                         disabled={disabled}
                         hasVariants={false}
+                        productType={product?.productType.name}
                         errors={errors}
                         formErrors={formErrors}
                         stocks={data.stocks}

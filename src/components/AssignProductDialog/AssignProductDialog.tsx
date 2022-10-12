@@ -19,13 +19,13 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
+import { ProductType } from "@saleor/utils/constants";
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
-import { Packet } from "./constants";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -146,7 +146,9 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
             <TableBody>
               {products &&
                 products.map(product => {
-                  if (product.productType.name === Packet.EXAMINATION_PACKET) {
+                  if (
+                    product.productType.name === ProductType.EXAMINATION_PACKET
+                  ) {
                     return null;
                   }
 

@@ -63,6 +63,7 @@ import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/con
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
+import { ProductType } from "@saleor/utils/constants";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -258,7 +259,10 @@ function useProductUpdateForm(
     ],
   );
 
-  const { isLoading, isValid: isSkuValidFromApi } = useSku();
+  const {
+    isLoading: isSkuApiValidating,
+    isValid: isSkuValidFromApi,
+  } = useSku();
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
@@ -473,8 +477,19 @@ function useProductUpdateForm(
     return true;
   };
 
+  const isSaveDisabledForExaminationPacket = disabled;
+
+  const isSaveDisabledForExamination =
+    isSaveDisabledForExaminationPacket ||
+    !isSkuValid(data.sku) ||
+    isSkuApiValidating ||
+    !isSkuValidFromApi;
+
   const isSaveDisabled =
-    disabled || !isSkuValid(data.sku) || isLoading || !isSkuValidFromApi;
+    product?.productType.name === ProductType.EXAMINATION_PACKET
+      ? isSaveDisabledForExaminationPacket
+      : isSaveDisabledForExamination;
+
   const isSubmitDisabled = isSaveDisabled || !isValid();
 
   useEffect(() => {

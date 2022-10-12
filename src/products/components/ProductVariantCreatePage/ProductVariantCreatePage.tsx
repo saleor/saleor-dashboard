@@ -273,6 +273,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 data={data}
                 disabled={disabled}
                 hasVariants={true}
+                productType={product?.productType.name}
                 onFormDataChange={change}
                 formErrors={formErrors}
                 errors={errors}

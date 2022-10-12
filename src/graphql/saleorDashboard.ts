@@ -423,7 +423,7 @@ export interface Diag {
   price: Scalars["Float"];
   isAvailableAsNFZ: Scalars["Boolean"];
   type: Scalars["String"];
-  comission?: Maybe<Scalars["String"]>;
+  commission?: Maybe<Scalars["Float"]>;
   orgIds?: Maybe<Array<Scalars["String"]>>;
 }
 
@@ -1067,6 +1067,7 @@ export interface Mutation {
   deleteChatMessage: Scalars["String"];
   updateVisitSlot: Visit;
   updateUserAddress: Patient;
+  refreshToken: TokensPayload;
   changePassword: Scalars["String"];
   unpinProcedure: ProcedureEntity;
   markPostsAsSeen: Array<Scalars["String"]>;
@@ -1160,6 +1161,10 @@ export interface MutationupdateUserAddressArgs {
   flatNumber?: InputMaybe<Scalars["String"]>;
   address: PlacematicAddressInput;
   id: Scalars["String"];
+}
+
+export interface MutationrefreshTokenArgs {
+  data: RTPayload;
 }
 
 export interface MutationchangePasswordArgs {
@@ -2189,6 +2194,7 @@ export interface Query {
   patientDeclarationHistory: PatientDeclarationHistoryEvent[];
   validateSku: Scalars["Boolean"];
   authorizeDoctor: Scalars["String"];
+  authorizeDoctorWithRefreshToken: TokensPayload;
   validateToken: Scalars["String"];
   getPatientDocs: Scalars["String"];
   me: Doctor;
@@ -2280,6 +2286,11 @@ export interface QueryvalidateSkuArgs {
 }
 
 export interface QueryauthorizeDoctorArgs {
+  password: Scalars["String"];
+  phone: Scalars["String"];
+}
+
+export interface QueryauthorizeDoctorWithRefreshTokenArgs {
   password: Scalars["String"];
   phone: Scalars["String"];
 }
@@ -2421,6 +2432,11 @@ export interface QuerylaboratoryExaminationsArgs {
 
 export interface QuerynfzEventsArgs {
   patientId: Scalars["String"];
+}
+
+export interface RTPayload {
+  jwt: Scalars["String"];
+  refreshToken: Scalars["String"];
 }
 
 export interface Range {
@@ -2785,6 +2801,11 @@ export interface TestimonialInput {
 export interface Time {
   iso: Scalars["String"];
   local: Scalars["String"];
+}
+
+export interface TokensPayload {
+  jwt: Scalars["String"];
+  refreshToken: Scalars["String"];
 }
 
 export interface UnderCarePerson {

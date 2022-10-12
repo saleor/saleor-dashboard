@@ -12495,6 +12495,7 @@ export const ProductVariantCreateDataDocument = gql`
     name
     productType {
       id
+      name
       selectionVariantAttributes: variantAttributes(
         variantSelection: VARIANT_SELECTION
       ) {

@@ -196,6 +196,7 @@ export const productVariantCreateQuery = gql`
       name
       productType {
         id
+        name
         selectionVariantAttributes: variantAttributes(
           variantSelection: VARIANT_SELECTION
         ) {

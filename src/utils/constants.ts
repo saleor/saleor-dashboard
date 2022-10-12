@@ -1,3 +1,3 @@
-export enum Packet {
+export enum ProductType {
   EXAMINATION_PACKET = "Pakiet badań",
 }
