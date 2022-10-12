@@ -149,8 +149,9 @@ export const productTypeQuery = gql`
           ...AttributeValueList
         }
       }
-      taxType {
-        ...TaxType
+      taxClass {
+        id
+        name
       }
     }
   }

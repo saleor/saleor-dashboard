@@ -166,7 +166,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
   const { data, loading: dataLoading } = useProductTypeDetailsQuery({
     displayLoader: true,
-    variables: { id, first: 20 },
+    variables: { id },
   });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();

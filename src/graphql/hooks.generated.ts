@@ -12518,13 +12518,13 @@ export const ProductTypeDocument = gql`
         ...AttributeValueList
       }
     }
-    taxType {
-      ...TaxType
+    taxClass {
+      id
+      name
     }
   }
 }
-    ${AttributeValueListFragmentDoc}
-${TaxTypeFragmentDoc}`;
+    ${AttributeValueListFragmentDoc}`;
 
 /**
  * __useProductTypeQuery__

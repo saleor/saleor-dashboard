@@ -46,9 +46,6 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
 
   const { data, loading } = useProductTypeCreateDataQuery({
     displayLoader: true,
-    variables: {
-      first: 20,
-    },
   });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
