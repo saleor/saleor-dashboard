@@ -1,7 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -19,7 +19,7 @@ import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<GiftCardUpdatePageUrlQueryParams>();
   const params: GiftCardUpdatePageUrlQueryParams = qs;
 
   return (
@@ -31,7 +31,7 @@ const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
 };
 
 const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<GiftCardListUrlQueryParams>();
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,
     GiftCardUrlSortField,

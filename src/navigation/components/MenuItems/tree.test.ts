@@ -4,7 +4,7 @@ import {
   insertNode,
   removeNode,
   TreeItem,
-} from "react-sortable-tree";
+} from "@nosferatu500/react-sortable-tree";
 
 import { MenuItemNode } from "./MenuItems";
 import { getDiff } from "./tree";

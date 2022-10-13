@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -19,8 +19,8 @@ import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList";
 
-const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const CollectionList: React.FC<RouteComponentProps<{}>> = () => {
+  const qs = useQueryParams<CollectionListUrlQueryParams>();
   const params: CollectionListUrlQueryParams = asSortParams(
     qs,
     CollectionListUrlSortField,
@@ -33,9 +33,8 @@ interface CollectionDetailsRouteProps {
 }
 const CollectionDetails: React.FC<RouteComponentProps<
   CollectionDetailsRouteProps
->> = ({ location, match }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: CollectionUrlQueryParams = qs;
+>> = ({ match }) => {
+  const params = useQueryParams<CollectionUrlQueryParams>();
   return (
     <CollectionDetailsView
       id={decodeURIComponent(match.params.id)}
@@ -44,9 +43,8 @@ const CollectionDetails: React.FC<RouteComponentProps<
   );
 };
 
-const CollectionCreate: React.FC<RouteComponentProps> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: CollectionCreateUrlQueryParams = qs;
+const CollectionCreate: React.FC<RouteComponentProps> = () => {
+  const params = useQueryParams<CollectionCreateUrlQueryParams>();
   return <CollectionCreateView params={params} />;
 };
 

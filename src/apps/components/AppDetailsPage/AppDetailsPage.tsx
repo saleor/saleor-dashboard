@@ -109,7 +109,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           })}
         />
         <CardContent>
-          {!loading ? <ReactMarkdown source={data?.aboutApp} /> : <Skeleton />}
+          {!loading ? (
+            <ReactMarkdown children={data?.aboutApp} />
+          ) : (
+            <Skeleton />
+          )}
         </CardContent>
       </Card>
       <CardSpacer />

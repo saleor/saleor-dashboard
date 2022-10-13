@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -19,10 +19,9 @@ import PermissionGroupCreate from "./views/PermissionGroupCreate";
 import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 
-const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
-  location,
-}) => {
-  const qs = parseQs(location.search.substr(1));
+const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({}) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const qs = useQueryParams<PermissionGroupListUrlQueryParams>();
   const params: PermissionGroupListUrlQueryParams = asSortParams(
     qs,
     PermissionGroupListUrlSortField,
@@ -37,7 +36,7 @@ interface PermissionGroupDetailsRouteProps {
 const PermissionGroupDetails: React.FC<RouteComponentProps<
   PermissionGroupDetailsRouteProps
 >> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<PermissionGroupDetailsUrlQueryParams>();
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,
     MembersListUrlSortField,

@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -16,8 +16,8 @@ import {
 import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
 
-const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const StaffList: React.FC<RouteComponentProps<{}>> = () => {
+  const qs = useQueryParams<StaffListUrlQueryParams>();
   const params: StaffListUrlQueryParams = asSortParams(
     qs,
     StaffListUrlSortField,
@@ -32,7 +32,7 @@ interface StaffDetailsRouteProps {
 const StaffDetails: React.FC<RouteComponentProps<StaffDetailsRouteProps>> = ({
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<StaffMemberDetailsUrlQueryParams>();
   const params: StaffMemberDetailsUrlQueryParams = qs;
 
   return (

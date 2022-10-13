@@ -1,4 +1,4 @@
-import { parse as parseQs } from "qs";
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import React, { useContext } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 
 const LoginView: React.FC<RouteComponentProps<any>> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<LoginUrlQueryParams>();
   const params: LoginUrlQueryParams = qs;
 
   return <LoginViewComponent params={params} />;

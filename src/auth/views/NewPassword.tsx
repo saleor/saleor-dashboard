@@ -1,6 +1,6 @@
 import useNavigator from "@saleor/hooks/useNavigator";
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { SetPasswordData, useAuth } from "@saleor/sdk";
-import { parse as parseQs } from "qs";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router";
 
@@ -9,7 +9,7 @@ import NewPasswordPage, {
 } from "../components/NewPasswordPage";
 import { NewPasswordUrlQueryParams } from "../urls";
 
-const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
+const NewPassword: React.FC<RouteComponentProps> = () => {
   const navigate = useNavigator();
 
   const { setPassword } = useAuth();
@@ -17,7 +17,9 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
 
-  const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
+  const params: NewPasswordUrlQueryParams = useQueryParams<
+    NewPasswordUrlQueryParams
+  >();
 
   const handleSubmit = async (data: NewPasswordPageFormData) => {
     setLoading(true);

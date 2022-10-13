@@ -1,5 +1,5 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -22,8 +22,8 @@ import ShippingZoneCreate from "./views/ShippingZoneCreate";
 import ShippingZoneDetailsComponent from "./views/ShippingZoneDetails";
 import ShippingZonesListComponent from "./views/ShippingZonesList";
 
-const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const ShippingZonesList: React.FC<RouteComponentProps<{}>> = () => {
+  const qs = useQueryParams<ShippingZonesListUrlQueryParams>();
   const params: ShippingZonesListUrlQueryParams = qs;
   return <ShippingZonesListComponent params={params} />;
 };
@@ -33,8 +33,8 @@ interface ShippingZoneDetailsRouteProps {
 }
 const ShippingZoneDetails: React.FC<RouteComponentProps<
   ShippingZoneDetailsRouteProps
->> = ({ location, match }) => {
-  const qs = parseQs(location.search.substr(1));
+>> = ({ match }) => {
+  const qs = useQueryParams<ShippingZoneUrlQueryParams>();
   const params: ShippingZoneUrlQueryParams = qs;
   return (
     <ShippingZoneDetailsComponent
@@ -47,7 +47,7 @@ const ShippingZoneDetails: React.FC<RouteComponentProps<
 const RateCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ShippingRateCreateUrlQueryParams>();
   const params: ShippingRateCreateUrlQueryParams = qs;
 
   return (
@@ -62,7 +62,7 @@ const RateUpdate: React.FC<RouteComponentProps<{
   id: string;
   rateId: string;
 }>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ShippingRateUrlQueryParams>();
   const params: ShippingRateUrlQueryParams = qs;
 
   return (

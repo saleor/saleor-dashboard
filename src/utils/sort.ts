@@ -42,7 +42,7 @@ export function getSortParams<
 
 // Appends Sort object to the querystring params
 export function asSortParams<
-  TParams extends Record<any, string>,
+  TParams extends Record<any, any>,
   TFields extends Record<any, string>
 >(
   params: TParams,
@@ -56,9 +56,12 @@ export function asSortParams<
       params.asc,
       defaultOrder === undefined ? true : defaultOrder,
     ),
-    sort: params.sort
+    sort: (params.sort
       ? findValueInEnum(params.sort, fields)
-      : defaultField?.toString() || "name",
+      : defaultField?.toString() || "name") as Exclude<
+      keyof TFields,
+      number | symbol
+    >,
   };
 }
 

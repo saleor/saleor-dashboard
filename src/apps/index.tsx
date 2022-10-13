@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import WebhooksRoutes from "@saleor/webhooks";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -28,7 +28,7 @@ import CustomAppDetailsView from "./views/CustomAppDetails";
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams();
   const params: AppDetailsUrlQueryParams = qs;
 
   return (
@@ -41,7 +41,7 @@ const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
 );
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams();
   const params: AppInstallUrlQueryParams = qs;
 
   return <AppInstallView params={params} {...props} />;
@@ -57,7 +57,7 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
   token,
   onTokenClose,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams();
   const params: CustomAppUrlQueryParams = qs;
   const id = match.params.id;
 
@@ -76,7 +76,7 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({
 };
 
 const AppsList: React.FC<RouteComponentProps> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams();
   const params: AppListUrlQueryParams = qs;
 
   return <AppsListView params={params} />;

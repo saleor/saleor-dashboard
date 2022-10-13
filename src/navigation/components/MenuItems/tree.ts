@@ -1,6 +1,6 @@
+import { TreeItem } from "@nosferatu500/react-sortable-tree";
 import { MenuDetailsFragment } from "@saleor/graphql";
 import { getPatch } from "fast-array-diff";
-import { TreeItem } from "react-sortable-tree";
 
 import { MenuItemType } from "../MenuItemDialog";
 import { MenuItemNode, MenuItemNodeProps } from "./MenuItems";

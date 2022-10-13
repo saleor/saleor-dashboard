@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -19,8 +19,8 @@ import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
-const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const PageList: React.FC<RouteComponentProps<{}>> = () => {
+  const qs = useQueryParams<PageListUrlQueryParams>();
   const params: PageListUrlQueryParams = asSortParams(
     qs,
     PageListUrlSortField,
@@ -30,7 +30,7 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 };
 
 const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<PageCreateUrlQueryParams>();
   const params: PageCreateUrlQueryParams = qs;
 
   return (
@@ -42,7 +42,7 @@ const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
 };
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<PageUrlQueryParams>();
   const params: PageUrlQueryParams = qs;
 
   return (

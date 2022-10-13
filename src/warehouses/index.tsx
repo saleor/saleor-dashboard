@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -18,8 +18,8 @@ import WarehouseCreate from "./views/WarehouseCreate";
 import WarehouseDetailsComponent from "./views/WarehouseDetails";
 import WarehouseListComponent from "./views/WarehouseList";
 
-const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const WarehouseList: React.FC<RouteComponentProps> = () => {
+  const qs = useQueryParams<WarehouseListUrlQueryParams>();
   const params: WarehouseListUrlQueryParams = asSortParams(
     qs,
     WarehouseListUrlSortField,
@@ -29,10 +29,9 @@ const WarehouseList: React.FC<RouteComponentProps> = ({ location }) => {
 };
 
 const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
-  location,
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<WarehouseUrlQueryParams>();
   const params: WarehouseUrlQueryParams = qs;
   return (
     <WarehouseDetailsComponent

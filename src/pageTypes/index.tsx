@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -18,8 +18,8 @@ import PageTypeCreate from "./views/PageTypeCreate";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";
 import PageTypeListComponent from "./views/PageTypeList";
 
-const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const PageTypeList: React.FC<RouteComponentProps<{}>> = () => {
+  const qs = useQueryParams<PageTypeListUrlQueryParams>();
   const params: PageTypeListUrlQueryParams = asSortParams(
     qs,
     PageTypeListUrlSortField,
@@ -33,7 +33,7 @@ interface PageTypeDetailsRouteParams {
 const PageTypeDetails: React.FC<RouteComponentProps<
   PageTypeDetailsRouteParams
 >> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<PageTypeUrlQueryParams>();
   const params: PageTypeUrlQueryParams = qs;
 
   return (

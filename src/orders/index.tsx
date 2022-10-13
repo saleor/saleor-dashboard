@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -29,8 +29,8 @@ import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSettings from "./views/OrderSettings";
 
-const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const OrderList: React.FC<RouteComponentProps<any>> = () => {
+  const qs = useQueryParams<OrderListUrlQueryParams>();
   const params: OrderListUrlQueryParams = asSortParams(
     qs,
     OrderListUrlSortField,
@@ -39,8 +39,8 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   );
   return <OrderListComponent params={params} />;
 };
-const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const OrderDraftList: React.FC<RouteComponentProps<any>> = () => {
+  const qs = useQueryParams<OrderDraftListUrlQueryParams>();
   const params: OrderDraftListUrlQueryParams = asSortParams(
     qs,
     OrderDraftListUrlSortField,
@@ -51,22 +51,16 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   return <OrderDraftListComponent params={params} />;
 };
 
-const OrderDetails: React.FC<RouteComponentProps<any>> = ({
-  location,
-  match,
-}) => {
-  const qs = parseQs(location.search.substr(1));
+const OrderDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const qs = useQueryParams<OrderUrlQueryParams>();
   const params: OrderUrlQueryParams = qs;
   const id = match.params.id;
 
   return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
 };
 
-const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
-  location,
-  match,
-}) => {
-  const qs = parseQs(location.search.substr(1));
+const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const qs = useQueryParams<OrderFulfillUrlQueryParams>();
   const params: OrderFulfillUrlQueryParams = qs;
   return (
     <OrderFulfillComponent

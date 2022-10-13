@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -18,7 +18,7 @@ import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
 const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const params = parseQs(location.search.substr(1));
+  const params = useQueryParams();
 
   return (
     <ChannelDetailsComponent
@@ -28,8 +28,8 @@ const ChannelDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
   );
 };
 
-const ChannelsList: React.FC<RouteComponentProps> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const ChannelsList: React.FC<RouteComponentProps> = () => {
+  const qs = useQueryParams<ChannelsListUrlQueryParams>();
   const params: ChannelsListUrlQueryParams = asSortParams(
     qs,
     ChannelsListUrlSortField,

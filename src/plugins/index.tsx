@@ -1,6 +1,6 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -16,8 +16,8 @@ import {
 import PluginsListComponent from "./views/PluginList";
 import PluginsDetailsComponent from "./views/PluginsDetails";
 
-const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const PluginList: React.FC<RouteComponentProps<any>> = () => {
+  const qs = useQueryParams<PluginListUrlQueryParams>();
   const params: PluginListUrlQueryParams = asSortParams(
     qs,
     PluginListUrlSortField,
@@ -26,7 +26,7 @@ const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 };
 
 const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<PluginUrlQueryParams>();
   const params: PluginUrlQueryParams = qs;
 
   return (

@@ -1,7 +1,7 @@
+import useQueryParams from "@saleor/hooks/useQueryParams";
 import { sectionNames } from "@saleor/intl";
 import { asSortParams } from "@saleor/utils/sort";
 import { getArrayQueryParam } from "@saleor/utils/urls";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
@@ -29,8 +29,8 @@ import ProductUpdateComponent from "./views/ProductUpdate";
 import ProductVariantComponent from "./views/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
-const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+const ProductList: React.FC<RouteComponentProps<any>> = () => {
+  const qs = useQueryParams<ProductListUrlQueryParams>();
   const params: ProductListUrlQueryParams = asSortParams(
     {
       ...qs,
@@ -47,7 +47,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 };
 
 const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ProductUrlQueryParams>();
   const params: ProductUrlQueryParams = qs;
 
   return (
@@ -62,14 +62,14 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
 };
 
 const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ProductCreateUrlQueryParams>();
   const params: ProductCreateUrlQueryParams = qs;
 
   return <ProductCreateComponent params={params} />;
 };
 
 const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ProductVariantEditUrlQueryParams>();
   const params: ProductVariantEditUrlQueryParams = qs;
 
   return (
@@ -81,11 +81,8 @@ const ProductVariant: React.FC<RouteComponentProps<any>> = ({ match }) => {
   );
 };
 
-const ProductImage: React.FC<RouteComponentProps<any>> = ({
-  location,
-  match,
-}) => {
-  const qs = parseQs(location.search.substr(1));
+const ProductImage: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const qs = useQueryParams<ProductImageUrlQueryParams>();
   const params: ProductImageUrlQueryParams = qs;
 
   return (
@@ -100,7 +97,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = useQueryParams<ProductVariantAddUrlQueryParams>();
   const params: ProductVariantAddUrlQueryParams = qs;
 
   return (
