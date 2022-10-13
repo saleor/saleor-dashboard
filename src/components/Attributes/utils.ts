@@ -87,7 +87,7 @@ export function getMultiChoices(
 ): MultiAutocompleteChoiceType[] {
   return values.map(value => ({
     label: value.name,
-    value: value.slug,
+    value: value.name,
   }));
 }
 
@@ -115,15 +115,15 @@ export function getMultiDisplayValue(
   return attribute.value.map(attributeValue => {
     const definedAttributeValue =
       attributeValues.find(
-        definedValue => definedValue.slug === attributeValue,
+        definedValue => definedValue.name === attributeValue,
       ) ||
       attribute.data.values.find(
-        definedValue => definedValue.slug === attributeValue,
+        definedValue => definedValue.name === attributeValue,
       );
     if (!!definedAttributeValue) {
       return {
         label: definedAttributeValue.name,
-        value: definedAttributeValue.slug,
+        value: definedAttributeValue.name,
       };
     }
 
