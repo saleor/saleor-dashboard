@@ -107,7 +107,7 @@ describe("Orders", () => {
 
   it(
     "should create order with selected channel. TC: SALEOR_2104",
-    { tags: ["@orders", "@allEnv", "@stable"] },
+    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)

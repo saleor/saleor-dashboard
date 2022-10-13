@@ -44,7 +44,7 @@ describe("As an admin I want to manage warehouses", () => {
 
   it(
     "should be able to create warehouse. TC: SALEOR_1101",
-    { tags: ["@warehouse", "@allEnv", "@stable"] },
+    { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.warehouses)

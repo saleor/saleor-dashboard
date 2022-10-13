@@ -1,6 +1,7 @@
 const { Command } = require("commander");
 const core = require("@actions/core");
 const fetch = require("node-fetch");
+const { Octokit } = require("@octokit/core");
 
 const program = new Command();
 
@@ -10,8 +11,10 @@ program
   .option("--version <version>", "version of a project")
   .option("--token <token>", "token fo login to cloud")
   .action(async options => {
+    const isOldVersion = await checkIfOldVersion(options.version);
+    core.setOutput("IS_OLD_VERSION", isOldVersion);
+
     if (!isPatchRelease(options.version)) {
-      const environmentId = "2dPjdMTU";
       const taskId = await updateEnvironment(
         environmentId,
         options.version,
@@ -63,7 +66,7 @@ async function updateEnvironment(environmentId, version, token) {
   return responseInJson.task_id;
 }
 
-async function waitUntilTaskInProgress(taskId, token, throwErrorAfterTimeout) {
+async function waitUntilTaskInProgress(taskId, token) {
   const response = await fetch(
     `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
     {
@@ -118,4 +121,25 @@ async function getDomainForUpdatedEnvironment(environmentId, token) {
   );
   const responseInJson = await response.json();
   return responseInJson.domain;
+}
+
+async function checkIfOldVersion(version) {
+  const newestVersion = await getTheNewestVersion();
+  const howManyVersionsBehind =
+    getFormattedVersion(newestVersion) - getFormattedVersion(version);
+  //All versions besides last three are old versions
+  return howManyVersionsBehind > 2 ? "true" : "false";
+}
+
+async function getTheNewestVersion() {
+  const octokit = new Octokit();
+
+  const response = await octokit.request(
+    "GET /repos/{owner}/{repo}/releases/latest",
+    {
+      owner: "saleor",
+      repo: "saleor-dashboard",
+    },
+  );
+  return response.data["tag_name"];
 }
