@@ -1,51 +1,25 @@
 import { Typography } from "@material-ui/core";
+import HelpOutline from "@material-ui/icons/HelpOutline";
 import Grid from "@saleor/components/Grid";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    attributeSection: {
-      "&:last-of-type": {
-        paddingBottom: 0,
-      },
-      padding: theme.spacing(2, 0),
-      wordBreak: "break-word",
-    },
-    attributeSectionLabel: {
-      alignItems: "center",
-      display: "flex",
-    },
-    flex: {
-      columnGap: theme.spacing(2) + "px",
-      display: "flex",
-      flexDirection: "row",
-      [theme.breakpoints.down("md")]: {
-        flexDirection: "column",
-        rowGap: theme.spacing(2) + "px",
-      },
-    },
-    value: {
-      "&&": {
-        overflow: "visible",
-      },
-    },
-  }),
-  { name: "BasicAttributeRow" },
-);
+import { useBasicAttributeStyles } from "./styles";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
+  description?: string | React.ReactNode;
   flexValueContainer?: boolean;
 }
 
 const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
   label,
+  description,
   children,
   flexValueContainer,
 }) => {
-  const classes = useStyles();
+  const classes = useBasicAttributeStyles();
 
   return (
     <Grid className={classes.attributeSection} variant="uniform">
@@ -53,7 +27,14 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
         className={classes.attributeSectionLabel}
         data-test-id="attribute-label"
       >
-        <Typography>{label}</Typography>
+        <Typography>
+          {label}
+          {description && (
+            <Tooltip title={description}>
+              <HelpOutline className={classes.tooltipIcon} />
+            </Tooltip>
+          )}
+        </Typography>
       </div>
       <div
         data-test-id="attribute-value"
