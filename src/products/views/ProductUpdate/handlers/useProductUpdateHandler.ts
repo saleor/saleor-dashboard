@@ -31,11 +31,11 @@ import {
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
+import { getVariantChannelsInputs } from "@saleor/products/components/ProductVariants/datagrid/getVariantChannelsInputs";
 import {
   getStockInputs,
   getStocks,
   getVariantChannels,
-  getVariantChannelsInputs,
   getVariantInput,
   getVariantInputs,
 } from "@saleor/products/components/ProductVariants/utils";

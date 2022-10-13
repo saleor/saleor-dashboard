@@ -9,7 +9,7 @@ import {
   ProductFragment,
 } from "@saleor/graphql";
 import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
-import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/utils";
+import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/datagrid/columnData";
 import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import pick from "lodash/pick";

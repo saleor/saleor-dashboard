@@ -18,7 +18,6 @@ import { Choice } from "@saleor/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
-  ProductVariantChannelListingAddInput,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
@@ -29,26 +28,14 @@ import { mapNodeToChoice } from "@saleor/utils/maps";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
+import {
+  getColumnAttribute,
+  getColumnChannel,
+  getColumnChannelAvailability,
+  getColumnStock,
+} from "./datagrid/columnData";
+import { getVariantChannelsInputs } from "./datagrid/getVariantChannelsInputs";
 import messages from "./messages";
-
-export function makeGetColumnData(
-  regexp: RegExp,
-): (column: string) => string | null {
-  return column => {
-    if (!regexp.test(column)) {
-      return null;
-    }
-
-    return column.match(regexp)[1];
-  };
-}
-
-export const getColumnAttribute = makeGetColumnData(/^attribute:(.*)/);
-export const getColumnChannel = makeGetColumnData(/^channel:(.*)/);
-export const getColumnChannelAvailability = makeGetColumnData(
-  /^availableInChannel:(.*)/,
-);
-export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
 export function getVariantInput(data: DatagridChangeOpts, index: number) {
   const attributes = data.updates
@@ -142,29 +129,6 @@ export function getStocks(
       variables =>
         variables.removeStocks.length > 0 || variables.stocks.length > 0,
     );
-}
-
-export function getVariantChannelsInputs(
-  data: DatagridChangeOpts,
-  index: number,
-) {
-  return data.updates
-    .filter(change => getColumnChannel(change.column))
-    .filter(
-      change =>
-        change.row === index + data.removed.filter(r => r <= index).length,
-    )
-    .map<ProductVariantChannelListingAddInput>(change => ({
-      channelId: getColumnChannel(change.column),
-      price: change.data.value,
-    }))
-    .filter(change => {
-      const availableInChannel = data.updates.find(
-        ({ column }) => column === `availableInChannel:${change.channelId}`,
-      )?.data;
-
-      return availableInChannel && change.price !== numberCellEmptyValue;
-    });
 }
 
 export function getVariantChannels(
