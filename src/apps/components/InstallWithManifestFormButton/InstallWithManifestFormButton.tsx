@@ -4,7 +4,10 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-type AvailableStates = "initial" | "input-open";
+enum AvailableStates {
+  Initial,
+  InputOpen,
+}
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,7 +29,7 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
   const styles = useStyles();
   const intl = useIntl();
 
-  const [state, setState] = useState<AvailableStates>("initial");
+  const [state, setState] = useState<AvailableStates>(AvailableStates.Initial);
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
@@ -44,12 +47,12 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
   };
 
   switch (state) {
-    case "initial": {
+    case AvailableStates.Initial: {
       return (
         <Button
           variant="secondary"
           data-test-id="add-app-from-manifest"
-          onClick={() => setState("input-open")}
+          onClick={() => setState(AvailableStates.InputOpen)}
         >
           <FormattedMessage
             id="kIXV5V"
@@ -59,7 +62,7 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
         </Button>
       );
     }
-    case "input-open": {
+    case AvailableStates.InputOpen: {
       return (
         <form onSubmit={handleFormSubmit}>
           <TextField
