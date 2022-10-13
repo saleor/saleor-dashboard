@@ -37,7 +37,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
       - name: Deploy
         run: |
-          DOTLESS_VERSION_FAMILY=$(echo $VERSION_FAMILY | sed "s/\.//")
+          DOTLESS_VERSION_FAMILY=$(echo $VERSION_FAMILY | tr -d .)
 
           gcloud storage cp -r build/dashboard/*  gs://saleor-cloud-eu-dashboard/${DEPLOYMENT_TARGET}-v${DOTLESS_VERSION_FAMILY}/static/
           gcloud storage cp build/dashboard/index.html gs://saleor-cloud-eu-dashboard/${DEPLOYMENT_TARGET}-v${DOTLESS_VERSION_FAMILY}/index.html
