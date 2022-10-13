@@ -277,6 +277,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       data={data}
                       disabled={loading}
                       hasVariants={false}
+                      productType={data?.productType?.name}
                       onFormDataChange={change}
                       errors={errors}
                       formErrors={formErrors}

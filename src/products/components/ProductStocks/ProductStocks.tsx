@@ -37,6 +37,7 @@ import {
   PlusIcon,
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import { ProductType } from "@saleor/utils/constants";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
@@ -72,6 +73,7 @@ export interface ProductStocksProps {
   data: ProductStockFormData;
   disabled: boolean;
   errors: ProductErrorFragment[];
+  productType?: string;
   formErrors:
     | FormErrors<ProductVariantCreateData>
     | FormErrors<ProductVariantUpdateData>
@@ -99,6 +101,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   hasVariants,
   errors,
   formErrors: localFormErrors,
+  productType,
   onChangePreorderEndDate,
   stocks,
   warehouses,
@@ -153,25 +156,27 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent>
-        <div className={classes.skuInputWithError}>
-          <div className={classes.skuInputContainer}>
-            <TextField
-              disabled={disabled}
-              error={!!formErrors.sku || Boolean(error)}
-              fullWidth
-              helperText={getProductErrorMessage(formErrors.sku, intl)}
-              label={intl.formatMessage(messages.sku)}
-              name="sku"
-              onChange={handleOnSkuChange()}
-              value={data.sku}
-            />
+        {productType === ProductType.EXAMINATION_PACKET ? null : (
+          <div className={classes.skuInputWithError}>
+            <div className={classes.skuInputContainer}>
+              <TextField
+                disabled={disabled}
+                error={!!formErrors.sku || Boolean(error)}
+                fullWidth
+                helperText={getProductErrorMessage(formErrors.sku, intl)}
+                label={intl.formatMessage(messages.sku)}
+                name="sku"
+                onChange={handleOnSkuChange()}
+                value={data.sku}
+              />
+            </div>
+            {error ? (
+              <Alert variant="error" close={false}>
+                <Typography>{error}</Typography>
+              </Alert>
+            ) : null}
           </div>
-          {error ? (
-            <Alert variant="error" close={false}>
-              <Typography>{error}</Typography>
-            </Alert>
-          ) : null}
-        </div>
+        )}
 
         <ControlledCheckbox
           checked={data.isPreorder}
