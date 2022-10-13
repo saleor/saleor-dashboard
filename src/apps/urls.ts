@@ -54,7 +54,8 @@ export const appDeepPath = (id: string, subPath: string) =>
   urlJoin(appPath(id), subPath);
 export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
 export const appInstallPath = urlJoin(appsSection, "install");
-export const appInstallUrl = appInstallPath;
+export const createAppInstallUrl = (manifestUrl: string) =>
+  `${appInstallPath}?manifestUrl=${manifestUrl}`;
 
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

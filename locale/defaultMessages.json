@@ -3627,6 +3627,9 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
+  "QVraQY": {
+    "string": "App manifest URL"
+  },
   "QY7FSs": {
     "context": "button",
     "string": "create product type"
@@ -6007,6 +6010,10 @@
     "context": "set balance dialog subtitle",
     "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
   },
+  "kIXV5V": {
+    "context": "install with app manifest button",
+    "string": "Install with App Manifest"
+  },
   "kIvvax": {
     "string": "Search Products..."
   },
@@ -6460,6 +6467,9 @@
   "ny4zrH": {
     "context": "dialog title",
     "string": "Delete Warehouse"
+  },
+  "o/q4fc": {
+    "string": "Usually ends with /api/manifest"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -7246,6 +7256,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ubmFc8": {
+    "string": "Install"
   },
   "ud0w8h": {
     "context": "number of postal code ranges",

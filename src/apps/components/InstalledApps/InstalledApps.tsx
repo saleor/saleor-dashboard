@@ -6,18 +6,20 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
 import { useAppListContext } from "@saleor/apps/context";
-import { appUrl } from "@saleor/apps/urls";
+import { appUrl, createAppInstallUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
@@ -37,6 +39,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   const intl = useIntl();
   const classes = useStyles(props);
   const { activateApp, deactivateApp } = useAppListContext();
+  const navigate = useNavigator();
+
+  const navigateToAppInstallPage = useCallback(
+    (url: string) => {
+      navigate(createAppInstallUrl(url));
+    },
+    [navigate],
+  );
 
   const getHandleToggle = (app: AppListItemFragment) => () => {
     if (app.isActive) {
@@ -54,6 +64,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
           defaultMessage: "Third Party Apps",
           description: "section header",
         })}
+        toolbar={
+          <InstallWithManifestFormButton
+            onSubmitted={navigateToAppInstallPage}
+          />
+        }
       />
       <ResponsiveTable>
         <TableBody>
