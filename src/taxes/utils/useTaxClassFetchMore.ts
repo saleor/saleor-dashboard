@@ -12,7 +12,7 @@ interface UseTaxClassFetchMoreHookResult {
  * It can be replaced with a top-level search when search feature
  * is implemented in the API.
  * @returns taxClasses - list of tax classes
- * @returns fetchMore - function to fetch more tax classes
+ * @returns fetchMore - props for paginated components, e.g. dropdowns
  */
 export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
   const { data, loading, fetchMore } = useTaxClassAssignQuery({
