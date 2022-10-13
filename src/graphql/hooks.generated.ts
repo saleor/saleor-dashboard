@@ -2023,12 +2023,6 @@ export const ProductDetailsVariantFragmentDoc = gql`
     ${StockFragmentDoc}
 ${PreorderFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}`;
-export const TaxTypeFragmentDoc = gql`
-    fragment TaxType on TaxType {
-  description
-  taxCode
-}
-    `;
 export const WeightFragmentDoc = gql`
     fragment Weight on Weight {
   unit
@@ -2056,7 +2050,6 @@ export const ProductFragmentDoc = gql`
     id
     name
   }
-  chargeTaxes
   channelListings {
     ...ChannelListingProductWithoutPricing
   }
@@ -2071,15 +2064,13 @@ export const ProductFragmentDoc = gql`
     id
     name
     hasVariants
-    taxType {
-      ...TaxType
-    }
   }
   weight {
     ...Weight
   }
-  taxType {
-    ...TaxType
+  taxClass {
+    id
+    name
   }
 }
     ${ProductVariantAttributesFragmentDoc}
@@ -2087,7 +2078,6 @@ ${MetadataFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${ProductMediaFragmentDoc}
 ${ProductDetailsVariantFragmentDoc}
-${TaxTypeFragmentDoc}
 ${WeightFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
@@ -2392,25 +2382,6 @@ export const CountryFragmentDoc = gql`
     fragment Country on CountryDisplay {
   country
   code
-}
-    `;
-export const CountryWithTaxesFragmentDoc = gql`
-    fragment CountryWithTaxes on CountryDisplay {
-  ...Country
-  vat {
-    standardRate
-    reducedRates {
-      rateType
-      rate
-    }
-  }
-}
-    ${CountryFragmentDoc}`;
-export const ShopTaxesFragmentDoc = gql`
-    fragment ShopTaxes on Shop {
-  chargeTaxesOnShipping
-  includeTaxesInPrices
-  displayGrossPrices
 }
     `;
 export const CountryWithCodeFragmentDoc = gql`
@@ -12456,12 +12427,8 @@ export const ProductDetailsDocument = gql`
   product(id: $id, channel: $channel) {
     ...Product
   }
-  taxTypes {
-    ...TaxType
-  }
 }
-    ${ProductFragmentDoc}
-${TaxTypeFragmentDoc}`;
+    ${ProductFragmentDoc}`;
 
 /**
  * __useProductDetailsQuery__
@@ -14776,85 +14743,6 @@ export function useStaffMemberDetailsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type StaffMemberDetailsQueryHookResult = ReturnType<typeof useStaffMemberDetailsQuery>;
 export type StaffMemberDetailsLazyQueryHookResult = ReturnType<typeof useStaffMemberDetailsLazyQuery>;
 export type StaffMemberDetailsQueryResult = Apollo.QueryResult<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>;
-export const UpdateTaxSettingsDocument = gql`
-    mutation UpdateTaxSettings($input: ShopSettingsInput!) {
-  shopSettingsUpdate(input: $input) {
-    errors {
-      ...ShopSettingsUpdateErrorFragment
-    }
-    shop {
-      ...ShopTaxes
-    }
-  }
-}
-    ${ShopSettingsUpdateErrorFragmentFragmentDoc}
-${ShopTaxesFragmentDoc}`;
-export type UpdateTaxSettingsMutationFn = Apollo.MutationFunction<Types.UpdateTaxSettingsMutation, Types.UpdateTaxSettingsMutationVariables>;
-
-/**
- * __useUpdateTaxSettingsMutation__
- *
- * To run a mutation, you first call `useUpdateTaxSettingsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateTaxSettingsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateTaxSettingsMutation, { data, loading, error }] = useUpdateTaxSettingsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateTaxSettingsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateTaxSettingsMutation, Types.UpdateTaxSettingsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateTaxSettingsMutation, Types.UpdateTaxSettingsMutationVariables>(UpdateTaxSettingsDocument, options);
-      }
-export type UpdateTaxSettingsMutationHookResult = ReturnType<typeof useUpdateTaxSettingsMutation>;
-export type UpdateTaxSettingsMutationResult = Apollo.MutationResult<Types.UpdateTaxSettingsMutation>;
-export type UpdateTaxSettingsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateTaxSettingsMutation, Types.UpdateTaxSettingsMutationVariables>;
-export const FetchTaxesDocument = gql`
-    mutation FetchTaxes {
-  shopFetchTaxRates {
-    errors {
-      ...ShopFetchTaxRatesErrorFragment
-    }
-    shop {
-      countries {
-        ...Country
-      }
-    }
-  }
-}
-    ${ShopFetchTaxRatesErrorFragmentFragmentDoc}
-${CountryFragmentDoc}`;
-export type FetchTaxesMutationFn = Apollo.MutationFunction<Types.FetchTaxesMutation, Types.FetchTaxesMutationVariables>;
-
-/**
- * __useFetchTaxesMutation__
- *
- * To run a mutation, you first call `useFetchTaxesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useFetchTaxesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [fetchTaxesMutation, { data, loading, error }] = useFetchTaxesMutation({
- *   variables: {
- *   },
- * });
- */
-export function useFetchTaxesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.FetchTaxesMutation, Types.FetchTaxesMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.FetchTaxesMutation, Types.FetchTaxesMutationVariables>(FetchTaxesDocument, options);
-      }
-export type FetchTaxesMutationHookResult = ReturnType<typeof useFetchTaxesMutation>;
-export type FetchTaxesMutationResult = Apollo.MutationResult<Types.FetchTaxesMutation>;
-export type FetchTaxesMutationOptions = Apollo.BaseMutationOptions<Types.FetchTaxesMutation, Types.FetchTaxesMutationVariables>;
 export const TaxConfigurationUpdateDocument = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {
@@ -15091,78 +14979,6 @@ export function useTaxClassDeleteMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type TaxClassDeleteMutationHookResult = ReturnType<typeof useTaxClassDeleteMutation>;
 export type TaxClassDeleteMutationResult = Apollo.MutationResult<Types.TaxClassDeleteMutation>;
 export type TaxClassDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>;
-export const CountryListDocument = gql`
-    query CountryList {
-  shop {
-    ...ShopTaxes
-    countries {
-      ...CountryWithTaxes
-    }
-  }
-}
-    ${ShopTaxesFragmentDoc}
-${CountryWithTaxesFragmentDoc}`;
-
-/**
- * __useCountryListQuery__
- *
- * To run a query within a React component, call `useCountryListQuery` and pass it any options that fit your needs.
- * When your component renders, `useCountryListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCountryListQuery({
- *   variables: {
- *   },
- * });
- */
-export function useCountryListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CountryListQuery, Types.CountryListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CountryListQuery, Types.CountryListQueryVariables>(CountryListDocument, options);
-      }
-export function useCountryListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CountryListQuery, Types.CountryListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CountryListQuery, Types.CountryListQueryVariables>(CountryListDocument, options);
-        }
-export type CountryListQueryHookResult = ReturnType<typeof useCountryListQuery>;
-export type CountryListLazyQueryHookResult = ReturnType<typeof useCountryListLazyQuery>;
-export type CountryListQueryResult = Apollo.QueryResult<Types.CountryListQuery, Types.CountryListQueryVariables>;
-export const TaxTypeListDocument = gql`
-    query TaxTypeList {
-  taxTypes {
-    ...TaxType
-  }
-}
-    ${TaxTypeFragmentDoc}`;
-
-/**
- * __useTaxTypeListQuery__
- *
- * To run a query within a React component, call `useTaxTypeListQuery` and pass it any options that fit your needs.
- * When your component renders, `useTaxTypeListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useTaxTypeListQuery({
- *   variables: {
- *   },
- * });
- */
-export function useTaxTypeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>(TaxTypeListDocument, options);
-      }
-export function useTaxTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>(TaxTypeListDocument, options);
-        }
-export type TaxTypeListQueryHookResult = ReturnType<typeof useTaxTypeListQuery>;
-export type TaxTypeListLazyQueryHookResult = ReturnType<typeof useTaxTypeListLazyQuery>;
-export type TaxTypeListQueryResult = Apollo.QueryResult<Types.TaxTypeListQuery, Types.TaxTypeListQueryVariables>;
 export const TaxConfigurationsListDocument = gql`
     query TaxConfigurationsList($before: String, $after: String, $first: Int, $last: Int, $filter: TaxConfigurationFilterInput) {
   taxConfigurations(

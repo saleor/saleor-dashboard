@@ -217,7 +217,6 @@ export const productFragmentDetails = gql`
       id
       name
     }
-    chargeTaxes
     channelListings {
       ...ChannelListingProductWithoutPricing
     }
@@ -232,15 +231,13 @@ export const productFragmentDetails = gql`
       id
       name
       hasVariants
-      taxType {
-        ...TaxType
-      }
     }
     weight {
       ...Weight
     }
-    taxType {
-      ...TaxType
+    taxClass {
+      id
+      name
     }
   }
 `;
