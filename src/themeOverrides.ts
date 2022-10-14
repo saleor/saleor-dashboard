@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core/styles";
 
-const fontFamily = "Fira Sans, sans-serif";
+const fontFamily = "Rubik, sans-serif";
 
 const breakpoints = ({
   keys: ["xs", "sm", "md", "lg", "xl"],
