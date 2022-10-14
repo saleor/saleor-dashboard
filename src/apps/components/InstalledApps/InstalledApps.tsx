@@ -33,6 +33,8 @@ export interface InstalledAppsProps extends ListProps {
   displayQuickManifestButton?: boolean;
 }
 
+const getAppDomainFromManifest = (manifest: string) => new URL(manifest).host;
+
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
@@ -105,7 +107,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                         className={clsx(classes.text, classes.manifestUrl)}
                         variant="body2"
                       >
-                        {app.node.manifestUrl}
+                        {getAppDomainFromManifest(app.node.manifestUrl)}
                       </Typography>
                     )}
                     <TableButtonWrapper>

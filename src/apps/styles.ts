@@ -53,7 +53,7 @@ export const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0,
-      width: theme.spacing(30),
+      minWidth: theme.spacing(30),
     },
     colSpinner: {
       "& svg": {
