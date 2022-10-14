@@ -213,9 +213,6 @@ export const useStyles = makeStyles(
         marginRight: theme.spacing(1),
       },
     },
-    manifestUrl: {
-      marginRight: theme.spacing(1),
-    },
   }),
   { name: "AppList" },
 );

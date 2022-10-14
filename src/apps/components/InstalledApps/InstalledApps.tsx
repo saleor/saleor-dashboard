@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
 import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
 import { useAppListContext } from "@saleor/apps/context";
 import { isAppInTunnel } from "@saleor/apps/is-app-in-tunnel";
@@ -19,7 +20,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
-import clsx from "clsx";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,8 +32,6 @@ export interface InstalledAppsProps extends ListProps {
   onRemove: (id: string) => void;
   displayQuickManifestButton?: boolean;
 }
-
-const getAppDomainFromManifest = (manifest: string) => new URL(manifest).host;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
@@ -103,12 +101,9 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
 
                   <TableCell className={classes.colAction}>
                     {app.node.manifestUrl && (
-                      <Typography
-                        className={clsx(classes.text, classes.manifestUrl)}
-                        variant="body2"
-                      >
-                        {getAppDomainFromManifest(app.node.manifestUrl)}
-                      </Typography>
+                      <AppManifestTableDisplay
+                        manifestUrl={app.node.manifestUrl}
+                      />
                     )}
                     <TableButtonWrapper>
                       <Switch
