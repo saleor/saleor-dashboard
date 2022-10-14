@@ -30,11 +30,13 @@ import AppsSkeleton from "../AppsSkeleton";
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
+  displayQuickManifestButton?: boolean;
 }
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
+  displayQuickManifestButton = false,
   ...props
 }) => {
   const intl = useIntl();
@@ -66,9 +68,13 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
           description: "section header",
         })}
         toolbar={
-          <InstallWithManifestFormButton
-            onSubmitted={navigateToAppInstallPage}
-          />
+          displayQuickManifestButton ? (
+            <InstallWithManifestFormButton
+              onSubmitted={navigateToAppInstallPage}
+            />
+          ) : (
+            undefined
+          )
         }
       />
       <ResponsiveTable>

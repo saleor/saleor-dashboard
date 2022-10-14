@@ -86,6 +86,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             <InstalledApps
               appsList={thirdPartyApps}
               onRemove={onInstalledAppRemove}
+              displayQuickManifestButton
               {...listProps}
             />
 
