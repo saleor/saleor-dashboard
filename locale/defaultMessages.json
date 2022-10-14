@@ -443,6 +443,10 @@
     "context": "order draft total price",
     "string": "Total"
   },
+  "1WbTJ5": {
+    "context": "product variants, title",
+    "string": "Variants"
+  },
   "1div9r": {
     "string": "Search Attribute"
   },
@@ -452,10 +456,6 @@
   },
   "1gzck6": {
     "string": "{firstName} {lastName}"
-  },
-  "1kdQdO": {
-    "context": "section header",
-    "string": "Variants"
   },
   "1lk/oS": {
     "context": "button",
@@ -479,10 +479,6 @@
   "1tXSSK": {
     "context": "header",
     "string": "Translation Voucher \"{voucherName}\" - {languageCode}"
-  },
-  "1w06LC": {
-    "context": "variants count label",
-    "string": "{variantsCount} variants"
   },
   "1wyZpQ": {
     "string": "These passwords are too similar"
@@ -647,10 +643,6 @@
     "context": "filter range separator",
     "string": "and"
   },
-  "37U5su": {
-    "context": "all variants label",
-    "string": "All variants"
-  },
   "38dS1A": {
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
@@ -680,10 +672,6 @@
   "3TlhJS": {
     "context": "navigator command mode description",
     "string": "Search Command"
-  },
-  "3VyHbJ": {
-    "context": "button",
-    "string": "Create variant"
   },
   "3Z8972": {
     "context": "product",
@@ -833,6 +821,10 @@
   },
   "4gZl/n": {
     "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
+  },
+  "4hl9rS": {
+    "context": "variant price in channel",
+    "string": "Price"
   },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
@@ -1003,10 +995,6 @@
   "5x6yT9": {
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
-  },
-  "6+sMz4": {
-    "context": "product variant inventory",
-    "string": "Unavailable in all locations"
   },
   "62T585": {
     "context": "button",
@@ -1191,10 +1179,6 @@
   "7l5Bh9": {
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
-  "7mK2vs": {
-    "context": "product variant inventory",
-    "string": "Unavailable"
-  },
   "7nKXni": {
     "context": "option description",
     "string": "This product will act as a payment method"
@@ -1222,10 +1206,6 @@
   "7yKZvp": {
     "context": "section header",
     "string": "User Status"
-  },
-  "80FeaT": {
-    "context": "product variant preorder threshold",
-    "string": "{globalThreshold} Global threshold"
   },
   "86pLaG": {
     "context": "WarehouseSettings public stock label",
@@ -1342,10 +1322,6 @@
   },
   "9OtpHt": {
     "string": "Order line deleted"
-  },
-  "9PmyrU": {
-    "context": "product variant inventory",
-    "string": "Not stocked"
   },
   "9RCuN3": {
     "string": "Payment successfully captured"
@@ -1639,6 +1615,10 @@
   "BanAhF": {
     "context": "sale status",
     "string": "Scheduled"
+  },
+  "BbP+k3": {
+    "context": "variant availability in channel",
+    "string": "Available"
   },
   "Be+J13": {
     "string": "Configurable"
@@ -2135,10 +2115,6 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
-  "FSinkL": {
-    "context": "variant stock status",
-    "string": "Available inventory at:"
-  },
   "FWWliu": {
     "context": "ExitFormPrompt title",
     "string": "You have unsaved changes"
@@ -2552,6 +2528,9 @@
     "context": "button",
     "string": "Create attribute"
   },
+  "IH47ID": {
+    "string": "Use button above to add new product variants"
+  },
   "IHtOda": {
     "context": "input label",
     "string": "Selected columns"
@@ -2659,6 +2638,9 @@
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"
+  },
+  "J4E+jp": {
+    "string": "Variant name"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -2813,10 +2795,6 @@
   "Jsh6+U": {
     "context": "product type is digital or physical",
     "string": "Type"
-  },
-  "JtZ71e": {
-    "context": "filtering option",
-    "string": "All Warehouses"
   },
   "Jwuu4X": {
     "context": "select product informations to be exported",
@@ -3323,10 +3301,6 @@
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
-  },
-  "OTek3r": {
-    "context": "product variant name",
-    "string": "Variant"
   },
   "OVOU1z": {
     "context": "section header",
@@ -4042,6 +4016,9 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U5Da30": {
+    "string": "Warehouses"
+  },
   "U5aVd8": {
     "context": "product",
     "string": "Shippable"
@@ -4152,6 +4129,10 @@
   "Urh2N3": {
     "context": "label",
     "string": "Link"
+  },
+  "Us9cA1": {
+    "context": "profit margin",
+    "string": "Margin"
   },
   "Utq1fE": {
     "context": "customer gift cards card title",
@@ -4373,9 +4354,6 @@
   "WGp+Fw": {
     "context": "order refund amount",
     "string": "Shipment Cost"
-  },
-  "WHkx+F": {
-    "string": "Price cannot be lower than 0"
   },
   "WMGoqz": {
     "context": "used by filter label",
@@ -6014,10 +5992,6 @@
     "context": "sales section name",
     "string": "Sales"
   },
-  "kL3C+K": {
-    "context": "product variant inventory status",
-    "string": "Inventory"
-  },
   "kN6SLs": {
     "string": "Min Value"
   },
@@ -6326,10 +6300,6 @@
   "n+Gwbu": {
     "string": "Discounts"
   },
-  "n02c9W": {
-    "context": "product variant price",
-    "string": "Price"
-  },
   "n0RwMK": {
     "string": "Define types of products you sell"
   },
@@ -6549,10 +6519,6 @@
     "context": "payment status",
     "string": "Payment"
   },
-  "p/EWEZ": {
-    "context": "channels variants availability dialog title",
-    "string": "Manage Channels"
-  },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
@@ -6734,10 +6700,6 @@
     "context": "dialog header",
     "string": "Delete Order Drafts"
   },
-  "qbqMpk": {
-    "context": "product variant preorder threshold",
-    "string": "In preorder"
-  },
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
@@ -6809,9 +6771,6 @@
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
-  },
-  "rIJbNC": {
-    "string": "Use variants for products that come in a variety of versions for example different sizes or colors"
   },
   "rJ3lkW": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
@@ -7239,10 +7198,6 @@
     "context": "order payment",
     "string": "Preauthorized amount"
   },
-  "uVssds": {
-    "context": "product variant inventory",
-    "string": "{stockQuantity,plural,one{{stockQuantity} available} other{{stockQuantity} available}}"
-  },
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
@@ -7520,10 +7475,6 @@
   "wWTUrM": {
     "string": "No activities found"
   },
-  "wWYYBR": {
-    "context": "product variant inventory",
-    "string": "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}"
-  },
   "wgA48T": {
     "context": "country selection",
     "string": "Countries A to Z"
@@ -7711,10 +7662,6 @@
   "yHQQMQ": {
     "context": "dialog header",
     "string": "Unpublish Pages"
-  },
-  "yHaQWG": {
-    "context": "variants selected label",
-    "string": "{variantsAmount} variants selected"
   },
   "yHeZRQ": {
     "string": "Product Export Failed"
