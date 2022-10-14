@@ -165,7 +165,7 @@ jobs:
 
       - name: echo-tags
         run: |
-              echo ${{steps.get_tags.outputs.result}}
+          echo ${{steps.get_tags.outputs.result}}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -193,7 +193,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -225,6 +225,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}
