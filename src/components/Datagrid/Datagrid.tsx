@@ -30,6 +30,7 @@ import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
 } from "./useDatagridChange";
+import { usePreventHistoryBack } from "./usePreventHistoryBack";
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
@@ -103,6 +104,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const scrollerInner: HTMLDivElement = document.querySelector(
     ".dvn-scroll-inner",
   );
+
+  usePreventHistoryBack(scroller);
+
   React.useEffect(() => {
     if (!(scroller && scrollerInner)) {
       return;

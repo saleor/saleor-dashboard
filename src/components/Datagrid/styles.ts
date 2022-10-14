@@ -1,4 +1,5 @@
 import { Theme } from "@glideapps/glide-data-grid";
+import { Typography } from "@material-ui/core/styles/createTypography";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
 import { useMemo } from "react";
 
@@ -55,6 +56,10 @@ const useStyles = makeStyles(
         },
         "& .clip-region": {
           border: `1px solid ${theme.palette.saleor.main[1]}`,
+        },
+        "& .gdg-growing-entry": {
+          flex: 1,
+          marginTop: 0,
         },
         "& .gdg-style": {
           background: theme.palette.background.paper,
@@ -161,8 +166,21 @@ const useStyles = makeStyles(
   { name: "Datagrid" },
 );
 
+const calculateFontToPx = (remValue: string | number, base: number) => {
+  if (typeof remValue === "string") {
+    return `${parseFloat(remValue) * base}px`;
+  }
+
+  return `${remValue * base}px`;
+};
+
+type HtmlTypography = Typography & { htmlFontSize: number };
+
 export function useDatagridTheme() {
   const theme = useTheme();
+
+  const base = (theme.typography as HtmlTypography).htmlFontSize * 0.625;
+
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
       accentColor: theme.palette.primary.main,
@@ -176,9 +194,9 @@ export function useDatagridTheme() {
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
       fontFamily: theme.typography.fontFamily,
-      baseFontStyle: theme.typography.body1.fontSize as string,
-      headerFontStyle: theme.typography.body2.fontSize as string,
-      editorFontSize: theme.typography.body1.fontSize as string,
+      baseFontStyle: calculateFontToPx(theme.typography.body1.fontSize, base),
+      headerFontStyle: calculateFontToPx(theme.typography.body2.fontSize, base),
+      editorFontSize: calculateFontToPx(theme.typography.body1.fontSize, base),
       textMedium: theme.palette.text.primary,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,
