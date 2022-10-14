@@ -14,12 +14,12 @@ import ProductUpdatePage, {
 } from "@saleor/products/components/ProductUpdatePage";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { ProductUpdatePageFormData } from "@saleor/products/utils/data";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
-import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
@@ -74,7 +74,8 @@ const props: ProductUpdatePageProps = {
   referenceProducts: [],
   saveButtonBarState: "default",
   selectedChannelId: "123",
-  taxTypes,
+  taxClasses,
+  fetchMoreTaxClasses: undefined,
   variants: product.variants,
   warehouses: warehouseList,
   attributeValues: [],

@@ -4,7 +4,6 @@ import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits, listActionsProps } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
-import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
 import { configure, mount } from "enzyme";
@@ -16,6 +15,7 @@ const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
 
 import * as _useNavigator from "@saleor/hooks/useNavigator";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
@@ -82,7 +82,8 @@ const props: ProductUpdatePageProps = {
   referenceProducts: [],
   saveButtonBarState: "default",
   selectedChannelId: "123",
-  taxTypes,
+  taxClasses,
+  fetchMoreTaxClasses: undefined,
   variants: product.variants,
   warehouses: warehouseList,
   attributeValues: [],
