@@ -1814,10 +1814,6 @@
     "context": "dialog header",
     "string": "Delete Page Types"
   },
-  "CdIHMu": {
-    "context": "select tax ratte",
-    "string": "Tax Rate"
-  },
   "ChAjJu": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
@@ -4044,10 +4040,6 @@
     "context": "orders section name",
     "string": "Orders"
   },
-  "TfY/Pi": {
-    "context": "checkbox",
-    "string": "Charge taxes on this product"
-  },
   "TfzIXS": {
     "context": "tax classes card header",
     "string": "General information"
@@ -5854,10 +5846,6 @@
   "iWyoZn": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
-  },
-  "iYH3Y7": {
-    "context": "checkbox",
-    "string": "Override the product type's tax rate"
   },
   "ibnmEd": {
     "context": "voucher country range",
