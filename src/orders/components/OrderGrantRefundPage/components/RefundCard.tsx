@@ -87,8 +87,8 @@ export const RefundCard = ({
           <span className={classes.totalMoney}>
             {currency}&nbsp;
             {getMoneyFormatted(locale, {
-              amount: totalSelectedPrice,
-              currency,
+              amount: totalSelectedPrice ?? 0,
+              currency: currency || "USD",
             })}
           </span>
           <LayoutButton
