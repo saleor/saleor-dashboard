@@ -8,6 +8,7 @@ import {
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -47,6 +48,8 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
     displayLoader: true,
   });
 
+  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
+
   const [
     createProductType,
     createProductTypeOpts,
@@ -73,7 +76,7 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
           isShippingRequired: formData.isShippingRequired,
           name: formData.name,
           kind: formData.kind,
-          taxCode: formData.taxType,
+          taxClass: formData.taxClassId,
           weight: formData.weight,
         },
       },
@@ -110,7 +113,8 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
           description: "header",
         })}
         saveButtonBarState={createProductTypeOpts.status}
-        taxTypes={data?.taxTypes || []}
+        taxClasses={taxClasses ?? []}
+        onFetchMoreTaxClasses={fetchMoreTaxClasses}
         kind={params.kind}
         onChangeKind={handleChangeKind}
         onSubmit={handleSubmit}

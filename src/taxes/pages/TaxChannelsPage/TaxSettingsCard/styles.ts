@@ -14,6 +14,20 @@ export const useStyles = makeStyles(
         overflow: "visible",
       },
     },
+    taxStrategySection: {
+      display: "flex",
+      alignItems: "flex-start",
+    },
+    singleSelectField: {
+      width: "275px",
+    },
+    infoIcon: {
+      "& > svg": {
+        width: "20px",
+        height: "20px",
+        verticalAlign: "middle",
+      },
+    },
   }),
   { name: "TaxSettingsCard" },
 );
