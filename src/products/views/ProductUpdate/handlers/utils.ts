@@ -84,12 +84,18 @@ export function getProductChannelsUpdateVariables(
     .map(channelId => ({
       channelId,
       addVariants: data.variants.updates
-        .filter(
-          change =>
+        .filter(change => {
+          const existInProduct = product.variants[
+            change.row
+          ].channelListings.some(c => c.channel.id === channelId);
+
+          return (
             !data.variants.added.includes(change.row) &&
+            !existInProduct &&
             channelId === getColumnChannelAvailability(change.column) &&
-            change.data,
-        )
+            change.data
+          );
+        })
         .map(change => product.variants[change.row].id),
       removeVariants: data.variants.updates
         .filter(

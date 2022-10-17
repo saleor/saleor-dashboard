@@ -12,8 +12,7 @@ export const usePreventHistoryBack = (scroller: HTMLDivElement) => {
   const offsetY = useRef(0);
 
   const wheelHandler = evt => {
-    const notVertival =
-      offsetY.current === 0 || offsetY.current === window.scrollY;
+    const notVertival = Math.abs(evt.deltaX) - Math.abs(evt.deltaY) >= 0;
 
     if (evt.target.scrollLeft <= 0 && evt.deltaX <= 0 && notVertival) {
       evt.preventDefault();
@@ -27,11 +26,10 @@ export const usePreventHistoryBack = (scroller: HTMLDivElement) => {
       return;
     }
 
-    scroller.scrollLeft = 1;
     scroller.addEventListener("wheel", wheelHandler, { passive: false });
 
     return () => {
       scroller.removeEventListener("wheel", wheelHandler);
     };
-  });
+  }, [scroller]);
 };
