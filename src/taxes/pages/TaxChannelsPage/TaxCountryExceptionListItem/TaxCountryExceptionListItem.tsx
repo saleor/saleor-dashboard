@@ -1,4 +1,7 @@
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import SingleSelectField, {
+  Choice,
+} from "@saleor/components/SingleSelectField";
 import {
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
@@ -19,12 +22,14 @@ interface TaxCountryExceptionListItemProps {
   onDelete: () => void;
   onChange: FormChange;
   divider: boolean;
+  strategyChoices: Choice[];
 }
 
 export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
   country,
   onDelete,
   onChange,
+  strategyChoices,
   divider = true,
 }) => {
   const classes = useStyles();
@@ -36,6 +41,14 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           className={classes.center}
           checked={country.chargeTaxes}
           name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+          onChange={onChange}
+        />
+        <SingleSelectField
+          className={classes.selectField}
+          choices={strategyChoices}
+          disabled={!country.chargeTaxes}
+          value={country.taxCalculationStrategy}
+          name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
           onChange={onChange}
         />
       </ListItemCell>

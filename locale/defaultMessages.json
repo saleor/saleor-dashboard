@@ -35,6 +35,10 @@
     "context": "variant sku",
     "string": "SKU {sku}"
   },
+  "+Jgot0": {
+    "context": "tax class for a product type",
+    "string": "Tax class"
+  },
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
@@ -843,6 +847,10 @@
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
   },
+  "4p3bjX": {
+    "context": "tax strategy combobox choice",
+    "string": "Use flat rates"
+  },
   "4prRLv": {
     "string": "Permission is out of your scope"
   },
@@ -1043,6 +1051,10 @@
   "6G41zU": {
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
+  },
+  "6HHPFy": {
+    "context": "tax strategy combobox hint",
+    "string": "Select the method of tax calculation"
   },
   "6JlXeD": {
     "context": "button",
@@ -1462,9 +1474,6 @@
     "context": "collection label",
     "string": "Visible"
   },
-  "9xUIAh": {
-    "string": "Tax group"
-  },
   "9xlPgt": {
     "context": "used staff users counter",
     "string": "{count}/{max} members"
@@ -1812,10 +1821,6 @@
   "CcEwXH": {
     "context": "dialog header",
     "string": "Delete Page Types"
-  },
-  "CdIHMu": {
-    "context": "select tax ratte",
-    "string": "Tax Rate"
   },
   "ChAjJu": {
     "context": "character limit",
@@ -4012,6 +4017,10 @@
     "context": "product availability available date",
     "string": "Set available on"
   },
+  "TJ7WHA": {
+    "context": "tax strategy combobox choice",
+    "string": "Use tax app"
+  },
   "TKmub+": {
     "string": "This field is required"
   },
@@ -4045,14 +4054,6 @@
   "Ta9j04": {
     "context": "orders section name",
     "string": "Orders"
-  },
-  "TalJlD": {
-    "context": "tax rate for a product type",
-    "string": "Tax"
-  },
-  "TfY/Pi": {
-    "context": "checkbox",
-    "string": "Charge taxes on this product"
   },
   "TfzIXS": {
     "context": "tax classes card header",
@@ -5081,6 +5082,10 @@
     "context": "product price",
     "string": "Price"
   },
+  "bDBiac": {
+    "context": "dropdown or column label",
+    "string": "Tax class"
+  },
   "bDHiYK": {
     "context": "gift card export success alert description",
     "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
@@ -5388,10 +5393,6 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
-  },
-  "di0qi8": {
-    "context": "card subtitle",
-    "string": "Tax charging"
   },
   "diOQm7": {
     "context": "product status",
@@ -5864,10 +5865,6 @@
   "iWyoZn": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
-  },
-  "iYH3Y7": {
-    "context": "checkbox",
-    "string": "Override the product type's tax rate"
   },
   "ibnmEd": {
     "context": "voucher country range",
@@ -6359,10 +6356,6 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
-  },
-  "mUb8Gt": {
-    "context": "section header",
-    "string": "Taxes"
   },
   "mWQt3s": {
     "string": "No. of Products"
@@ -7266,6 +7259,9 @@
   "ttMauu": {
     "context": "window title",
     "string": "Create collection"
+  },
+  "tthToS": {
+    "string": "Disabled"
   },
   "ttk0w7": {
     "context": "resend code to customer description",

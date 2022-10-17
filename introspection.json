@@ -44408,7 +44408,7 @@
           },
           {
             "name": "taxClassUpdate",
-            "description": "Update a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "description": "Update a tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
             "args": [
               {
                 "name": "id",
@@ -44453,7 +44453,7 @@
           },
           {
             "name": "taxConfigurationUpdate",
-            "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
             "args": [
               {
                 "name": "id",
@@ -44498,7 +44498,7 @@
           },
           {
             "name": "taxCountryConfigurationUpdate",
-            "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
             "args": [
               {
                 "name": "countryCode",
@@ -44551,7 +44551,7 @@
           },
           {
             "name": "taxCountryConfigurationDelete",
-            "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+            "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
             "args": [
               {
                 "name": "countryCode",
@@ -99751,7 +99751,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxClassCountryRate",
-        "description": "Tax rate for a country. When tax class is null, it represents the default tax rate for that country; otherwise it's a country tax rate specific to the given tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "description": "Tax rate for a country. When tax class is null, it represents the default tax rate for that country; otherwise it's a country tax rate specific to the given tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
         "fields": [
           {
             "name": "country",
@@ -99806,7 +99806,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxClassCreate",
-        "description": "Create a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Create a tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "errors",
@@ -100004,7 +100004,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxClassDelete",
-        "description": "Delete a tax class. After deleting the tax class any products, product types or shipping methods using it are updated to use the default tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Delete a tax class. After deleting the tax class any products, product types or shipping methods using it are updated to use the default tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "errors",
@@ -100297,7 +100297,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxClassUpdate",
-        "description": "Update a tax class.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Update a tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "errors",
@@ -100480,7 +100480,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "CountryRateInput",
+                  "name": "CountryRateUpdateInput",
                   "ofType": null
                 }
               }
@@ -100491,7 +100491,7 @@
           },
           {
             "name": "removeCountryRates",
-            "description": "List of country codes for which to remove the tax class rates.",
+            "description": "List of country codes for which to remove the tax class rates. Note: It removes all rates for given country code.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -100517,7 +100517,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxConfiguration",
-        "description": "Channel-specific tax configuration.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "description": "Channel-specific tax configuration.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
         "fields": [
           {
             "name": "id",
@@ -100984,7 +100984,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxConfigurationPerCountry",
-        "description": "Country-specific exceptions of a channel's tax configuration.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "description": "Country-specific exceptions of a channel's tax configuration.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
         "fields": [
           {
             "name": "country",
@@ -101126,7 +101126,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxConfigurationUpdate",
-        "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Update tax configuration for a channel.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "errors",
@@ -101382,7 +101382,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxCountryConfiguration",
-        "description": "Tax class rates grouped by country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "description": "Tax class rates grouped by country.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
         "fields": [
           {
             "name": "country",
@@ -101433,7 +101433,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxCountryConfigurationDelete",
-        "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Remove all tax class rates for a specific country.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "taxCountryConfiguration",
@@ -101560,7 +101560,7 @@
       {
         "kind": "OBJECT",
         "name": "TaxCountryConfigurationUpdate",
-        "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.5.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
+        "description": "Update tax class rates for a specific country.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TAXES.",
         "fields": [
           {
             "name": "taxCountryConfiguration",
@@ -101712,7 +101712,7 @@
             "deprecationReason": null
           },
           {
-            "name": "CANNOT_CREATE_WITH_NULL_RATE",
+            "name": "CANNOT_CREATE_NEGATIVE_RATE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

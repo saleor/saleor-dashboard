@@ -16,31 +16,6 @@ export const countryFragment = gql`
     code
   }
 `;
-export const countryWithTaxesFragment = gql`
-  fragment CountryWithTaxes on CountryDisplay {
-    ...Country
-    vat {
-      standardRate
-      reducedRates {
-        rateType
-        rate
-      }
-    }
-  }
-`;
-export const shopTaxesFragment = gql`
-  fragment ShopTaxes on Shop {
-    chargeTaxesOnShipping
-    includeTaxesInPrices
-    displayGrossPrices
-  }
-`;
-export const taxTypeFragment = gql`
-  fragment TaxType on TaxType {
-    description
-    taxCode
-  }
-`;
 
 export const taxConfigurationPerCountry = gql`
   fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
@@ -48,6 +23,7 @@ export const taxConfigurationPerCountry = gql`
       ...CountryWithCode
     }
     chargeTaxes
+    taxCalculationStrategy
     displayGrossPrices
   }
 `;
@@ -62,6 +38,7 @@ export const taxConfiguration = gql`
     displayGrossPrices
     pricesEnteredWithTax
     chargeTaxes
+    taxCalculationStrategy
     countries {
       ...TaxConfigurationPerCountry
     }

@@ -10,8 +10,12 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Grid from "@saleor/components/Grid";
+import SingleSelectField, {
+  Choice,
+} from "@saleor/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
+import { InfoIcon } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,11 +25,13 @@ import { useStyles } from "./styles";
 
 export interface TaxSettingsCardProps {
   values: TaxConfigurationFormData;
+  strategyChoices: Choice[];
   onChange: FormChange;
 }
 
 export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
   values,
+  strategyChoices,
   onChange,
 }) => {
   const intl = useIntl();
@@ -36,14 +42,30 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
       <CardTitle title={intl.formatMessage(taxesMessages.defaultSettings)} />
       <CardContent>
         <Typography className={classes.supportHeader}>
-          <FormattedMessage {...taxesMessages.taxCharging} />
+          <FormattedMessage {...taxesMessages.chargeTaxesHeader} />
         </Typography>
-        <ControlledCheckbox
-          checked={values.chargeTaxes}
-          name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
-          onChange={onChange}
-          label={intl.formatMessage(taxesMessages.chargeTaxes)}
-        />
+        <div className={classes.taxStrategySection}>
+          <ControlledCheckbox
+            checked={values.chargeTaxes}
+            name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+            onChange={onChange}
+            label={intl.formatMessage(taxesMessages.chargeTaxes)}
+          />
+          <SingleSelectField
+            className={classes.singleSelectField}
+            choices={strategyChoices}
+            disabled={!values.chargeTaxes}
+            hint={
+              <span className={classes.infoIcon}>
+                <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
+                <InfoIcon />
+              </span>
+            }
+            value={values.taxCalculationStrategy}
+            name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
+            onChange={onChange}
+          />
+        </div>
       </CardContent>
       <Divider />
       <CardContent>
