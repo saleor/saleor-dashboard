@@ -1,16 +1,6 @@
 import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
-  active: {
-    id: "c24hjq",
-    defaultMessage: "Active",
-    description: "status",
-  },
-  notActive: {
-    id: "NwQXZp",
-    defaultMessage: "Not active",
-    description: "status",
-  },
   availability: {
     id: "hOxIeP",
     defaultMessage: "Availability",
@@ -514,10 +504,24 @@ export const sectionNames = defineMessages({
 });
 
 export const commonStatusMessages = defineMessages({
+  active: {
+    id: "c24hjq",
+    defaultMessage: "Active",
+    description: "status",
+  },
+  notActive: {
+    id: "NwQXZp",
+    defaultMessage: "Not active",
+    description: "status",
+  },
   cancelled: {
     id: "dOQB9o",
     defaultMessage: "Cancelled",
     description: "payment status",
+  },
+  disabled: {
+    id: "tthToS",
+    defaultMessage: "Disabled",
   },
 });
 

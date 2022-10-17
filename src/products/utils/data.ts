@@ -210,11 +210,9 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
 
 export interface ProductUpdatePageFormData extends MetadataFormData {
   category: string | null;
-  changeTaxCode: boolean;
   channelsWithVariants: ChannelsWithVariantsData;
   channelListings: ChannelData[];
   channelsData: ChannelData[];
-  chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
   name: string;
@@ -223,7 +221,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   seoDescription: string;
   seoTitle: string;
   sku: string;
-  taxCode: string;
+  taxClassId: string;
   trackInventory: boolean;
   weight: string;
   isPreorder: boolean;
@@ -245,8 +243,6 @@ export function getProductUpdatePageFormData(
     channelsWithVariants,
     channelsData,
     category: maybe(() => product.category.id, ""),
-    changeTaxCode: !!product?.taxType.taxCode,
-    chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       [],
@@ -269,7 +265,7 @@ export function getProductUpdatePageFormData(
       "",
     ),
     slug: product?.slug || "",
-    taxCode: product?.taxType.taxCode,
+    taxClassId: product?.taxClass?.id ?? "",
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
     isPreorder: !!variant?.preorder || false,

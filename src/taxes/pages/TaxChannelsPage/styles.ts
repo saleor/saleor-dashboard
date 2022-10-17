@@ -21,6 +21,9 @@ export const useStyles = makeStyles(
         marginRight: 0,
       },
     },
+    selectField: {
+      textAlign: "left",
+    },
   }),
   { name: "TaxChannelsPage" },
 );

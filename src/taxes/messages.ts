@@ -1,6 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const taxesMessages = defineMessages({
+  taxClass: {
+    id: "bDBiac",
+    defaultMessage: "Tax class",
+    description: "dropdown or column label",
+  },
   channelsSection: {
     id: "b2DlTO",
     defaultMessage: "Channels",
@@ -30,11 +35,6 @@ export const taxesMessages = defineMessages({
     id: "+2VydL",
     defaultMessage: "Country exceptions",
     description: "card title",
-  },
-  taxCharging: {
-    id: "di0qi8",
-    defaultMessage: "Tax charging",
-    description: "card subtitle",
   },
   enteredPrices: {
     id: "puRlnN",
@@ -176,5 +176,20 @@ export const taxesMessages = defineMessages({
     id: "8BBMRj",
     defaultMessage: "New tax class",
     description: "default tax class name for new tax classes",
+  },
+  taxStrategyTaxApp: {
+    id: "TJ7WHA",
+    defaultMessage: "Use tax app",
+    description: "tax strategy combobox choice",
+  },
+  taxStrategyFlatRates: {
+    id: "4p3bjX",
+    defaultMessage: "Use flat rates",
+    description: "tax strategy combobox choice",
+  },
+  taxStrategyHint: {
+    id: "6HHPFy",
+    defaultMessage: "Select the method of tax calculation",
+    description: "tax strategy combobox hint",
   },
 });

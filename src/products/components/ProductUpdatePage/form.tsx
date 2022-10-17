@@ -77,11 +77,9 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
-  changeTaxCode: boolean;
   channelsData: ChannelData[];
   channelsWithVariants: ChannelsWithVariantsData;
   channelListings: ChannelData[];
-  chargeTaxes: boolean;
   collections: string[];
   isAvailable: boolean;
   name: string;
@@ -90,7 +88,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   seoDescription: string;
   seoTitle: string;
   sku: string;
-  taxCode: string;
   trackInventory: boolean;
   isPreorder: boolean;
   globalThreshold: string;
@@ -98,6 +95,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
   weight: string;
+  taxClassId: string;
 }
 export interface FileAttributeInputData {
   attributeId: string;
@@ -131,7 +129,7 @@ export interface ProductUpdateHandlers
       | "changeMetadata"
       | "selectCategory"
       | "selectCollection"
-      | "selectTaxRate",
+      | "selectTaxClass",
       FormChange
     >,
     Record<
@@ -175,14 +173,14 @@ export type UseProductUpdateFormRenderProps = Omit<
 
 export interface UseProductUpdateFormOpts
   extends Record<
-    "categories" | "collections" | "taxTypes",
+    "categories" | "collections" | "taxClasses",
     SingleAutocompleteChoiceType[]
   > {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
-  setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   channelsData: ChannelData[];
@@ -362,10 +360,10 @@ function useProductUpdateForm(
     triggerChange();
     stocks.remove(id);
   };
-  const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
+  const handleTaxClassSelect = createSingleAutocompleteSelectHandler(
     handleChange,
-    opts.setSelectedTaxType,
-    opts.taxTypes,
+    opts.setSelectedTaxClass,
+    opts.taxClasses,
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
@@ -498,7 +496,7 @@ function useProductUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
-      selectTaxRate: handleTaxTypeSelect,
+      selectTaxClass: handleTaxClassSelect,
     },
     submit,
     isSaveDisabled,

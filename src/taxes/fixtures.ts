@@ -1,4 +1,5 @@
 import {
+  TaxCalculationStrategy,
   TaxClassFragment,
   TaxConfigurationFragment,
   TaxCountryConfigurationFragment,
@@ -16,6 +17,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     displayGrossPrices: true,
     pricesEnteredWithTax: false,
     chargeTaxes: true,
+    taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
@@ -25,6 +27,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Afghanistan",
         },
         chargeTaxes: false,
+        taxCalculationStrategy: null,
         displayGrossPrices: false,
       },
       {
@@ -35,6 +38,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Åland Islands",
         },
         chargeTaxes: true,
+        taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
         displayGrossPrices: true,
       },
     ],
@@ -50,6 +54,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     displayGrossPrices: false,
     pricesEnteredWithTax: true,
     chargeTaxes: true,
+    taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
     countries: [
       {
         __typename: "TaxConfigurationPerCountry",
@@ -59,6 +64,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Albania",
         },
         chargeTaxes: true,
+        taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
         displayGrossPrices: true,
       },
       {
@@ -69,6 +75,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Algeria",
         },
         chargeTaxes: false,
+        taxCalculationStrategy: null,
         displayGrossPrices: false,
       },
     ],
