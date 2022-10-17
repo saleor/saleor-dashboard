@@ -35,6 +35,7 @@ import ProductStocks from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
+import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, {
@@ -191,6 +192,12 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
             </div>
             <div>
+              <ProductVariantName
+                value={data.name}
+                onChange={change}
+                errors={errors}
+              />
+              <CardSpacer />
               <ProductDetailsChannelsAvailabilityCard
                 product={product}
                 onManageClick={toggleManageChannels}

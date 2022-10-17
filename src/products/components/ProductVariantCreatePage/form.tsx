@@ -6,7 +6,6 @@ import {
   RichTextProps,
 } from "@saleor/attributes/utils/data";
 import {
-  createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createAttributeReferenceChangeHandler,
@@ -66,6 +65,7 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   quantityLimitPerCustomer: number | null;
   preorderEndDateTime?: string;
+  name: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -137,6 +137,7 @@ const initial: ProductVariantCreateFormData = {
   hasPreorderEndDate: false,
   preorderEndDateTime: "",
   quantityLimitPerCustomer: null,
+  name: "",
 };
 
 function useProductVariantCreateForm(
@@ -185,10 +186,13 @@ function useProductVariantCreateForm(
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleAttributeChange = createAttributeChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+
+  const handleAttributeChangeWithName = (id: string, value: string) => {
+    triggerChange();
+    attributes.change(id, value === "" ? [] : [value]);
+    handleChange({ target: { value, name: "name" } });
+  };
+
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
@@ -303,8 +307,9 @@ function useProductVariantCreateForm(
     data.isPreorder &&
     data.hasPreorderEndDate &&
     !!form.errors.preorderEndDateTime;
+  const emptyName = !data.name;
 
-  const formDisabled = invalidPreorder || invalidChannels;
+  const formDisabled = invalidPreorder || invalidChannels || emptyName;
   const isSaveDisabled = disabled || formDisabled || !onSubmit;
 
   setIsSubmitDisabled(isSaveDisabled);
@@ -325,7 +330,7 @@ function useProductVariantCreateForm(
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
-      selectAttribute: handleAttributeChange,
+      selectAttribute: handleAttributeChangeWithName,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,

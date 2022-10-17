@@ -7,16 +7,14 @@ import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ProductVariantUpdateData } from "../ProductVariantPage/form";
-
 interface Props {
-  data: ProductVariantUpdateData;
+  value: string;
   onChange: FormChange<any>;
-  disabled: boolean;
+  disabled?: boolean;
   errors: ProductErrorFragment[];
 }
 
-const ProductVariantName = ({ data, onChange, disabled, errors }: Props) => {
+const ProductVariantName = ({ value, onChange, disabled, errors }: Props) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
@@ -31,7 +29,7 @@ const ProductVariantName = ({ data, onChange, disabled, errors }: Props) => {
       <CardContent>
         <TextField
           name="name"
-          value={data.name}
+          value={value}
           label={intl.formatMessage(commonMessages.name)}
           onChange={onChange}
           error={!!formErrors.name}
