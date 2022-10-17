@@ -36,8 +36,8 @@ const ProductVariantName = ({ value, onChange, disabled, errors }: Props) => {
           fullWidth
           disabled={disabled}
           helperText={getProductErrorMessage(formErrors.name, intl)}
-          required
           data-test-id="variant-name"
+          required
         />
       </CardContent>
     </Card>

@@ -129,7 +129,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   channelErrors,
   defaultVariantId,
   defaultWeightUnit,
-  errors,
+  errors: apiErrors,
   header,
   loading,
   placeholderImage,
@@ -234,6 +234,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             change,
             data,
             formErrors,
+            validationErrors,
             isSaveDisabled,
             handlers,
             submit,
@@ -245,6 +246,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             const selectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
             );
+
+            const errors = [...apiErrors, ...validationErrors];
 
             return (
               <>

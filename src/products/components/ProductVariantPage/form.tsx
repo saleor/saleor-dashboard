@@ -21,6 +21,7 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import {
+  ProductErrorWithAttributesFragment,
   ProductVariantFragment,
   SearchPagesQuery,
   SearchProductsQuery,
@@ -49,6 +50,7 @@ import {
 import {
   validateCostPrice,
   validatePrice,
+  validateVariantData,
 } from "@saleor/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
@@ -56,7 +58,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockInput } from "../ProductStocks";
@@ -136,6 +138,7 @@ export interface UseProductVariantUpdateFormResult
     >,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
+  validationErrors: ProductErrorWithAttributesFragment[];
   disabled: boolean;
 }
 
@@ -156,6 +159,10 @@ function useProductVariantUpdateForm(
   const intl = useIntl();
   const attributeInput = getAttributeInputFromVariant(variant);
   const stockInput = getStockInputFromVariant(variant);
+
+  const [validationErrors, setValidationErrors] = useState<
+    ProductErrorWithAttributesFragment[]
+  >([]);
 
   const currentChannelsWithPreorderInfo = opts.currentChannels?.map(channel => {
     const variantChannel = variant?.channelListings?.find(
@@ -379,13 +386,21 @@ function useProductVariantUpdateForm(
   });
 
   const handleSubmit = async (data: ProductVariantUpdateSubmitData) => {
-    const errors = await onSubmit(data);
+    const validationErrors = validateVariantData(data);
 
-    if (!errors?.length) {
+    setValidationErrors(validationErrors);
+
+    if (validationErrors.length) {
+      return validationErrors;
+    }
+
+    const apiErrors = await onSubmit(data);
+
+    if (!apiErrors?.length) {
       attributesWithNewFileValue.set([]);
     }
 
-    return errors;
+    return apiErrors;
   };
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -397,9 +412,7 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isValid = () => !!data.name;
-
-  const isSaveDisabled = loading || disabled || !isValid();
+  const isSaveDisabled = loading || disabled;
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -407,6 +420,7 @@ function useProductVariantUpdateForm(
     data,
     disabled,
     formErrors: form.errors,
+    validationErrors,
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,

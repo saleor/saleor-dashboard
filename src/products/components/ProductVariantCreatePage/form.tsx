@@ -21,6 +21,7 @@ import { AttributeInput } from "@saleor/components/Attributes";
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import {
+  ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchPagesQuery,
   SearchProductsQuery,
@@ -30,6 +31,7 @@ import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
+  SubmitPromise,
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
@@ -42,10 +44,11 @@ import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@saleor/products/utils/handlers";
+import { validateVariantData } from "@saleor/products/utils/validation";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -114,6 +117,7 @@ export interface UseProductVariantCreateFormOutput
     >,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantCreateData>;
+  validationErrors: ProductErrorWithAttributesFragment[];
   disabled: boolean;
 }
 
@@ -121,7 +125,7 @@ export interface ProductVariantCreateFormProps
   extends UseProductVariantCreateFormOpts {
   children: (props: UseProductVariantCreateFormOutput) => React.ReactNode;
   product: ProductVariantCreateDataQuery["product"];
-  onSubmit: (data: ProductVariantCreateData) => void;
+  onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   disabled: boolean;
 }
 
@@ -142,12 +146,15 @@ const initial: ProductVariantCreateFormData = {
 
 function useProductVariantCreateForm(
   product: ProductVariantCreateDataQuery["product"],
-  onSubmit: (data: ProductVariantCreateData) => void,
+  onSubmit: (data: ProductVariantCreateData) => SubmitPromise,
   disabled: boolean,
   opts: UseProductVariantCreateFormOpts,
 ): UseProductVariantCreateFormOutput {
   const intl = useIntl();
   const attributeInput = getVariantAttributeInputFromProduct(product);
+  const [validationErrors, setValidationErrors] = useState<
+    ProductErrorWithAttributesFragment[]
+  >([]);
 
   const form = useForm(initial, undefined, { confirmLeave: true });
 
@@ -293,9 +300,21 @@ function useProductVariantCreateForm(
     ),
   });
 
+  const handleSubmit = async (data: ProductVariantCreateData) => {
+    const errors = validateVariantData(data);
+
+    setValidationErrors(errors);
+
+    if (errors.length) {
+      return errors;
+    }
+
+    return onSubmit(data);
+  };
+
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit,
+    onSubmit: handleSubmit,
   });
 
   const submit = async () => handleFormSubmit(await getSubmitData());
@@ -307,9 +326,8 @@ function useProductVariantCreateForm(
     data.isPreorder &&
     data.hasPreorderEndDate &&
     !!form.errors.preorderEndDateTime;
-  const emptyName = !data.name;
 
-  const formDisabled = invalidPreorder || invalidChannels || emptyName;
+  const formDisabled = invalidPreorder || invalidChannels;
   const isSaveDisabled = disabled || formDisabled || !onSubmit;
 
   setIsSubmitDisabled(isSaveDisabled);
@@ -319,6 +337,7 @@ function useProductVariantCreateForm(
     data,
     disabled,
     formErrors: form.errors,
+    validationErrors,
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,
