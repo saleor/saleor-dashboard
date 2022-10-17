@@ -18,6 +18,6 @@ export function handleTaxClassChange(
 ) {
   formChange(event);
   displayChange(
-    taxClasses.find(taxClass => taxClass.id === event.target.value).name,
+    taxClasses.find(taxClass => taxClass.id === event.target.value)?.name ?? "",
   );
 }
