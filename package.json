@@ -259,7 +259,7 @@
   "scripts": {
     "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
     "build-types": "graphql-codegen",
-    "build": "export NODE_OPTIONS=--max_old_space_size=4096 && npm run build-types && webpack -p",
+    "build": "npm run build-types && webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
