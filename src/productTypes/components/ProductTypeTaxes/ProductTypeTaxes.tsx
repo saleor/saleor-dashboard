@@ -2,7 +2,9 @@ import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import { TaxClassFragment } from "@saleor/graphql";
+import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
+import { taxesMessages } from "@saleor/taxes/messages";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -44,21 +46,12 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
 
   return (
     <Card className={classes.root}>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "mUb8Gt",
-          defaultMessage: "Taxes",
-          description: "section header",
-        })}
-      />
+      <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <SingleAutocompleteSelectField
           disabled={disabled}
           displayValue={taxClassDisplayName}
-          label={intl.formatMessage({
-            id: "kQjY56",
-            defaultMessage: "Tax class",
-          })}
+          label={intl.formatMessage(taxesMessages.taxClass)}
           name={"taxClassId" as keyof ProductTypeForm}
           onChange={onChange}
           value={data.taxClassId}

@@ -5067,6 +5067,10 @@
     "context": "product price",
     "string": "Price"
   },
+  "bDBiac": {
+    "context": "dropdown or column label",
+    "string": "Tax class"
+  },
   "bDHiYK": {
     "context": "gift card export success alert description",
     "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
@@ -6091,9 +6095,6 @@
     "context": "page header",
     "string": "Order #{orderNumber}"
   },
-  "kQjY56": {
-    "string": "Tax class"
-  },
   "kQq6/o": {
     "context": "info when addresses search is unsuccessful",
     "string": "No results found"
@@ -6336,10 +6337,6 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
-  },
-  "mUb8Gt": {
-    "context": "section header",
-    "string": "Taxes"
   },
   "mWQt3s": {
     "string": "No. of Products"

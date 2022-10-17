@@ -1,6 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const taxesMessages = defineMessages({
+  taxClass: {
+    id: "bDBiac",
+    defaultMessage: "Tax class",
+    description: "dropdown or column label",
+  },
   channelsSection: {
     id: "b2DlTO",
     defaultMessage: "Channels",
