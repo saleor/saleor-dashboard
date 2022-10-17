@@ -8,6 +8,7 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
 import {
   Button,
   MoreHorizontalIcon,
@@ -30,7 +31,6 @@ import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
 } from "./useDatagridChange";
-import { usePreventHistoryBack } from "./usePreventHistoryBack";
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
