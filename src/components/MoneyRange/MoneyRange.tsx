@@ -14,43 +14,48 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
 
   return (
     <LocaleConsumer>
-      {({ locale }) =>
-        from && to
-          ? intl.formatMessage(
-              {
-                id: "zTdwWM",
-                defaultMessage: "{fromMoney} - {toMoney}",
-                description: "money",
-              },
-              {
-                fromMoney: formatMoney(from, locale),
-                toMoney: formatMoney(to, locale),
-              },
-            )
-          : from && !to
-          ? intl.formatMessage(
-              {
-                id: "lW5uJO",
-                defaultMessage: "from {money}",
-                description: "money",
-              },
-              {
-                money: formatMoney(from, locale),
-              },
-            )
-          : !from && to
-          ? intl.formatMessage(
-              {
-                id: "hptDxW",
-                defaultMessage: "to {money}",
-                description: "money",
-              },
-              {
-                money: formatMoney(to, locale),
-              },
-            )
-          : "-"
-      }
+      {({ locale }) => {
+        if (from && to) {
+          return from.amount === to.amount
+            ? formatMoney(from, locale)
+            : intl.formatMessage(
+                {
+                  id: "zTdwWM",
+                  defaultMessage: "{fromMoney} - {toMoney}",
+                  description: "money",
+                },
+                {
+                  fromMoney: formatMoney(from, locale),
+                  toMoney: formatMoney(to, locale),
+                },
+              );
+        }
+        if (from && !to) {
+          return intl.formatMessage(
+            {
+              id: "lW5uJO",
+              defaultMessage: "from {money}",
+              description: "money",
+            },
+            {
+              money: formatMoney(from, locale),
+            },
+          );
+        }
+        if (!from && to) {
+          return intl.formatMessage(
+            {
+              id: "hptDxW",
+              defaultMessage: "to {money}",
+              description: "money",
+            },
+            {
+              money: formatMoney(to, locale),
+            },
+          );
+        }
+        return "-";
+      }}
     </LocaleConsumer>
   );
 };
