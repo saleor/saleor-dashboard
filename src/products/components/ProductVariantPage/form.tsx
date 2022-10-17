@@ -6,7 +6,6 @@ import {
   RichTextProps,
 } from "@saleor/attributes/utils/data";
 import {
-  createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
   createAttributeReferenceChangeHandler,
@@ -76,6 +75,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   quantityLimitPerCustomer: number | null;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
+  name: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   channelListings: FormsetData<
@@ -183,6 +183,7 @@ function useProductVariantUpdateForm(
     preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
+    name: variant?.name || "",
   };
 
   const form = useForm(initial, undefined, {
@@ -219,10 +220,13 @@ function useProductVariantUpdateForm(
   } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const handleAttributeChange = createAttributeChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+
+  const handleAttributeChangeWithName = (id: string, value: string) => {
+    triggerChange();
+    attributes.change(id, value === "" ? [] : [value]);
+    handleChange({ target: { value, name: "name" } });
+  };
+
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
@@ -393,7 +397,9 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = loading || disabled;
+  const isValid = () => !!data.name;
+
+  const isSaveDisabled = loading || disabled || !isValid();
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
@@ -412,7 +418,7 @@ function useProductVariantUpdateForm(
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
-      selectAttribute: handleAttributeChange,
+      selectAttribute: handleAttributeChangeWithName,
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
