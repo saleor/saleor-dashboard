@@ -1,0 +1,77 @@
+import { defineMessages } from "react-intl";
+
+export const refundPageMessages = defineMessages({
+  backlink: {
+    id: "rVIlBs",
+    defaultMessage: "Order #{orderNumber}",
+    description: "page header with order number",
+  },
+  backlinkNoNumber: {
+    id: "6u4K7e",
+    defaultMessage: "Order",
+    description: "page header",
+  },
+  pageSubtitle: {
+    defaultMessage: "Issue refund",
+    id: "/nZy6A",
+    description: "page subtitle",
+  },
+  refundBalance: {
+    defaultMessage: "Refund balance",
+    id: "2x9ZgK",
+    description: "card title",
+  },
+  totalCaptured: {
+    defaultMessage: "Total captured",
+    id: "zf48rQ",
+    description: "sum of captured amount of all transactions",
+  },
+  grantedRefund: {
+    defaultMessage: "Granted refund",
+    id: "1oYjZc",
+    description: "sum of all granted refunds for an order",
+  },
+  pendingRefunds: {
+    defaultMessage: "Pending refunds",
+    id: "0whAeC",
+    description: "sum of all pending refunds inside an order",
+  },
+  balanceAfterRequests: {
+    defaultMessage: "Balance after requests",
+    id: "Hc58JL",
+    description: "card title",
+  },
+  refundName: {
+    defaultMessage: "{transactionType} refund",
+    id: "NnhrxZ",
+    description: "amount of sent refund for transaction",
+  },
+  refundManual: {
+    defaultMessage: "Manual refund",
+    id: "PLX6FH",
+    description: "sum of all manual refunds for transaction",
+  },
+  result: {
+    defaultMessage: "Result",
+    id: "bT71VU",
+    description: "total of all sent refunds",
+  },
+  requestRefund: {
+    defaultMessage: "Request refund",
+    id: "fkgack",
+    description: "button, sends refund for transaction",
+  },
+});
+
+export const dataLineMessages = defineMessages({
+  settled: {
+    defaultMessage: "Settled",
+    id: "wJep/X",
+    description: "refund amounts were settled",
+  },
+  unsettled: {
+    defaultMessage: "Unsettled",
+    id: "9pLPLn",
+    description: "refund amounts were unsettled",
+  },
+});
