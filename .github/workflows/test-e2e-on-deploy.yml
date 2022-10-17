@@ -1,6 +1,10 @@
 name: TEST-E2E
 
-on: [pull_request]
+on:
+  workflow_run:
+    workflows: [TEST-ENV-DEPLOYMENT]
+    types:
+      - completed
 
 jobs:
   prepare-tests:
@@ -10,11 +14,14 @@ jobs:
       containers: ${{ steps.get_containers.outputs.result}}
 
     steps:
+      - uses: 8BitJonny/gh-get-current-pr@5ee263143a2cb66afc68b9cd173d32e93ad4abc5
+        id: pull_request
+
       - name: Get tags
         id: get_tags
         uses: actions/github-script@v6
         env:
-          pullRequestBody: ${{ github.event.pull_request.body }}
+          pullRequestBody: ${{ steps.pull_request.outputs.pr_body }}
         with:
           result-encoding: string
           script: |
@@ -38,7 +45,7 @@ jobs:
         id: get_containers
         uses: actions/github-script@v6
         env:
-          pullRequestBody: ${{ github.event.pull_request.body }}
+          pullRequestBody: ${{ steps.pull_request.outputs.pr_body }}
         with:
           script: |
             const { pullRequestBody } = process.env
@@ -64,14 +71,8 @@ jobs:
       matrix: ${{ fromJson(needs.prepare-tests.outputs.containers) }}
 
     steps:
-      - name: Wait for Deploy and tests
-        uses: lewagon/wait-on-check-action@0179dfc359f90a703c41240506f998ee1603f9ea # v1.0.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          running-workflow-name: e2e
-          check-name: deploy
-          wait-interval: 10
+      - uses: 8BitJonny/gh-get-current-pr@5ee263143a2cb66afc68b9cd173d32e93ad4abc5
+        id: pull_request
 
       - name: Checkout
         uses: actions/checkout@v1
@@ -86,7 +87,7 @@ jobs:
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
         env:
-          pull_request_body: ${{ github.event.pull_request.body }}
+          pull_request_body: ${{ steps.pull_request.outputs.pr_body }}
           prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
