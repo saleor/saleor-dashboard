@@ -3,7 +3,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { SELECT_SHIPPING_METHOD_FORM } from "../../elements/shipping/select-shipping-method-form";
 
-export function finalizeDraftOrder(name, address) {
+export function finalizeDraftOrder(name) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts)
     .click()
     .assignElements(name)
