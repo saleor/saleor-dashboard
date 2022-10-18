@@ -238,6 +238,14 @@
       "Voucher",
       "Warehouse"
     ],
+    "TaxSourceLine": [
+      "CheckoutLine",
+      "OrderLine"
+    ],
+    "TaxSourceObject": [
+      "Checkout",
+      "Order"
+    ],
     "TranslatableItem": [
       "ProductTranslatableContent",
       "CollectionTranslatableContent",
