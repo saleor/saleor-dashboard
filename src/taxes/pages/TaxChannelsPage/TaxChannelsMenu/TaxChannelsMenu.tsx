@@ -34,7 +34,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
         {configurations?.map(configuration => (
           <ListItemLink
             key={configuration.id}
-            className={clsx(classes.clickable, {
+            className={clsx(classes.clickable, classes.tableRow, {
               [classes.selected]: configuration.id === selectedConfigurationId,
             })}
             href={taxConfigurationListUrl(configuration.id)}

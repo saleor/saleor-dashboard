@@ -9,6 +9,9 @@ export const useStyles = makeStyles(
       textOverflow: "ellipsis",
       overflow: "hidden",
     },
+    tableRow: {
+      minHeight: "48px",
+    },
     selected: {
       "&&&&::before": {
         position: "absolute",
