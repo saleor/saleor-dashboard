@@ -273,25 +273,20 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                       ),
                   )
                   .map(country => ({ checked: false, ...country }))}
-                onConfirm={
-                  () => null
-                  // TODO: fix when adding comboboxes
-                  // countries => {
-                  // const input = countries.map(country => ({
-                  //   country,
-                  //   chargeTaxes: data.chargeTaxes,
-                  //   displayGrossPrices: data.displayGrossPrices,
-                  // })) as TaxConfigurationPerCountryFragment[];
-                  // const currentExceptions = data.updateCountriesConfiguration;
-                  // triggerChange();
-                  // set({
-                  //   updateCountriesConfiguration: [
-                  //     ...currentExceptions,
-                  //     ...input,
-                  //   ],
-                  // });
-                  // }
-                }
+                onConfirm={country => {
+                  closeDialog();
+                  const input = {
+                    country,
+                    chargeTaxes: data.chargeTaxes,
+                    displayGrossPrices: data.displayGrossPrices,
+                    taxCalculationStrategy: data.taxCalculationStrategy,
+                  } as TaxConfigurationPerCountryFragment;
+                  const currentExceptions = data.updateCountriesConfiguration;
+                  triggerChange();
+                  set({
+                    updateCountriesConfiguration: [input, ...currentExceptions],
+                  });
+                }}
                 onClose={closeDialog}
               />
             )}
