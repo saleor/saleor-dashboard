@@ -155,7 +155,13 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
       {shop?.countries && (
         <TaxCountryDialog
           open={params?.action === "add-country"}
-          countries={shop?.countries}
+          countries={shop?.countries.filter(
+            dialogCountry =>
+              !allCountryTaxes?.some(
+                existingCountry =>
+                  existingCountry.country.code === dialogCountry.code,
+              ),
+          )}
           onConfirm={data => {
             closeDialog();
             const taxClassCountryRates = taxClasses.map(taxClass => ({
