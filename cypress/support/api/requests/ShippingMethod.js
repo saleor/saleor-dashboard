@@ -120,6 +120,14 @@ export function addChannelToShippingMethod(
     }){
       shippingMethod{
         id
+        channelListings{
+          price{
+            amount
+          }
+          channel{
+            slug
+          }
+        }
       }
       errors{
         code
