@@ -190,7 +190,7 @@ function useProductVariantUpdateForm(
     preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
-    name: variant?.name || "",
+    name: variant?.name ?? "",
   };
 
   const form = useForm(initial, undefined, {
