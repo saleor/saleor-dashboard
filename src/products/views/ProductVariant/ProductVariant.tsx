@@ -167,7 +167,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
 
   const handleVariantReorder = createVariantReorderHandler(
     variant?.product,
-    variables => reorderProductVariants({ variables }),
+    reorderProductVariants,
   );
 
   const disableFormSave =
