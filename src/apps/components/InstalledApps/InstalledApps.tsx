@@ -92,7 +92,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     {app.node.manifestUrl &&
                     isAppInTunnel(app.node.manifestUrl) ? (
                       <Typography variant="caption">
-                        (TUNNEL - DEVELOPMENT)
+                        <FormattedMessage
+                          defaultMessage="(TUNNEL - DEVELOPMENT)"
+                          id="QdQ9z7"
+                        />
                       </Typography>
                     ) : null}
                   </TableCell>

@@ -1,5 +1,6 @@
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import React, { ComponentProps } from "react";
+import { useIntl } from "react-intl";
 
 export type AppPageTabValue =
   | "THIRD_PARTY"
@@ -13,11 +14,33 @@ type AvailableProps = Omit<AllProps, "children" | "onChange" | "value"> & {
   onChange(newValue: AppPageTabValue): void;
 };
 
-// todo translation
-export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => (
-  <PageTabs {...props}>
-    <PageTab value="THIRD_PARTY" label="3rd party apps" />
-    <PageTab value="WEBHOOKS_AND_EVENTS" label="Webhooks & Events" />
-    {showSaleorApps && <PageTab value="SALEOR_APPS" label="Saleor Apps" />}
-  </PageTabs>
-);
+export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
+  const intl = useIntl();
+  return (
+    <PageTabs {...props}>
+      <PageTab
+        value="THIRD_PARTY"
+        label={intl.formatMessage({
+          defaultMessage: "3rd party apps",
+          id: "J8frvS",
+        })}
+      />
+      <PageTab
+        value="WEBHOOKS_AND_EVENTS"
+        label={intl.formatMessage({
+          defaultMessage: "Webhooks & Events",
+          id: "UxTSw7",
+        })}
+      />
+      {showSaleorApps && (
+        <PageTab
+          value="SALEOR_APPS"
+          label={intl.formatMessage({
+            defaultMessage: "Saleor Apps",
+            id: "+niGip",
+          })}
+        />
+      )}
+    </PageTabs>
+  );
+};

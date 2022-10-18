@@ -11,7 +11,7 @@ import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ListProps } from "@saleor/types";
 import React, { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
@@ -97,8 +97,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         return (
           <>
             <p>
-              Third party apps are installed with App Manifests. They contain UI
-              accessible from dashboard and can extend it. Read more here.
+              <FormattedMessage
+                defaultMessage="Third party apps are installed with App Manifests. They contain UI
+              accessible from dashboard and can extend it. Read more here."
+                id="vkY3W9"
+              />
             </p>
             <InstalledApps
               title={intl.formatMessage({
@@ -131,8 +134,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         return (
           <>
             <p>
-              Local apps are custom webhooks & token pairs that can be used to
-              connect apps and access Saleor API. Read more.
+              <FormattedMessage
+                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
+              connect apps and access Saleor API. Read more."
+                id="EqDdoh"
+              />
             </p>
             <CustomApps
               appsList={customAppsList}
@@ -146,8 +152,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         return (
           <>
             <p>
-              Saleor apps are hosted and maintained by Saleor Team. They are
-              preinstalled for you and ready to use
+              <FormattedMessage
+                defaultMessage="Saleor apps are hosted and maintained by Saleor Team. They are
+              preinstalled for you and ready to use"
+                id="FLtdaw"
+              />
             </p>
             <InstalledApps
               title={intl.formatMessage({
