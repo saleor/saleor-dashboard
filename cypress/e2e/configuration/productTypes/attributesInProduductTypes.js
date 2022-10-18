@@ -13,21 +13,17 @@ import {
   createTypeProduct,
   getProductType,
 } from "../../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage attributes in product types", () => {
   const startsWith = "attrProdType";
-  let category;
-  let channel;
   let attribute;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-    createCategory({ name: startsWith }).then(resp => (category = resp));
-    getDefaultChannel().then(resp => (channel = resp));
+    createCategory({ name: startsWith });
   });
 
   beforeEach(() => {
@@ -48,7 +44,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
@@ -76,7 +72,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .wait("@AssignProductAttribute");
           getProductType(productType.id);
