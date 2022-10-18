@@ -21,12 +21,15 @@ import {
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
-interface ChannelsListProps {
+interface TaxChannelsListProps {
   id: string | undefined;
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
+export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({
+  id,
+  params,
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -95,4 +98,4 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ id, params }) => {
   );
 };
 
-export default ChannelsList;
+export default TaxChannelsList;

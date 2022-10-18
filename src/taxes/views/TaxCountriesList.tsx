@@ -27,12 +27,15 @@ import {
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import { mapUndefinedTaxRatesToCountries } from "../utils/utils";
 
-interface CountriesListProps {
+interface TaxCountriesListProps {
   id: string | undefined;
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
+export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
+  id,
+  params,
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -179,4 +182,4 @@ export const CountriesList: React.FC<CountriesListProps> = ({ id, params }) => {
   );
 };
 
-export default CountriesList;
+export default TaxCountriesList;
