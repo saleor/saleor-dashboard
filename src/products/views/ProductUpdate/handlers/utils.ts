@@ -50,6 +50,17 @@ export function getProductUpdateVariables(
   };
 }
 
+const hasChannel = (
+  channelId: string,
+  variant?: ProductFragment["variants"][number],
+) => {
+  if (!variant) {
+    return false;
+  }
+
+  return variant.channelListings.some(c => c.channel.id === channelId);
+};
+
 export function getProductChannelsUpdateVariables(
   product: ProductFragment,
   data: ProductUpdateSubmitData,
@@ -84,18 +95,13 @@ export function getProductChannelsUpdateVariables(
     .map(channelId => ({
       channelId,
       addVariants: data.variants.updates
-        .filter(change => {
-          const existInProduct = product.variants[
-            change.row
-          ].channelListings.some(c => c.channel.id === channelId);
-
-          return (
+        .filter(
+          change =>
             !data.variants.added.includes(change.row) &&
-            !existInProduct &&
+            !hasChannel(channelId, product.variants[change.row]) &&
             channelId === getColumnChannelAvailability(change.column) &&
-            change.data
-          );
-        })
+            change.data,
+        )
         .map(change => product.variants[change.row].id),
       removeVariants: data.variants.updates
         .filter(
