@@ -10,17 +10,20 @@ export enum AppPageTabValue {
 type AllProps = ComponentProps<typeof PageTabs>;
 type AvailableProps = Omit<AllProps, "children" | "onChange" | "value"> & {
   value: AppPageTabValue;
+  showSaleorApps: boolean;
   onChange(newValue: AppPageTabValue): void;
 };
 
 // todo translation
-export const AppPageTabs = (props: AvailableProps) => (
+export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => (
   <PageTabs {...props}>
     <PageTab value={AppPageTabValue.THIRD_PARTY} label="3rd party apps" />
     <PageTab
       value={AppPageTabValue.WEBHOOKS_AND_EVENTS}
       label="Webhooks & Events"
     />
-    <PageTab value={AppPageTabValue.SALEOR_APPS} label="Saleor Apps" />
+    {showSaleorApps && (
+      <PageTab value={AppPageTabValue.SALEOR_APPS} label="Saleor Apps" />
+    )}
   </PageTabs>
 );

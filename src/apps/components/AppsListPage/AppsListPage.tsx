@@ -2,6 +2,7 @@ import {
   AppPageTabs,
   AppPageTabValue,
 } from "@saleor/apps/components/AppPageTabs/AppPageTabs";
+import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
@@ -9,7 +10,7 @@ import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ListProps } from "@saleor/types";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
@@ -49,9 +50,20 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   onAppInstallRetry,
   ...listProps
 }) => {
+  const {
+    fetchApps,
+    apps: fetchedSaleorApps,
+    saleorAppsEnabled,
+  } = useSaleorApps();
+
+  useEffect(() => {
+    if (saleorAppsEnabled) {
+      fetchApps();
+    }
+  }, [saleorAppsEnabled, fetchApps]);
+
   const styles = useStyles();
   const intl = useIntl();
-  // TODO Move to router
   const [activeTab, setActiveTab] = useState<AppPageTabValue>(
     AppPageTabValue.THIRD_PARTY,
   );
@@ -61,17 +73,24 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   const thirdPartyApps = useMemo(
     () =>
       installedAppsList?.filter(
-        app => !app.node.manifestUrl?.includes(".saleor.cloud"),
+        app =>
+          !(fetchedSaleorApps ?? []).find(fetchedApp =>
+            app.node.manifestUrl.includes(fetchedApp.hostname),
+          ),
       ),
-    [installedAppsList],
+    [installedAppsList, fetchedSaleorApps],
   );
 
   const saleorApps = useMemo(
     () =>
-      installedAppsList?.filter(app =>
-        app.node.manifestUrl?.includes(".saleor.cloud"),
-      ),
-    [installedAppsList],
+      fetchedSaleorApps
+        ?.map(app =>
+          installedAppsList?.find(installedApp =>
+            installedApp.node.manifestUrl.includes(app.hostname),
+          ),
+        )
+        .filter(Boolean),
+    [installedAppsList, fetchedSaleorApps],
   );
 
   const renderContent = () => {
@@ -84,6 +103,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
               accessible from dashboard and can extend it. Read more here.
             </p>
             <InstalledApps
+              title={intl.formatMessage({
+                id: "BvmnJq",
+                defaultMessage: "Third Party Apps",
+                description: "section header",
+              })}
               appsList={thirdPartyApps}
               onRemove={onInstalledAppRemove}
               displayQuickManifestButton
@@ -128,6 +152,11 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
               preinstalled for you and ready to use
             </p>
             <InstalledApps
+              title={intl.formatMessage({
+                id: "PbQJY5",
+                defaultMessage: "Saleor Apps",
+                description: "section header",
+              })}
               appsList={saleorApps}
               onRemove={onInstalledAppRemove}
               {...listProps}
@@ -142,6 +171,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.apps)} />
       <AppPageTabs
+        showSaleorApps={saleorAppsEnabled}
         className={styles.topTabs}
         onChange={setActiveTab}
         value={activeTab}

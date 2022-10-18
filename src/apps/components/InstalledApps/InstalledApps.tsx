@@ -21,7 +21,7 @@ import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "../../styles";
 import { AppPermissions } from "../AppPermissions/AppPermissions";
@@ -31,15 +31,16 @@ export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
   displayQuickManifestButton?: boolean;
+  title: string;
 }
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
+  title,
   displayQuickManifestButton = false,
   ...props
 }) => {
-  const intl = useIntl();
   const classes = useStyles(props);
   const { activateApp, deactivateApp } = useAppListContext();
   const navigate = useNavigator();
@@ -62,11 +63,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   return (
     <Card className={classes.apps}>
       <CardTitle
-        title={intl.formatMessage({
-          id: "BvmnJq",
-          defaultMessage: "Third Party Apps",
-          description: "section header",
-        })}
+        title={title}
         toolbar={
           displayQuickManifestButton ? (
             <InstallWithManifestFormButton
