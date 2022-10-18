@@ -64,9 +64,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
 
   const styles = useStyles();
   const intl = useIntl();
-  const [activeTab, setActiveTab] = useState<AppPageTabValue>(
-    AppPageTabValue.THIRD_PARTY,
-  );
+  const [activeTab, setActiveTab] = useState<AppPageTabValue>("THIRD_PARTY");
 
   const appsInProgress = appsInProgressList?.appsInstallations;
 
@@ -95,7 +93,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
 
   const renderContent = () => {
     switch (activeTab) {
-      case AppPageTabValue.THIRD_PARTY: {
+      case "THIRD_PARTY": {
         return (
           <>
             <p>
@@ -129,7 +127,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
           </>
         );
       }
-      case AppPageTabValue.WEBHOOKS_AND_EVENTS: {
+      case "WEBHOOKS_AND_EVENTS": {
         return (
           <>
             <p>
@@ -144,7 +142,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
           </>
         );
       }
-      case AppPageTabValue.SALEOR_APPS: {
+      case "SALEOR_APPS": {
         return (
           <>
             <p>

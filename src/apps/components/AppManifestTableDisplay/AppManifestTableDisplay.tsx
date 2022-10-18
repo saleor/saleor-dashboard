@@ -29,13 +29,15 @@ const useStyles = makeStyles(
   { name: "AppManifestTableDisplay" },
 );
 
-interface Props {
+interface AppManifestTableDisplayProps {
   manifestUrl: string;
 }
 
 const getAppDomainFromManifest = (manifest: string) => new URL(manifest).host;
 
-export const AppManifestTableDisplay = ({ manifestUrl }: Props) => {
+export const AppManifestTableDisplay = ({
+  manifestUrl,
+}: AppManifestTableDisplayProps) => {
   const styles = useStyles();
   const [copied, setCopied] = useState(false);
 

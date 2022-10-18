@@ -9,8 +9,8 @@ import {
 import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
 import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
 import { useAppListContext } from "@saleor/apps/context";
-import { isAppInTunnel } from "@saleor/apps/is-app-in-tunnel";
 import { appUrl, createAppInstallUrl } from "@saleor/apps/urls";
+import { isAppInTunnel } from "@saleor/apps/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
@@ -89,7 +89,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
-                    {isAppInTunnel(app.node.manifestUrl) ? (
+                    {app.node.manifestUrl &&
+                    isAppInTunnel(app.node.manifestUrl) ? (
                       <Typography variant="caption">
                         (TUNNEL - DEVELOPMENT)
                       </Typography>
