@@ -204,7 +204,12 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
-    <Paper className={classes.root} elevation={8} style={style}>
+    <Paper
+      // click-outside-ignore is used by glide-datagrid
+      className={classNames("click-outside-ignore", classes.root)}
+      elevation={8}
+      style={style}
+    >
       <div
         className={classes.content}
         ref={anchor}

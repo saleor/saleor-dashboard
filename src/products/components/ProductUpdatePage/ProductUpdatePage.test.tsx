@@ -1,8 +1,7 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/channels/utils";
 import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, limits, listActionsProps } from "@saleor/fixtures";
+import { fetchMoreProps, limits } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
 import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -13,7 +12,6 @@ import React from "react";
 import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
-const channels = createChannelsData(channelsList);
 
 import * as _useNavigator from "@saleor/hooks/useNavigator";
 import Adapter from "enzyme-adapter-react-16";
@@ -26,6 +24,7 @@ const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
 jest.mock("@saleor/components/RichTextEditor/RichTextEditor");
 jest.mock("@saleor/utils/richText/useRichText");
+jest.mock("@glideapps/glide-data-grid");
 
 (global as any).document.createRange = () => ({
   // eslint-disable-next-line
@@ -39,18 +38,13 @@ jest.mock("@saleor/utils/richText/useRichText");
 });
 
 const props: ProductUpdatePageProps = {
-  ...listActionsProps,
+  channels: channelsList,
+  variantListErrors: [],
   productId: "123",
-  allChannelsCount: 5,
   categories: [product.category],
-  channelsData: [],
-  channelsWithVariantsData: {},
   isSimpleProduct: false,
-  setChannelsData: () => undefined,
   channelsErrors: [],
   collections,
-  currentChannels: channels,
-  defaultWeightUnit: "kg",
   disabled: false,
   errors: [],
   fetchCategories: () => undefined,
@@ -63,25 +57,21 @@ const props: ProductUpdatePageProps = {
   header: product.name,
   media: product.media,
   limits,
+  refetch: () => undefined,
+  onAttributeValuesSearch: () => Promise.resolve([]),
   onAssignReferencesClick: () => undefined,
-  onChannelsChange: () => undefined,
   onCloseDialog: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onMediaUrlUpload: () => undefined,
-  onSetDefaultVariant: () => undefined,
   onSubmit,
-  onVariantReorder: () => undefined,
-  onVariantEndPreorderDialogOpen: () => undefined,
-  onWarehouseConfigure: () => undefined,
-  openChannelsModal: () => undefined,
+  onVariantShow: () => undefined,
   placeholderImage,
   product,
   referencePages: [],
   referenceProducts: [],
   saveButtonBarState: "default",
-  selectedChannelId: "123",
   taxTypes,
   variants: product.variants,
   warehouses: warehouseList,
@@ -96,6 +86,7 @@ const selectors = {
 
 describe("Product details page", () => {
   useNavigator.mockImplementation();
+  // DataEditor.mockImplementation();
   it("can select empty option on attribute", async () => {
     const component = mount(
       <MemoryRouter>

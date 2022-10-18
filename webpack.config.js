@@ -24,17 +24,17 @@ if (!!analyze) {
 }
 
 const pathsPlugin = new TsconfigPathsPlugin({
-  configFile: "./tsconfig.json"
+  configFile: "./tsconfig.json",
 });
 
 const checkerPlugin = new CheckerPlugin({
   eslint: true,
-  reportFiles: ["src/**/*.{ts,tsx}"]
+  reportFiles: ["src/**/*.{ts,tsx}"],
 });
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: "index.html",
   hash: true,
-  template: "./src/index.html"
+  template: "./src/index.html",
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
   API_URI: "",
@@ -45,7 +45,7 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
   GTM_ID: "",
   SENTRY_DSN: "",
   SW_INTERVAL: "300", // Fetch SW every 300 seconds
-  IS_CLOUD_INSTANCE: false
+  IS_CLOUD_INSTANCE: false,
 });
 
 const dashboardBuildPath = "build/dashboard/";
@@ -66,7 +66,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
       chunkFilename: "[name].[chunkhash].js",
       filename: "[name].[chunkhash].js",
       path: resolve(dashboardBuildPath),
-      publicPath
+      publicPath,
     };
     fileLoaderPath = "file-loader?name=[name].[hash].[ext]";
   } else {
@@ -74,7 +74,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
       chunkFilename: "[name].js",
       filename: "[name].js",
       path: resolve(dashboardBuildPath),
-      publicPath
+      publicPath,
     };
     fileLoaderPath = "file-loader?name=[name].[ext]";
   }
@@ -90,7 +90,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
   ) {
     sentryPlugin = new SentryWebpackPlugin({
       include: "./build/dashboard/",
-      urlPrefix: process.env.SENTRY_URL_PREFIX
+      urlPrefix: process.env.SENTRY_URL_PREFIX,
     });
   }
 
@@ -100,7 +100,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
       swSrc: "./src/sw.js",
       swDest: "sw.js",
       maximumFileSizeToCacheInBytes: 5000000,
-      webpackCompilationPlugins: [checkerPlugin]
+      webpackCompilationPlugins: [checkerPlugin],
     });
   }
 
@@ -110,11 +110,11 @@ module.exports = speedMeasureWrapper((env, argv) => {
       contentBase: path.join(__dirname, dashboardBuildPath),
       historyApiFallback: true,
       hot: true,
-      port: 9000
+      port: 9000,
     },
     devtool: devMode ? "cheap-module-source-map" : "source-map",
     entry: {
-      dashboard: "./src/index.tsx"
+      dashboard: "./src/index.tsx",
     },
     module: {
       rules: [
@@ -125,27 +125,31 @@ module.exports = speedMeasureWrapper((env, argv) => {
               loader: "esbuild-loader",
               options: {
                 loader: "tsx",
-                target: "es2015"
-              }
-            }
-          ]
+                target: "es2015",
+              },
+            },
+          ],
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
         },
         {
           include: [
             resolve("node_modules"),
             resolve("assets/fonts"),
             resolve("assets/images"),
-            resolve("assets/favicons")
+            resolve("assets/favicons"),
           ],
           loader: fileLoaderPath,
-          test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/
-        }
-      ]
+          test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/,
+        },
+      ],
     },
     optimization: {
       removeAvailableModules: false,
       removeEmptyChunks: false,
-      splitChunks: false
+      splitChunks: false,
     },
     output,
     plugins: [
@@ -154,7 +158,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
       htmlWebpackPlugin,
       sentryPlugin,
       manifestPlugin,
-      bundleAnalyzerPlugin
+      bundleAnalyzerPlugin,
     ].filter(Boolean),
     resolve: {
       // Resolve macaw ui's peer dependencies to our own node_modules
@@ -165,11 +169,11 @@ module.exports = speedMeasureWrapper((env, argv) => {
         "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
         "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons"),
         "@material-ui/styles": path.resolve(
-          "./node_modules/@material-ui/styles"
-        )
+          "./node_modules/@material-ui/styles",
+        ),
       },
       extensions: [".js", ".jsx", ".ts", ".tsx"],
-      plugins: [pathsPlugin]
-    }
+      plugins: [pathsPlugin],
+    },
   };
 });
