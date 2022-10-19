@@ -110,7 +110,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
   }, [taxCountryConfigurations, newCountry, taxClasses]);
 
   const handleDeleteConfiguration = async (countryCode: CountryCode) => {
-    if (newCountry.country.code === countryCode) {
+    if (newCountry?.country.code === countryCode) {
       setNewCountry(undefined);
       return;
     }
