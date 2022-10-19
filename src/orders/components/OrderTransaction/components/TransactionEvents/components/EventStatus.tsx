@@ -3,13 +3,13 @@ import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { statusMessages } from "./messages";
+import { statusMessages } from "../messages";
 
 export interface EventStatusProps {
   status: TransactionStatus;
 }
 
-const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
+export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   const intl = useIntl();
   switch (status) {
     case TransactionStatus.PENDING:
@@ -35,5 +35,3 @@ const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       );
   }
 };
-
-export default EventStatus;

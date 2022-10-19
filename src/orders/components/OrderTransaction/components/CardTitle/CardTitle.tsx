@@ -8,13 +8,13 @@ import { Button, LinkIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionProps } from "../OrderTransaction";
-import { mapActionToMessage } from "./consts";
+import { OrderTransactionProps } from "../../OrderTransaction";
+import { mapActionToMessage } from "../../utils";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 import { useStyles } from "./styles";
 
-interface OrderTransactionCardTitleProps {
+interface CardTitleProps {
   title: string;
   id: string;
   refundedAmount: TransactionItemFragment["refundedAmount"];
@@ -24,9 +24,10 @@ interface OrderTransactionCardTitleProps {
   link?: string;
   className?: string;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
+  showActions?: boolean;
 }
 
-const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
+export const CardTitle: React.FC<CardTitleProps> = ({
   title,
   id,
   onTransactionAction,
@@ -35,6 +36,7 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
   authorizedAmount,
   actions,
   link,
+  showActions = true,
   className,
 }) => {
   const classes = useStyles();
@@ -57,16 +59,17 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
-            {actions
-              .filter(action => action !== TransactionActionEnum.REFUND)
-              .map(action => (
-                <Button
-                  variant="tertiary"
-                  onClick={() => onTransactionAction(id, action)}
-                >
-                  <FormattedMessage {...mapActionToMessage[action]} />
-                </Button>
-              ))}
+            {showActions &&
+              actions
+                .filter(action => action !== TransactionActionEnum.REFUND)
+                .map(action => (
+                  <Button
+                    variant="tertiary"
+                    onClick={() => onTransactionAction(id, action)}
+                  >
+                    <FormattedMessage {...mapActionToMessage[action]} />
+                  </Button>
+                ))}
 
             {/* TODO: Pending refund */}
 
@@ -98,5 +101,3 @@ const OrderTransactionCardTitle: React.FC<OrderTransactionCardTitleProps> = ({
     />
   );
 };
-
-export default OrderTransactionCardTitle;

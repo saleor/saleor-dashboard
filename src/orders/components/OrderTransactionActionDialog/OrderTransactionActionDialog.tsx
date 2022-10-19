@@ -12,7 +12,7 @@ import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { mapActionToMessage } from "../OrderTransactionCardTitle/consts";
+import { mapActionToMessage } from "../OrderTransaction/utils";
 import { messages } from "./messages";
 
 export interface OrderTransactionActionDialogProps extends DialogProps {

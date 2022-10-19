@@ -4,7 +4,7 @@ import { CopyIcon, Pill } from "@saleor/macaw-ui";
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
+import { messages } from "../messages";
 
 const useStyles = makeStyles(
   {
@@ -67,7 +67,9 @@ const useStaticWidth = (watch: string[] = []) => {
   return { ref: onMount, width, renderStep };
 };
 
-const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
+export const PspReference: React.FC<{ reference: string }> = ({
+  reference,
+}) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
@@ -97,5 +99,3 @@ const PspReference: React.FC<{ reference: string }> = ({ reference }) => {
     />
   );
 };
-
-export default PspReference;

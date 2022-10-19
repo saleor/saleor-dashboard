@@ -1,7 +1,7 @@
 import useLocale from "@saleor/hooks/useLocale";
 import React from "react";
 
-const EventTime: React.FC<{ date: string }> = ({ date }) => {
+export const EventTime: React.FC<{ date: string }> = ({ date }) => {
   const { locale } = useLocale();
   const intl = new Intl.DateTimeFormat(locale, {
     timeZoneName: "short",
@@ -14,5 +14,3 @@ const EventTime: React.FC<{ date: string }> = ({ date }) => {
 
   return <time dateTime={date}>{intl.format(new Date(date))}</time>;
 };
-
-export default EventTime;

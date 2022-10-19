@@ -6,8 +6,7 @@ import { renderCollection } from "@saleor/misc";
 import classnames from "classnames";
 import React, { useState } from "react";
 
-import EventStatus from "./EventStatus";
-import PspReference from "./PspReference";
+import { EventStatus, PspReference } from "./components";
 
 export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[];
@@ -70,7 +69,7 @@ const useStyles = makeStyles(
   },
 );
 
-const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
+export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
   events,
 }) => {
   const classes = useStyles();
@@ -117,5 +116,3 @@ const OrderTransactionEvents: React.FC<OrderTransactionEventsProps> = ({
     </ResponsiveTable>
   );
 };
-
-export default OrderTransactionEvents;
