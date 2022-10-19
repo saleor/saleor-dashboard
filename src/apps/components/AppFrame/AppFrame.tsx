@@ -106,7 +106,10 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(
         src,
         window.location.search,
-        `?${stringifyQs({ domain: shop.domain.host, id: appId, ...params })}`,
+        `?${stringifyQs(
+          { domain: shop.domain.host, id: appId, ...params },
+          "comma",
+        )}`,
       )}
       onError={onError}
       onLoad={handleLoad}

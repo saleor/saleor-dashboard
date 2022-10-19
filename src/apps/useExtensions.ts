@@ -86,6 +86,14 @@ const mapToMenuItem = ({ label, id, open }: Extension) => ({
 export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
   extensions.map(mapToMenuItem);
 
+export const mapToMenuItemsForProductOverviewActions = (
+  extensions: ExtensionWithParams[],
+  productIds: string[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }),
+  );
+
 export const mapToMenuItemsForProductDetails = (
   extensions: ExtensionWithParams[],
   productId: string,
@@ -100,6 +108,17 @@ export const mapToMenuItemsForCustomerDetails = (
 ) =>
   extensions.map(extension =>
     mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }),
+  );
+
+export const mapToMenuItemsForCustomerOverviewActions = (
+  extensions: ExtensionWithParams[],
+  customerIds: string[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({
+      ...extension,
+      open: () => extension.open({ customerIds }),
+    }),
   );
 
 export const mapToMenuItemsForOrderDetails = (

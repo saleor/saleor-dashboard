@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItems,
+  mapToMenuItemsForCustomerOverviewActions,
   useExtensions,
 } from "@saleor/apps/useExtensions";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
@@ -52,6 +53,7 @@ export interface CustomerListPageProps
     SortPage<CustomerListUrlSortField>,
     TabPageProps {
   customers: RelayToFlat<ListCustomersQuery["customers"]>;
+  selectedCustomerIds: string[];
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
@@ -65,6 +67,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   onTabDelete,
   onTabSave,
   tabs,
+  selectedCustomerIds,
   ...customerListProps
 }) => {
   const intl = useIntl();
@@ -78,7 +81,10 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     CUSTOMER_OVERVIEW_CREATE,
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
   } = useExtensions(extensionMountPoints.CUSTOMER_LIST);
-  const extensionMenuItems = mapToMenuItems(CUSTOMER_OVERVIEW_MORE_ACTIONS);
+  const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
+    CUSTOMER_OVERVIEW_MORE_ACTIONS,
+    selectedCustomerIds,
+  );
   const extensionCreateButtonItems = mapToMenuItems(CUSTOMER_OVERVIEW_CREATE);
 
   return (
