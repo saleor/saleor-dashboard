@@ -64,6 +64,3 @@ export const mapUndefinedTaxRatesToCountries = (
       }
     })
     .sort((a, b) => a.country.country.localeCompare(b.country.country));
-
-export const isOnlyTaxClass = (taxClasses: TaxClassFragment[]) =>
-  taxClasses.length === 1;

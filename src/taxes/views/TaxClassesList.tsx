@@ -125,10 +125,13 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   });
 
   const taxClasses = React.useMemo(() => {
-    if (!data?.taxClasses) {
+    if (data?.taxClasses === undefined) {
       return undefined;
     }
     const apiTaxClasses = mapEdgesToItems(data.taxClasses);
+    if (!apiTaxClasses.length && !isNewTaxClass) {
+      return [];
+    }
     if (isNewTaxClass) {
       return [newTaxClass, ...apiTaxClasses];
     }
