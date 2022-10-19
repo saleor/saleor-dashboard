@@ -225,7 +225,7 @@ jobs:
           parallel: true
           group: 'UI - Chrome'
           record: true
-          tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, https://v${{ steps.version.outputs.formatted_version }}.staging.saleor.cloud
+          tag: ${{github.event.client_payload.project}}, ${{github.event.client_payload.environment}}, Critical, ${{ needs.get-url.outputs.url }}
 
   add-review-and-merge-patch:
     if: ${{ always() && (needs.run-tests-on-release.outputs.status == 'success' || needs.run-tests-on-release.outputs.status == 'failure') }}

@@ -86,13 +86,35 @@ async function getTestsStatus(dashboardUrl) {
 
   const client = new GraphQLClient("https://dashboard.cypress.io/graphql");
 
-  const response = await client.request(
-    `query ($projectId: String!, $buildNumber: ID!) {
+  const throwErrorAfterTimeout = setTimeout(function() {
+    throw new Error("Run have still running status, after all tests executed");
+  }, 1200000);
+
+  const status = await waitForTestsToFinish(client, requestVariables);
+
+  clearTimeout(throwErrorAfterTimeout);
+  return status;
+}
+
+async function waitForTestsToFinish(client, requestVariables) {
+  return new Promise((resolve, reject) => {
+    client
+      .request(
+        `query ($projectId: String!, $buildNumber: ID!) {
       runByBuildNumber(buildNumber: $buildNumber, projectId: $projectId) {
         status
       }
     }`,
-    requestVariables,
-  );
-  return response.runByBuildNumber.status;
+        requestVariables,
+      )
+      .then(response => {
+        if (response.runByBuildNumber.status === "RUNNING") {
+          setTimeout(async function() {
+            resolve(await waitForTestsToFinish(client, requestVariables));
+          }, 10000);
+        } else {
+          resolve(response.runByBuildNumber.status);
+        }
+      });
+  });
 }
