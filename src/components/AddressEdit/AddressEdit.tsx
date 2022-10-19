@@ -96,6 +96,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               // Setting 'autoComplete: "new-password"' is the only way to
               // disable Chrome's autofill on forms as of early 2022
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -111,6 +112,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -132,6 +134,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -150,6 +153,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -169,6 +173,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         fullWidth
         InputProps={{
           autoComplete: "new-password",
+          spellCheck: false,
         }}
       />
       <FormSpacer />
@@ -186,6 +191,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         fullWidth
         InputProps={{
           autoComplete: "new-password",
+          spellCheck: false,
         }}
       />
       <FormSpacer />
@@ -205,6 +211,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -223,6 +230,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
@@ -245,6 +253,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onCountryChange}
             value={data.country}
             choices={countries}
+            InputProps={{
+              spellCheck: false,
+            }}
           />
         </div>
         <div>
@@ -262,6 +273,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             fullWidth
             InputProps={{
               autoComplete: "new-password",
+              spellCheck: false,
             }}
           />
         </div>
