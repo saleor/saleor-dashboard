@@ -51,5 +51,6 @@ To run all tests, just select the stable checkbox. To speed up tests, increase t
 19. [ ] plugins
 20. [ ] translations
 21. [ ] navigation
+22. [ ] variants
 
 CONTAINERS=1
