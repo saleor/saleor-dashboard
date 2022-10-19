@@ -1,4 +1,5 @@
 import { SEO_FORM } from "../../../elements/shared/seo/seo-form-selectors";
+
 export function editSeoSettings({ slug, title, description }) {
   cy.get(SEO_FORM.editSeoSettings)
     .click()
