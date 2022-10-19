@@ -125,7 +125,7 @@ describe("Orders", () => {
 
   it(
     "should not be possible to change channel in order. TC: SALEOR_2105",
-    { tags: ["@orders", "@allEnv", "@stable"] },
+    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createOrder({
         customerId: customer.id,
@@ -145,7 +145,7 @@ describe("Orders", () => {
 
   it(
     "should cancel fulfillment. TC: SALEOR_2106",
-    { tags: ["@orders", "@allEnv", "@stable"] },
+    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       let order;
       createFulfilledOrder({
@@ -184,7 +184,7 @@ describe("Orders", () => {
 
   it(
     "should make a refund. TC: 2107",
-    { tags: ["@orders", "@allEnv", "@stable"] },
+    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       let order;
       createReadyToFulfillOrder({
