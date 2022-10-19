@@ -4,8 +4,6 @@
 import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
-import { VARIANTS_SELECTORS } from "../../elements/catalog/products/variants-selectors";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -15,8 +13,14 @@ import {
 } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import { createVariant } from "../../support/pages/catalog/products/VariantsPage";
-
+import {
+  addVariantToDataGrid,
+  enterVariantEditPage,
+} from "../../support/pages/catalog/products/productDetailsPage";
+import {
+  createVariant,
+  selectChannelsForVariant,
+} from "../../support/pages/catalog/products/VariantsPage";
 describe("As an admin I should be able to create variant", () => {
   const startsWith = "CyCreateVariants-";
   const attributeValues = ["value1", "value2"];
@@ -79,34 +83,15 @@ describe("As an admin I should be able to create variant", () => {
             productId: createdProduct.id,
             channelId: newChannel.id,
           });
-          cy.visit(`${urlList.products}${createdProduct.id}`)
-            .waitForProgressBarToNotBeVisible()
-            .get(PRODUCT_DETAILS.addVariantButton)
-            .should("exist")
-            .click()
-            .get(PRODUCT_DETAILS.dataGridTable)
+          cy.visit(
+            `${urlList.products}${createdProduct.id}`,
+          ).waitForProgressBarToNotBeVisible();
+          addVariantToDataGrid(name);
+          cy.get(PRODUCT_DETAILS.dataGridTable)
             .should("be.visible")
-            .get(PRODUCT_DETAILS.firstRowDataGrid)
-            .click({ force: true })
-            .type(name)
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .confirmationMessageShouldAppear()
-            .reload()
-            .waitForProgressBarToNotBeVisible()
-            .get(PRODUCT_DETAILS.dataGridTable)
-            .should("be.visible")
-            .wait(1000)
-            .get(BUTTON_SELECTORS.showMoreButton)
-            .click()
-            .get(PRODUCT_DETAILS.editVariant)
-            .click()
-            .get(VARIANTS_SELECTORS.manageChannels)
-            .click()
-            .get(VARIANTS_SELECTORS.allChannels)
-            .check()
-            .get(BUTTON_SELECTORS.submit)
-            .click();
+            .wait(1000);
+          enterVariantEditPage();
+          selectChannelsForVariant();
           createVariant({
             channelName: [defaultChannel.name, newChannel.name],
             sku: name,
@@ -151,12 +136,9 @@ describe("As an admin I should be able to create variant", () => {
         .then(({ product: productResp }) => {
           createdProduct = productResp;
 
-          cy.visit(`${urlList.products}${createdProduct.id}`)
-            .get(BUTTON_SELECTORS.showMoreButton)
-            .click()
-            .get(PRODUCT_DETAILS.editVariant)
-            .click()
-            .get(PRODUCT_DETAILS.addVariantButton)
+          cy.visit(`${urlList.products}${createdProduct.id}`);
+          enterVariantEditPage();
+          cy.get(PRODUCT_DETAILS.addVariantButton)
             .click()
             .then(() => {
               createVariant({

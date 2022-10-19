@@ -133,3 +133,26 @@ export function fillUpCollectionAndCategory({ category, collection }) {
       return organization;
     });
 }
+
+export function addVariantToDataGrid(variantName) {
+  cy.get(PRODUCT_DETAILS.addVariantButton)
+    .should("exist")
+    .click()
+    .get(PRODUCT_DETAILS.dataGridTable)
+    .should("be.visible")
+    .get(PRODUCT_DETAILS.firstRowDataGrid)
+    .click({ force: true })
+    .type(variantName)
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .confirmationMessageShouldAppear()
+    .reload()
+    .waitForProgressBarToNotBeVisible();
+}
+
+export function enterVariantEditPage() {
+  cy.get(BUTTON_SELECTORS.showMoreButton)
+    .click()
+    .get(PRODUCT_DETAILS.editVariant)
+    .click();
+}
