@@ -325,6 +325,9 @@
     "context": "message title",
     "string": "App installed"
   },
+  "0fMNz8": {
+    "string": "User doesn't exist"
+  },
   "0iMYc+": {
     "context": "field is optional",
     "string": "(Optional)"
@@ -2571,6 +2574,9 @@
   "INNPVX": {
     "context": "payment status",
     "string": "Partially paid"
+  },
+  "INfaIc": {
+    "string": "Invalid or expired token"
   },
   "IOshTA": {
     "context": "header",
