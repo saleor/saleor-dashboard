@@ -38,12 +38,12 @@ const messages = defineMessages({
     defaultMessage: "This needs to be unique",
   },
   invalidToken: {
-    id: "INfaIc",
-    defaultMessage: "Invalid or expired token",
+    id: "ByYtFB",
+    defaultMessage: "Invalid or expired token. Please check your token in URL",
   },
   userNotFound: {
-    id: "0fMNz8",
-    defaultMessage: "User doesn't exist",
+    id: "tR+UuE",
+    defaultMessage: "User doesn't exist. Please check your email in URL",
   },
 });
 
