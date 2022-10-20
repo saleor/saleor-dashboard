@@ -3497,10 +3497,6 @@
     "context": "window title",
     "string": "Create Product"
   },
-  "PajjqE": {
-    "context": "attribute list",
-    "string": "Attribute {number}"
-  },
   "PbQJY5": {
     "context": "section header",
     "string": "Saleor Apps"
@@ -7983,6 +7979,10 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zgqPGF": {
+    "context": "attribute list",
+    "string": "Attribute {name}"
   },
   "zjHH6b": {
     "context": "sale start date",

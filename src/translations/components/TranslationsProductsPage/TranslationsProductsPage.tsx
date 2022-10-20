@@ -163,22 +163,22 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
             fields={
-              data.attributeValues.map((attrVal, i) => ({
+              data.attributeValues.map(attrVal => ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
-                    id: "PajjqE",
-                    defaultMessage: "Attribute {number}",
+                    id: "zgqPGF",
+                    defaultMessage: "Attribute {name}",
                     description: "attribute list",
                   },
                   {
-                    number: i + 1,
+                    name: attrVal.attribute.name,
                   },
                 ),
-                name: attrVal?.name,
-                translation: attrVal?.translation?.richText || null,
+                name: attrVal.name,
+                translation: attrVal.translation?.richText || null,
                 type: "rich" as "rich",
-                value: attrVal?.richText,
+                value: attrVal.richText,
               })) || []
             }
             saveButtonState={saveButtonState}

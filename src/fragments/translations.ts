@@ -70,6 +70,10 @@ export const productTranslationFragment = gql`
       attributeValue {
         id
       }
+      attribute {
+        id
+        name
+      }
       translation(languageCode: $language) {
         id
         name
@@ -103,6 +107,10 @@ export const productVariantTranslationFragment = gql`
       richText
       attributeValue {
         id
+      }
+      attribute {
+        id
+        name
       }
       translation(languageCode: $language) {
         id
@@ -196,6 +204,10 @@ export const pageTranslationFragment = gql`
       richText
       attributeValue {
         id
+      }
+      attribute {
+        id
+        name
       }
       translation(languageCode: $language) {
         id
