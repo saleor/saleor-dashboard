@@ -54,10 +54,6 @@ export function addProductToOrder(orderId, variantId, quantity = 1) {
 
 export function createDraftOrder({ customerId, channelId, address }) {
   const user = getValueWithDefault(customerId, `user:"${customerId}"`);
-  // const shippingMethod = getValueWithDefault(
-  //   shippingMethodId,
-  //   `shippingMethod:"${shippingMethodId}"`,
-  // );
 
   const mutation = `mutation{
     draftOrderCreate(input:{
