@@ -13,7 +13,6 @@ import {
 } from "../support/api/requests/Customer";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import { getMailActivationLinkForUser } from "../support/api/utils/users";
-import filterTests from "../support/filterTests";
 
 describe("Tests for customer registration", () => {
   const startsWith = "Registration";

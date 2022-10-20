@@ -7,7 +7,6 @@ import { PRODUCT_TYPE_DETAILS } from "../../../elements/productTypes/productType
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { productTypeDetailsUrl } from "../../../fixtures/urlList";
 import { createAttribute } from "../../../support/api/requests/Attribute";
-import { createCategory } from "../../../support/api/requests/Category";
 import {
   assignAttribute,
   createTypeProduct,
@@ -23,7 +22,6 @@ describe("As an admin I want to manage attributes in product types", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-    createCategory({ name: startsWith });
   });
 
   beforeEach(() => {
