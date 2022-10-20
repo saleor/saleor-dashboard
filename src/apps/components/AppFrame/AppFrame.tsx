@@ -100,17 +100,18 @@ export const AppFrame: React.FC<Props> = ({
     return null;
   }
 
+  const prepareAppUrl = () => {
+    const iframeContextQueryString = `?${stringifyQs(
+      { domain: shop.domain.host, id: appId, ...params },
+      "comma",
+    )}`;
+    return urlJoin(src, window.location.search, iframeContextQueryString);
+  };
+
   return (
     <iframe
       ref={frameRef}
-      src={urlJoin(
-        src,
-        window.location.search,
-        `?${stringifyQs(
-          { domain: shop.domain.host, id: appId, ...params },
-          "comma",
-        )}`,
-      )}
+      src={prepareAppUrl()}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
