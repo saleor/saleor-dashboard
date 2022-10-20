@@ -3,7 +3,6 @@ import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-ch
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 
 export function createCollection(collectionName, isPublished, channel) {
   const publishedSelector = isPublished
