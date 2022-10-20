@@ -2017,7 +2017,7 @@
     "string": "Warehouses A to Z"
   },
   "EqDdoh": {
-    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API. Read more."
+    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
   "ErNH3D": {
     "string": "Define where this attribute should be used in Saleor system"
@@ -7421,7 +7421,7 @@
     "string": "Gift card tags were updated"
   },
   "vkY3W9": {
-    "string": "Third party apps are installed with App Manifests. They contain UI accessible from dashboard and can extend it. Read more here."
+    "string": "Third party apps are installed with App Manifests. They contain UI accessible from dashboard and can extend it."
   },
   "vlLyvk": {
     "string": "{inputType} attributes cannot be used as variant selection attributes."
