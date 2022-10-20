@@ -155,17 +155,19 @@ jobs:
         with:
           script: |
             const { pullRequestBody } = process.env
+            console.log(pullRequestBody)
             const containers = [];
-              const numberOfContainersRegex = /CONTAINERS=(\d*)/
-              const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
-              for(let i=1; i<=numberOfContainers[1]; i++){
-                containers.push(i)
-              }
+            const numberOfContainersRegex = /CONTAINERS=(\d*)/
+            const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
+            console.log(numberOfContainers)
+            for(let i=1; i<=numberOfContainers[1]; i++){
+              containers.push(i)
+            }
             return {"containers": containers}
 
       - name: echo-tags
         run: |
-              echo ${{steps.get_tags.outputs.result}}
+          echo ${{steps.get_tags.outputs.result}}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -225,6 +227,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}
