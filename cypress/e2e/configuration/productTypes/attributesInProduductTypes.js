@@ -42,7 +42,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
@@ -70,7 +70,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .wait("@AssignProductAttribute");
           getProductType(productType.id);
