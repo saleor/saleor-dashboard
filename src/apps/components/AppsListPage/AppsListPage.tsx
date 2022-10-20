@@ -73,7 +73,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       installedAppsList?.filter(
         app =>
           !(fetchedSaleorApps ?? []).find(fetchedApp =>
-            app.node.manifestUrl.includes(fetchedApp.hostname),
+            app.node.manifestUrl?.includes(fetchedApp.hostname),
           ),
       ),
     [installedAppsList, fetchedSaleorApps],
@@ -84,7 +84,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       fetchedSaleorApps
         ?.map(app =>
           installedAppsList?.find(installedApp =>
-            installedApp.node.manifestUrl.includes(app.hostname),
+            installedApp.node.manifestUrl?.includes(app.hostname),
           ),
         )
         .filter(Boolean),
