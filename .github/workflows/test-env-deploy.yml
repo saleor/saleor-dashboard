@@ -155,11 +155,11 @@ jobs:
         with:
           script: |
             const { pullRequestBody } = process.env
-            console.log(pullRequestBody)
+            console.log('body', pullRequestBody)
             const containers = [];
             const numberOfContainersRegex = /CONTAINERS=(\d*)/
             const numberOfContainers = pullRequestBody.match(numberOfContainersRegex);
-            console.log(numberOfContainers)
+            console.log('containers', numberOfContainers)
             for(let i=1; i<=numberOfContainers[1]; i++){
               containers.push(i)
             }
