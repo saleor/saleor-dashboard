@@ -39,6 +39,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 const environmentPlugin = new webpack.EnvironmentPlugin({
   API_URI: "",
   MARKETPLACE_URL: "",
+  SALEOR_APPS_ENDPOINT: "",
   APP_MOUNT_URI: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",

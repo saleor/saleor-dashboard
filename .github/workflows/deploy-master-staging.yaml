@@ -18,6 +18,7 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       MARKETPLACE_URL: "https://apps.saleor.io/"
+      SALEOR_APPS_ENDPOINT: "https://apps.saleor.io/api/saleor-apps"
       ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
     steps:

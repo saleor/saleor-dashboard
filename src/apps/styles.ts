@@ -53,7 +53,7 @@ export const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0,
-      width: theme.spacing(30),
+      minWidth: theme.spacing(30),
     },
     colSpinner: {
       "& svg": {
@@ -212,9 +212,6 @@ export const useStyles = makeStyles(
       "& img": {
         marginRight: theme.spacing(1),
       },
-    },
-    manifestUrl: {
-      marginRight: theme.spacing(1),
     },
   }),
   { name: "AppList" },
