@@ -87,9 +87,6 @@ describe("As an admin I should be able to create variant", () => {
             `${urlList.products}${createdProduct.id}`,
           ).waitForProgressBarToNotBeVisible();
           addVariantToDataGrid(name);
-          cy.get(PRODUCT_DETAILS.dataGridTable)
-            .should("be.visible")
-            .wait(1000);
           enterVariantEditPage();
           selectChannelsForVariant();
           createVariant({
