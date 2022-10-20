@@ -1,15 +1,14 @@
 import {
   AppDetailsUrlQueryParams,
+  appIframeUrl,
   getAppDeepPathFromDashboardUrl,
 } from "@saleor/apps/urls";
 import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
-import { stringifyQs } from "@saleor/utils/urls";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router";
-import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
@@ -100,18 +99,10 @@ export const AppFrame: React.FC<Props> = ({
     return null;
   }
 
-  const prepareAppUrl = () => {
-    const iframeContextQueryString = `?${stringifyQs(
-      { domain: shop.domain.host, id: appId, ...params },
-      "comma",
-    )}`;
-    return urlJoin(src, window.location.search, iframeContextQueryString);
-  };
-
   return (
     <iframe
       ref={frameRef}
-      src={prepareAppUrl()}
+      src={appIframeUrl(appId, src, shop.domain.host, params)}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
