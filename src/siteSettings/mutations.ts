@@ -4,7 +4,6 @@ export const shopSettingsUpdate = gql`
   mutation ShopSettingsUpdate(
     $shopSettingsInput: ShopSettingsInput!
     $addressInput: AddressInput
-    $isCloudInstance: Boolean!
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {

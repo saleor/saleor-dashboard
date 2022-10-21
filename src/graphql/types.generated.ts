@@ -8161,7 +8161,6 @@ export type ShippingZonesCountQuery = { __typename: 'Query', shippingZones: { __
 export type ShopSettingsUpdateMutationVariables = Exact<{
   shopSettingsInput: ShopSettingsInput;
   addressInput?: InputMaybe<AddressInput>;
-  isCloudInstance: Scalars['Boolean'];
 }>;
 
 
