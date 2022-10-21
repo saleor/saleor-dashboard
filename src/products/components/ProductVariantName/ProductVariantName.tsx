@@ -42,7 +42,6 @@ const ProductVariantName: React.FC<Props> = ({
           disabled={disabled}
           helperText={getProductErrorMessage(formErrors.name, intl)}
           data-test-id="variant-name"
-          required
         />
       </CardContent>
     </Card>
