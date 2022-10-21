@@ -256,6 +256,15 @@ export const extractMutationErrors = async <
   return e as TErrors;
 };
 
+export const hasMutationErrors = (result: FetchResult): boolean => {
+  if (!result?.data) {
+    return false;
+  }
+  return Object.values(result.data).some(
+    ({ errors }: SaleorMutationResult) => errors.length > 0,
+  );
+};
+
 export const getMutationErrors = <
   T extends FetchResult<any>,
   TData extends T["data"],

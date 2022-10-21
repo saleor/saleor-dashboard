@@ -3,6 +3,7 @@
 
 import faker from "faker";
 
+import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
@@ -13,11 +14,13 @@ import {
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
+  addVariantToDataGrid,
+  enterVariantEditPage,
+} from "../../support/pages/catalog/products/productDetailsPage";
+import {
   createVariant,
-  variantsShouldBeVisible,
+  selectChannelsForVariant,
 } from "../../support/pages/catalog/products/VariantsPage";
-import { selectChannelInHeader } from "../../support/pages/channelsPage";
-
 describe("As an admin I should be able to create variant", () => {
   const startsWith = "CyCreateVariants-";
   const attributeValues = ["value1", "value2"];
@@ -43,7 +46,7 @@ describe("As an admin I should be able to create variant", () => {
         defaultChannel = resp.defaultChannel;
         warehouse = resp.warehouse;
 
-        createChannel({ isActive: true, name, currencyCode: "USD" });
+        createChannel({ isActive: true, name, currencyCode: "PLN" });
       })
       .then(resp => (newChannel = resp));
   });
@@ -71,6 +74,7 @@ describe("As an admin I should be able to create variant", () => {
       })
         .then(resp => {
           createdProduct = resp;
+
           updateChannelInProduct({
             productId: createdProduct.id,
             channelId: defaultChannel.id,
@@ -79,32 +83,30 @@ describe("As an admin I should be able to create variant", () => {
             productId: createdProduct.id,
             channelId: newChannel.id,
           });
-          cy.visit(`${urlList.products}${createdProduct.id}`);
+          cy.visit(
+            `${urlList.products}${createdProduct.id}`,
+          ).waitForProgressBarToNotBeVisible();
+          addVariantToDataGrid(name);
+          enterVariantEditPage();
+          selectChannelsForVariant();
           createVariant({
             channelName: [defaultChannel.name, newChannel.name],
             sku: name,
             price,
             attributeName: attributeValues[0],
           });
-          selectChannelInHeader(defaultChannel.name);
-          variantsShouldBeVisible({ name, price });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
         .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("name", name);
           expect(variant).to.have.property("price", price);
-          selectChannelInHeader(newChannel.name);
-          variantsShouldBeVisible({ name, price });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
-          expect(variant).to.have.property("price", price);
+          expect(variant).to.have.property("currency", "USD");
           getProductVariants(createdProduct.id, newChannel.slug);
         })
         .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("name", name);
           expect(variant).to.have.property("price", price);
+          expect(variant).to.have.property("currency", "PLN");
         });
     },
   );
@@ -130,26 +132,31 @@ describe("As an admin I should be able to create variant", () => {
         })
         .then(({ product: productResp }) => {
           createdProduct = productResp;
+
           cy.visit(`${urlList.products}${createdProduct.id}`);
-          createVariant({
-            sku: secondVariantSku,
-            attributeName: variants[1].name,
-            price: variants[1].price,
-            channelName: defaultChannel.name,
-          });
-        })
-        .then(() => {
-          selectChannelInHeader(defaultChannel.name);
-          variantsShouldBeVisible({
-            name: variants[1].name,
-            price: variants[1].price,
-          });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(secondVariant).to.have.property("name", variants[1].name);
-          expect(secondVariant).to.have.property("price", variants[1].price);
+          enterVariantEditPage();
+          cy.get(PRODUCT_DETAILS.addVariantButton)
+            .click()
+            .then(() => {
+              createVariant({
+                sku: secondVariantSku,
+                attributeName: variants[1].name,
+                price: variants[1].price,
+                channelName: defaultChannel.name,
+              });
+              getProductVariants(createdProduct.id, defaultChannel.slug);
+            })
+            .then(([firstVariant, secondVariant]) => {
+              expect(firstVariant).to.have.property("price", variants[0].price);
+              expect(firstVariant).to.have.property("name", "value");
+              expect(firstVariant).to.have.property("currency", "USD");
+              expect(secondVariant).to.have.property("name", "value2");
+              expect(secondVariant).to.have.property(
+                "price",
+                variants[1].price,
+              );
+              expect(secondVariant).to.have.property("currency", "USD");
+            });
         });
     },
   );

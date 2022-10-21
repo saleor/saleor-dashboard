@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.7.0-dev",
+  "version": "3.8.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "@editorjs/list": "^1.7.0",
     "@editorjs/paragraph": "^2.8.0",
     "@editorjs/quote": "^2.4.0",
+    "@glideapps/glide-data-grid": "^5.0.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
@@ -57,10 +58,12 @@
     "jwt-decode": "^3.1.2",
     "keycode": "^2.2.0",
     "lodash": "^4.17.20",
+    "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "qs": "^6.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.9.0",
+    "react-draggable": "^4.4.5",
     "react-dropzone": "^11.2.4",
     "react-editor-js": "^2.0.6",
     "react-error-boundary": "^1.2.5",
@@ -72,6 +75,7 @@
     "react-jss": "^10.0.0",
     "react-markdown": "^4.3.1",
     "react-moment": "^1.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-sortable-hoc": "^1.10.1",
@@ -170,9 +174,12 @@
     "graphql-request": "^3.7.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
+    "jest-canvas-mock": "^2.4.0",
     "jest-file": "^1.0.0",
     "jest-localstorage-mock": "^2.4.3",
+    "jest-mock-random": "^1.1.1",
     "jscodeshift": "^0.13.0",
     "lint-staged": "^10.5.1",
     "mocha-junit-reporter": "^2.0.2",
@@ -211,6 +218,7 @@
   "jest": {
     "resetMocks": false,
     "setupFiles": [
+      "jest-canvas-mock",
       "jest-localstorage-mock"
     ],
     "transform": {
@@ -227,6 +235,7 @@
       "node"
     ],
     "moduleNameMapper": {
+      "\\.(css)$": "identity-obj-proxy",
       "@assets(.*)$": "<rootDir>/assets/$1",
       "@locale(.*)$": "<rootDir>/locale/$1",
       "@saleor(?!.*macaw)(?!.*sdk)(.*)$": "<rootDir>/src/$1",

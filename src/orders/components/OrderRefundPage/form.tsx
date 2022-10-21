@@ -24,7 +24,7 @@ export enum OrderRefundAmountCalculationMode {
 }
 
 export interface OrderRefundData {
-  amount: number | string;
+  amount: string;
   type: OrderRefundType;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
