@@ -31,7 +31,7 @@ export function finalizeDraftOrder(name) {
     .get(SELECT_SHIPPING_METHOD_FORM.submitButton)
     .click()
     .wait("@OrderShippingMethodUpdate")
-    .getTextFromElement(DRAFT_ORDER_SELECTORS.pageHeader)
+    .getTextFromElement(SHARED_ELEMENTS.pageHeader)
     .as("draftOrderNumber")
     .addAliasToGraphRequest("OrderDraftFinalize")
     .get(DRAFT_ORDER_SELECTORS.finalizeButton)

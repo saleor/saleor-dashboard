@@ -1,6 +1,5 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { UNSAVED_CHANGES_DIALOG } from "../../elements/shared/unsavedChangesDialog";
 import { SHIPPING_RATE_DETAILS } from "../../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../../elements/shipping/shipping-zones-list";
@@ -132,7 +131,12 @@ export function fillUpShippingRate({
     fillUpLimits(priceLimits);
   }
   cy.get(SHIPPING_RATE_DETAILS.priceInput).each($priceInput => {
-    cy.wrap($priceInput).clearAndType(price);
+    cy.wrap($priceInput)
+      .clear()
+      .get(SHARED_ELEMENTS.pageHeader)
+      .click()
+      .wrap($priceInput)
+      .clearAndType(price);
   });
 }
 
