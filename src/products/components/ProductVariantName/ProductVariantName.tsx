@@ -7,7 +7,7 @@ import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 
-interface Props {
+interface ProductVariantNameProps {
   value: string;
   onChange: FormChange<any>;
   disabled?: boolean;
