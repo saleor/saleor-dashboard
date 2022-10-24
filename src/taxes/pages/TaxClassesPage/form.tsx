@@ -47,7 +47,7 @@ function useTaxClassesForm(
     .map(item => ({
       id: item.country.code,
       label: item.country.country,
-      value: item.rate.toString(),
+      value: item.rate?.toString() ?? "",
       data: null,
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
@@ -77,8 +77,13 @@ function useTaxClassesForm(
     name: data.name,
     [isNewTaxClass
       ? "createCountryRates"
-      : "updateCountryRates"]: formset.data.map(item => {
+      : "updateCountryRates"]: formset.data.flatMap(item => {
       const { id, value } = item;
+      // TODO: when backend allows removing rates by passing null,
+      // we can stop filtering out empty values
+      if (!value) {
+        return [];
+      }
       const parsedRate = parseFloat(value);
       return {
         rate: parsedRate,
