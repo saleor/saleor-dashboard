@@ -134,17 +134,17 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     ) {
       return undefined;
     }
-    const apiTaxClasses = mapUndefinedCountriesToTaxClasses(
+
+    const apiTaxClasses = mapEdgesToItems(data?.taxClasses);
+    const connectedTaxClasses = isNewTaxClass
+      ? [newTaxClass, ...apiTaxClasses]
+      : apiTaxClasses;
+
+    const taxClasses = mapUndefinedCountriesToTaxClasses(
       countryRatesData.taxCountryConfigurations,
-      mapEdgesToItems(data.taxClasses),
+      connectedTaxClasses,
     );
-    if (!apiTaxClasses.length && !isNewTaxClass) {
-      return [];
-    }
-    if (isNewTaxClass) {
-      return [newTaxClass, ...apiTaxClasses];
-    }
-    return apiTaxClasses;
+    return taxClasses;
   }, [
     countryRatesData?.taxCountryConfigurations,
     data?.taxClasses,

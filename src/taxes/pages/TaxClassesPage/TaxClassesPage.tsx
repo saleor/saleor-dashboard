@@ -78,6 +78,13 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     [selectedTaxClassId, taxClasses],
   );
 
+  const nameInputRef = React.useRef(null);
+  React.useEffect(() => {
+    if (currentTaxClass?.id === "new") {
+      nameInputRef.current.focus();
+    }
+  }, [currentTaxClass?.id]);
+
   return (
     <TaxClassesForm
       taxClass={currentTaxClass}
@@ -134,11 +141,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                         )}
                         fullWidth
                         inputProps={{ className: classes.namePadding }}
-                        inputRef={input => {
-                          if (input != null && selectedTaxClassId === "new") {
-                            input.focus();
-                          }
-                        }}
+                        inputRef={nameInputRef}
                       />
                     </CardContent>
                   </Card>
