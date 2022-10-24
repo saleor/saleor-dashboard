@@ -27,6 +27,7 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
       />
       <PageTab
         value="WEBHOOKS_AND_EVENTS"
+        id="WEBHOOKS_AND_EVENTS"
         label={intl.formatMessage({
           defaultMessage: "Webhooks & Events",
           id: "UxTSw7",
