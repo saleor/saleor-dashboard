@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent, Divider } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ListItemLink from "@saleor/components/ListItemLink";
 import Skeleton from "@saleor/components/Skeleton";
@@ -14,6 +14,7 @@ import {
 } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { taxClassesListUrl } from "@saleor/taxes/urls";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -39,7 +40,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
   const isCreatingNew = selectedTaxClassId === "new";
 
   return (
-    <Card>
+    <Card className={classes.menu}>
       <CardTitle
         title={intl.formatMessage(taxesMessages.taxClassList)}
         toolbar={
@@ -62,31 +63,35 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
               </ListItemCell>
             </ListItem>
           </ListHeader>
+          <Divider />
           <List gridTemplate={["1fr"]}>
-            {taxClasses?.map(taxClass => (
-              <ListItemLink
-                key={taxClass.id}
-                className={clsx(classes.clickable, classes.tableRow, {
-                  [classes.selected]: taxClass.id === selectedTaxClassId,
-                })}
-                href={taxClassesListUrl(taxClass.id)}
-              >
-                <ListItemCell>
-                  <div className={classes.spaceBetween}>
-                    {taxClass.name}
-                    <IconButton
-                      variant="secondary"
-                      onClick={event => {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        onTaxClassDelete(taxClass.id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                </ListItemCell>
-              </ListItemLink>
+            {taxClasses?.map((taxClass, taxClassId) => (
+              <>
+                <ListItemLink
+                  key={taxClass.id}
+                  className={clsx(classes.clickable, classes.tableRow, {
+                    [classes.selected]: taxClass.id === selectedTaxClassId,
+                  })}
+                  href={taxClassesListUrl(taxClass.id)}
+                >
+                  <ListItemCell>
+                    <div className={classes.spaceBetween}>
+                      {taxClass.name}
+                      <IconButton
+                        variant="secondary"
+                        onClick={event => {
+                          event.stopPropagation();
+                          event.preventDefault();
+                          onTaxClassDelete(taxClass.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </div>
+                  </ListItemCell>
+                </ListItemLink>
+                {!isLastElement(taxClasses, taxClassId) && <Divider />}
+              </>
             )) ?? <Skeleton />}
           </List>
         </>

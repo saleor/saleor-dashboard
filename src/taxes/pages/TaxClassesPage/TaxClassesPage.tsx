@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  Divider,
   InputAdornment,
   TextField,
 } from "@material-ui/core";
@@ -33,6 +34,7 @@ import {
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -196,22 +198,33 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                               </ListItemCell>
                             </ListItem>
                           </ListHeader>
-                          {filteredRates?.map(countryRate => (
-                            <ListItem key={countryRate.id} hover={false}>
-                              <ListItemCell>{countryRate.label}</ListItemCell>
-                              <ListItemCell>
-                                <TaxInput
-                                  value={countryRate.value}
-                                  change={e =>
-                                    handlers.handleRateChange(
-                                      countryRate.id,
-                                      e.target.value,
-                                    )
-                                  }
-                                />
-                              </ListItemCell>
-                            </ListItem>
-                          )) ?? (
+                          <Divider />
+                          {filteredRates?.map(
+                            (countryRate, countryRateIndex) => (
+                              <>
+                                <ListItem key={countryRate.id} hover={false}>
+                                  <ListItemCell>
+                                    {countryRate.label}
+                                  </ListItemCell>
+                                  <ListItemCell>
+                                    <TaxInput
+                                      value={countryRate.value}
+                                      change={e =>
+                                        handlers.handleRateChange(
+                                          countryRate.id,
+                                          e.target.value,
+                                        )
+                                      }
+                                    />
+                                  </ListItemCell>
+                                </ListItem>
+                                {!isLastElement(
+                                  filteredRates,
+                                  countryRateIndex,
+                                ) && <Divider />}
+                              </>
+                            ),
+                          ) ?? (
                             <>
                               <Skeleton />
                               <VerticalSpacer />
