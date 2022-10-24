@@ -27,7 +27,6 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-  makeStyles,
   PageTab,
   PageTabs,
   SearchIcon,
@@ -40,6 +39,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
 import TaxCountriesForm from "./form";
+import { useStyles } from "./styles";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
 export interface TaxCountriesPageProps {
@@ -52,21 +52,6 @@ export interface TaxCountriesPageProps {
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    inputPadding: {
-      padding: "16px 0 16px 0",
-    },
-    greyText: {
-      color: theme.palette.text.hint,
-    },
-    noDivider: {
-      "&::after": { display: "none" },
-    },
-  }),
-  { name: "TaxCountriesPage" },
-);
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   const {
@@ -176,7 +161,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                               {...taxesMessages.taxNameHeader}
                             />
                           </ListItemCell>
-                          <ListItemCell>
+                          <ListItemCell className={classes.right}>
                             <FormattedMessage
                               {...taxesMessages.taxRateHeader}
                             />

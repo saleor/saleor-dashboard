@@ -191,7 +191,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                   {...taxesMessages.countryNameHeader}
                                 />
                               </ListItemCell>
-                              <ListItemCell>
+                              <ListItemCell className={classes.right}>
                                 <FormattedMessage
                                   {...taxesMessages.taxRateHeader}
                                 />

@@ -2,21 +2,21 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    inputPadding: {
+      padding: "16px 0 16px 0",
+    },
+    greyText: {
+      color: theme.palette.text.hint,
+    },
+    noDivider: {
+      "&::after": { display: "none" },
+    },
     right: {
       margin: 0,
       display: "flex",
       placeContent: "flex-end",
       textAlign: "right",
     },
-    searchPadding: {
-      padding: "16px 0 16px 0",
-    },
-    namePadding: {
-      padding: "16px",
-    },
-    supportText: {
-      color: theme.palette.saleor.main[3],
-    },
   }),
-  { name: "TaxClassesPage" },
+  { name: "TaxCountriesPage" },
 );
