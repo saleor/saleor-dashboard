@@ -204,8 +204,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                           <Divider />
                           {filteredRates?.map(
                             (countryRate, countryRateIndex) => (
-                              <>
-                                <ListItem key={countryRate.id} hover={false}>
+                              <React.Fragment key={countryRate.id}>
+                                <ListItem hover={false}>
                                   <ListItemCell>
                                     {countryRate.label}
                                   </ListItemCell>
@@ -225,7 +225,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                   filteredRates,
                                   countryRateIndex,
                                 ) && <Divider />}
-                              </>
+                              </React.Fragment>
                             ),
                           ) ?? (
                             <>

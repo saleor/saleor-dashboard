@@ -62,9 +62,8 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
           </ListHeader>
           <Divider />
           {configurations?.map((config, configIndex) => (
-            <>
+            <React.Fragment key={config.country.code}>
               <ListItemLink
-                key={config.country.code}
                 className={clsx(classes.clickable, classes.tableRow, {
                   [classes.selected]: config.country.code === selectedCountryId,
                 })}
@@ -87,7 +86,7 @@ export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
                 </ListItemCell>
               </ListItemLink>
               {!isLastElement(configurations, configIndex) && <Divider />}
-            </>
+            </React.Fragment>
           )) ?? <Skeleton />}
         </List>
       )}

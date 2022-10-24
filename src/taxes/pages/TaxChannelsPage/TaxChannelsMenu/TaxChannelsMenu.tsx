@@ -34,9 +34,8 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
         </ListHeader>
         <Divider />
         {configurations?.map((configuration, confIndex) => (
-          <>
+          <React.Fragment key={configuration.id}>
             <ListItemLink
-              key={configuration.id}
               className={clsx(classes.clickable, classes.tableRow, {
                 [classes.selected]:
                   configuration.id === selectedConfigurationId,
@@ -48,7 +47,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
               </ListItemCell>
             </ListItemLink>
             {!isLastElement(configurations, confIndex) && <Divider />}
-          </>
+          </React.Fragment>
         )) ?? <Skeleton />}
       </List>
     </Card>

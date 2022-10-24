@@ -170,8 +170,8 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                       </ListHeader>
                       <Divider />
                       {filteredRates?.map((rate, rateIndex) => (
-                        <>
-                          <ListItem key={rate.id} hover={false}>
+                        <React.Fragment key={rate.id}>
+                          <ListItem hover={false}>
                             <ListItemCell>{rate.label}</ListItemCell>
                             <ListItemCell>
                               <TaxInput
@@ -189,7 +189,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                           {!isLastElement(filteredRates, rateIndex) && (
                             <Divider />
                           )}
-                        </>
+                        </React.Fragment>
                       )) ?? <Skeleton />}
                     </List>
                   </>

@@ -66,9 +66,8 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
           <Divider />
           <List gridTemplate={["1fr"]}>
             {taxClasses?.map((taxClass, taxClassId) => (
-              <>
+              <React.Fragment key={taxClass.id}>
                 <ListItemLink
-                  key={taxClass.id}
                   className={clsx(classes.clickable, classes.tableRow, {
                     [classes.selected]: taxClass.id === selectedTaxClassId,
                   })}
@@ -91,7 +90,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                   </ListItemCell>
                 </ListItemLink>
                 {!isLastElement(taxClasses, taxClassId) && <Divider />}
-              </>
+              </React.Fragment>
             )) ?? <Skeleton />}
           </List>
         </>
