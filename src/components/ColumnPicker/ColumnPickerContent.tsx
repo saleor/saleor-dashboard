@@ -49,6 +49,13 @@ const useStyles = makeStyles(
       textTransform: "uppercase",
       marginBottom: theme.spacing(1),
     },
+    choicesContainer: {
+      maxHeight: 500,
+      overflow: "hidden scroll",
+      "& span": {
+        wordBreak: "break-all",
+      },
+    },
   }),
   { name: "ColumnPickerContent" },
 );
@@ -87,6 +94,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
           {intl.formatMessage(messages.columnSubheader)}
         </Typography>
         <MultipleValueAutocomplete
+          className={classes.choicesContainer}
           choices={choices}
           enableReinitialize
           fullWidth

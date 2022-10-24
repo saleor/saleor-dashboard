@@ -28,13 +28,6 @@ const useStyles = makeStyles(
         justifyContent: "flex-end",
         padding: theme.spacing(1),
       },
-      btnContainer: {
-        display: "flex",
-        flexDirection: "row-reverse",
-      },
-      addBtn: {
-        marginBottom: theme.spacing(2),
-      },
       columnPicker: {
         display: "flex",
         alignItems: "center",
@@ -86,6 +79,7 @@ const useStyles = makeStyles(
         position: "fixed",
         top: 0,
         left: 0,
+        zIndex: 2,
       },
       datagrid: {
         "& .dvn-scroller": {
@@ -142,6 +136,7 @@ const useStyles = makeStyles(
       },
       editorContainer: {
         position: "relative",
+        height: "100%",
       },
       rowActionBarShadow: {
         height: "100%",
@@ -159,10 +154,27 @@ const useStyles = makeStyles(
       rowActionSelected,
       cardContentRoot: {
         padding: "0 0 2.4rem 0",
+        flex: 1,
       },
     };
   },
   { name: "Datagrid" },
+);
+
+export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
+  () => ({
+    fullScreenContainer: props => ({
+      [`& .${props.root}`]: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      },
+      [`& .${props.datagrid}`]: {
+        height: "100%",
+      },
+    }),
+  }),
+  { name: "Datagrid-fullscreen" },
 );
 
 const calculateFontToPx = (remValue: string | number, base: number) => {

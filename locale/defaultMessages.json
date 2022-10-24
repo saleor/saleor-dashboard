@@ -761,6 +761,10 @@
     "context": "voucher discount",
     "string": "Specific products"
   },
+  "483Xnh": {
+    "context": "open full-screen",
+    "string": "Open"
+  },
   "4B32Ba": {
     "context": "delete page",
     "string": "Are you sure you want to delete {title}?"
@@ -3642,6 +3646,10 @@
   "Qj/3sH": {
     "context": "limit voucher",
     "string": "Limit number of times this discount can be used in total"
+  },
+  "QjPJ78": {
+    "context": "close full-screen",
+    "string": "Close"
   },
   "QkFeOa": {
     "context": "order refund amount button",

@@ -35,6 +35,7 @@ const useStyles = makeStyles(
   theme => ({
     popper: {
       marginTop: theme.spacing(1),
+      zIndex: 1,
     },
   }),
   {
