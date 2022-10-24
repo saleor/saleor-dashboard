@@ -2528,6 +2528,7 @@ export const ProductTranslationFragmentDoc = gql`
   attributeValues {
     id
     name
+    plainText
     richText
     attributeValue {
       id
@@ -2539,6 +2540,7 @@ export const ProductTranslationFragmentDoc = gql`
     translation(languageCode: $language) {
       id
       name
+      plainText
       richText
       language {
         code
@@ -2565,6 +2567,7 @@ export const ProductVariantTranslationFragmentDoc = gql`
   attributeValues {
     id
     name
+    plainText
     richText
     attributeValue {
       id
@@ -2576,6 +2579,7 @@ export const ProductVariantTranslationFragmentDoc = gql`
     translation(languageCode: $language) {
       id
       name
+      plainText
       richText
       language {
         code
@@ -2660,6 +2664,7 @@ export const PageTranslationFragmentDoc = gql`
   attributeValues {
     id
     name
+    plainText
     richText
     attributeValue {
       id
@@ -2671,6 +2676,7 @@ export const PageTranslationFragmentDoc = gql`
     translation(languageCode: $language) {
       id
       name
+      plainText
       richText
       language {
         code
@@ -2725,11 +2731,13 @@ export const AttributeChoicesTranslationFragmentDoc = gql`
     node {
       id
       name
+      plainText
       richText
       inputType
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
       }
     }
