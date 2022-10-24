@@ -228,7 +228,11 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
       </DebounceAutocomplete>
       <div className={classes.chipContainer}>
         {displayValues.map(value => (
-          <div className={classes.chip} key={value.value}>
+          <div
+            className={classes.chip}
+            key={value.value}
+            id={`selected-option-${value.label}`}
+          >
             <div
               className={
                 !value.disabled ? classes.chipInner : classes.disabledChipInner

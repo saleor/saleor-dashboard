@@ -19,7 +19,9 @@ Cypress.Commands.add("fillMultiSelect", (selectSelector, option) => {
   cy.fillAutocompleteSelect(selectSelector, option).then(returnedOption => {
     cy.get(SHARED_ELEMENTS.header)
       .first()
-      .click({ force: true });
+      .click({ force: true })
+      .get(SHARED_ELEMENTS.multiAutocomplete.selectedOptions)
+      .should("be.visible");
     return cy.wrap(returnedOption);
   });
 });
