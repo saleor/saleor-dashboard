@@ -39,6 +39,5 @@ export const validateProductCreateData = (data: ProductCreateData) => {
 
 export const validateVariantData = (
   data: ProductVariantCreateData | ProductVariantUpdateSubmitData,
-): ProductErrorWithAttributesFragment[] => (
+): ProductErrorWithAttributesFragment[] =>
   !data.name ? [createEmptyRequiredError("name")] : [];
-);
