@@ -89,3 +89,6 @@ export const mapUndefinedCountriesToTaxClasses = (
       "country.code",
     ),
   }));
+
+export const isLastElement = (arr: any[], index: number): boolean =>
+  index === arr.length - 1;

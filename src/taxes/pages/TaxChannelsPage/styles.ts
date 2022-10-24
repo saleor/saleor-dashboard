@@ -8,6 +8,12 @@ export const useStyles = makeStyles(
       placeContent: "center",
       textAlign: "center",
     },
+    left: {
+      margin: 0,
+      display: "flex",
+      placeContent: "flex-start",
+      textAlign: "left",
+    },
     dummy: {
       width: "40px",
       height: "40px",

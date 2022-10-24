@@ -1,7 +1,7 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  () => ({
+  theme => ({
     supportHeader: {
       fontWeight: 500,
       fontSize: "12px",
@@ -16,17 +16,19 @@ export const useStyles = makeStyles(
     },
     taxStrategySection: {
       display: "flex",
-      alignItems: "flex-start",
+      alignItems: "center",
+      gap: theme.spacing(2),
     },
     singleSelectField: {
       width: "275px",
     },
-    infoIcon: {
-      "& > svg": {
-        width: "20px",
-        height: "20px",
-        verticalAlign: "middle",
-      },
+    singleSelectWrapper: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    hint: {
+      marginLeft: 0,
+      color: theme.palette.saleor.main[3],
     },
   }),
   { name: "TaxSettingsCard" },

@@ -15,7 +15,6 @@ import SingleSelectField, {
 } from "@saleor/components/SingleSelectField";
 import { TaxConfigurationUpdateInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { InfoIcon } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -51,20 +50,21 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             onChange={onChange}
             label={intl.formatMessage(taxesMessages.chargeTaxes)}
           />
-          <SingleSelectField
-            className={classes.singleSelectField}
-            choices={strategyChoices}
-            disabled={!values.chargeTaxes}
-            hint={
-              <span className={classes.infoIcon}>
-                <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
-                <InfoIcon />
-              </span>
-            }
-            value={values.taxCalculationStrategy}
-            name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-            onChange={onChange}
-          />
+          <div className={classes.singleSelectWrapper}>
+            <span className={classes.hint}>
+              <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
+            </span>
+            <SingleSelectField
+              className={classes.singleSelectField}
+              choices={strategyChoices}
+              disabled={!values.chargeTaxes}
+              value={values.taxCalculationStrategy}
+              name={
+                "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
+              }
+              onChange={onChange}
+            />
+          </div>
         </div>
       </CardContent>
       <Divider />

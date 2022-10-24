@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent, Divider } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -30,6 +30,7 @@ import {
 } from "@saleor/macaw-ui";
 import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
 import { taxesMessages } from "@saleor/taxes/messages";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -202,7 +203,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                               {...taxesMessages.countryNameHeader}
                             />
                           </ListItemCell>
-                          <ListItemCell className={classes.center}>
+                          <ListItemCell className={classes.left}>
                             <FormattedMessage
                               {...taxesMessages.chargeTaxesHeader}
                             />
@@ -218,10 +219,11 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
+                      <Divider />
                       {countryExceptions?.map((country, countryIndex) => (
                         <TaxCountryExceptionListItem
                           divider={
-                            countryIndex + 1 !== countryExceptions.length
+                            !isLastElement(countryExceptions, countryIndex)
                           }
                           strategyChoices={taxStrategyChoices}
                           country={country}
@@ -252,7 +254,6 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                       )) ?? <Skeleton />}
                     </List>
                   )}
-                  <VerticalSpacer />
                 </Card>
               </div>
             </Grid>

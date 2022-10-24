@@ -11,9 +11,13 @@ export const useStyles = makeStyles(
     },
     tableRow: {
       minHeight: "48px",
+      "&:before, &:after": {
+        backgroundColor: "transparent",
+      },
     },
     selected: {
-      "&&&&::before": {
+      "&&&:before": {
+        display: "visible",
         position: "absolute",
         left: 0,
         width: "4px",

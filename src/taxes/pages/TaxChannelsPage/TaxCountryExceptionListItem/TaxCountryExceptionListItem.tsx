@@ -1,3 +1,4 @@
+import { Divider } from "@material-ui/core";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import SingleSelectField, {
   Choice,
@@ -34,38 +35,41 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
 }) => {
   const classes = useStyles();
   return (
-    <ListItem hover={false} className={divider ? undefined : classes.noDivider}>
-      <ListItemCell>{country.country.country}</ListItemCell>
-      <ListItemCell className={classes.center}>
-        <ControlledCheckbox
-          className={classes.center}
-          checked={country.chargeTaxes}
-          name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
-          onChange={onChange}
-        />
-        <SingleSelectField
-          className={classes.selectField}
-          choices={strategyChoices}
-          disabled={!country.chargeTaxes}
-          value={country.taxCalculationStrategy}
-          name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-          onChange={onChange}
-        />
-      </ListItemCell>
-      <ListItemCell className={classes.center}>
-        <ControlledCheckbox
-          className={classes.center}
-          checked={country.displayGrossPrices}
-          name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
-          onChange={onChange}
-        />
-      </ListItemCell>
-      <ListItemCell>
-        <IconButton onClick={onDelete} variant="secondary">
-          <DeleteIcon />
-        </IconButton>
-      </ListItemCell>
-    </ListItem>
+    <>
+      <ListItem hover={false} className={classes.noDivider}>
+        <ListItemCell>{country.country.country}</ListItemCell>
+        <ListItemCell className={classes.center}>
+          <ControlledCheckbox
+            className={classes.center}
+            checked={country.chargeTaxes}
+            name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+            onChange={onChange}
+          />
+          <SingleSelectField
+            className={classes.selectField}
+            choices={strategyChoices}
+            disabled={!country.chargeTaxes}
+            value={country.taxCalculationStrategy}
+            name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
+            onChange={onChange}
+          />
+        </ListItemCell>
+        <ListItemCell className={classes.center}>
+          <ControlledCheckbox
+            className={classes.center}
+            checked={country.displayGrossPrices}
+            name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
+            onChange={onChange}
+          />
+        </ListItemCell>
+        <ListItemCell>
+          <IconButton onClick={onDelete} variant="secondary">
+            <DeleteIcon />
+          </IconButton>
+        </ListItemCell>
+      </ListItem>
+      {divider && <Divider />}
+    </>
   );
 };
 export default TaxCountryExceptionListItem;
