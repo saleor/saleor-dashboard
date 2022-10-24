@@ -103,6 +103,16 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
                 id="MYA6EV"
               />
             </p>
+            {!!appsInProgress?.length && (
+              <>
+                <AppsInProgress
+                  appsList={appsInProgress}
+                  onAppInstallRetry={onAppInstallRetry}
+                  onRemove={onAppInProgressRemove}
+                />
+                <CardSpacer />
+              </>
+            )}
             <InstalledApps
               title={intl.formatMessage({
                 id: "BvmnJq",
@@ -116,17 +126,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             />
 
             <CardSpacer />
-
-            {!!appsInProgress?.length && (
-              <>
-                <CardSpacer />
-                <AppsInProgress
-                  appsList={appsInProgress}
-                  onAppInstallRetry={onAppInstallRetry}
-                  onRemove={onAppInProgressRemove}
-                />
-              </>
-            )}
           </>
         );
       }
