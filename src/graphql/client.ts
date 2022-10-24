@@ -1,7 +1,6 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { ApolloLink } from "@apollo/client/link/core";
+import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
