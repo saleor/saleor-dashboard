@@ -98,6 +98,8 @@ describe("As a staff user I want to manage apps", () => {
       const randomAppName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.apps)
+        .get(APPS_LIST.webhookAndEventsTab)
+        .click()
         .get(APPS_LIST.createLocalAppButton)
         .click()
         .get(APP_DETAILS.nameInput)
