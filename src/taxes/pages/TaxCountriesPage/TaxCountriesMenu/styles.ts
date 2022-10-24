@@ -2,6 +2,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    menu: {
+      height: "fit-content",
+    },
     clickable: {
       cursor: "pointer",
     },

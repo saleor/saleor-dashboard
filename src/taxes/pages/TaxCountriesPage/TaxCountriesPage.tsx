@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  Divider,
   InputAdornment,
   TextField,
 } from "@material-ui/core";
@@ -33,7 +34,7 @@ import {
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
-import clsx from "clsx";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -182,32 +183,30 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
+                      <Divider />
                       {filteredRates?.map((rate, rateIndex) => (
-                        <ListItem
-                          key={rate.id}
-                          hover={false}
-                          className={clsx({
-                            [classes.noDivider]:
-                              rateIndex + 1 === filteredRates.length,
-                          })}
-                        >
-                          <ListItemCell>{rate.label}</ListItemCell>
-                          <ListItemCell>
-                            <TaxInput
-                              placeholder={data[0]?.rate}
-                              value={rate?.value}
-                              change={e =>
-                                handlers.handleRateChange(
-                                  rate.id,
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </ListItemCell>
-                        </ListItem>
+                        <>
+                          <ListItem key={rate.id} hover={false}>
+                            <ListItemCell>{rate.label}</ListItemCell>
+                            <ListItemCell>
+                              <TaxInput
+                                placeholder={data[0]?.rate}
+                                value={rate?.value}
+                                change={e =>
+                                  handlers.handleRateChange(
+                                    rate.id,
+                                    e.target.value,
+                                  )
+                                }
+                              />
+                            </ListItemCell>
+                          </ListItem>
+                          {!isLastElement(filteredRates, rateIndex) && (
+                            <Divider />
+                          )}
+                        </>
                       )) ?? <Skeleton />}
                     </List>
-                    <VerticalSpacer spacing={3} />
                   </>
                 )}
               </Card>
