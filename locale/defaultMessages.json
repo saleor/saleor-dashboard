@@ -3798,6 +3798,10 @@
     "context": "issue card button label",
     "string": "Issue card"
   },
+  "Rfk+8B": {
+    "context": "tax classes menu label when there are no tax classes",
+    "string": "There are no tax classes"
+  },
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
