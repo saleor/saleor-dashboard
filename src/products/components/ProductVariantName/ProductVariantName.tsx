@@ -14,7 +14,7 @@ interface ProductVariantNameProps {
   errors: ProductErrorFragment[];
 }
 
-const ProductVariantName: React.FC<Props> = ({
+const ProductVariantName: React.FC<ProductVariantNameProps> = ({
   value,
   onChange,
   disabled,
