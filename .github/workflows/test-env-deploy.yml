@@ -54,7 +54,7 @@ jobs:
           prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "custom_api_uri=$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)" >> $GITHUB_OUTPUT
       - name: Get MARKETPLACE_URL
         id: marketplace_url
         # Search for MARKETPLACE_URL in PR description
@@ -63,7 +63,7 @@ jobs:
           prefix: MARKETPLACE_URL=
           pattern: (http|https)://[a-zA-Z0-9.-]+/?
         run: |
-          echo "::set-output name=custom_marketplace_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "custom_marketplace_url=$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)" >> $GITHUB_OUTPUT
       - name: Run build
         env:
           # Use custom API_URI or the default one
@@ -81,7 +81,7 @@ jobs:
         id: set-domain
         # Set test instance domain based on branch name slug
         run: |
-          echo "::set-output name=domain::${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks"
+          echo "{domain}=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -189,7 +189,7 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+          echo "custom_api_uri=$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })" >> $GITHUB_OUTPUT
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
