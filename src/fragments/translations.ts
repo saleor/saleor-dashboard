@@ -66,6 +66,7 @@ export const productTranslationFragment = gql`
     attributeValues {
       id
       name
+      plainText
       richText
       attributeValue {
         id
@@ -77,6 +78,7 @@ export const productTranslationFragment = gql`
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
         language {
           code
@@ -104,6 +106,7 @@ export const productVariantTranslationFragment = gql`
     attributeValues {
       id
       name
+      plainText
       richText
       attributeValue {
         id
@@ -115,6 +118,7 @@ export const productVariantTranslationFragment = gql`
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
         language {
           code
@@ -201,6 +205,7 @@ export const pageTranslationFragment = gql`
     attributeValues {
       id
       name
+      plainText
       richText
       attributeValue {
         id
@@ -212,6 +217,7 @@ export const pageTranslationFragment = gql`
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
         language {
           code
@@ -252,11 +258,13 @@ export const attributeChoicesTranslationFragment = gql`
       node {
         id
         name
+        plainText
         richText
         inputType
         translation(languageCode: $language) {
           id
           name
+          plainText
           richText
         }
       }

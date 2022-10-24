@@ -165,9 +165,14 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
                   },
                 ),
                 name: attrVal.name,
-                translation: attrVal.translation?.richText || null,
-                type: "rich" as "rich",
-                value: attrVal.richText,
+                translation:
+                  attrVal.translation?.richText ||
+                  attrVal.translation?.plainText ||
+                  null,
+                type: attrVal.richText
+                  ? ("rich" as "rich")
+                  : ("short" as "short"),
+                value: attrVal.richText || attrVal.plainText,
               })) || []
             }
             saveButtonState={saveButtonState}

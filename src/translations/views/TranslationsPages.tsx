@@ -96,14 +96,17 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     );
 
   const handleAttributeValueSubmit = (
-    { id }: TranslationField<PageTranslationInputFieldName>,
-    data: OutputData,
+    { id, type }: TranslationField<PageTranslationInputFieldName>,
+    data: OutputData | string,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
           id,
-          input: { richText: JSON.stringify(data) },
+          input:
+            type === "rich"
+              ? { richText: JSON.stringify(data) }
+              : { plainText: data as string },
           language: languageCode,
         },
       }),
