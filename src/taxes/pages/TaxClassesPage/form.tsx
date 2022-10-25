@@ -79,9 +79,7 @@ function useTaxClassesForm(
       ? "createCountryRates"
       : "updateCountryRates"]: formset.data.flatMap(item => {
       const { id, value } = item;
-      // TODO: when backend allows removing rates by passing null,
-      // we can stop filtering out empty values
-      if (!value) {
+      if (!value && isNewTaxClass) {
         return [];
       }
       const parsedRate = parseFloat(value);
