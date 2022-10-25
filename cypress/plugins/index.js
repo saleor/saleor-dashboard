@@ -20,29 +20,23 @@
 
 const graphql = require("graphql-request");
 
-module.exports = async (on, config) => {
-  // make env variables visible for cypress
-  // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
-  config.env.API_URI = process.env.API_URI;
-  config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
-  config.env.SHOP = await getShopInfo(process.env);
-  config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-  config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
+const dotenvPlugin = require("cypress-dotenv");
 
-  on("before:browser:launch", (browser = {}, launchOptions) => {
+module.exports = async (on, config) => {
+  // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
+
+  config = dotenvPlugin(config, undefined, true); // read all .env variables (not only those starting from CYPRESS_)
+
+  config.env.SHOP = await getShopInfo(config.env);
+
+  on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
   return config;
 };
 
-function getShopInfo(envVariables) {
-  // envVariables.CYPRESS_USER_NAME
-  const variables = {
-    email: envVariables.CYPRESS_USER_NAME,
-    password: envVariables.CYPRESS_USER_PASSWORD,
-  };
-
+function getShopInfo({ USER_NAME, USER_PASSWORD, API_URI }) {
   const createTokenMutation = graphql.gql`mutation tokenCreate($email: String!, $password: String!){
     tokenCreate(email:$email, password:$password){
       token
@@ -55,14 +49,17 @@ function getShopInfo(envVariables) {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(envVariables.API_URI, {
+  const client = new graphql.GraphQLClient(API_URI, {
     headers: {},
   });
-  return client.request(createTokenMutation, variables).then(data => {
-    const token = data.tokenCreate.token;
-    client.setHeader("Authorization", `JWT ${token}`);
-    return client
-      .request(getShopInfoQuery)
-      .then(shopInfo => shopInfo.shop.version);
-  });
+
+  return client
+    .request(createTokenMutation, { email: USER_NAME, password: USER_PASSWORD })
+    .then(data => {
+      const token = data.tokenCreate.token;
+      client.setHeader("Authorization", `JWT ${token}`);
+      return client
+        .request(getShopInfoQuery)
+        .then(shopInfo => shopInfo.shop.version);
+    });
 }
