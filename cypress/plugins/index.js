@@ -20,14 +20,15 @@
 
 const graphql = require("graphql-request");
 
-const dotenvPlugin = require("cypress-dotenv");
-
 module.exports = async (on, config) => {
   // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
 
-  config = dotenvPlugin(config, undefined, true); // read all .env variables (not only those starting from CYPRESS_)
+  require("dotenv").config();
 
-  config.env.SHOP = await getShopInfo(config.env);
+  config.env.SHOP = await getShopInfo();
+
+  config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+  config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
 
   on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
@@ -36,7 +37,7 @@ module.exports = async (on, config) => {
   return config;
 };
 
-function getShopInfo({ USER_NAME, USER_PASSWORD, API_URI }) {
+function getShopInfo() {
   const createTokenMutation = graphql.gql`mutation tokenCreate($email: String!, $password: String!){
     tokenCreate(email:$email, password:$password){
       token
@@ -49,12 +50,15 @@ function getShopInfo({ USER_NAME, USER_PASSWORD, API_URI }) {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(API_URI, {
+  const client = new graphql.GraphQLClient(process.env.API_URL, {
     headers: {},
   });
 
   return client
-    .request(createTokenMutation, { email: USER_NAME, password: USER_PASSWORD })
+    .request(createTokenMutation, {
+      email: process.env.CYPRESS_USER_NAME,
+      password: process.env.CYPRESS_USER_PASSWORD,
+    })
     .then(data => {
       const token = data.tokenCreate.token;
       client.setHeader("Authorization", `JWT ${token}`);
