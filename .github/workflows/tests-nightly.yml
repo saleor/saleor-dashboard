@@ -212,9 +212,9 @@ jobs:
           new_version_test_tag: "@stable"
         run: |
           if [[ $is_old_version == "true" ]]; then
-              echo "::set-output name=TEST_TAG::$old_version_test_tag "
+              echo "TEST_TAG=$old_version_test_tag" >> $GITHUB_OUTPUT
           else
-              echo "::set-output name=TEST_TAG::$new_version_test_tag "
+              echo "TEST_TAG=$new_version_test_tag" >> $GITHUB_OUTPUT
           fi
               
       - name: Cypress run - automatically
