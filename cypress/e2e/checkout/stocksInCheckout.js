@@ -61,7 +61,7 @@ describe("Manage products stocks in checkout", () => {
 
   it(
     "should not be possible to add product with quantity greater than stock to checkout. TC: SALEOR_0405",
-    { tags: ["@checkout", "@allEnv", "@stable"] },
+    { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createCheckout({
         channelSlug: defaultChannel.slug,
@@ -85,7 +85,7 @@ describe("Manage products stocks in checkout", () => {
 
   it(
     "should buy product with no quantity if tracking is not set. TC: SALEOR_0406",
-    { tags: ["@checkout", "@allEnv", "@stable"] },
+    { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createWaitingForCaptureOrder({
         address,
@@ -101,7 +101,7 @@ describe("Manage products stocks in checkout", () => {
 
   it(
     "should create checkout with last product in stock. TC: SALEOR_0419",
-    { tags: ["@checkout", "@allEnv", "@stable"] },
+    { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createWaitingForCaptureOrder({
         address,
