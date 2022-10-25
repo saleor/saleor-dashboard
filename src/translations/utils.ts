@@ -1,6 +1,12 @@
 import { OutputData } from "@editorjs/editorjs";
-import { AttributeTranslationDetailsFragment } from "@saleor/graphql";
-import { TranslationField } from "@saleor/translations/types";
+import {
+  AttributeTranslationDetailsFragment,
+  AttributeValueTranslationInput,
+} from "@saleor/graphql";
+import {
+  TranslationField,
+  TranslationFieldType,
+} from "@saleor/translations/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import { IntlShape } from "react-intl";
@@ -52,3 +58,11 @@ export const getTranslationFields = (
       };
     },
   ) || [];
+
+export const getAttributeValueTranslationsInputData = (
+  type: TranslationFieldType,
+  data: OutputData | string,
+): AttributeValueTranslationInput =>
+  type === "rich"
+    ? { richText: JSON.stringify(data) }
+    : { plainText: data as string };

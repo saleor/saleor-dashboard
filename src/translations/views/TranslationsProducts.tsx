@@ -16,7 +16,10 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsProductsPage from "../components/TranslationsProductsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import {
+  getAttributeValueTranslationsInputData,
+  getParsedTranslationInputData,
+} from "../utils";
 
 export interface TranslationsProductsQueryParams {
   activeField: string;
@@ -103,10 +106,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
       updateAttributeValueTranslations({
         variables: {
           id,
-          input:
-            type === "rich"
-              ? { richText: JSON.stringify(data) }
-              : { plainText: data as string },
+          input: getAttributeValueTranslationsInputData(type, data),
           language: languageCode,
         },
       }),
