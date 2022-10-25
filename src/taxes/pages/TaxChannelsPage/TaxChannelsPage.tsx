@@ -143,6 +143,21 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
           set({ updateCountriesConfiguration: currentExceptions });
         };
 
+        const handleCountryChange = (country: CountryFragment) => {
+          closeDialog();
+          const input = {
+            country,
+            chargeTaxes: data.chargeTaxes,
+            displayGrossPrices: data.displayGrossPrices,
+            taxCalculationStrategy: data.taxCalculationStrategy,
+          } as TaxConfigurationPerCountryFragment;
+          const currentExceptions = data.updateCountriesConfiguration;
+          triggerChange();
+          set({
+            updateCountriesConfiguration: [input, ...currentExceptions],
+          });
+        };
+
         return (
           <Container>
             <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
@@ -274,20 +289,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                       ),
                   )
                   .map(country => ({ checked: false, ...country }))}
-                onConfirm={country => {
-                  closeDialog();
-                  const input = {
-                    country,
-                    chargeTaxes: data.chargeTaxes,
-                    displayGrossPrices: data.displayGrossPrices,
-                    taxCalculationStrategy: data.taxCalculationStrategy,
-                  } as TaxConfigurationPerCountryFragment;
-                  const currentExceptions = data.updateCountriesConfiguration;
-                  triggerChange();
-                  set({
-                    updateCountriesConfiguration: [input, ...currentExceptions],
-                  });
-                }}
+                onConfirm={handleCountryChange}
                 onClose={closeDialog}
               />
             )}
