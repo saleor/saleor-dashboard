@@ -21,7 +21,7 @@ import {
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { useStateUpdate } from "@saleor/hooks/useStateUpdate";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import { handleTaxClassChange } from "@saleor/productTypes/handlers";
@@ -130,7 +130,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
 
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
+  const [taxClassDisplayName, setTaxClassDisplayName] = useStateUpdate(
     rate?.taxClass?.name ?? "",
   );
 
