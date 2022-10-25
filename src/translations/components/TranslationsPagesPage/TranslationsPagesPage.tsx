@@ -8,6 +8,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
+  TranslationField,
   TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
@@ -84,7 +85,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             }),
             name: PageTranslationInputFieldName.title,
             translation: data?.translation?.title || null,
-            type: "short" as "short",
+            type: "short",
             value: data?.page?.title,
           },
           {
@@ -95,7 +96,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             }),
             name: PageTranslationInputFieldName.content,
             translation: data?.translation?.content || null,
-            type: "rich" as "rich",
+            type: "rich",
             value: data?.page?.content,
           },
         ]}
@@ -123,7 +124,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             }),
             name: PageTranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: "short" as "short",
+            type: "short",
             value: data?.page?.seoTitle,
           },
           {
@@ -133,7 +134,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             }),
             name: PageTranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: "long" as "long",
+            type: "long",
             value: data?.page?.seoDescription,
           },
         ]}
@@ -152,7 +153,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
             fields={
-              data.attributeValues.map(attrVal => ({
+              data.attributeValues.map<TranslationField>(attrVal => ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
@@ -169,9 +170,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
                   attrVal.translation?.richText ||
                   attrVal.translation?.plainText ||
                   null,
-                type: attrVal.richText
-                  ? ("rich" as "rich")
-                  : ("short" as "short"),
+                type: attrVal.richText ? "rich" : "short",
                 value: attrVal.richText || attrVal.plainText,
               })) || []
             }
