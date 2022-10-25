@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "git://github.com/saleor/macaw-ui.git#941d4e1",
+    "@saleor/macaw-ui": "git://github.com/saleor/macaw-ui.git#bd54d1f",
     "@saleor/sdk": "^0.4.4",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
