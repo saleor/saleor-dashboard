@@ -10,6 +10,7 @@ import {
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
+  TranslationField,
   TranslationInputFieldName,
   TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
@@ -98,7 +99,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: "short",
             value: data?.name,
           },
         ]}
@@ -117,7 +118,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
             fields={
-              data.attributeValues.map(attrVal => ({
+              data.attributeValues.map<TranslationField>(attrVal => ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
@@ -134,9 +135,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
                   attrVal.translation?.richText ||
                   attrVal.translation?.plainText ||
                   null,
-                type: attrVal.richText
-                  ? ("rich" as "rich")
-                  : ("short" as "short"),
+                type: attrVal.richText ? "rich" : "short",
                 value: attrVal.richText || attrVal.plainText,
               })) || []
             }

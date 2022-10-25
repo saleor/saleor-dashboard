@@ -7,6 +7,7 @@ import { LanguageCodeEnum, ProductTranslationFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
+  TranslationField,
   TranslationInputFieldName,
   TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
@@ -97,7 +98,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: "short",
             value: data?.product?.name,
           },
           {
@@ -107,7 +108,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
-            type: "rich" as "rich",
+            type: "rich",
             value: data?.product?.description,
           },
         ]}
@@ -134,7 +135,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: "short" as "short",
+            type: "short",
             value: data?.product?.seoTitle,
           },
           {
@@ -144,7 +145,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: "long" as "long",
+            type: "long",
             value: data?.product?.seoDescription,
           },
         ]}
@@ -163,7 +164,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
             fields={
-              data.attributeValues.map(attrVal => ({
+              data.attributeValues.map<TranslationField>(attrVal => ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
@@ -180,9 +181,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
                   attrVal.translation?.richText ||
                   attrVal.translation?.plainText ||
                   null,
-                type: attrVal.richText
-                  ? ("rich" as "rich")
-                  : ("short" as "short"),
+                type: attrVal.richText ? "rich" : "short",
                 value: attrVal.richText || attrVal.plainText,
               })) || []
             }
