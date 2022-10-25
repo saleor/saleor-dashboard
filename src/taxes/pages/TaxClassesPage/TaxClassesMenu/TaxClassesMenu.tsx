@@ -76,16 +76,18 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                   <ListItemCell>
                     <div className={classes.spaceBetween}>
                       {taxClass.name}
-                      <IconButton
-                        variant="secondary"
-                        onClick={event => {
-                          event.stopPropagation();
-                          event.preventDefault();
-                          onTaxClassDelete(taxClass.id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      {taxClass.id !== "new" && (
+                        <IconButton
+                          variant="secondary"
+                          onClick={event => {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            onTaxClassDelete(taxClass.id);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
                     </div>
                   </ListItemCell>
                 </ListItemLink>
