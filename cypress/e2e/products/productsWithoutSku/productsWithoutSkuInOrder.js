@@ -16,7 +16,7 @@ describe("As an admin I should be able to create order with variant without SKU"
     () => {
       let variants;
       let channel;
-      let shippingMethodId;
+      let shippingMethod;
       let address;
 
       cy.clearSessionData().loginUserViaRequest();
@@ -25,12 +25,12 @@ describe("As an admin I should be able to create order with variant without SKU"
           ({
             variantsList,
             defaultChannel,
-            shippingMethod,
+            shippingMethod: shippingMethodResp,
             address: addressResp,
           }) => {
             variants = variantsList;
             channel = defaultChannel;
-            shippingMethodId = shippingMethod.id;
+            shippingMethod = shippingMethodResp;
             address = addressResp;
             createCustomer(`${name}@example.com`, name, address, true);
           },
@@ -41,7 +41,7 @@ describe("As an admin I should be able to create order with variant without SKU"
             address,
             channelId: channel.id,
             customerId: customer.id,
-            shippingMethodId,
+            shippingMethod,
             variantsList: variants,
           });
         })
