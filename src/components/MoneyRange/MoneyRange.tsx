@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { LocaleConsumer } from "../Locale";
-import { formatMoney, IMoney } from "../Money";
+import { formatMoney, formatMoneyRange, IMoney } from "../Money";
 
 export interface MoneyRangeProps {
   from?: IMoney;
@@ -18,17 +18,7 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
         if (from && to) {
           return from.amount === to.amount
             ? formatMoney(from, locale)
-            : intl.formatMessage(
-                {
-                  id: "zTdwWM",
-                  defaultMessage: "{fromMoney} - {toMoney}",
-                  description: "money",
-                },
-                {
-                  fromMoney: formatMoney(from, locale),
-                  toMoney: formatMoney(to, locale),
-                },
-              );
+            : formatMoneyRange(from, to, locale);
         }
         if (from && !to) {
           return intl.formatMessage(
