@@ -25,10 +25,7 @@ module.exports = async (on, config) => {
 
   require("dotenv").config();
 
-  config.env.SHOP = await getShopInfo();
-
-  config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-  config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
+  await getShopInfo();
 
   on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
@@ -50,7 +47,7 @@ function getShopInfo() {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(process.env.API_URL, {
+  const client = new graphql.GraphQLClient(process.env.API_URI, {
     headers: {},
   });
 

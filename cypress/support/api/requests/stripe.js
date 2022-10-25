@@ -1,8 +1,8 @@
 import { stripeConfirmationUrl, urlList } from "../../../fixtures/urlList";
 import { getValueWithDefault } from "./utils/Utils";
 
-const stripeAuthBearer = `Bearer ${Cypress.env("STRIPE_SECRET_KEY")}`;
-const stripePublicKey = Cypress.env("STRIPE_PUBLIC_KEY");
+const stripeAuthBearer = `Bearer ${process.env.STRIPE_SECRET_KEY}`;
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY;
 
 export function getPaymentMethodStripeId({
   cardNumber,
