@@ -24,6 +24,9 @@ export const useStyles = makeStyles(
     },
     tableRow: {
       minHeight: "48px",
+      "&::before, &::after": {
+        display: "none",
+      },
     },
     greyText: {
       color: theme.palette.text.hint,

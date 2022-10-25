@@ -9,7 +9,7 @@ export const useStyles = makeStyles(
       color: theme.palette.text.hint,
     },
     noDivider: {
-      "&::after": { display: "none" },
+      "&::after, &::before": { display: "none" },
     },
     right: {
       margin: 0,

@@ -171,7 +171,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                       <Divider />
                       {filteredRates?.map((rate, rateIndex) => (
                         <React.Fragment key={rate.id}>
-                          <ListItem hover={false}>
+                          <ListItem hover={false} className={classes.noDivider}>
                             <ListItemCell>{rate.label}</ListItemCell>
                             <ListItemCell>
                               <TaxInput

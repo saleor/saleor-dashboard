@@ -20,7 +20,7 @@ export const useStyles = makeStyles(
       visiblity: "hidden",
     },
     noDivider: {
-      "&::after": { display: "none" },
+      "&::after, &::before": { display: "none" },
     },
     toolbarMargin: {
       "&:last-child": {

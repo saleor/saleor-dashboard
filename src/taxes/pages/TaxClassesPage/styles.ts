@@ -17,6 +17,11 @@ export const useStyles = makeStyles(
     supportText: {
       color: theme.palette.saleor.main[3],
     },
+    noDivider: {
+      "&::before, &::after": {
+        display: "none",
+      },
+    },
   }),
   { name: "TaxClassesPage" },
 );
