@@ -468,9 +468,15 @@ export type AttributeValueCreateInput = {
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /** Represents the text of the attribute value, plain text without formating. */
+  /**
+   * Represents the text of the attribute value, plain text without formating.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -527,9 +533,15 @@ export type AttributeValueUpdateInput = {
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /** Represents the text of the attribute value, plain text without formating. */
+  /**
+   * Represents the text of the attribute value, plain text without formating.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -596,6 +608,18 @@ export type CategoryInput = {
   backgroundImage?: InputMaybe<Scalars['Upload']>;
   /** Alt text for a product media. */
   backgroundImageAlt?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the category metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the category private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum CategorySortField {
@@ -898,6 +922,18 @@ export type CollectionCreateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
+  /**
+   * Fields required to update the collection metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the collection private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
   products?: InputMaybe<Array<Scalars['ID']>>;
 };
@@ -952,6 +988,18 @@ export type CollectionInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
+  /**
+   * Fields required to update the collection metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the collection private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum CollectionPublished {
@@ -1281,6 +1329,13 @@ export type CountryRateInput = {
   rate: Scalars['Float'];
 };
 
+export type CountryRateUpdateInput = {
+  /** Country in which this rate applies. */
+  countryCode: CountryCode;
+  /** Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate. Provide `null` to remove the particular rate. */
+  rate?: InputMaybe<Scalars['Float']>;
+};
+
 /** An enumeration. */
 export enum CustomerEventsEnum {
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
@@ -1306,6 +1361,12 @@ export type CustomerFilterInput = {
   placedOrders?: InputMaybe<DateRangeInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /**
+   * Filter by ids.
+   *
+   * Added in Saleor 3.8.
+   */
+  ids?: InputMaybe<Array<Scalars['ID']>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
@@ -1351,6 +1412,18 @@ export type DigitalContentInput = {
   urlValidDays?: InputMaybe<Scalars['Int']>;
   /** Overwrite default automatic_fulfillment setting for variant. */
   automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the digital content metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the digital content private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type DigitalContentUploadInput = {
@@ -1362,6 +1435,18 @@ export type DigitalContentUploadInput = {
   urlValidDays?: InputMaybe<Scalars['Int']>;
   /** Overwrite default automatic_fulfillment setting for variant. */
   automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the digital content metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the digital content private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Represents an file in a multipart request. */
   contentFile: Scalars['Upload'];
 };
@@ -1776,12 +1861,18 @@ export type GiftCardSettingsUpdateInput = {
 };
 
 export enum GiftCardSortField {
-  /** Sort orders by product. */
+  /** Sort gift cards by product. */
   PRODUCT = 'PRODUCT',
-  /** Sort orders by used by. */
+  /** Sort gift cards by used by. */
   USED_BY = 'USED_BY',
-  /** Sort orders by current balance. */
-  CURRENT_BALANCE = 'CURRENT_BALANCE'
+  /** Sort gift cards by current balance. */
+  CURRENT_BALANCE = 'CURRENT_BALANCE',
+  /**
+   * Sort gift cards by created at.
+   *
+   * Added in Saleor 3.8.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type GiftCardSortingInput = {
@@ -3356,7 +3447,11 @@ export enum PageSortField {
   SLUG = 'SLUG',
   /** Sort pages by visibility. */
   VISIBILITY = 'VISIBILITY',
-  /** Sort pages by creation date. */
+  /**
+   * Sort pages by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   CREATION_DATE = 'CREATION_DATE',
   /**
    * Sort pages by publication date.
@@ -3369,7 +3464,13 @@ export enum PageSortField {
    *
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
-  PUBLISHED_AT = 'PUBLISHED_AT'
+  PUBLISHED_AT = 'PUBLISHED_AT',
+  /**
+   * Sort pages by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type PageSortingInput = {
@@ -3475,6 +3576,12 @@ export enum PaymentErrorCode {
 }
 
 export type PaymentFilterInput = {
+  /**
+   * Filter by ids.
+   *
+   * Added in Saleor 3.8.
+   */
+  ids?: InputMaybe<Array<Scalars['ID']>>;
   checkouts?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -3763,6 +3870,18 @@ export type ProductCreateInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
   /** Defines the product rating value. */
   rating?: InputMaybe<Scalars['Float']>;
+  /**
+   * Fields required to update the product metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID'];
 };
@@ -3816,6 +3935,30 @@ export type ProductFilterInput = {
   stocks?: InputMaybe<ProductStockFilterInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /**
+   * Filter by the publication date.
+   *
+   * Added in Saleor 3.8.
+   */
+  publishedFrom?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * Filter by availability for purchase.
+   *
+   * Added in Saleor 3.8.
+   */
+  isAvailable?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Filter by the date of availability for purchase.
+   *
+   * Added in Saleor 3.8.
+   */
+  availableFrom?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * Filter by visibility in product listings.
+   *
+   * Added in Saleor 3.8.
+   */
+  isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
   price?: InputMaybe<PriceRangeInput>;
   /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
@@ -3872,6 +4015,18 @@ export type ProductInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
   /** Defines the product rating value. */
   rating?: InputMaybe<Scalars['Float']>;
+  /**
+   * Fields required to update the product metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type ProductMediaCreateInput = {
@@ -3964,7 +4119,13 @@ export enum ProductOrderField {
    */
   COLLECTION = 'COLLECTION',
   /** Sort products by rating. */
-  RATING = 'RATING'
+  RATING = 'RATING',
+  /**
+   * Sort products by creation date.
+   *
+   * Added in Saleor 3.8.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type ProductStockFilterInput = {
@@ -4070,6 +4231,18 @@ export type ProductVariantBulkCreateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
   /** List of prices assigned to channels. */
@@ -4120,6 +4293,18 @@ export type ProductVariantCreateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
   /** Stocks of a product available for sale. */
@@ -4161,6 +4346,18 @@ export type ProductVariantInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum ProductVariantSortField {
@@ -4676,8 +4873,8 @@ export type TaxClassUpdateInput = {
   /** Name of the tax class. */
   name?: InputMaybe<Scalars['String']>;
   /** List of country-specific tax rates to create or update for this tax class. */
-  updateCountryRates?: InputMaybe<Array<CountryRateInput>>;
-  /** List of country codes for which to remove the tax class rates. */
+  updateCountryRates?: InputMaybe<Array<CountryRateUpdateInput>>;
+  /** List of country codes for which to remove the tax class rates. Note: it removes all rates for given country code. */
   removeCountryRates?: InputMaybe<Array<CountryCode>>;
 };
 
@@ -4733,7 +4930,7 @@ export enum TaxCountryConfigurationUpdateErrorCode {
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
   ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED = 'ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED',
-  CANNOT_CREATE_WITH_NULL_RATE = 'CANNOT_CREATE_WITH_NULL_RATE'
+  CANNOT_CREATE_NEGATIVE_RATE = 'CANNOT_CREATE_NEGATIVE_RATE'
 }
 
 /** An enumeration. */
