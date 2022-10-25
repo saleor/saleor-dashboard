@@ -175,6 +175,7 @@ export const variantUpdateMutation = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $name: String!
   ) {
     productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
       errors {
@@ -215,6 +216,7 @@ export const variantUpdateMutation = gql`
         preorder: $preorder
         weight: $weight
         quantityLimitPerCustomer: $quantityLimitPerCustomer
+        name: $name
       }
     ) {
       errors {

@@ -14,7 +14,7 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 const product = productFixture(placeholderImage);
 
 import * as _useNavigator from "@saleor/hooks/useNavigator";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 
@@ -24,7 +24,17 @@ const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
 jest.mock("@saleor/components/RichTextEditor/RichTextEditor");
 jest.mock("@saleor/utils/richText/useRichText");
-jest.mock("@glideapps/glide-data-grid");
+/**
+ * Mocking glide library. We do want to test only if page renders, grid itself has dedicated tests.
+ */
+jest.mock("@glideapps/glide-data-grid", () => {
+  const { forwardRef } = jest.requireActual("react");
+  return {
+    ...jest.requireActual("@glideapps/glide-data-grid"),
+    __esModule: true,
+    default: forwardRef((_: any, ref: any) => <div ref={ref} />),
+  };
+});
 
 (global as any).document.createRange = () => ({
   // eslint-disable-next-line

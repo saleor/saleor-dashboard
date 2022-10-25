@@ -41,6 +41,7 @@ import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/Pr
 import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
+import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
@@ -128,7 +129,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   channelErrors,
   defaultVariantId,
   defaultWeightUnit,
-  errors,
+  errors: apiErrors,
   header,
   loading,
   placeholderImage,
@@ -233,6 +234,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             change,
             data,
             formErrors,
+            validationErrors,
             isSaveDisabled,
             handlers,
             submit,
@@ -244,6 +246,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             const selectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
             );
+
+            const errors = [...apiErrors, ...validationErrors];
 
             return (
               <>
@@ -259,6 +263,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                   </div>
                   <div>
+                    <ProductVariantName
+                      value={data.name}
+                      onChange={change}
+                      disabled={loading}
+                      errors={errors}
+                    />
+                    <CardSpacer />
                     <VariantDetailsChannelsAvailabilityCard
                       variant={variant}
                       onManageClick={toggleManageChannels}

@@ -130,7 +130,7 @@ describe("Orders", () => {
       createOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         variantsList,
         address,
       }).then(order => {
@@ -151,7 +151,7 @@ describe("Orders", () => {
       createFulfilledOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         variantsList,
         address,
         warehouse: warehouse.id,
@@ -190,7 +190,7 @@ describe("Orders", () => {
       createReadyToFulfillOrder({
         customerId: customer.id,
         channelId: defaultChannel.id,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         variantsList,
         address,
       })

@@ -99,10 +99,20 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             <p>
               <FormattedMessage
                 defaultMessage="Third party apps are installed with App Manifests. They contain UI
-              accessible from dashboard and can extend it. Read more here."
-                id="vkY3W9"
+              accessible from dashboard and can extend it."
+                id="MYA6EV"
               />
             </p>
+            {!!appsInProgress?.length && (
+              <>
+                <AppsInProgress
+                  appsList={appsInProgress}
+                  onAppInstallRetry={onAppInstallRetry}
+                  onRemove={onAppInProgressRemove}
+                />
+                <CardSpacer />
+              </>
+            )}
             <InstalledApps
               title={intl.formatMessage({
                 id: "BvmnJq",
@@ -116,17 +126,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             />
 
             <CardSpacer />
-
-            {!!appsInProgress?.length && (
-              <>
-                <CardSpacer />
-                <AppsInProgress
-                  appsList={appsInProgress}
-                  onAppInstallRetry={onAppInstallRetry}
-                  onRemove={onAppInProgressRemove}
-                />
-              </>
-            )}
           </>
         );
       }
@@ -136,8 +135,8 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             <p>
               <FormattedMessage
                 defaultMessage="Local apps are custom webhooks & token pairs that can be used to
-              connect apps and access Saleor API. Read more."
-                id="EqDdoh"
+              connect apps and access Saleor API."
+                id="GDJHXl"
               />
             </p>
             <CustomApps
