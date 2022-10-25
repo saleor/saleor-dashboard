@@ -235,7 +235,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: Triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
-          CYPRESS_grepTags: '${{steps.set-tag-for-tests.outputs.TEST_TAG}}'
+          CYPRESS_grepTags: ${{steps.set-tag-for-tests.outputs.TEST_TAG}}
         with:
           parallel: true
           group: 'UI - Chrome'
