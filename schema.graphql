@@ -1739,11 +1739,15 @@ input AttributeValueCreateInput {
   Represents the text of the attribute value, includes formatting.
   
   Rich text format. For reference see https://editorjs.io/
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
   richText: JSONString
 
   """
   Represents the text of the attribute value, plain text without formating.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
   plainText: String
 
@@ -1947,11 +1951,15 @@ input AttributeValueUpdateInput {
   Represents the text of the attribute value, includes formatting.
   
   Rich text format. For reference see https://editorjs.io/
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
   richText: JSONString
 
   """
   Represents the text of the attribute value, plain text without formating.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
   """
   plainText: String
 
@@ -2379,6 +2387,20 @@ input CategoryInput {
 
   """Alt text for a product media."""
   backgroundImageAlt: String
+
+  """
+  Fields required to update the category metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the category private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 enum CategorySortField {
@@ -3876,6 +3898,20 @@ input CollectionCreateInput {
   """
   publicationDate: Date
 
+  """
+  Fields required to update the collection metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the collection private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
+
   """List of products to be added to the collection."""
   products: [ID!]
 }
@@ -4019,6 +4055,20 @@ input CollectionInput {
   DEPRECATED: this field will be removed in Saleor 4.0.
   """
   publicationDate: Date
+
+  """
+  Fields required to update the collection metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the collection private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 enum CollectionPublished {
@@ -4536,6 +4586,16 @@ input CountryRateInput {
   rate: Float!
 }
 
+input CountryRateUpdateInput {
+  """Country in which this rate applies."""
+  countryCode: CountryCode!
+
+  """
+  Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate. Provide `null` to remove the particular rate.
+  """
+  rate: Float
+}
+
 """Create JWT token."""
 type CreateToken {
   """JWT token, required to authenticate."""
@@ -4682,6 +4742,13 @@ input CustomerFilterInput {
   placedOrders: DateRangeInput
   search: String
   metadata: [MetadataFilter!]
+
+  """
+  Filter by ids. 
+  
+  Added in Saleor 3.8.
+  """
+  ids: [ID!]
   updatedAt: DateTimeRangeInput
 }
 
@@ -4930,6 +4997,20 @@ input DigitalContentInput {
 
   """Overwrite default automatic_fulfillment setting for variant."""
   automaticFulfillment: Boolean
+
+  """
+  Fields required to update the digital content metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the digital content private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -4960,6 +5041,20 @@ input DigitalContentUploadInput {
 
   """Overwrite default automatic_fulfillment setting for variant."""
   automaticFulfillment: Boolean
+
+  """
+  Fields required to update the digital content metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the digital content private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 
   """Represents an file in a multipart request."""
   contentFile: Upload!
@@ -6731,14 +6826,21 @@ input GiftCardSettingsUpdateInput {
 }
 
 enum GiftCardSortField {
-  """Sort orders by product."""
+  """Sort gift cards by product."""
   PRODUCT
 
-  """Sort orders by used by."""
+  """Sort gift cards by used by."""
   USED_BY
 
-  """Sort orders by current balance."""
+  """Sort gift cards by current balance."""
   CURRENT_BALANCE
+
+  """
+  Sort gift cards by created at.
+  
+  Added in Saleor 3.8.
+  """
+  CREATED_AT
 }
 
 input GiftCardSortingInput {
@@ -8045,6 +8147,15 @@ type Manifest {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   webhooks: [AppManifestWebhook!]!
+
+  """
+  The audience that will be included in all JWT tokens for the app.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  audience: String
 }
 
 type Margin {
@@ -9733,7 +9844,14 @@ type Mutation {
   """
   productVariantDelete(
     """ID of a product variant to delete."""
-    id: ID!
+    id: ID
+
+    """
+    SKU of a product variant to delete.
+    
+    Added in Saleor 3.8.
+    """
+    sku: String
   ): ProductVariantDelete
 
   """
@@ -9756,7 +9874,14 @@ type Mutation {
   """
   productVariantBulkDelete(
     """List of product variant IDs to delete."""
-    ids: [ID!]!
+    ids: [ID!]
+
+    """
+    List of product variant SKUs to delete.
+    
+    Added in Saleor 3.8.
+    """
+    skus: [String!]
   ): ProductVariantBulkDelete
 
   """
@@ -9778,8 +9903,13 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantStocksDelete(
+    """SKU of product variant for which stocks will be deleted."""
+    sku: String
+
     """ID of product variant for which stocks will be deleted."""
-    variantId: ID!
+    variantId: ID
+
+    """Input list of warehouse IDs."""
     warehouseIds: [ID!]
   ): ProductVariantStocksDelete
 
@@ -9789,11 +9919,14 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantStocksUpdate(
-    """Input list of stocks to create."""
+    """SKU of product variant for which stocks will be updated."""
+    sku: String
+
+    """Input list of stocks to create or update."""
     stocks: [StockInput!]!
 
-    """ID of a product variant for which stocks will be created."""
-    variantId: ID!
+    """ID of a product variant for which stocks will be updated."""
+    variantId: ID
   ): ProductVariantStocksUpdate
 
   """
@@ -9803,10 +9936,17 @@ type Mutation {
   """
   productVariantUpdate(
     """ID of a product variant to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a product variant."""
     input: ProductVariantInput!
+
+    """
+    SKU of a product variant to update.
+    
+    Added in Saleor 3.8.
+    """
+    sku: String
   ): ProductVariantUpdate
 
   """
@@ -9843,12 +9983,19 @@ type Mutation {
   """
   productVariantChannelListingUpdate(
     """ID of a product variant to update."""
-    id: ID!
+    id: ID
 
     """
     List of fields required to create or upgrade product variant channel listings.
     """
     input: [ProductVariantChannelListingAddInput!]!
+
+    """
+    SKU of a product variant to update.
+    
+    Added in Saleor 3.8.
+    """
+    sku: String
   ): ProductVariantChannelListingUpdate
 
   """
@@ -11324,7 +11471,7 @@ type Mutation {
     checkoutId: ID
 
     """
-    ID of customer to attach to checkout. Can be used to attach customer to checkout by staff or app. Requires IMPERSONATE_USER permission.
+    ID of customer to attach to checkout. Requires IMPERSONATE_USER permission when customerId is different than the logged-in user.
     """
     customerId: ID
 
@@ -12025,6 +12172,15 @@ type Mutation {
 
   """Create JWT token."""
   tokenCreate(
+    """
+    The audience that will be included to JWT tokens with prefix `custom:`.
+    
+    Added in Saleor 3.8.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    audience: String
+
     """Email of a user."""
     email: String!
 
@@ -14462,7 +14618,11 @@ enum PageSortField {
   """Sort pages by visibility."""
   VISIBILITY
 
-  """Sort pages by creation date."""
+  """
+  Sort pages by creation date.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  """
   CREATION_DATE
 
   """
@@ -14478,6 +14638,13 @@ enum PageSortField {
   DEPRECATED: this field will be removed in Saleor 4.0.
   """
   PUBLISHED_AT
+
+  """
+  Sort pages by creation date.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  """
+  CREATED_AT
 }
 
 input PageSortingInput {
@@ -15175,6 +15342,12 @@ enum PaymentErrorCode {
 }
 
 input PaymentFilterInput {
+  """
+  Filter by ids. 
+  
+  Added in Saleor 3.8.
+  """
+  ids: [ID!]
   checkouts: [ID!]
 }
 
@@ -16283,6 +16456,20 @@ input ProductCreateInput {
   """Defines the product rating value."""
   rating: Float
 
+  """
+  Fields required to update the product metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the product private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
+
   """ID of the type that product belongs to."""
   productType: ID!
 }
@@ -16427,6 +16614,34 @@ input ProductFilterInput {
   stocks: ProductStockFilterInput
   search: String
   metadata: [MetadataFilter!]
+
+  """
+  Filter by the publication date. 
+  
+  Added in Saleor 3.8.
+  """
+  publishedFrom: DateTime
+
+  """
+  Filter by availability for purchase. 
+  
+  Added in Saleor 3.8.
+  """
+  isAvailable: Boolean
+
+  """
+  Filter by the date of availability for purchase. 
+  
+  Added in Saleor 3.8.
+  """
+  availableFrom: DateTime
+
+  """
+  Filter by visibility in product listings. 
+  
+  Added in Saleor 3.8.
+  """
+  isVisibleInListing: Boolean
   price: PriceRangeInput
 
   """Filter by the lowest variant price after discounts."""
@@ -16529,6 +16744,20 @@ input ProductInput {
 
   """Defines the product rating value."""
   rating: Float
+
+  """
+  Fields required to update the product metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the product private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """Represents a product media."""
@@ -16726,6 +16955,13 @@ enum ProductOrderField {
 
   """Sort products by rating."""
   RATING
+
+  """
+  Sort products by creation date.
+  
+  Added in Saleor 3.8.
+  """
+  CREATED_AT
 }
 
 """Represents availability of a product in the storefront."""
@@ -17429,6 +17665,20 @@ input ProductVariantBulkCreateInput {
   """
   quantityLimitPerCustomer: Int
 
+  """
+  Fields required to update the product variant metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the product variant private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
+
   """Stocks of a product available for sale."""
   stocks: [StockInput!]
 
@@ -17570,6 +17820,20 @@ input ProductVariantCreateInput {
   """
   quantityLimitPerCustomer: Int
 
+  """
+  Fields required to update the product variant metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the product variant private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
+
   """Product ID of which type is the variant."""
   product: ID!
 
@@ -17685,6 +17949,20 @@ input ProductVariantInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   quantityLimitPerCustomer: Int
+
+  """
+  Fields required to update the product variant metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the product variant private metadata.
+  
+  Added in Saleor 3.8.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -21874,9 +22152,11 @@ input TaxClassUpdateInput {
   """
   List of country-specific tax rates to create or update for this tax class.
   """
-  updateCountryRates: [CountryRateInput!]
+  updateCountryRates: [CountryRateUpdateInput!]
 
-  """List of country codes for which to remove the tax class rates."""
+  """
+  List of country codes for which to remove the tax class rates. Note: it removes all rates for given country code.
+  """
   removeCountryRates: [CountryCode!]
 }
 
@@ -22176,7 +22456,7 @@ enum TaxCountryConfigurationUpdateErrorCode {
   INVALID
   NOT_FOUND
   ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED
-  CANNOT_CREATE_WITH_NULL_RATE
+  CANNOT_CREATE_NEGATIVE_RATE
 }
 
 """
@@ -22970,6 +23250,28 @@ type User implements Node & ObjectWithMetadata {
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): [ID!]
+
+  """
+  Returns checkouts assigned to this user.
+  
+  Added in Saleor 3.8.
+  """
+  checkouts(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """Return the first n elements from the list."""
+    first: Int
+
+    """Return the last n elements from the list."""
+    last: Int
+  ): CheckoutCountableConnection
 
   """List of the user gift cards."""
   giftCards(
