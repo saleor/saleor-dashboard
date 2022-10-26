@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  Divider,
   InputAdornment,
   TextField,
 } from "@material-ui/core";
@@ -26,19 +27,19 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-  makeStyles,
   PageTab,
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
-import clsx from "clsx";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
 import TaxCountriesForm from "./form";
+import { useStyles } from "./styles";
 import TaxCountriesMenu from "./TaxCountriesMenu";
 
 export interface TaxCountriesPageProps {
@@ -51,21 +52,6 @@ export interface TaxCountriesPageProps {
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    inputPadding: {
-      padding: "16px 0 16px 0",
-    },
-    greyText: {
-      color: theme.palette.text.hint,
-    },
-    noDivider: {
-      "&::after": { display: "none" },
-    },
-  }),
-  { name: "TaxCountriesPage" },
-);
 
 export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
   const {
@@ -130,9 +116,15 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
               />
               <Card>
                 <CardTitle
-                  title={intl.formatMessage(taxesMessages.taxClassRatesHeader, {
-                    country: currentCountry?.country?.country,
-                  })}
+                  title={
+                    currentCountry ? (
+                      intl.formatMessage(taxesMessages.taxClassRatesHeader, {
+                        country: currentCountry?.country?.country,
+                      })
+                    ) : (
+                      <Skeleton />
+                    )
+                  }
                 />
                 {countryTaxesData?.length === 0 ? (
                   <CardContent className={classes.greyText}>
@@ -169,39 +161,37 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                               {...taxesMessages.taxNameHeader}
                             />
                           </ListItemCell>
-                          <ListItemCell>
+                          <ListItemCell className={classes.right}>
                             <FormattedMessage
                               {...taxesMessages.taxRateHeader}
                             />
                           </ListItemCell>
                         </ListItem>
                       </ListHeader>
+                      <Divider />
                       {filteredRates?.map((rate, rateIndex) => (
-                        <ListItem
-                          key={rate.id}
-                          hover={false}
-                          className={clsx({
-                            [classes.noDivider]:
-                              rateIndex + 1 === filteredRates.length,
-                          })}
-                        >
-                          <ListItemCell>{rate.label}</ListItemCell>
-                          <ListItemCell>
-                            <TaxInput
-                              placeholder={data[0]?.rate}
-                              value={rate?.value}
-                              change={e =>
-                                handlers.handleRateChange(
-                                  rate.id,
-                                  e.target.value,
-                                )
-                              }
-                            />
-                          </ListItemCell>
-                        </ListItem>
+                        <React.Fragment key={rate.id}>
+                          <ListItem hover={false} className={classes.noDivider}>
+                            <ListItemCell>{rate.label}</ListItemCell>
+                            <ListItemCell>
+                              <TaxInput
+                                placeholder={data[0]?.rate}
+                                value={rate?.value}
+                                change={e =>
+                                  handlers.handleRateChange(
+                                    rate.id,
+                                    e.target.value,
+                                  )
+                                }
+                              />
+                            </ListItemCell>
+                          </ListItem>
+                          {!isLastElement(filteredRates, rateIndex) && (
+                            <Divider />
+                          )}
+                        </React.Fragment>
                       )) ?? <Skeleton />}
                     </List>
-                    <VerticalSpacer spacing={3} />
                   </>
                 )}
               </Card>

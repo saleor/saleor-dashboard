@@ -47,6 +47,7 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
       <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
       <CardContent>
         <SingleAutocompleteSelectField
+          emptyOption
           disabled={disabled}
           displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}

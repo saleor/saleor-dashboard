@@ -192,4 +192,9 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Select the method of tax calculation",
     description: "tax strategy combobox hint",
   },
+  noTaxClasses: {
+    id: "Rfk+8B",
+    defaultMessage: "There are no tax classes",
+    description: "tax classes menu label when there are no tax classes",
+  },
 });

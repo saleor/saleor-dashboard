@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  Divider,
   InputAdornment,
   TextField,
 } from "@material-ui/core";
@@ -33,6 +34,8 @@ import {
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
+import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
+import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -76,6 +79,10 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     [selectedTaxClassId, taxClasses],
   );
 
+  const nameInputRef = useAutofocus(currentTaxClass?.id === "new", [
+    currentTaxClass?.id,
+  ]);
+
   return (
     <TaxClassesForm
       taxClass={currentTaxClass}
@@ -113,112 +120,126 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 onTaxClassDelete={onTaxClassDelete}
                 onCreateNew={onCreateNewButtonClick}
               />
-              <div>
-                <Card>
-                  <CardTitle
-                    title={intl.formatMessage(taxesMessages.generalInformation)}
-                  />
-                  <CardContent>
-                    <TextField
-                      value={data?.name}
-                      onChange={change}
-                      name="name"
-                      variant="outlined"
-                      placeholder={intl.formatMessage(
-                        taxesMessages.taxRateName,
+              {taxClasses?.length !== 0 && (
+                <div>
+                  <Card>
+                    <CardTitle
+                      title={intl.formatMessage(
+                        taxesMessages.generalInformation,
                       )}
-                      fullWidth
-                      inputProps={{ className: classes.namePadding }}
-                      inputRef={input => {
-                        if (input != null && selectedTaxClassId === "new") {
-                          input.focus();
-                        }
-                      }}
                     />
-                  </CardContent>
-                </Card>
-                <VerticalSpacer spacing={3} />
-                <Card>
-                  <CardTitle
-                    title={intl.formatMessage(taxesMessages.taxClassRates)}
-                  />
-                  {currentTaxClass?.countries.length === 0 ? (
-                    <CardContent className={classes.supportText}>
-                      <FormattedMessage
-                        {...taxesMessages.noRatesInTaxClass}
-                        values={{
-                          tab: (
-                            <b>
-                              {intl.formatMessage(
-                                taxesMessages.countriesSection,
-                              )}
-                            </b>
-                          ),
-                        }}
+                    <CardContent>
+                      <TextField
+                        value={data?.name}
+                        onChange={change}
+                        name="name"
+                        variant="outlined"
+                        placeholder={intl.formatMessage(
+                          taxesMessages.taxRateName,
+                        )}
+                        fullWidth
+                        inputProps={{ className: classes.namePadding }}
+                        inputRef={nameInputRef}
                       />
                     </CardContent>
-                  ) : (
-                    <>
-                      <CardContent>
-                        <TextField
-                          value={query}
-                          variant="outlined"
-                          onChange={e => setQuery(e.target.value)}
-                          placeholder={intl.formatMessage(
-                            taxesMessages.searchTaxClasses,
-                          )}
-                          fullWidth
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <SearchIcon />
-                              </InputAdornment>
+                  </Card>
+                  <VerticalSpacer spacing={3} />
+                  <Card>
+                    <CardTitle
+                      title={intl.formatMessage(taxesMessages.taxClassRates)}
+                    />
+                    {currentTaxClass?.countries.length === 0 ? (
+                      <CardContent className={classes.supportText}>
+                        <FormattedMessage
+                          {...taxesMessages.noRatesInTaxClass}
+                          values={{
+                            tab: (
+                              <b>
+                                {intl.formatMessage(
+                                  taxesMessages.countriesSection,
+                                )}
+                              </b>
                             ),
                           }}
-                          inputProps={{ className: classes.searchPadding }}
                         />
                       </CardContent>
-                      <List gridTemplate={["5fr 2fr"]}>
-                        <ListHeader>
-                          <ListItem>
-                            <ListItemCell>
-                              <FormattedMessage
-                                {...taxesMessages.countryNameHeader}
-                              />
-                            </ListItemCell>
-                            <ListItemCell>
-                              <FormattedMessage
-                                {...taxesMessages.taxRateHeader}
-                              />
-                            </ListItemCell>
-                          </ListItem>
-                        </ListHeader>
-                        {filteredRates?.map(countryRate => (
-                          <ListItem key={countryRate.id} hover={false}>
-                            <ListItemCell>{countryRate.label}</ListItemCell>
-                            <ListItemCell>
-                              <TaxInput
-                                value={countryRate.value}
-                                change={e =>
-                                  handlers.handleRateChange(
-                                    countryRate.id,
-                                    e.target.value,
-                                  )
-                                }
-                              />
-                            </ListItemCell>
-                          </ListItem>
-                        )) ?? (
-                          <>
-                            <Skeleton />
-                            <VerticalSpacer />
-                          </>
-                        )}
-                      </List>
-                    </>
-                  )}
-                </Card>
-              </div>
+                    ) : (
+                      <>
+                        <CardContent>
+                          <TextField
+                            value={query}
+                            variant="outlined"
+                            onChange={e => setQuery(e.target.value)}
+                            placeholder={intl.formatMessage(
+                              taxesMessages.searchTaxClasses,
+                            )}
+                            fullWidth
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <SearchIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                            inputProps={{ className: classes.searchPadding }}
+                          />
+                        </CardContent>
+                        <List gridTemplate={["5fr 2fr"]}>
+                          <ListHeader>
+                            <ListItem>
+                              <ListItemCell>
+                                <FormattedMessage
+                                  {...taxesMessages.countryNameHeader}
+                                />
+                              </ListItemCell>
+                              <ListItemCell className={classes.right}>
+                                <FormattedMessage
+                                  {...taxesMessages.taxRateHeader}
+                                />
+                              </ListItemCell>
+                            </ListItem>
+                          </ListHeader>
+                          <Divider />
+                          {filteredRates?.map(
+                            (countryRate, countryRateIndex) => (
+                              <React.Fragment key={countryRate.id}>
+                                <ListItem
+                                  hover={false}
+                                  className={classes.noDivider}
+                                >
+                                  <ListItemCell>
+                                    {countryRate.label}
+                                  </ListItemCell>
+                                  <ListItemCell>
+                                    <TaxInput
+                                      value={countryRate.value}
+                                      change={e =>
+                                        handlers.handleRateChange(
+                                          countryRate.id,
+                                          e.target.value,
+                                        )
+                                      }
+                                    />
+                                  </ListItemCell>
+                                </ListItem>
+                                {!isLastElement(
+                                  filteredRates,
+                                  countryRateIndex,
+                                ) && <Divider />}
+                              </React.Fragment>
+                            ),
+                          ) ?? (
+                            <>
+                              <Skeleton />
+                              <VerticalSpacer />
+                            </>
+                          )}
+                        </List>
+                      </>
+                    )}
+                  </Card>
+                </div>
+              )}
             </Grid>
             <Savebar
               state={savebarState}

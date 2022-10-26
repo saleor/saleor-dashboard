@@ -2,6 +2,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    menu: {
+      height: "fit-content",
+    },
     clickable: {
       cursor: "pointer",
     },
@@ -21,6 +24,9 @@ export const useStyles = makeStyles(
     },
     tableRow: {
       minHeight: "48px",
+      "&::after": {
+        display: "none",
+      },
     },
     greyText: {
       color: theme.palette.text.hint,

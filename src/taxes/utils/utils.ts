@@ -1,6 +1,7 @@
 import {
   CountryFragment,
   TaxClassFragment,
+  TaxCountriesListQuery,
   TaxCountryConfigurationFragment,
 } from "@saleor/graphql";
 import uniqBy from "lodash/uniqBy";
@@ -65,5 +66,40 @@ export const mapUndefinedTaxRatesToCountries = (
     })
     .sort((a, b) => a.country.country.localeCompare(b.country.country));
 
-export const isOnlyTaxClass = (taxClasses: TaxClassFragment[]) =>
-  taxClasses.length === 1;
+export const getCountriesFromCountryConfigurations = (
+  data: TaxCountriesListQuery,
+): CountryFragment[] =>
+  data?.taxCountryConfigurations?.map(config => config.country);
+
+export const mapUndefinedCountriesToTaxClasses = (
+  taxConfigurations: TaxCountryConfigurationFragment[],
+  taxClasses: TaxClassFragment[],
+): TaxClassFragment[] =>
+  taxClasses.map(taxClass => ({
+    ...taxClass,
+    countries: uniqBy(
+      [
+        ...taxClass.countries,
+        ...taxConfigurations.map(({ country }) => ({
+          __typename: "TaxClassCountryRate" as const,
+          rate: undefined,
+          country,
+        })),
+      ],
+      "country.code",
+    ),
+  }));
+
+export const isLastElement = (arr: any[], index: number): boolean =>
+  index === arr.length - 1;
+
+export const excludeExistingCountries = (
+  allCountries: CountryFragment[],
+  existingCountries: TaxCountryConfigurationFragment[],
+): CountryFragment[] =>
+  allCountries.filter(
+    dialogCountry =>
+      !existingCountries?.some(
+        existingCountry => existingCountry.country.code === dialogCountry.code,
+      ),
+  );
