@@ -30,11 +30,18 @@ module.exports = async (on, config) => {
   config.env.SHOP = await getShopInfo(process.env);
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
+  config.env.USER_NAME = process.env.CYPRESS_USER_NAME;
+  config.env.USER_PASSWORD = process.env.CYPRESS_USER_PASSWORD;
+  config.env.SECOND_USER_NAME = process.env.CYPRESS_SECOND_USER_NAME;
+  config.env.PERMISSIONS_USERS_PASSWORD =
+    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
+  config.env.grepTags = process.env.CYPRESS_grepTags;
 
   on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
+
   return config;
 };
 
