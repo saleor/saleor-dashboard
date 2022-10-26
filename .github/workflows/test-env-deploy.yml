@@ -165,7 +165,7 @@ jobs:
 
       - name: echo-tags
         run: |
-          echo ${{steps.get_tags.outputs.result}}
+              echo ${{steps.get_tags.outputs.result}}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -215,7 +215,7 @@ jobs:
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: https://2456-env-vars-handling.dashboard.saleor.rocks/
+          CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
@@ -225,6 +225,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           parallel: true
-          group: "UI - Chrome"
+          group: 'UI - Chrome'
           record: true
           tag: Critical, ${{github.event.action}}

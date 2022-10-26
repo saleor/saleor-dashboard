@@ -115,7 +115,7 @@ jobs:
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_baseUrl: https://2456-env-vars-handling.dashboard.saleor.rocks/
+          CYPRESS_baseUrl: https://${{ steps.set-domain.outputs.domain }}/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}

@@ -42,7 +42,6 @@
     "color-convert": "^2.0.1",
     "crc-32": "^1.2.0",
     "currency-codes": "^2.1.0",
-    "cypress-dotenv": "2.0.0",
     "cypress-mailhog": "^1.3.0",
     "cypress-mochawesome-reporter": "^2.3.0",
     "downshift": "^6.1.7",
