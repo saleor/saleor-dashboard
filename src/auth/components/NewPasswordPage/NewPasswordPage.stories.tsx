@@ -10,10 +10,10 @@ storiesOf("Views / Authentication / Set up a new password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => (
-    <NewPasswordPage errors={[]} disabled={false} onSubmit={() => undefined} />
+    <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />
   ))
   .add("loading", () => (
-    <NewPasswordPage errors={[]} disabled={true} onSubmit={() => undefined} />
+    <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />
   ))
   .add("too short error", () => (
     <NewPasswordPage
@@ -24,7 +24,7 @@ storiesOf("Views / Authentication / Set up a new password", module)
         addressType: null,
         message: null,
       }))}
-      disabled={false}
+      loading={false}
       onSubmit={() => undefined}
     />
   ));

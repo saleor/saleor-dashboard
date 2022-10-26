@@ -1673,6 +1673,9 @@
     "context": "header",
     "string": "Hello there, {userName}"
   },
+  "ByYtFB": {
+    "string": "Invalid or expired token. Please check your token in URL"
+  },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
@@ -7091,6 +7094,9 @@
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
+  },
+  "tR+UuE": {
+    "string": "User doesn't exist. Please check your email in URL"
   },
   "tTtoKd": {
     "context": "error message",
