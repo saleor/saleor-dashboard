@@ -25,7 +25,10 @@ import {
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
-import { mapUndefinedTaxRatesToCountries } from "../utils/utils";
+import {
+  excludeExistingCountries,
+  mapUndefinedTaxRatesToCountries,
+} from "../utils/utils";
 
 interface TaxCountriesListProps {
   id: string | undefined;
@@ -155,13 +158,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({
       {shop?.countries && (
         <TaxCountryDialog
           open={params?.action === "add-country"}
-          countries={shop?.countries.filter(
-            dialogCountry =>
-              !allCountryTaxes?.some(
-                existingCountry =>
-                  existingCountry.country.code === dialogCountry.code,
-              ),
-          )}
+          countries={excludeExistingCountries(shop?.countries, allCountryTaxes)}
           onConfirm={data => {
             closeDialog();
             const taxClassCountryRates = taxClasses.map(taxClass => ({

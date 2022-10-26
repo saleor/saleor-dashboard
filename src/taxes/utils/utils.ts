@@ -92,3 +92,14 @@ export const mapUndefinedCountriesToTaxClasses = (
 
 export const isLastElement = (arr: any[], index: number): boolean =>
   index === arr.length - 1;
+
+export const excludeExistingCountries = (
+  allCountries: CountryFragment[],
+  existingCountries: TaxCountryConfigurationFragment[],
+): CountryFragment[] =>
+  allCountries.filter(
+    dialogCountry =>
+      !existingCountries?.some(
+        existingCountry => existingCountry.country.code === dialogCountry.code,
+      ),
+  );
