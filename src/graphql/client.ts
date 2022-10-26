@@ -1,6 +1,6 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
@@ -8,11 +8,23 @@ import { API_URI } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
-export const link = createUploadLink({
-  credentials: "include",
-  uri: API_URI,
-  fetch: createFetch(),
-});
+const attachVariablesLink = new ApolloLink((operation, forward) =>
+  forward(operation).map(data => ({
+    ...data,
+    extensions: {
+      ...data.extensions,
+      variables: operation.variables,
+    },
+  })),
+);
+
+export const link = attachVariablesLink.concat(
+  createUploadLink({
+    credentials: "include",
+    uri: API_URI,
+    fetch: createFetch(),
+  }),
+);
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
@@ -32,6 +44,25 @@ export const apolloClient = new ApolloClient({
       },
       Shop: {
         keyFields: [],
+      },
+      AttributeValue: {
+        fields: {
+          /**
+           * Since, API sometimes creates an empty slug,
+           * We need to handle that case also on front-end,
+           * so after fix that problem in the API, the UI will ablle
+           * to handle it.
+           *
+           * If the slug is empty, use the name
+           */
+          slug: (givenSlug, { readField }) => {
+            if (!givenSlug) {
+              return readField("name");
+            }
+
+            return givenSlug;
+          },
+        },
       },
     } as TypedTypePolicies,
   }),

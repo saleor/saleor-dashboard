@@ -41,7 +41,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
   const intl = useIntl();
   const loaded = React.useRef(false);
   const [expanded, setExpanded] = React.useState(true);
-  const classes = useStyles({});
+  const classes = useStyles();
 
   useEffect(() => {
     if (data !== undefined) {

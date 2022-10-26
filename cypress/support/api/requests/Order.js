@@ -38,30 +38,26 @@ export function addProductToOrder(orderId, variantId, quantity = 1) {
       quantity:${quantity}
       variantId: "${variantId}"
     }){
+      order{
+        shippingMethods{
+          id
+          name
+        }
+      }
       errors{
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderLinesCreate");
 }
 
-export function createDraftOrder({
-  customerId,
-  shippingMethodId,
-  channelId,
-  address,
-}) {
+export function createDraftOrder({ customerId, channelId, address }) {
   const user = getValueWithDefault(customerId, `user:"${customerId}"`);
-  const shippingMethod = getValueWithDefault(
-    shippingMethodId,
-    `shippingMethod:"${shippingMethodId}"`,
-  );
 
   const mutation = `mutation{
     draftOrderCreate(input:{
       ${user}
-      ${shippingMethod}
       channelId: "${channelId}"
       ${getDefaultAddress(address, "shippingAddress")}
       ${getDefaultAddress(address, "billingAddress")}
@@ -72,7 +68,15 @@ export function createDraftOrder({
       order{
         id
         number
-        token
+        id
+        shippingMethods{
+          id
+          name
+        }
+        paymentStatus
+        totalBalance{
+          amount
+        }
       }
     }
   }`;
@@ -166,4 +170,21 @@ export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
   }
 }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.orderFulfill");
+}
+
+export function addShippingMethod(orderId, shippingMethodId) {
+  const mutation = `mutation{
+    orderUpdateShipping(order:"${orderId}", input:{
+      shippingMethod:"${shippingMethodId}"
+    }){
+      order{
+        id
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderUpdateShipping");
 }

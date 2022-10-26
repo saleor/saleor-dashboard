@@ -79,7 +79,6 @@ export const productListUrl = (params?: ProductListUrlQueryParams): string =>
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog =
   | "remove"
-  | "remove-variants"
   | "assign-attribute-value"
   | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction &

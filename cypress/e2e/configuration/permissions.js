@@ -19,7 +19,6 @@ import {
 } from "../../support/api/requests/PermissionGroup.js";
 import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembers";
 import { deletePermissionGroupsStartsWith } from "../../support/api/utils/permissionGroupUtils.js";
-import filterTests from "../../support/filterTests.js";
 
 describe("Permissions groups", () => {
   const startsWith = "CyPermissions-";

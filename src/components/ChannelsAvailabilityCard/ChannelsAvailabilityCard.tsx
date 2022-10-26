@@ -22,6 +22,7 @@ export interface ChannelsAvailability
     "children" | "selectedChannelsCount"
   > {
   channels: ChannelData[];
+  /** Channels that have no settings */
   channelsList: ChannelList[];
   errors?: ChannelsAvailabilityError[];
   disabled?: boolean;
@@ -71,9 +72,9 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
 
             return (
               <ChannelAvailabilityItemWrapper
-                key={data.id}
-                messages={channelsMessages[data.id]}
+                messages={messages}
                 data={data}
+                key={data.id}
               >
                 <ChannelAvailabilityItemContent
                   data={data}

@@ -36,7 +36,7 @@ export function getMailActivationLinkForUser(email, i = 0) {
         .should("not.eq", undefined)
         .mhGetBody()
         .then(body => {
-          const urlRegex = /\[([^\]]*)\]/;
+          const urlRegex = /\[\w*password\w*\]\(([^\)]*)/;
           const bodyWithoutWhiteSpaces = body.replace(/(\r\n|\n|\r|\s)/gm, "");
           return urlRegex.exec(bodyWithoutWhiteSpaces)[1];
         });
@@ -65,7 +65,7 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
               .should("not.eq", undefined)
               .mhGetBody()
               .then(body => {
-                const urlRegex = /\[([^\]]*)\]/;
+                const urlRegex = /\[\w*password\w*\]\(([^\)]*)/;
                 const bodyWithoutWhiteSpaces = body.replace(
                   /(\r\n|\n|\r|\s)/gm,
                   "",

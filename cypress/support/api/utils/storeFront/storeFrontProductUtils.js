@@ -25,6 +25,7 @@ export const getProductVariants = (productId, channelSlug) => {
       id: element.id,
       name: element.name,
       price: element.pricing.price.gross.amount,
+      currency: element.pricing.price.gross.currency,
     }));
   });
 };

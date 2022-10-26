@@ -3,12 +3,10 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@saleor/attributes/utils/data";
-import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
   VariantAttributeScope,
 } from "@saleor/components/Attributes";
-import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   ProductDetailsVariantFragment,
@@ -26,7 +24,7 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
+import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 export interface Collection {
   id: string;
@@ -171,19 +169,6 @@ export function getStockInputFromVariant(
   );
 }
 
-export function getStockInputFromProduct(
-  product: ProductFragment,
-): ProductStockInput[] {
-  return product?.variants[0]?.stocks.map(stock => ({
-    data: {
-      quantityAllocated: stock?.quantityAllocated,
-    },
-    id: stock.warehouse.id,
-    label: stock.warehouse.name,
-    value: stock.quantity.toString(),
-  }));
-}
-
 export function getCollectionInput(
   productCollections: ProductFragment["collections"],
 ): Collection[] {
@@ -208,42 +193,13 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
   );
 }
 
-export interface ProductUpdatePageFormData extends MetadataFormData {
-  category: string | null;
-  changeTaxCode: boolean;
-  channelsWithVariants: ChannelsWithVariantsData;
-  channelListings: ChannelData[];
-  channelsData: ChannelData[];
-  chargeTaxes: boolean;
-  collections: string[];
-  isAvailable: boolean;
-  name: string;
-  slug: string;
-  rating: number;
-  seoDescription: string;
-  seoTitle: string;
-  sku: string;
-  taxCode: string;
-  trackInventory: boolean;
-  weight: string;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
-}
-
 export function getProductUpdatePageFormData(
   product: ProductFragment,
   variants: ProductDetailsVariantFragment[],
-  currentChannels: ChannelData[],
-  channelsData: ChannelData[],
-  channelsWithVariants: ChannelsWithVariantsData,
-): ProductUpdatePageFormData {
+): ProductUpdateFormData {
   const variant = product?.variants[0];
+
   return {
-    channelsWithVariants,
-    channelsData,
     category: maybe(() => product.category.id, ""),
     changeTaxCode: !!product?.taxType.taxCode,
     chargeTaxes: maybe(() => product.chargeTaxes, false),
@@ -251,7 +207,6 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       [],
     ),
-    channelListings: currentChannels.map(listing => ({ ...listing })),
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
