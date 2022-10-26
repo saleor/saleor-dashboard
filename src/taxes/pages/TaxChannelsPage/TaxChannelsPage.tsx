@@ -145,12 +145,13 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
-          const input = {
+          const input: TaxConfigurationPerCountryFragment = {
+            __typename: "TaxConfigurationPerCountry",
             country,
             chargeTaxes: data.chargeTaxes,
             displayGrossPrices: data.displayGrossPrices,
             taxCalculationStrategy: data.taxCalculationStrategy,
-          } as TaxConfigurationPerCountryFragment;
+          };
           const currentExceptions = data.updateCountriesConfiguration;
           triggerChange();
           set({
