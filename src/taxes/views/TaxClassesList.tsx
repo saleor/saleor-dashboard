@@ -6,6 +6,7 @@ import {
   useTaxClassDeleteMutation,
   useTaxClassesListQuery,
   useTaxClassUpdateMutation,
+  useTaxCountriesListQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -18,6 +19,7 @@ import { taxesMessages } from "../messages";
 import TaxClassesPage from "../pages/TaxClassesPage";
 import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
+import { mapUndefinedCountriesToTaxClasses } from "../utils/utils";
 
 interface TaxClassesListProps {
   id: string | undefined;
@@ -123,17 +125,32 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
   const { data, refetch } = useTaxClassesListQuery({
     variables: { first: 100 },
   });
+  const { data: countryRatesData } = useTaxCountriesListQuery();
 
   const taxClasses = React.useMemo(() => {
-    if (!data?.taxClasses) {
+    if (
+      data?.taxClasses === undefined ||
+      countryRatesData?.taxCountryConfigurations === undefined
+    ) {
       return undefined;
     }
-    const apiTaxClasses = mapEdgesToItems(data.taxClasses);
-    if (isNewTaxClass) {
-      return [newTaxClass, ...apiTaxClasses];
-    }
-    return apiTaxClasses;
-  }, [data?.taxClasses, isNewTaxClass, newTaxClass]);
+
+    const apiTaxClasses = mapEdgesToItems(data?.taxClasses);
+    const connectedTaxClasses = isNewTaxClass
+      ? [newTaxClass, ...apiTaxClasses]
+      : apiTaxClasses;
+
+    const taxClasses = mapUndefinedCountriesToTaxClasses(
+      countryRatesData.taxCountryConfigurations,
+      connectedTaxClasses,
+    );
+    return taxClasses;
+  }, [
+    countryRatesData?.taxCountryConfigurations,
+    data?.taxClasses,
+    isNewTaxClass,
+    newTaxClass,
+  ]);
 
   const savebarState =
     id === "new"

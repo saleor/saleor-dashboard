@@ -11,31 +11,31 @@ import {
   taxCountriesListPath,
   TaxesUrlQueryParams,
 } from "./urls";
-import ChannelsListComponent from "./views/ChannelsList";
-import CountriesListComponent from "./views/CountriesList";
+import TaxChannelsListComponent from "./views/TaxChannelsList";
 import TaxClassesListComponent from "./views/TaxClassesList";
+import TaxCountriesListComponent from "./views/TaxCountriesList";
 
-const ChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
+const TaxChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
   location,
 }) => {
   const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
 
   return (
-    <ChannelsListComponent
+    <TaxChannelsListComponent
       id={decodeURIComponent(match.params.id)}
       params={qs}
     />
   );
 };
 
-const CountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
+const TaxCountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
 }) => {
   const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
 
   return (
-    <CountriesListComponent
+    <TaxCountriesListComponent
       id={decodeURIComponent(match.params.id)}
       params={qs}
     />
@@ -55,11 +55,14 @@ const Component = () => {
       <Switch>
         <Route
           path={taxConfigurationListPath(":id")}
-          component={ChannelsList}
+          component={TaxChannelsList}
         />
-        <Route path={taxConfigurationListPath()} component={ChannelsList} />
-        <Route path={taxCountriesListPath(":id")} component={CountriesList} />
-        <Route path={taxCountriesListPath()} component={CountriesList} />
+        <Route path={taxConfigurationListPath()} component={TaxChannelsList} />
+        <Route
+          path={taxCountriesListPath(":id")}
+          component={TaxCountriesList}
+        />
+        <Route path={taxCountriesListPath()} component={TaxCountriesList} />
         <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />
         <Route path={taxClassesListUrl()} component={TaxClassesList} />
       </Switch>
