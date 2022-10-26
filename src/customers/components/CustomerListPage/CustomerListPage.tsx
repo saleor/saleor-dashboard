@@ -95,7 +95,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
           extensionMenuItems.length > 0 && (
             <CardMenu
               className={classes.settings}
-              menuItems={[...extensionMenuItems]}
+              menuItems={extensionMenuItems}
             />
           )
         }
