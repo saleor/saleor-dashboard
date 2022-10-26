@@ -35,9 +35,11 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: "index.html",
   hash: true,
   template: "./src/index.html",
+  templateParameters: {
+    API_URI: process.env.API_URI,
+  },
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
-  API_URI: "",
   MARKETPLACE_URL: "",
   SALEOR_APPS_ENDPOINT: "",
   APP_MOUNT_URI: "/",
