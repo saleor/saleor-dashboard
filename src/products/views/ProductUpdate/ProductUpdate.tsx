@@ -319,7 +319,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         placeholderImage={placeholderImg}
         product={product}
         warehouses={warehouses}
-        taxClasses={taxClasses}
+        taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         variants={product?.variants}
         onDelete={() => openModal("remove")}
