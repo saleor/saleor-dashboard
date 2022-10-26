@@ -1,4 +1,4 @@
-import { API_URI } from "@saleor/config";
+import { getApiUri } from "@saleor/config";
 import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
@@ -16,7 +16,7 @@ function renderAuthProvider() {
   };
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
-    apiUrl: API_URI,
+    apiUrl: getApiUri(),
     channel: "",
   });
   const wrapper = ({ children }) => (
