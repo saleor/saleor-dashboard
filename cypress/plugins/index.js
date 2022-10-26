@@ -25,7 +25,11 @@ module.exports = async (on, config) => {
 
   require("dotenv").config();
 
-  await getShopInfo();
+  config.env.API_URI = process.env.API_URI;
+  config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
+  config.env.SHOP = await getShopInfo(process.env);
+  config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+  config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
 
   on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
@@ -34,7 +38,7 @@ module.exports = async (on, config) => {
   return config;
 };
 
-function getShopInfo() {
+function getShopInfo(envVariables) {
   const createTokenMutation = graphql.gql`mutation tokenCreate($email: String!, $password: String!){
     tokenCreate(email:$email, password:$password){
       token
@@ -47,14 +51,14 @@ function getShopInfo() {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(process.env.API_URI, {
+  const client = new graphql.GraphQLClient(envVariables.API_URI, {
     headers: {},
   });
 
   return client
     .request(createTokenMutation, {
-      email: process.env.CYPRESS_USER_NAME,
-      password: process.env.CYPRESS_USER_PASSWORD,
+      email: envVariables.CYPRESS_USER_NAME,
+      password: envVariables.CYPRESS_USER_PASSWORD,
     })
     .then(data => {
       const token = data.tokenCreate.token;
