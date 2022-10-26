@@ -54,10 +54,12 @@ describe("As a staff user I want to change shop default weight unit", () => {
       });
   });
 
-  it(
+  xit(
     "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
-    { tags: ["@shipping", "@allEnv", "@stable"] },
+    { tags: ["@shipping", "@allEnv"] },
     () => {
+      // Enable this test after fixing SALEOR-4898
+
       const rateName = `${startsWith}${faker.datatype.number()}`;
       const minWeightInKg = 1;
       const maxWeightInKg = 10;
