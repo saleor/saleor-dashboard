@@ -35,9 +35,13 @@ export const TaxInput: React.FC<TaxInputProps> = ({
       },
     });
   };
-  const handleKeyDown: TextFieldProps["onKeyDown"] = e => {
-    if (e.key === "e" || e.key === "E" || e.key === "-") {
-      e.preventDefault();
+  const handleKeyDown: TextFieldProps["onKeyDown"] = event => {
+    switch (event.key.toLowerCase()) {
+      case "e":
+      case "-": {
+        event.preventDefault();
+        break;
+      }
     }
   };
 
