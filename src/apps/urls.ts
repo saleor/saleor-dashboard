@@ -21,7 +21,10 @@ export type AppListUrlQueryParams = ActiveTab &
 
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
+  productIds?: string[];
   orderId?: string;
+  customerId?: string;
+  customerIds?: string[];
 }
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
@@ -113,3 +116,16 @@ export const customAppAddUrl = customAppAddPath;
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
+
+export const appIframeUrl = (
+  appId: string,
+  appUrl: string,
+  shopDomainHost: string,
+  params: AppDetailsUrlQueryParams,
+) => {
+  const iframeContextQueryString = `?${stringifyQs(
+    { domain: shopDomainHost, id: appId, ...params },
+    "comma",
+  )}`;
+  return urlJoin(appUrl, window.location.search, iframeContextQueryString);
+};

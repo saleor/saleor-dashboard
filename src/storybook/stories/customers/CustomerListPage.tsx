@@ -26,6 +26,7 @@ const props: CustomerListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   customers: customerList,
+  selectedCustomerIds: ["123"],
   filterOpts: {
     joined: {
       active: false,
