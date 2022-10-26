@@ -34,6 +34,7 @@ import {
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
+import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
 import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -78,12 +79,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     [selectedTaxClassId, taxClasses],
   );
 
-  const nameInputRef = React.useRef(null);
-  React.useEffect(() => {
-    if (currentTaxClass?.id === "new") {
-      nameInputRef.current.focus();
-    }
-  }, [currentTaxClass?.id]);
+  const nameInputRef = useAutofocus(currentTaxClass?.id === "new", [
+    currentTaxClass?.id,
+  ]);
 
   return (
     <TaxClassesForm
