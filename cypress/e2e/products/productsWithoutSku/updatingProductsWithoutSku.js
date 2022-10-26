@@ -3,14 +3,10 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import {
-  productDetailsUrl,
-  productVariantDetailUrl,
-} from "../../../fixtures/urlList";
+import { productVariantDetailUrl } from "../../../fixtures/urlList";
 import {
   createVariant,
   getVariant,
@@ -115,49 +111,6 @@ describe("Updating products without sku", () => {
   });
 
   it(
-    "should add sku to simple product",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      const sku = "NewSkuSimpleProd";
-      const simpleProductName = `${startsWith}${faker.datatype.number()}`;
-      let simpleProduct;
-      createProductInChannelWithoutVariants({
-        name: simpleProductName,
-        attributeId: attribute.id,
-        categoryId: category.id,
-        channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id,
-      })
-        .then(productResp => {
-          simpleProduct = productResp;
-          createVariant({
-            productId: simpleProduct.id,
-            channelId: defaultChannel.id,
-            warehouseId: warehouse.id,
-            quantityInWarehouse: 10,
-          });
-        })
-        .then(variantsList => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id),
-          )
-            .get(SHARED_ELEMENTS.skeleton)
-            .should("not.exist")
-            .get(PRODUCT_DETAILS.skuInput)
-            .type(sku)
-            .addAliasToGraphRequest("SimpleProductUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@SimpleProductUpdate");
-          getVariant(variantsList[0].id, defaultChannel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.sku).to.eq(sku);
-        });
-    },
-  );
-
-  it(
     "should add sku to variant",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
@@ -220,50 +173,6 @@ describe("Updating products without sku", () => {
             .click()
             .waitForRequestAndCheckIfNoErrors("@VariantUpdate");
           getVariant(variant.id, defaultChannel.slug);
-        })
-        .then(variantResp => {
-          expect(variantResp.sku).to.be.null;
-          checkIfCheckoutForVariantCanBeCompleted(variantResp);
-        });
-    },
-  );
-
-  it(
-    "should remove sku from simple product",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      const simpleProductName = `${startsWith}${faker.datatype.number()}`;
-      let simpleProduct;
-      createProductInChannelWithoutVariants({
-        name: simpleProductName,
-        attributeId: attribute.id,
-        categoryId: category.id,
-        channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id,
-      })
-        .then(productResp => {
-          simpleProduct = productResp;
-          createVariant({
-            productId: simpleProduct.id,
-            channelId: defaultChannel.id,
-            sku: simpleProductName,
-            quantityInWarehouse: 10,
-            warehouseId: warehouse.id,
-          });
-        })
-        .then(variantsList => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productDetailsUrl(simpleProduct.id),
-          )
-            .get(SHARED_ELEMENTS.skeleton)
-            .should("not.exist")
-            .get(PRODUCT_DETAILS.skuInput)
-            .clear()
-            .addAliasToGraphRequest("SimpleProductUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@SimpleProductUpdate");
-          getVariant(variantsList[0].id, defaultChannel.slug);
         })
         .then(variantResp => {
           expect(variantResp.sku).to.be.null;
