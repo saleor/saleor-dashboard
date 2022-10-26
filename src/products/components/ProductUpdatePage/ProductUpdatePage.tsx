@@ -363,6 +363,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   )}
                   <CardSpacer />
                   <ProductVariants
+                    productName={product?.name}
                     errors={variantListErrors}
                     channels={listings}
                     limits={limits}

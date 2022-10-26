@@ -41,6 +41,11 @@ const messages = defineMessages({
     id: "1WbTJ5",
     description: "product variants, title",
   },
+  fullScreenTitle: {
+    defaultMessage: "Variants for: {name}",
+    id: "64aQXZ",
+    description: "product variants, full-screen title",
+  },
 });
 
 export default messages;

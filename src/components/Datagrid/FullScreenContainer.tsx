@@ -1,12 +1,8 @@
 import { useTheme } from "@saleor/macaw-ui";
-import React, {
-  CSSProperties,
-  FC,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from "react";
+import React, { CSSProperties, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
+
+import { useDelayedState } from "./useDelayedState";
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -59,21 +55,8 @@ interface FullScreenContainerProps {
 }
 
 const Portal = ({ className, children, open }) => {
-  const {
-    transitions: { duration },
-  } = useTheme();
-  const [delayedOpen, setDelayeedOpen] = useState(open);
-  const styles = useAnimationStyles(open, duration.standard);
-
-  useEffect(() => {
-    const delay = open ? 0 : duration.standard;
-    const timeout = setTimeout(() => {
-      setDelayeedOpen(open);
-    }, delay);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [open]);
+  const { delayedState: delayedOpen, duration } = useDelayedState(open);
+  const styles = useAnimationStyles(open, duration);
 
   return ReactDOM.createPortal(
     <div className={className} style={styles}>

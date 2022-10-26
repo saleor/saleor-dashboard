@@ -1,9 +1,14 @@
 import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
 import { useEffect, useState } from "react";
 
+import { useDelayedState } from "./useDelayedState";
+
 export const useFullScreenMode = () => {
-  const { enable, disable } = usePreventHistoryBack(document.body, false);
+  const { enable, disable } = usePreventHistoryBack(document.body, {
+    defaultEnabled: false,
+  });
   const [open, setOpen] = useState(false);
+  const { delayedState: delayedOpen } = useDelayedState(!open);
   const togglePreventHistory = open ? disable : enable;
 
   const toggle = () => {
@@ -17,6 +22,7 @@ export const useFullScreenMode = () => {
 
   return {
     isOpen: open,
+    isAnimationOpenFinished: !delayedOpen,
     toggle,
   };
 };

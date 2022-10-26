@@ -1,7 +1,7 @@
 import FullScreenIcon from "@saleor/icons/FullScreenIcon";
 import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
-import React from "react";
+import React, { FC, PropsWithChildren } from "react";
 
 import CardTitle from "../CardTitle";
 
@@ -10,7 +10,7 @@ const useStyles = makeStyles(
     btnContainer: {
       display: "flex",
       flexDirection: "row-reverse",
-      gap: "10px",
+      gap: theme.spacing(1),
     },
     headerBtn: {
       marginBottom: theme.spacing(2),
@@ -26,7 +26,16 @@ const useStyles = makeStyles(
   { name: "Datagrid" },
 );
 
-const ButtonFullScreen = ({ isOpen, onToggle, children }) => {
+interface ButtonFullScreenProps {
+  isOpen: boolean;
+  onToggle: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
+  isOpen,
+  onToggle,
+  children,
+}) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +55,14 @@ const ButtonFullScreen = ({ isOpen, onToggle, children }) => {
   );
 };
 
-const ButtonAddRow = ({ onAddRow, children }) => {
+interface ButtonAddRowProps {
+  onAddRow: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
+  onAddRow,
+  children,
+}) => {
   const classes = useStyles();
 
   return (
@@ -62,7 +78,16 @@ const ButtonAddRow = ({ onAddRow, children }) => {
   );
 };
 
-const Header = ({ title, children }) => {
+interface HeaderProps {
+  title: string;
+}
+
+interface GridHeader extends FC<PropsWithChildren<HeaderProps>> {
+  ButtonFullScreen: typeof ButtonFullScreen;
+  ButtonAddRow: typeof ButtonAddRow;
+}
+
+const Header: GridHeader = ({ title, children }) => {
   const classes = useStyles();
 
   return (

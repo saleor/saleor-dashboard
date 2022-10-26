@@ -29,7 +29,7 @@ import useDatagridChange, {
   OnDatagridChange,
 } from "./useDatagridChange";
 import { useFullScreenMode } from "./useFullScreenMode";
-import { usePortal } from "./usePortal";
+import { usePortalClasses } from "./usePortalClasses";
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
@@ -51,6 +51,7 @@ export interface DatagridProps {
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
   title: string;
+  fullScreenTitle?: string;
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
@@ -68,6 +69,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rows,
   selectionActions,
   title,
+  fullScreenTitle,
   onChange,
 }): React.ReactElement => {
   const classes = useStyles();
@@ -75,9 +77,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme();
   const editor = React.useRef<DataEditorRef>();
 
-  const { isOpen, toggle } = useFullScreenMode();
+  const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
 
-  usePortal({ className: classes.portal });
+  usePortalClasses({ className: classes.portal });
 
   const {
     availableColumnsChoices,
@@ -198,6 +200,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const rowsTotal = rows - removed.length + added.length;
   const hasColumnGroups = columns.some(col => col.group);
+  const headerTitle = isAnimationOpenFinished
+    ? fullScreenTitle ?? title
+    : title;
 
   return (
     <FullScreenContainer
@@ -205,7 +210,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       className={fullScreenClasses.fullScreenContainer}
     >
       <Card className={classes.root}>
-        <Header title={title}>
+        <Header title={headerTitle}>
           <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
             {isOpen ? (
               <FormattedMessage

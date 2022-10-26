@@ -10,9 +10,9 @@ import React, { useRef } from "react";
 
 export const usePreventHistoryBack = (
   scroller: HTMLElement,
-  defaultEnabled: boolean = true,
+  options?: { defaultEnabled?: boolean },
 ) => {
-  const enabled = useRef(defaultEnabled);
+  const enabled = useRef(options?.defaultEnabled ?? true);
   const offsetY = useRef(0);
 
   const wheelHandler = evt => {
