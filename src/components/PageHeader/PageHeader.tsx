@@ -79,7 +79,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
         underline={underline}
         title={
           <>
-            <Typography className={classes.title} variant="h5">
+            <Typography className={classes.title} variant="h3">
               {title !== undefined ? (
                 title
               ) : (
