@@ -421,12 +421,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   />
                   <CardSpacer />
                   <ProductTaxes
-                  value={data.taxClassId}
-                  disabled={disabled}
-                  onChange={handlers.selectTaxClass}
-                  taxClassDisplayName={selectedTaxClass}
-                  taxClasses={taxClasses}
-                  onFetchMore={fetchMoreTaxClasses}
+                    value={data.taxClassId}
+                    disabled={disabled}
+                    onChange={handlers.selectTaxClass}
+                    taxClassDisplayName={selectedTaxClass}
+                    taxClasses={taxClasses}
+                    onFetchMore={fetchMoreTaxClasses}
                   />
                 </div>
               </Grid>
