@@ -3,7 +3,6 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -54,7 +53,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
   return (
     <ResponsiveTable>
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCell className={classes.wideColumn}>
             <FormattedMessage
               id="X6PF8z"
@@ -68,12 +67,12 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
               defaultMessage="Completed Translations"
             />
           </TableCell>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext colSpan={2} disabled={disabled} />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -106,14 +105,14 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
             </TableRowLink>
           ),
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={2}>
                 <FormattedMessage
                   id="vcwrgW"
                   defaultMessage="No translatable entities found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

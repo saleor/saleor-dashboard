@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import {
   CollectionListUrlSortField,
   collectionUrl,
@@ -146,13 +146,13 @@ const CollectionList: React.FC<CollectionListProps> = props => {
         </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -211,14 +211,14 @@ const CollectionList: React.FC<CollectionListProps> = props => {
             );
           },
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="Yw+9F7"
                   defaultMessage="No collections found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

@@ -6,11 +6,11 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { MetadataInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
@@ -122,7 +122,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               ) : (
                 <Table className={classes.table}>
                   <TableHead>
-                    <TableRow>
+                    <TableRowLink>
                       <TableCell className={classes.colNameHeader}>
                         <FormattedMessage
                           id="nudPsY"
@@ -144,11 +144,11 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                           description="table action"
                         />
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   </TableHead>
                   <TableBody>
                     {data.map((field, fieldIndex) => (
-                      <TableRow data-test-id="field" key={fieldIndex}>
+                      <TableRowLink data-test-id="field" key={fieldIndex}>
                         <TableCell className={classes.colName}>
                           <TextField
                             InputProps={{
@@ -192,7 +192,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                             <DeleteIcon />
                           </IconButton>
                         </TableCell>
-                      </TableRow>
+                      </TableRowLink>
                     ))}
                   </TableBody>
                 </Table>

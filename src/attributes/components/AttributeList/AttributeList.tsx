@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import {
   AttributeListUrlSortField,
   attributeUrl,
@@ -168,9 +168,9 @@ const AttributeList: React.FC<AttributeListProps> = ({
         </TableCellHeader>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext colSpan={numberOfColumns} />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -242,14 +242,14 @@ const AttributeList: React.FC<AttributeListProps> = ({
             );
           },
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="ztQgD8"
                   defaultMessage="No attributes found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

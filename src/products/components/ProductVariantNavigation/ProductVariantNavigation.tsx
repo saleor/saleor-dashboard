@@ -1,4 +1,4 @@
-import { Card, TableCell, TableRow } from "@material-ui/core";
+import { Card, TableCell } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -8,6 +8,7 @@ import {
   SortableTableRow,
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery,
@@ -94,7 +95,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             );
           })}
           {!isCreate ? (
-            <TableRow className={classes.rowNew}>
+            <TableRowLink className={classes.rowNew}>
               <TableCell colSpan={3}>
                 <Button
                   href={productVariantAddUrl(productId)}
@@ -103,9 +104,9 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                   <FormattedMessage {...messages.addVariant} />
                 </Button>
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ) : (
-            <TableRow>
+            <TableRowLink>
               <TableCellAvatar
                 alignRight
                 className={classNames(
@@ -122,7 +123,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
               <TableCell className={classes.colName}>
                 <FormattedMessage {...messages.newVariant} />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           )}
         </SortableTableBody>
       </ResponsiveTable>

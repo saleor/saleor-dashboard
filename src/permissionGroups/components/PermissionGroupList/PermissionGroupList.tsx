@@ -3,7 +3,6 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -71,7 +70,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
   return (
     <ResponsiveTable>
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCellHeader
             direction={
               sort.sort === PermissionGroupListUrlSortField.name
@@ -94,15 +93,15 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
           <TableCell className={classes.colActionsHeader}>
             <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
           </TableCell>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             disabled={disabled}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -158,14 +157,14 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
             </TableRowLink>
           ),
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="CXn88q"
                   defaultMessage="No permission groups found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

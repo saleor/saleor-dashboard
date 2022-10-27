@@ -6,7 +6,6 @@ import {
   DialogTitle,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -14,6 +13,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SearchProductsQuery } from "@saleor/graphql";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -133,7 +133,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                 productChoices,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
-                    <TableRow>
+                    <TableRowLink>
                       <TableCell
                         padding="checkbox"
                         className={classes.productCheckboxCell}
@@ -161,10 +161,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                       <TableCell className={classes.colName} colSpan={2}>
                         {maybe(() => product.name)}
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                     {maybe(() => product.variants, []).map(
                       (variant, variantIndex) => (
-                        <TableRow
+                        <TableRowLink
                           key={variant.id}
                           data-test-id="assign-variant-table-row"
                         >
@@ -206,7 +206,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                               <Money money={variant.channelListings[0].price} />
                             )}
                           </TableCell>
-                        </TableRow>
+                        </TableRowLink>
                       ),
                     )}
                   </React.Fragment>

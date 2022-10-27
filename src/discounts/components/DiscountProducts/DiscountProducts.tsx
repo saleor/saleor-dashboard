@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
@@ -97,9 +91,9 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           <TableCell className={classes.colActions} />
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePaginationWithContext colSpan={numberOfColumns} />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <TableBody>
           {renderCollection(
@@ -164,11 +158,11 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage {...messages.discountProductsNotFound} />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>
