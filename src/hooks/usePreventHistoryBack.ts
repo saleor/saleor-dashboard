@@ -8,10 +8,18 @@ import React, { useRef } from "react";
  * https://caniuse.com/css-overscroll-behavior
  */
 
-export const usePreventHistoryBack = (scroller: HTMLDivElement) => {
+export const usePreventHistoryBack = (
+  scroller: HTMLElement,
+  options?: { defaultEnabled?: boolean },
+) => {
+  const enabled = useRef(options?.defaultEnabled ?? true);
   const offsetY = useRef(0);
 
   const wheelHandler = evt => {
+    if (!enabled.current) {
+      return;
+    }
+
     const notVertival = Math.abs(evt.deltaX) - Math.abs(evt.deltaY) >= 0;
 
     if (evt.target.scrollLeft <= 0 && evt.deltaX <= 0 && notVertival) {
@@ -32,4 +40,14 @@ export const usePreventHistoryBack = (scroller: HTMLDivElement) => {
       scroller.removeEventListener("wheel", wheelHandler);
     };
   }, [scroller]);
+
+  const enable = () => {
+    enabled.current = true;
+  };
+
+  const disable = () => {
+    enabled.current = false;
+  };
+
+  return { enable, disable };
 };
