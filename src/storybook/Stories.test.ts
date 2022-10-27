@@ -5,10 +5,13 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { configure, render } from "enzyme";
 import toJSON from "enzyme-to-json";
 import { mockRandomForEach } from "jest-mock-random";
-import React from "react";
+import React, { ReactPortal } from "react";
+import ReactDOM from "react-dom";
 
 // Fixes useLayoutEffect warnings
 React.useLayoutEffect = React.useEffect;
+
+ReactDOM.createPortal = node => node as ReactPortal;
 
 configure({ adapter: new Adapter() });
 

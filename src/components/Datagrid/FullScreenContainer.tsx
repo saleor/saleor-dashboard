@@ -4,7 +4,8 @@ import ReactDOM from "react-dom";
 
 import { useDelayedState } from "./useDelayedState";
 
-const modalRoot = document.getElementById("modal-root");
+const modalRoot =
+  document.getElementById("modal-root") || document.createElement("div");
 
 const useEase = (duration: number) => {
   const { transitions } = useTheme();
