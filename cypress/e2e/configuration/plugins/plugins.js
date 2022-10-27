@@ -12,6 +12,7 @@ import {
   deleteCustomersStartsWith,
   requestPasswordReset,
 } from "../../../support/api/requests/Customer";
+import { activatePlugin } from "../../../support/api/requests/Plugins";
 import {
   deleteChannelsStartsWith,
   getDefaultChannel,
@@ -31,7 +32,14 @@ describe("As an admin I want to manage plugins", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteCustomersStartsWith(startsWith);
     deleteChannelsStartsWith(startsWith);
-    getDefaultChannel().then(channel => (defaultChannel = channel));
+    getDefaultChannel().then(channel => {
+      defaultChannel = channel;
+      activatePlugin({ id: "mirumee.notifications.admin_email" });
+      activatePlugin({
+        id: "mirumee.notifications.user_email",
+        channel: channel.id,
+      });
+    });
   });
 
   beforeEach(() => {
