@@ -22,12 +22,12 @@ export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
   });
   const taxClasses = mapEdgesToItems(data?.taxClasses);
   const fetchMoreTaxClasses = {
-    hasMore: data?.taxClasses.pageInfo?.hasNextPage,
+    hasMore: data?.taxClasses?.pageInfo?.hasNextPage,
     loading,
     onFetchMore: () => {
       fetchMore({
         variables: {
-          after: data?.taxClasses.pageInfo?.endCursor,
+          after: data?.taxClasses?.pageInfo?.endCursor,
         },
       });
     },
