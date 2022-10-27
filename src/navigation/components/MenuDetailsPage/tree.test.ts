@@ -1,10 +1,10 @@
-import { MenuDetailsFragment, MenuDetailsQuery } from "@saleor/graphql";
+import { RecursiveMenuItem } from "@saleor/navigation/types";
 
 import { menu } from "../../fixtures";
 import { TreeOperation } from "../MenuItems";
 import { computeRelativeTree } from "./tree";
 
-const relativeOutput: Array<MenuDetailsQuery["menu"]["items"]> = [
+const relativeOutput: RecursiveMenuItem[][] = [
   // no moves
   [
     {
@@ -1152,10 +1152,7 @@ const testTable: TreeOperation[][] = [
 ];
 
 // Readability FTW
-function innerTreeToString(
-  tree: MenuDetailsFragment["items"][0],
-  level: number,
-): string {
+function innerTreeToString(tree: RecursiveMenuItem, level: number): string {
   return (
     "\n" +
     "··".repeat(level) +
@@ -1166,7 +1163,7 @@ function innerTreeToString(
     )
   );
 }
-function treeToString(tree: MenuDetailsFragment["items"]): string {
+function treeToString(tree: RecursiveMenuItem[]): string {
   return tree.reduce((acc, node) => acc + innerTreeToString(node, 0), "");
 }
 
