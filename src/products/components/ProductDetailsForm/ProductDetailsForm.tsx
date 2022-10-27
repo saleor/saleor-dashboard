@@ -40,6 +40,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   } = useRichTextContext();
 
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
+
   return (
     <Card>
       <CardTitle

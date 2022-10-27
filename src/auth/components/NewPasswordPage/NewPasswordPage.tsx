@@ -15,7 +15,7 @@ export interface NewPasswordPageFormData {
   confirmPassword: string;
 }
 export interface NewPasswordPageProps {
-  disabled: boolean;
+  loading: boolean;
   errors: SetPasswordData["errors"];
   onSubmit: (data: NewPasswordPageFormData) => SubmitPromise;
 }
@@ -26,14 +26,10 @@ const initialForm: NewPasswordPageFormData = {
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
-  const { disabled, errors, onSubmit } = props;
+  const { loading, errors, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const error = getAccountErrorMessage(
-    errors.find(err => err.field === "password"),
-    intl,
-  );
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
@@ -50,7 +46,14 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 description="page title"
               />
             </Typography>
-            {!!error && <div className={classes.panel}>{error}</div>}
+            {errors.map(error => (
+              <div
+                className={classes.panel}
+                key={`${error.code}-${error.field}`}
+              >
+                {getAccountErrorMessage(error, intl)}
+              </div>
+            ))}
             <Typography variant="caption" color="textSecondary">
               <FormattedMessage
                 id="m0Dz+2"
@@ -62,7 +65,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoFocus
               fullWidth
               autoComplete="none"
-              disabled={disabled}
+              disabled={loading}
               label={intl.formatMessage({
                 id: "Ev6SEF",
                 defaultMessage: "New Password",
@@ -74,13 +77,14 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               inputProps={{
                 "data-test-id": "password",
               }}
+              required
             />
             <FormSpacer />
             <TextField
               fullWidth
               error={passwordError}
               autoComplete="none"
-              disabled={disabled}
+              disabled={loading}
               label={intl.formatMessage({
                 id: "vfG+nh",
                 defaultMessage: "Confirm Password",
@@ -99,12 +103,13 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               inputProps={{
                 "data-test-id": "confirm-password",
               }}
+              required
             />
             <FormSpacer />
             <Button
               data-test="button-bar-confirm"
               className={classes.submit}
-              disabled={(passwordError && data.password.length > 0) || disabled}
+              disabled={loading || data.password.length === 0 || passwordError}
               variant="primary"
               onClick={handleSubmit}
               type="submit"

@@ -24,7 +24,11 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
-import { getById } from "../utils";
+import {
+  getById,
+  getQuantityDataFromItems,
+  getReplacementDataFromItems,
+} from "../utils";
 import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
@@ -180,14 +184,18 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 variant,
               } = line;
               const isValueError = false;
-              const isRefunded = itemsQuantities.find(getById(id)).data
-                .isRefunded;
+              const { isRefunded, currentQuantity } = getQuantityDataFromItems(
+                itemsQuantities,
+                id,
+              );
+              const { isSelected } = getReplacementDataFromItems(
+                itemsSelections,
+                id,
+              );
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
               const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
-              const isSelected = itemsSelections.find(getById(id))?.value;
-              const currentQuantity = itemsQuantities.find(getById(id))?.value;
               const anyLineWithoutVariant = lines.some(
                 ({ variant }) => !variant,
               );

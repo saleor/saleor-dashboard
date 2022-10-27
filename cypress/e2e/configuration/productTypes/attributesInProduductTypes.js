@@ -7,27 +7,21 @@ import { PRODUCT_TYPE_DETAILS } from "../../../elements/productTypes/productType
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { productTypeDetailsUrl } from "../../../fixtures/urlList";
 import { createAttribute } from "../../../support/api/requests/Attribute";
-import { createCategory } from "../../../support/api/requests/Category";
 import {
   assignAttribute,
   createTypeProduct,
   getProductType,
 } from "../../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage attributes in product types", () => {
   const startsWith = "attrProdType";
-  let category;
-  let channel;
   let attribute;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
-    createCategory({ name: startsWith }).then(resp => (category = resp));
-    getDefaultChannel().then(resp => (channel = resp));
   });
 
   beforeEach(() => {
@@ -48,7 +42,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
@@ -76,7 +70,7 @@ describe("As an admin I want to manage attributes in product types", () => {
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
-            .assignElements(startsWith, false, true)
+            .assignElements(startsWith)
             .confirmationMessageShouldAppear()
             .wait("@AssignProductAttribute");
           getProductType(productType.id);

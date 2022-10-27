@@ -6,7 +6,7 @@ import { ThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
 import { render } from "react-dom";
-import ErrorBoundary from "react-error-boundary";
+import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -30,6 +30,7 @@ import useAppChannel, {
   AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
+import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
@@ -126,6 +127,7 @@ const Routes: React.FC = () => {
 
   return (
     <>
+      <style>{`#portal { position: fixed; top: 0; }`}</style>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
@@ -142,6 +144,12 @@ const Routes: React.FC = () => {
                 type: "displayError",
               });
             }}
+            fallbackRender={({ resetErrorBoundary }) => (
+              <ErrorPage
+                onBack={resetErrorBoundary}
+                onRefresh={() => window.location.reload()}
+              />
+            )}
           >
             <Switch>
               <SectionRoute exact path="/" component={HomePage} />

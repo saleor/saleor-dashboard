@@ -1,11 +1,14 @@
-import { getAppDeepPathFromDashboardUrl } from "@saleor/apps/urls";
+import {
+  AppDetailsUrlQueryParams,
+  appIframeUrl,
+  getAppDeepPathFromDashboardUrl,
+} from "@saleor/apps/urls";
 import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router";
-import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
@@ -16,6 +19,7 @@ interface Props {
   appToken: string;
   appId: string;
   className?: string;
+  params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
   onLoad?(): void;
   onError?(): void;
@@ -28,6 +32,7 @@ export const AppFrame: React.FC<Props> = ({
   appToken,
   appId,
   className,
+  params = {},
   onLoad,
   onError,
   refetch,
@@ -97,11 +102,7 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={urlJoin(
-        src,
-        window.location.search,
-        `?domain=${shop.domain.host}&id=${appId}&locale=${locale}`,
-      )}
+      src={appIframeUrl(appId, src, shop.domain.host, params)}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
