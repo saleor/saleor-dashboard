@@ -39,6 +39,8 @@ export const useStyles = makeStyles(
     actions: {
       gap: theme.spacing(1),
       display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "right",
     },
   }),
   { name: "OrderPayment" },
