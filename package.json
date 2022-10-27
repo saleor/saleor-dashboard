@@ -219,7 +219,8 @@
     "resetMocks": false,
     "setupFiles": [
       "jest-canvas-mock",
-      "jest-localstorage-mock"
+      "jest-localstorage-mock",
+      "<rootDir>/testUtils/setup.ts"
     ],
     "transform": {
       "^.+\\.(jsx?|tsx?)$": "babel-jest",

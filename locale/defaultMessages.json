@@ -764,6 +764,10 @@
     "context": "voucher discount",
     "string": "Specific products"
   },
+  "483Xnh": {
+    "context": "open full-screen",
+    "string": "Open"
+  },
   "4B32Ba": {
     "context": "delete page",
     "string": "Are you sure you want to delete {title}?"
@@ -1006,6 +1010,10 @@
   "62Ywh2": {
     "context": "number of countries",
     "string": "{number} Countries"
+  },
+  "64aQXZ": {
+    "context": "product variants, full-screen title",
+    "string": "Variants for: {name}"
   },
   "64aYF0": {
     "context": "informations about product organization, header",
@@ -3667,6 +3675,10 @@
   "Qj/3sH": {
     "context": "limit voucher",
     "string": "Limit number of times this discount can be used in total"
+  },
+  "QjPJ78": {
+    "context": "close full-screen",
+    "string": "Close"
   },
   "QkFeOa": {
     "context": "order refund amount button",
