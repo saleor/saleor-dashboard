@@ -1011,6 +1011,10 @@
     "context": "number of countries",
     "string": "{number} Countries"
   },
+  "64aQXZ": {
+    "context": "product variants, full-screen title",
+    "string": "Variants for: {name}"
+  },
   "64aYF0": {
     "context": "informations about product organization, header",
     "string": "Product Organization"
