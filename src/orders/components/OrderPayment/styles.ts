@@ -37,9 +37,8 @@ export const useStyles = makeStyles(
       color: theme.palette.success.dark,
     },
     actions: {
-      "& > *:not(:last-child)": {
-        marginRight: theme.spacing(2),
-      },
+      gap: theme.spacing(1),
+      display: "flex",
     },
   }),
   { name: "OrderPayment" },
