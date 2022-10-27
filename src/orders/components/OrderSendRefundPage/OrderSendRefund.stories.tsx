@@ -4,15 +4,20 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { order as getOrder, prepareMoney } from "../../fixtures";
-import OrderSendRefund from "./OrderSendRefund";
+import OrderSendRefund, { OrderSendRefundPageProps } from "./OrderSendRefund";
 
 const order = getOrder(placeholderImage);
 
+const props: OrderSendRefundPageProps = {
+  order,
+};
+
 storiesOf("Views / Orders / Send refund order", module)
   .addDecorator(Decorator)
-  .add("settled", () => <OrderSendRefund order={order} />)
+  .add("settled", () => <OrderSendRefund {...props} />)
   .add("unsettled", () => (
     <OrderSendRefund
+      {...props}
       order={{
         ...order,
         totalGrantedRefund: prepareMoney(10),

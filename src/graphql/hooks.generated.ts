@@ -9450,6 +9450,50 @@ export function useOrderGrantRefundEditMutation(baseOptions?: ApolloReactHooks.M
 export type OrderGrantRefundEditMutationHookResult = ReturnType<typeof useOrderGrantRefundEditMutation>;
 export type OrderGrantRefundEditMutationResult = Apollo.MutationResult<Types.OrderGrantRefundEditMutation>;
 export type OrderGrantRefundEditMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
+export const OrderSendRefundDocument = gql`
+    mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
+  transactionRequestAction(
+    actionType: REFUND
+    amount: $amount
+    id: $transactionId
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionRequestActionError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionRequestActionErrorFragmentDoc}`;
+export type OrderSendRefundMutationFn = Apollo.MutationFunction<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+
+/**
+ * __useOrderSendRefundMutation__
+ *
+ * To run a mutation, you first call `useOrderSendRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderSendRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderSendRefundMutation, { data, loading, error }] = useOrderSendRefundMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>(OrderSendRefundDocument, options);
+      }
+export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
+export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
+export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(

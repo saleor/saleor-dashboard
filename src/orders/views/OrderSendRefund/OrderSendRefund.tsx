@@ -7,14 +7,14 @@ interface OrderSendRefund {
 }
 
 const OrderSendRefund: React.FC<OrderSendRefund> = ({ orderId }) => {
-  const { data, loading } = useOrderDetailsQuery({
+  const { data } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
     },
   });
 
-  return <OrderSendRefundPage order={data?.order} loading={loading} />;
+  return <OrderSendRefundPage order={data?.order} />;
 };
 
 export default OrderSendRefund;

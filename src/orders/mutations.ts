@@ -540,3 +540,20 @@ export const orderGrantRefundEditMutation = gql`
     }
   }
 `;
+
+export const orderSendRefundMutation = gql`
+  mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
+    transactionRequestAction(
+      actionType: REFUND
+      amount: $amount
+      id: $transactionId
+    ) {
+      transaction {
+        ...TransactionItem
+      }
+      errors {
+        ...TransactionRequestActionError
+      }
+    }
+  }
+`;

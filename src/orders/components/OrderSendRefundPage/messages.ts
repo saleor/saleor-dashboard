@@ -61,6 +61,11 @@ export const refundPageMessages = defineMessages({
     id: "fkgack",
     description: "button, sends refund for transaction",
   },
+  refundAmount: {
+    defaultMessage: "Refund amount",
+    id: "ng0ZDW",
+    description: "label, input for amount to refund in transaction",
+  },
 });
 
 export const dataLineMessages = defineMessages({

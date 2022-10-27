@@ -1,10 +1,11 @@
 import { Card, CardContent, Container } from "@material-ui/core";
+import { Backlink } from "@saleor/components/Backlink";
 import CardTitle from "@saleor/components/CardTitle";
 import { Grid } from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderDetailsFragment } from "@saleor/graphql";
-import { Backlink } from "@saleor/macaw-ui";
+import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -28,7 +29,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({ order }) => {
 
   return (
     <Container>
-      <Backlink>
+      <Backlink href={orderUrl(order.id)}>
         {order?.number ? (
           <FormattedMessage
             {...refundPageMessages.backlink}
@@ -46,7 +47,11 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({ order }) => {
       <Grid>
         <div>
           {order?.transactions.map(transaction => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
+            <TransactionCard
+              key={transaction.id}
+              transaction={transaction}
+              orderId={order.id}
+            />
           ))}
           <div>Manual refund</div>
         </div>
