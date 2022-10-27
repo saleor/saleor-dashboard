@@ -95,8 +95,8 @@ describe("Test for metadata", () => {
       createDraftOrder({ channelId: channel.id })
         .then(orderResp => {
           order = orderResp;
-          updateMetadata(order.token, metadata.key, metadata.value);
-          updatePrivateMetadata(order.token, metadata.key, metadata.value);
+          updateMetadata(order.id, metadata.key, metadata.value);
+          updatePrivateMetadata(order.id, metadata.key, metadata.value);
         })
         .then(() => {
           getOrder(order.id);
