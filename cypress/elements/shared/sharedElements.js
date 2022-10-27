@@ -24,6 +24,9 @@ export const SHARED_ELEMENTS = {
   },
   warningDialog: '[data-test-id="warning-dialog"]',
   pageHeader: "[data-test-id='page-header']",
+  multiAutocomplete: {
+    selectedOptions: '[id*="selected-option-"]',
+  },
 };
 
 export const selectorWithDataValue = value => `[data-value="${value}"]`;
