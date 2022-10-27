@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.8.0-dev",
+  "version": "3.9.0a0-simple-taxes",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
