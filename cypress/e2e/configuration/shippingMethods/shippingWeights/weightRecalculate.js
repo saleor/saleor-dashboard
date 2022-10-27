@@ -54,7 +54,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
       });
   });
 
-  xit(
+  it.skip(
     "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
     { tags: ["@shipping", "@allEnv"] },
     () => {
