@@ -7784,6 +7784,7 @@ export type VariantUpdateMutationVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
 }>;
 
 

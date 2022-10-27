@@ -37,6 +37,14 @@ const messages = defineMessages({
     id: "TDhHMi",
     defaultMessage: "This needs to be unique",
   },
+  invalidToken: {
+    id: "ByYtFB",
+    defaultMessage: "Invalid or expired token. Please check your token in URL",
+  },
+  userNotFound: {
+    id: "tR+UuE",
+    defaultMessage: "User doesn't exist. Please check your email in URL",
+  },
 });
 
 interface ErrorFragment {
@@ -62,6 +70,10 @@ function getAccountErrorMessage(err: ErrorFragment, intl: IntlShape): string {
         return intl.formatMessage(messages.tooSimilar);
       case AccountErrorCode.UNIQUE:
         return intl.formatMessage(messages.unique);
+      case AccountErrorCode.INVALID:
+        return intl.formatMessage(messages.invalidToken);
+      case AccountErrorCode.NOT_FOUND:
+        return intl.formatMessage(messages.userNotFound);
     }
   }
 

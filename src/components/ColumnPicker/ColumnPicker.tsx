@@ -26,7 +26,7 @@ export interface ColumnPickerProps
   defaultColumns: string[];
   initialColumns: Choice[];
   initialOpen?: boolean;
-  IconButtonProps?: IconButtonProps;
+  IconButtonProps?: Omit<IconButtonProps, "ref">;
   query: string;
   onSave: (columns: string[]) => void;
 }

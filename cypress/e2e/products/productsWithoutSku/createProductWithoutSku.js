@@ -9,10 +9,6 @@ import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-ch
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import {
-  createProduct,
-  updateChannelInProduct,
-} from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import {
   deleteChannelsStartsWith,
@@ -22,10 +18,7 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import {
-  createFirstVariant,
-  createVariant,
-} from "../../../support/pages/catalog/products/VariantsPage";
+import { createVariant } from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
@@ -97,51 +90,6 @@ describe("Creating variants", () => {
       ONE_PERMISSION_USERS.product,
     );
   });
-
-  xit(
-    "should create variant without sku by variant creator",
-    { tags: ["@products", "@allEnv"] },
-    () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const price = 10;
-      let createdProduct;
-
-      createProduct({
-        attributeId: attribute.id,
-        name,
-        productTypeId: productType.id,
-        categoryId: category.id,
-      })
-        .then(resp => {
-          createdProduct = resp;
-          updateChannelInProduct({
-            productId: createdProduct.id,
-            channelId: defaultChannel.id,
-          });
-          cy.visit(`${urlList.products}${createdProduct.id}`);
-          cy.waitForProgressBarToNotBeVisible();
-          createVariant({
-            price,
-            attributeName: attributeValues[0],
-          });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
-          expect(variant).to.have.property("price", price);
-          createWaitingForCaptureOrder({
-            channelSlug: defaultChannel.slug,
-            email: "example@example.com",
-            variantsList: [variant],
-            shippingMethodName: shippingMethod.name,
-            address,
-          });
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
-    },
-  );
 
   xit(
     "should create variant without sku",

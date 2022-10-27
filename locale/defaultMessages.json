@@ -97,6 +97,9 @@
     "context": "dialog header",
     "string": "Change Password"
   },
+  "+niGip": {
+    "string": "Saleor Apps"
+  },
   "+pLi+M": {
     "context": "issued by app label",
     "string": "Issued by app"
@@ -1674,6 +1677,9 @@
     "context": "header",
     "string": "Hello there, {userName}"
   },
+  "ByYtFB": {
+    "string": "Invalid or expired token. Please check your token in URL"
+  },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
@@ -2081,6 +2087,9 @@
     "context": "dialog content",
     "string": "Select method you want to use to change address"
   },
+  "FLtdaw": {
+    "string": "Saleor apps are hosted and maintained by Saleor Team. They are preinstalled for you and ready to use"
+  },
   "FNAZoh": {
     "string": "Last login"
   },
@@ -2240,6 +2249,9 @@
   "GD/bom": {
     "context": "label",
     "string": "Min Delivery Time"
+  },
+  "GDJHXl": {
+    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
   "GFJabu": {
     "context": "dialog header",
@@ -2649,6 +2661,9 @@
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
+  },
+  "J8frvS": {
+    "string": "3rd party apps"
   },
   "JDz5h8": {
     "context": "number of subcategories in category",
@@ -3074,6 +3089,9 @@
     "context": "remove country from shipping zone and save, button",
     "string": "Remove and save"
   },
+  "MYA6EV": {
+    "string": "Third party apps are installed with App Manifests. They contain UI accessible from dashboard and can extend it."
+  },
   "MbZHXE": {
     "context": "column title balance",
     "string": "Balance"
@@ -3442,6 +3460,10 @@
     "context": "attribute list",
     "string": "Attribute {number}"
   },
+  "PbQJY5": {
+    "context": "section header",
+    "string": "Saleor Apps"
+  },
   "PbqNhi": {
     "context": "order status",
     "string": "Partially fulfilled"
@@ -3631,6 +3653,9 @@
   "QdGzUf": {
     "context": "number of collections",
     "string": "Collections ({quantity})"
+  },
+  "QdQ9z7": {
+    "string": "(TUNNEL - DEVELOPMENT)"
   },
   "Qe4XHv": {
     "context": "years after label",
@@ -4160,6 +4185,9 @@
   "UvD+xp": {
     "context": "attribute values",
     "string": "Value {number}"
+  },
+  "UxTSw7": {
+    "string": "Webhooks & Events"
   },
   "UxdBmI": {
     "context": "collection availability",
@@ -7074,6 +7102,9 @@
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
+  },
+  "tR+UuE": {
+    "string": "User doesn't exist. Please check your email in URL"
   },
   "tTtoKd": {
     "context": "error message",

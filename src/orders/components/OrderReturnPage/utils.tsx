@@ -1,7 +1,11 @@
 import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
 import { Node } from "@saleor/types";
 
-import { LineItemOptions } from "./form";
+import {
+  FormsetQuantityData,
+  FormsetReplacementData,
+  LineItemOptions,
+} from "./form";
 
 const fulfiledStatuses = [
   FulfillmentStatus.FULFILLED,
@@ -132,4 +136,40 @@ export function getByType<TType, TObject extends { type: TType }>(
   typeToCompare: TType,
 ) {
   return (obj: TObject) => obj.type === typeToCompare;
+}
+
+export function getQuantityDataFromItems(
+  itemsQuantities: FormsetQuantityData,
+  id: string,
+) {
+  const quantityData = itemsQuantities.find(getById(id));
+
+  if (!quantityData) {
+    return {
+      isRefunded: false,
+      currentQuantity: 0,
+    };
+  }
+
+  return {
+    isRefunded: quantityData.data.isRefunded,
+    currentQuantity: quantityData.value,
+  };
+}
+
+export function getReplacementDataFromItems(
+  itemsSelections: FormsetReplacementData,
+  id: string,
+) {
+  const replacementData = itemsSelections.find(getById(id));
+
+  if (!replacementData) {
+    return {
+      isSelected: false,
+    };
+  }
+
+  return {
+    isSelected: replacementData.value,
+  };
 }

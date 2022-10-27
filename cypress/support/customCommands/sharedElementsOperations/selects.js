@@ -19,7 +19,9 @@ Cypress.Commands.add("fillMultiSelect", (selectSelector, option) => {
   cy.fillAutocompleteSelect(selectSelector, option).then(returnedOption => {
     cy.get(SHARED_ELEMENTS.header)
       .first()
-      .click({ force: true });
+      .click({ force: true })
+      .get(SHARED_ELEMENTS.multiAutocomplete.selectedOptions)
+      .should("be.visible");
     return cy.wrap(returnedOption);
   });
 });
@@ -38,9 +40,17 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
     .get(BUTTON_SELECTORS.selectOption)
     .should("be.visible");
   if (option) {
-    cy.get(selectSelector).clearAndType(option);
-    cy.contains(BUTTON_SELECTORS.selectOption, option).click();
-    cy.wrap(option).as("option");
+    cy.get(BUTTON_SELECTORS.selectOption)
+      .first()
+      .then(detachedOption => {
+        cy.get(selectSelector).clear();
+        cy.get(selectSelector).type(option);
+        cy.wrap(detachedOption).should(det => {
+          Cypress.dom.isDetached(det);
+        });
+        cy.contains(BUTTON_SELECTORS.selectOption, option).click();
+        cy.wrap(option).as("option");
+      });
   } else {
     cy.get(BUTTON_SELECTORS.selectOption)
       .wait(1000)

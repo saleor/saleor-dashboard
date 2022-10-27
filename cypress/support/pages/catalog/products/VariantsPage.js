@@ -200,3 +200,12 @@ export function saveVariant(waitForAlias = "VariantCreate") {
     .click()
     .waitForRequestAndCheckIfNoErrors(`@${waitForAlias}`);
 }
+
+export function selectChannelsForVariant() {
+  cy.get(VARIANTS_SELECTORS.manageChannels)
+    .click()
+    .get(VARIANTS_SELECTORS.allChannels)
+    .check()
+    .get(BUTTON_SELECTORS.submit)
+    .click();
+}
