@@ -23,13 +23,13 @@ const graphql = require("graphql-request");
 module.exports = async (on, config) => {
   // make env variables visible for cypress
   // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
-  config.env.API_URI = process.env.API_URI;
+  config.env.API_URL = process.env.API_URL;
   config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
   config.env.SHOP = await getShopInfo(process.env);
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
 
-  on("before:browser:launch", (browser = {}, launchOptions) => {
+  on("before:browser:launch", ({}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
@@ -55,7 +55,7 @@ function getShopInfo(envVariables) {
     }
   }`;
 
-  const client = new graphql.GraphQLClient(envVariables.API_URI, {
+  const client = new graphql.GraphQLClient(envVariables.API_URL, {
     headers: {},
   });
   return client.request(createTokenMutation, variables).then(data => {

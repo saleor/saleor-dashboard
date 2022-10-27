@@ -126,7 +126,7 @@ jobs:
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          API_URL: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
@@ -222,7 +222,7 @@ jobs:
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{ needs.get-environment-variables.outputs.url }}graphql/
+          API_URL: ${{ needs.get-environment-variables.outputs.url }}graphql/
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ needs.get-environment-variables.outputs.url }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}

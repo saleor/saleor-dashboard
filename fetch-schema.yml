@@ -1,4 +1,4 @@
-schema: ${API_URI}
+schema: ${API_URL}
 generates:
   ./introspection.json:
     plugins:
