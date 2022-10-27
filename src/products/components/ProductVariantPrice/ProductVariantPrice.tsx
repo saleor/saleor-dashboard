@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import {
@@ -16,6 +15,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductChannelListingErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -130,7 +130,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
       </CardContent>
       <ResponsiveTable className={classes.table}>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell>
               <FormattedMessage
                 id="c8UT0c"
@@ -152,7 +152,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                 description="tabel column header"
               />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -168,7 +168,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               );
 
               return (
-                <TableRow key={listing?.id || `skeleton-${index}`}>
+                <TableRowLink key={listing?.id || `skeleton-${index}`}>
                   <TableCell>{listing?.name || <Skeleton />}</TableCell>
                   <TableCell className={classes.colPrice}>
                     {listing ? (
@@ -230,18 +230,18 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                       <Skeleton />
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="/glQgs"
                     defaultMessage="No channels found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

@@ -10,7 +10,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -25,6 +24,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
 import PreviewPill from "@saleor/components/PreviewPill";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@saleor/graphql";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
@@ -245,7 +245,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               <col className={classes.colQuantity} />
             </colgroup>
             <TableHead>
-              <TableRow>
+              <TableRowLink>
                 <TableCell className={classes.colName}>
                   <FormattedMessage {...messages.warehouseName} />
                 </TableCell>
@@ -256,7 +256,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   <FormattedMessage {...messages.quantity} />
                 </TableCell>
                 <TableCell className={classes.colAction} />
-              </TableRow>
+              </TableRowLink>
             </TableHead>
             <TableBody>
               {renderCollection(stocks, (stock, index) => {
@@ -265,7 +265,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 );
 
                 return (
-                  <TableRow key={stock.id}>
+                  <TableRowLink key={stock.id}>
                     <TableCell className={classes.colName}>
                       {stock.label}
                     </TableCell>
@@ -299,12 +299,12 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
-                  </TableRow>
+                  </TableRowLink>
                 );
               })}
               {warehousesToAssign.length > 0 && (
                 <ClickAwayListener onClickAway={() => setExpansionState(false)}>
-                  <TableRow
+                  <TableRowLink
                     className={classes.addRow}
                     onClick={() => setExpansionState(!isExpanded)}
                   >
@@ -354,7 +354,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         </Popper>
                       </div>
                     </TableCell>
-                  </TableRow>
+                  </TableRowLink>
                 </ClickAwayListener>
               )}
             </TableBody>
@@ -446,7 +446,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             <col className={classes.colThreshold} />
           </colgroup>
           <TableHead>
-            <TableRow>
+            <TableRowLink>
               <TableCell className={classes.colName}>
                 <FormattedMessage {...sectionNames.channels} />
               </TableCell>
@@ -456,7 +456,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               <TableCell className={classes.colThreshold}>
                 <FormattedMessage {...messages.channelTreshold} />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           </TableHead>
           <TableBody>
             {renderCollection(productVariantChannelListings, listing => {
@@ -465,7 +465,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               }
 
               return (
-                <TableRow key={listing.id}>
+                <TableRowLink key={listing.id}>
                   <TableCell className={classes.colName}>
                     {listing.name}
                   </TableCell>
@@ -498,7 +498,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       value={listing?.preorderThreshold ?? ""}
                     />
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             })}
           </TableBody>

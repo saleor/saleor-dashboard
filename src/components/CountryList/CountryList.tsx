@@ -1,9 +1,10 @@
-import { Card, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { Card, TableBody, TableCell } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -107,7 +108,7 @@ const CountryList: React.FC<CountryListProps> = props => {
       />
       <ResponsiveTable>
         <TableBody>
-          <TableRow className={classes.pointer} onClick={toggleCollapse}>
+          <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
             <TableCell
               className={classNames(classes.wideColumn, classes.toLeft)}
             >
@@ -132,12 +133,12 @@ const CountryList: React.FC<CountryListProps> = props => {
                 />
               </IconButton>
             </TableCell>
-          </TableRow>
+          </TableRowLink>
           {!isCollapsed &&
             renderCollection(
               sortCountries(countries),
               (country, countryIndex) => (
-                <TableRow key={country ? country.code : "skeleton"}>
+                <TableRowLink key={country ? country.code : "skeleton"}>
                   <TableCell className={classes.offsetCell}>
                     {maybe<React.ReactNode>(
                       () => (
@@ -167,14 +168,14 @@ const CountryList: React.FC<CountryListProps> = props => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
               () => (
-                <TableRow>
+                <TableRowLink>
                   <TableCell className={classes.toLeft} colSpan={2}>
                     {emptyText}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
             )}
         </TableBody>

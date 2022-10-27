@@ -3,7 +3,6 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow,
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
 import { DateTime } from "@saleor/components/Date";
@@ -100,7 +99,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
   return (
     <ResponsiveTable>
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCellHeader
             direction={
               sort.sort === OrderListUrlSortField.number
@@ -176,17 +175,17 @@ export const OrderList: React.FC<OrderListProps> = props => {
               description="total order price"
             />
           </TableCellHeader>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
             disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -256,14 +255,14 @@ export const OrderList: React.FC<OrderListProps> = props => {
             </TableRowLink>
           ),
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="RlfqSV"
                   defaultMessage="No orders found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

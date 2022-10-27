@@ -1,14 +1,9 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppUpdateMutation } from "@saleor/graphql";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -54,7 +49,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
       />
       <ResponsiveTable>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell className={classes.colNote}>
               <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
             </TableCell>
@@ -72,13 +67,13 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                 description="table actions"
               />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
             tokens,
             token => (
-              <TableRow key={token ? token.id : "skeleton"}>
+              <TableRowLink key={token ? token.id : "skeleton"}>
                 <TableCell className={classes.colNote}>
                   {token?.name || <Skeleton />}
                 </TableCell>
@@ -94,17 +89,17 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="bsP4f3"
                     defaultMessage="No tokens found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>
