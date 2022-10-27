@@ -3,7 +3,6 @@ import {
   Switch,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
@@ -128,7 +127,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <AppsSkeleton key={index} />
               ),
             () => (
-              <TableRow className={classes.tableRow}>
+              <TableRowLink className={classes.tableRow}>
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
@@ -138,7 +137,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     />
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

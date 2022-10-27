@@ -7,12 +7,12 @@ import {
   Radio,
   RadioGroup,
   TableCell,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
 import Debounce from "@saleor/components/Debounce";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderFulfillLineFragment, WarehouseFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import {
@@ -160,7 +160,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                 warehouse,
               );
               return (
-                <TableRow key={warehouse.id}>
+                <TableRowLink key={warehouse.id}>
                   <TableCell className={classes.tableCell}>
                     <FormControlLabel
                       value={warehouse.id}
@@ -187,7 +187,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                       </Typography>
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             })}
           </RadioGroup>

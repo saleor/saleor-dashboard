@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
 import Date from "@saleor/components/Date";
 import Money from "@saleor/components/Money";
@@ -170,13 +170,13 @@ const SaleList: React.FC<SaleListProps> = props => {
         </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -247,11 +247,11 @@ const SaleList: React.FC<SaleListProps> = props => {
             );
           },
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage id="51HE+Q" defaultMessage="No sales found" />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

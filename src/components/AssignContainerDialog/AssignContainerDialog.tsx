@@ -6,10 +6,10 @@ import {
   DialogTitle,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import TableRowLink from "@saleor/components/TableRowLink";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
@@ -131,7 +131,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                 );
 
                 return (
-                  <TableRow key={container.id}>
+                  <TableRowLink key={container.id}>
                     <TableCell
                       padding="checkbox"
                       className={classes.checkboxCell}
@@ -151,7 +151,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                     <TableCell className={classes.wideCell}>
                       {container.name}
                     </TableCell>
-                  </TableRow>
+                  </TableRowLink>
                 );
               })}
             </TableBody>

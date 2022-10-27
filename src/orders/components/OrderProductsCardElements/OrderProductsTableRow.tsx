@@ -1,8 +1,9 @@
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderDetailsFragment, OrderLineFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
@@ -73,7 +74,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 
   return (
-    <TableRow key={line.id}>
+    <TableRowLink key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
@@ -101,7 +102,7 @@ const TableLine: React.FC<TableLineProps> = ({
           }}
         />
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 
