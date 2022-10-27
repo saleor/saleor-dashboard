@@ -50,7 +50,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({ order }) => {
             <TransactionCard
               key={transaction.id}
               transaction={transaction}
-              orderId={order.id}
+              order={order}
             />
           ))}
           <div>Manual refund</div>

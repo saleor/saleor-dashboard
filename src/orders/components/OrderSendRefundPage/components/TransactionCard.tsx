@@ -4,10 +4,11 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import {
   OrderDetailsDocument,
+  OrderDetailsFragment,
   TransactionItemFragment,
   useOrderSendRefundMutation,
 } from "@saleor/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,7 +17,7 @@ import { refundPageMessages } from "../messages";
 
 interface TransactionCardProps {
   transaction: TransactionItemFragment;
-  orderId: string;
+  order: OrderDetailsFragment;
 }
 
 const useStyles = makeStyles(
@@ -42,7 +43,7 @@ const useStyles = makeStyles(
 
 export const TransactionCard: React.FC<TransactionCardProps> = ({
   transaction,
-  orderId,
+  order,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -55,7 +56,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     { status, loading, error, data },
   ] = useOrderSendRefundMutation({
     refetchQueries: [
-      { query: OrderDetailsDocument, variables: { id: orderId } },
+      { query: OrderDetailsDocument, variables: { id: order.id } },
     ],
     variables: {
       transactionId: transaction.id,
@@ -79,6 +80,15 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     }
   };
 
+  const setMaxRefundValue = () => {
+    setValue(
+      Math.min(
+        order.totalRemainingGrant.amount,
+        transaction.chargedAmount.amount,
+      ),
+    );
+  };
+
   const inputId = `refund-amount-${id}`;
   const errorId = `refund-error-${id}`;
   const submitError = error || data?.transactionRequestAction?.errors?.[0];
@@ -91,7 +101,11 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       cardFooter={
         <div className={classes.wrapper}>
           <form className={classes.form} onSubmit={handleSubmit}>
+            <Button variant="tertiary" onClick={setMaxRefundValue}>
+              <FormattedMessage {...refundPageMessages.setMax} />
+            </Button>
             <PriceField
+              InputLabelProps={{ shrink: value !== undefined }}
               inputProps={{
                 id: inputId,
                 "aria-invalid": !!submitError ? "true" : "false",

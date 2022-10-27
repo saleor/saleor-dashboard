@@ -66,6 +66,11 @@ export const refundPageMessages = defineMessages({
     id: "ng0ZDW",
     description: "label, input for amount to refund in transaction",
   },
+  setMax: {
+    defaultMessage: "Set max",
+    id: "d7dT8o",
+    description: "button, sets granted refund amount in input",
+  },
 });
 
 export const dataLineMessages = defineMessages({
