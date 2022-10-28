@@ -36,8 +36,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   hash: true,
   template: "./src/index.html",
   templateParameters: {
-    // fallbacks for backwards compatibility
-    API_URL: process.env.API_URL || process.env.API_URI,
+    API_URI: process.env.API_URI,
     APP_MOUNT_URI: process.env.APP_MOUNT_URI,
   },
 });
@@ -60,8 +59,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
   let fileLoaderPath;
   let output;
 
-  if (!process.env.API_URL && !process.env.API_URI) {
-    throw new Error("Environment variable API_URL not set");
+  if (!process.env.API_URI) {
+    throw new Error("Environment variable API_URI not set");
   }
 
   const publicPath = process.env.STATIC_URL || "/";

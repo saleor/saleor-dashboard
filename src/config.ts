@@ -8,7 +8,7 @@ export const getAppMountUri = () =>
   IS_TEST
     ? getAppDefaultUri()
     : window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
-export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
+export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URI;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10);
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 export const MARKETPLACE_URL = process.env.MARKETPLACE_URL;

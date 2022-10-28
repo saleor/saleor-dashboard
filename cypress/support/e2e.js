@@ -30,7 +30,7 @@ Cypress.Commands.add("clearSessionData", () => {
 });
 
 Cypress.Commands.add("addAliasToGraphRequest", operationName => {
-  cy.intercept("POST", urlList.apiUrl, req => {
+  cy.intercept("POST", urlList.apiUri, req => {
     req.statusCode = 200;
     const requestBody = req.body;
     if (Array.isArray(requestBody)) {
@@ -49,8 +49,7 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
 
 Cypress.on(
   "uncaught:exception",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (err, runnable) =>
+  (_err, _runnable) =>
     // returning false here prevents Cypress from
     // failing the test
     false,

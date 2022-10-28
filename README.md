@@ -1,5 +1,6 @@
 ![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
 
+
 <div align="center">
   <h1>Saleor Dashboard</h1>
 </div>
@@ -53,6 +54,7 @@ $ cd saleor-dashboard
 
 Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release
 
+
 #### Using development version
 
 If you want to use the latest development version, checkout to the `main` branch:
@@ -69,11 +71,11 @@ $ npm i
 
 ### Configuration
 
-Create `.env` file in a root directory or set environment variables with following values:
+Create ```.env``` file in a root directory or set environment variables with following values:
 
-- `API_URL` (required) - URI of a running instance of Saleor GraphQL API.
-  If you are running Saleor locally with the default settings, set `API_URL` to: `http://localhost:8000/graphql/`.
-  Make sure that you have `/` at the end of `API_URL`.
+- `API_URI` (required) - URI of a running instance of Saleor GraphQL API.
+  If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
+  Make sure that you have `/` at the end of `API_URI`.
 
 - `APP_MOUNT_URI` - URI at which the Dashboard app will be mounted.
   E.g. if you set `APP_MOUNT_URI` to `/dashboard/`, your app will be mounted at `http://localhost:9000/dashboard/`.
@@ -88,7 +90,6 @@ To start the development server run:
 ```
 $ npm start
 ```
-
 In case you see CORS errors make sure to check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ### Production

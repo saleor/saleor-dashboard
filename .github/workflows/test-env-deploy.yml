@@ -46,15 +46,15 @@ jobs:
       - name: Install deps
         run: |
           npm ci
-      - name: Get custom API_URL
-        id: api_url
-        # Search for API_URL in PR description
+      - name: Get custom API_URI
+        id: api_uri
+        # Search for API_URI in PR description
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URL=
+          prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
-          echo "::set-output name=custom_api_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Get MARKETPLACE_URL
         id: marketplace_url
         # Search for MARKETPLACE_URL in PR description
@@ -66,8 +66,8 @@ jobs:
           echo "::set-output name=custom_marketplace_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Run build
         env:
-          # Use custom API_URL or the default one
-          API_URL: ${{ steps.api_url.outputs.custom_api_url || 'https://qa.staging.saleor.cloud/graphql/' }}
+          # Use custom API_URI or the default one
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
           MARKETPLACE_URL: ${{ steps.marketplace_url.outputs.custom_marketplace_url }}
           APP_MOUNT_URI: /
           STATIC_URL: /
@@ -165,7 +165,7 @@ jobs:
 
       - name: echo-tags
         run: |
-          echo ${{steps.get_tags.outputs.result}}
+              echo ${{steps.get_tags.outputs.result}}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -180,16 +180,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Get API_URL
-        id: api_url
-        # Search for API_URL in PR description and use default if not defined
+      - name: Get API_URI
+        id: api_uri
+        # Search for API_URI in PR description and use default if not defined
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: API_URL=
+          prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
-          fallback_url: ${{ secrets.CYPRESS_API_URI }}
+          fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
-          echo "::set-output name=custom_api_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_url; if [ -z "$custom_url" ]; then echo "$fallback_url"; else echo "$custom_url"; fi })"
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -213,7 +213,7 @@ jobs:
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
-          API_URL: ${{ steps.api_url.outputs.custom_api_url }}
+          API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
@@ -225,6 +225,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           parallel: true
-          group: "UI - Chrome"
+          group: 'UI - Chrome'
           record: true
           tag: Critical, ${{github.event.action}}
