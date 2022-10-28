@@ -4,16 +4,16 @@ import { MessageContext } from "@saleor/components/messages";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { useContext } from "react";
 
-interface UseHandleFormSubmitProps<TData, TErrors> {
+interface UseHandleFormSubmitProps<TData, TError> {
   formId?: FormId;
-  onSubmit: (data: TData) => SubmitPromise<TErrors[]> | void;
+  onSubmit: (data: TData) => SubmitPromise<TError[]> | void;
 }
 
 function useHandleFormSubmit<TData, TErrors>({
   formId,
   onSubmit,
 }: UseHandleFormSubmitProps<TData, TErrors>) {
-  const { setIsSubmitting } = useExitFormDialog({
+  const { setIsSubmitting, setIsDirty } = useExitFormDialog({
     formId,
   });
   const messageContext = useContext(MessageContext);
@@ -36,6 +36,8 @@ function useHandleFormSubmit<TData, TErrors>({
     setIsSubmitting(false);
 
     if (errors?.length === 0) {
+      setIsDirty(false);
+
       return [];
     }
 

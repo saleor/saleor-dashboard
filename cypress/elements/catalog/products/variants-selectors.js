@@ -17,4 +17,6 @@ export const VARIANTS_SELECTORS = {
   globalThresholdInput: "[name='globalThreshold']",
   stockInput: "[data-test-id='stock-input']",
   selectOption: "[data-test-id='multi-autocomplete-select-option']",
+  manageChannels: "[data-testid='manage-channels-button']",
+  allChannels: "[name='allChannels']",
 };

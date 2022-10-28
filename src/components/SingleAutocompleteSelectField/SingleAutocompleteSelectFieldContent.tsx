@@ -69,7 +69,7 @@ const useStyles = makeStyles(
           ? theme.palette.grey[50]
           : theme.palette.grey[900],
       bottom: 0,
-      color: theme.palette.primary.main,
+      color: theme.palette.grey[500],
       display: "flex",
       height: 30,
       justifyContent: "center",
@@ -204,7 +204,12 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
-    <Paper className={classes.root} elevation={8} style={style}>
+    <Paper
+      // click-outside-ignore is used by glide-datagrid
+      className={classNames("click-outside-ignore", classes.root)}
+      elevation={8}
+      style={style}
+    >
       <div
         className={classes.content}
         ref={anchor}

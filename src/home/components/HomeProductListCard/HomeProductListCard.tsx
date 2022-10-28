@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -136,7 +130,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
               </TableRowLink>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={3} className={classes.noProducts}>
                   <Typography>
                     <FormattedMessage
@@ -145,7 +139,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                     />
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

@@ -19,7 +19,6 @@ describe("As an admin I want to use attributes in variant selection", () => {
 
   const attributesTypes = [
     { key: "DROPDOWN", TC: "SALEOR_0534" },
-    { key: "MULTISELECT", TC: "SALEOR_0535" },
     { key: "BOOLEAN", TC: "SALEOR_0536" },
     { key: "NUMERIC", TC: "SALEOR_0537" },
     { key: "SWATCH", TC: "SALEOR_0538" },
@@ -79,6 +78,8 @@ describe("As an admin I want to use attributes in variant selection", () => {
               sku: name,
               attributeName: attributeValues[0],
               attributeType: inputType,
+              costPrice: 10,
+              price: 10,
             });
 
             cy.wait("@VariantCreate");

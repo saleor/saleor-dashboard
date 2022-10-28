@@ -3,14 +3,11 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelCreateMutation,
   ChannelErrorFragment,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
-  useShippingZonesCountQuery,
-  useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -19,8 +16,6 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import currencyCodes from "currency-codes";
 import React from "react";
@@ -29,6 +24,8 @@ import { useIntl } from "react-intl";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath, channelsListUrl } from "../../urls";
 import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
+import { useShippingZones } from "../ChannelDetails/useShippingZones";
+import { useWarehouses } from "../ChannelDetails/useWarehouses";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
@@ -49,7 +46,10 @@ export const ChannelCreateView = ({}) => {
     },
   });
 
-  const [reorderChannelWarehouses] = useChannelReorderWarehousesMutation({
+  const [
+    reorderChannelWarehouses,
+    reorderChannelWarehousesOpts,
+  ] = useChannelReorderWarehousesMutation({
     onCompleted: data => {
       const errors = data.channelReorderWarehouses.errors;
       if (errors.length) {
@@ -62,19 +62,20 @@ export const ChannelCreateView = ({}) => {
 
   const handleSubmit = async ({
     shippingZonesIdsToAdd,
-    shippingZonesIdsToRemove,
     warehousesIdsToAdd,
-    warehousesIdsToRemove,
     warehousesToDisplay,
-    shippingZonesToDisplay,
     currencyCode,
     allocationStrategy,
-    ...rest
+    name,
+    slug,
+    defaultCountry,
   }: FormData) => {
     const createChannelMutation = createChannel({
       variables: {
         input: {
-          ...rest,
+          defaultCountry,
+          name,
+          slug,
           currencyCode: currencyCode.toUpperCase(),
           addShippingZones: shippingZonesIdsToAdd,
           addWarehouses: warehousesIdsToAdd,
@@ -106,30 +107,20 @@ export const ChannelCreateView = ({}) => {
   };
 
   const {
-    data: shippingZonesCountData,
-    loading: shippingZonesCountLoading,
-  } = useShippingZonesCountQuery();
+    shippingZonesCountData,
+    shippingZonesCountLoading,
+    fetchMoreShippingZones,
+    searchShippingZones,
+    searchShippingZonesResult,
+  } = useShippingZones();
 
   const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult,
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery();
-
-  const {
-    loadMore: fetchMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesResult,
-  } = useWarehouseSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+    warehousesCountData,
+    warehousesCountLoading,
+    fetchMoreWarehouses,
+    searchWarehouses,
+    searchWarehousesResult,
+  } = useWarehouses();
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
@@ -185,6 +176,7 @@ export const ChannelCreateView = ({}) => {
           )}
           disabled={
             createChannelOpts.loading ||
+            reorderChannelWarehousesOpts.loading ||
             shippingZonesCountLoading ||
             warehousesCountLoading
           }

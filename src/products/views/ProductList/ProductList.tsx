@@ -45,7 +45,9 @@ import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
 } from "@saleor/products/components/ProductListPage/utils";
+import ProductTypePickerDialog from "@saleor/products/components/ProductTypePickerDialog";
 import {
+  productAddUrl,
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
@@ -324,6 +326,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
+  const {
+    loadMore: loadMoreDialogProductTypes,
+    search: searchDialogProductTypes,
+    result: searchDialogProductTypesOpts,
+  } = useProductTypeSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
+  const fetchMoreDialogProductTypes = {
+    hasMore: searchDialogProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchDialogProductTypesOpts.loading,
+    onFetchMore: loadMoreDialogProductTypes,
+  };
+
   const filterOpts = getFilterOpts(
     params,
     (mapEdgesToItems(initialFilterAttributes?.attributes) || []).filter(
@@ -371,12 +387,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
-        totalGridAttributes={maybe(
-          () =>
-            availableInGridAttributesOpts.result.data.availableInGrid
-              .totalCount,
-          0,
-        )}
         settings={settings}
         loading={
           availableInGridAttributesOpts.result.loading || gridAttributes.loading
@@ -390,9 +400,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
+        selectedProductIds={listElements}
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={updateListSettings}
+        onAdd={() => openModal("create-product")}
         onAll={resetFilters}
         toolbar={
           <IconButton
@@ -498,6 +510,23 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+      />
+      <ProductTypePickerDialog
+        confirmButtonState="success"
+        open={params.action === "create-product"}
+        productTypes={mapNodeToChoice(
+          mapEdgesToItems(searchDialogProductTypesOpts?.data?.search),
+        )}
+        fetchProductTypes={searchDialogProductTypes}
+        fetchMoreProductTypes={fetchMoreDialogProductTypes}
+        onClose={closeModal}
+        onConfirm={productTypeId =>
+          navigate(
+            productAddUrl({
+              "product-type-id": productTypeId,
+            }),
+          )
+        }
       />
     </PaginatorContext.Provider>
   );

@@ -357,7 +357,19 @@ export const PageInfoFragmentDoc = gql`
 export const SaleDetailsFragmentDoc = gql`
     fragment SaleDetails on Sale {
   ...Sale
-  variants(after: $after, before: $before, first: $first, last: $last) {
+  variantsCount: variants {
+    totalCount
+  }
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  variants(after: $after, before: $before, first: $first, last: $last) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -381,9 +393,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  products(after: $after, before: $before, first: $first, last: $last) {
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -403,9 +414,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -418,9 +428,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -433,7 +442,6 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
 }
     ${SaleFragmentDoc}
@@ -479,7 +487,16 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerOrder
   applyOncePerCustomer
   onlyForStaff
-  products(after: $after, before: $before, first: $first, last: $last) {
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -496,12 +513,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -511,12 +527,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -526,7 +541,6 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
@@ -1887,7 +1901,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
   }
   productType {
     id
-    variantAttributes(variantSelection: VARIANT_SELECTION) {
+    variantAttributes {
       id
       name
       inputType
@@ -1954,7 +1968,16 @@ export const ProductDetailsVariantFragmentDoc = gql`
   id
   sku
   name
-  margin
+  attributes {
+    attribute {
+      id
+      name
+    }
+    values {
+      id
+      name
+    }
+  }
   media {
     url(size: 200)
   }
@@ -2099,6 +2122,7 @@ export const ProductVariantFragmentDoc = gql`
       url
     }
     channelListings {
+      id
       publicationDate
       isPublished
       channel {
@@ -5817,7 +5841,7 @@ export type SaleUpdateMutationHookResult = ReturnType<typeof useSaleUpdateMutati
 export type SaleUpdateMutationResult = Apollo.MutationResult<Types.SaleUpdateMutation>;
 export type SaleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SaleUpdateMutation, Types.SaleUpdateMutationVariables>;
 export const SaleCataloguesAddDocument = gql`
-    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -5850,6 +5874,10 @@ export type SaleCataloguesAddMutationFn = Apollo.MutationFunction<Types.SaleCata
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -5861,7 +5889,7 @@ export type SaleCataloguesAddMutationHookResult = ReturnType<typeof useSaleCatal
 export type SaleCataloguesAddMutationResult = Apollo.MutationResult<Types.SaleCataloguesAddMutation>;
 export type SaleCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>;
 export const SaleCataloguesRemoveDocument = gql`
-    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -5894,6 +5922,10 @@ export type SaleCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.SaleC
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6134,7 +6166,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6167,6 +6199,9 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6178,7 +6213,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6211,6 +6246,9 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6445,7 +6483,7 @@ export type VoucherListQueryHookResult = ReturnType<typeof useVoucherListQuery>;
 export type VoucherListLazyQueryHookResult = ReturnType<typeof useVoucherListLazyQuery>;
 export type VoucherListQueryResult = Apollo.QueryResult<Types.VoucherListQuery, Types.VoucherListQueryVariables>;
 export const SaleDetailsDocument = gql`
-    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   sale(id: $id) {
     ...SaleDetails
   }
@@ -6469,6 +6507,10 @@ export const SaleDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6484,7 +6526,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -6508,6 +6550,9 @@ export const VoucherDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -11237,18 +11282,14 @@ export type ProductVariantSetDefaultMutationHookResult = ReturnType<typeof usePr
 export type ProductVariantSetDefaultMutationResult = Apollo.MutationResult<Types.ProductVariantSetDefaultMutation>;
 export type ProductVariantSetDefaultMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>;
 export const ProductUpdateDocument = gql`
-    mutation ProductUpdate($id: ID!, $input: ProductInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    mutation ProductUpdate($id: ID!, $input: ProductInput!) {
   productUpdate(id: $id, input: $input) {
     errors {
       ...ProductErrorWithAttributes
     }
-    product {
-      ...Product
-    }
   }
 }
-    ${ProductErrorWithAttributesFragmentDoc}
-${ProductFragmentDoc}`;
+    ${ProductErrorWithAttributesFragmentDoc}`;
 export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>;
 
 /**
@@ -11266,10 +11307,6 @@ export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdat
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
  *   },
  * });
  */
@@ -11280,93 +11317,6 @@ export function useProductUpdateMutation(baseOptions?: ApolloReactHooks.Mutation
 export type ProductUpdateMutationHookResult = ReturnType<typeof useProductUpdateMutation>;
 export type ProductUpdateMutationResult = Apollo.MutationResult<Types.ProductUpdateMutation>;
 export type ProductUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>;
-export const SimpleProductUpdateDocument = gql`
-    mutation SimpleProductUpdate($id: ID!, $input: ProductInput!, $productVariantId: ID!, $productVariantInput: ProductVariantInput!, $addStocks: [StockInput!]!, $deleteStocks: [ID!]!, $updateStocks: [StockInput!]!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  productUpdate(id: $id, input: $input) {
-    errors {
-      ...ProductErrorWithAttributes
-    }
-    product {
-      ...Product
-    }
-  }
-  productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
-    errors {
-      ...ProductErrorWithAttributes
-    }
-    productVariant {
-      ...ProductVariant
-    }
-  }
-  productVariantStocksCreate(stocks: $addStocks, variantId: $productVariantId) {
-    errors {
-      ...BulkStockError
-    }
-    productVariant {
-      ...ProductVariant
-    }
-  }
-  productVariantStocksDelete(
-    warehouseIds: $deleteStocks
-    variantId: $productVariantId
-  ) {
-    errors {
-      ...StockError
-    }
-    productVariant {
-      ...ProductVariant
-    }
-  }
-  productVariantStocksUpdate(stocks: $updateStocks, variantId: $productVariantId) {
-    errors {
-      ...BulkStockError
-    }
-    productVariant {
-      ...ProductVariant
-    }
-  }
-}
-    ${ProductErrorWithAttributesFragmentDoc}
-${ProductFragmentDoc}
-${ProductVariantFragmentDoc}
-${BulkStockErrorFragmentDoc}
-${StockErrorFragmentDoc}`;
-export type SimpleProductUpdateMutationFn = Apollo.MutationFunction<Types.SimpleProductUpdateMutation, Types.SimpleProductUpdateMutationVariables>;
-
-/**
- * __useSimpleProductUpdateMutation__
- *
- * To run a mutation, you first call `useSimpleProductUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSimpleProductUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [simpleProductUpdateMutation, { data, loading, error }] = useSimpleProductUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *      productVariantId: // value for 'productVariantId'
- *      productVariantInput: // value for 'productVariantInput'
- *      addStocks: // value for 'addStocks'
- *      deleteStocks: // value for 'deleteStocks'
- *      updateStocks: // value for 'updateStocks'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
- *   },
- * });
- */
-export function useSimpleProductUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SimpleProductUpdateMutation, Types.SimpleProductUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.SimpleProductUpdateMutation, Types.SimpleProductUpdateMutationVariables>(SimpleProductUpdateDocument, options);
-      }
-export type SimpleProductUpdateMutationHookResult = ReturnType<typeof useSimpleProductUpdateMutation>;
-export type SimpleProductUpdateMutationResult = Apollo.MutationResult<Types.SimpleProductUpdateMutation>;
-export type SimpleProductUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SimpleProductUpdateMutation, Types.SimpleProductUpdateMutationVariables>;
 export const ProductCreateDocument = gql`
     mutation ProductCreate($input: ProductCreateInput!) {
   productCreate(input: $input) {
@@ -11443,8 +11393,123 @@ export function useVariantDeleteMutation(baseOptions?: ApolloReactHooks.Mutation
 export type VariantDeleteMutationHookResult = ReturnType<typeof useVariantDeleteMutation>;
 export type VariantDeleteMutationResult = Apollo.MutationResult<Types.VariantDeleteMutation>;
 export type VariantDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>;
+export const VariantDatagridUpdateDocument = gql`
+    mutation VariantDatagridUpdate($id: ID!, $input: ProductVariantInput!) {
+  productVariantUpdate(id: $id, input: $input) {
+    errors {
+      ...ProductErrorWithAttributes
+    }
+  }
+}
+    ${ProductErrorWithAttributesFragmentDoc}`;
+export type VariantDatagridUpdateMutationFn = Apollo.MutationFunction<Types.VariantDatagridUpdateMutation, Types.VariantDatagridUpdateMutationVariables>;
+
+/**
+ * __useVariantDatagridUpdateMutation__
+ *
+ * To run a mutation, you first call `useVariantDatagridUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVariantDatagridUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [variantDatagridUpdateMutation, { data, loading, error }] = useVariantDatagridUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVariantDatagridUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantDatagridUpdateMutation, Types.VariantDatagridUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.VariantDatagridUpdateMutation, Types.VariantDatagridUpdateMutationVariables>(VariantDatagridUpdateDocument, options);
+      }
+export type VariantDatagridUpdateMutationHookResult = ReturnType<typeof useVariantDatagridUpdateMutation>;
+export type VariantDatagridUpdateMutationResult = Apollo.MutationResult<Types.VariantDatagridUpdateMutation>;
+export type VariantDatagridUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VariantDatagridUpdateMutation, Types.VariantDatagridUpdateMutationVariables>;
+export const VariantDatagridStockUpdateDocument = gql`
+    mutation VariantDatagridStockUpdate($stocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!) {
+  productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
+    errors {
+      ...ProductVariantStocksDeleteError
+    }
+  }
+  productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
+    errors {
+      ...BulkStockError
+    }
+  }
+}
+    ${ProductVariantStocksDeleteErrorFragmentDoc}
+${BulkStockErrorFragmentDoc}`;
+export type VariantDatagridStockUpdateMutationFn = Apollo.MutationFunction<Types.VariantDatagridStockUpdateMutation, Types.VariantDatagridStockUpdateMutationVariables>;
+
+/**
+ * __useVariantDatagridStockUpdateMutation__
+ *
+ * To run a mutation, you first call `useVariantDatagridStockUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVariantDatagridStockUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [variantDatagridStockUpdateMutation, { data, loading, error }] = useVariantDatagridStockUpdateMutation({
+ *   variables: {
+ *      stocks: // value for 'stocks'
+ *      removeStocks: // value for 'removeStocks'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useVariantDatagridStockUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantDatagridStockUpdateMutation, Types.VariantDatagridStockUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.VariantDatagridStockUpdateMutation, Types.VariantDatagridStockUpdateMutationVariables>(VariantDatagridStockUpdateDocument, options);
+      }
+export type VariantDatagridStockUpdateMutationHookResult = ReturnType<typeof useVariantDatagridStockUpdateMutation>;
+export type VariantDatagridStockUpdateMutationResult = Apollo.MutationResult<Types.VariantDatagridStockUpdateMutation>;
+export type VariantDatagridStockUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VariantDatagridStockUpdateMutation, Types.VariantDatagridStockUpdateMutationVariables>;
+export const VariantDatagridChannelListingUpdateDocument = gql`
+    mutation VariantDatagridChannelListingUpdate($id: ID!, $input: [ProductVariantChannelListingAddInput!]!) {
+  productVariantChannelListingUpdate(id: $id, input: $input) {
+    errors {
+      ...ProductChannelListingError
+    }
+  }
+}
+    ${ProductChannelListingErrorFragmentDoc}`;
+export type VariantDatagridChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.VariantDatagridChannelListingUpdateMutation, Types.VariantDatagridChannelListingUpdateMutationVariables>;
+
+/**
+ * __useVariantDatagridChannelListingUpdateMutation__
+ *
+ * To run a mutation, you first call `useVariantDatagridChannelListingUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVariantDatagridChannelListingUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [variantDatagridChannelListingUpdateMutation, { data, loading, error }] = useVariantDatagridChannelListingUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVariantDatagridChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantDatagridChannelListingUpdateMutation, Types.VariantDatagridChannelListingUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.VariantDatagridChannelListingUpdateMutation, Types.VariantDatagridChannelListingUpdateMutationVariables>(VariantDatagridChannelListingUpdateDocument, options);
+      }
+export type VariantDatagridChannelListingUpdateMutationHookResult = ReturnType<typeof useVariantDatagridChannelListingUpdateMutation>;
+export type VariantDatagridChannelListingUpdateMutationResult = Apollo.MutationResult<Types.VariantDatagridChannelListingUpdateMutation>;
+export type VariantDatagridChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VariantDatagridChannelListingUpdateMutation, Types.VariantDatagridChannelListingUpdateMutationVariables>;
 export const VariantUpdateDocument = gql`
-    mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $preorder: PreorderSettingsInput, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $preorder: PreorderSettingsInput, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $name: String!) {
   productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
     errors {
       ...ProductVariantStocksDeleteError
@@ -11477,7 +11542,7 @@ export const VariantUpdateDocument = gql`
   }
   productVariantUpdate(
     id: $id
-    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer}
+    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer, name: $name}
   ) {
     errors {
       ...ProductErrorWithAttributes
@@ -11521,6 +11586,7 @@ export type VariantUpdateMutationFn = Apollo.MutationFunction<Types.VariantUpdat
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      name: // value for 'name'
  *   },
  * });
  */
@@ -11807,6 +11873,45 @@ export function useProductBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
+export const ProductVariantBulkCreateDocument = gql`
+    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
+  productVariantBulkCreate(product: $id, variants: $inputs) {
+    errors {
+      ...BulkProductError
+    }
+    productVariants {
+      id
+    }
+  }
+}
+    ${BulkProductErrorFragmentDoc}`;
+export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
+
+/**
+ * __useProductVariantBulkCreateMutation__
+ *
+ * To run a mutation, you first call `useProductVariantBulkCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantBulkCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [productVariantBulkCreateMutation, { data, loading, error }] = useProductVariantBulkCreateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      inputs: // value for 'inputs'
+ *   },
+ * });
+ */
+export function useProductVariantBulkCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>(ProductVariantBulkCreateDocument, options);
+      }
+export type ProductVariantBulkCreateMutationHookResult = ReturnType<typeof useProductVariantBulkCreateMutation>;
+export type ProductVariantBulkCreateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkCreateMutation>;
+export type ProductVariantBulkCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
 export const ProductVariantBulkDeleteDocument = gql`
     mutation ProductVariantBulkDelete($ids: [ID!]!) {
   productVariantBulkDelete(ids: $ids) {
@@ -11884,26 +11989,12 @@ export type ProductExportMutationOptions = Apollo.BaseMutationOptions<Types.Prod
 export const ProductChannelListingUpdateDocument = gql`
     mutation ProductChannelListingUpdate($id: ID!, $input: ProductChannelListingUpdateInput!) {
   productChannelListingUpdate(id: $id, input: $input) {
-    product {
-      id
-      channelListings {
-        ...ChannelListingProductWithoutPricing
-      }
-      variants {
-        id
-        channelListings {
-          ...ChannelListingProductVariant
-        }
-      }
-    }
     errors {
       ...ProductChannelListingError
     }
   }
 }
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${ChannelListingProductVariantFragmentDoc}
-${ProductChannelListingErrorFragmentDoc}`;
+    ${ProductChannelListingErrorFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
 
 /**
@@ -12484,6 +12575,8 @@ export const ProductVariantCreateDataDocument = gql`
       url
     }
     channelListings {
+      isPublished
+      publicationDate
       channel {
         id
         name
@@ -13319,6 +13412,9 @@ export const SearchProductsDocument = gql`
               currency
             }
           }
+        }
+        collections {
+          id
         }
       }
     }

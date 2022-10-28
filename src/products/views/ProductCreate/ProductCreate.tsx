@@ -8,6 +8,8 @@ import {
   VALUES_PAGINATE_BY,
 } from "@saleor/config";
 import {
+  ProductChannelListingErrorFragment,
+  ProductErrorWithAttributesFragment,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductCreateMutation,
@@ -24,6 +26,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { getMutationErrors } from "@saleor/misc";
 import ProductCreatePage, {
   ProductCreateData,
 } from "@saleor/products/components/ProductCreatePage";
@@ -62,9 +65,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [productCreateComplete, setProductCreateComplete] = React.useState(
     false,
   );
-  const [selectedProductTypeId, setSelectedProductTypeId] = React.useState<
-    string
-  >();
+  const selectedProductTypeId = params["product-type-id"];
+
+  const handleSelectProductType = (productTypeId: string) =>
+    navigate(
+      productAddUrl({
+        ...params,
+        "product-type-id": productTypeId,
+      }),
+    );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductCreateUrlDialog,
@@ -282,6 +291,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading;
 
+  const channelsErrors = [
+    ...getMutationErrors(updateVariantChannelsOpts),
+    ...getMutationErrors(updateChannelsOpts),
+  ] as ProductChannelListingErrorFragment[];
+  const errors = [
+    ...getMutationErrors(productCreateOpts),
+    ...getMutationErrors(productVariantCreateOpts),
+  ] as ProductErrorWithAttributesFragment[];
+
   return (
     <>
       <WindowTitle
@@ -318,14 +336,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           []
         }
         loading={loading}
-        channelsErrors={
-          updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
-            ?.errors
-        }
-        errors={[
-          ...(productCreateOpts.data?.productCreate.errors || []),
-          ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
-        ]}
+        channelsErrors={channelsErrors}
+        errors={errors}
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
         fetchProductTypes={searchProductTypes}
@@ -362,7 +374,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
-        onSelectProductType={id => setSelectedProductTypeId(id)}
+        onSelectProductType={handleSelectProductType}
         onAttributeSelectBlur={searchAttributeReset}
       />
     </>

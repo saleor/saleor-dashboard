@@ -9,6 +9,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   useFileUploadMutation,
+  useProductVariantChannelListingUpdateMutation,
   useProductVariantCreateDataQuery,
   useProductVariantReorderMutation,
   useUpdateMetadataMutation,
@@ -86,7 +87,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       });
     },
   });
-
+  const [updateChannels] = useProductVariantChannelListingUpdateMutation({});
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
@@ -95,8 +96,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     reorderProductVariantsOpts,
   ] = useProductVariantReorderMutation({});
 
-  const handleVariantReorder = createVariantReorderHandler(product, variables =>
-    reorderProductVariants({ variables }),
+  const handleVariantReorder = createVariantReorderHandler(
+    product,
+    reorderProductVariants,
   );
 
   const handleCreate = async (formData: ProductVariantCreateData) => {
@@ -110,7 +112,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       uploadFilesResult,
     );
 
-    const result = await variantCreate({
+    const variantCreateResult = await variantCreate({
       variables: {
         input: {
           attributes: prepareAttributesInput({
@@ -122,6 +124,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           }),
           product: productId,
           sku: formData.sku,
+          name: formData.name,
           stocks: formData.stocks.map(stock => ({
             quantity: parseInt(stock.value, 10) || 0,
             warehouse: stock.id,
@@ -142,9 +145,30 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         firstValues: 10,
       },
     });
-    const id = result.data?.productVariantCreate?.productVariant?.id || null;
 
-    return { id, errors: getMutationErrors(result) };
+    const variantCreateResultErrors = getMutationErrors(variantCreateResult);
+
+    if (variantCreateResultErrors.length > 0) {
+      return { id: null, errors: variantCreateResultErrors };
+    }
+
+    const id = variantCreateResult.data.productVariantCreate.productVariant.id;
+
+    const updateChannelsResult = await updateChannels({
+      variables: {
+        id,
+        input: formData.channelListings.map(listing => ({
+          channelId: listing.id,
+          costPrice: listing.value.costPrice || null,
+          price: listing.value.price,
+          preorderThreshold: listing.value.preorderThreshold,
+        })),
+      },
+    });
+
+    const updateChannelsErrors = getMutationErrors(updateChannelsResult);
+
+    return { id, errors: updateChannelsErrors };
   };
 
   const handleSubmit = createMetadataCreateHandler(

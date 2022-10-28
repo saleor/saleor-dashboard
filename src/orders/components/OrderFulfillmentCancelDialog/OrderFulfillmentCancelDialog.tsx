@@ -75,7 +75,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
       fullWidth
       maxWidth="sm"
     >
-      <Form confirmLeave initial={{ warehouseId: null }} onSubmit={onConfirm}>
+      <Form initial={{ warehouseId: null }} onSubmit={onConfirm}>
         {({ change, data: formData, submit }) => {
           const handleChange = createSingleAutocompleteSelectHandler(
             change,

@@ -378,7 +378,6 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           unassignProductOpts?.status === "loading" ||
           assignProductOpts?.status === "loading"
         }
-        havePostalCodesChanged={state.havePostalCodesChanged}
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
         backHref={shippingZoneUrl(id)}

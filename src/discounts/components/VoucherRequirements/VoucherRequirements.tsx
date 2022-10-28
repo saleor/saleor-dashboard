@@ -3,7 +3,6 @@ import {
   CardContent,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -14,6 +13,7 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ChannelInput } from "@saleor/discounts/handlers";
 import { RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/graphql";
@@ -142,7 +142,7 @@ const VoucherRequirements = ({
                         id => id === listing.id,
                       );
                       return (
-                        <TableRow key={listing?.id || `skeleton-${index}`}>
+                        <TableRowLink key={listing?.id || `skeleton-${index}`}>
                           <TableCell>
                             <Typography>
                               {listing?.name || <Skeleton />}
@@ -174,18 +174,18 @@ const VoucherRequirements = ({
                               <Skeleton />
                             )}
                           </TableCell>
-                        </TableRow>
+                        </TableRowLink>
                       );
                     },
                     () => (
-                      <TableRow>
+                      <TableRowLink>
                         <TableCell colSpan={numberOfColumns}>
                           <FormattedMessage
                             id="/glQgs"
                             defaultMessage="No channels found"
                           />
                         </TableCell>
-                      </TableRow>
+                      </TableRowLink>
                     ),
                   )}
                 </TableBody>

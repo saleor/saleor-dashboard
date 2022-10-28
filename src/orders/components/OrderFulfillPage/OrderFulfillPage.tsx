@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
 } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -16,6 +15,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   FulfillOrderMutation,
   OrderErrorCode,
@@ -163,6 +163,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     !shopSettings?.fulfillmentAllowUnpaid &&
     !order?.isPaid;
 
+  const areWarehousesSet = formsetData.every(line =>
+    line.value.every(v => v.warehouse),
+  );
+
   const shouldEnableSave = () => {
     if (!order || loading) {
       return false;
@@ -186,7 +190,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         return formQuantityFulfilled > quantityToFulfill;
       });
 
-    return !overfulfill && isAtLeastOneFulfilled;
+    return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
 
   return (
@@ -223,7 +227,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 {order ? (
                   <ResponsiveTable className={classes.table}>
                     <TableHead>
-                      <TableRow>
+                      <TableRowLink>
                         <TableCell className={classes.colName}>
                           <FormattedMessage {...messages.productName} />
                         </TableCell>
@@ -244,7 +248,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         <TableCell className={classes.colWarehouse}>
                           <FormattedMessage {...messages.warehouse} />
                         </TableCell>
-                      </TableRow>
+                      </TableRowLink>
                     </TableHead>
                     <TableBody>
                       {renderCollection(
@@ -261,7 +265,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 lineId: line.id,
                                 warehouseId:
                                   formsetData[lineIndex]?.value?.[0]?.warehouse
-                                    .id,
+                                    ?.id,
                               })
                             }
                           />

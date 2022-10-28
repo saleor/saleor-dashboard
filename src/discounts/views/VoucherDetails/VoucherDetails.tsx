@@ -16,6 +16,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import DiscountCountrySelectDialog from "@saleor/discounts/components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
+  VoucherTabItemsCount,
 } from "@saleor/discounts/components/VoucherDetailsPage";
 import {
   voucherListUrl,
@@ -32,6 +33,7 @@ import {
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
+  VoucherDetailsQueryVariables,
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
@@ -109,11 +111,21 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     setActiveTab(tab);
   };
 
+  const detailsQueryInclude: Pick<
+    VoucherDetailsQueryVariables,
+    "includeCategories" | "includeCollections" | "includeProducts"
+  > = {
+    includeCategories: activeTab === VoucherDetailsPageTab.categories,
+    includeCollections: activeTab === VoucherDetailsPageTab.collections,
+    includeProducts: activeTab === VoucherDetailsPageTab.products,
+  };
+
   const { data, loading } = useVoucherDetailsQuery({
     displayLoader: true,
     variables: {
       id,
       ...paginationState,
+      ...detailsQueryInclude,
     },
   });
 
@@ -235,6 +247,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           categories: ids,
@@ -246,6 +259,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           collections: ids,
@@ -257,6 +271,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     voucherCataloguesRemove({
       variables: {
         ...paginationState,
+        ...detailsQueryInclude,
         id,
         input: {
           products: ids,
@@ -268,6 +283,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     tabPageInfo,
     paginationState,
   );
+
+  const tabItemsCount: VoucherTabItemsCount = {
+    categories: data?.voucher?.categoriesCount?.totalCount,
+    collections: data?.voucher?.collectionsCount?.totalCount,
+    products: data?.voucher?.productsCount?.totalCount,
+  };
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
@@ -338,6 +359,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           })
         }
         activeTab={activeTab}
+        tabItemsCount={tabItemsCount}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
         onRemove={() => openModal("remove")}
@@ -409,6 +431,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           voucherCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 categories,
@@ -432,6 +455,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           voucherCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 collections,
@@ -472,6 +496,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           voucherCataloguesAdd({
             variables: {
               ...paginationState,
+              ...detailsQueryInclude,
               id,
               input: {
                 products,

@@ -13,7 +13,6 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import CountryList from "../CountryList";
 import TaxConfiguration from "../TaxConfiguration";
 
@@ -41,10 +40,11 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
   const navigate = useNavigator();
 
   const initialForm: TaxesConfigurationFormData = {
-    chargeTaxesOnShipping: maybe(() => shop.chargeTaxesOnShipping, false),
-    includeTax: maybe(() => shop.includeTaxesInPrices, false),
-    showGross: maybe(() => shop.displayGrossPrices, false),
+    chargeTaxesOnShipping: shop?.chargeTaxesOnShipping || false,
+    includeTax: shop?.includeTaxesInPrices || false,
+    showGross: shop?.displayGrossPrices || false,
   };
+
   return (
     <Form
       confirmLeave
@@ -75,7 +75,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
                 />
               </div>
               <div>
-                <CountryList countries={maybe(() => shop.countries)} />
+                <CountryList countries={shop?.countries} />
               </div>
             </Grid>
           </Container>

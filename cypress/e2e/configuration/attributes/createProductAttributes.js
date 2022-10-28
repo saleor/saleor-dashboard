@@ -32,6 +32,7 @@ describe("As an admin I want to create product attribute", () => {
   const attributeReferenceType = [
     { type: "PRODUCT", testCase: "SALEOR_0506" },
     { type: "PAGE", testCase: "SALEOR_0507" },
+    { type: "PRODUCT_VARIANT", testCase: "SALEOR_0539" },
   ];
   const attributeNumericType = [
     {
@@ -65,7 +66,7 @@ describe("As an admin I want to create product attribute", () => {
   attributesTypes.forEach(attributeType => {
     it(
       `should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable", "@oldRelease"] },
       () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -116,7 +117,7 @@ describe("As an admin I want to create product attribute", () => {
   attributeNumericType.forEach(numericSystemType => {
     it(
       `should be able to create numeric ${numericSystemType.unitSystem} attribute. TC:${numericSystemType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable"] },
       () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;

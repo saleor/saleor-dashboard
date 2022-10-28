@@ -15,14 +15,18 @@ export const SHARED_ELEMENTS = {
   urlInput: 'input[type="url"]',
   richTextEditor: {
     loader: '[class*="codex-editor__loader"]',
-    empty: '[class*="codex-editor--empty"]'
+    empty: '[class*="codex-editor--empty"]',
   },
   contentEditable: '[contenteditable="true"]',
   filters: {
     filterGroupActivateCheckbox: '[data-test-id*="filter-group-active"]',
-    filterRow: '[data-test-id*="channel-availability-item"]'
+    filterRow: '[data-test-id*="channel-availability-item"]',
   },
-  warningDialog: '[data-test-id="warning-dialog"]'
+  warningDialog: '[data-test-id="warning-dialog"]',
+  pageHeader: "[data-test-id='page-header']",
+  multiAutocomplete: {
+    selectedOptions: '[id*="selected-option-"]',
+  },
 };
 
 export const selectorWithDataValue = value => `[data-value="${value}"]`;

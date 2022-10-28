@@ -19,7 +19,8 @@ interface TableButtonWrapper {
  */
 export const TableButtonWrapper = <T extends HTMLElement>({
   children,
-}: TableButtonWrapper) => {
+}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+TableButtonWrapper) => {
   const onClick = (e: React.MouseEvent<T>) => {
     if (!children.props.href) {
       // <TableRowLink> is a <a> that wraps each <tr>

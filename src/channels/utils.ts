@@ -2,6 +2,8 @@ import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
 } from "@saleor/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
+import { RequirementsPicker } from "@saleor/discounts/types";
 import {
   ChannelDetailsFragment,
   ChannelFragment,
@@ -38,6 +40,15 @@ export interface ChannelData {
   visibleInListings?: boolean;
   preorderThreshold?: number;
   unitsSold?: number;
+}
+
+export interface ProductChannelListingData extends Channel {
+  isPublished: boolean;
+  publicationDate: string | null;
+  availableForPurchase: string;
+  isAvailableForPurchase: boolean;
+  visibleInListings: boolean;
+  currency?: string;
 }
 
 export interface ChannelPriceData {
@@ -415,3 +426,11 @@ export const validateSalePrice = (
       ? channel.percentageValue
       : channel.fixedValue,
   );
+
+export const validateVoucherPrice = (
+  data: VoucherDetailsPageFormData,
+  channel: ChannelVoucherData,
+) =>
+  validatePrice(channel.discountValue) ||
+  (data.requirementsPicker === RequirementsPicker.ORDER &&
+    validatePrice(channel.minSpent));

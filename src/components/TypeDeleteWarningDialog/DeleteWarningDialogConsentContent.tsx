@@ -6,7 +6,7 @@ import ControlledCheckbox from "../ControlledCheckbox";
 import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 
 interface DeleteWarningDialogConsentContentProps {
-  description: string | React.ReactNode[];
+  description: string | React.ReactNode[] | readonly React.ReactNode[];
   consentLabel: string;
   isConsentChecked: boolean;
   onConsentChange: (value: boolean) => void;

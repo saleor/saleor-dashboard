@@ -1,4 +1,5 @@
 import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-details";
+import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
 import { addMetadataField } from "../metadataComponent";
@@ -90,6 +91,16 @@ export function fillUpProductGeneralInfo({ name, description, rating }) {
     .clearAndType(rating);
 }
 
+export function fillUpProductTypeDialog({ productType }) {
+  const organization = {};
+  return cy
+    .fillAutocompleteSelect(PRODUCTS_LIST.dialogProductTypeInput, productType)
+    .then(selected => {
+      organization.productType = selected;
+      return organization;
+    });
+}
+
 export function fillUpProductOrganization({
   productType,
   category,
@@ -121,4 +132,30 @@ export function fillUpCollectionAndCategory({ category, collection }) {
       organization.collection = selected;
       return organization;
     });
+}
+
+export function addVariantToDataGrid(variantName) {
+  cy.get(PRODUCT_DETAILS.addVariantButton)
+    .should("exist")
+    .click()
+    .get(PRODUCT_DETAILS.dataGridTable)
+    .should("be.visible")
+    .get(PRODUCT_DETAILS.firstRowDataGrid)
+    .click({ force: true })
+    .type(variantName)
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .confirmationMessageShouldAppear()
+    .reload()
+    .waitForProgressBarToNotBeVisible();
+}
+
+export function enterVariantEditPage() {
+  cy.get(PRODUCT_DETAILS.dataGridTable)
+    .should("be.visible")
+    .wait(1000)
+    .get(BUTTON_SELECTORS.showMoreButton)
+    .click()
+    .get(PRODUCT_DETAILS.editVariant)
+    .click();
 }

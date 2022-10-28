@@ -1,9 +1,9 @@
 import isArray from "lodash/isArray";
 import { stringify } from "qs";
 
-export function stringifyQs(params: {}): string {
+export function stringifyQs(params: {}, arrayFormat?: string): string {
   return stringify(params, {
-    arrayFormat: "indices",
+    arrayFormat: arrayFormat || "indices",
   });
 }
 

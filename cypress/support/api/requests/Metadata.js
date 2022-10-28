@@ -1,6 +1,6 @@
-export function updateMetadata(token, key, value) {
+export function updateMetadata(id, key, value) {
   const mutation = `mutation{
-    updateMetadata(id:"${token}" input:{
+    updateMetadata(id:"${id}" input:{
       key:"${key}",
       value:"${value}"
     }){

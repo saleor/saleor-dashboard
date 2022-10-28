@@ -1,13 +1,8 @@
-import {
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -76,7 +71,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
           <ResponsiveTable className={classes.table}>
             {!!lines?.length && (
               <TableHead>
-                <TableRow>
+                <TableRowLink>
                   <TableCell className={classes.colName}>
                     {intl.formatMessage(messages.productLabel)}
                   </TableCell>
@@ -86,7 +81,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                   <TableCell className={classes.colWarehouseStock}>
                     {intl.formatMessage(messages.warehouseStockLabel)}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               </TableHead>
             )}
 

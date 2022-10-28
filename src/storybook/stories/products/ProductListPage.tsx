@@ -49,11 +49,11 @@ const props: ProductListPageProps = {
   onExport: () => undefined,
   products,
   selectedChannelId: "123",
+  selectedProductIds: ["123"],
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"],
   },
-  totalGridAttributes: attributes.length,
 };
 
 storiesOf("Views / Products / Product list", module)

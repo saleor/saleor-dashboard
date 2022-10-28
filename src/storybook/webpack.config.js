@@ -3,8 +3,6 @@ const path = require("path");
 const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
-const resolve = resolvePath => path.resolve(__dirname, resolvePath);
-
 module.exports = ({ config }) => {
   config.module.rules.push({
     exclude: /node_modules/,

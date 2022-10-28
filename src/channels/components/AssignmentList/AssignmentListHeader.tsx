@@ -17,13 +17,13 @@ const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
   itemsName,
   loading,
 }) => {
-  const classes = useHeaderStyles();
+  const { container, skeleton, ...accordion } = useHeaderStyles();
 
   return (
-    <div className={classes.container}>
-      <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
+    <div className={container}>
+      <AccordionSummary expandIcon={<IconChevronDown />} classes={accordion}>
         {loading ? (
-          <Skeleton className={classes.skeleton} />
+          <Skeleton className={skeleton} />
         ) : (
           <Typography variant="subtitle2" color="textSecondary">
             {`${assignCount} ${itemsName.toLowerCase()}`}

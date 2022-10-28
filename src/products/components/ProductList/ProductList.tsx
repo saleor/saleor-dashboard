@@ -1,10 +1,4 @@
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,
@@ -319,13 +313,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
           </DisplayColumn>
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
             />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <TableBody>
           {renderCollection(
@@ -356,27 +350,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
-                    {product?.productType ? (
-                      <div className={classes.colNameWrapper}>
-                        <span data-test-id="name">{product.name}</span>
-                        {product?.productType && (
-                          <Typography variant="caption">
-                            {product.productType.hasVariants ? (
-                              <FormattedMessage
-                                id="X90t9n"
-                                defaultMessage="Configurable"
-                                description="product type"
-                              />
-                            ) : (
-                              <FormattedMessage
-                                id="Jz/Cb+"
-                                defaultMessage="Simple"
-                                description="product type"
-                              />
-                            )}
-                          </Typography>
-                        )}
-                      </div>
+                    {product?.name ? (
+                      <span data-test-id="name">{product.name}</span>
                     ) : (
                       <Skeleton />
                     )}
@@ -467,14 +442,14 @@ export const ProductList: React.FC<ProductListProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="Q1Uzbb"
                     defaultMessage="No products found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

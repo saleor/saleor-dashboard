@@ -17,6 +17,8 @@ jobs:
       REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      MARKETPLACE_URL: "https://apps.saleor.io/"
+      SALEOR_APPS_ENDPOINT: "https://apps.saleor.io/api/saleor-apps"
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2

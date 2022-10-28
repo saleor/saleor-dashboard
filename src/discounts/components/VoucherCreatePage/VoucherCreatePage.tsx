@@ -110,7 +110,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       formId={VOUCHER_CREATE_FORM_ID}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, submit, triggerChange, set, isSaveDisabled }) => {
+      {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change,
         );
@@ -203,7 +203,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
-              disabled={isSaveDisabled}
+              disabled={disabled}
               onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}

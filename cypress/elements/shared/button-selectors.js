@@ -16,5 +16,5 @@ export const BUTTON_SELECTORS = {
   button: "button",
   deleteAssignedItemsConsentCheckbox: '[name="delete-assigned-items-consent"]',
   deleteSelectedElementsButton:
-    '[data-test-id = "delete-selected-elements-icon"]'
+    '[data-test-id = "delete-selected-elements-icon"]',
 };

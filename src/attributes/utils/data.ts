@@ -420,6 +420,27 @@ export const getProductReferenceAttributeDisplayData = (
   },
 });
 
+export const getProductVariantReferenceAttributeDisplayData = (
+  attribute: AttributeInput,
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+) => ({
+  ...attribute,
+  data: {
+    ...attribute.data,
+    references:
+      referenceProducts?.length > 0 && attribute.value?.length > 0
+        ? mapNodeToChoice(
+            attribute.value.map(value => {
+              const reference = mapReferenceProductsToVariants(
+                referenceProducts,
+              ).find(reference => reference.id === value);
+              return { ...reference };
+            }),
+          )
+        : [],
+  },
+});
+
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: RelayToFlat<SearchPagesQuery["search"]>,
@@ -429,6 +450,13 @@ export const getReferenceAttributeDisplayData = (
     return getPageReferenceAttributeDisplayData(attribute, referencePages);
   } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
     return getProductReferenceAttributeDisplayData(
+      attribute,
+      referenceProducts,
+    );
+  } else if (
+    attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT
+  ) {
+    return getProductVariantReferenceAttributeDisplayData(
       attribute,
       referenceProducts,
     );
@@ -464,22 +492,18 @@ export const getSelectedReferencesFromAttribute = <T extends Node>(
       !attribute?.value?.some(selectedValue => selectedValue === value.id),
   ) || [];
 
-export const getAttributeValuesFromReferences = (
+export const getReferenceAttributeEntityTypeFromAttribute = (
   attributeId: string,
   attributes?: AttributeInput[],
-  referencePages?: RelayToFlat<SearchPagesQuery["search"]>,
-  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>,
-) => {
-  const attribute = attributes?.find(attribute => attribute.id === attributeId);
+): AttributeEntityTypeEnum | undefined =>
+  attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 
-  if (attribute?.data?.entityType === AttributeEntityTypeEnum.PAGE) {
-    return mapPagesToChoices(
-      getSelectedReferencesFromAttribute(attribute, referencePages),
-    );
-  } else if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
-    return mapNodeToChoice(
-      getSelectedReferencesFromAttribute(attribute, referenceProducts),
-    );
-  }
-  return [];
-};
+export const mapReferenceProductsToVariants = (
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+) =>
+  referenceProducts.flatMap(product =>
+    product.variants.map(variant => ({
+      ...variant,
+      name: product.name + " " + variant.name,
+    })),
+  );

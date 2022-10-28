@@ -47,44 +47,37 @@ describe("As a staff user I want to navigate through shop using different permis
     if (key !== "all") {
       it(
         `should be able to navigate through shop as a staff member using ${key} permission. ${permissionsOptions[key].testCase}`,
-        { tags: ["@allEnv", "@navigation"] },
+        { tags: ["@allEnv", "@navigation", "@stable", "@oldRelease"] },
         () => {
           const permissionOption = permissionsOptions[key];
           const permissions = permissionOption.permissions;
+
           cy.clearSessionData();
           permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
             permissionOption,
           );
-          permissionsSteps
-            .getDisplayedSelectors()
-            .then(selectors => {
-              permissionsSteps.expectAllSelectorsPermitted(
-                permissions,
-                selectors,
-              );
-            })
-            .then(() => {
-              if (!permissions) {
-                return;
-              }
-              permissions.forEach(permission => {
-                if (permission.parent) {
-                  cy.get(permission.parent.parentMenuSelector)
-                    .click()
-                    .then(() => {
-                      permissionsSteps.getDisplayedSelectors(
-                        permission.parent.parentSelectors,
-                      );
-                    })
-                    .then(parentSelectors => {
-                      permissionsSteps.expectAllSelectorsPermitted(
-                        permissions,
-                        parentSelectors,
-                      );
-                    });
-                }
-              });
-            });
+          permissionsSteps.getDisplayedSelectors().then(selectors => {
+            permissionsSteps.expectAllSelectorsPermitted(
+              permissions,
+              selectors,
+            );
+          });
+          if (!permissions) {
+            return;
+          }
+          permissions.forEach(permission => {
+            if (permission.parent) {
+              cy.get(permission.parent.parentMenuSelector).click();
+              permissionsSteps
+                .getDisplayedSelectors(permission.parent.parentSelectors)
+                .then(parentSelectors => {
+                  permissionsSteps.expectAllSelectorsPermitted(
+                    permissions,
+                    parentSelectors,
+                  );
+                });
+            }
+          });
         },
       );
     }
@@ -92,9 +85,10 @@ describe("As a staff user I want to navigate through shop using different permis
 
   it(
     `should be able to navigate through shop as a staff member using all permissions. ${permissionsOptions.all.testCase}`,
-    { tags: ["@critical", "@allEnv", "@navigation", "@stable"] },
+    { tags: ["@critical", "@allEnv", "@navigation", "@stable", "@oldRelease"] },
     () => {
       const permissionOption = permissionsOptions.all;
+
       cy.clearSessionData();
       permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
         permissionOption,

@@ -20,6 +20,7 @@ export type PageListUrlDialog =
   | "publish"
   | "unpublish"
   | "remove"
+  | "create-page"
   | TabActionDialog;
 export enum PageListUrlSortField {
   title = "title",
@@ -49,10 +50,16 @@ export const pageListUrl = (params?: PageListUrlQueryParams) =>
 
 export const pagePath = (id: string) => urlJoin(pagesSection, id);
 export type PageUrlDialog = "remove" | "assign-attribute-value";
+export interface PageCreateUrlPageType {
+  "page-type-id"?: string;
+}
 export type PageUrlQueryParams = Dialog<PageUrlDialog> & SingleAction;
+export type PageCreateUrlQueryParams = Dialog<PageUrlDialog> &
+  SingleAction &
+  PageCreateUrlPageType;
 export const pageUrl = (id: string, params?: PageUrlQueryParams) =>
   pagePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const pageCreatePath = urlJoin(pagesSection, "add");
-export const pageCreateUrl = (params?: PageUrlQueryParams) =>
+export const pageCreateUrl = (params?: PageCreateUrlQueryParams) =>
   pageCreatePath + "?" + stringifyQs(params);

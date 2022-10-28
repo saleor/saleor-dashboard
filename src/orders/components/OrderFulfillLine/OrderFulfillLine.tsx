@@ -1,6 +1,7 @@
-import { TableCell, TableRow, TextField, Typography } from "@material-ui/core";
+import { TableCell, TextField, Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { OrderFulfillLineFragment } from "@saleor/graphql";
 import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import {
@@ -58,9 +59,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
 
   const isStockExceeded = lineFormQuantity > availableQuantity;
 
-  if (!line || !lineFormWarehouse) {
+  if (!line) {
     return (
-      <TableRow key={lineIndex}>
+      <TableRowLink key={lineIndex}>
         <TableCellAvatar className={classes.colName}>
           <Skeleton />
         </TableCellAvatar>
@@ -76,12 +77,12 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         <TableCell className={classes.colWarehouse}>
           <Skeleton />
         </TableCell>
-      </TableRow>
+      </TableRowLink>
     );
   }
 
   return (
-    <TableRow key={line.id}>
+    <TableRowLink key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={line?.thumbnail?.url}
@@ -156,7 +157,11 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         </TableCell>
       )}
       <TableCell className={classes.colStock} key="total">
-        {isPreorder || isDeletedVariant ? undefined : availableQuantity}
+        {lineFormWarehouse
+          ? isPreorder || isDeletedVariant
+            ? undefined
+            : availableQuantity
+          : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
         <IconButton
@@ -165,14 +170,18 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           data-test-id="select-warehouse-button"
         >
           <div className={classes.warehouseButtonContent}>
-            <div className={classes.warehouseButtonContentText}>
-              {lineFormWarehouse?.name ?? <Skeleton />}
-            </div>
+            <Typography
+              color={lineFormWarehouse ? "textPrimary" : "textSecondary"}
+              className={classes.warehouseButtonContentText}
+            >
+              {lineFormWarehouse?.name ??
+                intl.formatMessage(messages.selectWarehouse)}
+            </Typography>
             <ChevronIcon />
           </div>
         </IconButton>
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 OrderFulfillLine.displayName = "OrderFulfillLine";

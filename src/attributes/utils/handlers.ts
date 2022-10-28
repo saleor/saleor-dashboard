@@ -88,7 +88,10 @@ export function createFetchReferencesHandler(
     ) {
       fetchReferencePages(value);
     } else if (
-      attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT &&
+      [
+        AttributeEntityTypeEnum.PRODUCT,
+        AttributeEntityTypeEnum.PRODUCT_VARIANT,
+      ].includes(attribute.data.entityType) &&
       fetchReferenceProducts
     ) {
       fetchReferenceProducts(value);
@@ -112,7 +115,12 @@ export function createFetchMoreReferencesHandler(
 
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return fetchMoreReferencePages;
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+  } else if (
+    [
+      AttributeEntityTypeEnum.PRODUCT,
+      AttributeEntityTypeEnum.PRODUCT_VARIANT,
+    ].includes(attribute.data.entityType)
+  ) {
     return fetchMoreReferenceProducts;
   }
 }

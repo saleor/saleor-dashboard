@@ -2,7 +2,7 @@ name: Deploy to staging demo
 on:
   push:
     tags:
-      - 3.7**
+      - 3.8**
   workflow_dispatch:
     inputs:
       git_ref:
@@ -20,6 +20,8 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      MARKETPLACE_URL: "https://apps.saleor.io/"
+      SALEOR_APPS_ENDPOINT: "https://apps.saleor.io/api/saleor-apps"
       ENVIRONMENT: demo-staging
       DEMO_MODE: true
     steps:

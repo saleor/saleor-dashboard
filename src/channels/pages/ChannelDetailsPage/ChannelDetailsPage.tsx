@@ -2,9 +2,11 @@ import ChannelAllocationStrategy from "@saleor/channels/components/ChannelAlloca
 import ShippingZones from "@saleor/channels/components/ShippingZones";
 import Warehouses from "@saleor/channels/components/Warehouses";
 import { channelsListUrl } from "@saleor/channels/urls";
+import { validateChannelFormData } from "@saleor/channels/validation";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
@@ -13,6 +15,7 @@ import {
   ChannelErrorFragment,
   CountryCode,
   CountryFragment,
+  PermissionEnum,
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
   StockSettingsInput,
@@ -39,7 +42,9 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
-export interface ChannelDetailsPageProps<TErrors> {
+export interface ChannelDetailsPageProps<
+  TErrors extends ChannelErrorFragment[]
+> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
@@ -56,13 +61,13 @@ export interface ChannelDetailsPageProps<TErrors> {
   allWarehousesCount: number;
   countries: CountryFragment[];
   onDelete?: () => void;
-  onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
+  onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
 }
 
-const ChannelDetailsPage = function<TErrors>({
+const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   channel,
   currencyCodes,
   disabled,
@@ -85,6 +90,10 @@ const ChannelDetailsPage = function<TErrors>({
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
+
+  const [validationErrors, setValidationErrors] = useState<
+    ChannelErrorFragment[]
+  >([]);
 
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [
@@ -131,25 +140,21 @@ const ChannelDetailsPage = function<TErrors>({
         !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
 
-  const checkIfSaveIsDisabled = (data: FormData) => {
-    const isValid =
-      !!data.name &&
-      !!data.slug &&
-      !!data.currencyCode &&
-      !!data.defaultCountry &&
-      data.name.trim().length > 0;
+  const handleSubmit = async (data: FormData) => {
+    const errors = validateChannelFormData(data);
 
-    return disabled || !isValid;
+    setValidationErrors(errors);
+
+    if (errors.length) {
+      return errors;
+    }
+
+    return onSubmit(data);
   };
 
   return (
-    <Form
-      confirmLeave
-      onSubmit={onSubmit}
-      initial={initialData}
-      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
-    >
-      {({ change, data, submit, set, isSaveDisabled, triggerChange }) => {
+    <Form confirmLeave onSubmit={handleSubmit} initial={initialData}>
+      {({ change, data, submit, set, triggerChange }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
@@ -186,6 +191,8 @@ const ChannelDetailsPage = function<TErrors>({
         );
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
 
+        const allErrors = [...errors, ...validationErrors];
+
         return (
           <>
             <Grid>
@@ -200,7 +207,7 @@ const ChannelDetailsPage = function<TErrors>({
                   onChange={change}
                   onCurrencyCodeChange={handleCurrencyCodeSelect}
                   onDefaultCountryChange={handleDefaultCountrySelect}
-                  errors={errors}
+                  errors={allErrors}
                 />
               </div>
               <div>
@@ -214,33 +221,45 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices(
-                    data.shippingZonesToDisplay,
-                  )}
-                  shippingZones={data.shippingZonesToDisplay}
-                  addShippingZone={addShippingZone}
-                  removeShippingZone={removeShippingZone}
-                  searchShippingZones={searchShippingZones}
-                  fetchMoreShippingZones={fetchMoreShippingZones}
-                  totalCount={allShippingZonesCount}
-                  loading={disabled}
-                />
-                <CardSpacer />
-                <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices(
-                    data.warehousesToDisplay,
-                  )}
-                  warehouses={data.warehousesToDisplay}
-                  addWarehouse={addWarehouse}
-                  removeWarehouse={removeWarehouse}
-                  searchWarehouses={searchWarehouses}
-                  fetchMoreWarehouses={fetchMoreWarehouses}
-                  totalCount={allWarehousesCount}
-                  reorderWarehouses={reorderWarehouse}
-                  loading={disabled}
-                />
-                <CardSpacer />
+                <RequirePermissions
+                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                >
+                  <ShippingZones
+                    shippingZonesChoices={getFilteredShippingZonesChoices(
+                      data.shippingZonesToDisplay,
+                    )}
+                    shippingZones={data.shippingZonesToDisplay}
+                    addShippingZone={addShippingZone}
+                    removeShippingZone={removeShippingZone}
+                    searchShippingZones={searchShippingZones}
+                    fetchMoreShippingZones={fetchMoreShippingZones}
+                    totalCount={allShippingZonesCount}
+                    loading={disabled}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
+                <RequirePermissions
+                  oneOfPermissions={[
+                    PermissionEnum.MANAGE_SHIPPING,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PRODUCTS,
+                  ]}
+                >
+                  <Warehouses
+                    warehousesChoices={getFilteredWarehousesChoices(
+                      data.warehousesToDisplay,
+                    )}
+                    warehouses={data.warehousesToDisplay}
+                    addWarehouse={addWarehouse}
+                    removeWarehouse={removeWarehouse}
+                    searchWarehouses={searchWarehouses}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    totalCount={allWarehousesCount}
+                    reorderWarehouses={reorderWarehouse}
+                    loading={disabled}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
                 <ChannelAllocationStrategy
                   data={data}
                   disabled={disabled}
@@ -253,7 +272,7 @@ const ChannelDetailsPage = function<TErrors>({
               onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}
-              disabled={isSaveDisabled}
+              disabled={disabled}
             />
           </>
         );

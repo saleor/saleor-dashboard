@@ -19,12 +19,28 @@ interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
 }
 
 const ExternalLink: React.FC<ExternalLinkProps> = props => {
-  const { className, children, href, typographyProps, ...rest } = props;
+  const {
+    className,
+    children,
+    href,
+    typographyProps,
+    target,
+    rel,
+    ...rest
+  } = props;
 
   const classes = useStyles(props);
 
+  const opensNewTab = target === "_blank";
+
   return (
-    <a href={href} className={classes.link} {...rest}>
+    <a
+      href={href}
+      className={classes.link}
+      target={target}
+      rel={rel ?? opensNewTab ? "noopener noreferer" : ""}
+      {...rest}
+    >
       <Typography className={className} color="primary" {...typographyProps}>
         {children}
       </Typography>

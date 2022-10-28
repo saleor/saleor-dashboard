@@ -3,13 +3,13 @@ import {
   CircularProgress as Progress,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AppsInstallationsQuery, JobStatusEnum } from "@saleor/graphql";
 import {
   DeleteIcon,
@@ -27,14 +27,12 @@ import { useStyles } from "../../styles";
 
 export interface AppsInProgressProps {
   appsList: AppsInstallationsQuery["appsInstallations"];
-  disabled: boolean;
   onAppInstallRetry: (id: string) => void;
   onRemove: (id: string) => void;
 }
 
 const AppsInProgress: React.FC<AppsInProgressProps> = ({
   appsList,
-  disabled,
   onAppInstallRetry,
   onRemove,
   ...props
@@ -54,7 +52,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
       <ResponsiveTable>
         <TableBody>
           {renderCollection(appsList, ({ status, appName, id, message }) => (
-            <TableRow key={id} className={classes.tableRow}>
+            <TableRowLink key={id} className={classes.tableRow}>
               <TableCell className={classes.colName}>
                 <span data-tc="name">{appName}</span>
               </TableCell>
@@ -116,7 +114,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                   </TableButtonWrapper>
                 </TableCell>
               )}
-            </TableRow>
+            </TableRowLink>
           ))}
         </TableBody>
       </ResponsiveTable>

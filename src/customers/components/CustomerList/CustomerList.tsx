@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
 import Checkbox from "@saleor/components/Checkbox";
 import RequirePermissions, {
@@ -125,13 +125,13 @@ const CustomerList: React.FC<CustomerListProps> = props => {
         </RequirePermissions>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -172,14 +172,14 @@ const CustomerList: React.FC<CustomerListProps> = props => {
             );
           },
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="FpIcp9"
                   defaultMessage="No customers found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

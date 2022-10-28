@@ -3,8 +3,8 @@ import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   order: {
-    id: "bP7ZLP",
-    defaultMessage: "Entire order",
+    id: "ymo+cm",
+    defaultMessage: "All products",
     description: "voucher discount",
   },
   products: {
@@ -16,6 +16,29 @@ const messages = defineMessages({
     id: "WasHjQ",
     defaultMessage: "Shipment",
     description: "voucher discount",
+  },
+});
+
+export const itemsQuantityMessages = defineMessages({
+  categories: {
+    id: "ppLwx3",
+    defaultMessage: "Categories ({quantity})",
+    description: "number of categories",
+  },
+  collections: {
+    id: "QdGzUf",
+    defaultMessage: "Collections ({quantity})",
+    description: "number of collections",
+  },
+  products: {
+    id: "bNw8PM",
+    defaultMessage: "Products ({quantity})",
+    description: "number of products",
+  },
+  variants: {
+    id: "HVlMK2",
+    defaultMessage: "Variants ({quantity})",
+    description: "number of variants",
   },
 });
 

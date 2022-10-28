@@ -1,10 +1,10 @@
 import {
   TableCell,
   TableHead as MuiTableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -84,7 +84,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
 
   return (
     <MuiTableHead {...muiTableHeadProps}>
-      <TableRow>
+      <TableRowLink>
         {dragRows && (items === undefined || items.length > 0) && <TableCell />}
         {(items === undefined || items.length > 0) && (
           <TableCell
@@ -127,7 +127,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
         ) : (
           children
         )}
-      </TableRow>
+      </TableRowLink>
     </MuiTableHead>
   );
 };

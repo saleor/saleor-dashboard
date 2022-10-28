@@ -21,7 +21,10 @@ export type AppListUrlQueryParams = ActiveTab &
 
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
+  productIds?: string[];
   orderId?: string;
+  customerId?: string;
+  customerIds?: string[];
 }
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
@@ -54,7 +57,8 @@ export const appDeepPath = (id: string, subPath: string) =>
   urlJoin(appPath(id), subPath);
 export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
 export const appInstallPath = urlJoin(appsSection, "install");
-export const appInstallUrl = appInstallPath;
+export const createAppInstallUrl = (manifestUrl: string) =>
+  `${appInstallPath}?manifestUrl=${manifestUrl}`;
 
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
@@ -112,3 +116,16 @@ export const customAppAddUrl = customAppAddPath;
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
+
+export const appIframeUrl = (
+  appId: string,
+  appUrl: string,
+  shopDomainHost: string,
+  params: AppDetailsUrlQueryParams,
+) => {
+  const iframeContextQueryString = `?${stringifyQs(
+    { domain: shopDomainHost, id: appId, ...params },
+    "comma",
+  )}`;
+  return urlJoin(appUrl, window.location.search, iframeContextQueryString);
+};

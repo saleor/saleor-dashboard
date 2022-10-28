@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -14,8 +8,10 @@ import {
   SortableTableRow,
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   AttributeInputTypeEnum,
+  AttributeValueFragment,
   AttributeValueListFragment,
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -75,6 +71,15 @@ const useStyles = makeStyles(
   { name: "AttributeValues" },
 );
 
+const getSwatchCellStyle = (value: AttributeValueFragment) => {
+  if (!value) {
+    return;
+  }
+  return value.file
+    ? { backgroundImage: `url(${value.file.url})` }
+    : { backgroundColor: value.value };
+};
+
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
   onValueAdd,
@@ -120,7 +125,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
       />
       <ResponsiveTable>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell className={classes.columnDrag} />
             {isSwatch && (
               <TableCell className={classes.columnSwatch}>
@@ -146,10 +151,10 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               />
             </TableCell>
             <TableCell className={classes.iconCell} />
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePagination
               colSpan={numberOfColumns}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
@@ -161,7 +166,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
             />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <SortableTableBody onSortEnd={onValueReorder}>
           {renderCollection(
@@ -179,11 +184,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     <div
                       data-test-id="swatch-image"
                       className={classes.swatch}
-                      style={
-                        value?.file
-                          ? { backgroundImage: `url(${value.file.url})` }
-                          : { backgroundColor: value.value }
-                      }
+                      style={getSwatchCellStyle(value)}
                     />
                   </TableCell>
                 )}
@@ -205,7 +206,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
               </SortableTableRow>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="g5zIpS"
@@ -213,7 +214,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     description="No attribute values found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </SortableTableBody>

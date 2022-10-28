@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -70,7 +64,6 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   return (
     <Card>
       <CardTitle
-        height="const"
         title={intl.formatMessage({
           id: "h5r9+x",
           defaultMessage: "Shipping By Zone",
@@ -114,14 +107,14 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           <TableCell className={classes.colAction} />
         </TableHead>
         <TableFooter>
-          <TableRow>
+          <TableRowLink>
             <TablePaginationWithContext
               colSpan={numberOfColumns}
               settings={settings}
               disabled={disabled}
               onUpdateListSettings={onUpdateListSettings}
             />
-          </TableRow>
+          </TableRowLink>
         </TableFooter>
         <TableBody>
           {renderCollection(
@@ -182,14 +175,14 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="IhK1F3"
                     defaultMessage="No shipping zones found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

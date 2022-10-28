@@ -5,12 +5,12 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   OrderDetailsFragment,
   OrderErrorFragment,
@@ -24,7 +24,11 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
-import { getById } from "../utils";
+import {
+  getById,
+  getQuantityDataFromItems,
+  getReplacementDataFromItems,
+} from "../utils";
 import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
@@ -134,7 +138,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
       </CardContent>
       <ResponsiveTable>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell>
               <FormattedMessage
                 id="aAAxKp"
@@ -164,7 +168,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 description="table column header"
               />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -180,14 +184,18 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 variant,
               } = line;
               const isValueError = false;
-              const isRefunded = itemsQuantities.find(getById(id)).data
-                .isRefunded;
+              const { isRefunded, currentQuantity } = getQuantityDataFromItems(
+                itemsQuantities,
+                id,
+              );
+              const { isSelected } = getReplacementDataFromItems(
+                itemsSelections,
+                id,
+              );
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
               const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
-              const isSelected = itemsSelections.find(getById(id))?.value;
-              const currentQuantity = itemsQuantities.find(getById(id))?.value;
               const anyLineWithoutVariant = lines.some(
                 ({ variant }) => !variant,
               );
@@ -196,7 +204,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 : "50%";
 
               return (
-                <TableRow key={id}>
+                <TableRowLink key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
                     style={{ width: productNameCellWidth }}
@@ -251,15 +259,15 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                       />
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={4}>
                   <Skeleton />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

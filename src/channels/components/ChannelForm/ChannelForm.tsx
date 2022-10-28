@@ -72,10 +72,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode"],
+    ["name", "slug", "currencyCode", "defaultCountry"],
     errors,
   );
-  const classes = useStyles({});
+  const classes = useStyles();
+
   return (
     <>
       <Card>
