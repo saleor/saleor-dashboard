@@ -53,7 +53,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/heads/') }}
         run: |
           set -x
-          # Version name is the branch name, slashes are substitued by dashes
+          # Version name is the branch name, slashes are substituted by dashes
           CLEAN_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
           # Target with the branch name as the tag, e.g. unstable-main
           TAGS=$"\
@@ -106,7 +106,7 @@ jobs:
             PROJECT_VERSION=${{ env.NAMED_VERSION }}
             COMMIT_ID=${{ github.sha }}
 
-      - name: Ourput image digest
+      - name: Output image digest
         run: |
           echo $"\
             Digest: ${{ steps.docker_build.outputs.digest }}
