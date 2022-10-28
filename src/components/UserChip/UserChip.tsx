@@ -1,24 +1,11 @@
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { UserFragment } from "@saleor/graphql";
-import { makeStyles, UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
+import { UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-
-const useStyles = makeStyles(
-  () => ({
-    switch: {
-      "&&:hover": {
-        background: "transparent",
-      },
-    },
-  }),
-  {
-    name: "UserChip",
-  },
-);
 
 export interface UserChipProps {
   isDarkThemeEnabled: boolean;
@@ -33,7 +20,6 @@ const UserChip: React.FC<UserChipProps> = ({
   onLogout,
   onThemeToggle,
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
 
   return (
@@ -64,16 +50,7 @@ const UserChip: React.FC<UserChipProps> = ({
         data-test-is-dark={isDarkThemeEnabled}
       >
         <FormControlLabel
-          control={
-            <Switch
-              classes={{
-                switchBase: classes.switch,
-              }}
-              checked={isDarkThemeEnabled}
-              color="primary"
-              disableRipple
-            />
-          }
+          control={<Switch checked={isDarkThemeEnabled} disableRipple />}
           label={intl.formatMessage({
             id: "2r4cTE",
             defaultMessage: "Enable Dark Mode",
