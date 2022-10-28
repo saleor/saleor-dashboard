@@ -79,7 +79,10 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const { code, state } = params;
     const isCallbackPath = location.pathname.includes(loginCallbackPath);
 
-    if (code && state && isCallbackPath) {
+    const externalAuthParamsExist = code && state && isCallbackPath;
+    const externalAuthNotPerformed = !authenticating && !error;
+
+    if (externalAuthParamsExist && externalAuthNotPerformed) {
       handleExternalAuthentication(code, state);
     }
   }, []);
