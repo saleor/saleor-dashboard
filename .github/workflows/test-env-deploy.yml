@@ -69,7 +69,7 @@ jobs:
           # Use custom API_URL or the default one
           API_URL: ${{ steps.api_url.outputs.custom_api_url || 'https://qa.staging.saleor.cloud/graphql/' }}
           MARKETPLACE_URL: ${{ steps.marketplace_url.outputs.custom_marketplace_url }}
-          APP_MOUNT_URL: /
+          APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
         run: |
@@ -165,7 +165,7 @@ jobs:
 
       - name: echo-tags
         run: |
-              echo ${{steps.get_tags.outputs.result}}
+          echo ${{steps.get_tags.outputs.result}}
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -214,7 +214,7 @@ jobs:
         uses: cypress-io/github-action@v4
         env:
           API_URL: ${{ steps.api_url.outputs.custom_api_url }}
-          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: https://${{needs.deploy.outputs.base_URL}}
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
@@ -225,6 +225,6 @@ jobs:
           CYPRESS_grepTags: ${{ needs.prepare-tests.outputs.tags }}
         with:
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}

@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       API_URL: /graphql/
-      APP_MOUNT_URL: /dashboard/
+      APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
       SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ env.VERSION }}
-      
+
       - name: Set environment
         # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
         run: |

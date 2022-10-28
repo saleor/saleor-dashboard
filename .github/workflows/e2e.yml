@@ -114,7 +114,7 @@ jobs:
         uses: cypress-io/github-action@v4
         env:
           API_URL: ${{ steps.api_url.outputs.custom_api_url }}
-          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: https://${{ steps.set-domain.outputs.domain }}/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}

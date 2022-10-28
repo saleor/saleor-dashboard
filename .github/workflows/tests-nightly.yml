@@ -127,7 +127,7 @@ jobs:
         uses: cypress-io/github-action@v4
         env:
           API_URL: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
-          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
@@ -223,7 +223,7 @@ jobs:
         uses: cypress-io/github-action@v4
         env:
           API_URL: ${{ needs.get-environment-variables.outputs.url }}graphql/
-          APP_MOUNT_URL: ${{ secrets.APP_MOUNT_URI }}
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
           CYPRESS_baseUrl: ${{ needs.get-environment-variables.outputs.url }}dashboard/
           CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
