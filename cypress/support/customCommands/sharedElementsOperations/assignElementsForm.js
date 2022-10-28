@@ -10,7 +10,7 @@ Cypress.Commands.add("assignElements", name => {
       });
       cy.contains(ASSIGN_ELEMENTS_SELECTORS.tableRow, name)
         .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-        .click()
+        .check({ force: true })
         .get(ASSIGN_ELEMENTS_SELECTORS.submitButton)
         .click();
     });
