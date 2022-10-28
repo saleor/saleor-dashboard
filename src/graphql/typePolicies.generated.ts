@@ -4788,15 +4788,19 @@ export type TransactionCreateErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionEventKeySpecifier = ('id' | 'createdAt' | 'status' | 'reference' | 'name' | TransactionEventKeySpecifier)[];
+export type TransactionEventKeySpecifier = ('id' | 'createdAt' | 'status' | 'reference' | 'pspReference' | 'name' | 'externalUrl' | 'amount' | 'type' | TransactionEventKeySpecifier)[];
 export type TransactionEventFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	reference?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
+	pspReference?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	externalUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	amount?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionItemKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'createdAt' | 'modifiedAt' | 'actions' | 'authorizedAmount' | 'refundedAmount' | 'voidedAmount' | 'chargedAmount' | 'status' | 'type' | 'reference' | 'order' | 'events' | 'user' | 'app' | TransactionItemKeySpecifier)[];
+export type TransactionItemKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'createdAt' | 'modifiedAt' | 'actions' | 'authorizedAmount' | 'refundedAmount' | 'voidedAmount' | 'chargedAmount' | 'status' | 'type' | 'reference' | 'pspReference' | 'order' | 'events' | 'user' | 'app' | 'externalUrl' | TransactionItemKeySpecifier)[];
 export type TransactionItemFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4815,10 +4819,12 @@ export type TransactionItemFieldPolicy = {
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	reference?: FieldPolicy<any> | FieldReadFunction<any>,
+	pspReference?: FieldPolicy<any> | FieldReadFunction<any>,
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>,
-	app?: FieldPolicy<any> | FieldReadFunction<any>
+	app?: FieldPolicy<any> | FieldReadFunction<any>,
+	externalUrl?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TransactionRequestActionKeySpecifier = ('transaction' | 'errors' | TransactionRequestActionKeySpecifier)[];
 export type TransactionRequestActionFieldPolicy = {

@@ -979,6 +979,13 @@ export const TransactionRequestActionErrorFragmentDoc = gql`
   code
 }
     `;
+export const TransactionCreateErrorFragmentDoc = gql`
+    fragment TransactionCreateError on TransactionCreateError {
+  field
+  message
+  code
+}
+    `;
 export const OrderGrantRefundCreateErrorFragmentDoc = gql`
     fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
   field
@@ -9494,6 +9501,52 @@ export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.Mutati
 export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+export const CreateManualTransactionRefundDocument = gql`
+    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String) {
+  transactionCreate(
+    id: $orderId
+    transaction: {type: "Manual refund", status: "Success", reference: $description, amountRefunded: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, type: REFUND, name: $description}
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionCreateError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionCreateErrorFragmentDoc}`;
+export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
+
+/**
+ * __useCreateManualTransactionRefundMutation__
+ *
+ * To run a mutation, you first call `useCreateManualTransactionRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateManualTransactionRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createManualTransactionRefundMutation, { data, loading, error }] = useCreateManualTransactionRefundMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      currency: // value for 'currency'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useCreateManualTransactionRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>(CreateManualTransactionRefundDocument, options);
+      }
+export type CreateManualTransactionRefundMutationHookResult = ReturnType<typeof useCreateManualTransactionRefundMutation>;
+export type CreateManualTransactionRefundMutationResult = Apollo.MutationResult<Types.CreateManualTransactionRefundMutation>;
+export type CreateManualTransactionRefundMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(

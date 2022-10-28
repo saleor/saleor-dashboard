@@ -8773,7 +8773,7 @@
           },
           {
             "name": "richText",
-            "description": "Represents the text of the attribute value, includes formatting.\n\nRich text format. For reference see https://editorjs.io/",
+            "description": "Represents the text of the attribute value, includes formatting.\n\nRich text format. For reference see https://editorjs.io/\n\nDEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.",
             "type": {
               "kind": "SCALAR",
               "name": "JSONString",
@@ -8785,7 +8785,7 @@
           },
           {
             "name": "plainText",
-            "description": "Represents the text of the attribute value, plain text without formating.",
+            "description": "Represents the text of the attribute value, plain text without formating.\n\nDEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -9691,7 +9691,7 @@
           },
           {
             "name": "richText",
-            "description": "Represents the text of the attribute value, includes formatting.\n\nRich text format. For reference see https://editorjs.io/",
+            "description": "Represents the text of the attribute value, includes formatting.\n\nRich text format. For reference see https://editorjs.io/\n\nDEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.",
             "type": {
               "kind": "SCALAR",
               "name": "JSONString",
@@ -9703,7 +9703,7 @@
           },
           {
             "name": "plainText",
-            "description": "Represents the text of the attribute value, plain text without formating.",
+            "description": "Represents the text of the attribute value, plain text without formating.\n\nDEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -22291,6 +22291,26 @@
                 "ofType": {
                   "kind": "INPUT_OBJECT",
                   "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": "Filter by ids. \n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
                   "ofType": null
                 }
               }
@@ -51214,7 +51234,7 @@
               },
               {
                 "name": "customerId",
-                "description": "ID of customer to attach to checkout. Can be used to attach customer to checkout by staff or app. Requires IMPERSONATE_USER permission.",
+                "description": "ID of customer to attach to checkout. Requires IMPERSONATE_USER permission when customerId is different than the logged-in user.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "ID",
@@ -59109,7 +59129,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "TransactionStatus",
+              "name": "TransactionEventStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -68387,6 +68407,26 @@
         "description": null,
         "fields": null,
         "inputFields": [
+          {
+            "name": "ids",
+            "description": "Filter by ids. \n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "checkouts",
             "description": null,
@@ -96173,7 +96213,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionActionEnum",
-        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action.\n    ",
+        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. DEPRECATED: this enum value will be removed\n    in Saleor 3.9 (Feature Preview). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -96192,6 +96232,12 @@
           },
           {
             "name": "VOID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CANCEL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96427,6 +96473,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -96471,7 +96523,19 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction.",
+            "description": "Reference of the transaction. The reference and PSP reference must be unique across all `transactionItem` objects. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pspReference",
+            "description": "PSP Reference of the transaction. The PSP reference must be unique across all `transactionItem` objects.\n\nAdded in Saleor 3.8.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -96588,6 +96652,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "externalUrl",
+            "description": "The url that will allow to redirect user to payment provider page with transaction details.\n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -96640,7 +96716,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "TransactionStatus",
+                "name": "TransactionEventStatus",
                 "ofType": null
               }
             },
@@ -96650,6 +96726,22 @@
           {
             "name": "reference",
             "description": "Reference of transaction's event.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead."
+          },
+          {
+            "name": "pspReference",
+            "description": "PSP reference of transaction.\n\nAdded in Saleor 3.8.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -96674,6 +96766,50 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "externalUrl",
+            "description": "The url that will allow to redirect user to payment provider page with transaction details.\n\nAdded in Saleor 3.8.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amount",
+            "description": "The amount related to this event.\n\nAdded in Saleor 3.8.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Money",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "The type of action related to this event.\n\nAdded in Saleor 3.8.",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "TransactionEventActionTypeEnum",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -96685,6 +96821,41 @@
           }
         ],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionEventActionTypeEnum",
+        "description": "Represents possible event actions.\n\n    The following actions are possible:\n    AUTHORIZE - Represents a authorize event.\n    CHARGE - Represents a charge event.\n    REFUND - Represents a refund event.\n    CANCEL - Represents a cancel event.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "AUTHORIZE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHARGE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REFUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CANCEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -96701,7 +96872,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "TransactionStatus",
+                "name": "TransactionEventStatus",
                 "ofType": null
               }
             },
@@ -96711,7 +96882,19 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction.",
+            "description": "Reference of the transaction. The reference and PSP reference must be unique across all `transactionEvent` objects. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pspReference",
+            "description": "PSP Reference related to this action. The PSP reference must be unique across all `transactionEvent` objects.\n\nAdded in Saleor 3.8.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -96732,10 +96915,81 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": "The transaction action that is related to this event.\n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "ENUM",
+              "name": "TransactionEventActionTypeEnum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amount",
+            "description": "The amount related to this event.\n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Decimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalUrl",
+            "description": "The url that will allow to redirect user to payment provider page with transaction event details.\n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "TransactionEventStatus",
+        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action. DEPRECATED: this enum value will be removed\n    in Saleor 3.9 (Feature Preview). Saleor automatically marks transaction as pending.\n    REQUEST - Represents a request that was send for the payment transaction.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "PENDING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SUCCESS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FAILURE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUEST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -97096,6 +97350,22 @@
                 "ofType": null
               }
             },
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead."
+          },
+          {
+            "name": "pspReference",
+            "description": "PSP reference of transaction.\n\nAdded in Saleor 3.8.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -97155,6 +97425,22 @@
               "kind": "OBJECT",
               "name": "App",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalUrl",
+            "description": "The url that will allow to redirect user to payment provider page with transaction details.\n\nAdded in Saleor 3.8.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -97381,35 +97667,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "TransactionStatus",
-        "description": "An enumeration.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "PENDING",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "SUCCESS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FAILURE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "TransactionUpdate",
         "description": "Create transaction for checkout or order. Requires the following permissions: OWNER and HANDLE_PAYMENTS.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
@@ -97544,6 +97801,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -97580,7 +97843,19 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction.",
+            "description": "Reference of the transaction. The reference and PSP reference must be unique across all `transactionItem` objects. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pspReference",
+            "description": "PSP Reference of the transaction. The PSP reference must be unique across all `transactionItem` objects.\n\nAdded in Saleor 3.8.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -97693,6 +97968,18 @@
                   "ofType": null
                 }
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalUrl",
+            "description": "The url that will allow to redirect user to payment provider page with transaction details.\n\nAdded in Saleor 3.8.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
