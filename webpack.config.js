@@ -36,7 +36,9 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   hash: true,
   template: "./src/index.html",
   templateParameters: {
-    API_URI: process.env.API_URI,
+    // URI is kept for backwards compatibility.
+    // See more at https://github.com/saleor/saleor-dashboard/issues/2502
+    API_URL: process.env.API_URI,
     APP_MOUNT_URI: process.env.APP_MOUNT_URI,
   },
 });

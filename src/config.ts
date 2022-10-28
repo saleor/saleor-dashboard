@@ -2,13 +2,10 @@ import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
 
-export const IS_TEST = process.env.NODE_ENV === "test";
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () =>
-  IS_TEST
-    ? getAppDefaultUri()
-    : window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
-export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URI;
+  window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
+export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10);
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 export const MARKETPLACE_URL = process.env.MARKETPLACE_URL;
