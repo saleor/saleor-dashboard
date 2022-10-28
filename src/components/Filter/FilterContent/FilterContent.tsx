@@ -8,7 +8,7 @@ import {
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import IconChevronDown from "@saleor/icons/ChevronDown";
+import { ChevronIcon } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
@@ -229,7 +229,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     },
                     disableRipple: true,
                   }}
-                  expandIcon={<IconChevronDown />}
+                  expandIcon={<ChevronIcon />}
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
                 >
