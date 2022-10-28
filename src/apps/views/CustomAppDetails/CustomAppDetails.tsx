@@ -220,11 +220,11 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
       <CustomAppDetailsPage
-        apiUri={getApiUrl()}
+        apiUrl={getApiUrl()}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        onApiUriClick={() => open(getApiUrl(), "blank")}
+        onApiUrlClick={() => open(getApiUrl(), "blank")}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}

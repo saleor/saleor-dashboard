@@ -15,7 +15,7 @@ Cypress.Commands.add(
           Authorization: `JWT ${window.sessionStorage.getItem(authorization)}`,
         },
         method: "POST",
-        url: urlList.apiUri,
+        url: urlList.apiUrl,
         log: true,
       }).then(response => {
         const respInSting = JSON.stringify(response.body);
@@ -33,7 +33,7 @@ Cypress.Commands.add(
           Authorization: `Bearer ${authorization}`,
         },
         method: "POST",
-        url: urlList.apiUri,
+        url: urlList.apiUrl,
         log: true,
       }).then(response => {
         const respInSting = JSON.stringify(response.body);
