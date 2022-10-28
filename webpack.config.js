@@ -36,13 +36,14 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   hash: true,
   template: "./src/index.html",
   templateParameters: {
+    // fallbacks for backwards compatibility
     API_URL: process.env.API_URL || process.env.API_URI,
+    APP_MOUNT_URI: process.env.APP_MOUNT_URI,
   },
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
   MARKETPLACE_URL: "",
   SALEOR_APPS_ENDPOINT: "",
-  APP_MOUNT_URI: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",
