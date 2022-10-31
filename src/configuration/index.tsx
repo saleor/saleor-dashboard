@@ -32,7 +32,8 @@ import { warehouseSection } from "@saleor/warehouses/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
+import ConfigurationPage from "./ConfigurationPage";
+import { MenuSection } from "./types";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
@@ -81,7 +82,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage how your store charges tax",
           }),
           icon: <Taxes />,
-          permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
           url: taxConfigurationListUrl(),
           testId: "configuration-menu-taxes",
