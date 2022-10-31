@@ -78,6 +78,9 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 name="oldPassword"
                 type="password"
                 onChange={change}
+                inputProps={{
+                  spellCheck: false,
+                }}
               />
               <FormSpacer />
               <TextField
@@ -99,6 +102,9 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 name="newPassword"
                 type="password"
                 onChange={change}
+                inputProps={{
+                  spellCheck: false,
+                }}
               />
             </DialogContent>
             <DialogActions>
