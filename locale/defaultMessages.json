@@ -1162,6 +1162,10 @@
     "context": "product field",
     "string": "Export Product Weight"
   },
+  "7Jg9ec": {
+    "context": "error message",
+    "string": "You don't have permission to login."
+  },
   "7KRGqz": {
     "context": "Payment card title",
     "string": "Payment balance"
@@ -2215,6 +2219,10 @@
   "Fn3bE0": {
     "string": "Order line updated"
   },
+  "FopBSj": {
+    "context": "error message",
+    "string": "Your username and/or password are incorrect. Please try again."
+  },
   "FpIcp9": {
     "string": "No customers found"
   },
@@ -3050,10 +3058,6 @@
   "M1uijW": {
     "context": "collection",
     "string": "Not Published"
-  },
-  "M4q0Ye": {
-    "context": "error message",
-    "string": "Sorry, login went wrong. Please try again."
   },
   "M6s/9e": {
     "context": "unassign country, dialog header",
@@ -4514,6 +4518,10 @@
   "WnlZMO": {
     "context": "title",
     "string": "There’s a problem with app."
+  },
+  "Wr5UOV": {
+    "context": "error message",
+    "string": "Login went wrong. Please try again."
   },
   "Ww69SE": {
     "context": "search input placeholder",
@@ -7196,10 +7204,6 @@
   },
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"
-  },
-  "tTtoKd": {
-    "context": "error message",
-    "string": "Sorry, your username and/or password are incorrect. Please try again."
   },
   "tTuCYj": {
     "context": "all gift cards label",

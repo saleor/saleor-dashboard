@@ -12,6 +12,7 @@ export const UserDecorator = (user: UserFragment) => storyFn => (
       user,
       authenticated: false,
       authenticating: false,
+      errors: [],
     }}
   >
     {storyFn()}

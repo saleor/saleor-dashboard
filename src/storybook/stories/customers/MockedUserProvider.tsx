@@ -24,6 +24,7 @@ export const MockedUserProvider: React.FC<{
         avatar: null,
         __typename: "User",
       },
+      errors: [],
     }}
   >
     {children}

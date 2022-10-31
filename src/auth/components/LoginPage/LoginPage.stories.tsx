@@ -15,6 +15,7 @@ const props: Omit<LoginCardProps, "classes"> = {
     },
   ],
   loading: false,
+  errors: [],
   onExternalAuthentication: () => undefined,
   onSubmit: () => undefined,
 };
@@ -23,9 +24,9 @@ storiesOf("Views / Authentication / Log in", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <LoginPage {...props} />)
-  .add("error login", () => <LoginPage {...props} error={"loginError"} />)
+  .add("error login", () => <LoginPage {...props} errors={["loginError"]} />)
   .add("error external login", () => (
-    <LoginPage {...props} error={"externalLoginError"} />
+    <LoginPage {...props} errors={["externalLoginError"]} />
   ))
   .add("disabled", () => <LoginPage {...props} disabled={true} />)
   .add("loading", () => <LoginPage {...props} loading={true} />);

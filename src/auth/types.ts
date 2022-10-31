@@ -21,7 +21,9 @@ export interface RequestExternalLogoutInput {
 export type UserContextError =
   | "loginError"
   | "externalLoginError"
-  | "serverError";
+  | "unknownLoginError"
+  | "serverError"
+  | "noPermissionsError";
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;
@@ -37,5 +39,5 @@ export interface UserContext {
   user?: UserFragment;
   authenticating: boolean;
   authenticated: boolean;
-  error?: UserContextError;
+  errors: UserContextError[];
 }
