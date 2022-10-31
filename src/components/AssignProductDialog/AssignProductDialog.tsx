@@ -130,7 +130,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         id={scrollableTargetId}
       >
         <InfiniteScroll
-          dataLength={products?.length}
+          dataLength={products?.length ?? 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
