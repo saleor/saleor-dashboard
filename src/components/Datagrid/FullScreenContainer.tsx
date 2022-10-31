@@ -1,5 +1,5 @@
 import { useTheme } from "@saleor/macaw-ui";
-import React, { CSSProperties, FC, PropsWithChildren } from "react";
+import React, { CSSProperties, FC, PropsWithChildren, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import { useDelayedState } from "./useDelayedState";
@@ -50,14 +50,36 @@ const useAnimationStyles = (isOpen: boolean, duration: number) => {
   };
 };
 
-interface FullScreenContainerProps {
-  open?: boolean;
-  className?: string;
-}
+const useEscapeKey = (callback?: () => void) => {
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.code === "Escape") {
+        callback();
+      }
+    };
 
-const Portal = ({ className, children, open }) => {
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => document.removeEventListener("keydown", handleEscapeKey);
+  }, [callback]);
+};
+
+type FullScreenContainerProps = FC<
+  PropsWithChildren<{
+    open?: boolean;
+    className?: string;
+    onEscapePress?: () => void;
+  }>
+>;
+
+const Portal: FullScreenContainerProps = ({
+  className,
+  children,
+  open,
+  onEscapePress,
+}) => {
   const { delayedState: delayedOpen, duration } = useDelayedState(open);
   const styles = useAnimationStyles(open, duration);
+  useEscapeKey(onEscapePress);
 
   return ReactDOM.createPortal(
     <div className={className} style={styles}>
@@ -67,13 +89,12 @@ const Portal = ({ className, children, open }) => {
   );
 };
 
-export const FullScreenContainer: FC<PropsWithChildren<
-  FullScreenContainerProps
->> = ({ children, open, className }) => (
+export const FullScreenContainer: FullScreenContainerProps = ({
+  children,
+  ...rest
+}) => (
   <>
-    <Portal className={className} open={open}>
-      {children}
-    </Portal>
+    <Portal {...rest}>{children}</Portal>
     {children}
   </>
 );
