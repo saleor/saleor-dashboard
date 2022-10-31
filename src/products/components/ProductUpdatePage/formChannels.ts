@@ -40,18 +40,27 @@ export function useProductChannelListingsForm(
     touched.current = uniq([...touched.current, id]);
   };
 
-  const handleChannelChange = useCallback((id: string, data: ChannelOpts) => {
-    setChannels(prevData => ({
-      ...prevData,
-      updateChannels: prevData.updateChannels.map(prevListing =>
-        prevListing.channelId === id
-          ? { ...prevListing, ...data }
-          : prevListing,
-      ),
-    }));
-    triggerChange();
-    touch(id);
-  }, []);
+  const handleChannelChange = useCallback(
+    (id: string, data: ChannelOpts) => {
+      setChannels(prevData => ({
+        ...prevData,
+        updateChannels: prevData.updateChannels.map(prevListing =>
+          prevListing.channelId === id
+            ? {
+                ...prevListing,
+                ...data,
+                availableForPurchaseDate: data.isAvailableForPurchase
+                  ? data.availableForPurchase
+                  : null,
+              }
+            : prevListing,
+        ),
+      }));
+      triggerChange();
+      touch(id);
+    },
+    [setChannels, triggerChange],
+  );
 
   const handleChannelListUpdate: ProductChannelsListingDialogSubmit = useCallback(
     ({ added, removed }) => {
