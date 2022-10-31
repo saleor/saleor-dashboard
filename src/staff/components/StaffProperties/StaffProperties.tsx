@@ -212,6 +212,9 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   {...getFieldProps("firstName")}
                   onChange={onChange}
                   fullWidth
+                  inputProps={{
+                    spellCheck: false,
+                  }}
                 />
               </div>
               <div className={classes.prop}>
@@ -219,6 +222,9 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   {...getFieldProps("lastName")}
                   onChange={onChange}
                   fullWidth
+                  inputProps={{
+                    spellCheck: false,
+                  }}
                 />
               </div>
               <div className={classes.prop}>
@@ -226,6 +232,9 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   {...getFieldProps("email")}
                   onChange={onChange}
                   fullWidth
+                  inputProps={{
+                    spellCheck: false,
+                  }}
                 />
               </div>
             </div>
