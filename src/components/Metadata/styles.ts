@@ -49,6 +49,7 @@ const useStyles = makeStyles(
         transition: theme.transitions.create("transform", {
           duration: theme.transitions.duration.shorter,
         }),
+        border: 0,
       },
       header: {
         "&&": {
