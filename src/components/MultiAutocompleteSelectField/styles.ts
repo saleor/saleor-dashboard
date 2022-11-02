@@ -10,6 +10,7 @@ export const useStyles = makeStyles(
       height: 32,
       padding: 0,
       width: 32,
+      border: 0,
     },
     chipContainer: {
       display: "flex",
@@ -21,7 +22,10 @@ export const useStyles = makeStyles(
         color: theme.palette.primary.contrastText,
       },
       alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.8),
+      background:
+        theme.palette.type === "dark"
+          ? theme.palette.secondary.main
+          : fade(theme.palette.primary.main, 0.8),
       borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
