@@ -76,6 +76,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               value={data.password}
               inputProps={{
                 "data-test-id": "password",
+                spellCheck: false,
               }}
               required
             />
@@ -102,6 +103,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               }
               inputProps={{
                 "data-test-id": "confirm-password",
+                spellCheck: false,
               }}
               required
             />
