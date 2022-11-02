@@ -7851,10 +7851,6 @@
   "zSOvI0": {
     "string": "Filters"
   },
-  "zTdwWM": {
-    "context": "money",
-    "string": "{fromMoney} - {toMoney}"
-  },
   "zWM89r": {
     "context": "numeric attribute units of",
     "string": "Units of"
