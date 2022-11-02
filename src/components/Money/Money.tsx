@@ -4,9 +4,12 @@ import React from "react";
 
 const useStyles = makeStyles(
   {
+    root: {
+      fontWeight: 500,
+    },
     currency: {
-      fontSize: "0.875em",
-      marginRight: "0.5rem",
+      fontSize: "0.87em",
+      marginRight: "0.2rem",
     },
   },
   { name: "Money" },
@@ -40,10 +43,10 @@ export const Money: React.FC<MoneyProps> = ({ money }) => {
   });
 
   return (
-    <>
+    <span className={classes.root}>
       <span className={classes.currency}>{money.currency}</span>
       {amount}
-    </>
+    </span>
   );
 };
 
