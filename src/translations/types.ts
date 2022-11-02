@@ -19,7 +19,13 @@ export enum PageTranslationInputFieldName {
   richText = "richText",
 }
 
-export type TranslationFieldType = "short" | "long" | "rich";
+export const TranslationFieldType = {
+  SHORT: "short",
+  LONG: "long",
+  RICH: "rich",
+} as const;
+
+export type TranslationFieldType = typeof TranslationFieldType[keyof typeof TranslationFieldType];
 
 export interface TranslationField<T extends string = string> {
   id?: string;

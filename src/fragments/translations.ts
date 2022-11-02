@@ -1,5 +1,31 @@
 import { gql } from "@apollo/client";
 
+export const attributeValueTranslatableFragment = gql`
+  fragment AttributeValueTranslatable on AttributeValueTranslatableContent {
+    id
+    name
+    plainText
+    richText
+    attributeValue {
+      id
+    }
+    attribute {
+      id
+      name
+    }
+    translation(languageCode: $language) {
+      id
+      name
+      plainText
+      richText
+      language {
+        code
+        language
+      }
+    }
+  }
+`;
+
 export const categoryTranslationFragment = gql`
   fragment CategoryTranslation on CategoryTranslatableContent {
     translation(languageCode: $language) {
@@ -64,27 +90,7 @@ export const productTranslationFragment = gql`
       }
     }
     attributeValues {
-      id
-      name
-      plainText
-      richText
-      attributeValue {
-        id
-      }
-      attribute {
-        id
-        name
-      }
-      translation(languageCode: $language) {
-        id
-        name
-        plainText
-        richText
-        language {
-          code
-          language
-        }
-      }
+      ...AttributeValueTranslatable
     }
   }
 `;
@@ -104,27 +110,7 @@ export const productVariantTranslationFragment = gql`
       }
     }
     attributeValues {
-      id
-      name
-      plainText
-      richText
-      attributeValue {
-        id
-      }
-      attribute {
-        id
-        name
-      }
-      translation(languageCode: $language) {
-        id
-        name
-        plainText
-        richText
-        language {
-          code
-          language
-        }
-      }
+      ...AttributeValueTranslatable
     }
   }
 `;
@@ -203,27 +189,7 @@ export const pageTranslationFragment = gql`
       }
     }
     attributeValues {
-      id
-      name
-      plainText
-      richText
-      attributeValue {
-        id
-      }
-      attribute {
-        id
-        name
-      }
-      translation(languageCode: $language) {
-        id
-        name
-        plainText
-        richText
-        language {
-          code
-          language
-        }
-      }
+      ...AttributeValueTranslatable
     }
   }
 `;
@@ -299,28 +265,6 @@ export const attributeTranslationDetailsFragment = gql`
       name
       inputType
       withChoices
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeChoicesTranslation
-      }
-    }
-  }
-`;
-
-export const attributeValueTranslatableContentFragment = gql`
-  fragment AttributeValueTranslatableContent on AttributeTranslatableContent {
-    translation(languageCode: $language) {
-      id
-      name
-    }
-    attribute {
-      id
-      name
-      inputType
       choices(
         first: $firstValues
         after: $afterValues

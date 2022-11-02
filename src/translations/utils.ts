@@ -1,6 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import {
   AttributeTranslationDetailsFragment,
+  AttributeValueTranslatableFragment,
   AttributeValueTranslationInput,
 } from "@saleor/graphql";
 import {
@@ -59,10 +60,33 @@ export const getTranslationFields = (
     },
   ) || [];
 
+export const mapAttributeValuesToTranslationFields = (
+  attributeValues: AttributeValueTranslatableFragment[],
+  intl: IntlShape,
+) =>
+  attributeValues.map<TranslationField>(attrVal => ({
+    id: attrVal.attributeValue.id,
+    displayName: intl.formatMessage(
+      {
+        id: "zgqPGF",
+        defaultMessage: "Attribute {name}",
+        description: "attribute list",
+      },
+      {
+        name: attrVal.attribute.name,
+      },
+    ),
+    name: attrVal.name,
+    translation:
+      attrVal.translation?.richText || attrVal.translation?.plainText,
+    type: attrVal.richText ? "rich" : "short",
+    value: attrVal.richText || attrVal.plainText,
+  })) || [];
+
 export const getAttributeValueTranslationsInputData = (
   type: TranslationFieldType,
   data: OutputData | string,
 ): AttributeValueTranslationInput =>
-  type === "rich"
+  type === TranslationFieldType.RICH
     ? { richText: JSON.stringify(data) }
     : { plainText: data as string };

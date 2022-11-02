@@ -2505,6 +2505,31 @@ export const CollectionTranslationFragmentDoc = gql`
   }
 }
     `;
+export const AttributeValueTranslatableFragmentDoc = gql`
+    fragment AttributeValueTranslatable on AttributeValueTranslatableContent {
+  id
+  name
+  plainText
+  richText
+  attributeValue {
+    id
+  }
+  attribute {
+    id
+    name
+  }
+  translation(languageCode: $language) {
+    id
+    name
+    plainText
+    richText
+    language {
+      code
+      language
+    }
+  }
+}
+    `;
 export const ProductTranslationFragmentDoc = gql`
     fragment ProductTranslation on ProductTranslatableContent {
   product {
@@ -2526,30 +2551,10 @@ export const ProductTranslationFragmentDoc = gql`
     }
   }
   attributeValues {
-    id
-    name
-    plainText
-    richText
-    attributeValue {
-      id
-    }
-    attribute {
-      id
-      name
-    }
-    translation(languageCode: $language) {
-      id
-      name
-      plainText
-      richText
-      language {
-        code
-        language
-      }
-    }
+    ...AttributeValueTranslatable
   }
 }
-    `;
+    ${AttributeValueTranslatableFragmentDoc}`;
 export const ProductVariantTranslationFragmentDoc = gql`
     fragment ProductVariantTranslation on ProductVariantTranslatableContent {
   productVariant {
@@ -2565,30 +2570,10 @@ export const ProductVariantTranslationFragmentDoc = gql`
     }
   }
   attributeValues {
-    id
-    name
-    plainText
-    richText
-    attributeValue {
-      id
-    }
-    attribute {
-      id
-      name
-    }
-    translation(languageCode: $language) {
-      id
-      name
-      plainText
-      richText
-      language {
-        code
-        language
-      }
-    }
+    ...AttributeValueTranslatable
   }
 }
-    `;
+    ${AttributeValueTranslatableFragmentDoc}`;
 export const SaleTranslationFragmentDoc = gql`
     fragment SaleTranslation on SaleTranslatableContent {
   sale {
@@ -2662,30 +2647,10 @@ export const PageTranslationFragmentDoc = gql`
     }
   }
   attributeValues {
-    id
-    name
-    plainText
-    richText
-    attributeValue {
-      id
-    }
-    attribute {
-      id
-      name
-    }
-    translation(languageCode: $language) {
-      id
-      name
-      plainText
-      richText
-      language {
-        code
-        language
-      }
-    }
+    ...AttributeValueTranslatable
   }
 }
-    `;
+    ${AttributeValueTranslatableFragmentDoc}`;
 export const PageTranslatableFragmentDoc = gql`
     fragment PageTranslatable on PageTranslatableContent {
   id
@@ -2755,27 +2720,6 @@ export const AttributeTranslationDetailsFragmentDoc = gql`
     name
     inputType
     withChoices
-    choices(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      ...AttributeChoicesTranslation
-    }
-  }
-}
-    ${AttributeChoicesTranslationFragmentDoc}`;
-export const AttributeValueTranslatableContentFragmentDoc = gql`
-    fragment AttributeValueTranslatableContent on AttributeTranslatableContent {
-  translation(languageCode: $language) {
-    id
-    name
-  }
-  attribute {
-    id
-    name
-    inputType
     choices(
       first: $firstValues
       after: $afterValues
