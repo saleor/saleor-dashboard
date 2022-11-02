@@ -1,3 +1,4 @@
+import { useKeyDown } from "@saleor/hooks/useKeyDown";
 import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,10 @@ export const useFullScreenMode = () => {
   const [open, setOpen] = useState(false);
   const { delayedState: delayedOpen } = useDelayedState(!open);
   const togglePreventHistory = open ? disable : enable;
+
+  useKeyDown("Escape", () => {
+    setOpen(false);
+  });
 
   const toggle = () => {
     setOpen(p => !p);

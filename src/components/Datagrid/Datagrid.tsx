@@ -208,7 +208,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     <FullScreenContainer
       open={isOpen}
       className={fullScreenClasses.fullScreenContainer}
-      onEscapePress={toggle}
     >
       <Card className={classes.root}>
         <Header title={headerTitle}>
