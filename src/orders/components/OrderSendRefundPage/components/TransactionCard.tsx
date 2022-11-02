@@ -5,6 +5,7 @@ import PriceField from "@saleor/components/PriceField";
 import {
   OrderDetailsDocument,
   OrderDetailsFragment,
+  TransactionActionEnum,
   TransactionItemFragment,
   useOrderSendRefundMutation,
 } from "@saleor/graphql";
@@ -93,47 +94,53 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const errorId = `refund-error-${id}`;
   const submitError = error || data?.transactionRequestAction?.errors?.[0];
 
+  const canBeRefunded = transaction.actions.includes(
+    TransactionActionEnum.REFUND,
+  );
+
   return (
     <OrderTransaction
       transaction={transaction}
       onTransactionAction={() => undefined}
       showActions={false}
       cardFooter={
-        <div className={classes.wrapper}>
-          <form className={classes.form} onSubmit={handleSubmit}>
-            <Button variant="tertiary" onClick={setMaxRefundValue}>
-              <FormattedMessage {...refundPageMessages.setMax} />
-            </Button>
-            <PriceField
-              InputLabelProps={{ shrink: value !== undefined }}
-              inputProps={{
-                id: inputId,
-                "aria-invalid": !!submitError ? "true" : "false",
-                "aria-describedby": errorId,
-              }}
-              disabled={loading}
-              className={classes.input}
-              label={intl.formatMessage(refundPageMessages.refundAmount)}
-              name="amount"
-              onChange={handleChange}
-              value={value}
-              currencySymbol={transaction?.authorizedAmount?.currency}
-            />
-            <ConfirmButton
-              type="submit"
-              variant="primary"
-              transitionState={status}
-              disabled={value <= 0 || typeof value !== "number"}
-            >
-              <FormattedMessage {...refundPageMessages.requestRefund} />
-            </ConfirmButton>
-          </form>
-          {submitError && (
-            <Typography id={errorId} color="error" variant="body2">
-              {submitError.message}
-            </Typography>
-          )}
-        </div>
+        canBeRefunded && (
+          <div className={classes.wrapper}>
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <Button variant="tertiary" onClick={setMaxRefundValue}>
+                <FormattedMessage {...refundPageMessages.setMax} />
+              </Button>
+              <PriceField
+                InputLabelProps={{ shrink: value !== undefined }}
+                inputProps={{
+                  id: inputId,
+                  "aria-invalid": !!submitError ? "true" : "false",
+                  "aria-describedby": errorId,
+                }}
+                disabled={loading}
+                className={classes.input}
+                label={intl.formatMessage(refundPageMessages.refundAmount)}
+                name="amount"
+                onChange={handleChange}
+                value={value}
+                currencySymbol={transaction?.authorizedAmount?.currency}
+              />
+              <ConfirmButton
+                type="submit"
+                variant="primary"
+                transitionState={status}
+                disabled={value <= 0 || typeof value !== "number"}
+              >
+                <FormattedMessage {...refundPageMessages.requestRefund} />
+              </ConfirmButton>
+            </form>
+            {submitError && (
+              <Typography id={errorId} color="error" variant="body2">
+                {submitError.message}
+              </Typography>
+            )}
+          </div>
+        )
       }
     />
   );
