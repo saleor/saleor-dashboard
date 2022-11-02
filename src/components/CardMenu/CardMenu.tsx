@@ -139,7 +139,6 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
-        color="primary"
         disabled={disabled}
         ref={anchorRef}
         onClick={handleToggle}

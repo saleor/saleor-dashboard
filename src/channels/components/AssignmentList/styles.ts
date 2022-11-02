@@ -53,6 +53,9 @@ export const useHeaderStyles = makeStyles(
         margin: 0,
       },
     },
+    expandIcon: {
+      padding: 0,
+    },
   }),
   { name: "AssignmentListHeader" },
 );
