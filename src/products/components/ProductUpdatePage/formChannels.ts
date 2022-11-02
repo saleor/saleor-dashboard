@@ -19,6 +19,29 @@ const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
   visibleInListings: false,
 };
 
+export const updateChannelsInput = (
+  input: ProductChannelListingUpdateInput,
+  data: ChannelOpts,
+  id: string,
+) => {
+  const mergeListings = (listing: ProductChannelListingAddInput) => {
+    if (listing.channelId === id) {
+      return {
+        ...listing,
+        ...data,
+        availableForPurchaseDate: data.isAvailableForPurchase
+          ? data.availableForPurchase
+          : null,
+      };
+    }
+    return listing;
+  };
+  return {
+    ...input,
+    updateChannels: input.updateChannels.map(mergeListings),
+  };
+};
+
 export function useProductChannelListingsForm(
   product: Pick<ProductFragment, "channelListings">,
   triggerChange: () => void,
@@ -42,20 +65,7 @@ export function useProductChannelListingsForm(
 
   const handleChannelChange = useCallback(
     (id: string, data: ChannelOpts) => {
-      setChannels(prevData => ({
-        ...prevData,
-        updateChannels: prevData.updateChannels.map(prevListing =>
-          prevListing.channelId === id
-            ? {
-                ...prevListing,
-                ...data,
-                availableForPurchaseDate: data.isAvailableForPurchase
-                  ? data.availableForPurchase
-                  : null,
-              }
-            : prevListing,
-        ),
-      }));
+      setChannels(input => updateChannelsInput(input, data, id));
       triggerChange();
       touch(id);
     },
