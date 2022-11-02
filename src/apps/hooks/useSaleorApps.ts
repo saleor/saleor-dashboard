@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 export interface SaleorApp {
   name: string;
-  hostname: string;
+  manifestUrl: string;
 }
 
 const saleorAppsEnabled = Boolean(SALEOR_APPS_ENDPOINT);
@@ -22,7 +22,7 @@ export const useSaleorApps = () => {
         if (
           !data.every(
             item =>
-              typeof item.hostname === "string" ||
+              typeof item.manifestUrl === "string" ||
               typeof item.name === "string",
           )
         ) {

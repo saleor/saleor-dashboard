@@ -2,6 +2,7 @@ import {
   AppPageTabs,
   AppPageTabValue,
 } from "@saleor/apps/components/AppPageTabs/AppPageTabs";
+import SaleorAppsList from "@saleor/apps/components/SaleorAppsList";
 import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
@@ -73,21 +74,9 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       installedAppsList?.filter(
         app =>
           !(fetchedSaleorApps ?? []).find(fetchedApp =>
-            app.node.manifestUrl?.includes(fetchedApp.hostname),
+            app.node.manifestUrl?.includes(fetchedApp.manifestUrl),
           ),
       ),
-    [installedAppsList, fetchedSaleorApps],
-  );
-
-  const saleorApps = useMemo(
-    () =>
-      fetchedSaleorApps
-        ?.map(app =>
-          installedAppsList?.find(installedApp =>
-            installedApp.node.manifestUrl?.includes(app.hostname),
-          ),
-        )
-        .filter(Boolean),
     [installedAppsList, fetchedSaleorApps],
   );
 
@@ -157,13 +146,14 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
                 id="FLtdaw"
               />
             </p>
-            <InstalledApps
+            <SaleorAppsList
               title={intl.formatMessage({
                 id: "PbQJY5",
                 defaultMessage: "Saleor Apps",
                 description: "section header",
               })}
-              appsList={saleorApps}
+              availableApps={fetchedSaleorApps}
+              installedApps={installedAppsList}
               onRemove={onInstalledAppRemove}
               {...listProps}
             />
