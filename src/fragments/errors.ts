@@ -496,6 +496,14 @@ export const transactionRequestActionErrorFragment = gql`
   }
 `;
 
+export const transactionCreateErrorFragment = gql`
+  fragment TransactionCreateError on TransactionCreateError {
+    field
+    message
+    code
+  }
+`;
+
 export const orderGrantRefundCreateErrorFragment = gql`
   fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
     field

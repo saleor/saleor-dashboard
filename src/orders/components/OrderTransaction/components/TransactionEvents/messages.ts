@@ -16,6 +16,11 @@ export const statusMessages = defineMessages({
     id: "e4UtKH",
     description: "Transaction event status - failure",
   },
+  request: {
+    defaultMessage: "Requested",
+    id: "++8ZWj",
+    description: "Transaction event status - requested",
+  },
 });
 
 export const messages = defineMessages({

@@ -46,11 +46,6 @@ export const refundPageMessages = defineMessages({
     id: "NnhrxZ",
     description: "amount of sent refund for transaction",
   },
-  refundManual: {
-    defaultMessage: "Manual refund",
-    id: "PLX6FH",
-    description: "sum of all manual refunds for transaction",
-  },
   result: {
     defaultMessage: "Result",
     id: "bT71VU",
@@ -70,6 +65,24 @@ export const refundPageMessages = defineMessages({
     defaultMessage: "Set max",
     id: "d7dT8o",
     description: "button, sets granted refund amount in input",
+  },
+});
+
+export const manualRefundMessages = defineMessages({
+  refundManual: {
+    defaultMessage: "Manual refund",
+    id: "PLX6FH",
+    description: "sum of all manual refunds for transaction",
+  },
+  refundManualDescription: {
+    defaultMessage: "Create a manual refund for non-integrated payments",
+    id: "LLrOK3",
+    description: "paragraph, description in manual refund card",
+  },
+  refund: {
+    defaultMessage: "Refund",
+    id: "bfuxy3",
+    description: "button, create new transaction with refund amount",
   },
 });
 

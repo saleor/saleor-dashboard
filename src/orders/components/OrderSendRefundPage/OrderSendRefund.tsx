@@ -4,7 +4,11 @@ import CardTitle from "@saleor/components/CardTitle";
 import { Grid } from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import {
+  CreateManualTransactionRefundMutationVariables,
+  OrderDetailsFragment,
+} from "@saleor/graphql";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -12,20 +16,33 @@ import { FormattedMessage } from "react-intl";
 import { DataLine } from "./components/DataLine";
 import { DataLineMoney } from "./components/DataLineMoney";
 import { DataLineSettled } from "./components/DataLineSettled";
+import { ManualRefundCard } from "./components/ManualRefundCard";
 import { TransactionCard } from "./components/TransactionCard";
 import { refundPageMessages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderSendRefundPageProps {
   order: OrderDetailsFragment;
+  onAddManualRefund: (
+    args: CreateManualTransactionRefundMutationVariables,
+  ) => void;
+  addManualRefundState: ConfirmButtonTransitionState;
+  addManualRefundError: string | undefined;
 }
 
-const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({ order }) => {
+const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
+  order,
+  onAddManualRefund,
+  addManualRefundState,
+  addManualRefundError,
+}) => {
   const classes = useStyles();
 
   if (!order) {
     return null;
   }
+
+  const currency = order.totalBalance.currency;
 
   return (
     <Container>
@@ -53,7 +70,19 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({ order }) => {
               order={order}
             />
           ))}
-          <div>Manual refund</div>
+          <ManualRefundCard
+            currency={currency}
+            submitState={addManualRefundState}
+            error={addManualRefundError}
+            onAddRefund={(amount, description) => {
+              onAddManualRefund({
+                currency,
+                description,
+                amount,
+                orderId: order.id,
+              });
+            }}
+          />
         </div>
         <div>
           <Card>

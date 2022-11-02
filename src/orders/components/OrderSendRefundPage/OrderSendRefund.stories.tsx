@@ -10,6 +10,9 @@ const order = getOrder(placeholderImage);
 
 const props: OrderSendRefundPageProps = {
   order,
+  onAddManualRefund: () => undefined,
+  addManualRefundState: "default",
+  addManualRefundError: undefined,
 };
 
 storiesOf("Views / Orders / Send refund order", module)
