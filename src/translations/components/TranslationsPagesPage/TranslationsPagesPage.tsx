@@ -8,7 +8,6 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
-  TranslationField,
   TranslationsEntitiesPageProps,
 } from "@saleor/translations/types";
 import {
@@ -16,6 +15,7 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@saleor/translations/urls";
+import { mapAttributeValuesToTranslationFields } from "@saleor/translations/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -152,28 +152,10 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             disabled={disabled}
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={
-              data.attributeValues.map<TranslationField>(attrVal => ({
-                id: attrVal.attributeValue.id,
-                displayName: intl.formatMessage(
-                  {
-                    id: "zgqPGF",
-                    defaultMessage: "Attribute {name}",
-                    description: "attribute list",
-                  },
-                  {
-                    name: attrVal.attribute.name,
-                  },
-                ),
-                name: attrVal.name,
-                translation:
-                  attrVal.translation?.richText ||
-                  attrVal.translation?.plainText ||
-                  null,
-                type: attrVal.richText ? "rich" : "short",
-                value: attrVal.richText || attrVal.plainText,
-              })) || []
-            }
+            fields={mapAttributeValuesToTranslationFields(
+              data.attributeValues,
+              intl,
+            )}
             saveButtonState={saveButtonState}
             richTextResetKey={languageCode}
             onEdit={onEdit}
