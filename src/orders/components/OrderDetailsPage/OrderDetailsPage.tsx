@@ -40,6 +40,7 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
+import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment";
@@ -292,6 +293,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   />
                 </div>
                 <CardSpacer />
+                {order?.grantedRefunds?.length !== 0 ? (
+                  <>
+                    <OrderGrantedRefunds order={order} />
+                    <CardSpacer />
+                  </>
+                ) : null}
                 <div>
                   {order?.transactions?.map(transaction => (
                     <OrderTransaction

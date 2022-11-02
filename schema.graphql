@@ -1423,6 +1423,7 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -1824,7 +1825,7 @@ input AttributeValueFilterInput {
 
 input AttributeValueInput {
   """ID of the selected attribute."""
-  id: ID!
+  id: ID
 
   """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
@@ -2353,6 +2354,7 @@ input CategoryFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 input CategoryInput {
@@ -3011,6 +3013,15 @@ type Checkout implements Node & ObjectWithMetadata {
   """The price of the checkout before shipping, with taxes included."""
   subtotalPrice: TaxedMoney!
 
+  """
+  Returns True if checkout has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
+
   """The checkout's token."""
   token: UUID!
 
@@ -3432,6 +3443,13 @@ input CheckoutLineInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   forceNewLine: Boolean = false
+
+  """
+  Fields required to update the object's metadata.
+  
+  Added in Saleor 3.8.
+  """
+  metadata: [MetadataInput!]
 }
 
 input CheckoutLineUpdateInput {
@@ -3950,6 +3968,7 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataFilter!]
   ids: [ID!]
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -4747,6 +4766,14 @@ type DeactivateAllUserTokens {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
 }
+
+"""
+Custom Decimal implementation.
+
+Returns Decimal as a float in the API,
+parses float to the Decimal on the way back.
+"""
+scalar Decimal
 
 """
 Delete metadata of an object. To use it, you need to have access to the modified object.
@@ -8250,6 +8277,7 @@ input MenuFilterInput {
   search: String
   slug: [String!]
   metadata: [MetadataFilter!]
+  slugs: [String!]
 }
 
 input MenuInput {
@@ -8850,6 +8878,23 @@ type Mutation {
     """List of shipping zone IDs."""
     shippingZoneIds: [ID!]!
   ): WarehouseShippingZoneUnassign
+
+  """
+  Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TAXES.
+  """
+  taxExemptionManage(
+    """ID of the Checkout or Order object."""
+    id: ID!
+
+    """Determines if a taxes should be exempt."""
+    taxExemption: Boolean!
+  ): TaxExemptionManage
 
   """
   Creates a new staff notification recipient. 
@@ -9811,7 +9856,7 @@ type Mutation {
   ): PaymentCheckBalance
 
   """
-  Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
+  Create transaction for checkout or order. Requires the following permissions: HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
   
@@ -9829,7 +9874,7 @@ type Mutation {
   ): TransactionCreate
 
   """
-  Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
+  Create transaction for checkout or order. Requires the following permissions: OWNER and HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
   
@@ -10227,6 +10272,32 @@ type Mutation {
     """ID of the order to be returned."""
     order: ID!
   ): FulfillmentReturnProducts
+
+  """
+  Adds granted refund to the order. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderGrantRefundCreate(
+    """ID of the order."""
+    id: ID!
+
+    """Fields required to create a granted refund for the order."""
+    input: OrderGrantRefundCreateInput!
+  ): OrderGrantRefundCreate
+
+  """
+  Updates granted refund. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderGrantRefundUpdate(
+    """ID of the granted refund."""
+    id: ID!
+
+    """Fields required to update a granted refund."""
+    input: OrderGrantRefundUpdateInput!
+  ): OrderGrantRefundUpdate
 
   """
   Create order lines for an order. 
@@ -11123,6 +11194,13 @@ type Mutation {
     """
     id: ID
 
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
     """Client-side generated data required to finalize the payment."""
     paymentData: JSONString
 
@@ -11530,6 +11608,20 @@ type Mutation {
   orderCreateFromCheckout(
     """ID of a checkout that will be converted to an order."""
     id: ID!
+
+    """
+    Fields required to update the checkout metadata.
+    
+    Added in Saleor 3.8.
+    """
+    metadata: [MetadataInput!]
+
+    """
+    Fields required to update the checkout private metadata.
+    
+    Added in Saleor 3.8.
+    """
+    privateMetadata: [MetadataInput!]
 
     """
     Determines if checkout should be removed after creating an order. Default true.
@@ -12521,6 +12613,15 @@ type Order implements Node & ObjectWithMetadata {
   chargeStatus: OrderChargeStatusEnum!
 
   """
+  Returns True if order has to be exempt from taxes.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  taxExemption: Boolean!
+
+  """
   List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
@@ -12616,6 +12717,59 @@ type Order implements Node & ObjectWithMetadata {
 
   """List of errors that occurred during order validation."""
   errors: [OrderError!]!
+
+  """
+  List of granted refunds.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  grantedRefunds: [OrderGrantedRefund!]!
+
+  """
+  Total amount of granted refund.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  totalGrantedRefund: Money!
+
+  """
+  Total refund amount for the order.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  totalRefunded: Money!
+
+  """
+  Total amount of refund requested for the order.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  totalPendingRefund: Money!
+
+  """
+  The difference amount between granted refund and the amounts that are pending and refunded.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  totalRemainingGrant: Money!
 }
 
 enum OrderAction {
@@ -13378,6 +13532,121 @@ type OrderFullyPaid implements Event {
 
   """The order the event relates to."""
   order: Order
+}
+
+"""
+Adds granted refund to the order. 
+
+Requires one of the following permissions: MANAGE_ORDERS.
+"""
+type OrderGrantRefundCreate {
+  """Order which has assigned new grant refund."""
+  order: Order
+
+  """Created granted refund."""
+  grantedRefund: OrderGrantedRefund
+  errors: [OrderGrantRefundCreateError!]!
+}
+
+type OrderGrantRefundCreateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderGrantRefundCreateErrorCode!
+}
+
+"""An enumeration."""
+enum OrderGrantRefundCreateErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+}
+
+input OrderGrantRefundCreateInput {
+  """Amount of the granted refund."""
+  amount: Decimal!
+
+  """Reason of the granted refund."""
+  reason: String
+}
+
+"""
+Updates granted refund. 
+
+Requires one of the following permissions: MANAGE_ORDERS.
+"""
+type OrderGrantRefundUpdate {
+  """Order which has assigned updated grant refund."""
+  order: Order
+
+  """Created granted refund."""
+  grantedRefund: OrderGrantedRefund
+  errors: [OrderGrantRefundUpdateError!]!
+  orderGrantedRefund: OrderGrantedRefund
+}
+
+type OrderGrantRefundUpdateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderGrantRefundUpdateErrorCode!
+}
+
+"""An enumeration."""
+enum OrderGrantRefundUpdateErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  REQUIRED
+}
+
+input OrderGrantRefundUpdateInput {
+  """Amount of the granted refund."""
+  amount: Decimal
+
+  """Reason of the granted refund."""
+  reason: String
+}
+
+"""
+The details of granted refund.
+
+Added in Saleor 3.8.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderGrantedRefund {
+  id: ID!
+
+  """Time of creation."""
+  createdAt: DateTime!
+
+  """Time of last update."""
+  updatedAt: DateTime!
+
+  """Refund amount."""
+  amount: Money!
+
+  """Reason of the refund."""
+  reason: String
+
+  """
+  User who performed the action. Requires of of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+  """
+  user: User
+
+  """App that performed the action."""
+  app: App
 }
 
 """Represents order line of particular order."""
@@ -14193,6 +14462,7 @@ input PageFilterInput {
   metadata: [MetadataFilter!]
   pageTypes: [ID!]
   ids: [ID!]
+  slugs: [String!]
 }
 
 """
@@ -14579,6 +14849,7 @@ type PageTypeDeleted implements Event {
 
 input PageTypeFilterInput {
   search: String
+  slugs: [String!]
 }
 
 """
@@ -15218,6 +15489,10 @@ enum PermissionEnum {
   IMPERSONATE_USER
   MANAGE_APPS
   MANAGE_OBSERVABILITY
+  MANAGE_CHECKOUTS
+  HANDLE_CHECKOUTS
+  HANDLE_TAXES
+  MANAGE_TAXES
   MANAGE_CHANNELS
   MANAGE_DISCOUNTS
   MANAGE_PLUGINS
@@ -15232,9 +15507,6 @@ enum PermissionEnum {
   MANAGE_SHIPPING
   MANAGE_SETTINGS
   MANAGE_TRANSLATIONS
-  MANAGE_CHECKOUTS
-  HANDLE_CHECKOUTS
-  HANDLE_TAXES
 }
 
 """
@@ -16228,6 +16500,7 @@ input ProductFilterInput {
   giftCard: Boolean
   ids: [ID!]
   hasPreorderedVariants: Boolean
+  slugs: [String!]
 
   """
   Specifies the channel by which the data should be filtered. 
@@ -16801,6 +17074,7 @@ input ProductTypeFilterInput {
   metadata: [MetadataFilter!]
   kind: ProductTypeKindEnum
   ids: [ID!]
+  slugs: [String!]
 }
 
 input ProductTypeInput {
@@ -18296,7 +18570,11 @@ type Query {
     """Sort menus."""
     sortBy: MenuSortingInput
 
-    """Filtering options for menus."""
+    """
+    Filtering options for menus. 
+    
+    `slug`: This field will be removed in Saleor 4.0. Use `slugs` instead.
+    """
     filter: MenuFilterInput
 
     """Return the elements in the list that come before the specified cursor."""
@@ -21239,6 +21517,41 @@ type Subscription {
   event: Event
 }
 
+"""
+Exempt checkout or order from charging the taxes. When tax exemption is enabled, taxes won't be charged for the checkout or order. Taxes may still be calculated in cases when product prices are entered with the tax included and the net price needs to be known.
+
+Added in Saleor 3.8.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_TAXES.
+"""
+type TaxExemptionManage {
+  taxableObject: TaxSourceObject
+  errors: [TaxExemptionManageError!]!
+}
+
+type TaxExemptionManageError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TaxExemptionManageErrorCode!
+}
+
+"""An enumeration."""
+enum TaxExemptionManageErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  NOT_EDITABLE_ORDER
+}
+
 union TaxSourceLine = CheckoutLine | OrderLine
 
 union TaxSourceObject = Checkout | Order
@@ -21445,7 +21758,7 @@ type TransactionActionRequest implements Event {
 }
 
 """
-Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
+Create transaction for checkout or order. Requires the following permissions: HANDLE_PAYMENTS.
 
 Added in Saleor 3.4.
 
@@ -21631,6 +21944,28 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """List of all transaction's events."""
   events: [TransactionEvent!]!
+
+  """
+  User who created the transaction.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+  """
+  user: User
+
+  """
+  App that created the transaction.
+  
+  Added in Saleor 3.8.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  """
+  app: App
 }
 
 """An enumeration."""
@@ -21690,7 +22025,7 @@ enum TransactionStatus {
 }
 
 """
-Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
+Create transaction for checkout or order. Requires the following permissions: OWNER and HANDLE_PAYMENTS.
 
 Added in Saleor 3.4.
 
@@ -23068,6 +23403,7 @@ input WarehouseFilterInput {
   ids: [ID!]
   isPrivate: Boolean
   channels: [ID!]
+  slugs: [String!]
 }
 
 """

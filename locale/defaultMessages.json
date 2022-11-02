@@ -93,12 +93,20 @@
     "context": "dialog header",
     "string": "Change Password"
   },
+  "+mmPxn": {
+    "context": "page header",
+    "string": "Grant refund"
+  },
   "+pLi+M": {
     "context": "issued by app label",
     "string": "Issued by app"
   },
   "+sX7yS": {
     "string": "Fulfillment successfully approved"
+  },
+  "+sXiWx": {
+    "context": "window title",
+    "string": "Edit grant refund"
   },
   "+svQBN": {
     "context": "alert",
@@ -239,6 +247,10 @@
     "context": "no variants",
     "string": "No variants found"
   },
+  "/qk66u": {
+    "context": "window title",
+    "string": "Grant refund #{orderNumber}"
+  },
   "/vCXIP": {
     "string": "Translation"
   },
@@ -370,6 +382,10 @@
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
+  },
+  "1/oauz": {
+    "context": "grant refund table, column header",
+    "string": "Qty to refund"
   },
   "11lR5V": {
     "context": "avatar delete button",
@@ -921,6 +937,10 @@
     "context": "dialog header",
     "string": "Send Invoice"
   },
+  "5JUEIh": {
+    "context": "field label, refund amount",
+    "string": "Refund amount"
+  },
   "5Jo3C5": {
     "context": "vat not included in order price",
     "string": "does not apply"
@@ -1051,10 +1071,6 @@
   "6JlXeD": {
     "context": "button",
     "string": "Create page type"
-  },
-  "6Joy8j": {
-    "context": "sum of all refunds from transactions in order",
-    "string": "Refunded"
   },
   "6L6Fy2": {
     "context": "header",
@@ -1714,6 +1730,10 @@
     "context": "header",
     "string": "Hello there, {userName}"
   },
+  "C035fF": {
+    "context": "grant refund, refund card explanation next to submit button",
+    "string": "Funds will be returned in a separate step"
+  },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
@@ -1826,6 +1846,10 @@
   "ClKKID": {
     "context": "channel publication status",
     "string": "Not published"
+  },
+  "CmxKIg": {
+    "context": "window title",
+    "string": "Grant refund"
   },
   "Co2U4u": {
     "string": "No plugins found"
@@ -2648,6 +2672,10 @@
     "context": "variant created success message",
     "string": "Variant created"
   },
+  "IfiR4M": {
+    "context": "heading, sum of all pending refunds from transactions in order",
+    "string": "Pending"
+  },
   "IhK1F3": {
     "string": "No shipping zones found"
   },
@@ -3255,6 +3283,10 @@
     "context": "collections section name",
     "string": "Collections"
   },
+  "NPIBGp": {
+    "context": "heading, sum of all granted refunds from transactions in order",
+    "string": "Granted"
+  },
   "NPfmdK": {
     "context": "webhook input label",
     "string": "Secret Key"
@@ -3347,6 +3379,10 @@
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
+  },
+  "OAcl78": {
+    "context": "order, granted refunds card, title",
+    "string": "Granted refunds"
   },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
@@ -3857,6 +3893,10 @@
     "context": "search placeholder",
     "string": "Search by product name, attribute, product type etc..."
   },
+  "S5/nSq": {
+    "context": "grant refund table, column header",
+    "string": "Quantity"
+  },
   "S52JMl": {
     "context": "default gift card delete description",
     "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} giftCards?}}"
@@ -3996,6 +4036,10 @@
     "context": "order subtotal price",
     "string": "Subtotal"
   },
+  "TBftMD": {
+    "context": "button. form submit, grant refund edit",
+    "string": "Edit granted refund"
+  },
   "TC/EOG": {
     "context": "status section title",
     "string": "Status in channel"
@@ -4055,6 +4099,10 @@
     "context": "tax rate for a product type",
     "string": "Tax"
   },
+  "Tenl9A": {
+    "context": "grant refund, refund card toggle",
+    "string": "Refund shipment: {currency} {amount}"
+  },
   "TfY/Pi": {
     "context": "checkbox",
     "string": "Charge taxes on this product"
@@ -4086,6 +4134,10 @@
   "TtZg/K": {
     "context": "ExitFormPrompt title",
     "string": "Would you like to save changes?"
+  },
+  "TxYWkD": {
+    "context": "page header, edit view",
+    "string": "Edit grant refund"
   },
   "U1eJIw": {
     "context": "order history message",
@@ -4436,6 +4488,9 @@
   },
   "WHkx+F": {
     "string": "Price cannot be lower than 0"
+  },
+  "WK62MN": {
+    "string": "Fulfillment"
   },
   "WMGoqz": {
     "context": "used by filter label",
@@ -4815,6 +4870,9 @@
   "YpukUN": {
     "context": "label",
     "string": "Shipping zone name"
+  },
+  "Ys86kI": {
+    "string": "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order."
   },
   "Yw+9F7": {
     "string": "No collections found"
@@ -5209,6 +5267,10 @@
     "context": "button",
     "string": "Assign Warehouse"
   },
+  "cBVHN5": {
+    "context": "grant refund, reason input field placeholder",
+    "string": "Reason for refund"
+  },
   "cFVgOo": {
     "context": "Channel label",
     "string": "Channel"
@@ -5572,6 +5634,10 @@
     "context": "order history message",
     "string": "Transaction refund requested"
   },
+  "fsBsMy": {
+    "context": "button, form submit, grant refund create",
+    "string": "Grant refund"
+  },
   "ftcHpD": {
     "string": "Customer created"
   },
@@ -5658,6 +5724,10 @@
   "gZHmaV": {
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
+  },
+  "gaOXvo": {
+    "context": "notification, form submitted",
+    "string": "Refund grant for order #{orderNumber} was updated"
   },
   "ghGLbJ": {
     "context": "OrderPayment click&collect shipping method",
@@ -5784,6 +5854,10 @@
     "context": "status label deactivated",
     "string": "Deactivated"
   },
+  "hoii+4": {
+    "context": "heading, sum of all completed refunds from transactions in order",
+    "string": "Refunded"
+  },
   "hpMcW8": {
     "string": "Define how users can navigate through your store"
   },
@@ -5841,9 +5915,17 @@
     "context": "sale start date",
     "string": "Starts"
   },
+  "iBW3rG": {
+    "context": "button",
+    "string": "Apply"
+  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
+  },
+  "iFM716": {
+    "context": "grant refund, refund card subtitle",
+    "string": "How much money do you want to return to the customer for the order?"
   },
   "iJrw63": {
     "context": "section header",
@@ -6104,6 +6186,10 @@
   "kJQczl": {
     "context": "sales section name",
     "string": "Sales"
+  },
+  "kJYa8Y": {
+    "context": "grant refund, refund card calculated refund value",
+    "string": "Selected refund value:"
   },
   "kL3C+K": {
     "context": "product variant inventory status",
@@ -6827,6 +6913,10 @@
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
   },
+  "qbFKVI": {
+    "context": "notification, form submitted",
+    "string": "Refund for order #{orderNumber} was granted"
+  },
   "qbmeUI": {
     "context": "dialog header",
     "string": "Delete Order Drafts"
@@ -6997,6 +7087,10 @@
   "rwOx2s": {
     "string": "Please provide a transaction reference using the input below:"
   },
+  "rxlJJ/": {
+    "context": "grant refund table, column header",
+    "string": "Product"
+  },
   "ryAyPr": {
     "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
   },
@@ -7056,6 +7150,10 @@
   "sEjRyz": {
     "context": "voucher type order discount",
     "string": "Voucher"
+  },
+  "sFynTT": {
+    "context": "grant refund, refund card title",
+    "string": "Refund"
   },
   "sG0w22": {
     "context": "dialog title",
@@ -7691,6 +7789,14 @@
     "context": "dialog header",
     "string": "Assign Variant"
   },
+  "xEM9Of": {
+    "context": "orde, granted refunds card, unsettled amount",
+    "string": "Unsettled {currency} {money}"
+  },
+  "xGC2Ge": {
+    "context": "grant refund, button",
+    "string": "Set max. quantities"
+  },
   "xHj9Qe": {
     "context": "gift card settings header",
     "string": "Gift Cards Settings"
@@ -7983,6 +8089,10 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zfjAc7": {
+    "context": "grant refund, card header",
+    "string": "Unfulfilled products"
   },
   "zjHH6b": {
     "context": "sale start date",

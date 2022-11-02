@@ -1,76 +1,32 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
-import { Button, Pill } from "@saleor/macaw-ui";
+import { Pill } from "@saleor/macaw-ui";
 import { transformPaymentStatus } from "@saleor/misc";
+import { orderGrantRefundUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import SummaryLine from "../OrderSummaryCard/SummaryLine";
-import { SummaryList } from "../OrderSummaryCard/SummaryList";
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
+import { RefundsSummary } from "./components";
+import {
+  getShouldDisplayAmounts,
+  PaymentsSummary,
+} from "./components/PaymentsSummary";
 import {
   orderPaymentActionButtonMessages,
   orderPaymentMessages,
 } from "./messages";
 import { useStyles } from "./styles";
-import { extractRefundedAmount } from "./utils";
 
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
   onRefund: () => void;
   onMarkAsPaid: () => void;
 }
-
-const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
-  if (!order) {
-    return {
-      authorized: false,
-      captured: false,
-      any: false,
-    };
-  }
-
-  const authorized = order.totalAuthorized?.amount ?? 0;
-  const captured = order.totalCaptured?.amount ?? 0;
-  const total = order.total.gross?.amount ?? 0;
-
-  if (authorized && captured) {
-    // different amounts
-    return {
-      authorized: true,
-      captured: true,
-      any: true,
-    };
-  }
-
-  if (captured !== 0 && captured !== total) {
-    // partial capture
-    return {
-      authorized: false,
-      captured: true,
-      any: true,
-    };
-  }
-
-  if (authorized !== 0) {
-    // not fully authorized
-    return {
-      authorized: true,
-      captured: false,
-      any: true,
-    };
-  }
-
-  // fully paid / not paid at all
-  return {
-    authorized: false,
-    captured: false,
-    any: false,
-  };
-};
 
 const OrderPayment: React.FC<OrderPaymementProps> = ({
   order,
@@ -80,18 +36,16 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const refundedAmount = extractRefundedAmount(order);
   const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const canGrantRefund =
     order?.transactions?.length > 0 || order?.payments?.length > 0;
-  const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
+  const canSendRefund = order?.grantedRefunds?.length > 0;
   const canAnyRefund = canGrantRefund || canSendRefund;
   const hasGiftCards = giftCardAmount > 0;
 
   const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
-
   const shouldDisplay = getShouldDisplayAmounts(order);
 
   if (!order) {
@@ -120,45 +74,24 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
         }
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      {!canAnyRefund && !shouldDisplay.any && !hasGiftCards && (
-        <CardContent className={classes.noPaymentContent}>
-          <Typography variant="h5" className={classes.noPaymentTitle}>
-            <FormattedMessage {...orderPaymentMessages.noPayments} />
-          </Typography>
-          {canMarkAsPaid && (
-            <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
-              <FormattedMessage
-                {...orderPaymentActionButtonMessages.markAsPaid}
-              />
-            </Button>
-          )}
-        </CardContent>
-      )}
-      {shouldDisplay.any && (
-        <CardContent>
-          {shouldDisplay.any && (
-            <SummaryList className={classes.amountGrid}>
-              {shouldDisplay.authorized && (
-                <SummaryLine
-                  vertical
-                  text={
-                    <FormattedMessage {...orderPaymentMessages.authorized} />
-                  }
-                  money={order.totalAuthorized}
+      {!canAnyRefund &&
+        !shouldDisplay.captured &&
+        !shouldDisplay.authorized &&
+        !hasGiftCards && (
+          <CardContent className={classes.noPaymentContent}>
+            <Typography variant="h5" className={classes.noPaymentTitle}>
+              <FormattedMessage {...orderPaymentMessages.noPayments} />
+            </Typography>
+            {canMarkAsPaid && (
+              <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
+                <FormattedMessage
+                  {...orderPaymentActionButtonMessages.markAsPaid}
                 />
-              )}
-
-              {shouldDisplay.captured && (
-                <SummaryLine
-                  vertical
-                  text={<FormattedMessage {...orderPaymentMessages.captured} />}
-                  money={order.totalCaptured}
-                />
-              )}
-            </SummaryList>
-          )}
-        </CardContent>
-      )}
+              </Button>
+            )}
+          </CardContent>
+        )}
+      <PaymentsSummary order={order} />
       {canAnyRefund && (
         <>
           <Hr />
@@ -166,7 +99,10 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
             toolbar={
               <div className={classes.refundsButtons}>
                 {canGrantRefund && (
-                  <Button variant="secondary">
+                  <Button
+                    href={orderGrantRefundUrl(order.id)}
+                    variant="secondary"
+                  >
                     <FormattedMessage
                       {...orderPaymentActionButtonMessages.grantRefund}
                     />
@@ -188,22 +124,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
             title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
           ></CardTitle>
           <CardContent>
-            {/* TODO: Add granted refund amount */}
-            {refundedAmount?.amount !== 0 ? (
-              <SummaryList className={classes.amountGrid}>
-                <SummaryLine
-                  vertical
-                  text={<FormattedMessage {...orderPaymentMessages.refunded} />}
-                  money={refundedAmount}
-                />
-              </SummaryList>
-            ) : (
-              <Typography variant="body2" className={classes.explainText}>
-                <FormattedMessage
-                  {...orderPaymentMessages.refundsExplanation}
-                />
-              </Typography>
-            )}
+            <RefundsSummary order={order} />
           </CardContent>
         </>
       )}

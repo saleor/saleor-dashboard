@@ -1,4 +1,5 @@
 import { TableCell, TableRow } from "@material-ui/core";
+import EventTime from "@saleor/components/EventTime";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -6,7 +7,6 @@ import classnames from "classnames";
 import React, { useState } from "react";
 
 import EventStatus from "./EventStatus";
-import EventTime from "./EventTime";
 import PspReference from "./PspReference";
 
 export interface OrderTransactionEventsProps {

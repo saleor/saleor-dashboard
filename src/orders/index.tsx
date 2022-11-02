@@ -12,6 +12,8 @@ import {
   OrderDraftListUrlSortField,
   orderFulfillPath,
   OrderFulfillUrlQueryParams,
+  orderGrantRefundEditPath,
+  orderGrantRefundPath,
   orderListPath,
   OrderListUrlQueryParams,
   OrderListUrlSortField,
@@ -23,7 +25,9 @@ import {
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
 import OrderDraftListComponent from "./views/OrderDraftList";
+import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
+import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
@@ -84,6 +88,19 @@ const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
+const OrderGrantRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
+const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
+  match,
+}) => (
+  <OrderGrantRefundEditComponent
+    orderId={decodeURIComponent(match.params.orderId)}
+    grantRefundId={decodeURIComponent(match.params.refundId)}
+  />
+);
+
 const Component = () => {
   const intl = useIntl();
 
@@ -97,6 +114,14 @@ const Component = () => {
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
         <Route path={orderRefundPath(":id")} component={OrderRefund} />
+        <Route
+          path={orderGrantRefundEditPath(":orderId", ":refundId")}
+          component={OrderGrantRefundEdit}
+        />
+        <Route
+          path={orderGrantRefundPath(":id")}
+          component={OrderGrantRefund}
+        />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>
