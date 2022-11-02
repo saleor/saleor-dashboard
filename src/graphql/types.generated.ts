@@ -468,9 +468,15 @@ export type AttributeValueCreateInput = {
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /** Represents the text of the attribute value, plain text without formating. */
+  /**
+   * Represents the text of the attribute value, plain text without formating.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -527,9 +533,15 @@ export type AttributeValueUpdateInput = {
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /** Represents the text of the attribute value, plain text without formating. */
+  /**
+   * Represents the text of the attribute value, plain text without formating.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -596,6 +608,18 @@ export type CategoryInput = {
   backgroundImage?: InputMaybe<Scalars['Upload']>;
   /** Alt text for a product media. */
   backgroundImageAlt?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the category metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the category private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum CategorySortField {
@@ -898,6 +922,18 @@ export type CollectionCreateInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
+  /**
+   * Fields required to update the collection metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the collection private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
   products?: InputMaybe<Array<Scalars['ID']>>;
 };
@@ -952,6 +988,18 @@ export type CollectionInput = {
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
+  /**
+   * Fields required to update the collection metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the collection private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum CollectionPublished {
@@ -1299,6 +1347,12 @@ export type CustomerFilterInput = {
   placedOrders?: InputMaybe<DateRangeInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /**
+   * Filter by ids.
+   *
+   * Added in Saleor 3.8.
+   */
+  ids?: InputMaybe<Array<Scalars['ID']>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
@@ -1344,6 +1398,18 @@ export type DigitalContentInput = {
   urlValidDays?: InputMaybe<Scalars['Int']>;
   /** Overwrite default automatic_fulfillment setting for variant. */
   automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the digital content metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the digital content private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type DigitalContentUploadInput = {
@@ -1355,6 +1421,18 @@ export type DigitalContentUploadInput = {
   urlValidDays?: InputMaybe<Scalars['Int']>;
   /** Overwrite default automatic_fulfillment setting for variant. */
   automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Fields required to update the digital content metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the digital content private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Represents an file in a multipart request. */
   contentFile: Scalars['Upload'];
 };
@@ -1769,12 +1847,18 @@ export type GiftCardSettingsUpdateInput = {
 };
 
 export enum GiftCardSortField {
-  /** Sort orders by product. */
+  /** Sort gift cards by product. */
   PRODUCT = 'PRODUCT',
-  /** Sort orders by used by. */
+  /** Sort gift cards by used by. */
   USED_BY = 'USED_BY',
-  /** Sort orders by current balance. */
-  CURRENT_BALANCE = 'CURRENT_BALANCE'
+  /** Sort gift cards by current balance. */
+  CURRENT_BALANCE = 'CURRENT_BALANCE',
+  /**
+   * Sort gift cards by created at.
+   *
+   * Added in Saleor 3.8.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type GiftCardSortingInput = {
@@ -3349,7 +3433,11 @@ export enum PageSortField {
   SLUG = 'SLUG',
   /** Sort pages by visibility. */
   VISIBILITY = 'VISIBILITY',
-  /** Sort pages by creation date. */
+  /**
+   * Sort pages by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   CREATION_DATE = 'CREATION_DATE',
   /**
    * Sort pages by publication date.
@@ -3362,7 +3450,13 @@ export enum PageSortField {
    *
    * DEPRECATED: this field will be removed in Saleor 4.0.
    */
-  PUBLISHED_AT = 'PUBLISHED_AT'
+  PUBLISHED_AT = 'PUBLISHED_AT',
+  /**
+   * Sort pages by creation date.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type PageSortingInput = {
@@ -3468,6 +3562,12 @@ export enum PaymentErrorCode {
 }
 
 export type PaymentFilterInput = {
+  /**
+   * Filter by ids.
+   *
+   * Added in Saleor 3.8.
+   */
+  ids?: InputMaybe<Array<Scalars['ID']>>;
   checkouts?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -3746,6 +3846,18 @@ export type ProductCreateInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
   /** Defines the product rating value. */
   rating?: InputMaybe<Scalars['Float']>;
+  /**
+   * Fields required to update the product metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID'];
 };
@@ -3799,6 +3911,30 @@ export type ProductFilterInput = {
   stocks?: InputMaybe<ProductStockFilterInput>;
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /**
+   * Filter by the publication date.
+   *
+   * Added in Saleor 3.8.
+   */
+  publishedFrom?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * Filter by availability for purchase.
+   *
+   * Added in Saleor 3.8.
+   */
+  isAvailable?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Filter by the date of availability for purchase.
+   *
+   * Added in Saleor 3.8.
+   */
+  availableFrom?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * Filter by visibility in product listings.
+   *
+   * Added in Saleor 3.8.
+   */
+  isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
   price?: InputMaybe<PriceRangeInput>;
   /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
@@ -3845,6 +3981,18 @@ export type ProductInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
   /** Defines the product rating value. */
   rating?: InputMaybe<Scalars['Float']>;
+  /**
+   * Fields required to update the product metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export type ProductMediaCreateInput = {
@@ -3937,7 +4085,13 @@ export enum ProductOrderField {
    */
   COLLECTION = 'COLLECTION',
   /** Sort products by rating. */
-  RATING = 'RATING'
+  RATING = 'RATING',
+  /**
+   * Sort products by creation date.
+   *
+   * Added in Saleor 3.8.
+   */
+  CREATED_AT = 'CREATED_AT'
 }
 
 export type ProductStockFilterInput = {
@@ -4037,6 +4191,18 @@ export type ProductVariantBulkCreateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
   /** List of prices assigned to channels. */
@@ -4087,6 +4253,18 @@ export type ProductVariantCreateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
   /** Stocks of a product available for sale. */
@@ -4128,6 +4306,18 @@ export type ProductVariantInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  /**
+   * Fields required to update the product variant metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the product variant private metadata.
+   *
+   * Added in Saleor 3.8.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 export enum ProductVariantSortField {
@@ -5118,6 +5308,14 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
+  /**
+   * A gift card metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A new menu created. */
   MENU_CREATED = 'MENU_CREATED',
   /** A menu is updated. */
@@ -5142,6 +5340,14 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
+  /**
+   * An order metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   /** A draft order is updated. */
@@ -5168,18 +5374,42 @@ export enum WebhookEventTypeAsyncEnum {
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A customer account is deleted. */
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
+  /**
+   * A customer account metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A new collection is created. */
   COLLECTION_CREATED = 'COLLECTION_CREATED',
   /** A collection is updated. */
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
   /** A collection is deleted. */
   COLLECTION_DELETED = 'COLLECTION_DELETED',
+  /**
+   * A collection metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A new product is created. */
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /**
+   * A product metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is updated. */
@@ -5190,16 +5420,40 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  /**
+   * A checkout metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A new fulfillment is created. */
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   /** A fulfillment is cancelled. */
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
   /** A fulfillment is approved. */
   FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
+  /**
+   * A fulfillment metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   /** User notification triggered. */
   NOTIFY_USER = 'NOTIFY_USER',
   /** A new page is created. */
@@ -5232,6 +5486,14 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /**
+   * A shipping zone metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
   /** A staff user is updated. */
@@ -5240,6 +5502,14 @@ export enum WebhookEventTypeAsyncEnum {
   STAFF_DELETED = 'STAFF_DELETED',
   /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  /**
+   * Transaction item metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
@@ -5250,12 +5520,28 @@ export enum WebhookEventTypeAsyncEnum {
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
   /** A warehouse is deleted. */
   WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
+  /**
+   * A warehouse metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /**
+   * A voucher metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY'
 }
@@ -5312,6 +5598,14 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
+  /**
+   * A gift card metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A new menu created. */
   MENU_CREATED = 'MENU_CREATED',
   /** A menu is updated. */
@@ -5336,6 +5630,14 @@ export enum WebhookEventTypeEnum {
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
+  /**
+   * An order metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   /** A draft order is updated. */
@@ -5362,18 +5664,42 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A customer account is deleted. */
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
+  /**
+   * A customer account metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A new collection is created. */
   COLLECTION_CREATED = 'COLLECTION_CREATED',
   /** A collection is updated. */
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
   /** A collection is deleted. */
   COLLECTION_DELETED = 'COLLECTION_DELETED',
+  /**
+   * A collection metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A new product is created. */
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /**
+   * A product metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is updated. */
@@ -5384,16 +5710,40 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  /**
+   * A checkout metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A new fulfillment is created. */
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   /** A fulfillment is cancelled. */
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
   /** A fulfillment is approved. */
   FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
+  /**
+   * A fulfillment metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   /** User notification triggered. */
   NOTIFY_USER = 'NOTIFY_USER',
   /** A new page is created. */
@@ -5426,6 +5776,14 @@ export enum WebhookEventTypeEnum {
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  /**
+   * A shipping zone metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
   /** A staff user is updated. */
@@ -5434,6 +5792,14 @@ export enum WebhookEventTypeEnum {
   STAFF_DELETED = 'STAFF_DELETED',
   /** An action requested for transaction. */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  /**
+   * Transaction item metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   /** A translation is updated. */
@@ -5444,12 +5810,28 @@ export enum WebhookEventTypeEnum {
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
   /** A warehouse is deleted. */
   WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
+  /**
+   * A warehouse metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
+  /**
+   * A voucher metadata is updated.
+   *
+   * Added in Saleor 3.8.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Authorize payment. */
@@ -5556,6 +5938,7 @@ export enum WebhookSampleEventTypeEnum {
   GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
+  GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   MENU_CREATED = 'MENU_CREATED',
   MENU_UPDATED = 'MENU_UPDATED',
   MENU_DELETED = 'MENU_DELETED',
@@ -5568,6 +5951,7 @@ export enum WebhookSampleEventTypeEnum {
   ORDER_UPDATED = 'ORDER_UPDATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   ORDER_FULFILLED = 'ORDER_FULFILLED',
+  ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
@@ -5581,22 +5965,28 @@ export enum WebhookSampleEventTypeEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
+  CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   COLLECTION_CREATED = 'COLLECTION_CREATED',
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
   COLLECTION_DELETED = 'COLLECTION_DELETED',
+  COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
   FULFILLMENT_APPROVED = 'FULFILLMENT_APPROVED',
+  FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   NOTIFY_USER = 'NOTIFY_USER',
   PAGE_CREATED = 'PAGE_CREATED',
   PAGE_UPDATED = 'PAGE_UPDATED',
@@ -5613,18 +6003,22 @@ export enum WebhookSampleEventTypeEnum {
   SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
+  SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   STAFF_CREATED = 'STAFF_CREATED',
   STAFF_UPDATED = 'STAFF_UPDATED',
   STAFF_DELETED = 'STAFF_DELETED',
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
+  TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED',
   WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
+  WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',
+  VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   OBSERVABILITY = 'OBSERVABILITY'
 }
 
