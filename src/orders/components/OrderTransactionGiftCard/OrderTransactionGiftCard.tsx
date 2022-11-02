@@ -2,8 +2,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
+  TransactionEventStatus,
   TransactionItemFragment,
-  TransactionStatus,
 } from "@saleor/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -44,7 +44,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
     events: usedInOrderEvents.map(event => ({
       name: intl.formatMessage(transactionGiftCardMessages.usedInOrder),
       id: event.id,
-      status: TransactionStatus.SUCCESS,
+      status: TransactionEventStatus.SUCCESS,
       createdAt: event.date,
     })),
     actions: [],

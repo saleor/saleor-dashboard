@@ -13,5 +13,6 @@ export const mapActionToMessage: Record<
 > = {
   VOID: transactionActionMessages.void,
   CHARGE: transactionActionMessages.capture,
+  CANCEL: transactionActionMessages.cancel,
   REFUND: null,
 };

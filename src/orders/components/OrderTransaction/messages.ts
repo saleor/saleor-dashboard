@@ -13,4 +13,10 @@ export const transactionActionMessages = defineMessages({
       "Transaction void button - return preauthorized amount to client",
     id: "XPiJex",
   },
+  cancel: {
+    defaultMessage: "Cancel",
+    id: "iIfq2+",
+    description:
+      "Transaction cancel button - return preauthorized amount to client",
+  },
 });

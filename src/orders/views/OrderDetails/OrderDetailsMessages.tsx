@@ -27,7 +27,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import {
   getOrderTransactionErrorMessage,
-  messages as transactionMessages,
+  transactionRequestMessages as transactionMessages,
 } from "@saleor/utils/errors/transaction";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";

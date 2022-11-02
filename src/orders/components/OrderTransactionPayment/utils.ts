@@ -4,8 +4,8 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
   TransactionEventFragment,
+  TransactionEventStatus,
   TransactionKind,
-  TransactionStatus,
 } from "@saleor/graphql";
 
 type Money = OrderPaymentFragment["total"];
@@ -42,7 +42,7 @@ export const mapTransactionsToEvents = (
         id: "",
         reference: undefined,
         name: TransactionKind.PENDING,
-        status: TransactionStatus.PENDING,
+        status: TransactionEventStatus.PENDING,
         createdAt: payment.modified ?? new Date(),
         __typename: "TransactionEvent" as const,
       },
@@ -56,10 +56,10 @@ export const mapTransactionsToEvents = (
       name: kind,
       status:
         kind === TransactionKind.PENDING
-          ? TransactionStatus.PENDING
+          ? TransactionEventStatus.PENDING
           : isSuccess
-          ? TransactionStatus.SUCCESS
-          : TransactionStatus.FAILURE,
+          ? TransactionEventStatus.SUCCESS
+          : TransactionEventStatus.FAILURE,
       createdAt: created,
       __typename: "TransactionEvent" as const,
     }))
