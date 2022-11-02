@@ -52,6 +52,9 @@ const useSummaryStyles = makeStyles(
         margin: 0,
       },
     },
+    expandIcon: {
+      padding: 0,
+    },
   }),
   { name: "ChannelContentWrapperExpanderSummary" },
 );
