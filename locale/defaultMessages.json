@@ -4722,10 +4722,6 @@
     "context": "order return error description when cannot refund",
     "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
   },
-  "XRf1Bi": {
-    "context": "order refunded success message",
-    "string": "Refunded Items"
-  },
   "XT/ZvF": {
     "context": "voucher requirement",
     "string": "Minimum quantity of items"
