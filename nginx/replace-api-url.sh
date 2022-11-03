@@ -7,7 +7,7 @@ set -e
 
 INDEX_BUNDLE_PATH="/app/dashboard/index.html"
 
-if [[ -z "${API_URL}" ]]; then
+if [ -z "${API_URL}" ]; then
     echo "No API_URL provided, using defaults."
 else
     echo "Setting API_URL to: $API_URL"
