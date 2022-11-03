@@ -29,7 +29,7 @@ module.exports = async (on, config) => {
   config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
   config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
 
-  on("before:browser:launch", (browser = {}, launchOptions) => {
+  on("before:browser:launch", (_browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
