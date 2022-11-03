@@ -1,7 +1,6 @@
-import { Accordion, AccordionSummary, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
-import IconChevronDown from "@saleor/icons/ChevronDown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Accordion, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import React from "react";
 
@@ -45,16 +44,6 @@ const useSummaryStyles = makeStyles(
         padding: theme.spacing(2, 0),
       },
     },
-    content: {
-      margin: 0,
-
-      "&$expanded": {
-        margin: 0,
-      },
-    },
-    expandIcon: {
-      padding: 0,
-    },
   }),
   { name: "ChannelContentWrapperExpanderSummary" },
 );
@@ -91,10 +80,7 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
       classes={expanderClasses}
       data-test-id="channel-availability-item"
     >
-      <AccordionSummary
-        expandIcon={<IconChevronDown />}
-        classes={summaryClasses}
-      >
+      <AccordionSummary className={summaryClasses.root}>
         <div className={classes.container}>
           <Typography>{name}</Typography>
           <Label text={messages.availableDateText} />

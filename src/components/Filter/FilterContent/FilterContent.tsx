@@ -1,14 +1,8 @@
-import {
-  Accordion,
-  AccordionSummary,
-  makeStyles,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, Paper, Typography } from "@material-ui/core";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { ChevronIcon } from "@saleor/macaw-ui";
+import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
@@ -28,7 +22,6 @@ import FilterErrorsList from "./FilterErrorsList";
 const useExpanderStyles = makeStyles(
   theme => ({
     btn: {
-      border: "none",
       marginRight: theme.spacing(1),
     },
 
@@ -64,13 +57,6 @@ const useSummaryStyles = makeStyles(
 
       "&$expanded": {
         minHeight: 0,
-      },
-    },
-    content: {
-      margin: 0,
-
-      "&$expanded": {
-        margin: 0,
       },
     },
   }),
@@ -229,8 +215,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     },
                     disableRipple: true,
                   }}
-                  expandIcon={<ChevronIcon />}
-                  classes={summaryClasses}
+                  className={summaryClasses.root}
                   onClick={() => handleFilterOpen(filter)}
                 >
                   {currentFilter && (
