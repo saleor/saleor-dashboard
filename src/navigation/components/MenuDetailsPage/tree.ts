@@ -1,11 +1,8 @@
-import { MenuDetailsFragment } from "@saleor/graphql";
+import { RecursiveMenuItem } from "@saleor/navigation/types";
 
 import { TreeOperation } from "../MenuItems";
 
-export function findNode(
-  tree: MenuDetailsFragment["items"],
-  id: string,
-): number[] {
+export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
   if (tree.length === 0) {
     return [null];
@@ -21,9 +18,9 @@ export function findNode(
 }
 
 export function getNode(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   path: number[],
-): MenuDetailsFragment["items"][0] {
+): RecursiveMenuItem {
   if (path.length === 1) {
     return tree[path[0]];
   }
@@ -31,9 +28,9 @@ export function getNode(
 }
 
 function removeNode(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   path: number[],
-): MenuDetailsFragment["items"] {
+): RecursiveMenuItem[] {
   const removeIndex = path[0];
 
   if (path.length === 1) {
@@ -50,9 +47,9 @@ function removeNode(
 }
 
 interface InsertNodeInput {
-  tree: MenuDetailsFragment["items"];
+  tree: RecursiveMenuItem[];
   path: number[];
-  node: MenuDetailsFragment["items"][0];
+  node: RecursiveMenuItem;
   position: number;
 }
 
@@ -61,7 +58,7 @@ function insertNode({
   path,
   node,
   position,
-}: InsertNodeInput): MenuDetailsFragment["items"] {
+}: InsertNodeInput): RecursiveMenuItem[] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
@@ -78,9 +75,9 @@ function insertNode({
 }
 
 function removeNodeAndChildren(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   operation: TreeOperation,
-): MenuDetailsFragment["items"] {
+): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
 
@@ -101,9 +98,9 @@ function removeNodeAndChildren(
 }
 
 function permuteRelativeNode(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   permutation: TreeOperation,
-): MenuDetailsFragment["items"] {
+): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
 
@@ -128,18 +125,18 @@ function permuteRelativeNode(
 }
 
 function executeRelativeOperation(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   operation: TreeOperation,
-): MenuDetailsFragment["items"] {
+): RecursiveMenuItem[] {
   return operation.type === "move"
     ? permuteRelativeNode(tree, operation)
     : removeNodeAndChildren(tree, operation);
 }
 
 export function computeRelativeTree(
-  tree: MenuDetailsFragment["items"],
+  tree: RecursiveMenuItem[],
   operations: TreeOperation[],
-) {
+): RecursiveMenuItem[] {
   const newTree = operations.reduce(
     (acc, operation) => executeRelativeOperation(acc, operation),
     JSON.parse(JSON.stringify(tree)),
