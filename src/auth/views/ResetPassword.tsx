@@ -1,8 +1,8 @@
-import { APP_MOUNT_URI } from "@saleor/config";
 import { useRequestPasswordResetMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
+import { getAppMountUriForRedirect } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -49,7 +49,7 @@ const ResetPasswordView: React.FC = () => {
           email: data.email,
           redirectUrl: urlJoin(
             window.location.origin,
-            APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+            getAppMountUriForRedirect(),
             newPasswordUrl().replace(/\?/, ""),
           ),
         },

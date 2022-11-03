@@ -7,4 +7,8 @@ declare module "*.svg" {
 
 declare interface Window {
   PasswordCredential: PasswordCredential;
+  __SALEOR_CONFIG__: {
+    API_URL: string;
+    APP_MOUNT_URI: string;
+  };
 }

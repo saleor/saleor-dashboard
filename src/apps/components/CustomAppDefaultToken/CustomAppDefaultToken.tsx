@@ -10,14 +10,14 @@ import { FormattedMessage } from "react-intl";
 import { useStyles } from "./styles";
 
 export interface CustomAppDefaultTokenProps {
-  apiUri: string;
+  apiUrl: string;
   token: string;
-  onApiUriClick: () => void;
+  onApiUrlClick: () => void;
   onTokenClose: () => void;
 }
 
 const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
-  const { apiUri, token, onApiUriClick, onTokenClose } = props;
+  const { apiUrl, token, onApiUrlClick, onTokenClose } = props;
   const classes = useStyles(props);
   const [copied, copy] = useClipboard();
 
@@ -38,8 +38,8 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
                 defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
                 values={{
                   url: (
-                    <Link href={apiUri} onClick={onApiUriClick}>
-                      {apiUri}
+                    <Link href={apiUrl} onClick={onApiUrlClick}>
+                      {apiUrl}
                     </Link>
                   ),
                 }}
