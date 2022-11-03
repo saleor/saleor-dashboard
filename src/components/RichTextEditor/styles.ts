@@ -1,11 +1,11 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => {
     const hover = {
       "&:hover": {
-        background: fade(theme.palette.primary.main, 0.1),
+        background: alpha(theme.palette.primary.main, 0.1),
       },
     };
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
           minHeight: 24,
         },
         "& .ce-block--selected .ce-block__content": {
-          background: `${fade(theme.palette.primary.main, 0.2)} !important`,
+          background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
         },
         "& .ce-block__content": {
           margin: 0,
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
           ...hover,
         },
         "& .ce-conversion-tool--focused": {
-          background: `${fade(theme.palette.primary.main, 0.1)} !important`,
+          background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
         },
         "& .ce-conversion-tool__icon": {
           background: "none",
@@ -87,7 +87,7 @@ const useStyles = makeStyles(
         },
       },
       root: {
-        border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
+        border: `1px solid ${alpha(theme.palette.text.secondary, 0.4)}`,
         borderRadius: 4,
         boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
         fontSize: theme.typography.body1.fontSize,
