@@ -145,6 +145,22 @@ You are ready to run cypress commands like:
 npm run cy:open
 ```
 
+### Usage with docker
+
+Build docker image:
+
+```shell
+docker build --tag saleor-dashboard .
+```
+
+Run nginx from docker and bind it to port on your machine (in this example 8080):
+
+```shell
+docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
+```
+
+Enter `http://localhost:8080/` to use dashboard.
+
 ##### Usage with Sentry adapter:
 
 Sentry is used as the default tracker so no changes in code are necessary and the configuration is done via environment variables.
