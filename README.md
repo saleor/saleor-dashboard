@@ -130,7 +130,7 @@ docker build --tag saleor-dashboard .
 Run nginx from docker and bind it to port on your machine (in this example 8080):
 
 ```shell
-docker run --publish 8080:80 --env "API_URL=https://master.staging.saleor.cloud/graphql/" saleor-dashboard
+docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
 ```
 
 Enter `http://localhost:8080/` to use dashboard.
