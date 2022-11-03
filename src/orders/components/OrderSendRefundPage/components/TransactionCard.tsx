@@ -122,7 +122,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
                 label={intl.formatMessage(refundPageMessages.refundAmount)}
                 name="amount"
                 onChange={handleChange}
-                value={value}
+                value={value?.toString() ?? ""}
                 currencySymbol={transaction?.authorizedAmount?.currency}
               />
               <ConfirmButton

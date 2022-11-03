@@ -111,7 +111,7 @@ export const ManualRefundCard: React.FC<ManualRefundCardProps> = ({
             currencySymbol={currency}
             disabled={submitState === "loading"}
             onChange={handleChangeAmount}
-            value={amount}
+            value={amount?.toString() ?? ""}
           />
           <ConfirmButton
             type="submit"
