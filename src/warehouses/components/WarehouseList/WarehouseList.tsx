@@ -3,7 +3,6 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -86,7 +85,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   return (
     <ResponsiveTable data-test-id="warehouse-list">
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCellHeader
             direction={
               sort.sort === WarehouseListUrlSortField.name
@@ -109,17 +108,17 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           <TableCell className={classes.colActions}>
             <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
           </TableCell>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             settings={settings}
             disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -170,14 +169,14 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
             </TableRowLink>
           ),
           () => (
-            <TableRow data-test-id="empty-list-message">
+            <TableRowLink data-test-id="empty-list-message">
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="2gsiR1"
                   defaultMessage="No warehouses found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

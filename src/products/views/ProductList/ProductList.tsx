@@ -400,6 +400,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
+        selectedProductIds={listElements}
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={updateListSettings}

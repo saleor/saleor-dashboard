@@ -3,7 +3,6 @@ import {
   CardContent,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
@@ -11,6 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Date from "@saleor/components/Date";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { InvoiceFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -107,7 +107,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           <ResponsiveTable className={classes.invoicesTable}>
             <TableBody className={classes.invoicesTableBody}>
               {generatedInvoices.map(invoice => (
-                <TableRow key={invoice.id} hover={!!invoice}>
+                <TableRowLink key={invoice.id} hover={!!invoice}>
                   <TableCell
                     className={
                       onInvoiceClick
@@ -141,7 +141,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       </Button>
                     </TableCell>
                   )}
-                </TableRow>
+                </TableRowLink>
               ))}
             </TableBody>
           </ResponsiveTable>

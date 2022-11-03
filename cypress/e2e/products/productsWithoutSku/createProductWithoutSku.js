@@ -5,14 +5,10 @@ import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import {
-  createProduct,
-  updateChannelInProduct,
-} from "../../../support/api/requests/Product";
+import { updateVariantWarehouse } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import {
   deleteChannelsStartsWith,
@@ -21,11 +17,8 @@ import {
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import {
-  createFirstVariant,
-  createVariant,
-} from "../../../support/pages/catalog/products/VariantsPage";
+import { enterVariantEditPage } from "../../../support/pages/catalog/products/productDetailsPage";
+import { selectChannelsForVariant } from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
@@ -99,51 +92,6 @@ describe("Creating variants", () => {
   });
 
   xit(
-    "should create variant without sku by variant creator",
-    { tags: ["@products", "@allEnv"] },
-    () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const price = 10;
-      let createdProduct;
-
-      createProduct({
-        attributeId: attribute.id,
-        name,
-        productTypeId: productType.id,
-        categoryId: category.id,
-      })
-        .then(resp => {
-          createdProduct = resp;
-          updateChannelInProduct({
-            productId: createdProduct.id,
-            channelId: defaultChannel.id,
-          });
-          cy.visit(`${urlList.products}${createdProduct.id}`);
-          cy.waitForProgressBarToNotBeVisible();
-          createVariant({
-            price,
-            attributeName: attributeValues[0],
-          });
-          getProductVariants(createdProduct.id, defaultChannel.slug);
-        })
-        .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
-          expect(variant).to.have.property("price", price);
-          createWaitingForCaptureOrder({
-            channelSlug: defaultChannel.slug,
-            email: "example@example.com",
-            variantsList: [variant],
-            shippingMethodName: shippingMethod.name,
-            address,
-          });
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
-    },
-  );
-
-  xit(
     "should create variant without sku",
     { tags: ["@products", "@allEnv"] },
     () => {
@@ -201,12 +149,13 @@ describe("Creating variants", () => {
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
         .click()
-        .get(PRODUCT_DETAILS.productNameInput)
-        .type(name)
         .fillAutocompleteSelect(
-          PRODUCT_DETAILS.productTypeInput,
+          PRODUCTS_LIST.dialogProductTypeInput,
           simpleProductType.name,
-        )
+        );
+      cy.get(BUTTON_SELECTORS.submit).click();
+      cy.get(PRODUCT_DETAILS.productNameInput)
+        .type(name)
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
       cy.get(PRODUCT_DETAILS.costPriceInput)
@@ -218,29 +167,28 @@ describe("Creating variants", () => {
         .click()
         .confirmationMessageShouldDisappear()
         .wait("@VariantCreate")
-        .get(PRODUCT_DETAILS.addWarehouseButton)
-        .click();
-      cy.contains(PRODUCT_DETAILS.warehouseOption, warehouse.name)
-        .click()
+        .then(({ response }) => {
+          const variantId =
+            response.body.data.productVariantCreate.productVariant.id;
+
+          updateVariantWarehouse({ variantId, warehouseId: warehouse.id });
+        });
+      enterVariantEditPage();
+      cy.addAliasToGraphRequest("ProductVariantDetails");
+      selectChannelsForVariant();
+      cy.get(PRODUCT_DETAILS.stockInput)
+        .parents()
+        .contains(warehouse.name)
         .get(PRODUCT_DETAILS.stockInput)
         .clearAndType(10)
-        .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
-        .click()
-        .get(
-          `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
-        )
-        .click()
-        .get(
-          `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue}`,
-        )
-        .click()
-        .addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@ProductDetails")
+        .wait("@ProductVariantDetails")
         .then(({ response }) => {
-          const variants = [response.body.data.product.variants[0]];
+          const variants = [
+            response.body.data.productVariant.product.variants[0],
+          ];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",

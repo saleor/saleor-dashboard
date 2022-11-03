@@ -1,8 +1,9 @@
-import { TableCell, TableRow, Typography } from "@material-ui/core";
+import { TableCell, Typography } from "@material-ui/core";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   OrderErrorFragment,
   OrderLineFragment,
@@ -103,7 +104,7 @@ const TableLine: React.FC<TableLineProps> = ({
   };
 
   return (
-    <TableRow key={id}>
+    <TableRowLink key={id}>
       <TableCell
         className={classNames({
           [classes.colStatusEmpty]: !alerts.length,
@@ -155,7 +156,7 @@ const TableLine: React.FC<TableLineProps> = ({
           <DeleteIcon color="primary" />
         </IconButton>
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 

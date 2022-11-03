@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
@@ -12,6 +6,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableHead from "@saleor/components/TableHead";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
@@ -138,7 +133,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                 );
 
                 return (
-                  <TableRow key={channel.id}>
+                  <TableRowLink key={channel.id}>
                     <TableCell>
                       <Typography>{channel.name}</Typography>
                     </TableCell>
@@ -187,7 +182,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         }
                       />
                     </TableCell>
-                  </TableRow>
+                  </TableRowLink>
                 );
               })}
             </TableBody>

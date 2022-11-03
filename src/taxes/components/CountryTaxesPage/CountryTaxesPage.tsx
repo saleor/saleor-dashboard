@@ -1,16 +1,11 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -66,20 +61,20 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
           <Card>
             <ResponsiveTable>
               <TableHead>
-                <TableRow>
+                <TableRowLink>
                   <TableCell className={classes.wideColumn}>
                     <FormattedMessage id="ccXLVi" defaultMessage="Category" />
                   </TableCell>
                   <TableCell>
                     <FormattedMessage id="la9cZ4" defaultMessage="Tax Rate" />
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               </TableHead>
               <TableBody>
                 {renderCollection(
                   taxCategories,
                   taxCategory => (
-                    <TableRow
+                    <TableRowLink
                       key={taxCategory ? taxCategory.rateType : "skeleton"}
                     >
                       <TableCell>
@@ -91,17 +86,17 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                           <Skeleton />,
                         )}
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   ),
                   () => (
-                    <TableRow>
+                    <TableRowLink>
                       <TableCell colSpan={2}>
                         <FormattedMessage
                           id="Ubath+"
                           defaultMessage="No reduced tax categories found"
                         />
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   ),
                 )}
               </TableBody>

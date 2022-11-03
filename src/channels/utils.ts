@@ -42,6 +42,15 @@ export interface ChannelData {
   unitsSold?: number;
 }
 
+export interface ProductChannelListingData extends Channel {
+  isPublished: boolean;
+  publicationDate: string | null;
+  availableForPurchase: string;
+  isAvailableForPurchase: boolean;
+  visibleInListings: boolean;
+  currency?: string;
+}
+
 export interface ChannelPriceData {
   id: string;
   name: string;

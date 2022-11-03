@@ -3,22 +3,24 @@ import {
   Switch,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
+import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
+import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
 import { useAppListContext } from "@saleor/apps/context";
-import { appUrl } from "@saleor/apps/urls";
+import { appUrl, createAppInstallUrl } from "@saleor/apps/urls";
+import { isAppInTunnel } from "@saleor/apps/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import React, { useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "../../styles";
 import { AppPermissions } from "../AppPermissions/AppPermissions";
@@ -27,16 +29,27 @@ import AppsSkeleton from "../AppsSkeleton";
 export interface InstalledAppsProps extends ListProps {
   appsList: AppsListQuery["apps"]["edges"];
   onRemove: (id: string) => void;
+  displayQuickManifestButton?: boolean;
+  title: string;
 }
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
   onRemove,
+  title,
+  displayQuickManifestButton = false,
   ...props
 }) => {
-  const intl = useIntl();
   const classes = useStyles(props);
   const { activateApp, deactivateApp } = useAppListContext();
+  const navigate = useNavigator();
+
+  const navigateToAppInstallPage = useCallback(
+    (url: string) => {
+      navigate(createAppInstallUrl(url));
+    },
+    [navigate],
+  );
 
   const getHandleToggle = (app: AppListItemFragment) => () => {
     if (app.isActive) {
@@ -49,11 +62,16 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   return (
     <Card className={classes.apps}>
       <CardTitle
-        title={intl.formatMessage({
-          id: "BvmnJq",
-          defaultMessage: "Third Party Apps",
-          description: "section header",
-        })}
+        title={title}
+        toolbar={
+          displayQuickManifestButton ? (
+            <InstallWithManifestFormButton
+              onSubmitted={navigateToAppInstallPage}
+            />
+          ) : (
+            undefined
+          )
+        }
       />
       <ResponsiveTable>
         <TableBody>
@@ -70,15 +88,22 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
+                    {app.node.manifestUrl &&
+                    isAppInTunnel(app.node.manifestUrl) ? (
+                      <Typography variant="caption">
+                        <FormattedMessage
+                          defaultMessage="(TUNNEL - DEVELOPMENT)"
+                          id="QdQ9z7"
+                        />
+                      </Typography>
+                    ) : null}
                   </TableCell>
+
                   <TableCell className={classes.colAction}>
                     {app.node.manifestUrl && (
-                      <Typography
-                        className={clsx(classes.text, classes.manifestUrl)}
-                        variant="body2"
-                      >
-                        {app.node.manifestUrl}
-                      </Typography>
+                      <AppManifestTableDisplay
+                        manifestUrl={app.node.manifestUrl}
+                      />
                     )}
                     <TableButtonWrapper>
                       <Switch
@@ -102,7 +127,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                 <AppsSkeleton key={index} />
               ),
             () => (
-              <TableRow className={classes.tableRow}>
+              <TableRowLink className={classes.tableRow}>
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
@@ -112,7 +137,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     />
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

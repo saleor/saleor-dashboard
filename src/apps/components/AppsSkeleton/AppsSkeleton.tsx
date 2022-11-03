@@ -1,5 +1,6 @@
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import React from "react";
 
 import { useStyles } from "../../styles";
@@ -8,11 +9,11 @@ export const AppsSkeleton = () => {
   const classes = useStyles({});
 
   return (
-    <TableRow className={classes.tableRow}>
+    <TableRowLink className={classes.tableRow}>
       <TableCell colSpan={2} className={classes.colName}>
         <Skeleton />
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 

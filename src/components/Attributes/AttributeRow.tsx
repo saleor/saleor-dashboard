@@ -1,4 +1,5 @@
 import { InputAdornment, TextField } from "@material-ui/core";
+import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
 import ExtendedAttributeRow from "@saleor/components/Attributes/ExtendedAttributeRow";
@@ -126,7 +127,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.PLAIN_TEXT:
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow
+          label={attribute.label}
+          description={intl.formatMessage(inputTypeMessages.plainText)}
+        >
           <TextField
             fullWidth
             disabled={disabled}
@@ -149,7 +153,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow
+          label={attribute.label}
+          description={intl.formatMessage(inputTypeMessages.richText)}
+        >
           {getShouldMount(attribute.id) && (
             <RichTextEditor
               defaultValue={defaultValue}

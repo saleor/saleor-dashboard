@@ -3,7 +3,6 @@ import {
   CardContent,
   TableBody,
   TableCell,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
@@ -13,6 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { PermissionGroupMemberFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import {
@@ -201,7 +201,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                 const isSelected = user ? isChecked(user.id) : false;
 
                 return (
-                  <TableRow
+                  <TableRowLink
                     className={classNames({
                       [classes.tableRow]: !!user,
                     })}
@@ -276,18 +276,18 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                         <Skeleton />
                       )}
                     </TableCell>
-                  </TableRow>
+                  </TableRowLink>
                 );
               },
               () => (
-                <TableRow>
+                <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
                     <FormattedMessage
                       id="qrWOxx"
                       defaultMessage="No members found"
                     />
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
             )}
           </TableBody>
