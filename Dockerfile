@@ -22,5 +22,5 @@ FROM nginx:stable-alpine as runner
 WORKDIR /app
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx/replace-api-url.sh /docker-entrypoint.d/replace-api-url.sh
+COPY ./nginx/replace-api-url.sh /docker-entrypoint.d/50-replace-api-url.sh
 COPY --from=builder /app/build/ /app/
