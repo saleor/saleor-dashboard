@@ -1,5 +1,5 @@
 import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useState } from "react";
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
     addFilterButton: {
       "&$filterButton": {
         "&:hover, &:focus": {
-          backgroundColor: fade(theme.palette.primary.main, 0.1),
+          backgroundColor: alpha(theme.palette.primary.main, 0.1),
         },
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.primary.main}`,
@@ -41,7 +41,7 @@ const useStyles = makeStyles(
     },
     addFilterButtonActive: {
       "&$addFilterButton": {
-        backgroundColor: fade(theme.palette.primary.main, 0.1),
+        backgroundColor: alpha(theme.palette.primary.main, 0.1),
       },
     },
     addFilterIcon: {

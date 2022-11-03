@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       color: theme.palette.common.white,
     },
     root: {
-      background: fade(theme.palette.primary.main, 0.8),
+      background: alpha(theme.palette.primary.main, 0.8),
       borderRadius: 18,
       display: "inline-block",
       marginRight: theme.spacing(2),
