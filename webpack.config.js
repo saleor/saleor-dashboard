@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
-const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
+const TSCheckerPlugin = require("fork-ts-checker-webpack-plugin");
+const ESCheckerPlugin = require("eslint-webpack-plugin");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 require("dotenv").config();
@@ -27,10 +28,9 @@ const pathsPlugin = new TsconfigPathsPlugin({
   configFile: "./tsconfig.json",
 });
 
-const checkerPlugin = new CheckerPlugin({
-  eslint: true,
-  reportFiles: ["src/**/*.{ts,tsx}"],
-});
+const typescriptCheckerPlugin = new TSCheckerPlugin();
+const eslintCheckerPlugin = new ESCheckerPlugin();
+
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: "index.html",
   hash: true,
@@ -54,7 +54,7 @@ const dashboardBuildPath = "build/dashboard/";
 module.exports = speedMeasureWrapper((env, argv) => {
   const devMode = argv.mode !== "production";
 
-  let fileLoaderPath;
+  let fileLoader;
   let output;
 
   if (!process.env.API_URI) {
@@ -69,7 +69,12 @@ module.exports = speedMeasureWrapper((env, argv) => {
       path: resolve(dashboardBuildPath),
       publicPath,
     };
-    fileLoaderPath = "file-loader?name=[name].[hash].[ext]";
+    fileLoader = {
+      loader: "file-loader",
+      options: {
+        name: "[name].[hash].[ext]",
+      },
+    };
   } else {
     output = {
       chunkFilename: "[name].js",
@@ -77,7 +82,12 @@ module.exports = speedMeasureWrapper((env, argv) => {
       path: resolve(dashboardBuildPath),
       publicPath,
     };
-    fileLoaderPath = "file-loader?name=[name].[ext]";
+    fileLoader = {
+      loader: "file-loader",
+      options: {
+        name: "[name].[hash].[ext]",
+      },
+    };
   }
 
   // Create release if sentry config is set
@@ -101,7 +111,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
       swSrc: "./src/sw.js",
       swDest: "sw.js",
       maximumFileSizeToCacheInBytes: 5000000,
-      webpackCompilationPlugins: [checkerPlugin],
+      webpackCompilationPlugins: [typescriptCheckerPlugin, eslintCheckerPlugin],
     });
   }
 
@@ -142,8 +152,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
             resolve("assets/images"),
             resolve("assets/favicons"),
           ],
-          loader: fileLoaderPath,
           test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/,
+          use: [fileLoader],
         },
       ],
     },
@@ -154,7 +164,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
     },
     output,
     plugins: [
-      checkerPlugin,
+      typescriptCheckerPlugin,
+      eslintCheckerPlugin,
       environmentPlugin,
       htmlWebpackPlugin,
       sentryPlugin,
@@ -175,6 +186,9 @@ module.exports = speedMeasureWrapper((env, argv) => {
       },
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin],
+      fallback: {
+        path: require.resolve("path-browserify"),
+      },
     },
   };
 });
