@@ -33,6 +33,11 @@ jobs:
           env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
           ref: ${{ github.head_ref }}
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
