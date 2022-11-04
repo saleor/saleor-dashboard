@@ -93,10 +93,6 @@ program
       }
     }
 
-    const requestBody =
-      testsStatus === "PASSED"
-        ? `Cypress tests passed. See results at ${options.dashboard_url}`
-        : `Some tests failed, need manual approve. See results at ${options.dashboard_url}`;
     const event = "COMMENT";
 
     await octokit.request(
