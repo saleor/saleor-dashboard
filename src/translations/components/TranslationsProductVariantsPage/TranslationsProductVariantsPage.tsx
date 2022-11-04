@@ -18,7 +18,6 @@ import {
   productVariantUrl,
   TranslatableEntities,
 } from "@saleor/translations/urls";
-import { mapAttributeValuesToTranslationFields } from "@saleor/translations/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -99,7 +98,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short",
+            type: "short" as "short",
             value: data?.name,
           },
         ]}
@@ -117,10 +116,25 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             disabled={disabled}
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={mapAttributeValuesToTranslationFields(
-              data.attributeValues,
-              intl,
-            )}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    id: "PajjqE",
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list",
+                  },
+                  {
+                    number: i + 1,
+                  },
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText,
+              })) || []
+            }
             saveButtonState={saveButtonState}
             richTextResetKey={languageCode}
             onEdit={onEdit}
