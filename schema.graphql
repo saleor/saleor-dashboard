@@ -1881,6 +1881,9 @@ type AttributeValueTranslatableContent implements Node {
     languageCode: LanguageCodeEnum!
   ): AttributeValueTranslation
 
+  """Represents an attribute."""
+  attribute: Attribute!
+
   """Represents a value of an attribute."""
   attributeValue: AttributeValue @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
 }
