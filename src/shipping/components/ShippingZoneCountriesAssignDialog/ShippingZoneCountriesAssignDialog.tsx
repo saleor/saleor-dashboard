@@ -49,7 +49,9 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDialogProps> = props => {
+const ShippingZoneCountriesAssignDialog: React.FC<
+  ShippingZoneCountriesAssignDialogProps
+> = props => {
   const {
     confirmButtonState,
     onClose,

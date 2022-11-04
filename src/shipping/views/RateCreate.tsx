@@ -44,13 +44,11 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     ShippingRateCreateUrlQueryParams
   >(navigate, params => shippingRateCreateUrl(id, params), params);
 
-  const {
-    data: shippingZoneData,
-    loading: channelsLoading,
-  } = useShippingZoneChannelsQuery({
-    displayLoader: true,
-    variables: { id },
-  });
+  const { data: shippingZoneData, loading: channelsLoading } =
+    useShippingZoneChannelsQuery({
+      displayLoader: true,
+      variables: { id },
+    });
 
   const allChannels = createSortedShippingChannels(
     shippingZoneData?.shippingZone?.channels,
@@ -82,17 +80,13 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     postalCodeRules: [],
   });
 
-  const {
-    channelErrors,
-    createShippingRate,
-    errors,
-    status,
-  } = useShippingRateCreator(
-    id,
-    params.type,
-    state.postalCodeRules,
-    state.inclusionType,
-  );
+  const { channelErrors, createShippingRate, errors, status } =
+    useShippingRateCreator(
+      id,
+      params.type,
+      state.postalCodeRules,
+      state.inclusionType,
+    );
 
   const onPostalCodeAssign = (rule: MinMax) => {
     if (

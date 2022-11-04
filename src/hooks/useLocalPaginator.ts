@@ -62,9 +62,8 @@ export function useSectionLocalPaginationState(
   section: string,
 ): [PaginationState, (paginationState: PaginationState) => void] {
   const [paginationSection, setPaginationSection] = useState(section);
-  const [paginationState, setPaginationState] = useLocalPaginationState(
-    paginateBy,
-  );
+  const [paginationState, setPaginationState] =
+    useLocalPaginationState(paginateBy);
 
   const fallbackPaginationState = {
     first: paginateBy,

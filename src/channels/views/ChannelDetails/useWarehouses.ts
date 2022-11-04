@@ -12,10 +12,8 @@ export const useWarehouses = () => {
     PermissionEnum.MANAGE_PRODUCTS,
   ]);
 
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery({ skip: !canLoadWarehouses });
+  const { data: warehousesCountData, loading: warehousesCountLoading } =
+    useWarehousesCountQuery({ skip: !canLoadWarehouses });
 
   const {
     loadMore: fetchMoreWarehouses,

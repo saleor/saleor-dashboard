@@ -53,15 +53,17 @@ export interface SiteSettingsPageProps {
 export function areAddressInputFieldsModified(
   data: SiteSettingsPageAddressFormData,
 ): boolean {
-  return ([
-    "city",
-    "country",
-    "countryArea",
-    "phone",
-    "postalCode",
-    "streetAddress1",
-    "streetAddress2",
-  ] as Array<keyof SiteSettingsPageAddressFormData>)
+  return (
+    [
+      "city",
+      "country",
+      "countryArea",
+      "phone",
+      "postalCode",
+      "streetAddress1",
+      "streetAddress2",
+    ] as Array<keyof SiteSettingsPageAddressFormData>
+  )
     .map(key => data[key])
     .some(field => field !== "");
 }
@@ -89,10 +91,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     shop?.companyAddress?.country.code || "",
   );
 
-  const {
-    errors: validationErrors,
-    submit: handleSubmitWithAddress,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmitWithAddress } =
+    useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: shop?.companyAddress?.city || "",

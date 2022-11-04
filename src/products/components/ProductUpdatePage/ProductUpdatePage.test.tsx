@@ -107,32 +107,18 @@ describe("Product details page", () => {
     );
     expect(component.find(selectors.dropdown).exists()).toBeFalsy();
 
-    component
-      .find(selectors.input)
-      .first()
-      .simulate("click");
+    component.find(selectors.input).first().simulate("click");
 
     expect(component.find(selectors.dropdown).exists()).toBeTruthy();
 
     expect(component.find(selectors.empty).exists());
 
-    component
-      .find(selectors.empty)
-      .first()
-      .simulate("click");
+    component.find(selectors.empty).first().simulate("click");
 
-    expect(
-      component
-        .find(selectors.input)
-        .first()
-        .prop("value"),
-    ).toEqual("");
+    expect(component.find(selectors.input).first().prop("value")).toEqual("");
 
     await act(async () => {
-      component
-        .find("form")
-        .first()
-        .simulate("submit");
+      component.find("form").first().simulate("submit");
       // wait for async function to complete
       await new Promise(process.nextTick);
     });

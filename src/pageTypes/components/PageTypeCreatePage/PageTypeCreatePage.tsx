@@ -53,9 +53,8 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   return (
     <Form

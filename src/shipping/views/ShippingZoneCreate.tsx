@@ -30,20 +30,18 @@ const ShippingZoneCreate: React.FC<{}> = () => {
     },
   });
 
-  const [
-    createShippingZone,
-    createShippingZoneOpts,
-  ] = useCreateShippingZoneMutation({
-    onCompleted: data => {
-      if (data.shippingZoneCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));
-      }
-    },
-  });
+  const [createShippingZone, createShippingZoneOpts] =
+    useCreateShippingZoneMutation({
+      onCompleted: data => {
+        if (data.shippingZoneCreate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));
+        }
+      },
+    });
 
   const handleSubmit = (data: ShippingZoneCreateFormData) =>
     extractMutationErrors(

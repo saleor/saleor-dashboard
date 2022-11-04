@@ -82,19 +82,17 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const [
-    updateStaffMember,
-    updateStaffMemberOpts,
-  ] = useStaffMemberUpdateMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateStaffMember, updateStaffMemberOpts] =
+    useStaffMemberUpdateMutation({
+      onCompleted: data => {
+        if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const [deleteStaffMember, deleteResult] = useStaffMemberDeleteMutation({
     onCompleted: data => {

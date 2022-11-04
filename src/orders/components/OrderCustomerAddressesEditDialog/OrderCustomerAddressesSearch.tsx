@@ -38,7 +38,9 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch();
 }
 
-const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
+const OrderCustomerAddressesSearch: React.FC<
+  OrderCustomerAddressesSearchProps
+> = props => {
   const {
     type,
     cloneAddress,
@@ -60,10 +62,8 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   );
 
   const [query, setQuery] = React.useState("");
-  const [
-    temporarySelectedAddress,
-    setTemporarySelectedAddress,
-  ] = React.useState(initialAddress);
+  const [temporarySelectedAddress, setTemporarySelectedAddress] =
+    React.useState(initialAddress);
 
   const handleSelect = () => {
     if (type === AddressTypeEnum.SHIPPING) {

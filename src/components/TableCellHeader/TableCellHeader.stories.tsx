@@ -50,9 +50,8 @@ const Story: React.FC<StoryProps> = ({
   </Card>
 );
 const InteractiveStory: React.FC = () => {
-  const [direction, setDirection] = React.useState<
-    TableCellHeaderArrowDirection
-  >("asc");
+  const [direction, setDirection] =
+    React.useState<TableCellHeaderArrowDirection>("asc");
   const [field, setField] = React.useState<Field>("name");
 
   const handleHeaderClick = (selectedField: Field) => {

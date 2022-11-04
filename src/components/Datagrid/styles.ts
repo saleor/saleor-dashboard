@@ -40,10 +40,11 @@ const useStyles = makeStyles(
         },
       },
       portal: {
-        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
-          appearance: "none",
-          margin: 0,
-        },
+        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
+          {
+            appearance: "none",
+            margin: 0,
+          },
         "& input[type=number]": {
           appearance: "textfield",
         },

@@ -31,7 +31,9 @@ export interface OrderFulfillmentAcceptDialogProps {
   onConfirm(data: OrderFulfillmentAcceptDialogFormData): void;
 }
 
-const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
+const OrderFulfillmentAcceptDialog: React.FC<
+  OrderFulfillmentAcceptDialogProps
+> = props => {
   const { confirmButtonState, errors, open, onConfirm, onClose } = props;
 
   const intl = useIntl();

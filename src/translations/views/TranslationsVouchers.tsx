@@ -39,21 +39,19 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateVoucherTranslationsMutation({
-    onCompleted: data => {
-      if (data.voucherTranslate.errors.length === 0) {
-        voucherTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateVoucherTranslationsMutation({
+      onCompleted: data => {
+        if (data.voucherTranslate.errors.length === 0) {
+          voucherTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const onEdit = (field: string) =>
     navigate(

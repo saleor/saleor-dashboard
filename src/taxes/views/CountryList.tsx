@@ -40,19 +40,17 @@ export const CountryList: React.FC = () => {
     },
   });
 
-  const [
-    updateTaxSettings,
-    updateTaxSettingsOpts,
-  ] = useUpdateTaxSettingsMutation({
-    onCompleted: data => {
-      if (data.shopSettingsUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateTaxSettings, updateTaxSettingsOpts] =
+    useUpdateTaxSettingsMutation({
+      onCompleted: data => {
+        if (data.shopSettingsUpdate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const handleSubmit = (data: TaxesConfigurationFormData) =>
     extractMutationErrors(

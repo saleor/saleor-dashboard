@@ -166,10 +166,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     { formId: VOUCHER_UPDATE_FORM_ID },
   );
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useVoucherChannelListingUpdateMutation({});
 
   const notifySaved = () =>
     notify({
@@ -195,30 +193,26 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     },
   });
 
-  const [
-    voucherCataloguesRemove,
-    voucherCataloguesRemoveOpts,
-  ] = useVoucherCataloguesRemoveMutation({
-    onCompleted: data => {
-      if (data.voucherCataloguesRemove.errors.length === 0) {
-        notifySaved();
-        closeModal();
-        reset();
-      }
-    },
-  });
+  const [voucherCataloguesRemove, voucherCataloguesRemoveOpts] =
+    useVoucherCataloguesRemoveMutation({
+      onCompleted: data => {
+        if (data.voucherCataloguesRemove.errors.length === 0) {
+          notifySaved();
+          closeModal();
+          reset();
+        }
+      },
+    });
 
-  const [
-    voucherCataloguesAdd,
-    voucherCataloguesAddOpts,
-  ] = useVoucherCataloguesAddMutation({
-    onCompleted: data => {
-      if (data.voucherCataloguesAdd.errors.length === 0) {
-        notifySaved();
-        closeModal();
-      }
-    },
-  });
+  const [voucherCataloguesAdd, voucherCataloguesAddOpts] =
+    useVoucherCataloguesAddMutation({
+      onCompleted: data => {
+        if (data.voucherCataloguesAdd.errors.length === 0) {
+          notifySaved();
+          closeModal();
+        }
+      },
+    });
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 

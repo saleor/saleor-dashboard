@@ -103,11 +103,11 @@ export const getParsedLines = (
 export const getById = (idToCompare: string) => (obj: Node) =>
   obj.id === idToCompare;
 
-export const getByUnmatchingId = (idToCompare: string) => (obj: {
-  id: string;
-}) => obj.id !== idToCompare;
+export const getByUnmatchingId =
+  (idToCompare: string) => (obj: { id: string }) =>
+    obj.id !== idToCompare;
 
-const isIncludedInIds = function<T extends Node>(
+const isIncludedInIds = function <T extends Node>(
   arrayToCompare: string[] | T[],
   obj: Node,
 ) {

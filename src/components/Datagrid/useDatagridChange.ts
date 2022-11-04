@@ -47,9 +47,8 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   };
 }
 
-export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(
-  undefined,
-);
+export const DatagridChangeStateContext =
+  createContext<UseDatagridChangeState>(undefined);
 export const useDatagridChangeStateContext = () =>
   useContext(DatagridChangeStateContext);
 
@@ -58,13 +57,8 @@ function useDatagridChange(
   rows: number,
   onChange?: OnDatagridChange,
 ) {
-  const {
-    added,
-    setAdded,
-    removed,
-    setRemoved,
-    changes,
-  } = useDatagridChangeStateContext();
+  const { added, setAdded, removed, setRemoved, changes } =
+    useDatagridChangeStateContext();
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
       changes.current.findIndex(

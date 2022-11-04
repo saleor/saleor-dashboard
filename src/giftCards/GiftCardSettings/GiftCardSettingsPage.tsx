@@ -41,10 +41,8 @@ const GiftCardSettingsPage: React.FC = () => {
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
 
-  const [
-    updateGiftCardSettings,
-    updateGiftCardSettingsOpts,
-  ] = useGiftCardSettingsUpdateMutation({});
+  const [updateGiftCardSettings, updateGiftCardSettingsOpts] =
+    useGiftCardSettingsUpdateMutation({});
 
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({

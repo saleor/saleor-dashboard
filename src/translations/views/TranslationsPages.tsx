@@ -52,18 +52,15 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     }
   };
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdatePageTranslationsMutation({
-    onCompleted: data => onUpdate(data.pageTranslate.errors),
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdatePageTranslationsMutation({
+      onCompleted: data => onUpdate(data.pageTranslate.errors),
+    });
 
-  const [
-    updateAttributeValueTranslations,
-  ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
-  });
+  const [updateAttributeValueTranslations] =
+    useUpdateAttributeValueTranslationsMutation({
+      onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    });
 
   const onEdit = (field: string) =>
     navigate(

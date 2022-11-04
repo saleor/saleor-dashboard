@@ -48,7 +48,7 @@ export default function useLocalStorage<T>(
       // Casting to T (which should resolve to string) because JSON.parse would
       // throw an error if "foo" was passed, but properly casting "true" or "1"
       // to their respective types
-      result = (item as unknown) as T;
+      result = item as unknown as T;
     }
 
     return getValue(result, initialValue);

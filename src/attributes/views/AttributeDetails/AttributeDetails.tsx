@@ -61,10 +61,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     ListViews.ATTRIBUTE_VALUE_LIST,
   );
 
-  const [
-    valuesPaginationState,
-    setValuesPaginationState,
-  ] = useLocalPaginationState(settings?.rowNumber);
+  const [valuesPaginationState, setValuesPaginationState] =
+    useLocalPaginationState(settings?.rowNumber);
 
   const { data, loading } = useAttributeDetailsQuery({
     variables: {
@@ -104,36 +102,32 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    attributeValueDelete,
-    attributeValueDeleteOpts,
-  ] = useAttributeValueDeleteMutation({
-    onCompleted: data => {
-      if (data?.attributeValueDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "7H2D5m",
-            defaultMessage: "Value deleted",
-            description: "attribute value deleted",
-          }),
-        });
-        closeModal();
-      }
-    },
-  });
+  const [attributeValueDelete, attributeValueDeleteOpts] =
+    useAttributeValueDeleteMutation({
+      onCompleted: data => {
+        if (data?.attributeValueDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "7H2D5m",
+              defaultMessage: "Value deleted",
+              description: "attribute value deleted",
+            }),
+          });
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    attributeValueUpdate,
-    attributeValueUpdateOpts,
-  ] = useAttributeValueUpdateMutation({
-    onCompleted: data => {
-      if (data?.attributeValueUpdate.errors.length === 0) {
-        notifySaved();
-        closeModal();
-      }
-    },
-  });
+  const [attributeValueUpdate, attributeValueUpdateOpts] =
+    useAttributeValueUpdateMutation({
+      onCompleted: data => {
+        if (data?.attributeValueUpdate.errors.length === 0) {
+          notifySaved();
+          closeModal();
+        }
+      },
+    });
 
   const [attributeUpdate, attributeUpdateOpts] = useAttributeUpdateMutation({
     onCompleted: data => {
@@ -143,24 +137,22 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    attributeValueCreate,
-    attributeValueCreateOpts,
-  ] = useAttributeValueCreateMutation({
-    onCompleted: data => {
-      if (data?.attributeValueCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "xVn5B0",
-            defaultMessage: "Added new value",
-            description: "added new attribute value",
-          }),
-        });
-        closeModal();
-      }
-    },
-  });
+  const [attributeValueCreate, attributeValueCreateOpts] =
+    useAttributeValueCreateMutation({
+      onCompleted: data => {
+        if (data?.attributeValueCreate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "xVn5B0",
+              defaultMessage: "Added new value",
+              description: "added new attribute value",
+            }),
+          });
+          closeModal();
+        }
+      },
+    });
 
   const [attributeValueReorder] = useAttributeValueReorderMutation({
     onCompleted: data => {

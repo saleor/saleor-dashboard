@@ -9,13 +9,13 @@ import { useIntl } from "react-intl";
 import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
 
 interface GiftCardStatusChipProps<
-  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>
+  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
 > {
   giftCard: T;
 }
 
 function GiftCardStatusChip<
-  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>
+  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
 >({ giftCard }: GiftCardStatusChipProps<T>) {
   const { isExpired, isActive } = giftCard;
   const intl = useIntl();

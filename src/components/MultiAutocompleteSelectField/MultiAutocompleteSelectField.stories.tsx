@@ -26,11 +26,13 @@ const props: MultiAutocompleteSelectFieldProps = {
   value: undefined,
 };
 
-const Story: React.FC<Partial<
-  MultiAutocompleteSelectFieldProps & {
-    enableLoadMore: boolean;
-  }
->> = ({ enableLoadMore, ...rest }) => {
+const Story: React.FC<
+  Partial<
+    MultiAutocompleteSelectFieldProps & {
+      enableLoadMore: boolean;
+    }
+  >
+> = ({ enableLoadMore, ...rest }) => {
   const { change, data: countries } = useMultiAutocomplete([suggestions[0]]);
 
   return (

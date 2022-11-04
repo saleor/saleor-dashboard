@@ -42,11 +42,8 @@ const GiftCardListSearchAndFilters: React.FC = () => {
 
   const { reset, params } = useGiftCardList();
 
-  const {
-    onClose,
-    openSearchDeleteDialog,
-    openSearchSaveDialog,
-  } = useGiftCardListDialogs();
+  const { onClose, openSearchDeleteDialog, openSearchSaveDialog } =
+    useGiftCardListDialogs();
 
   const defaultSearchVariables = {
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
@@ -70,10 +67,8 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     result: searchGiftCardTagsResult,
   } = useGiftCardTagsSearch(defaultSearchVariables);
 
-  const {
-    data: giftCardCurrenciesData,
-    loading: loadingGiftCardCurrencies,
-  } = useGiftCardCurrenciesQuery();
+  const { data: giftCardCurrenciesData, loading: loadingGiftCardCurrencies } =
+    useGiftCardCurrenciesQuery();
 
   const filterOpts = getFilterOpts({
     params,
@@ -108,17 +103,14 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const tabs = getFilterTabs();
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: giftCardListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    cleanupFn: reset,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: giftCardListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      cleanupFn: reset,
+    });
 
   const handleTabChange = (tab: number) => {
     reset();

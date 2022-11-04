@@ -21,9 +21,9 @@ type AttributeSwatchFieldProps<T> = Pick<
 
 type SwatchType = "picker" | "image";
 
-const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
-  AttributeValueEditDialogFormData
->> = ({ set, ...props }) => {
+const AttributeSwatchField: React.FC<
+  AttributeSwatchFieldProps<AttributeValueEditDialogFormData>
+> = ({ set, ...props }) => {
   const { data } = props;
   const notify = useNotifier();
   const intl = useIntl();

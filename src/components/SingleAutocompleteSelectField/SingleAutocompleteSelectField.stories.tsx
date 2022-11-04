@@ -27,11 +27,13 @@ const props: SingleAutocompleteSelectFieldProps = {
   value: suggestions[0].value,
 };
 
-const Story: React.FC<Partial<
-  SingleAutocompleteSelectFieldProps & {
-    enableLoadMore: boolean;
-  }
->> = ({
+const Story: React.FC<
+  Partial<
+    SingleAutocompleteSelectFieldProps & {
+      enableLoadMore: boolean;
+    }
+  >
+> = ({
   allowCustomValues,
   emptyOption,
   enableLoadMore,

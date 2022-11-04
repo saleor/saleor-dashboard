@@ -18,6 +18,5 @@ export const getSortQueryField = (
   }
 };
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

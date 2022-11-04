@@ -166,9 +166,8 @@ function useProductVariantCreateForm(
     setIsSubmitDisabled,
   } = form;
 
-  const currentChannelsWithPreorderInfo = createChannelsWithPreorderInfo(
-    product,
-  );
+  const currentChannelsWithPreorderInfo =
+    createChannelsWithPreorderInfo(product);
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
   const attributes = useFormset(attributeInput);
@@ -188,9 +187,8 @@ function useProductVariantCreateForm(
     formId,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

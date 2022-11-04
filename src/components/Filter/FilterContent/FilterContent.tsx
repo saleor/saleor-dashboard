@@ -135,12 +135,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     {},
   );
 
-  const [
-    autocompleteDisplayValues,
-    setAutocompleteDisplayValues,
-  ] = useStateFromProps<FilterAutocompleteDisplayValues>(
-    initialAutocompleteDisplayValues,
-  );
+  const [autocompleteDisplayValues, setAutocompleteDisplayValues] =
+    useStateFromProps<FilterAutocompleteDisplayValues>(
+      initialAutocompleteDisplayValues,
+    );
 
   const commonFilterBodyProps: Omit<
     FilterContentBodyProps<string>,
@@ -167,9 +165,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
     }
   };
 
-  const handleFilterPropertyGroupChange = function<
+  const handleFilterPropertyGroupChange = function <
     K extends string,
-    T extends FieldType
+    T extends FieldType,
   >(action: FilterReducerAction<K, T>, filter: FilterElement<string>) {
     const switchToActive = action.payload.update.active;
     if (switchToActive && filter.name !== openedFilter?.name) {
@@ -183,9 +181,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
     onFilterPropertyChange(action);
   };
 
-  const handleMultipleFieldPropertyChange = function<
+  const handleMultipleFieldPropertyChange = function <
     K extends string,
-    T extends FieldType
+    T extends FieldType,
   >(action: FilterReducerAction<K, T>) {
     const { update } = action.payload;
     onFilterPropertyChange({
@@ -194,7 +192,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     });
   };
 
-  const getFilterFromCurrentData = function<T extends string>(
+  const getFilterFromCurrentData = function <T extends string>(
     filter: FilterElement<T>,
   ) {
     return filters.find(({ name }) => filter.name === name);

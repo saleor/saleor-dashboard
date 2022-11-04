@@ -74,9 +74,8 @@ function useCategoryCreateForm(
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

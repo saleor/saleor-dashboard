@@ -18,9 +18,7 @@ export const Date: React.FC<DateProps> = ({ date, plain }) => {
   const localizeDate = useDateLocalize();
 
   const getHumanized = (value: string, locale: string, currentDate: number) =>
-    moment(value)
-      .locale(locale)
-      .from(currentDate);
+    moment(value).locale(locale).from(currentDate);
 
   return (
     <LocaleConsumer>

@@ -45,11 +45,12 @@ export interface SingleAutocompleteSelectFieldProps
   popperPlacement?: PopperPlacementType;
 }
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<
-  string
->> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> =
+  Debounce;
 
-const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectFieldProps> = props => {
+const SingleAutocompleteSelectFieldComponent: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = props => {
   const {
     add,
     allowCustomValues,
@@ -280,11 +281,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   );
 };
 
-const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps> = ({
-  choices,
-  fetchChoices,
-  ...rest
-}) => {
+const SingleAutocompleteSelectField: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = ({ choices, fetchChoices, ...rest }) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {

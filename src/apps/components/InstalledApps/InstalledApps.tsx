@@ -68,9 +68,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             <InstallWithManifestFormButton
               onSubmitted={navigateToAppInstallPage}
             />
-          ) : (
-            undefined
-          )
+          ) : undefined
         }
       />
       <ResponsiveTable>

@@ -48,14 +48,8 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
 }
 
 const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const {
-    loading,
-    values,
-    error,
-    helperText,
-    onValueDelete,
-    onValueReorder,
-  } = props;
+  const { loading, values, error, helperText, onValueDelete, onValueReorder } =
+    props;
   const classes = useStyles(props);
 
   const handleSortStart = () => {

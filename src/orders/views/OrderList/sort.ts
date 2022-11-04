@@ -21,6 +21,5 @@ export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

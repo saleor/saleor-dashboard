@@ -199,12 +199,9 @@ function useOrderCustomerAddressesEditForm(
   };
 }
 
-const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormProps> = ({
-  children,
-  initial,
-  onSubmit,
-  ...rest
-}) => {
+const OrderCustomerAddressesEditForm: React.FC<
+  OrderCustomerAddressesEditFormProps
+> = ({ children, initial, onSubmit, ...rest }) => {
   const props = useOrderCustomerAddressesEditForm(
     initial || {},
     onSubmit,

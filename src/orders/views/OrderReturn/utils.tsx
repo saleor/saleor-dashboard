@@ -28,13 +28,17 @@ class ReturnFormDataParser {
       refundShipmentCosts,
     } = this.formData;
 
-    const fulfillmentLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(fulfilledItemsQuantities, "fulfillmentLineId");
+    const fulfillmentLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        fulfilledItemsQuantities,
+        "fulfillmentLineId",
+      );
 
-    const waitingLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(waitingItemsQuantities, "fulfillmentLineId");
+    const waitingLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        waitingItemsQuantities,
+        "fulfillmentLineId",
+      );
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
       unfulfilledItemsQuantities,
@@ -56,8 +60,8 @@ class ReturnFormDataParser {
       ? this.formData.amount
       : undefined;
 
-  private getParsedLineData = function<
-    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
+  private getParsedLineData = function <
+    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput,
   >(
     itemsQuantities: FormsetQuantityData,
     idKey: "fulfillmentLineId" | "orderLineId",
@@ -73,7 +77,7 @@ class ReturnFormDataParser {
 
       return [
         ...result,
-        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T,
+        { [idKey]: id, quantity, replace: shouldReplace } as unknown as T,
       ];
     }, []);
   };
@@ -101,8 +105,8 @@ class ReturnFormDataParser {
   };
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  private static isLineRefundable = function<
-    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
+  private static isLineRefundable = function <
+    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
   >({ replace }: T) {
     return !replace;
   };

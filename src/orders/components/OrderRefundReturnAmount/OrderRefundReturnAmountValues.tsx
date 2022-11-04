@@ -81,7 +81,9 @@ const messages = defineMessages({
   },
 });
 
-const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props => {
+const OrderRefundAmountValues: React.FC<
+  OrderRefundAmountValuesProps
+> = props => {
   const intl = useIntl();
   const classes = useStyles({});
 

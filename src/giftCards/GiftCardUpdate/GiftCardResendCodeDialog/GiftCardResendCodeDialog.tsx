@@ -78,31 +78,29 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
     handleSubmit,
   );
 
-  const [
-    resendGiftCardCode,
-    resendGiftCardCodeOpts,
-  ] = useGiftCardResendMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardResend?.errors;
+  const [resendGiftCardCode, resendGiftCardCodeOpts] =
+    useGiftCardResendMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardResend?.errors;
 
-      const notifierData: IMessage = !!errors?.length
-        ? {
-            status: "error",
-            text: intl.formatMessage(commonErrorMessages.unknownError),
-          }
-        : {
-            status: "success",
-            text: intl.formatMessage(messages.successResendAlertText),
-          };
+        const notifierData: IMessage = !!errors?.length
+          ? {
+              status: "error",
+              text: intl.formatMessage(commonErrorMessages.unknownError),
+            }
+          : {
+              status: "success",
+              text: intl.formatMessage(messages.successResendAlertText),
+            };
 
-      notify(notifierData);
+        notify(notifierData);
 
-      if (!errors.length) {
-        onClose();
-        reset();
-      }
-    },
-  });
+        if (!errors.length) {
+          onClose();
+          reset();
+        }
+      },
+    });
 
   const { loading, status, data: submitData } = resendGiftCardCodeOpts;
 

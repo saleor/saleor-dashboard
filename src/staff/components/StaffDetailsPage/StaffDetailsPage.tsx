@@ -85,16 +85,14 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
   const { locale, setLocale } = useLocale();
 
-  const [
-    permissionGroupsDisplayValues,
-    setPermissionGroupsDisplayValues,
-  ] = useStateFromProps<MultiAutocompleteChoiceType[]>(
-    (staffMember?.permissionGroups || []).map(group => ({
-      disabled: !group.userCanManage,
-      label: group.name,
-      value: group.id,
-    })) || [],
-  );
+  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] =
+    useStateFromProps<MultiAutocompleteChoiceType[]>(
+      (staffMember?.permissionGroups || []).map(group => ({
+        disabled: !group.userCanManage,
+        label: group.name,
+        value: group.id,
+      })) || [],
+    );
 
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",

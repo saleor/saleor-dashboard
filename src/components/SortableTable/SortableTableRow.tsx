@@ -7,16 +7,15 @@ import SortableHandle from "./SortableHandle";
 
 type SortableTableRowTypesUnion = "link" | "row";
 
-type SortableTableRowProps<
-  T extends SortableTableRowTypesUnion
-> = T extends "link" ? TableRowLinkProps : TableRowProps;
+type SortableTableRowProps<T extends SortableTableRowTypesUnion> =
+  T extends "link" ? TableRowLinkProps : TableRowProps;
 
-const SortableTableRow = (SortableElement<any>(({ children, ...props }) => (
+const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
   <TableRowLink {...props}>
     <SortableHandle />
     {children}
   </TableRowLink>
-)) as unknown) as <T extends SortableTableRowTypesUnion = "link">(
+)) as unknown as <T extends SortableTableRowTypesUnion = "link">(
   props: SortableElementProps & SortableTableRowProps<T>,
 ) => JSX.Element;
 

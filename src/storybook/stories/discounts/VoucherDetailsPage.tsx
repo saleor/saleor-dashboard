@@ -64,18 +64,20 @@ storiesOf("Views / Discounts / Voucher details", module)
   .add("form errors", () => (
     <VoucherDetailsPage
       {...props}
-      errors={([
-        "applyOncePerOrder",
-        "code",
-        "discountType",
-        "endDate",
-        "minSpent",
-        "name",
-        "startDate",
-        "type",
-        "usageLimit",
-        "discountValue",
-      ] as Array<keyof VoucherDetailsPageFormData>).map(field => ({
+      errors={(
+        [
+          "applyOncePerOrder",
+          "code",
+          "discountType",
+          "endDate",
+          "minSpent",
+          "name",
+          "startDate",
+          "type",
+          "usageLimit",
+          "discountValue",
+        ] as Array<keyof VoucherDetailsPageFormData>
+      ).map(field => ({
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,

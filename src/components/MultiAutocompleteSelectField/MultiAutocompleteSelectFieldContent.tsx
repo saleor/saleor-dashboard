@@ -165,7 +165,9 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
-const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
+const MultiAutocompleteSelectFieldContent: React.FC<
+  MultiAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices = [],

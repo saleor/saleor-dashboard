@@ -136,10 +136,8 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     SaleUrlQueryParams
   >(navigate, params => saleUrl(id, params), params);
 
-  const allChannels: ChannelSaleData[] = createChannelsDataWithSaleDiscountPrice(
-    data?.sale,
-    availableChannels,
-  );
+  const allChannels: ChannelSaleData[] =
+    createChannelsDataWithSaleDiscountPrice(data?.sale, availableChannels);
   const saleChannelsChoices = createSortedChannelsDataFromSale(data?.sale);
 
   const {
@@ -188,30 +186,26 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    saleCataloguesAdd,
-    saleCataloguesAddOpts,
-  ] = useSaleCataloguesAddMutation({
-    onCompleted: data => {
-      if (data.saleCataloguesAdd.errors.length === 0) {
-        notifySaved();
-        closeModal();
-      }
-    },
-  });
+  const [saleCataloguesAdd, saleCataloguesAddOpts] =
+    useSaleCataloguesAddMutation({
+      onCompleted: data => {
+        if (data.saleCataloguesAdd.errors.length === 0) {
+          notifySaved();
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    saleCataloguesRemove,
-    saleCataloguesRemoveOpts,
-  ] = useSaleCataloguesRemoveMutation({
-    onCompleted: data => {
-      if (data.saleCataloguesRemove.errors.length === 0) {
-        notifySaved();
-        closeModal();
-        reset();
-      }
-    },
-  });
+  const [saleCataloguesRemove, saleCataloguesRemoveOpts] =
+    useSaleCataloguesRemoveMutation({
+      onCompleted: data => {
+        if (data.saleCataloguesRemove.errors.length === 0) {
+          notifySaved();
+          closeModal();
+          reset();
+        }
+      },
+    });
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 

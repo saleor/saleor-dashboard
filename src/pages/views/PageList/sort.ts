@@ -24,6 +24,5 @@ export function getFilterVariables(
   };
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

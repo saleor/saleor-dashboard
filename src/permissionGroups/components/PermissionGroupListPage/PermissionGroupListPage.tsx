@@ -23,7 +23,9 @@ export interface PermissionGroupListPageProps
   onDelete: (id: string) => void;
 }
 
-const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
+const PermissionGroupListPage: React.FC<
+  PermissionGroupListPageProps
+> = listProps => {
   const intl = useIntl();
 
   return (

@@ -60,10 +60,8 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     address?.country.country || "",
   );
-  const {
-    errors: validationErrors,
-    submit: handleSubmit,
-  } = useAddressValidation(onConfirm);
+  const { errors: validationErrors, submit: handleSubmit } =
+    useAddressValidation(onConfirm);
   const dialogErrors = useModalDialogErrors(
     [...errors, ...validationErrors],
     open,

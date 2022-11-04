@@ -35,16 +35,11 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
 
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-    getValue,
-  } = useRichText({
-    initial,
-    triggerChange: () => setIsDirty(true),
-  });
+  const { defaultValue, editorRef, isReadyForMount, handleChange, getValue } =
+    useRichText({
+      initial,
+      triggerChange: () => setIsDirty(true),
+    });
 
   useEffect(() => setExitDialogSubmitRef(onSubmit), [onSubmit]);
 

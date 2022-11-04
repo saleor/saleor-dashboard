@@ -95,17 +95,14 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: saleListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: saleListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   useEffect(() => {
     if (!canBeSorted(params.sort, !!selectedChannel)) {

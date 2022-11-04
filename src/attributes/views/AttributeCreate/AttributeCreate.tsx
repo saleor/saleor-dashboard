@@ -74,13 +74,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     ListViews.ATTRIBUTE_VALUE_LIST,
   );
 
-  const {
-    pageInfo,
-    pageValues,
-    loadNextPage,
-    loadPreviousPage,
-    loadPage,
-  } = useLocalPageInfo(values, settings?.rowNumber);
+  const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } =
+    useLocalPageInfo(values, settings?.rowNumber);
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
@@ -194,7 +189,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
       saveButtonBarState={attributeCreateOpts.status}
       values={{
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename:
+          "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           __typename: "PageInfo" as "PageInfo",
           endCursor: "",
@@ -203,7 +199,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           startCursor: "",
         },
         edges: pageValues.map((value, valueIndex) => ({
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "1",
           node: {
             __typename: "AttributeValue" as "AttributeValue",

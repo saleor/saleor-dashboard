@@ -63,17 +63,14 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     },
   });
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: pageListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    cleanupFn: reset,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: pageListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      cleanupFn: reset,
+    });
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 

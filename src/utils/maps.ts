@@ -54,7 +54,7 @@ export function mapNodeToChoice<T extends ExtendedNode>(
 ): Array<SingleAutocompleteChoiceType<string>>;
 export function mapNodeToChoice<
   T extends ExtendedNode | Node,
-  K extends ChoiceValue
+  K extends ChoiceValue,
 >(nodes: T[], getterFn: (node: T) => K): Array<SingleAutocompleteChoiceType<K>>;
 
 export function mapNodeToChoice<T extends ExtendedNode>(

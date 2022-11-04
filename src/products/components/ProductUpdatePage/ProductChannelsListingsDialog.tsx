@@ -19,13 +19,9 @@ export interface ProductChannelsListingsDialogProps extends DialogProps {
   onConfirm: ProductChannelsListingDialogSubmit;
 }
 
-const ProductChannelsListingsDialog: React.FC<ProductChannelsListingsDialogProps> = ({
-  channels,
-  data,
-  open,
-  onClose,
-  onConfirm,
-}) => {
+const ProductChannelsListingsDialog: React.FC<
+  ProductChannelsListingsDialogProps
+> = ({ channels, data, open, onClose, onConfirm }) => {
   const intl = useIntl();
 
   const [selected, setSelected] = useStateFromProps(

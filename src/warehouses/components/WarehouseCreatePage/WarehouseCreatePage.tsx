@@ -60,10 +60,8 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
   const [displayCountry, setDisplayCountry] = useStateFromProps("");
 
-  const {
-    errors: validationErrors,
-    submit: handleSubmit,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmit } =
+    useAddressValidation(onSubmit);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>

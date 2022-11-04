@@ -141,12 +141,14 @@ const Option: React.FC<{
   );
 };
 
-const FieldAccordion: React.FC<AccordionProps & {
-  data: ExportProductsInput;
-  fields: ProductFieldEnum[];
-  onChange: (event: ChangeEvent) => void;
-  onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
-}> = ({ data, fields, onChange, onToggleAll, ...props }) => {
+const FieldAccordion: React.FC<
+  AccordionProps & {
+    data: ExportProductsInput;
+    fields: ProductFieldEnum[];
+    onChange: (event: ChangeEvent) => void;
+    onToggleAll: (field: ProductFieldEnum[], setTo: boolean) => void;
+  }
+> = ({ data, fields, onChange, onToggleAll, ...props }) => {
   const classes = useStyles({});
   const getFieldLabel = useProductExportFieldMessages();
 

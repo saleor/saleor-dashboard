@@ -64,9 +64,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onBack,
 }) => {
   const intl = useIntl();
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     channelListings,

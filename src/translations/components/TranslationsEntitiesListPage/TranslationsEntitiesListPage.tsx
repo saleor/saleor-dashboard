@@ -29,7 +29,8 @@ export interface TranslationsEntitiesFilters {
   onMenuItemsTabClick: () => void;
 }
 
-export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
+export type TranslationsEntitiesListFilterTab =
+  keyof typeof TranslatableEntities;
 
 const tabs: TranslationsEntitiesListFilterTab[] = [
   "categories",
@@ -43,7 +44,9 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "menuItems",
 ];
 
-const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
+const TranslationsEntitiesListPage: React.FC<
+  TranslationsEntitiesListPageProps
+> = props => {
   const { filters, language, children } = props;
 
   const intl = useIntl();

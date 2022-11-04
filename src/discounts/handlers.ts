@@ -170,17 +170,18 @@ export function createSaleUpdateHandler(
     const invalidChannelListings = channelListings
       ?.filter(channel => validateSalePrice(formData, channel))
       .map(channel => channel.id);
-    const localErrors: DiscountErrorFragment[] = !!invalidChannelListings?.length
-      ? [
-          {
-            __typename: "DiscountError",
-            code: DiscountErrorCode.INVALID,
-            field: "value",
-            channels: invalidChannelListings,
-            message: "Invalid discount value",
-          },
-        ]
-      : [];
+    const localErrors: DiscountErrorFragment[] =
+      !!invalidChannelListings?.length
+        ? [
+            {
+              __typename: "DiscountError",
+              code: DiscountErrorCode.INVALID,
+              field: "value",
+              channels: invalidChannelListings,
+              message: "Invalid discount value",
+            },
+          ]
+        : [];
 
     setLocalErrors(localErrors);
 
@@ -202,17 +203,18 @@ export function createVoucherUpdateHandler(
     const invalidChannelListings = channelListings
       ?.filter(channel => validateVoucherPrice(formData, channel))
       .map(channel => channel.id);
-    const localErrors: DiscountErrorFragment[] = !!invalidChannelListings?.length
-      ? [
-          {
-            __typename: "DiscountError",
-            code: DiscountErrorCode.INVALID,
-            field: "discountValue",
-            channels: invalidChannelListings,
-            message: "Invalid discount value",
-          },
-        ]
-      : [];
+    const localErrors: DiscountErrorFragment[] =
+      !!invalidChannelListings?.length
+        ? [
+            {
+              __typename: "DiscountError",
+              code: DiscountErrorCode.INVALID,
+              field: "discountValue",
+              channels: invalidChannelListings,
+              message: "Invalid discount value",
+            },
+          ]
+        : [];
 
     setLocalErrors(localErrors);
 

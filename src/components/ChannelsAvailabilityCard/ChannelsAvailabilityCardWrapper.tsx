@@ -17,7 +17,9 @@ export interface ChannelsAvailabilityWrapperProps {
   openModal: () => void;
 }
 
-export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperProps> = props => {
+export const ChannelsAvailabilityWrapper: React.FC<
+  ChannelsAvailabilityWrapperProps
+> = props => {
   const {
     selectedChannelsCount,
     allChannelsCount,

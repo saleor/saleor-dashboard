@@ -79,52 +79,46 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     variables: queryVariables,
   });
 
-  const [
-    deleteShippingZone,
-    deleteShippingZoneOpts,
-  ] = useDeleteShippingZoneMutation({
-    onCompleted: data => {
-      if (data.shippingZoneDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-        refetch();
-      }
-    },
-  });
+  const [deleteShippingZone, deleteShippingZoneOpts] =
+    useDeleteShippingZoneMutation({
+      onCompleted: data => {
+        if (data.shippingZoneDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          closeModal();
+          refetch();
+        }
+      },
+    });
 
-  const [
-    updateDefaultWeightUnit,
-    updateDefaultWeightUnitOpts,
-  ] = useUpdateDefaultWeightUnitMutation({
-    onCompleted: data => {
-      if (data.shopSettingsUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] =
+    useUpdateDefaultWeightUnitMutation({
+      onCompleted: data => {
+        if (data.shopSettingsUpdate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
-  const [
-    bulkDeleteShippingZone,
-    bulkDeleteShippingZoneOpts,
-  ] = useBulkDeleteShippingZoneMutation({
-    onCompleted: data => {
-      if (data.shippingZoneBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-        reset();
-        refetch();
-      }
-    },
-  });
+  const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] =
+    useBulkDeleteShippingZoneMutation({
+      onCompleted: data => {
+        if (data.shippingZoneBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          closeModal();
+          reset();
+          refetch();
+        }
+      },
+    });
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.shippingZones.pageInfo),

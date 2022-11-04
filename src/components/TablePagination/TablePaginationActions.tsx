@@ -61,7 +61,9 @@ export interface TablePaginationActionsProps {
   onPreviousPage(event);
 }
 
-export const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
+export const TablePaginationActions: React.FC<
+  TablePaginationActionsProps
+> = props => {
   const {
     backIconButtonProps,
     className,

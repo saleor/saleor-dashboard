@@ -1,25 +1,29 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { CollectionDetailsQuery, SearchProductsQuery } from "@saleor/graphql";
 
-export const createChannelsChangeHandler = (
-  channelListings: ChannelCollectionData[],
-  updateChannels: (data: ChannelCollectionData[]) => void,
-  triggerChange: () => void,
-) => (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
-  const channelIndex = channelListings.findIndex(channel => channel.id === id);
-  const channel = channelListings[channelIndex];
+export const createChannelsChangeHandler =
+  (
+    channelListings: ChannelCollectionData[],
+    updateChannels: (data: ChannelCollectionData[]) => void,
+    triggerChange: () => void,
+  ) =>
+  (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id,
+    );
+    const channel = channelListings[channelIndex];
 
-  const updatedChannels = [
-    ...channelListings.slice(0, channelIndex),
-    {
-      ...channel,
-      ...data,
-    },
-    ...channelListings.slice(channelIndex + 1),
-  ];
-  updateChannels(updatedChannels);
-  triggerChange();
-};
+    const updatedChannels = [
+      ...channelListings.slice(0, channelIndex),
+      {
+        ...channel,
+        ...data,
+      },
+      ...channelListings.slice(channelIndex + 1),
+    ];
+    updateChannels(updatedChannels);
+    triggerChange();
+  };
 
 export const getAssignedProductIdsToCollection = (
   collection: CollectionDetailsQuery["collection"],

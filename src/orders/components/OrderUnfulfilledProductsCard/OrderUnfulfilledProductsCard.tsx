@@ -20,13 +20,11 @@ interface OrderUnfulfilledProductsCardProps {
   onFulfill: () => void;
 }
 
-const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = props => {
-  const {
-    showFulfillmentAction,
-    notAllowedToFulfillUnpaid,
-    lines,
-    onFulfill,
-  } = props;
+const OrderUnfulfilledProductsCard: React.FC<
+  OrderUnfulfilledProductsCardProps
+> = props => {
+  const { showFulfillmentAction, notAllowedToFulfillUnpaid, lines, onFulfill } =
+    props;
   const classes = useStyles();
 
   if (!lines.length) {

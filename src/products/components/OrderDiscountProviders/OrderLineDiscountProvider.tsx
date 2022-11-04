@@ -37,9 +37,8 @@ interface DiscountProviderProps {
   order: OrderDetailsFragment;
 }
 
-export const OrderLineDiscountContext = createContext<
-  GetOrderLineDiscountContextConsumerProps
->(null);
+export const OrderLineDiscountContext =
+  createContext<GetOrderLineDiscountContextConsumerProps>(null);
 
 export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   children,
@@ -60,33 +59,28 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     closeDialog();
   };
 
-  const [
-    orderLineDiscountAddOrUpdate,
-    orderLineDiscountAddOrUpdateOpts,
-  ] = useOrderLineDiscountUpdateMutation({
-    onCompleted: ({ orderLineDiscountUpdate: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderLineDiscountAddOrUpdate, orderLineDiscountAddOrUpdateOpts] =
+    useOrderLineDiscountUpdateMutation({
+      onCompleted: ({ orderLineDiscountUpdate: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
-  const [
-    orderLineDiscountRemove,
-    orderLineDiscountRemoveOpts,
-  ] = useOrderLineDiscountRemoveMutation({
-    onCompleted: ({ orderLineDiscountRemove: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderLineDiscountRemove, orderLineDiscountRemoveOpts] =
+    useOrderLineDiscountRemoveMutation({
+      onCompleted: ({ orderLineDiscountRemove: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };
 
-  const addOrUpdateOrderLineDiscount = (orderLineId: string) => (
-    input: OrderDiscountCommonInput,
-  ) =>
-    orderLineDiscountAddOrUpdate({
-      variables: { orderLineId, input: getParsedDiscountData(input) },
-    });
+  const addOrUpdateOrderLineDiscount =
+    (orderLineId: string) => (input: OrderDiscountCommonInput) =>
+      orderLineDiscountAddOrUpdate({
+        variables: { orderLineId, input: getParsedDiscountData(input) },
+      });
 
   const removeOrderLineDiscount = (orderLineId: string) => () =>
     orderLineDiscountRemove({ variables: { orderLineId } });
@@ -119,10 +113,9 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   );
 };
 
-export const OrderLineDiscountConsumer: React.FC<OrderLineDiscountConsumerProps> = ({
-  children,
-  orderLineId,
-}) => (
+export const OrderLineDiscountConsumer: React.FC<
+  OrderLineDiscountConsumerProps
+> = ({ children, orderLineId }) => (
   <OrderLineDiscountContext.Consumer>
     {(getValues: GetOrderLineDiscountContextConsumerProps) =>
       children(getValues(orderLineId))

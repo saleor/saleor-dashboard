@@ -48,16 +48,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     CollectionCreateUrlQueryParams
   >(navigate, params => collectionAddUrl(params), params);
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useCollectionChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
 
-  const allChannels = createCollectionChannels(
-    availableChannels,
-  )?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
+  const allChannels = createCollectionChannels(availableChannels)?.sort(
+    (channel, nextChannel) => channel.name.localeCompare(nextChannel.name),
   );
 
   const {

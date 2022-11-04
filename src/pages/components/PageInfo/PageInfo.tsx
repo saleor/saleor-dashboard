@@ -36,12 +36,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } =
+    useRichTextContext();
   const formErrors = getFormErrors(["title", "content"], errors);
 
   return (

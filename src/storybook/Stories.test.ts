@@ -16,8 +16,9 @@ ReactDOM.createPortal = node => node as ReactPortal;
 configure({ adapter: new Adapter() });
 
 jest.mock("@material-ui/styles/createGenerateClassName");
-(createGenerateClassName as any).mockImplementation(() => (rule, stylesheet) =>
-  [stylesheet.options.meta, rule.key, "id"].join("-"),
+(createGenerateClassName as any).mockImplementation(
+  () => (rule, stylesheet) =>
+    [stylesheet.options.meta, rule.key, "id"].join("-"),
 );
 
 initStoryshots({

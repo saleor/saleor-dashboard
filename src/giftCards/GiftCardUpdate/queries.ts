@@ -12,5 +12,5 @@ export const giftCardDetails = gql`
   }
 `;
 
-export const GIFT_CARD_DETAILS_QUERY = getOperationAST(giftCardDetails).name
-  .value;
+export const GIFT_CARD_DETAILS_QUERY =
+  getOperationAST(giftCardDetails).name.value;

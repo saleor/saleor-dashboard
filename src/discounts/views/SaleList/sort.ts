@@ -38,6 +38,5 @@ export function getSortQueryField(sort: SaleListUrlSortField): SaleSortField {
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

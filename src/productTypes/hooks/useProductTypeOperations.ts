@@ -66,7 +66,8 @@ function useProductTypeOperations({
     optimisticResponse: variables => ({
       __typename: "Mutation",
       productTypeReorderAttributes: {
-        __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
+        __typename:
+          "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
         errors: [],
         productType: {
           ...productType,

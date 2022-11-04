@@ -40,13 +40,8 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    giftCards,
-    numberOfColumns,
-    loading,
-    toggleAll,
-    listElements,
-  } = useGiftCardList();
+  const { giftCards, numberOfColumns, loading, toggleAll, listElements } =
+    useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
   const { onSort, sort } = useGiftCardList();
 

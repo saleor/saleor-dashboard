@@ -131,16 +131,18 @@ export const getAvailabilityVariables = (
     };
   });
 
-export const createPreorderEndDateChangeHandler = (
-  form: UseFormResult<{ preorderEndDateTime?: string }>,
-  triggerChange: () => void,
-  preorderPastDateErrorMessage: string,
-): FormChange => event => {
-  form.change(event);
-  if (moment(event.target.value).isSameOrBefore(Date.now())) {
-    form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-  } else {
-    form.clearErrors("preorderEndDateTime");
-  }
-  triggerChange();
-};
+export const createPreorderEndDateChangeHandler =
+  (
+    form: UseFormResult<{ preorderEndDateTime?: string }>,
+    triggerChange: () => void,
+    preorderPastDateErrorMessage: string,
+  ): FormChange =>
+  event => {
+    form.change(event);
+    if (moment(event.target.value).isSameOrBefore(Date.now())) {
+      form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
+    } else {
+      form.clearErrors("preorderEndDateTime");
+    }
+    triggerChange();
+  };

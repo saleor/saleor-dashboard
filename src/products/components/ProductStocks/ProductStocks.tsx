@@ -115,9 +115,8 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     ) || [];
   const formErrors = getFormErrors(["sku"], errors);
 
-  const onThresholdChange = createNonNegativeValueChangeHandler(
-    onFormDataChange,
-  );
+  const onThresholdChange =
+    createNonNegativeValueChangeHandler(onFormDataChange);
 
   const handleWarehouseStockAdd = (warehouseId: string) => {
     onWarehouseStockAdd(warehouseId);
@@ -260,9 +259,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             </TableHead>
             <TableBody>
               {renderCollection(stocks, (stock, index) => {
-                const handleQuantityChange = createNonNegativeValueChangeHandler(
-                  event => onChange(stock.id, event.target.value),
-                );
+                const handleQuantityChange =
+                  createNonNegativeValueChangeHandler(event =>
+                    onChange(stock.id, event.target.value),
+                  );
 
                 return (
                   <TableRowLink key={stock.id}>

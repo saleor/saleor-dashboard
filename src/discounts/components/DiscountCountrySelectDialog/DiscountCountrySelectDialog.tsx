@@ -41,15 +41,11 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => SubmitPromise;
 }
 
-const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
-  const {
-    confirmButtonState,
-    onClose,
-    countries,
-    open,
-    initial,
-    onConfirm,
-  } = props;
+const DiscountCountrySelectDialog: React.FC<
+  DiscountCountrySelectDialogProps
+> = props => {
+  const { confirmButtonState, onClose, countries, open, initial, onConfirm } =
+    props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle();
 

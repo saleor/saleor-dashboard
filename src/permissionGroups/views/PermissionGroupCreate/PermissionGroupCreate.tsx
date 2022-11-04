@@ -21,25 +21,23 @@ const PermissionGroupCreateView: React.FC = () => {
   const shop = useShop();
   const user = useUser();
 
-  const [
-    createPermissionGroup,
-    createPermissionGroupResult,
-  ] = usePermissionGroupCreateMutation({
-    onCompleted: data => {
-      if (data?.permissionGroupCreate?.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "eUjFjW",
-            defaultMessage: "Permission group created",
-          }),
-        });
-        navigate(
-          permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
-        );
-      }
-    },
-  });
+  const [createPermissionGroup, createPermissionGroupResult] =
+    usePermissionGroupCreateMutation({
+      onCompleted: data => {
+        if (data?.permissionGroupCreate?.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "eUjFjW",
+              defaultMessage: "Permission group created",
+            }),
+          });
+          navigate(
+            permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
+          );
+        }
+      },
+    });
 
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];

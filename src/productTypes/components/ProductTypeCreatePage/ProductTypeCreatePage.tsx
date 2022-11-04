@@ -85,9 +85,8 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   const navigate = useNavigator();
 
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialData = {
     ...formInitialData,

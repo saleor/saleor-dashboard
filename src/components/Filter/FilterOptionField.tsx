@@ -21,10 +21,9 @@ const useStyles = makeStyles(
   { name: "FilterOptionField" },
 );
 
-const FilterOptionField: React.FC<FilterFieldBaseProps<
-  string,
-  FieldType.options
->> = ({ filter, onFilterPropertyChange, ...rest }) => {
+const FilterOptionField: React.FC<
+  FilterFieldBaseProps<string, FieldType.options>
+> = ({ filter, onFilterPropertyChange, ...rest }) => {
   const classes = useStyles({});
   const handleSelect = (value: string) =>
     onFilterPropertyChange({

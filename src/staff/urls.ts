@@ -39,9 +39,8 @@ export type StaffMemberDetailsUrlDialog =
   | "change-password"
   | "remove"
   | "remove-avatar";
-export type StaffMemberDetailsUrlQueryParams = Dialog<
-  StaffMemberDetailsUrlDialog
->;
+export type StaffMemberDetailsUrlQueryParams =
+  Dialog<StaffMemberDetailsUrlDialog>;
 
 export const staffMemberDetailsUrl = (
   id: string,

@@ -16,10 +16,9 @@ interface GiftCardCreateDialogCodeContentProps {
   onClose: () => void;
 }
 
-const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
-  cardCode,
-  onClose,
-}) => {
+const GiftCardCreateDialogCodeContent: React.FC<
+  GiftCardCreateDialogCodeContentProps
+> = ({ cardCode, onClose }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const notify = useNotifier();

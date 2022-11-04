@@ -30,9 +30,11 @@ storiesOf("Views / Plugins / Plugin details", module)
     <PluginsDetailsPage
       {...props}
       errors={[
-        ...(["active", "Username or account", "Password or license"] as Array<
-          keyof PluginDetailsPageFormData
-        >).map(field => ({
+        ...(
+          ["active", "Username or account", "Password or license"] as Array<
+            keyof PluginDetailsPageFormData
+          >
+        ).map(field => ({
           __typename: "PluginError" as "PluginError",
           code: PluginErrorCode.INVALID,
           field,

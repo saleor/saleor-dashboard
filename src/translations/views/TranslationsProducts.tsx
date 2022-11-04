@@ -52,18 +52,15 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
     }
   };
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateProductTranslationsMutation({
-    onCompleted: data => onUpdate(data.productTranslate.errors),
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateProductTranslationsMutation({
+      onCompleted: data => onUpdate(data.productTranslate.errors),
+    });
 
-  const [
-    updateAttributeValueTranslations,
-  ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
-  });
+  const [updateAttributeValueTranslations] =
+    useUpdateAttributeValueTranslationsMutation({
+      onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    });
 
   const onEdit = (field: string) =>
     navigate(

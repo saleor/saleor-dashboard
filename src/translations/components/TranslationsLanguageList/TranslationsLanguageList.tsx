@@ -26,7 +26,9 @@ const useStyles = makeStyles(
   { name: "TranslationsLanguageList" },
 );
 
-const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
+const TranslationsLanguageList: React.FC<
+  TranslationsLanguageListProps
+> = props => {
   const { languages } = props;
 
   const classes = useStyles(props);

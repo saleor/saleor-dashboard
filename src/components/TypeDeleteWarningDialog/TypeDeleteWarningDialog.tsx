@@ -87,8 +87,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   const singleItemSelectedId = typesToDelete[0];
 
-  const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))
-    ?.name;
+  const singleItemSelectedName = typesData.find(
+    getById(singleItemSelectedId),
+  )?.name;
 
   return (
     <Modal open={isOpen}>

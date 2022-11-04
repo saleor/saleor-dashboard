@@ -91,25 +91,22 @@ export function useProductUpdateHandler(
   const [uploadFile] = useFileUploadMutation();
 
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useProductChannelListingUpdateMutation({
-    onCompleted: data => {
-      if (!!data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      }
-    },
-  });
+  const [updateChannels, updateChannelsOpts] =
+    useProductChannelListingUpdateMutation({
+      onCompleted: data => {
+        if (!!data.productChannelListingUpdate.errors.length) {
+          data.productChannelListingUpdate.errors.forEach(error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl),
+            }),
+          );
+        }
+      },
+    });
 
-  const [
-    updateVariantChannels,
-  ] = useVariantDatagridChannelListingUpdateMutation();
+  const [updateVariantChannels] =
+    useVariantDatagridChannelListingUpdateMutation();
 
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
@@ -122,11 +119,12 @@ export function useProductUpdateHandler(
       variables => uploadFile({ variables }),
     );
 
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      product?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
+    const deleteAttributeValuesResult =
+      await handleDeleteMultipleAttributeValues(
+        data.attributesWithNewFileValue,
+        product?.attributes,
+        variables => deleteAttributeValue({ variables }),
+      );
 
     errors = [
       ...errors,

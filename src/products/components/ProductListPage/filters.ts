@@ -103,9 +103,9 @@ const messages = defineMessages({
   },
 });
 
-const filterByType = (type: AttributeInputTypeEnum) => (
-  attribute: AttributeFilterOpts,
-) => attribute.inputType === type;
+const filterByType =
+  (type: AttributeInputTypeEnum) => (attribute: AttributeFilterOpts) =>
+    attribute.inputType === type;
 
 export function createFilterStructure(
   intl: IntlShape,

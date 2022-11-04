@@ -28,12 +28,8 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } =
+    useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
 
   return (

@@ -23,13 +23,12 @@ const getChannelMinAmountSpent = (
   return channel.minSpent;
 };
 
-const mapChannelToChannelInput = (formData: VoucherDetailsPageFormData) => (
-  channel: ChannelVoucherData,
-) => ({
-  channelId: channel.id,
-  discountValue: getChannelDiscountValue(channel, formData),
-  minAmountSpent: getChannelMinAmountSpent(channel, formData),
-});
+const mapChannelToChannelInput =
+  (formData: VoucherDetailsPageFormData) => (channel: ChannelVoucherData) => ({
+    channelId: channel.id,
+    discountValue: getChannelDiscountValue(channel, formData),
+    minAmountSpent: getChannelMinAmountSpent(channel, formData),
+  });
 
 const filterNotDiscountedChannel = (
   channelInput: VoucherChannelListingAddInput,

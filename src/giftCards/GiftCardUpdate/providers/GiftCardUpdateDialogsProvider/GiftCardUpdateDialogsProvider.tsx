@@ -25,24 +25,18 @@ export interface GiftCardUpdateDialogsConsumerProps {
   openResendCodeDialog: () => void;
 }
 
-export const GiftCardUpdateDialogsContext = createContext<
-  GiftCardUpdateDialogsConsumerProps
->(null);
+export const GiftCardUpdateDialogsContext =
+  createContext<GiftCardUpdateDialogsConsumerProps>(null);
 
-const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps> = ({
-  children,
-  params,
-  id,
-}) => {
+const GiftCardUpdateDialogsProvider: React.FC<
+  GiftCardUpdateDialogsProviderProps
+> = ({ children, params, id }) => {
   const navigate = useNavigator();
 
   const { loading: loadingGiftCard } = useGiftCardDetails();
 
-  const {
-    SET_BALANCE,
-    DELETE,
-    RESEND_CODE,
-  } = GiftCardUpdatePageActionParamsEnum;
+  const { SET_BALANCE, DELETE, RESEND_CODE } =
+    GiftCardUpdatePageActionParamsEnum;
 
   const [openDialog, onClose] = createDialogActionHandlers<
     GiftCardUpdatePageActionParamsEnum,

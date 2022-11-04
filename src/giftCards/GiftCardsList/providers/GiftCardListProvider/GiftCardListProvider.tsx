@@ -58,9 +58,8 @@ export interface GiftCardsListConsumerProps
   selectedItemsCount: number;
 }
 
-export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
-  null,
-);
+export const GiftCardsListContext =
+  createContext<GiftCardsListConsumerProps>(null);
 
 export const useGiftCardList = () => useContext(GiftCardsListContext);
 
@@ -75,9 +74,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     [],
   );
 
-  const { updateListSettings, settings } = useListSettings<
-    GiftCardListColummns
-  >(ListViews.GIFT_CARD_LIST);
+  const { updateListSettings, settings } =
+    useListSettings<GiftCardListColummns>(ListViews.GIFT_CARD_LIST);
 
   usePaginationReset(giftCardListUrl, params, settings.rowNumber);
 

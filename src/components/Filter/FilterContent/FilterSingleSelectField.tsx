@@ -11,10 +11,9 @@ import SingleSelectField from "../../SingleSelectField/SingleSelectField";
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
-export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({
-  filter,
-  onFilterPropertyChange,
-}) => {
+export const FilterSingleSelectField: React.FC<
+  FilterSingleSelectFieldProps
+> = ({ filter, onFilterPropertyChange }) => {
   const classes = useCommonStyles({});
   const intl = useIntl();
 

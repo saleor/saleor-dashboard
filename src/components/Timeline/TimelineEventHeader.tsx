@@ -49,7 +49,9 @@ export interface TimelineEventHeaderProps {
   secondaryTitle?: string;
 }
 
-export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
+export const TimelineEventHeader: React.FC<
+  TimelineEventHeaderProps
+> = props => {
   const { title, date, titleElements, secondaryTitle } = props;
   const navigate = useNavigator();
 

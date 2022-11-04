@@ -127,28 +127,26 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
-  const [
-    pageTypeBulkDelete,
-    pageTypeBulkDeleteOpts,
-  ] = usePageTypeBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.pageTypeBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        reset();
-        refetch();
-        navigate(
-          pageTypeListUrl({
-            ...params,
-            action: undefined,
-            ids: undefined,
-          }),
-        );
-      }
-    },
-  });
+  const [pageTypeBulkDelete, pageTypeBulkDeleteOpts] =
+    usePageTypeBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.pageTypeBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          reset();
+          refetch();
+          navigate(
+            pageTypeListUrl({
+              ...params,
+              action: undefined,
+              ids: undefined,
+            }),
+          );
+        }
+      },
+    });
 
   const hanldePageTypeBulkDelete = () =>
     pageTypeBulkDelete({

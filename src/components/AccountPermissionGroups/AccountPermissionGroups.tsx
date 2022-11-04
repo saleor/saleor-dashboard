@@ -27,7 +27,9 @@ export interface AccountPermissionGroupsProps
   displayValues: MultiAutocompleteChoiceType[];
 }
 
-const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props => {
+const AccountPermissionGroups: React.FC<
+  AccountPermissionGroupsProps
+> = props => {
   const {
     availablePermissionGroups,
     disabled,

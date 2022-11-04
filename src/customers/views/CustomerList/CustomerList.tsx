@@ -84,17 +84,14 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: customerListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: customerListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomerListUrlDialog,
@@ -128,22 +125,20 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     queryString: params,
   });
 
-  const [
-    bulkRemoveCustomers,
-    bulkRemoveCustomersOpts,
-  ] = useBulkRemoveCustomersMutation({
-    onCompleted: data => {
-      if (data.customerBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        reset();
-        refetch();
-        closeModal();
-      }
-    },
-  });
+  const [bulkRemoveCustomers, bulkRemoveCustomersOpts] =
+    useBulkRemoveCustomersMutation({
+      onCompleted: data => {
+        if (data.customerBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          reset();
+          refetch();
+          closeModal();
+        }
+      },
+    });
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
 

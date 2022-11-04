@@ -635,8 +635,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            id: "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
             name: "Europe for click and collect",
             __typename: "Warehouse",
           },
@@ -647,8 +646,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            id: "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
             name: "Europe",
             __typename: "Warehouse",
           },
@@ -659,8 +657,7 @@ export const product: (
           quantity: 274,
           quantityAllocated: 2,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            id: "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
             name: "Asia",
             __typename: "Warehouse",
           },
@@ -671,8 +668,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            id: "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
             name: "Oceania",
             __typename: "Warehouse",
           },
@@ -683,8 +679,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            id: "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
             name: "Africa",
             __typename: "Warehouse",
           },
@@ -695,8 +690,7 @@ export const product: (
           quantity: 274,
           quantityAllocated: 2,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            id: "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
             name: "Americas",
             __typename: "Warehouse",
           },
@@ -880,8 +874,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            id: "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
             name: "Europe",
             __typename: "Warehouse",
           },
@@ -892,8 +885,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            id: "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
             name: "Asia",
             __typename: "Warehouse",
           },
@@ -904,8 +896,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            id: "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
             name: "Americas",
             __typename: "Warehouse",
           },
@@ -916,8 +907,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            id: "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
             name: "Oceania",
             __typename: "Warehouse",
           },
@@ -928,8 +918,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            id: "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
             name: "Europe for click and collect",
             __typename: "Warehouse",
           },
@@ -940,8 +929,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            id: "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
             name: "Africa",
             __typename: "Warehouse",
           },
@@ -3791,10 +3779,9 @@ export const variantProductImages = (placeholderImage: string) =>
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
 
-export const productTypesList: Array<Pick<
-  ProductType,
-  "id" | "name" | "hasVariants"
->> = [
+export const productTypesList: Array<
+  Pick<ProductType, "id" | "name" | "hasVariants">
+> = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",

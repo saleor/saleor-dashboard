@@ -50,17 +50,18 @@ export function getProductVariantListErrors(
     .flatMap(result => {
       if (result.data.productVariantChannelListingUpdate) {
         const data = result.data as ProductVariantChannelListingUpdateMutation;
-        return data.productVariantChannelListingUpdate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "channel",
-          error: error.code,
-          variantId: (result.extensions
-            .variables as ProductVariantChannelListingUpdateMutationVariables)
-            .id,
-          channelIds: error.channels,
-        }));
+        return data.productVariantChannelListingUpdate.errors.map<ProductVariantListError>(
+          error => ({
+            __typename: "DatagridError",
+            type: "channel",
+            error: error.code,
+            variantId: (
+              result.extensions
+                .variables as ProductVariantChannelListingUpdateMutationVariables
+            ).id,
+            channelIds: error.channels,
+          }),
+        );
       }
 
       if (result.data.productVariantStocksUpdate) {
@@ -68,25 +69,27 @@ export function getProductVariantListErrors(
         const variables = result.extensions
           .variables as VariantDatagridStockUpdateMutationVariables;
         return [
-          ...data.productVariantStocksUpdate.errors.map<
-            ProductVariantListError
-          >(error => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: (variables.stocks as StockInput[])[error.index]
-              .warehouse,
-          })),
-          ...data.productVariantStocksDelete.errors.map<
-            ProductVariantListError
-          >(() => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: null,
-          })),
+          ...data.productVariantStocksUpdate.errors.map<ProductVariantListError>(
+            error => ({
+              __typename: "DatagridError",
+              type: "stock",
+              variantId: (
+                variables as VariantDatagridStockUpdateMutationVariables
+              ).id,
+              warehouseId: (variables.stocks as StockInput[])[error.index]
+                .warehouse,
+            }),
+          ),
+          ...data.productVariantStocksDelete.errors.map<ProductVariantListError>(
+            () => ({
+              __typename: "DatagridError",
+              type: "stock",
+              variantId: (
+                variables as VariantDatagridStockUpdateMutationVariables
+              ).id,
+              warehouseId: null,
+            }),
+          ),
         ];
       }
 
@@ -107,14 +110,14 @@ export function getProductVariantListErrors(
 
       if (result.data.productVariantBulkCreate) {
         const data = result.data as ProductVariantBulkCreateMutation;
-        return data.productVariantBulkCreate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "create",
-          index: error.index,
-          error: error.code,
-        }));
+        return data.productVariantBulkCreate.errors.map<ProductVariantListError>(
+          error => ({
+            __typename: "DatagridError",
+            type: "create",
+            index: error.index,
+            error: error.code,
+          }),
+        );
       }
     });
 }

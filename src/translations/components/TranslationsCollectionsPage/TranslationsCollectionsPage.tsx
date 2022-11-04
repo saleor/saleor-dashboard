@@ -28,7 +28,9 @@ export interface TranslationsCollectionsPageProps
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
+const TranslationsCollectionsPage: React.FC<
+  TranslationsCollectionsPageProps
+> = ({
   translationId,
   activeField,
   disabled,

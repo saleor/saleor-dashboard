@@ -54,7 +54,9 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   variant: ShippingMethodTypeEnum;
 }
 
-export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
+export const ShippingZoneRatesCreatePage: React.FC<
+  ShippingZoneRatesCreatePageProps
+> = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,

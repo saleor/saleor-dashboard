@@ -133,10 +133,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const {
-    isOpen: isManageChannelsModalOpen,
-    toggle: toggleManageChannels,
-  } = useManageChannels();
+  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } =
+    useManageChannels();
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (

@@ -79,12 +79,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       installations.filter(item => item.id !== id),
     );
 
-  const {
-    data: appsInProgressData,
-    refetch: appsInProgressRefetch,
-  } = useAppsInstallationsQuery({
-    displayLoader: false,
-  });
+  const { data: appsInProgressData, refetch: appsInProgressRefetch } =
+    useAppsInstallationsQuery({
+      displayLoader: false,
+    });
   const { data, loading, refetch } = useAppsListQuery({
     displayLoader: true,
     variables: {
@@ -184,18 +182,16 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       }
     },
   });
-  const [
-    deleteInProgressApp,
-    deleteInProgressAppOpts,
-  ] = useAppDeleteFailedInstallationMutation({
-    onCompleted: data => {
-      if (!data?.appDeleteFailedInstallation?.errors?.length) {
-        removeAppNotify();
-        appsInProgressRefetch();
-        closeModal();
-      }
-    },
-  });
+  const [deleteInProgressApp, deleteInProgressAppOpts] =
+    useAppDeleteFailedInstallationMutation({
+      onCompleted: data => {
+        if (!data?.appDeleteFailedInstallation?.errors?.length) {
+          removeAppNotify();
+          appsInProgressRefetch();
+          closeModal();
+        }
+      },
+    });
 
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];

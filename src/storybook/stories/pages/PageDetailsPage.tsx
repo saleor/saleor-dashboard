@@ -36,15 +36,17 @@ storiesOf("Views / Pages / Page details", module)
   .add("form errors", () => (
     <PageDetailsPage
       {...props}
-      errors={([
-        "title",
-        "slug",
-        "content",
-        "publicationDate",
-        "isPublished",
-        "seoDescription",
-        "seoTitle",
-      ] as Array<keyof PageData>).map(field => ({
+      errors={(
+        [
+          "title",
+          "slug",
+          "content",
+          "publicationDate",
+          "isPublished",
+          "seoDescription",
+          "seoTitle",
+        ] as Array<keyof PageData>
+      ).map(field => ({
         __typename: "PageError",
         attributes: [],
         code: PageErrorCode.INVALID,

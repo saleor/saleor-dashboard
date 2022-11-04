@@ -95,24 +95,22 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
 
-  const initialForm: Omit<
-    ShippingZoneRateUpdateFormData,
-    "description"
-  > = React.useMemo(
-    () => ({
-      channelListings: shippingChannels,
-      maxDays: rate?.maximumDeliveryDays?.toString() || "",
-      maxValue: rate?.maximumOrderWeight?.value.toString() || "",
-      metadata: rate?.metadata.map(mapMetadataItemToInput),
-      minDays: rate?.minimumDeliveryDays?.toString() || "",
-      minValue: rate?.minimumOrderWeight?.value.toString() || "",
-      name: rate?.name || "",
-      orderValueRestricted: !!rate?.channelListings.length,
-      privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
-      type: rate?.type || null,
-    }),
-    [shippingChannels, rate],
-  );
+  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> =
+    React.useMemo(
+      () => ({
+        channelListings: shippingChannels,
+        maxDays: rate?.maximumDeliveryDays?.toString() || "",
+        maxValue: rate?.maximumOrderWeight?.value.toString() || "",
+        metadata: rate?.metadata.map(mapMetadataItemToInput),
+        minDays: rate?.minimumDeliveryDays?.toString() || "",
+        minValue: rate?.minimumOrderWeight?.value.toString() || "",
+        name: rate?.name || "",
+        orderValueRestricted: !!rate?.channelListings.length,
+        privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
+        type: rate?.type || null,
+      }),
+      [shippingChannels, rate],
+    );
 
   const {
     change,
@@ -132,9 +130,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const data: ShippingZoneRateUpdateFormData = {
     ...formData,

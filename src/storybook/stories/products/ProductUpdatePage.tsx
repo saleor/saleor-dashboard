@@ -155,18 +155,20 @@ storiesOf("Views / Products / Product edit", module)
   .add("form errors", () => (
     <ProductUpdatePage
       {...props}
-      errors={([
-        "attributes",
-        "category",
-        "chargeTaxes",
-        "collections",
-        "name",
-        "publicationDate",
-        "seoDescription",
-        "seoTitle",
-        "sku",
-        "stockQuantity",
-      ] as Array<keyof ProductUpdateFormData | "attributes">).map(field => ({
+      errors={(
+        [
+          "attributes",
+          "category",
+          "chargeTaxes",
+          "collections",
+          "name",
+          "publicationDate",
+          "seoDescription",
+          "seoTitle",
+          "sku",
+          "stockQuantity",
+        ] as Array<keyof ProductUpdateFormData | "attributes">
+      ).map(field => ({
         __typename: "ProductError",
         attributes:
           field === "attributes" ? [product.attributes[0].attribute.id] : null,

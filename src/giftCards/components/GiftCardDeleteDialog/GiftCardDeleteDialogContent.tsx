@@ -25,9 +25,8 @@ type DeleteDialogContentGiftCard = Pick<
 >;
 
 export interface GiftCardDeleteDialogContentProps<
-  TGiftCard extends DeleteDialogContentGiftCard
->
-  extends Pick<
+  TGiftCard extends DeleteDialogContentGiftCard,
+> extends Pick<
       ActionDialogProps,
       "open" | "onClose" | "onConfirm" | "confirmButtonState"
     >,
@@ -43,7 +42,7 @@ export interface GiftCardDeleteDialogContentProps<
 }
 
 function GiftCardDeleteDialogContent<
-  TGiftCard extends DeleteDialogContentGiftCard
+  TGiftCard extends DeleteDialogContentGiftCard,
 >({
   id,
   open,

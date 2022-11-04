@@ -32,13 +32,8 @@ interface OrderFulfillLineProps {
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const {
-    line,
-    lineIndex,
-    formsetData,
-    formsetChange,
-    onWarehouseChange,
-  } = props;
+  const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } =
+    props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -100,9 +95,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                 <WarningIcon />
               </div>
             </Tooltip>
-          ) : (
-            undefined
-          )
+          ) : undefined
         }
       >
         {line.productName}
@@ -122,8 +115,8 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             type="number"
             inputProps={{
               className: classNames(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]: !line.variant
-                  ?.trackInventory,
+                [classes.quantityInnerInputNoRemaining]:
+                  !line.variant?.trackInventory,
               }),
               min: 0,
               style: { textAlign: "right" },

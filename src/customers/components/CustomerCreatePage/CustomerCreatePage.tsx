@@ -76,48 +76,48 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
 
   const [countryDisplayName, setCountryDisplayName] = React.useState("");
   const countryChoices = mapCountriesToChoices(countries);
-  const {
-    errors: validationErrors,
-    submit: handleSubmitWithAddress,
-  } = useAddressValidation<CustomerCreatePageFormData, void>(formData =>
-    onSubmit({
-      address: {
-        city: formData.city,
-        cityArea: formData.cityArea,
-        companyName: formData.companyName,
-        country: formData.country,
-        countryArea: formData.countryArea,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phone: formData.phone,
-        postalCode: formData.postalCode,
-        streetAddress1: formData.streetAddress1,
-        streetAddress2: formData.streetAddress2,
-      },
-      customerFirstName: formData.customerFirstName,
-      customerLastName: formData.customerLastName,
-      email: formData.email,
-      note: formData.note,
-    }),
-  );
+  const { errors: validationErrors, submit: handleSubmitWithAddress } =
+    useAddressValidation<CustomerCreatePageFormData, void>(formData =>
+      onSubmit({
+        address: {
+          city: formData.city,
+          cityArea: formData.cityArea,
+          companyName: formData.companyName,
+          country: formData.country,
+          countryArea: formData.countryArea,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          postalCode: formData.postalCode,
+          streetAddress1: formData.streetAddress1,
+          streetAddress2: formData.streetAddress2,
+        },
+        customerFirstName: formData.customerFirstName,
+        customerLastName: formData.customerLastName,
+        email: formData.email,
+        note: formData.note,
+      }),
+    );
 
   const errors = [...apiErrors, ...validationErrors];
 
   const handleSubmit = (
     formData: CustomerCreatePageFormData & AddressTypeInput,
   ) => {
-    const areAddressInputFieldsModified = ([
-      "city",
-      "companyName",
-      "country",
-      "countryArea",
-      "firstName",
-      "lastName",
-      "phone",
-      "postalCode",
-      "streetAddress1",
-      "streetAddress2",
-    ] as Array<keyof AddressTypeInput>)
+    const areAddressInputFieldsModified = (
+      [
+        "city",
+        "companyName",
+        "country",
+        "countryArea",
+        "firstName",
+        "lastName",
+        "phone",
+        "postalCode",
+        "streetAddress1",
+        "streetAddress2",
+      ] as Array<keyof AddressTypeInput>
+    )
       .map(key => formData[key])
       .some(field => field !== "");
 

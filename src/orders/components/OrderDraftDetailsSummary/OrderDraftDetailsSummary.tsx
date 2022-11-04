@@ -66,7 +66,9 @@ interface OrderDraftDetailsSummaryProps
   onShippingMethodEdit: () => void;
 }
 
-const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props => {
+const OrderDraftDetailsSummary: React.FC<
+  OrderDraftDetailsSummaryProps
+> = props => {
   const {
     order,
     errors,

@@ -32,12 +32,9 @@ const useStyles = makeStyles(
   },
 );
 
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
-  confirmButtonState,
-  open,
-  onClose,
-  onSubmit,
-}) => {
+const ShippingZonePostalCodeRangeDialog: React.FC<
+  ShippingZonePostalCodeRangeDialogProps
+> = ({ confirmButtonState, open, onClose, onSubmit }) => {
   const classes = useStyles({});
   const intl = useIntl();
 

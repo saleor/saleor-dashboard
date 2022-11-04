@@ -18,12 +18,11 @@ export enum PermissionGroupListUrlSortField {
   name = "name",
 }
 export type PermissionGroupListUrlSort = Sort<PermissionGroupListUrlSortField>;
-export type PermissionGroupListUrlQueryParams = Dialog<
-  PermissionGroupListUrlDialog
-> &
-  Pagination &
-  PermissionGroupListUrlSort &
-  SingleAction;
+export type PermissionGroupListUrlQueryParams =
+  Dialog<PermissionGroupListUrlDialog> &
+    Pagination &
+    PermissionGroupListUrlSort &
+    SingleAction;
 export const permissionGroupListUrl = (
   params?: PermissionGroupListUrlQueryParams,
 ) => permissionGroupListPath + "?" + stringifyQs(params);

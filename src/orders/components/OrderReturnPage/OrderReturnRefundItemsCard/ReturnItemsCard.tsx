@@ -119,9 +119,9 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
-  const handleChangeQuantity = (id: string) => (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => onChangeQuantity(id, parseInt(event.target.value, 10));
+  const handleChangeQuantity =
+    (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
+      onChangeQuantity(id, parseInt(event.target.value, 10));
 
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
 

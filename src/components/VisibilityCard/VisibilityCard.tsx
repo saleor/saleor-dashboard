@@ -113,20 +113,19 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       date: localizeDate(date),
     });
 
-  const handleRadioFieldChange = (type: keyof DateFields) => (
-    e: ChangeEvent,
-  ) => {
-    const { value } = e.target;
-    if (!value) {
-      onChange({
-        target: {
-          name: type,
-          value: null,
-        },
-      });
-    }
-    return onChange(e);
-  };
+  const handleRadioFieldChange =
+    (type: keyof DateFields) => (e: ChangeEvent) => {
+      const { value } = e.target;
+      if (!value) {
+        onChange({
+          target: {
+            name: type,
+            value: null,
+          },
+        });
+      }
+      return onChange(e);
+    };
 
   return (
     <Card>

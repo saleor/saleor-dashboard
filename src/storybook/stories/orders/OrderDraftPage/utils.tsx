@@ -22,14 +22,15 @@ export const getDiscountsProvidersWrapper = (
   };
 
   const MockOrderDiscountProvider = ({ children }) => {
-    const mockedOrderDiscountProviderValues: OrderDiscountContextConsumerProps = {
-      ...mockedCommonDiscountProviderValues,
-      orderDiscountAddStatus: "default",
-      orderDiscountRemoveStatus: "default",
-      orderDiscount: null,
-      addOrderDiscount: () => {},
-      removeOrderDiscount: () => {},
-    };
+    const mockedOrderDiscountProviderValues: OrderDiscountContextConsumerProps =
+      {
+        ...mockedCommonDiscountProviderValues,
+        orderDiscountAddStatus: "default",
+        orderDiscountRemoveStatus: "default",
+        orderDiscount: null,
+        addOrderDiscount: () => {},
+        removeOrderDiscount: () => {},
+      };
 
     return (
       <OrderDiscountContext.Provider value={mockedOrderDiscountProviderValues}>
@@ -39,14 +40,15 @@ export const getDiscountsProvidersWrapper = (
   };
 
   const MockOrderLineDiscountProvider = ({ children }) => {
-    const mockedOrderDiscountProviderValues = (): OrderLineDiscountContextConsumerProps => ({
-      ...mockedCommonDiscountProviderValues,
-      addOrderLineDiscount: () => {},
-      removeOrderLineDiscount: () => {},
-      orderLineDiscount: null,
-      orderLineDiscountUpdateStatus: "default",
-      orderLineDiscountRemoveStatus: "default",
-    });
+    const mockedOrderDiscountProviderValues =
+      (): OrderLineDiscountContextConsumerProps => ({
+        ...mockedCommonDiscountProviderValues,
+        addOrderLineDiscount: () => {},
+        removeOrderLineDiscount: () => {},
+        orderLineDiscount: null,
+        orderLineDiscountUpdateStatus: "default",
+        orderLineDiscountRemoveStatus: "default",
+      });
 
     return (
       <OrderLineDiscountContext.Provider

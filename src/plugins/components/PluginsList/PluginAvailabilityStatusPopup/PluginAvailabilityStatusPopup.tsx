@@ -24,11 +24,9 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
-  plugin,
-  isOpen,
-  anchor,
-}) => {
+const PluginAvailabilityStatusPopup: React.FC<
+  PluginAvailabilityStatusPopupProps
+> = ({ plugin, isOpen, anchor }) => {
   const classes = useStyles({});
 
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);

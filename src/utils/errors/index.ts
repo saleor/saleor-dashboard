@@ -15,7 +15,7 @@ export function getErrors(errors: UserError[]): string[] {
 
 export type FormErrors<
   TField extends string,
-  TError extends UserError
+  TError extends UserError,
 > = Record<TField, TError>;
 
 export function getFormErrors<TField extends string, TError extends UserError>(
@@ -25,7 +25,7 @@ export function getFormErrors<TField extends string, TError extends UserError>(
   return fields.reduce((errs, field) => {
     errs[field] = getFieldError(errors, field);
     return errs;
-  }, ({} as unknown) as Record<TField, TError>);
+  }, {} as unknown as Record<TField, TError>);
 }
 
 export interface ChannelError {
@@ -42,7 +42,7 @@ export function getFieldChannelError<T extends ChannelError>(
 
 export function getFormChannelErrors<
   TField extends string,
-  TError extends ChannelError
+  TError extends ChannelError,
 >(fields: TField[], errors: TError[]) {
   return fields.reduce((errs, field) => {
     errs[field] = [

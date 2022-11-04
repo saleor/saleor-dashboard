@@ -44,14 +44,11 @@ export interface GiftCardUpdateFormErrors {
   handlers: { changeMetadata: FormChange };
 }
 
-export type GiftCardUpdateFormConsumerProps = UseFormResult<
-  GiftCardUpdateFormData
-> &
-  GiftCardUpdateFormConsumerData;
+export type GiftCardUpdateFormConsumerProps =
+  UseFormResult<GiftCardUpdateFormData> & GiftCardUpdateFormConsumerData;
 
-export const GiftCardUpdateFormContext = createContext<
-  GiftCardUpdateFormConsumerProps
->(null);
+export const GiftCardUpdateFormContext =
+  createContext<GiftCardUpdateFormConsumerProps>(null);
 
 const getGiftCardTagsAddRemoveData = (
   initTags: string[],

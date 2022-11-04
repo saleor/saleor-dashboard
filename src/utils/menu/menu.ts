@@ -107,9 +107,10 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
   const flatMenu = toFlat(menu);
   const menuItem = flatMenu.find(menuItem => menuItem.value === value);
 
-  return (menuItem.parent === null
-    ? [menuItem]
-    : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
+  return (
+    menuItem.parent === null
+      ? [menuItem]
+      : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
   ).map(flatMenuItem => _fromFlat(flatMenu, flatMenuItem));
 }
 

@@ -62,9 +62,10 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [availableColumns],
   );
-  const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [
-    availableColumns,
-  ]);
+  const defaultColumns = useMemo(
+    () => availableColumns.map(({ id }) => id),
+    [availableColumns],
+  );
 
   return {
     availableColumnsChoices,

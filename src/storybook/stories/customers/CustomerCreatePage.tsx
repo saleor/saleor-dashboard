@@ -26,21 +26,23 @@ storiesOf("Views / Customers / Create customer", module)
   .add("form errors", () => (
     <CustomerCreatePage
       {...props}
-      errors={([
-        "city",
-        "cityArea",
-        "companyName",
-        "country",
-        "countryArea",
-        "email",
-        "firstName",
-        "lastName",
-        "note",
-        "phone",
-        "postalCode",
-        "streetAddress1",
-        "streetAddress2",
-      ] as Array<keyof CustomerCreatePageFormData>).map(field => ({
+      errors={(
+        [
+          "city",
+          "cityArea",
+          "companyName",
+          "country",
+          "countryArea",
+          "email",
+          "firstName",
+          "lastName",
+          "note",
+          "phone",
+          "postalCode",
+          "streetAddress1",
+          "streetAddress2",
+        ] as Array<keyof CustomerCreatePageFormData>
+      ).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
         field,

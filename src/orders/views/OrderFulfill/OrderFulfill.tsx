@@ -36,10 +36,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
     OrderFulfillUrlQueryParams
   >(navigate, params => orderFulfillUrl(orderId, params), params);
 
-  const {
-    data: settings,
-    loading: settingsLoading,
-  } = useOrderFulfillSettingsQuery({});
+  const { data: settings, loading: settingsLoading } =
+    useOrderFulfillSettingsQuery({});
 
   const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,

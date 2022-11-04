@@ -42,7 +42,7 @@ export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
 }
 
 export function getWarehousesFromOrderLines<
-  T extends OrderLineWithStockWarehouses
+  T extends OrderLineWithStockWarehouses,
 >(lines?: T[]) {
   return lines?.reduce(
     (warehouses, line) =>

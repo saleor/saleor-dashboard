@@ -38,9 +38,8 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   return (
     <Form initial={{ quantity }} onSubmit={data => handleSubmit(id, data)}>
       {({ change, data, submit, set }) => {
-        const handleQuantityChange = createNonNegativeValueChangeHandler(
-          change,
-        );
+        const handleQuantityChange =
+          createNonNegativeValueChangeHandler(change);
 
         return (
           <DebounceForm

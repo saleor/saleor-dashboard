@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export function useDialogFormReset<
   TError extends UserError,
-  TKey extends string
+  TKey extends string,
 >({
   reset,
   apiErrors,

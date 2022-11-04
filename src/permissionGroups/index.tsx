@@ -34,9 +34,9 @@ const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
 interface PermissionGroupDetailsRouteProps {
   id: string;
 }
-const PermissionGroupDetails: React.FC<RouteComponentProps<
-  PermissionGroupDetailsRouteProps
->> = ({ match }) => {
+const PermissionGroupDetails: React.FC<
+  RouteComponentProps<PermissionGroupDetailsRouteProps>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,

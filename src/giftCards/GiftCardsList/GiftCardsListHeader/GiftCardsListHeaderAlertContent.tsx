@@ -13,10 +13,9 @@ interface GiftCardsListHeaderAlertContentProps {
   giftCardProductsExist: boolean;
 }
 
-const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
-  giftCardProductTypesExist,
-  giftCardProductsExist,
-}) => {
+const GiftCardsListHeaderAlertContent: React.FC<
+  GiftCardsListHeaderAlertContentProps
+> = ({ giftCardProductTypesExist, giftCardProductsExist }) => {
   const classes = useStyles({});
 
   const giftCardProductTypeUrl = productTypeAddUrl({

@@ -11,10 +11,9 @@ interface VariantDetailsChannelsAvailabilityCardContainerProps {
   cardTitle?: React.ReactNode;
 }
 
-const VariantDetailsChannelsAvailabilityCardContainer: React.FC<VariantDetailsChannelsAvailabilityCardContainerProps> = ({
-  children,
-  cardTitle,
-}) => (
+const VariantDetailsChannelsAvailabilityCardContainer: React.FC<
+  VariantDetailsChannelsAvailabilityCardContainerProps
+> = ({ children, cardTitle }) => (
   <>
     <Card>
       {cardTitle || (

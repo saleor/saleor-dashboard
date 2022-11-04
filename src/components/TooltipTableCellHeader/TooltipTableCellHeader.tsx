@@ -7,7 +7,9 @@ interface TooltipTableCellHeaderProps extends TableCellHeaderProps {
   tooltip?: string | React.ReactNodeArray;
 }
 
-export const TooltipTableCellHeader: React.FC<TooltipTableCellHeaderProps> = props => {
+export const TooltipTableCellHeader: React.FC<
+  TooltipTableCellHeaderProps
+> = props => {
   const { children, tooltip, disabled, ...rest } = props;
 
   const tooltipDisabled = () => {

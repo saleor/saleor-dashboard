@@ -67,9 +67,9 @@ const Portal = ({ className, children, open }) => {
   );
 };
 
-export const FullScreenContainer: FC<PropsWithChildren<
-  FullScreenContainerProps
->> = ({ children, open, className }) => (
+export const FullScreenContainer: FC<
+  PropsWithChildren<FullScreenContainerProps>
+> = ({ children, open, className }) => (
   <>
     <Portal className={className} open={open}>
       {children}

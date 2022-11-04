@@ -142,9 +142,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     [],
   );
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: SaleDetailsPageFormData = {
     channelListings,

@@ -17,11 +17,9 @@ interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
 }
 
-const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogProps> = ({
-  open,
-  onClose,
-  idsToExport,
-}) => {
+const GiftCardBulkCreateSuccessDialog: React.FC<
+  GiftCardBulkCreateSuccessDialogProps
+> = ({ open, onClose, idsToExport }) => {
   const intl = useIntl();
   const [openEmailExport, setOpenEmailExport] = useState(false);
 

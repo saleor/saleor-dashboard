@@ -5,12 +5,11 @@ import {
 
 import { getColumnChannel, getColumnChannelAvailability } from "./columnData";
 
-const byCurrentRowByIndex = (index: number, data: DatagridChangeOpts) => (
-  change: DatagridChange,
-) => {
-  const totalRemoved = data.removed.filter(r => r <= index).length;
-  return change.row === index + totalRemoved;
-};
+const byCurrentRowByIndex =
+  (index: number, data: DatagridChangeOpts) => (change: DatagridChange) => {
+    const totalRemoved = data.removed.filter(r => r <= index).length;
+    return change.row === index + totalRemoved;
+  };
 
 const byChannelColumn = (change: DatagridChange) =>
   getColumnChannel(change.column);

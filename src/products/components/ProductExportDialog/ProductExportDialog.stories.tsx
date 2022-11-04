@@ -43,9 +43,9 @@ storiesOf("Views / Products / Export / Export settings", module)
   .add("errors", () => (
     <ProductExportDialog
       {...props}
-      errors={(["fileType", "scope", null] as Array<
-        keyof ExportProductsInput | null
-      >).map(field => ({
+      errors={(
+        ["fileType", "scope", null] as Array<keyof ExportProductsInput | null>
+      ).map(field => ({
         __typename: "ExportError",
         code: ExportErrorCode.INVALID,
         field,

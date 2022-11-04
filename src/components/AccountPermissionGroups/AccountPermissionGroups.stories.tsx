@@ -11,7 +11,9 @@ import React from "react";
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import AccountPermissionGroups, { AccountPermissionGroupsProps } from ".";
 
-const availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]> = [
+const availablePermissionGroups: RelayToFlat<
+  SearchPermissionGroupsQuery["search"]
+> = [
   {
     __typename: "Group",
     id: "R3JvdXA6MQ==",

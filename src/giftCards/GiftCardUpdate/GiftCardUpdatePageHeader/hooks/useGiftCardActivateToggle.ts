@@ -48,32 +48,30 @@ const useGiftCardActivateToggle = ({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
   });
 
-  const [
-    giftCardDeactivate,
-    giftCardDeactivateOpts,
-  ] = useGiftCardDeactivateMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardDeactivate?.errors;
+  const [giftCardDeactivate, giftCardDeactivateOpts] =
+    useGiftCardDeactivateMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardDeactivate?.errors;
 
-      if (!!errors?.length) {
+        if (!!errors?.length) {
+          notify({
+            status: "error",
+            text: intl.formatMessage(commonErrorMessages.unknownError),
+          });
+          return;
+        }
+
         notify({
-          status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError),
+          status: "success",
+          text: intl.formatMessage(messages.successfullyDisabledTitle),
         });
-        return;
-      }
 
-      notify({
-        status: "success",
-        text: intl.formatMessage(messages.successfullyDisabledTitle),
-      });
-
-      if (!!onDeactivateActionComplete) {
-        onDeactivateActionComplete();
-      }
-    },
-    refetchQueries: [GIFT_CARD_DETAILS_QUERY],
-  });
+        if (!!onDeactivateActionComplete) {
+          onDeactivateActionComplete();
+        }
+      },
+      refetchQueries: [GIFT_CARD_DETAILS_QUERY],
+    });
 
   const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
 

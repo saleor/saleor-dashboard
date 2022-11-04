@@ -245,7 +245,7 @@ type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 export const extractMutationErrors = async <
   TData extends InferPromiseResult<TPromise>,
   TPromise extends Promise<FetchResult<TData>>,
-  TErrors extends ReturnType<typeof getMutationErrors>
+  TErrors extends ReturnType<typeof getMutationErrors>,
 >(
   submitPromise: TPromise,
 ): Promise<TErrors> => {
@@ -268,7 +268,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
 export const getMutationErrors = <
   T extends FetchResult<any>,
   TData extends T["data"],
-  TErrors extends TData[keyof TData]["errors"]
+  TErrors extends TData[keyof TData]["errors"],
 >(
   result: T,
 ): TErrors[] => {
@@ -282,7 +282,7 @@ export const getMutationErrors = <
 };
 
 export function getMutationStatus<
-  TData extends Record<string, SaleorMutationResult | any>
+  TData extends Record<string, SaleorMutationResult | any>,
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
   const errors = getMutationErrors(opts);
 
@@ -388,9 +388,7 @@ export function splitDateTime(dateTime: string) {
     };
   }
   // Default html input format YYYY-MM-DD HH:mm
-  const splitDateTime = moment(dateTime)
-    .format("YYYY-MM-DD HH:mm")
-    .split(" ");
+  const splitDateTime = moment(dateTime).format("YYYY-MM-DD HH:mm").split(" ");
   return {
     date: splitDateTime[0],
     time: splitDateTime[1],
@@ -429,7 +427,7 @@ export function findValueInEnum<TEnum extends {}>(
     throw new Error(`Value ${needle} not found in enum`);
   }
 
-  return (needle as unknown) as TEnum[keyof TEnum];
+  return needle as unknown as TEnum[keyof TEnum];
 }
 
 export function parseBoolean(a: string, defaultValue: boolean): boolean {
@@ -520,10 +518,7 @@ export function PromiseQueue() {
 
   function add<T>(operation: (value: T | void) => PromiseLike<T>) {
     return new Promise((resolve, reject) => {
-      queue = queue
-        .then(operation)
-        .then(resolve)
-        .catch(reject);
+      queue = queue.then(operation).then(resolve).catch(reject);
     });
   }
 

@@ -14,9 +14,8 @@ export interface GiftCardDetailsConsumerProps {
   loading: boolean;
 }
 
-export const GiftCardDetailsContext = createContext<
-  GiftCardDetailsConsumerProps
->(null);
+export const GiftCardDetailsContext =
+  createContext<GiftCardDetailsConsumerProps>(null);
 
 const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
   children,

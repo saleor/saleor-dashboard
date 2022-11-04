@@ -36,13 +36,8 @@ const GiftCardsListTable: React.FC = () => {
   const classes = useStyles({});
   const navigate = useNavigator();
 
-  const {
-    toggle,
-    isSelected,
-    giftCards,
-    numberOfColumns,
-    params,
-  } = useGiftCardList();
+  const { toggle, isSelected, giftCards, numberOfColumns, params } =
+    useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
 
   const isCurrencySelected = !!params.currency;

@@ -307,9 +307,8 @@ function useProductVariantUpdateForm(
       );
 
       if (variantChannel) {
-        const { costPrice, price } = extractChannelPricesFromVariantChannel(
-          variantChannel,
-        );
+        const { costPrice, price } =
+          extractChannelPricesFromVariantChannel(variantChannel);
 
         return {
           ...variantChannel.channel,

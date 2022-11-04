@@ -14,7 +14,9 @@ export interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogProps> = ({
+const ProductVariantEndPreorderDialog: React.FC<
+  ProductVariantEndPreorderDialogProps
+> = ({
   confirmButtonState,
   open,
   onClose,

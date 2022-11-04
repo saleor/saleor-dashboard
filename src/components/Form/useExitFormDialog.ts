@@ -25,11 +25,8 @@ export const useExitFormDialog = (
   const id = useRef(formId || Symbol()).current;
 
   const exitDialogProps = useContext(ExitFormDialogContext);
-  const {
-    setIsDirty,
-    setIsSubmitDisabled,
-    setExitDialogSubmitRef,
-  } = exitDialogProps;
+  const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef } =
+    exitDialogProps;
 
   React.useEffect(() => {
     if (isDisabled !== undefined) {

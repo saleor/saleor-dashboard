@@ -57,7 +57,9 @@ interface ProductVariantImageSelectDialogProps {
   onMediaSelect(id: string);
 }
 
-const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
+const ProductVariantMediaSelectDialog: React.FC<
+  ProductVariantImageSelectDialogProps
+> = props => {
   const { media, open, selectedMedia, onClose, onMediaSelect } = props;
   const classes = useStyles(props);
 

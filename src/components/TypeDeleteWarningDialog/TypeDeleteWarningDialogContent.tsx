@@ -23,7 +23,9 @@ interface TypeDeleteWarningDialogContentProps {
   showViewAssignedItemsButton?: boolean;
 }
 
-const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentProps> = ({
+const TypeDeleteWarningDialogContent: React.FC<
+  TypeDeleteWarningDialogContentProps
+> = ({
   description,
   consentLabel,
   viewAssignedItemsUrl,

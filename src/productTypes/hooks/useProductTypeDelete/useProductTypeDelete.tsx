@@ -16,7 +16,7 @@ import React from "react";
 import * as messages from "./messages";
 
 type UseProductTypeDeleteProps<
-  T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams
+  T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams,
 > = UseTypeDeleteProps<T>;
 
 function useProductTypeDelete({
@@ -28,16 +28,15 @@ function useProductTypeDelete({
 
   const isDeleteDialogOpen = params.action === "remove";
 
-  const productsAssignedToSelectedTypesQueryVars = React.useMemo<
-    ProductCountQueryVariables
-  >(
-    () => ({
-      filter: {
-        productTypes,
-      },
-    }),
-    [productTypes],
-  );
+  const productsAssignedToSelectedTypesQueryVars =
+    React.useMemo<ProductCountQueryVariables>(
+      () => ({
+        filter: {
+          productTypes,
+        },
+      }),
+      [productTypes],
+    );
 
   const shouldSkipProductListQuery =
     !productTypes.length || !isDeleteDialogOpen;

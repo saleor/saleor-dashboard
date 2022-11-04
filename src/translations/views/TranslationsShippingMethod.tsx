@@ -39,21 +39,19 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateShippingMethodTranslationsMutation({
-    onCompleted: data => {
-      if (data.shippingPriceTranslate.errors.length === 0) {
-        shippingMethodTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateShippingMethodTranslationsMutation({
+      onCompleted: data => {
+        if (data.shippingPriceTranslate.errors.length === 0) {
+          shippingMethodTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const onEdit = (field: string) =>
     navigate(

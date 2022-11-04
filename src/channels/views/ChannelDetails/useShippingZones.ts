@@ -14,10 +14,8 @@ export const useShippingZones = (channelId?: string) => {
     PermissionEnum.MANAGE_SHIPPING,
   ]);
 
-  const {
-    data: shippingZonesCountData,
-    loading: shippingZonesCountLoading,
-  } = useShippingZonesCountQuery({ skip: !canLoadShippingZones });
+  const { data: shippingZonesCountData, loading: shippingZonesCountLoading } =
+    useShippingZonesCountQuery({ skip: !canLoadShippingZones });
 
   const {
     data: channelShippingZonesData,

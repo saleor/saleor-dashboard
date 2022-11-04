@@ -32,7 +32,9 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm(data: FormData);
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
+const OrderFulfillmentTrackingDialog: React.FC<
+  OrderFulfillmentTrackingDialogProps
+> = ({
   confirmButtonState,
   errors: apiErrors,
   open,

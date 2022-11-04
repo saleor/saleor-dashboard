@@ -13,7 +13,7 @@ export const Backlink = ({
     return (
       <MacawBacklink<LinkType>
         {...props}
-        component={(Link as unknown) as LinkType}
+        component={Link as unknown as LinkType}
         to={href}
       />
     );

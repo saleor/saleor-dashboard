@@ -80,9 +80,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
   };
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,

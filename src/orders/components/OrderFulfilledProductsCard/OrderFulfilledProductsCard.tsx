@@ -36,7 +36,9 @@ const cancelableStatuses = [
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
-const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
+const OrderFulfilledProductsCard: React.FC<
+  OrderFulfilledProductsCardProps
+> = props => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,

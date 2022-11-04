@@ -89,21 +89,19 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
       },
     },
   );
-  const [
-    unassignAttribute,
-    unassignAttributeOpts,
-  ] = useUnassignPageAttributeMutation({
-    onCompleted: data => {
-      if (data.pageAttributeUnassign.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-        attributeListActions.reset();
-      }
-    },
-  });
+  const [unassignAttribute, unassignAttributeOpts] =
+    useUnassignPageAttributeMutation({
+      onCompleted: data => {
+        if (data.pageAttributeUnassign.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          closeModal();
+          attributeListActions.reset();
+        }
+      },
+    });
   const [reorderAttribute] = usePageTypeAttributeReorderMutation({
     onCompleted: data => {
       if (data.pageTypeReorderAttributes.errors.length === 0) {

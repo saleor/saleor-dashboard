@@ -93,7 +93,9 @@ function handleContainerAssign(
 
 const numberOfColumns = 6;
 
-const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
+const ProductTypeVariantAttributes: React.FC<
+  ProductTypeVariantAttributesProps
+> = props => {
   const {
     assignedVariantAttributes,
     disabled,

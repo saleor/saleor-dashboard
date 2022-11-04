@@ -37,7 +37,9 @@ export interface OrderCustomerAddressEditProps {
   showCard?: boolean;
 }
 
-const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
+const OrderCustomerAddressEdit: React.FC<
+  OrderCustomerAddressEditProps
+> = props => {
   const {
     loading,
     customerAddresses,

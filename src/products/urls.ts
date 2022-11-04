@@ -51,9 +51,7 @@ export enum ProductListUrlFiltersWithKeyValueValues {
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues> &
   FiltersWithKeyValueValues<ProductListUrlFiltersWithKeyValueValues> &
-  FiltersAsDictWithMultipleValues<
-    ProductListUrlFiltersAsDictWithMultipleValues
-  >;
+  FiltersAsDictWithMultipleValues<ProductListUrlFiltersAsDictWithMultipleValues>;
 export enum ProductListUrlSortField {
   attribute = "attribute",
   name = "name",
@@ -97,10 +95,8 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
 export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value";
-export type ProductVariantEditUrlQueryParams = Dialog<
-  ProductVariantEditUrlDialog
-> &
-  SingleAction;
+export type ProductVariantEditUrlQueryParams =
+  Dialog<ProductVariantEditUrlDialog> & SingleAction;
 export const productVariantEditUrl = (
   productId: string,
   variantId: string,
@@ -114,10 +110,8 @@ export const productVariantEditUrl = (
   stringifyQs(params);
 
 export type ProductVariantAddUrlDialog = "assign-attribute-value";
-export type ProductVariantAddUrlQueryParams = Dialog<
-  ProductVariantAddUrlDialog
-> &
-  SingleAction;
+export type ProductVariantAddUrlQueryParams =
+  Dialog<ProductVariantAddUrlDialog> & SingleAction;
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
 export const productVariantAddUrl = (

@@ -29,10 +29,9 @@ const useStyles = makeStyles(
   { name: "SortableTableBody" },
 );
 
-const SortableTableBody: React.FC<Omit<
-  TableBodyProps & SortableTableBodyProps,
-  "ref"
->> = props => {
+const SortableTableBody: React.FC<
+  Omit<TableBodyProps & SortableTableBodyProps, "ref">
+> = props => {
   const classes = useStyles({});
 
   return (

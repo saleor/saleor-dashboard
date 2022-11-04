@@ -76,9 +76,8 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   >(navigate, permissionGroupListUrl, params);
 
   const permissionGroups = mapEdgesToItems(data?.permissionGroups);
-  const [deleteError, setDeleteError] = React.useState<
-    PermissionGroupErrorFragment
-  >();
+  const [deleteError, setDeleteError] =
+    React.useState<PermissionGroupErrorFragment>();
 
   const [permissionGroupDelete] = usePermissionGroupDeleteMutation({
     onCompleted: data => {

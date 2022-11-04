@@ -86,7 +86,9 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContentWrapper: React.FC<
+  ChannelsAvailabilityContentProps
+> = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,

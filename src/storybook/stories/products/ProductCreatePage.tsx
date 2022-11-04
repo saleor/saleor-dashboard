@@ -100,13 +100,11 @@ storiesOf("Views / Products / Create product", module)
       currentChannels={channels}
       allChannelsCount={5}
       loading={false}
-      errors={([
-        "attributes",
-        "name",
-        "productType",
-        "category",
-        "sku",
-      ] as Array<keyof ProductCreateFormData | "attributes">).map(field => ({
+      errors={(
+        ["attributes", "name", "productType", "category", "sku"] as Array<
+          keyof ProductCreateFormData | "attributes"
+        >
+      ).map(field => ({
         __typename: "ProductError",
         attributes:
           field === "attributes"

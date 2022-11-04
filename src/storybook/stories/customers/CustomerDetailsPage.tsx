@@ -41,9 +41,11 @@ storiesOf("Views / Customers / Customer details", module)
   .add("form errors", () => (
     <CustomerDetailsPage
       {...props}
-      errors={(["email", "firstName", "lastName"] as Array<
-        keyof CustomerDetailsPageErrors
-      >).map(field => ({
+      errors={(
+        ["email", "firstName", "lastName"] as Array<
+          keyof CustomerDetailsPageErrors
+        >
+      ).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
         field,

@@ -147,17 +147,11 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<VoucherListUrlFilters>(VOUCHER_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<VoucherListUrlFilters>(VOUCHER_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<VoucherListUrlQueryParams, VoucherListUrlFilters>({
-  ...VoucherListUrlFiltersEnum,
-  ...VoucherListUrlFiltersWithMultipleValues,
-});
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<VoucherListUrlQueryParams, VoucherListUrlFilters>({
+    ...VoucherListUrlFiltersEnum,
+    ...VoucherListUrlFiltersWithMultipleValues,
+  });

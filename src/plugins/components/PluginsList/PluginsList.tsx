@@ -34,14 +34,8 @@ export interface PluginListProps
 const totalColSpan = 10;
 
 const PluginList: React.FC<PluginListProps> = props => {
-  const {
-    settings,
-    plugins,
-    disabled,
-    sort,
-    onSort,
-    onUpdateListSettings,
-  } = props;
+  const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } =
+    props;
   const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();

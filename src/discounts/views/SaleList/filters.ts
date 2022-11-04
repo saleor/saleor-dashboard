@@ -117,17 +117,11 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<SaleListUrlFilters>(SALE_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<SaleListUrlFilters>(SALE_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<SaleListUrlQueryParams, SaleListUrlFilters>({
-  ...SaleListUrlFiltersEnum,
-  ...SaleListUrlFiltersWithMultipleValues,
-});
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<SaleListUrlQueryParams, SaleListUrlFilters>({
+    ...SaleListUrlFiltersEnum,
+    ...SaleListUrlFiltersWithMultipleValues,
+  });

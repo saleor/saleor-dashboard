@@ -28,20 +28,11 @@ describe("Metadata editor", () => {
     const expandDataEl = "data-test-expanded";
 
     expect(
-      wrapper
-        .find(`[${expandDataEl}]`)
-        .first()
-        .prop(expandDataEl),
+      wrapper.find(`[${expandDataEl}]`).first().prop(expandDataEl),
     ).toEqual(false);
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
+    wrapper.find(`[${expandButton}]`).first().simulate("click");
     expect(
-      wrapper
-        .find(`[${expandDataEl}]`)
-        .first()
-        .prop(expandDataEl),
+      wrapper.find(`[${expandDataEl}]`).first().prop(expandDataEl),
     ).toEqual(true);
   });
 
@@ -51,29 +42,18 @@ describe("Metadata editor", () => {
     const inputNameSelector = '[name="name:1"] input';
 
     // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
+    wrapper.find(`[${expandButton}]`).first().simulate("click");
 
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual(props.data.metadata[1].key);
+    expect(wrapper.find(inputNameSelector).first().prop("value")).toEqual(
+      props.data.metadata[1].key,
+    );
 
     wrapper
       .find(inputNameSelector)
       .first()
       .simulate("change", { target: { name: "name:1", value: "x" } });
 
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual("x");
+    expect(wrapper.find(inputNameSelector).first().prop("value")).toEqual("x");
   });
 
   it("can edit field value", () => {
@@ -82,29 +62,18 @@ describe("Metadata editor", () => {
     const inputNameSelector = '[name="value:1"] textarea';
 
     // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
+    wrapper.find(`[${expandButton}]`).first().simulate("click");
 
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual(props.data.metadata[1].value);
+    expect(wrapper.find(inputNameSelector).first().prop("value")).toEqual(
+      props.data.metadata[1].value,
+    );
 
     wrapper
       .find(inputNameSelector)
       .first()
       .simulate("change", { target: { name: "value:1", value: "x" } });
 
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual("x");
+    expect(wrapper.find(inputNameSelector).first().prop("value")).toEqual("x");
   });
 
   it("can delete field", () => {
@@ -114,19 +83,13 @@ describe("Metadata editor", () => {
     const deleteButtonSelector = '[data-test-id*="delete-field"]';
 
     // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
+    wrapper.find(`[${expandButton}]`).first().simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
       props.data.metadata.length,
     );
 
-    wrapper
-      .find(deleteButtonSelector)
-      .first()
-      .simulate("click");
+    wrapper.find(deleteButtonSelector).first().simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
       props.data.metadata.length - 1,
@@ -140,19 +103,13 @@ describe("Metadata editor", () => {
     const addButtonSelector = '[data-test-id="add-field"]';
 
     // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
+    wrapper.find(`[${expandButton}]`).first().simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
       props.data.metadata.length,
     );
 
-    wrapper
-      .find(addButtonSelector)
-      .first()
-      .simulate("click");
+    wrapper.find(addButtonSelector).first().simulate("click");
 
     expect(wrapper.find(fieldSelector).length).toEqual(
       props.data.metadata.length + 1,

@@ -43,7 +43,7 @@ import {
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
 export interface ChannelDetailsPageProps<
-  TErrors extends ChannelErrorFragment[]
+  TErrors extends ChannelErrorFragment[],
 > {
   channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
@@ -67,7 +67,7 @@ export interface ChannelDetailsPageProps<
   searchWarehouses: (query: string) => void;
 }
 
-const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
+const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channel,
   currencyCodes,
   disabled,
@@ -96,10 +96,8 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   >([]);
 
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
-  const [
-    selectedCountryDisplayName,
-    setSelectedCountryDisplayName,
-  ] = useStateFromProps(channel?.defaultCountry.country || "");
+  const [selectedCountryDisplayName, setSelectedCountryDisplayName] =
+    useStateFromProps(channel?.defaultCountry.country || "");
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
@@ -160,11 +158,12 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
           setSelectedCurrencyCode,
           currencyCodes,
         );
-        const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedCountryDisplayName,
-          countryChoices,
-        );
+        const handleDefaultCountrySelect =
+          createSingleAutocompleteSelectHandler(
+            change,
+            setSelectedCountryDisplayName,
+            countryChoices,
+          );
 
         const addShippingZone = createShippingZoneAddHandler(
           data,

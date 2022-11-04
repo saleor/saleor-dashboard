@@ -69,14 +69,13 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    data: settingsData,
-    loading: loadingSettings,
-  } = useGiftCardSettingsQuery();
+  const { data: settingsData, loading: loadingSettings } =
+    useGiftCardSettingsQuery();
 
-  const [selectedCustomer, setSelectedCustomer] = useState<
-    GiftCardCreateFormCustomer
-  >(initialCustomer || defaultInitialCustomer);
+  const [selectedCustomer, setSelectedCustomer] =
+    useState<GiftCardCreateFormCustomer>(
+      initialCustomer || defaultInitialCustomer,
+    );
 
   const handleSubmit = (data: GiftCardCreateFormData) =>
     onSubmit({ ...data, selectedCustomer });

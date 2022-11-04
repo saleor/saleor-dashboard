@@ -27,7 +27,9 @@ export interface TranslationsShippingMethodPageProps
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
+const TranslationsShippingMethodPage: React.FC<
+  TranslationsShippingMethodPageProps
+> = ({
   translationId,
   activeField,
   disabled,

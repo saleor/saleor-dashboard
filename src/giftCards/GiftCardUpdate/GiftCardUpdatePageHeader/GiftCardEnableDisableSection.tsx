@@ -14,13 +14,10 @@ const GiftCardEnableDisableSection: React.FC = () => {
     giftCard: { id, isActive, isExpired },
   } = useGiftCardDetails();
 
-  const {
-    giftCardActivate,
-    giftCardDeactivate,
-    currentOpts,
-  } = useGiftCardActivateToggle({
-    isActive,
-  });
+  const { giftCardActivate, giftCardDeactivate, currentOpts } =
+    useGiftCardActivateToggle({
+      isActive,
+    });
 
   const handleClick = () =>
     isActive

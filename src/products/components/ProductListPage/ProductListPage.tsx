@@ -171,10 +171,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
-  const {
-    PRODUCT_OVERVIEW_CREATE,
-    PRODUCT_OVERVIEW_MORE_ACTIONS,
-  } = useExtensions(extensionMountPoints.PRODUCT_LIST);
+  const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
+    useExtensions(extensionMountPoints.PRODUCT_LIST);
 
   const extensionMenuItems = mapToMenuItemsForProductOverviewActions(
     PRODUCT_OVERVIEW_MORE_ACTIONS,

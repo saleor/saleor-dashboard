@@ -131,12 +131,10 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleCategoryBulkDelete,
-  });
+  const [categoryBulkDelete, categoryBulkDeleteOpts] =
+    useCategoryBulkDeleteMutation({
+      onCompleted: handleCategoryBulkDelete,
+    });
 
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
 

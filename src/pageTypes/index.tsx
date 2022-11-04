@@ -30,9 +30,9 @@ const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface PageTypeDetailsRouteParams {
   id: string;
 }
-const PageTypeDetails: React.FC<RouteComponentProps<
-  PageTypeDetailsRouteParams
->> = ({ match }) => {
+const PageTypeDetails: React.FC<
+  RouteComponentProps<PageTypeDetailsRouteParams>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageTypeUrlQueryParams = qs;
 

@@ -62,26 +62,25 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
 
   const formErrors = getFormErrors(formFields, errors);
 
-  const productExportTypeChoices: Array<RadioGroupFieldChoice<
-    FileTypesEnum
-  >> = [
-    {
-      label: intl.formatMessage({
-        id: "9Tl/bT",
-        defaultMessage: "Spreadsheet for Excel, Numbers etc.",
-        description: "export items as spreadsheet",
-      }),
-      value: FileTypesEnum.XLSX,
-    },
-    {
-      label: intl.formatMessage({
-        id: "li1BBk",
-        defaultMessage: "Plain CSV file",
-        description: "export items as csv file",
-      }),
-      value: FileTypesEnum.CSV,
-    },
-  ];
+  const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> =
+    [
+      {
+        label: intl.formatMessage({
+          id: "9Tl/bT",
+          defaultMessage: "Spreadsheet for Excel, Numbers etc.",
+          description: "export items as spreadsheet",
+        }),
+        value: FileTypesEnum.XLSX,
+      },
+      {
+        label: intl.formatMessage({
+          id: "li1BBk",
+          defaultMessage: "Plain CSV file",
+          description: "export items as csv file",
+        }),
+        value: FileTypesEnum.CSV,
+      },
+    ];
 
   const exportScopeChoices = [
     {

@@ -18,7 +18,7 @@ export interface ResultSearchData {
 
 function makeTopLevelSearch<
   TData extends SearchData,
-  TVariables extends SearchVariables
+  TVariables extends SearchVariables,
 >(query: DocumentNode): UseSearchHook<TData, TVariables> {
   return makeSearch<TData, TVariables>(query, result => {
     if (result?.data?.search?.pageInfo?.hasNextPage) {

@@ -55,7 +55,9 @@ interface CategoryProductListProps extends ListProps, ListActions {
   products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
 }
 
-export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
+export const CategoryProductList: React.FC<
+  CategoryProductListProps
+> = props => {
   const {
     disabled,
     isChecked,

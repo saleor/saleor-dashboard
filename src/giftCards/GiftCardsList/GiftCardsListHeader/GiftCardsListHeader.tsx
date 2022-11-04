@@ -16,11 +16,8 @@ const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    openCreateDialog,
-    openBulkCreateDialog,
-    openExportDialog,
-  } = useGiftCardListDialogs();
+  const { openCreateDialog, openBulkCreateDialog, openExportDialog } =
+    useGiftCardListDialogs();
 
   const openSettings = () => navigate(giftCardSettingsUrl);
 

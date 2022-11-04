@@ -49,10 +49,8 @@ export const useAppActions = (
   ): DispatchResponseEvent => {
     switch (action?.type) {
       case "notification": {
-        const {
-          actionId,
-          ...notification
-        } = action.payload as NotificationAction["payload"];
+        const { actionId, ...notification } =
+          action.payload as NotificationAction["payload"];
 
         notify({
           ...notification,
@@ -61,11 +59,8 @@ export const useAppActions = (
         return sendResponseStatus(actionId, true);
       }
       case "redirect": {
-        const {
-          to,
-          newContext,
-          actionId,
-        } = action.payload as RedirectAction["payload"];
+        const { to, newContext, actionId } =
+          action.payload as RedirectAction["payload"];
 
         let success = true;
         const appDeepUrlChange = isAppDeepUrlChange(
