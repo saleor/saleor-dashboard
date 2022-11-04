@@ -178,7 +178,8 @@
     "radix": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "simple-import-sort/sort": ["error"],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "sort-keys": "off",
     "space-before-function-paren": "off",
