@@ -24,6 +24,9 @@ export function createNewMenuItem({ menuId, name, menuItemType }) {
 
   return cy
     .visit(menuDetailsUrl(menuId))
+    .wait("@SearchCollections")
+    .wait("@SearchPages")
+    .wait("@SearchCategories")
     .get(MENU_DETAILS.createNewMenuItemButton)
     .click()
     .get(SHARED_ELEMENTS.dialog)
@@ -52,5 +55,5 @@ export function createNewMenuItem({ menuId, name, menuItemType }) {
 export const MENU_ITEM_TYPES = {
   category: "categoryItem",
   collection: "collectionItem",
-  page: "pageItem"
+  page: "pageItem",
 };
