@@ -14,10 +14,7 @@ import {
   IconButton,
   makeStyles,
 } from "@saleor/macaw-ui";
-import {
-  TranslationField,
-  TranslationFieldType,
-} from "@saleor/translations/types";
+import { TranslationField } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -181,7 +178,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 </div>
                 <div className={classes.content}>
                   {field && field.value !== undefined ? (
-                    field.type === TranslationFieldType.SHORT ? (
+                    field.type === "short" ? (
                       <TranslationFieldsShort
                         disabled={disabled}
                         edit={false}
@@ -190,7 +187,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         onDiscard={onDiscard}
                         onSubmit={undefined}
                       />
-                    ) : field.type === TranslationFieldType.LONG ? (
+                    ) : field.type === "long" ? (
                       <TranslationFieldsLong
                         disabled={disabled}
                         edit={false}
@@ -216,7 +213,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 </div>
                 <Typography className={classes.content}>
                   {field && field.translation !== undefined ? (
-                    field.type === TranslationFieldType.SHORT ? (
+                    field.type === "short" ? (
                       <TranslationFieldsShort
                         disabled={disabled}
                         edit={activeField === field.name}
@@ -225,7 +222,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
                       />
-                    ) : field.type === TranslationFieldType.LONG ? (
+                    ) : field.type === "long" ? (
                       <TranslationFieldsLong
                         disabled={disabled}
                         edit={activeField === field.name}
