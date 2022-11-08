@@ -1,4 +1,5 @@
 import { AttributeEntityTypeEnum, SearchPagesQuery } from "@saleor/graphql";
+import { ProductUpdateData } from "@saleor/products/components/ProductUpdatePage/form";
 import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -35,6 +36,7 @@ const pagesMessages = defineMessages({
 type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   entityType: AttributeEntityTypeEnum;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
+  attributes: ProductUpdateData["attributes"];
 };
 
 const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({

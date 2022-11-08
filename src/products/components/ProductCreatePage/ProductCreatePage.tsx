@@ -384,6 +384,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   assignReferencesAttributeId,
                   data.attributes,
                 )}
+                attributes={data.attributes}
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
