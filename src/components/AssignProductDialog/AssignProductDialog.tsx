@@ -43,7 +43,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
-  attributes: ProductUpdateData["attributes"];
+  attributes?: ProductUpdateData["attributes"];
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -70,16 +70,16 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
   const queryParams = parseQs(location.search);
 
-  const associatedPackets = attributes.find(
+  const associatedPackets = attributes?.find(
     attribute =>
       attribute.label.toLowerCase() === AttributeName.ASSOCIATED_PACKETS,
   );
 
   const filteredProducts = products.filter(product => {
     if (
-      (associatedPackets.id === queryParams.id &&
+      (associatedPackets?.id === queryParams.id &&
         product.productType.name !== ProductType.EXAMINATION_PACKET) ||
-      (associatedPackets.id !== queryParams.id &&
+      (associatedPackets?.id !== queryParams.id &&
         product.productType.name === ProductType.EXAMINATION_PACKET)
     ) {
       return false;
