@@ -532,12 +532,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 state={saveButtonBarState}
                 disabled={isSaveDisabled}
               />
+
               {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog
                   entityType={getReferenceAttributeEntityTypeFromAttribute(
                     assignReferencesAttributeId,
                     data.attributes,
                   )}
+                  attributes={data.attributes}
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}

@@ -17,9 +17,11 @@ import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
+import { ProductUpdateData } from "@saleor/products/components/ProductUpdatePage/form";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
-import { ProductType } from "@saleor/utils/constants";
+import { AttributeName, ProductType } from "@saleor/utils/constants";
+import { parse as parseQs } from "qs";
 import React, { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -41,6 +43,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
+  attributes?: ProductUpdateData["attributes"];
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -57,12 +60,33 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onFetchMore,
     onSubmit,
     selectedIds,
+    attributes,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [productsDict, setProductsDict] = React.useState(selectedIds || {});
+
+  const queryParams = parseQs(location.search);
+
+  const associatedPackets = attributes?.find(
+    attribute =>
+      attribute.label.toLowerCase() === AttributeName.ASSOCIATED_PACKETS,
+  );
+
+  const filteredProducts = products.filter(product => {
+    if (
+      (associatedPackets?.id === queryParams.id &&
+        product.productType.name !== ProductType.EXAMINATION_PACKET) ||
+      (associatedPackets?.id !== queryParams.id &&
+        product.productType.name === ProductType.EXAMINATION_PACKET)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 
   useEffect(() => {
     if (selectedIds) {
@@ -131,7 +155,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         id={scrollableTargetId}
       >
         <InfiniteScroll
-          dataLength={products?.length}
+          dataLength={filteredProducts?.length}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
@@ -144,14 +168,8 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         >
           <ResponsiveTable key="table">
             <TableBody>
-              {products &&
-                products.map(product => {
-                  if (
-                    product.productType.name === ProductType.EXAMINATION_PACKET
-                  ) {
-                    return null;
-                  }
-
+              {filteredProducts &&
+                filteredProducts.map(product => {
                   const isSelected = productsDict[product.id] || false;
 
                   return (

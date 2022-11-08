@@ -393,6 +393,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       assignReferencesAttributeId,
                       data.attributes,
                     )}
+                    attributes={data.attributes}
                     confirmButtonState={"default"}
                     products={referenceProducts}
                     pages={referencePages}

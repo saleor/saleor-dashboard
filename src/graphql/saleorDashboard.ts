@@ -259,6 +259,49 @@ export interface Checker {
   lastName: Scalars["String"];
 }
 
+export interface ChukBodyMeasurements {
+  weight?: Maybe<Scalars["Float"]>;
+  height?: Maybe<Scalars["Float"]>;
+  waist?: Maybe<Scalars["Float"]>;
+}
+
+export interface ChukBodyMeasurementsInput {
+  weight?: InputMaybe<Scalars["Float"]>;
+  height?: InputMaybe<Scalars["Float"]>;
+  waist?: InputMaybe<Scalars["Float"]>;
+}
+
+export interface ChukEducationInput {
+  cholesterol?: InputMaybe<Scalars["Float"]>;
+  cholesterolLDL?: InputMaybe<Scalars["Float"]>;
+  cholesterolHDL?: InputMaybe<Scalars["Float"]>;
+  cholesterolNonHDL?: InputMaybe<Scalars["Float"]>;
+  triglycerides?: InputMaybe<Scalars["Float"]>;
+  glucose?: InputMaybe<Scalars["Float"]>;
+  riskScore?: InputMaybe<Scalars["Float"]>;
+  recommendations?: InputMaybe<Scalars["String"]>;
+  simpFiles?: InputMaybe<Array<Scalars["String"]>>;
+  comment?: InputMaybe<Scalars["String"]>;
+}
+
+export interface ChukMeasurementsInput {
+  pressureMeasurements?: InputMaybe<ChukPressureMeasurementInput[]>;
+  bodyMeasurements?: InputMaybe<ChukBodyMeasurementsInput>;
+  comment?: InputMaybe<Scalars["String"]>;
+}
+
+export interface ChukPressureMeasurement {
+  systolicPressure?: Maybe<Scalars["Float"]>;
+  diastolicPressure?: Maybe<Scalars["Float"]>;
+  pulse?: Maybe<Scalars["Float"]>;
+}
+
+export interface ChukPressureMeasurementInput {
+  systolicPressure?: InputMaybe<Scalars["Float"]>;
+  diastolicPressure?: InputMaybe<Scalars["Float"]>;
+  pulse?: InputMaybe<Scalars["Float"]>;
+}
+
 export interface ClientAppSettings {
   preferredLocation: Scalars["String"];
 }
@@ -1489,6 +1532,7 @@ export interface ObjectedNFZStatus {
   chosenNurse?: Maybe<Scalars["String"]>;
   telezgodaAccepted: Scalars["Boolean"];
   ewusLastCheck?: Maybe<EwusCheckWithDate>;
+  noInsurance?: Maybe<Scalars["Boolean"]>;
 }
 
 export interface OpeningHours {
@@ -1633,6 +1677,7 @@ export type Patient = BaseUser &
     izolacja?: Maybe<Scalars["String"]>;
     kwarantanna?: Maybe<Scalars["String"]>;
     stayAddresses: Address[];
+    isQualifiedToCHUK: Scalars["Boolean"];
     oneTimeSurvey?: Maybe<Scalars["JSON"]>;
     regularSurvey: Scalars["JSON"];
     relation: Scalars["String"];
@@ -1968,6 +2013,25 @@ export interface ProcedureBandageInput {
   used?: InputMaybe<Scalars["String"]>;
 }
 
+export interface ProcedureChukEducation {
+  cholesterol?: Maybe<Scalars["Float"]>;
+  cholesterolLDL?: Maybe<Scalars["Float"]>;
+  cholesterolHDL?: Maybe<Scalars["Float"]>;
+  cholesterolNonHDL?: Maybe<Scalars["Float"]>;
+  triglycerides?: Maybe<Scalars["Float"]>;
+  glucose?: Maybe<Scalars["Float"]>;
+  riskScore?: Maybe<Scalars["Float"]>;
+  recommendations?: Maybe<Scalars["String"]>;
+  simpFiles?: Maybe<Array<Scalars["String"]>>;
+  comment?: Maybe<Scalars["String"]>;
+}
+
+export interface ProcedureChukMeasurements {
+  pressureMeasurements?: Maybe<ChukPressureMeasurement[]>;
+  bodyMeasurements?: Maybe<ChukBodyMeasurements>;
+  comment?: Maybe<Scalars["String"]>;
+}
+
 export interface ProcedureDataInput {
   disinfectant?: InputMaybe<ProcedureDisinfectantInput[]>;
   tool?: InputMaybe<ProcedureToolInput[]>;
@@ -1987,6 +2051,8 @@ export interface ProcedureDataInput {
   observations?: InputMaybe<Scalars["String"]>;
   isEditingLocked?: InputMaybe<Scalars["Boolean"]>;
   answers?: InputMaybe<ProcedureAnswerInput[]>;
+  chukMeasurements?: InputMaybe<ChukMeasurementsInput>;
+  chukEducation?: InputMaybe<ChukEducationInput>;
 }
 
 export interface ProcedureDisinfectant {
@@ -2084,6 +2150,8 @@ export interface ProcedureEntity {
   observations: Scalars["String"];
   isEditingLocked: Scalars["Boolean"];
   answers: ProcedureAnswer[];
+  chukMeasurements?: Maybe<ProcedureChukMeasurements>;
+  chukEducation?: Maybe<ProcedureChukEducation>;
   creator: User;
   patient: Patient;
 }
@@ -2163,6 +2231,8 @@ export enum ProcedureType {
   OBJECT = "OBJECT",
   VACCINE = "VACCINE",
   QUALIFICATION_FOR_VACCINATION = "QUALIFICATION_FOR_VACCINATION",
+  CHUK_MEASUREMENTS = "CHUK_MEASUREMENTS",
+  CHUK_EDUCATION = "CHUK_EDUCATION",
 }
 
 export interface ProcedureVaccine {
@@ -2194,7 +2264,8 @@ export interface Query {
   patientDeclarationHistory: PatientDeclarationHistoryEvent[];
   validateSku: Scalars["Boolean"];
   authorizeDoctor: Scalars["String"];
-  authorizeDoctorWithRefreshToken: TokensPayload;
+  authorizeMFA: TokensPayload;
+  sendMfaSmsCode: Scalars["Boolean"];
   validateToken: Scalars["String"];
   getPatientDocs: Scalars["String"];
   me: Doctor;
@@ -2290,7 +2361,12 @@ export interface QueryauthorizeDoctorArgs {
   phone: Scalars["String"];
 }
 
-export interface QueryauthorizeDoctorWithRefreshTokenArgs {
+export interface QueryauthorizeMFAArgs {
+  mfaCode: Scalars["String"];
+  phone: Scalars["String"];
+}
+
+export interface QuerysendMfaSmsCodeArgs {
   password: Scalars["String"];
   phone: Scalars["String"];
 }
@@ -2888,6 +2964,7 @@ export interface UserEntity {
   patientPublicSince?: Maybe<Scalars["DateTime"]>;
   assistantId?: Maybe<Scalars["String"]>;
   clientAppSettings?: Maybe<ClientAppSettings>;
+  isQualifiedToCHUK: Scalars["Boolean"];
 }
 
 export enum UserGenre {
