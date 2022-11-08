@@ -78,8 +78,10 @@ describe("As an admin I should be able to create product", () => {
         productOrgResp => (productData.productOrganization = productOrgResp),
       );
       cy.addAliasToGraphRequest("ProductDetails")
+        .addAliasToGraphRequest("ProductCreate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
+        .waitForRequestAndCheckIfNoErrors("@ProductCreate")
         .confirmationMessageShouldDisappear()
         .waitForRequestAndCheckIfNoErrors("@ProductDetails")
         .get("@ProductDetails")
