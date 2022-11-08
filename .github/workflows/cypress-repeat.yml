@@ -15,7 +15,7 @@ on:
         description: "Dashboard url"
       API_url:
         required: true
-        default: 'https://automation-dashboard.staging.saleor.cloud/graphql'
+        default: 'https://automation-dashboard.staging.saleor.cloud/graphql/'
         description: "API url"
       repeat:
         required: true
