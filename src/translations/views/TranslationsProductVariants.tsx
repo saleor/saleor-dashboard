@@ -16,10 +16,7 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  getAttributeValueTranslationsInputData,
-  getParsedTranslationInputData,
-} from "../utils";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsProductVariantsQueryParams {
   activeField: string;
@@ -101,14 +98,14 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     );
 
   const handleAttributeValueSubmit = (
-    { id, type }: TranslationField<TranslationInputFieldName>,
-    data: OutputData | string,
+    { id }: TranslationField<TranslationInputFieldName>,
+    data: OutputData,
   ) =>
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
           id,
-          input: getAttributeValueTranslationsInputData(type, data),
+          input: { richText: JSON.stringify(data) },
           language: languageCode,
         },
       }),

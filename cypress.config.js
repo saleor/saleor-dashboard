@@ -9,6 +9,10 @@ module.exports = defineConfig({
   requestTimeout: 20000,
   viewportWidth: 1400,
   viewportHeight: 660,
+  retries: {
+    runMode: 1,
+    openMode: 0,
+  },
   e2e: {
     env: {
       grepFilterSpecs: true,

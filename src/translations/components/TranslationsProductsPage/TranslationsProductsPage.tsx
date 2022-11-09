@@ -15,7 +15,6 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@saleor/translations/urls";
-import { mapAttributeValuesToTranslationFields } from "@saleor/translations/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -98,7 +97,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short",
+            type: "short" as "short",
             value: data?.product?.name,
           },
           {
@@ -108,7 +107,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
-            type: "rich",
+            type: "rich" as "rich",
             value: data?.product?.description,
           },
         ]}
@@ -135,7 +134,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: "short",
+            type: "short" as "short",
             value: data?.product?.seoTitle,
           },
           {
@@ -145,7 +144,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: "long",
+            type: "long" as "long",
             value: data?.product?.seoDescription,
           },
         ]}
@@ -163,10 +162,25 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             disabled={disabled}
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={mapAttributeValuesToTranslationFields(
-              data.attributeValues,
-              intl,
-            )}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    id: "PajjqE",
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list",
+                  },
+                  {
+                    number: i + 1,
+                  },
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText,
+              })) || []
+            }
             saveButtonState={saveButtonState}
             richTextResetKey={languageCode}
             onEdit={onEdit}

@@ -15,7 +15,7 @@ on:
         description: "Dashboard url"
       API_url:
         required: true
-        default: 'https://automation-dashboard.staging.saleor.cloud/graphql'
+        default: 'https://automation-dashboard.staging.saleor.cloud/graphql/'
         description: "API url"
       repeat:
         required: true
@@ -35,6 +35,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Package
+        run: npm ci
 
       - name: Install cypress-repeat
         run: npm i -D cypress-repeat
