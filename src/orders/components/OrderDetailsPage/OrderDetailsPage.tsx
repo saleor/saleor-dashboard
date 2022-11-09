@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import { AppExtensionCard } from "@saleor/apps/components/AppExtensionCard/AppExtensionCard";
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -283,6 +284,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
               </div>
               <div>
+                <AppExtensionCard appUrl="http://localhost:3000/api/hello" />
+                <CardSpacer />
                 <OrderCustomer
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
