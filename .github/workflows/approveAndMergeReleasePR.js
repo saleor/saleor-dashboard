@@ -164,7 +164,7 @@ async function waitForTestsToFinish(requestVariables) {
       .then(response => {
         if (response.runByBuildNumber.status === "RUNNING") {
           setTimeout(async function() {
-            resolve(await waitForTestsToFinish(client, requestVariables));
+            resolve(await waitForTestsToFinish(requestVariables));
           }, 10000);
         } else {
           resolve(response.runByBuildNumber);
