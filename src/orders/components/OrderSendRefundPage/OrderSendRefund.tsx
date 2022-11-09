@@ -9,6 +9,7 @@ import {
   OrderDetailsFragment,
 } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { orderMessages } from "@saleor/orders/messages";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -49,13 +50,13 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
       <Backlink href={orderUrl(order.id)}>
         {order?.number ? (
           <FormattedMessage
-            {...refundPageMessages.backlink}
+            {...orderMessages.headerOrderNumber}
             values={{
               orderNumber: order?.number,
             }}
           />
         ) : (
-          <FormattedMessage {...refundPageMessages.backlinkNoNumber} />
+          <FormattedMessage {...orderMessages.headerOrder} />
         )}
       </Backlink>
       <PageHeader

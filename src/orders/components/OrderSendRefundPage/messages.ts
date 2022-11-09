@@ -1,16 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const refundPageMessages = defineMessages({
-  backlink: {
-    id: "rVIlBs",
-    defaultMessage: "Order #{orderNumber}",
-    description: "page header with order number",
-  },
-  backlinkNoNumber: {
-    id: "6u4K7e",
-    defaultMessage: "Order",
-    description: "page header",
-  },
   pageSubtitle: {
     defaultMessage: "Issue refund",
     id: "/nZy6A",
