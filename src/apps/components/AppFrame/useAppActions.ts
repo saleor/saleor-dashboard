@@ -74,6 +74,8 @@ export const useAppActions = (
           to,
         );
 
+        console.log({ appDeepUrlChange });
+
         try {
           if (newContext) {
             window.open(to);
@@ -108,6 +110,15 @@ export const useAppActions = (
         }
 
         return sendResponseStatus(actionId, success);
+      }
+      case "updateRouting": {
+        const { newRoute, strategy, actionId } = action.payload as any;
+
+        const appCompletePath = appPath(encodeURIComponent(appId));
+
+        window.history.pushState(null, "", appCompletePath + newRoute);
+
+        return sendResponseStatus(actionId, true);
       }
       default: {
         throw new Error("Unknown action type");
