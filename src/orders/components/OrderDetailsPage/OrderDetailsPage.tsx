@@ -65,24 +65,43 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
+
   onBillingAddressEdit();
+
   onFulfillmentApprove(id: string);
+
   onFulfillmentCancel(id: string);
+
   onFulfillmentTrackingNumberUpdate(id: string);
+
   onOrderFulfill();
+
   onProductClick?(id: string);
+
   onPaymentCapture();
+
   onPaymentPaid();
+
   onPaymentRefund();
+
   onPaymentVoid();
+
   onShippingAddressEdit();
+
   onOrderCancel();
+
   onNoteAdd(data: HistoryFormData);
+
   onProfileView();
+
   onOrderReturn();
+
   onInvoiceClick(invoiceId: string);
+
   onInvoiceGenerate();
+
   onInvoiceSend(invoiceId: string);
+
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -284,7 +303,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
               </div>
               <div>
-                <AppExtensionCard appUrl="http://localhost:3000/api/hello" />
+                <AppExtensionCard
+                  height={300}
+                  appUrl={`https://debug-bar-test.vercel.app/api/app`}
+                  params={{
+                    order: order?.id,
+                  }}
+                  shouldLoad={Boolean(order?.id)}
+                />
                 <CardSpacer />
                 <OrderCustomer
                   canEditAddresses={canEditAddresses}

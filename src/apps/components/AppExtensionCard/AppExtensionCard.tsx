@@ -1,14 +1,18 @@
 import appsIcon from "@assets/images/menu-apps-icon.svg";
 import { Card, CardContent, CardProps } from "@material-ui/core";
+import { useAppActions } from "@saleor/apps/components/AppFrame/useAppActions";
 import CardTitle from "@saleor/components/CardTitle";
+import { useAppQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { CSSProperties, useMemo } from "react";
+import React, { CSSProperties, useEffect, useMemo, useRef } from "react";
 import SVG from "react-inlinesvg";
 
 interface AppExtensionCardProps extends CardProps {
   appUrl: string;
   height?: string | number;
+  params: Record<string, string>;
+  shouldLoad?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -19,18 +23,29 @@ const useStyles = makeStyles(
       border: "none",
     },
     card: {},
+    cardContent: {
+      overflow: "auto",
+    },
   }),
   { name: "AppFrame" },
 );
 
-// todo load iframe loader
 export const AppExtensionCard = ({
   appUrl,
   className,
   height = 200,
+  params,
+  shouldLoad,
   ...props
 }: AppExtensionCardProps) => {
   const styles = useStyles();
+  const rootRef = useRef<HTMLElement | null>(null);
+  const frameRef = React.useRef<HTMLIFrameElement>();
+
+  const { data } = useAppQuery({
+    displayLoader: true,
+    variables: { id: "QXBwOjMx" }, // temp, should load actual app
+  });
 
   const rootStyles = useMemo(
     (): CSSProperties => ({
@@ -39,8 +54,38 @@ export const AppExtensionCard = ({
     [height],
   );
 
+  useEffect(() => {
+    if (rootRef.current) {
+      const titleBar = rootRef.current.querySelector<HTMLDivElement>(
+        ".MuiCardHeader-root",
+      );
+      const headerHeight = titleBar.getBoundingClientRect().height;
+
+      rootRef.current.querySelector<HTMLDivElement>(
+        `.${styles.cardContent}`,
+      )!.style.height = `calc(100% - ${headerHeight}px)`;
+    }
+  }, [rootRef, styles.cardContent]);
+
+  const appOrigin = new URL(appUrl).origin;
+
+  const { postToExtension } = useAppActions(frameRef, appOrigin, data?.app.id);
+
+  const handleLoad = () => {
+    postToExtension({
+      type: "handshake",
+      payload: {
+        token: data?.app.accessToken,
+        version: 1,
+      },
+    });
+  };
+
+  const qs = new URLSearchParams(params);
+
   return (
     <Card
+      ref={rootRef}
       style={rootStyles}
       className={clsx(className, styles.card)}
       {...props}
@@ -53,8 +98,17 @@ export const AppExtensionCard = ({
           </span>
         }
       />
-      <CardContent>
-        <iframe className={styles.iframe} src={appUrl}></iframe>
+      <CardContent className={styles.cardContent}>
+        <div>
+          {shouldLoad && (
+            <iframe
+              ref={frameRef}
+              onLoad={handleLoad}
+              className={styles.iframe}
+              src={`${appOrigin}/api/preload?url=${appUrl}?${qs.toString()}`}
+            ></iframe>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
