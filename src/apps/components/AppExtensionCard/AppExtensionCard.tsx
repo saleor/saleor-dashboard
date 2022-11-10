@@ -44,7 +44,7 @@ export const AppExtensionCard = ({
 
   const { data } = useAppQuery({
     displayLoader: true,
-    variables: { id: "QXBwOjMx" }, // temp, should load actual app
+    variables: { id: "QXBwOjM0" }, // temp, should load actual app
   });
 
   const rootStyles = useMemo(
@@ -69,7 +69,7 @@ export const AppExtensionCard = ({
 
   const appOrigin = new URL(appUrl).origin;
 
-  const { postToExtension } = useAppActions(frameRef, appOrigin, data?.app.id);
+  const { postToExtension } = useAppActions(frameRef, appOrigin, data?.app?.id);
 
   const handleLoad = () => {
     postToExtension({

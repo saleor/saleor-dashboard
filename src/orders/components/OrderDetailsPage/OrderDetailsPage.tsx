@@ -211,6 +211,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     extensionMountPoints.ORDER_DETAILS,
   );
 
+  // todo - need to remove validation from core
+  console.log(ORDER_DETAILS_MORE_ACTIONS);
+
   const extensionMenuItems = mapToMenuItemsForOrderDetails(
     ORDER_DETAILS_MORE_ACTIONS,
     order?.id,

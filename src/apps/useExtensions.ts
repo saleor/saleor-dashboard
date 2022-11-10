@@ -22,6 +22,17 @@ export interface Extension {
   open(): void;
 }
 
+export interface StaticExtension {
+  id: string;
+  app: RelayToFlat<ExtensionListQuery["appExtensions"]>[0]["app"];
+  accessToken: string;
+  permissions: PermissionEnum[];
+  label: string;
+  mount: string; // todo
+  url: string;
+  height: number;
+}
+
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
   open(params: AppDetailsUrlMountQueryParams): void;
 }
