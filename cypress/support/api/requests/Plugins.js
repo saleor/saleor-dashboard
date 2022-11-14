@@ -1,10 +1,15 @@
-export function updatePlugin(id, name, value) {
+export function updatePlugin(id, name, value, channel) {
+  const channelLine = channel ? `channelId: "${channel}"` : "";
+
   const mutation = `mutation{
-    pluginUpdate(id:"${id}", input:{
-      configuration:{
-        name:"${name}"
+    pluginUpdate(
+      id:"${id}", 
+      ${channelLine},
+      input:{
+      configuration:[{
+        name:"${name}",
         value:"${value}"
-      }
+      }]
     }){
       errors{
         field
