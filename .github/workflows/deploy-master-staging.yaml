@@ -23,7 +23,10 @@ jobs:
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
-
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
       - name: Package
         timeout-minutes: 15
         run: |

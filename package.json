@@ -13,8 +13,8 @@
   },
   "homepage": "https://saleor.io/",
   "engines": {
-    "node": ">=14 <15",
-    "npm": ">=6.11.0 <7"
+    "node": ">=18 <19",
+    "npm": ">=8 <9"
   },
   "dependencies": {
     "@apollo/client": "3.4.15",
@@ -266,9 +266,10 @@
     ]
   },
   "scripts": {
-    "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
+    "build-storybook": "env NODE_OPTIONS=--openssl-legacy-provider build-storybook -c src/storybook/ -o build/storybook",
     "build-types": "graphql-codegen",
-    "build": "npm run build-types && webpack -p",
+    "prebuild": "npm run build-types",
+    "build": "env NODE_OPTIONS=--openssl-legacy-provider webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
@@ -276,8 +277,9 @@
     "fetch-schema": "graphql-codegen --config ./fetch-schema.yml && node scripts/build-schema.js",
     "heroku-postbuild": "npm run build",
     "serve:lhci": "NODE_ENV=production npm run server",
-    "start": "npm run build-types && webpack-dev-server -d",
-    "storybook": "start-storybook -p 3000 -c src/storybook/",
+    "prestart": "npm run build-types",
+    "start": "env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server -d",
+    "storybook": "env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 3000 -c src/storybook/",
     "cy:run": "cypress run",
     "cy:run:dashboard": "cypress run --record",
     "cy:open": "cypress open",
