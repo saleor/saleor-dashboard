@@ -61,17 +61,16 @@ const hasChannel = (
   return variant.channelListings.some(c => c.channel.id === channelId);
 };
 
-function inferProductChannelsAfterUpdate(
+export function inferProductChannelsAfterUpdate(
   product: ProductFragment,
   data: ProductUpdateSubmitData,
 ) {
   const productChannelsIds = product.channelListings.map(
     listing => listing.channel.id,
   );
-  const updatedChannelsIds = data.channels.updateChannels.map(
-    listing => listing.channelId,
-  );
-  const removedChannelsIds = data.channels.removeChannels;
+  const updatedChannelsIds =
+    data.channels.updateChannels?.map(listing => listing.channelId) || [];
+  const removedChannelsIds = data.channels.removeChannels || [];
 
   return uniq([
     ...productChannelsIds.filter(
