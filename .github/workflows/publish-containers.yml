@@ -39,7 +39,7 @@ jobs:
       - name: Set up Docker QEMU
         uses: docker/setup-qemu-action@v1
         with:
-          platforms: all
+          platforms: arm64
 
       - name: Set up Docker Buildx
         id: buildx
@@ -65,6 +65,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           build-args: |
             COMMIT_ID=${{ github.sha }}
+            PROJECT_VERSION=$DASHBOARD_VERSION
 
       - name: Output image digest
         run: |
