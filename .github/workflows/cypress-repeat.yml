@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: ".nvmrc"
 
       - name: Install cypress-repeat
         run: npm i -D cypress-repeat
