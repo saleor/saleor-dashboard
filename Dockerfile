@@ -3,7 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-
 COPY nginx/ nginx/
 COPY assets/ assets/
 COPY locale/ locale/
