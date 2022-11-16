@@ -1,11 +1,11 @@
-import type {
+import {
   ApolloError,
   ApolloQueryResult,
-  LazyQueryHookOptions,
+  LazyQueryHookOptions as BaseLazyQueryHookOptions,
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
+  useQuery as useBaseQuery,
 } from "@apollo/client";
-import { useQuery as useBaseQuery } from "@apollo/client";
 import { handleQueryAuthError, useUser } from "@saleor/auth";
 import { PrefixedPermissions } from "@saleor/graphql/extendedTypes";
 import {
@@ -52,6 +52,8 @@ export interface LoadMore<TData, TVariables> {
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
+export type LazyQueryHookOptions = BaseLazyQueryHookOptions;
+
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
 export type QueryHookOptions<TData, TVariables> = Partial<
@@ -61,7 +63,6 @@ export type QueryHookOptions<TData, TVariables> = Partial<
     variables?: Omit<TVariables, PrefixedPermissions>;
   }
 >;
-export { LazyQueryHookOptions };
 
 type UseQueryHook<TData, TVariables> = (
   opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>,
