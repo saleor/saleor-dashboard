@@ -34,10 +34,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version-file: ".nvmrc"
+          
       - name: Package
         run: npm i
-
+          
       - name: Install cypress-repeat
         run: npm i -D cypress-repeat
 
