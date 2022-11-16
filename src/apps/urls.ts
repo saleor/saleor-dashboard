@@ -1,3 +1,4 @@
+import { API_URI } from "@saleor/config";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
@@ -117,15 +118,28 @@ export const customAppAddUrl = customAppAddPath;
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);
 
-export const appIframeUrl = (
+export const resolveAppIframeUrl = (
   appId: string,
   appUrl: string,
   shopDomainHost: string,
   params: AppDetailsUrlQueryParams,
 ) => {
   const iframeContextQueryString = `?${stringifyQs(
-    { domain: shopDomainHost, id: appId, ...params },
+    {
+      /**
+       * @deprecated - domain will be removed in favor of saleorApiUrl.
+       * Current hostname (used as domain) can be extracted from full URL
+       *
+       * Difference will be:
+       * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
+       */
+      domain: shopDomainHost,
+      saleorApiUrl: API_URI,
+      id: appId,
+      ...params,
+    },
     "comma",
   )}`;
+
   return urlJoin(appUrl, window.location.search, iframeContextQueryString);
 };
