@@ -1,6 +1,10 @@
 name: Publish container image
 
-on: [pull_request]
+on:
+  push:
+    tags:
+      # Matches stable and pre-releases
+      - "[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
   docker:
@@ -55,7 +59,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./
           platforms: linux/amd64,linux/arm64
-          push: false
+          push: true
           tags: ${{ env.CONTAINER_TAGS }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
