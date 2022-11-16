@@ -1,3 +1,4 @@
+import { getApiUrl } from "@saleor/config";
 import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
@@ -15,7 +16,7 @@ function renderAuthProvider() {
   };
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
-    apiUrl: process.env.API_URI,
+    apiUrl: getApiUrl(),
     channel: "",
   });
   const wrapper = ({ children }) => (
@@ -50,7 +51,7 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-xdescribe("User", () => {
+describe("User", () => {
   it("will be logged in if has valid credentials", async done => {
     const hook = renderAuthProvider();
 

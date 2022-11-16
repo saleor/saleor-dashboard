@@ -38,7 +38,7 @@ module.exports = async (on, config) => {
   config.env.mailHogUrl = process.env.CYPRESS_mailHogUrl;
   config.env.grepTags = process.env.CYPRESS_grepTags;
 
-  on("before:browser:launch", ({}, launchOptions) => {
+  on("before:browser:launch", (_browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });

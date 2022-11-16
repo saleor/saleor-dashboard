@@ -5,7 +5,7 @@ import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { API_URI } from "@saleor/config";
+import { getApiUrl } from "@saleor/config";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -220,11 +220,11 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
       <CustomAppDetailsPage
-        apiUri={API_URI}
+        apiUrl={getApiUrl()}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        onApiUriClick={() => open(API_URI, "blank")}
+        onApiUrlClick={() => open(getApiUrl(), "blank")}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}
