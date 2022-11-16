@@ -252,5 +252,5 @@ async function createIssue(newBug, version, octokit) {
     )}: false\n**Additional Info:**\nSpec: ${newBug.spec}`,
     labels: ["tests"],
   });
-  return issue.data.url;
+  return issue.data.html_url;
 }
