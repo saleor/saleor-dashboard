@@ -1,4 +1,4 @@
-import { API_URI } from "@saleor/config";
+import { getApiUrl } from "@saleor/config";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
@@ -134,7 +134,7 @@ export const resolveAppIframeUrl = (
        * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
        */
       domain: shopDomainHost,
-      saleorApiUrl: API_URI,
+      saleorApiUrl: getApiUrl(),
       id: appId,
       ...params,
     },

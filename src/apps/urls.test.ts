@@ -2,7 +2,7 @@ import { resolveAppIframeUrl } from "@saleor/apps/urls";
 
 jest.mock("@saleor/config", () => ({
   ...jest.requireActual("@saleor/config"),
-  API_URI: "https://shop.saleor.cloud/graphql/",
+  getApiUrl: () => "https://shop.saleor.cloud/graphql/",
 }));
 
 describe("resolveAppIframeUrl", () => {
