@@ -75,7 +75,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       attribute.label.toLowerCase() === AttributeName.ASSOCIATED_PACKETS,
   );
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = products?.filter(product => {
     if (
       (associatedPackets?.id === queryParams.id &&
         product.productType.name !== ProductType.EXAMINATION_PACKET) ||
