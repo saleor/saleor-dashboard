@@ -2,6 +2,7 @@ import {
   ApolloError,
   ApolloQueryResult,
   LazyQueryHookOptions as BaseLazyQueryHookOptions,
+  OperationVariables,
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
   useQuery as useBaseQuery,
@@ -52,7 +53,10 @@ export interface LoadMore<TData, TVariables> {
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
-export type LazyQueryHookOptions = BaseLazyQueryHookOptions;
+export type LazyQueryHookOptions<
+  TData = any,
+  TVariables = OperationVariables
+> = BaseLazyQueryHookOptions<TData, TVariables>;
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
