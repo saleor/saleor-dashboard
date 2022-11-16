@@ -1,7 +1,7 @@
 FROM node:18-alpine as builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 COPY nginx/ nginx/
 COPY assets/ assets/
