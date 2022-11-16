@@ -10,8 +10,8 @@
     <title>Saleor e-commerce</title>
     <script>
       window.__SALEOR_CONFIG__ = {
-        API_URL: "<%= API_URL %>",
-        APP_MOUNT_URI: "<%= APP_MOUNT_URI %>",
+        API_URL: "<%- API_URL %>",
+        APP_MOUNT_URI: "<%- APP_MOUNT_URI %>",
       };
     </script>
   </head>
@@ -20,6 +20,5 @@
     <div id="dashboard-app"></div>
     <div id="portal"></div>
     <div id="modal-root"></div>
-    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

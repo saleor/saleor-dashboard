@@ -1,5 +1,6 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
+import { createHtmlPlugin } from "vite-plugin-html";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 export default defineConfig(({ command, mode }) => {
@@ -9,12 +10,12 @@ export default defineConfig(({ command, mode }) => {
   */
   const {
     NODE_ENV,
-    APP_DEFAULT_UR,
     API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
     MARKETPLACE_URL,
     SALEOR_APPS_ENDPOINT,
+    APP_MOUNT_URI,
   } = env;
 
   /*
@@ -28,14 +29,18 @@ export default defineConfig(({ command, mode }) => {
     envDir: "..",
     define: {
       ...globals,
+
+      /*
+        We still have references to process.env, we need to peserve them as workaround.
+      */
       "process.env": {
         NODE_ENV,
-        APP_DEFAULT_UR,
         API_URI,
         SW_INTERVAL,
         IS_CLOUD_INSTANCE,
         MARKETPLACE_URL,
         SALEOR_APPS_ENDPOINT,
+        APP_MOUNT_URI,
       },
     },
     build: {
@@ -77,7 +82,19 @@ export default defineConfig(({ command, mode }) => {
         moment: path.resolve(__dirname, "./node_modules/moment/moment.js"),
       },
     },
-    plugins: [swcReactRefresh()],
+    plugins: [
+      swcReactRefresh(),
+      createHtmlPlugin({
+        entry: "/index.tsx",
+        template: "index.html",
+        inject: {
+          data: {
+            API_URL: API_URI,
+            APP_MOUNT_URI,
+          },
+        },
+      }),
+    ],
     esbuild: { jsx: "automatic" },
   };
 });

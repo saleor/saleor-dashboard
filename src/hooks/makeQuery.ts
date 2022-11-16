@@ -1,11 +1,11 @@
-import {
+import type {
   ApolloError,
   ApolloQueryResult,
   LazyQueryHookOptions,
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
-  useQuery as useBaseQuery,
 } from "@apollo/client";
+import { useQuery as useBaseQuery } from "@apollo/client";
 import { handleQueryAuthError, useUser } from "@saleor/auth";
 import { PrefixedPermissions } from "@saleor/graphql/extendedTypes";
 import {
