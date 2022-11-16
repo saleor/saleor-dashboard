@@ -1,3 +1,4 @@
+import { getAppDefaultUri, getAppMountUri } from "@saleor/config";
 import isArray from "lodash/isArray";
 import { stringify } from "qs";
 
@@ -20,3 +21,6 @@ export function getArrayQueryParam(param: string | string[]): string[] {
 }
 
 export const isExternalURL = url => /^https?:\/\//.test(url);
+
+export const getAppMountUriForRedirect = () =>
+  getAppMountUri() === getAppDefaultUri() ? "" : getAppMountUri();

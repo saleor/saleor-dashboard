@@ -29,7 +29,7 @@ export const urlList = {
   variants: "variant/",
   vouchers: "discounts/vouchers/",
   variant: "variant/",
-  warehouses: "warehouses/"
+  warehouses: "warehouses/",
 };
 
 export const addVariantUrl = productId =>

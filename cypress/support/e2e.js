@@ -1,19 +1,19 @@
 // / <reference types="cypress" />
 
-import "./customCommands/user";
+import "cypress-file-upload";
+import "cypress-mailhog";
+import "cypress-mochawesome-reporter/register";
 import "./customCommands/basicOperations";
 import "./customCommands/deleteElementsViaApi";
-import "./customCommands/softAssertions";
 import "./customCommands/sharedElementsOperations/addressForm.js";
 import "./customCommands/sharedElementsOperations/assignElementsForm.js";
 import "./customCommands/sharedElementsOperations/confirmationMessages.js";
+import "./customCommands/sharedElementsOperations/deleteElement";
 import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
-import "./customCommands/sharedElementsOperations/deleteElement";
-import "cypress-mailhog";
-import "cypress-file-upload";
-import "cypress-mochawesome-reporter/register";
+import "./customCommands/softAssertions";
+import "./customCommands/user";
 
 import { commandTimings } from "cypress-timings";
 
@@ -49,7 +49,7 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
 
 Cypress.on(
   "uncaught:exception",
-  (err, runnable) =>
+  (_err, _runnable) =>
     // returning false here prevents Cypress from
     // failing the test
     false,
