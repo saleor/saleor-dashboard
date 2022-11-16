@@ -47,7 +47,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          # use explicit version as this job does not checkout code
+          node-version: '18'
 
       - name: Install saleor cli
         id: install-saleor-cli
