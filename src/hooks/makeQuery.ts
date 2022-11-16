@@ -1,6 +1,7 @@
 import {
   ApolloError,
   ApolloQueryResult,
+  LazyQueryHookOptions,
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
   useQuery as useBaseQuery,
@@ -60,6 +61,8 @@ export type QueryHookOptions<TData, TVariables> = Partial<
     variables?: Omit<TVariables, PrefixedPermissions>;
   }
 >;
+export { LazyQueryHookOptions };
+
 type UseQueryHook<TData, TVariables> = (
   opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>,
 ) => UseQueryResult<TData, TVariables>;
