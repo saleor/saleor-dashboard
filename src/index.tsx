@@ -36,7 +36,7 @@ import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
+import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
@@ -79,7 +79,7 @@ errorTracker.init();
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={APP_MOUNT_URI}>
+      <BrowserRouter basename={getAppMountUri()}>
         <ThemeProvider overrides={themeOverrides}>
           <DateProvider>
             <LocaleProvider>

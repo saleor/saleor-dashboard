@@ -4,7 +4,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useStaffListQuery, useStaffMemberAddMutation } from "@saleor/graphql";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -23,6 +23,7 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
+import { getAppMountUriForRedirect } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -159,7 +160,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
           lastName: variables.lastName,
           redirectUrl: urlJoin(
             window.location.origin,
-            APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+            getAppMountUriForRedirect(),
             newPasswordUrl().replace(/\?/, ""),
           ),
         },

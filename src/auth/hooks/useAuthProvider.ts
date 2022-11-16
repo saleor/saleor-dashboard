@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
-import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import { DEMO_MODE } from "@saleor/config";
 import { useUserDetailsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -16,6 +16,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials,
 } from "@saleor/utils/credentialsManagement";
+import { getAppMountUriForRedirect } from "@saleor/utils/urls";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -88,8 +89,10 @@ export function useAuthProvider({
   });
 
   const handleLogout = async () => {
-    const path = APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI;
-    const returnTo = urlJoin(window.location.origin, path);
+    const returnTo = urlJoin(
+      window.location.origin,
+      getAppMountUriForRedirect(),
+    );
 
     const result = await logout({
       input: JSON.stringify({

@@ -35,9 +35,10 @@ module.exports = async (on, config) => {
   config.env.SECOND_USER_NAME = process.env.CYPRESS_SECOND_USER_NAME;
   config.env.PERMISSIONS_USERS_PASSWORD =
     process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
+  config.env.mailHogUrl = process.env.CYPRESS_mailHogUrl;
   config.env.grepTags = process.env.CYPRESS_grepTags;
 
-  on("before:browser:launch", ({}, launchOptions) => {
+  on("before:browser:launch", (_browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
