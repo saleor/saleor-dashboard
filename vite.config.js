@@ -1,7 +1,6 @@
-import react from "@vitejs/plugin-react";
-// import { viteCommonjs, esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
+import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -41,7 +40,6 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       emptyOutDir: true,
-      minify: false,
       outDir: "../dist/dashboard",
       commonjsOptions: {
         /*
@@ -79,14 +77,7 @@ export default defineConfig(({ command, mode }) => {
         moment: path.resolve(__dirname, "./node_modules/moment/moment.js"),
       },
     },
-    plugins: [
-      react({
-        /*
-        Ignore stories as well as test files.
-        */
-        exclude: [/\.stories\.(t|j)sx?$/, /\.test\.(t|j)sx?$/],
-        include: "**/*.tsx",
-      }),
-    ],
+    plugins: [swcReactRefresh()],
+    esbuild: { jsx: "automatic" },
   };
 });
