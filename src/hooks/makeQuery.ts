@@ -18,7 +18,7 @@ import { useIntl } from "react-intl";
 
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
-export { useLazyQuery, LazyQueryHookOptions } from "@apollo/client";
+export { useLazyQuery } from "@apollo/client";
 
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;
