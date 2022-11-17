@@ -14,11 +14,11 @@ const useStyles = makeStyles(
     dot: {
       backgroundColor: theme.palette.primary.main,
       borderRadius: "100%",
-      height: 8,
-      left: -29,
+      height: 7,
+      left: -28,
       position: "absolute",
       top: 6,
-      width: 8,
+      width: 7,
     },
     panel: {
       "& .MuiAccordionDetails-root": {
