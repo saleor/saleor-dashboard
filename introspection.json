@@ -9358,6 +9358,22 @@
             "deprecationReason": null
           },
           {
+            "name": "attribute",
+            "description": "Represents a value of an attribute.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AttributeTranslatableContent",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "attributeValue",
             "description": "Represents a value of an attribute.",
             "args": [],
