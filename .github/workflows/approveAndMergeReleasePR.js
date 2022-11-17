@@ -119,6 +119,7 @@ program
           owner,
           repo,
           pull_number: pullNumber,
+          merge_method: "squash",
         },
       );
     }
