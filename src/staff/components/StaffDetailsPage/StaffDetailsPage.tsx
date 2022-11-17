@@ -12,6 +12,8 @@ import Savebar from "@saleor/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
+  StaffMemberDetailsFragment,
+  UserFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
@@ -21,7 +23,6 @@ import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
-import { StaffMemberDetails } from "@saleor/staff/types";
 import { staffListUrl } from "@saleor/staff/urls";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -51,7 +52,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   disabled: boolean;
   fetchMorePermissionGroups: FetchMoreProps;
   saveButtonBarState: ConfirmButtonTransitionState;
-  staffMember: StaffMemberDetails;
+  staffMember: StaffMemberDetailsFragment | UserFragment;
   errors: StaffErrorFragment[];
   onChangePassword: () => void;
   onDelete: () => void;
@@ -85,11 +86,22 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
   const { locale, setLocale } = useLocale();
 
+  const isActive = !!(
+    staffMember &&
+    "isActive" in staffMember &&
+    staffMember.isActive
+  );
+  const permissionGroups =
+    (staffMember &&
+      "permissionGroups" in staffMember &&
+      staffMember.permissionGroups) ||
+    [];
+
   const [
     permissionGroupsDisplayValues,
     setPermissionGroupsDisplayValues,
   ] = useStateFromProps<MultiAutocompleteChoiceType[]>(
-    (staffMember?.permissionGroups || []).map(group => ({
+    permissionGroups.map(group => ({
       disabled: !group.userCanManage,
       label: group.name,
       value: group.id,
@@ -99,9 +111,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
-    isActive: !!staffMember?.isActive,
+    isActive,
     lastName: staffMember?.lastName || "",
-    permissionGroups: staffMember?.permissionGroups?.map(pg => pg.id) || [],
+    permissionGroups: permissionGroups.map(pg => pg.id),
   };
 
   return (
