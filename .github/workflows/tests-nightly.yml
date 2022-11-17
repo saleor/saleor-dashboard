@@ -92,6 +92,8 @@ jobs:
     needs: ['revert-automation-env-to-snap']
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
     outputs:
       status: ${{ steps.cypress.outcome }}
     container: cypress/browsers:node18.12.0-chrome106-ff106
@@ -115,7 +117,8 @@ jobs:
           DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
           TYPED_ENV_URI: ''
         run: |
-          echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+           echo "::set-output name=ENV_URI::${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}"
+      
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -182,6 +185,8 @@ jobs:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
     needs: get-environment-variables
     runs-on: ubuntu-latest
+    env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
     outputs:
       status: ${{ steps.cypress.outcome }}
       dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
