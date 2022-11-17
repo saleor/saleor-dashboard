@@ -1575,6 +1575,11 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
   shippingMethods: [
     {
       __typename: "ShippingMethodType",
+      taxClass: {
+        __typename: "TaxClass",
+        name: "Shipping method",
+        id: "VGV4Q2xhc3M6MQ==",
+      },
       channelListings: [
         {
           __typename: "ShippingMethodChannelListing",
@@ -1670,6 +1675,11 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
     },
     {
       __typename: "ShippingMethodType",
+      taxClass: {
+        __typename: "TaxClass",
+        name: "Shipping method",
+        id: "VGV4Q2xhc3M6MQ==",
+      },
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1735,6 +1745,11 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
     },
     {
       __typename: "ShippingMethodType",
+      taxClass: {
+        __typename: "TaxClass",
+        name: "Shipping method",
+        id: "VGV4Q2xhc3M6MQ==",
+      },
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1800,6 +1815,11 @@ export const shippingZone: ShippingZoneQuery["shippingZone"] = {
     },
     {
       __typename: "ShippingMethodType",
+      taxClass: {
+        __typename: "TaxClass",
+        name: "Shipping method",
+        id: "VGV4Q2xhc3M6MQ==",
+      },
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",

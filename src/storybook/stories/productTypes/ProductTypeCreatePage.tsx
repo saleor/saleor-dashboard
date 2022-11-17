@@ -1,5 +1,6 @@
 import { ProductTypeKindEnum, WeightUnitsEnum } from "@saleor/graphql";
 import { formError } from "@saleor/storybook/misc";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -16,7 +17,8 @@ const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   onSubmit: () => undefined,
   pageTitle: "Create product type",
   saveButtonBarState: "default",
-  taxTypes: [],
+  taxClasses,
+  onFetchMoreTaxClasses: undefined,
   kind: ProductTypeKindEnum.NORMAL,
   onChangeKind: () => undefined,
 };

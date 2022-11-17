@@ -8,12 +8,12 @@ import ProductUpdatePage, {
 } from "@saleor/products/components/ProductUpdatePage";
 import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/types";
 import { product as productFixture } from "@saleor/products/fixtures";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import Decorator from "../../Decorator";
-import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture(placeholderImage);
 
@@ -60,7 +60,8 @@ const props: ProductUpdatePageProps = {
   referencePages: [],
   referenceProducts: [],
   saveButtonBarState: "default",
-  taxTypes,
+  taxClasses,
+  fetchMoreTaxClasses: undefined,
   variants: product.variants,
   warehouses: warehouseList,
   attributeValues: [],
