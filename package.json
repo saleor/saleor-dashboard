@@ -262,7 +262,7 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "env NODE_OPTIONS=--max_old_space_size=16384 vite build",
     "preview": "vite preview",
     "build-storybook": "env NODE_OPTIONS=--openssl-legacy-provider build-storybook -c src/storybook/ -o build/storybook",
     "build-types": "graphql-codegen",
