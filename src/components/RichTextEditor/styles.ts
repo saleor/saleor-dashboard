@@ -73,6 +73,17 @@ const useStyles = makeStyles(
         },
         "& .ce-toolbar__plus": {
           left: -9,
+          color: theme.palette.text.primary,
+          ...hover,
+        },
+        "& .ce-popover": {
+          backgroundColor: theme.palette.background.paper,
+        },
+        "& .ce-popover__item": {
+          ...hover,
+        },
+        "& .ce-popover__item-icon": {
+          color: theme.palette.saleor.generic.verydark,
         },
         "& .ce-toolbox.ce-toolbox--opened": {
           left: 16,

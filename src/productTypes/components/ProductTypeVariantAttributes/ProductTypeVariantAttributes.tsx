@@ -1,4 +1,4 @@
-import { Card, TableCell, Tooltip } from "@material-ui/core";
+import { Card, TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { attributeUrl } from "@saleor/attributes/urls";
 import { Button } from "@saleor/components/Button";
@@ -14,7 +14,7 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableHead from "@saleor/components/TableHead";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@saleor/graphql";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles, Tooltip } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import capitalize from "lodash/capitalize";
@@ -22,7 +22,7 @@ import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     colAction: {
       "&:last-child": {
         paddingRight: 0,
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
       alignItems: "center",
     },
     colVariantDisabled: {
-      fill: "#28234A",
+      fill: theme.palette.alert.icon.info,
       fillOpacity: 0.6,
       "&:hover": {
         fillOpacity: 1,
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
     textLeft: {
       textAlign: "left",
     },
-  },
+  }),
   { name: "ProductTypeAttributes" },
 );
 
