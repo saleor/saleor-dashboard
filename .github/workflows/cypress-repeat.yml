@@ -37,7 +37,7 @@ jobs:
           node-version-file: ".nvmrc"
           
       - name: Package
-        run: npm i
+        run: npm ci
           
       - name: Install cypress-repeat
         run: npm i -D cypress-repeat
