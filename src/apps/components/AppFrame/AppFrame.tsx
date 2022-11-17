@@ -1,7 +1,7 @@
 import {
   AppDetailsUrlQueryParams,
-  appIframeUrl,
   getAppDeepPathFromDashboardUrl,
+  resolveAppIframeUrl,
 } from "@saleor/apps/urls";
 import useLocale from "@saleor/hooks/useLocale";
 import useShop from "@saleor/hooks/useShop";
@@ -102,7 +102,7 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={appIframeUrl(appId, src, shop.domain.host, params)}
+      src={resolveAppIframeUrl(appId, src, shop.domain.host, params)}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
