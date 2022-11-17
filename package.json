@@ -109,7 +109,6 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
-    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@pollyjs/adapter-node-http": "^5.0.0",
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
@@ -171,6 +170,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^5.0.2",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
     "graphql-request": "^3.7.0",
     "husky": "^4.3.0",
     "identity-obj-proxy": "^3.0.0",
@@ -195,17 +195,17 @@
     "setup-polly-jest": "^0.9.1",
     "start-server-and-test": "^1.11.0",
     "ts-jest": "^27.0.7",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^4.8.4",
     "vite": "^3.2.4",
     "vite-plugin-html": "^3.2.0",
+    "vite-plugin-sentry": "^1.1.6",
     "vite-plugin-swc-react-refresh": "^2.2.1",
     "workbox-cacheable-response": "^6.1.2",
     "workbox-expiration": "^6.1.2",
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2",
-    "fork-ts-checker-webpack-plugin": "^3.1.1",
-    "tsconfig-paths-webpack-plugin": "^3.2.0"
+    "workbox-strategies": "^6.1.2"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
@@ -286,6 +286,8 @@
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
     "test": "TZ=UTC jest src/",
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
+    "postbuild": "node scripts/removeSourcemaps.js",
+    "postinstall": "node scripts/patchReactVirtualized.js",
     "release": "release-it"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -16,7 +17,42 @@ export default defineConfig(({ command, mode }) => {
     MARKETPLACE_URL,
     SALEOR_APPS_ENDPOINT,
     APP_MOUNT_URI,
+    SENTRY_ORG,
+    SENTRY_PROJECT,
+    SENTRY_AUTH_TOKEN,
+    SENTRY_DSN,
+    ENVIRONMENT,
   } = env;
+
+  const enableSentry =
+    SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
+
+  const plugins = [
+    swcReactRefresh(),
+    createHtmlPlugin({
+      entry: "/index.tsx",
+      template: "index.html",
+      inject: {
+        data: {
+          API_URL: API_URI,
+          APP_MOUNT_URI,
+        },
+      },
+    }),
+  ];
+
+  if (enableSentry) {
+    console.log("Enabling sentry...");
+
+    plugins.push(
+      viteSentry({
+        sourceMaps: {
+          include: "./build/dashboard/",
+          urlPrefix: process.env.SENTRY_URL_PREFIX,
+        },
+      }),
+    );
+  }
 
   /*
    "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
@@ -41,9 +77,12 @@ export default defineConfig(({ command, mode }) => {
         MARKETPLACE_URL,
         SALEOR_APPS_ENDPOINT,
         APP_MOUNT_URI,
+        SENTRY_DSN,
+        ENVIRONMENT,
       },
     },
     build: {
+      sourcemap: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
       commonjsOptions: {
@@ -82,19 +121,7 @@ export default defineConfig(({ command, mode }) => {
         moment: path.resolve(__dirname, "./node_modules/moment/moment.js"),
       },
     },
-    plugins: [
-      swcReactRefresh(),
-      createHtmlPlugin({
-        entry: "/index.tsx",
-        template: "index.html",
-        inject: {
-          data: {
-            API_URL: API_URI,
-            APP_MOUNT_URI,
-          },
-        },
-      }),
-    ],
+    plugins,
     esbuild: { jsx: "automatic" },
   };
 });
