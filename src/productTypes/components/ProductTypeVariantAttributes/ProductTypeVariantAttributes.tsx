@@ -274,8 +274,9 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                       <IconButton
                         data-test-id="delete-icon"
                         onClick={() => onAttributeUnassign(attribute.id)}
+                        variant="primary"
                       >
-                        <DeleteIcon color="primary" />
+                        <DeleteIcon />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

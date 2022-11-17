@@ -161,7 +161,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                   >
                     <IconButton
                       data-test-id="delete-icon"
-                      color="primary"
+                      variant="primary"
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >
