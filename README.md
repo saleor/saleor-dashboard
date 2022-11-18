@@ -32,7 +32,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js v14+
+- Node.js v18+
 - A running instance of [Saleor](https://github.com/saleor/saleor/).
 
 ### Installing
