@@ -92,4 +92,29 @@ describe("As an admin I want to update gift card", () => {
         });
     },
   );
+
+  it(
+    "should be able to delete several gift cards. TC: SALEOR_1009",
+    { tags: ["@giftCard", "@allEnv", "@stable"] },
+    () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+
+      createGiftCard({
+        tag: name,
+        amount: 10,
+        currency: "USD",
+      }).then(giftCard => {
+        cy.visit(giftCardDetailsUrl(giftCard.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("DeleteGiftCard")
+          .get(GIFT_CARD_UPDATE.consentCheckbox)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@DeleteGiftCard");
+        getGiftCardWithId(giftCard.id).should("be.null");
+      });
+    },
+  );
 });
