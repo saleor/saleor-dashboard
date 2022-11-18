@@ -18,12 +18,15 @@ export interface RequestExternalLogoutInput {
   returnTo: string;
 }
 
-export type UserContextError =
-  | "loginError"
-  | "externalLoginError"
-  | "unknownLoginError"
-  | "serverError"
-  | "noPermissionsError";
+export const UserContextError = {
+  loginError: "loginError",
+  serverError: "serverError",
+  noPermissionsError: "noPermissionsError",
+  externalLoginError: "externalLoginError",
+  unknownLoginError: "unknownLoginError",
+} as const;
+
+export type UserContextError = typeof UserContextError[keyof typeof UserContextError];
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;

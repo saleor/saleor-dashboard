@@ -10,6 +10,13 @@ export enum JWTError {
   expired = "ExpiredSignatureError",
 }
 
+export const AuthError = {
+  PermissionDenied: "PermissionDenied",
+  OAuthError: "OAuthError",
+} as const;
+
+export type AuthError = typeof AuthError[keyof typeof AuthError];
+
 export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
   try {
@@ -26,13 +33,13 @@ export function isTokenExpired(error: GraphQLError): boolean {
 }
 
 export function getAuthErrorType(graphQLError: GraphQLError): UserContextError {
-  switch (graphQLError.extensions?.exception?.code) {
-    case "PermissionDenied":
-      return "noPermissionsError";
-    case "OAuthError":
-      return "externalLoginError";
+  switch (graphQLError.extensions?.exception?.code as AuthError) {
+    case AuthError.PermissionDenied:
+      return UserContextError.noPermissionsError;
+    case AuthError.OAuthError:
+      return UserContextError.externalLoginError;
     default:
-      return "unknownLoginError";
+      return UserContextError.unknownLoginError;
   }
 }
 
