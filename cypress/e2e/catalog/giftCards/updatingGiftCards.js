@@ -33,7 +33,7 @@ describe("As an admin I want to update gift card", () => {
 
       createGiftCard({
         tag: name,
-        amount: 10,
+        amount: 5,
         currency: "USD",
       }).then(giftCard => {
         cy.visit(giftCardDetailsUrl(giftCard.id))
@@ -60,7 +60,7 @@ describe("As an admin I want to update gift card", () => {
 
       createGiftCard({
         tag: name,
-        amount: 10,
+        amount: 5,
         currency: "USD",
       })
         .then(giftCard => {
@@ -101,8 +101,8 @@ describe("As an admin I want to update gift card", () => {
 
       createGiftCard({
         tag: name,
-        amount: 10,
-        currency: "USD",
+        amount: 5,
+        currency: "THB",
       }).then(giftCard => {
         cy.visit(giftCardDetailsUrl(giftCard.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -117,4 +117,4 @@ describe("As an admin I want to update gift card", () => {
       });
     },
   );
-});
+}); // cla test
