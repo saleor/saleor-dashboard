@@ -192,7 +192,7 @@ export function getShippingMethodChannelVariables(
             channel.maxValue && orderValueRestricted ? channel.maxValue : null,
           minimumOrderPrice:
             channel.minValue && orderValueRestricted ? channel.minValue : null,
-          price: channel.price || null,
+          price: channel.price,
         })) || [],
       removeChannels,
     },
