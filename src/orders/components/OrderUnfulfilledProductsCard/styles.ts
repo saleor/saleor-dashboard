@@ -5,6 +5,7 @@ export const useStyles = makeStyles(
     actions: {
       flexDirection: "row-reverse",
       padding: theme.spacing(2, 3),
+      gap: theme.spacing(1),
     },
     table: {
       "& td, & th": {
