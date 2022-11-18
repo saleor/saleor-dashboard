@@ -82,6 +82,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     build: {
+      minify: false,
       sourcemap: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
@@ -92,6 +93,9 @@ export default defineConfig(({ command, mode }) => {
          */
         transformMixedEsModules: true,
       },
+    },
+    optimizeDeps: {
+      include: ["esm-dep > cjs-dep"],
     },
     resolve: {
       alias: {
