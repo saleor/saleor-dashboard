@@ -256,6 +256,9 @@
       "pre-push": "npm run check-types"
     }
   },
+  "overrides": {
+    "resolve": "1.20.0"
+  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
@@ -290,7 +293,7 @@
     "cy:run:critical:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Critical",
     "cy:run:allEnv:parallel": "cypress run --record --env grepTags=@allEnv --parallel",
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
-    "test": "TZ=UTC jest src/",
+    "test": "TZ=UTC NODE_ENV=test jest src/",
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
     "postbuild": "node scripts/removeSourcemaps.js",
     "postinstall": "node scripts/patchReactVirtualized.js",
