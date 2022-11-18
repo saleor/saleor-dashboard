@@ -205,7 +205,13 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-sentry": "^1.1.6",
     "vite-plugin-swc-react-refresh": "^2.2.1",
-    "eslint-plugin-react-refresh": "^0.3.1"
+    "eslint-plugin-react-refresh": "^0.3.1",
+    "webpack": "^4.35.3",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-manifest-plugin": "2.2.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
