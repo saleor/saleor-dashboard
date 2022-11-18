@@ -117,4 +117,4 @@ describe("As an admin I want to update gift card", () => {
       });
     },
   );
-}); // cla test2
+}); // cla test3
