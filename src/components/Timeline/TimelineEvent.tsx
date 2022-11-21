@@ -1,7 +1,10 @@
 import { Typography } from "@material-ui/core";
 import {
+  // @ts-ignore
   Accordion,
+  // @ts-ignore
   AccordionDetails,
+  // @ts-ignore
   AccordionSummary,
   makeStyles,
 } from "@saleor/macaw-ui";

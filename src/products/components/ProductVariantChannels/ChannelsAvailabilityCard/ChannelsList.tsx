@@ -1,5 +1,6 @@
 import { CardContent, Typography } from "@material-ui/core";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+// @ts-ignore
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
 import React from "react";
 

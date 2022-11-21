@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
+// @ts-ignore
 import { Accordion, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import React from "react";

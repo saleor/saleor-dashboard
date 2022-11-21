@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Skeleton from "@saleor/components/Skeleton";
+// @ts-ignore
 import { AccordionSummary } from "@saleor/macaw-ui";
 import React from "react";
 
