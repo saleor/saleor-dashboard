@@ -1,261 +1,214 @@
-import { Card, CardContent } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { Button } from "@saleor/components/Button";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { Hr } from "@saleor/components/Hr";
-import Money from "@saleor/components/Money";
+import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
-import {
-  OrderAction,
-  OrderDetailsFragment,
-  OrderDiscountType,
-  OrderStatus,
-} from "@saleor/graphql";
-import { Pill } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
+import { Button, Pill } from "@saleor/macaw-ui";
+import { transformPaymentStatus } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { transformPaymentStatus } from "../../../misc";
-import { orderPaymentMessages, paymentButtonMessages } from "./messages";
+import SummaryLine from "../OrderSummaryCard/SummaryLine";
+import { SummaryList } from "../OrderSummaryCard/SummaryList";
+import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
+import {
+  orderPaymentActionButtonMessages,
+  orderPaymentMessages,
+} from "./messages";
 import { useStyles } from "./styles";
-import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from "./utils";
+import { extractRefundedAmount } from "./utils";
 
-interface OrderPaymentProps {
-  order: OrderDetailsFragment;
-  onCapture: () => void;
-  onMarkAsPaid: () => void;
+interface OrderPaymementProps {
+  order: OrderDetailsFragment | undefined;
   onRefund: () => void;
-  onVoid: () => void;
+  onMarkAsPaid: () => void;
 }
 
-const OrderPayment: React.FC<OrderPaymentProps> = props => {
-  const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
-  const classes = useStyles(props);
+const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
+  if (!order) {
+    return {
+      authorized: false,
+      captured: false,
+      any: false,
+    };
+  }
 
+  const authorized = order.totalAuthorized?.amount ?? 0;
+  const captured = order.totalCaptured?.amount ?? 0;
+  const total = order.total.gross?.amount ?? 0;
+
+  if (authorized && captured) {
+    // different amounts
+    return {
+      authorized: true,
+      captured: true,
+      any: true,
+    };
+  }
+
+  if (captured !== 0 && captured !== total) {
+    // partial capture
+    return {
+      authorized: false,
+      captured: true,
+      any: true,
+    };
+  }
+
+  if (authorized !== 0) {
+    // not fully authorized
+    return {
+      authorized: true,
+      captured: false,
+      any: true,
+    };
+  }
+
+  // fully paid / not paid at all
+  return {
+    authorized: false,
+    captured: false,
+    any: false,
+  };
+};
+
+const OrderPayment: React.FC<OrderPaymementProps> = ({
+  order,
+  onRefund,
+  onMarkAsPaid,
+}) => {
+  const classes = useStyles();
   const intl = useIntl();
 
-  const canCapture = (order?.actions ?? []).includes(OrderAction.CAPTURE);
-  const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
-  const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = (order?.actions ?? []).includes(
-    OrderAction.MARK_AS_PAID,
-  );
-  const payment = transformPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount = extractRefundedAmount(order);
-  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
+  const payment = transformPaymentStatus(order?.paymentStatus, intl);
+  const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
-  const getDeliveryMethodName = (order: OrderDetailsFragment) => {
-    if (
-      order?.shippingMethodName === undefined &&
-      order?.shippingPrice === undefined &&
-      order?.collectionPointName === undefined
-    ) {
-      return <Skeleton />;
-    }
+  const canGrantRefund =
+    order?.transactions?.length > 0 || order?.payments?.length > 0;
+  const canSendRefund = canGrantRefund; // TODO: Check if order has granted refunds
+  const canAnyRefund = canGrantRefund || canSendRefund;
+  const hasGiftCards = giftCardAmount > 0;
 
-    if (order.shippingMethodName === null) {
-      return order.collectionPointName == null ? (
-        <FormattedMessage {...orderPaymentMessages.shippingDoesNotApply} />
-      ) : (
-        <FormattedMessage
-          {...orderPaymentMessages.clickAndCollectShippingMethod}
-        />
-      );
-    }
-    return order.shippingMethodName;
-  };
+  const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
+
+  const shouldDisplay = getShouldDisplayAmounts(order);
+
+  if (!order) {
+    return (
+      <Card>
+        <CardTitle
+          title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
+          toolbar={<Skeleton />}
+        ></CardTitle>
+        <CardContent>
+          <Skeleton />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardTitle
-        title={
-          !order?.paymentStatus ? (
-            <Skeleton />
-          ) : (
-            <div className={classes.titleContainer}>
-              <FormattedMessage {...orderPaymentMessages.paymentTitle} />
-              <HorizontalSpacer spacing={2} />
-              <Pill
-                className={classes.rightmostLeftAlignedElement}
-                label={payment.localized}
-                color={payment.status}
-              />
-              {order?.status !== OrderStatus.CANCELED &&
-                (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-                  <div>
-                    {canCapture && (
-                      <Button variant="tertiary" onClick={onCapture}>
-                        <FormattedMessage {...paymentButtonMessages.capture} />
-                      </Button>
-                    )}
-                    {canRefund && (
-                      <Button
-                        variant="tertiary"
-                        onClick={onRefund}
-                        data-test-id="refund-button"
-                      >
-                        <FormattedMessage {...paymentButtonMessages.refund} />
-                      </Button>
-                    )}
-                    {canVoid && (
-                      <Button variant="tertiary" onClick={onVoid}>
-                        <FormattedMessage {...paymentButtonMessages.void} />
-                      </Button>
-                    )}
-                    {canMarkAsPaid && (
-                      <Button variant="tertiary" onClick={onMarkAsPaid}>
-                        <FormattedMessage
-                          {...paymentButtonMessages.markAsPaid}
-                        />
-                      </Button>
-                    )}
-                  </div>
-                )}
-            </div>
-          )
+        toolbar={
+          <Pill
+            label={payment.localized}
+            color={payment.status}
+            className={classes.paymentStatus}
+          />
         }
+        title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
-      <CardContent>
-        <div className={classes.root}>
-          {order?.discounts?.map(discount => (
-            <div>
-              <FormattedMessage {...orderPaymentMessages.discount} />
-              <HorizontalSpacer spacing={4} />
-              <span className={classes.supportText}>
-                {discount.type === OrderDiscountType.MANUAL ? (
-                  <FormattedMessage {...orderPaymentMessages.staffAdded} />
-                ) : (
-                  <FormattedMessage {...orderPaymentMessages.voucher} />
+      {!canAnyRefund && !shouldDisplay.any && !hasGiftCards && (
+        <CardContent className={classes.noPaymentContent}>
+          <Typography variant="h5" className={classes.noPaymentTitle}>
+            <FormattedMessage {...orderPaymentMessages.noPayments} />
+          </Typography>
+          {canMarkAsPaid && (
+            <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
+              <FormattedMessage
+                {...orderPaymentActionButtonMessages.markAsPaid}
+              />
+            </Button>
+          )}
+        </CardContent>
+      )}
+      {shouldDisplay.any && (
+        <CardContent>
+          {shouldDisplay.any && (
+            <SummaryList className={classes.amountGrid}>
+              {shouldDisplay.authorized && (
+                <SummaryLine
+                  vertical
+                  text={
+                    <FormattedMessage {...orderPaymentMessages.authorized} />
+                  }
+                  money={order.totalAuthorized}
+                />
+              )}
+
+              {shouldDisplay.captured && (
+                <SummaryLine
+                  vertical
+                  text={<FormattedMessage {...orderPaymentMessages.captured} />}
+                  money={order.totalCaptured}
+                />
+              )}
+            </SummaryList>
+          )}
+        </CardContent>
+      )}
+      {canAnyRefund && (
+        <>
+          <Hr />
+          <CardTitle
+            toolbar={
+              <div className={classes.refundsButtons}>
+                {canGrantRefund && (
+                  <Button variant="secondary">
+                    <FormattedMessage
+                      {...orderPaymentActionButtonMessages.grantRefund}
+                    />
+                  </Button>
                 )}
-              </span>
-              <span
-                className={clsx(
-                  classes.leftmostRightAlignedElement,
-                  classes.smallFont,
-                  classes.supportText,
+                {canSendRefund && (
+                  <Button
+                    variant="secondary"
+                    onClick={onRefund}
+                    data-test-id="refund-button"
+                  >
+                    <FormattedMessage
+                      {...orderPaymentActionButtonMessages.sendRefund}
+                    />
+                  </Button>
                 )}
-              >
+              </div>
+            }
+            title={<FormattedMessage {...orderPaymentMessages.refundsTitle} />}
+          ></CardTitle>
+          <CardContent>
+            {/* TODO: Add granted refund amount */}
+            {refundedAmount?.amount !== 0 ? (
+              <SummaryList className={classes.amountGrid}>
+                <SummaryLine
+                  vertical
+                  text={<FormattedMessage {...orderPaymentMessages.refunded} />}
+                  money={refundedAmount}
+                />
+              </SummaryList>
+            ) : (
+              <Typography variant="body2" className={classes.explainText}>
                 <FormattedMessage
-                  {...orderPaymentMessages.includedInSubtotal}
+                  {...orderPaymentMessages.refundsExplanation}
                 />
-              </span>
-              <HorizontalSpacer spacing={2} />
-              <div className={classes.supportText}>
-                -<Money money={discount.amount} />
-              </div>
-            </div>
-          ))}
-          <div>
-            <FormattedMessage {...orderPaymentMessages.subtotal} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.subtotal.gross} /> ?? <Skeleton />}
-            </div>
-          </div>
-          <div>
-            <FormattedMessage {...orderPaymentMessages.shipping} />
-            <HorizontalSpacer spacing={4} />
-            <div className={classes.supportText}>
-              {getDeliveryMethodName(order)}
-            </div>
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.shippingPrice.gross} /> ?? <Skeleton />}
-            </div>
-          </div>
-          <div>
-            <FormattedMessage {...orderPaymentMessages.taxes} />
-            {order?.total.tax.amount > 0 && (
-              <>
-                <div
-                  className={clsx(
-                    classes.supportText,
-                    classes.smallFont,
-                    classes.leftmostRightAlignedElement,
-                  )}
-                >
-                  <FormattedMessage
-                    {...orderPaymentMessages.includedInPrices}
-                  />{" "}
-                </div>
-                <HorizontalSpacer spacing={2} />
-              </>
+              </Typography>
             )}
-            <div
-              className={clsx(
-                {
-                  [classes.leftmostRightAlignedElement]:
-                    order?.total.tax.amount === 0,
-                },
-                classes.supportText,
-              )}
-            >
-              {<Money money={order?.total.tax} /> ?? <Skeleton />}
-            </div>
-          </div>
-          <div className={classes.totalRow}>
-            <FormattedMessage {...orderPaymentMessages.total} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.total.gross} /> ?? <Skeleton />}
-            </div>
-          </div>
-        </div>
-      </CardContent>
-      <Hr />
-      <CardContent>
-        <div className={classes.root}>
-          {!!usedGiftCardAmount && (
-            <div>
-              <FormattedMessage {...orderPaymentMessages.paidWithGiftCard} />
-              <div className={classes.leftmostRightAlignedElement}>
-                <Money
-                  money={{
-                    amount: usedGiftCardAmount,
-                    currency: order?.total?.gross?.currency,
-                  }}
-                />
-              </div>
-            </div>
-          )}
-          <div>
-            <FormattedMessage {...orderPaymentMessages.preauthorized} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.totalAuthorized} /> ?? <Skeleton />}
-            </div>
-          </div>
-          <div>
-            <FormattedMessage {...orderPaymentMessages.captured} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.totalCaptured} /> ?? <Skeleton />}
-            </div>
-          </div>
-          {!!refundedAmount?.amount && (
-            <div>
-              <FormattedMessage {...orderPaymentMessages.refunded} />
-              <div className={classes.leftmostRightAlignedElement}>
-                {<Money money={refundedAmount} />}
-              </div>
-            </div>
-          )}
-          <div
-            className={clsx(
-              { [classes.success]: order?.totalBalance.amount === 0 },
-              classes.totalRow,
-            )}
-          >
-            <FormattedMessage {...orderPaymentMessages.outstanding} />
-            <div className={classes.leftmostRightAlignedElement}>
-              {order?.totalBalance.amount === 0 ? (
-                <FormattedMessage {...orderPaymentMessages.settled} />
-              ) : (
-                <Money money={order?.totalBalance} /> ?? <Skeleton />
-              )}
-              {}
-            </div>
-          </div>
-        </div>
-      </CardContent>
+          </CardContent>
+        </>
+      )}
     </Card>
   );
 };
-OrderPayment.displayName = "OrderPayment";
+
 export default OrderPayment;

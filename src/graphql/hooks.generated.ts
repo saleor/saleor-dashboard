@@ -1248,6 +1248,58 @@ export const TransactionItemFragmentDoc = gql`
 }
     ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
+export const OrderPaymentFragmentDoc = gql`
+    fragment OrderPayment on Payment {
+  id
+  isActive
+  actions
+  gateway
+  paymentMethodType
+  availableCaptureAmount {
+    ...Money
+  }
+  capturedAmount {
+    ...Money
+  }
+  total {
+    ...Money
+  }
+  modified
+  transactions {
+    id
+    token
+    created
+    kind
+    isSuccess
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderGiftCardFragmentDoc = gql`
+    fragment OrderGiftCard on GiftCard {
+  id
+  last4CodeChars
+  events {
+    id
+    type
+    orderId
+    date
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1430,26 +1482,11 @@ export const OrderDetailsFragmentDoc = gql`
   transactions {
     ...TransactionItem
   }
+  payments {
+    ...OrderPayment
+  }
   giftCards {
-    events {
-      id
-      type
-      orderId
-      balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-      }
-    }
+    ...OrderGiftCard
   }
   isShippingRequired
   canFinalize
@@ -1571,6 +1608,8 @@ export const OrderDetailsFragmentDoc = gql`
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
 ${TransactionItemFragmentDoc}
+${OrderPaymentFragmentDoc}
+${OrderGiftCardFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
@@ -1880,6 +1919,12 @@ export const PluginsDetailsFragmentDoc = gql`
   }
 }
     ${PluginConfigurationExtendedFragmentDoc}`;
+export const PaymentGatewayFragmentDoc = gql`
+    fragment PaymentGateway on PaymentGateway {
+  name
+  id
+}
+    `;
 export const ProductTypeFragmentDoc = gql`
     fragment ProductType on ProductType {
   id
@@ -9430,9 +9475,13 @@ export const OrderDetailsDocument = gql`
     defaultWeightUnit
     fulfillmentAllowUnpaid
     fulfillmentAutoApprove
+    availablePaymentGateways {
+      ...PaymentGateway
+    }
   }
 }
-    ${OrderDetailsFragmentDoc}`;
+    ${OrderDetailsFragmentDoc}
+${PaymentGatewayFragmentDoc}`;
 
 /**
  * __useOrderDetailsQuery__

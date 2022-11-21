@@ -11,10 +11,6 @@
     "context": "header",
     "string": "Products in {categoryName}"
   },
-  "+5HkZN": {
-    "context": "order, button",
-    "string": "Mark as paid"
-  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -270,6 +266,9 @@
     "context": "order returned success message",
     "string": "Successfully returned products!"
   },
+  "01+5kQ": {
+    "string": "Mark as paid"
+  },
   "05hqq6": {
     "context": "checkbox label",
     "string": "Automatically approve all fulfillments"
@@ -409,6 +408,9 @@
   "16PGt9": {
     "context": "WarehouseSettings all warehouses label",
     "string": "All warehouses"
+  },
+  "16sza6": {
+    "string": "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction."
   },
   "18wvf7": {
     "context": "section header",
@@ -576,6 +578,9 @@
   "2W4EBM": {
     "context": "button",
     "string": "Set maximal quantities"
+  },
+  "2WenNh": {
+    "string": "Send refund"
   },
   "2Xt+sw": {
     "context": "dialog header",
@@ -1059,6 +1064,10 @@
     "context": "button",
     "string": "Create page type"
   },
+  "6Joy8j": {
+    "context": "sum of all refunds from transactions in order",
+    "string": "Refunded"
+  },
   "6L6Fy2": {
     "context": "header",
     "string": "Disclaimer"
@@ -1169,10 +1178,6 @@
   "7JAAul": {
     "context": "product field",
     "string": "Export Product Weight"
-  },
-  "7KRGqz": {
-    "context": "Payment card title",
-    "string": "Payment balance"
   },
   "7NFfmz": {
     "string": "Products"
@@ -1669,10 +1674,6 @@
     "context": "header",
     "string": "Activity"
   },
-  "BZ7BkQ": {
-    "context": "capture payment, button",
-    "string": "Capture"
-  },
   "BanAhF": {
     "context": "sale status",
     "string": "Scheduled"
@@ -1850,6 +1851,10 @@
   "Co2U4u": {
     "string": "No plugins found"
   },
+  "CrY98m": {
+    "context": "button, marks order as paid (legacy payments)",
+    "string": "Mark order as paid"
+  },
   "CxfKLC": {
     "string": "Pages"
   },
@@ -2003,6 +2008,10 @@
   },
   "E8VDeH": {
     "string": "No. of Orders"
+  },
+  "E9Dz18": {
+    "context": "Order summary refunds header",
+    "string": "Refunds"
   },
   "E9Jssl": {
     "string": "No orders ready to fulfill"
@@ -2359,6 +2368,10 @@
     "context": "button",
     "string": "Create voucher"
   },
+  "GcbFa9": {
+    "context": "aria-label, negative money amount",
+    "string": "minus"
+  },
   "Gfbp36": {
     "context": "dialog header",
     "string": "Unassign Products From Shipping"
@@ -2444,6 +2457,10 @@
     "context": "create new menu item, header",
     "string": "Add Item"
   },
+  "H52OCA": {
+    "context": "Order summary payment header",
+    "string": "Payment"
+  },
   "H5NKfr": {
     "context": "button",
     "string": "Create"
@@ -2508,10 +2525,6 @@
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
-  },
-  "HaQ8cg": {
-    "context": "button",
-    "string": "Refund"
   },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
@@ -2699,6 +2712,10 @@
   "IyHQr0": {
     "context": "navigator action",
     "string": "Go to order #{orderNumber}"
+  },
+  "IyV8CY": {
+    "context": "all authorized amount from transactions in order",
+    "string": "Authorized"
   },
   "IzEVek": {
     "context": "bulk disable label",
@@ -3911,6 +3928,10 @@
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
   },
+  "SC/eNC": {
+    "context": "Payment card title",
+    "string": "Payment status"
+  },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
   },
@@ -4006,6 +4027,10 @@
   },
   "T1f2Yl": {
     "string": "Variant Name"
+  },
+  "T34dJq": {
+    "context": "Displayed when order has no payment",
+    "string": "This order has no payment yet."
   },
   "T4GOiX": {
     "string": "End Date"
@@ -5355,6 +5380,10 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
+  "cpnYcM": {
+    "context": "Order summary card title",
+    "string": "Order summary"
+  },
   "cqZ5UH": {
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
@@ -5474,6 +5503,10 @@
     "context": "Transaction event status - failure",
     "string": "Failure"
   },
+  "e5Mlfh": {
+    "context": "Transaction title",
+    "string": "Gift card (**** {code})"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -5514,6 +5547,10 @@
   "eWcvOc": {
     "context": "button",
     "string": "Choose file"
+  },
+  "egBBQ/": {
+    "context": "all captured amount from transactions in order",
+    "string": "Captured"
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
@@ -5829,6 +5866,10 @@
   "hnRRUe": {
     "context": "docs link label",
     "string": "Learn more..."
+  },
+  "hnaOnB": {
+    "context": "button, opens modal to create transaction in order",
+    "string": "Capture manual transaction"
   },
   "ho75Lr": {
     "context": "status label deactivated",
@@ -6184,6 +6225,9 @@
   "kVTWtR": {
     "context": "product updated at",
     "string": "Last updated"
+  },
+  "kWw0fr": {
+    "string": "Grant refund"
   },
   "kXqn6A": {
     "context": "table header column",
@@ -7727,6 +7771,10 @@
   "x/pIZ9": {
     "context": "button",
     "string": "Add product"
+  },
+  "x2mg39": {
+    "context": "Transaction event description",
+    "string": "Used in order"
   },
   "x3g4Ry": {
     "context": "sale discount",

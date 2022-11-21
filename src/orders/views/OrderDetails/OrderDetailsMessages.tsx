@@ -359,7 +359,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     } = data;
     const isError = !!errors.length;
 
-    pushMessage({
+    notify({
       status: isError ? "error" : "success",
       text: isError
         ? getOrderTransactionErrorMessage(errors[0], intl)

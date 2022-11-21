@@ -102,6 +102,7 @@ export const orderDetailsQuery = gql`
     order(id: $id) {
       ...OrderDetails
     }
+
     shop {
       countries {
         code
@@ -110,6 +111,9 @@ export const orderDetailsQuery = gql`
       defaultWeightUnit
       fulfillmentAllowUnpaid
       fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
     }
   }
 `;

@@ -1,99 +1,40 @@
 import { defineMessages } from "react-intl";
 
 export const orderPaymentMessages = defineMessages({
-  clickAndCollectShippingMethod: {
-    id: "ghGLbJ",
-    defaultMessage: "click&collect",
-    description: "OrderPayment click&collect shipping method",
-  },
-  shippingDoesNotApply: {
-    id: "uzAPCt",
-    defaultMessage: "does not apply",
-    description: "OrderPayment does not require shipping",
-  },
   paymentTitle: {
-    id: "7KRGqz",
-    defaultMessage: "Payment balance",
-    description: "Payment card title",
+    id: "H52OCA",
+    defaultMessage: "Payment",
+    description: "Order summary payment header",
   },
-  subtotal: {
-    id: "T8rvXs",
-    defaultMessage: "Subtotal",
-    description: "order subtotal price",
+  refundsTitle: {
+    id: "E9Dz18",
+    defaultMessage: "Refunds",
+    description: "Order summary refunds header",
   },
-  itemCount: {
-    id: "pr513b",
-    defaultMessage: "{quantity} items",
-    description: "ordered products",
-  },
-  taxes: {
-    id: "r+dgiv",
-    defaultMessage: "Taxes",
-  },
-  vatIncluded: {
-    id: "dJVXIb",
-    defaultMessage: "VAT included",
-    description: "vat included in order price",
-  },
-  vatNotIncluded: {
-    id: "5Jo3C5",
-    defaultMessage: "does not apply",
-    description: "vat not included in order price",
-  },
-  shipping: {
-    id: "+CeEe3",
-    defaultMessage: "Shipping",
-    description: "order shipping method name",
-  },
-  shippingNotApplicable: {
-    id: "Rsknyh",
-    defaultMessage: "does not apply",
-    description: "order does not require shipping",
-  },
-  discount: {
-    id: "u0S2be",
-    defaultMessage: "Discount",
-    description: "order discount",
-  },
-  staffAdded: {
-    id: "QJG+d/",
-    defaultMessage: "Staff added",
-    description: "staff added type order discount",
-  },
-  voucher: {
-    id: "sEjRyz",
-    defaultMessage: "Voucher",
-    description: "voucher type order discount",
-  },
-  total: {
-    id: "zb4eBO",
-    defaultMessage: "Total",
-    description: "order total price",
-  },
-  preauthorized: {
-    id: "uUsZ7m",
-    defaultMessage: "Preauthorized amount",
-    description: "order payment",
+  authorized: {
+    id: "IyV8CY",
+    defaultMessage: "Authorized",
+    description: "all authorized amount from transactions in order",
   },
   captured: {
-    id: "V+gwx7",
-    defaultMessage: "Captured amount",
-    description: "order payment",
+    id: "egBBQ/",
+    defaultMessage: "Captured",
+    description: "all captured amount from transactions in order",
   },
   refunded: {
-    id: "q+gCyP",
-    defaultMessage: "Refunded amount",
-    description: "order payment",
+    id: "6Joy8j",
+    defaultMessage: "Refunded",
+    description: "sum of all refunds from transactions in order",
   },
-  outstanding: {
-    id: "5te3Tp",
-    defaultMessage: "Outstanding Balance",
-    description: "order payment",
+  refundsExplanation: {
+    id: "16sza6",
+    defaultMessage:
+      "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction.",
   },
-  paidWithGiftCard: {
-    id: "vM9quW",
-    defaultMessage: "Paid with Gift Card",
-    description: "order payment",
+  noPayments: {
+    defaultMessage: "This order has no payment yet.",
+    id: "T34dJq",
+    description: "Displayed when order has no payment",
   },
   includedInSubtotal: {
     id: "pPef6L",
@@ -112,25 +53,17 @@ export const orderPaymentMessages = defineMessages({
   },
 });
 
-export const paymentButtonMessages = defineMessages({
-  capture: {
-    id: "BZ7BkQ",
-    defaultMessage: "Capture",
-    description: "capture payment, button",
+export const orderPaymentActionButtonMessages = defineMessages({
+  grantRefund: {
+    defaultMessage: "Grant refund",
+    id: "kWw0fr",
   },
-  refund: {
-    id: "HaQ8cg",
-    defaultMessage: "Refund",
-    description: "button",
-  },
-  void: {
-    id: "HaQ8cg",
-    defaultMessage: "Refund",
-    description: "button",
+  sendRefund: {
+    defaultMessage: "Send refund",
+    id: "2WenNh",
   },
   markAsPaid: {
-    id: "+5HkZN",
     defaultMessage: "Mark as paid",
-    description: "order, button",
+    id: "01+5kQ",
   },
 });
