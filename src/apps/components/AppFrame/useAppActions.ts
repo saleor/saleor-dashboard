@@ -74,8 +74,6 @@ export const useAppActions = (
           to,
         );
 
-        console.log({ appDeepUrlChange });
-
         try {
           if (newContext) {
             window.open(to);
@@ -112,7 +110,7 @@ export const useAppActions = (
         return sendResponseStatus(actionId, success);
       }
       case "updateRouting": {
-        const { newRoute, strategy, actionId } = action.payload as any;
+        const { newRoute, actionId } = action.payload;
 
         const appCompletePath = appPath(encodeURIComponent(appId));
 
