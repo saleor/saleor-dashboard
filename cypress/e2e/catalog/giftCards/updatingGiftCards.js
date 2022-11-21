@@ -4,8 +4,10 @@
 import faker from "faker";
 
 import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
+import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { giftCardDetailsUrl } from "../../../fixtures/urlList";
+import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
 import {
   createGiftCard,
   getGiftCardWithId,
@@ -25,7 +27,7 @@ describe("As an admin I want to update gift card", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it(
+  it.skip(
     "should be able to delete gift card. TC: SALEOR_1004",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
@@ -33,7 +35,7 @@ describe("As an admin I want to update gift card", () => {
 
       createGiftCard({
         tag: name,
-        amount: 5,
+        amount: 10,
         currency: "USD",
       }).then(giftCard => {
         cy.visit(giftCardDetailsUrl(giftCard.id))
@@ -50,7 +52,7 @@ describe("As an admin I want to update gift card", () => {
     },
   );
 
-  it(
+  it.skip(
     "should be able to update gift card. TC: SALEOR_1005",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
@@ -60,7 +62,7 @@ describe("As an admin I want to update gift card", () => {
 
       createGiftCard({
         tag: name,
-        amount: 5,
+        amount: 10,
         currency: "USD",
       })
         .then(giftCard => {
@@ -98,23 +100,56 @@ describe("As an admin I want to update gift card", () => {
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+      const name2 = `${startsWith}${faker.datatype.number()}`;
+
+      let giftCard01;
+      let giftCard02;
 
       createGiftCard({
         tag: name,
-        amount: 5,
+        amount: 3,
         currency: "THB",
-      }).then(giftCard => {
-        cy.visit(giftCardDetailsUrl(giftCard.id))
-          .get(BUTTON_SELECTORS.deleteButton)
-          .click()
-          .addAliasToGraphRequest("DeleteGiftCard")
-          .get(GIFT_CARD_UPDATE.consentCheckbox)
-          .click()
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@DeleteGiftCard");
-        getGiftCardWithId(giftCard.id).should("be.null");
-      });
+      })
+        .then(giftCard01resp => {
+          giftCard01 = giftCard01resp;
+          cy.log(giftCardDetailsUrl(giftCard01.id));
+          createGiftCard({
+            tag: name2,
+            amount: 7,
+            currency: "THB",
+          });
+        })
+        .then(giftCard02resp => {
+          giftCard02 = giftCard02resp;
+          cy.log(giftCardDetailsUrl(giftCard01.id))
+            .log(giftCardDetailsUrl(giftCard02.id))
+            .log(`name: ${name}, name2: ${name2}`);
+        })
+        .then(() => {
+          cy.visit(urlList.giftCards)
+            .get(PRODUCTS_LIST.showFiltersButton)
+            .click()
+            .get(PRODUCTS_LIST.filters.filterBy.currency)
+            .click()
+            .get("[class^=FilterOptionField")
+            .contains("THB")
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .get("[data-test-id^=gift-card-row]")
+            .eq(1)
+            .should("be.visible")
+            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+            .first()
+            .click()
+            .get(BUTTON_SELECTORS.deleteButton)
+            .click();
+
+          cy.get(".MuiTypography-root MuiTypography-body1")
+            .contains("Selected 2 items")
+            .should("be.visible");
+          cy.get(BUTTON_SELECTORS.deleteButton).click();
+        });
     },
   );
 }); // cla test3

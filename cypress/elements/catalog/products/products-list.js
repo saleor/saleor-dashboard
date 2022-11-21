@@ -30,6 +30,7 @@ export const PRODUCTS_LIST = {
       productType: '[data-test-id="filter-group-active-productType"]',
       stock: '[data-test-id="filter-group-active-stock"]',
       channel: '[data-test-id="filter-group-active-channel"]',
+      currency: '[data-test-id="filter-group-active-currency"]',
     },
     filterField: {
       filterField: '[data-test-id*="filter-field"]',
