@@ -16,22 +16,19 @@ import {
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
   ShippingZoneQuery,
-  TaxClassFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { useStateUpdate } from "@saleor/hooks/useStateUpdate";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
-import { handleTaxClassChange } from "@saleor/productTypes/handlers";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingMethodProducts from "@saleor/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { FetchMoreProps, ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps } from "@saleor/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@saleor/utils/richText/context";
@@ -39,7 +36,6 @@ import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage } from "react-intl";
 
-import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
@@ -70,8 +66,6 @@ export interface ShippingZoneRatesPageProps
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
-  fetchMoreTaxClasses: FetchMoreProps;
 }
 
 export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
@@ -95,8 +89,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   postalCodeRules,
   variant,
   formId,
-  taxClasses,
-  fetchMoreTaxClasses,
   ...listProps
 }) => {
   const navigate = useNavigator();
@@ -118,7 +110,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
       orderValueRestricted: !!rate?.channelListings.length,
       privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
       type: rate?.type || null,
-      taxClassId: rate?.taxClass?.id || "",
     }),
     [shippingChannels, rate],
   );
@@ -129,10 +120,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     setIsSubmitDisabled,
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
-
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateUpdate(
-    rate?.taxClass?.name ?? "",
-  );
 
   const handleFormSubmit = useHandleFormSubmit({
     formId,
@@ -251,22 +238,6 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                   name: channel.name,
                 }))}
                 openModal={openChannelsModal}
-              />
-              <CardSpacer />
-              <ShippingMethodTaxes
-                value={formData.taxClassId}
-                taxClassDisplayName={taxClassDisplayName}
-                taxClasses={taxClasses}
-                disabled={false}
-                onChange={event =>
-                  handleTaxClassChange(
-                    event,
-                    taxClasses,
-                    change,
-                    setTaxClassDisplayName,
-                  )
-                }
-                onFetchMore={fetchMoreTaxClasses}
               />
             </div>
           </Grid>

@@ -7,9 +7,9 @@ export const productTypeFragment = gql`
     kind
     hasVariants
     isShippingRequired
-    taxClass {
-      id
-      name
+    taxType {
+      description
+      taxCode
     }
   }
 `;

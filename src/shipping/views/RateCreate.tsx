@@ -23,7 +23,6 @@ import {
   getPostalCodeRuleByMinMax,
   getRuleObject,
 } from "@saleor/shipping/views/utils";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import { MinMax } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -52,8 +51,6 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     displayLoader: true,
     variables: { id },
   });
-
-  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   const allChannels = createSortedShippingChannels(
     shippingZoneData?.shippingZone?.channels,
@@ -167,8 +164,6 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
         onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         variant={params.type}
-        taxClasses={taxClasses ?? []}
-        fetchMoreTaxClasses={fetchMoreTaxClasses}
       />
       <ShippingZonePostalCodeRangeDialog
         confirmButtonState="default"

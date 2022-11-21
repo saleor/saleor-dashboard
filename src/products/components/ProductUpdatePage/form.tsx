@@ -163,10 +163,10 @@ function useProductUpdateForm(
     attributes.data,
     triggerChange,
   );
-  const handleTaxClassSelect = createSingleAutocompleteSelectHandler(
+  const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
     handleChange,
-    opts.setSelectedTaxClass,
-    opts.taxClasses,
+    opts.setSelectedTaxType,
+    opts.taxTypes,
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
@@ -295,7 +295,7 @@ function useProductUpdateForm(
       selectAttributeReference: handleAttributeReferenceChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
-      selectTaxClass: handleTaxClassSelect,
+      selectTaxRate: handleTaxTypeSelect,
       updateChannelList: handleChannelListUpdate,
     },
     submit,

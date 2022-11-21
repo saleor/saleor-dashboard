@@ -26,7 +26,6 @@ import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
 import useAvailableProductAttributeSearch from "@saleor/searches/useAvailableProductAttributeSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import { ReorderEvent } from "@saleor/types";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -143,7 +142,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           productAttributes: formData.productAttributes.map(
             choice => choice.value,
           ),
-          taxClass: formData.taxClassId,
+          taxCode: formData.taxType,
           variantAttributes: formData.variantAttributes.map(
             choice => choice.value,
           ),
@@ -168,8 +167,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     displayLoader: true,
     variables: { id },
   });
-
-  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   const productType = data?.productType;
 
@@ -324,7 +321,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
         saveButtonBarState={
           updateProductTypeOpts.status || updateProductAttributesOpts.status
         }
-        taxClasses={taxClasses ?? []}
+        taxTypes={maybe(() => data.taxTypes, [])}
         selectedVariantAttributes={selectedVariantAttributes}
         setSelectedVariantAttributes={setSelectedVariantAttributes}
         onAttributeAdd={type =>
@@ -401,7 +398,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
             </Button>
           ),
         }}
-        onFetchMoreTaxClasses={fetchMoreTaxClasses}
       />
       {!dataLoading && (
         <>

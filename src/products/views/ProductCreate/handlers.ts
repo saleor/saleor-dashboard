@@ -113,6 +113,7 @@ export function createHandler(
           updatedFileAttributes,
         }),
         category: formData.category,
+        chargeTaxes: formData.chargeTaxes,
         collections: formData.collections,
         description: getParsedDataForJsonStringField(formData.description),
         name: formData.name,
@@ -123,7 +124,7 @@ export function createHandler(
           title: formData.seoTitle,
         },
         slug: formData.slug,
-        taxClass: formData.taxClassId,
+        taxCode: formData.changeTaxCode ? formData.taxCode : undefined,
         weight: weight(formData.weight),
       },
     };

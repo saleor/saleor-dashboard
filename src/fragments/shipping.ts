@@ -28,10 +28,6 @@ export const shippingMethodTypeFragment = gql`
   fragment ShippingMethodType on ShippingMethodType {
     ...ShippingMethodWithPostalCodes
     ...Metadata
-    taxClass {
-      name
-      id
-    }
     minimumOrderWeight {
       unit
       value

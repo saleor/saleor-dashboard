@@ -8,8 +8,8 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "DeliveryMethod": [
-      "Warehouse",
-      "ShippingMethod"
+      "ShippingMethod",
+      "Warehouse"
     ],
     "Event": [
       "AddressCreated",
@@ -210,8 +210,6 @@
       "ShopTranslation",
       "StaffNotificationRecipient",
       "Stock",
-      "TaxClass",
-      "TaxConfiguration",
       "Transaction",
       "TransactionEvent",
       "TransactionItem",
@@ -248,8 +246,6 @@
       "ShippingMethod",
       "ShippingMethodType",
       "ShippingZone",
-      "TaxClass",
-      "TaxConfiguration",
       "TransactionItem",
       "User",
       "Voucher",
@@ -264,43 +260,43 @@
       "Order"
     ],
     "TranslatableItem": [
-      "ProductTranslatableContent",
-      "CollectionTranslatableContent",
-      "CategoryTranslatableContent",
       "AttributeTranslatableContent",
       "AttributeValueTranslatableContent",
-      "ProductVariantTranslatableContent",
+      "CategoryTranslatableContent",
+      "CollectionTranslatableContent",
+      "MenuItemTranslatableContent",
       "PageTranslatableContent",
-      "ShippingMethodTranslatableContent",
+      "ProductTranslatableContent",
+      "ProductVariantTranslatableContent",
       "SaleTranslatableContent",
-      "VoucherTranslatableContent",
-      "MenuItemTranslatableContent"
+      "ShippingMethodTranslatableContent",
+      "VoucherTranslatableContent"
     ],
     "TranslationTypes": [
-      "ProductTranslation",
-      "CollectionTranslation",
-      "CategoryTranslation",
       "AttributeTranslation",
       "AttributeValueTranslation",
-      "ProductVariantTranslation",
+      "CategoryTranslation",
+      "CollectionTranslation",
+      "MenuItemTranslation",
       "PageTranslation",
-      "ShippingMethodTranslation",
+      "ProductTranslation",
+      "ProductVariantTranslation",
       "SaleTranslation",
-      "VoucherTranslation",
-      "MenuItemTranslation"
+      "ShippingMethodTranslation",
+      "VoucherTranslation"
     ],
     "_Entity": [
-      "App",
       "Address",
-      "User",
-      "Group",
-      "ProductVariant",
-      "Product",
-      "ProductType",
-      "Collection",
+      "App",
       "Category",
+      "Collection",
+      "Group",
+      "PageType",
+      "Product",
       "ProductMedia",
-      "PageType"
+      "ProductType",
+      "ProductVariant",
+      "User"
     ]
   }
 };

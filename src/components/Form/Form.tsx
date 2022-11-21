@@ -14,7 +14,6 @@ export interface FormProps<TData, TErrors>
   onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
   formId?: FormId;
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<TData>;
-  mergeData?: boolean;
 }
 
 function Form<TData, Terrors>({
@@ -26,7 +25,6 @@ function Form<TData, Terrors>({
   formId,
   checkIfSaveIsDisabled,
   disabled,
-  mergeData,
   ...rest
 }: FormProps<TData, Terrors>) {
   const renderProps = useForm(initial, onSubmit, {
@@ -34,7 +32,6 @@ function Form<TData, Terrors>({
     formId,
     checkIfSaveIsDisabled,
     disabled,
-    mergeData,
   });
 
   function handleSubmit(event?: React.FormEvent<any>, cb?: () => void) {

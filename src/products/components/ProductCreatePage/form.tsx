@@ -74,7 +74,9 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
+  changeTaxCode: boolean;
   channelListings: ChannelData[];
+  chargeTaxes: boolean;
   collections: string[];
   description: OutputData;
   isAvailable: boolean;
@@ -86,6 +88,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   sku: string;
   slug: string;
   stockQuantity: number;
+  taxCode: string;
   trackInventory: boolean;
   isPreorder: boolean;
   globalThreshold: string;
@@ -93,7 +96,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   preorderEndDateTime: string;
   weight: string;
-  taxClassId: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
   attributes: AttributeInput[];
@@ -107,7 +109,7 @@ export interface ProductCreateHandlers
       | "selectCategory"
       | "selectCollection"
       | "selectProductType"
-      | "selectTaxClass",
+      | "selectTaxRate",
       FormChange
     >,
     Record<
@@ -148,14 +150,14 @@ export type UseProductCreateFormRenderProps = Omit<
 
 export interface UseProductCreateFormOpts
   extends Record<
-    "categories" | "collections" | "taxClasses",
+    "categories" | "collections" | "taxTypes",
     SingleAutocompleteChoiceType[]
   > {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
-  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
   selectedCollections: MultiAutocompleteChoiceType[];
   productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
@@ -192,7 +194,9 @@ function useProductCreateForm(
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
     category: "",
+    changeTaxCode: false,
     channelListings: opts.currentChannels,
+    chargeTaxes: false,
     collections: [],
     description: null,
     isAvailable: false,
@@ -206,7 +210,7 @@ function useProductCreateForm(
     sku: "",
     slug: "",
     stockQuantity: null,
-    taxClassId: "",
+    taxCode: null,
     trackInventory: false,
     weight: "",
     globalSoldUnits: 0,
@@ -327,10 +331,10 @@ function useProductCreateForm(
     triggerChange();
     stocks.remove(id);
   };
-  const handleTaxClassSelect = createSingleAutocompleteSelectHandler(
+  const handleTaxTypeSelect = createSingleAutocompleteSelectHandler(
     handleChange,
-    opts.setSelectedTaxClass,
-    opts.taxClasses,
+    opts.setSelectedTaxType,
+    opts.taxTypes,
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleChannelsChange = createChannelsChangeHandler(
@@ -474,7 +478,7 @@ function useProductCreateForm(
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectProductType: handleProductTypeSelect,
-      selectTaxClass: handleTaxClassSelect,
+      selectTaxRate: handleTaxTypeSelect,
     },
     submit,
     isSaveDisabled,

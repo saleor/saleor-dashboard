@@ -1007,10 +1007,10 @@ export const productTypeSearch: ProductTypeQuery["productType"] = {
   id: "UHJvZHVjdFR5cGU6NA==",
   name: "Candy",
   productAttributes: [attributes[0]],
-  taxClass: {
-    __typename: "TaxClass" as "TaxClass",
-    name: "PB100000",
-    id: "Books / Manuals",
+  taxType: {
+    __typename: "TaxType" as "TaxType",
+    description: "PB100000",
+    taxCode: "Books / Manuals",
   },
 };
 
@@ -1026,10 +1026,10 @@ export const productTypes: Array<RelayToFlat<
     name: "Candy",
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[0]],
-    taxClass: {
-      __typename: "TaxClass" as "TaxClass",
-      name: "Shipping method",
-      id: "VGV4Q2xhc3M6MQ==",
+    taxType: {
+      __typename: "TaxType" as "TaxType",
+      description: "PB100000",
+      taxCode: "Books / Manuals",
     },
     variantAttributes: [attributes[1], attributes[2]],
   },
@@ -1041,10 +1041,10 @@ export const productTypes: Array<RelayToFlat<
     name: "E-books",
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[5]],
-    taxClass: {
-      __typename: "TaxClass" as "TaxClass",
-      name: "Digital goods",
-      id: "VGV4Q4xhc3M6MQ==",
+    taxType: {
+      __typename: "TaxType" as "TaxType",
+      description: "PH403682",
+      taxCode: "Holters",
     },
     variantAttributes: [attributes[0], attributes[3]],
   },
@@ -1056,10 +1056,10 @@ export const productTypes: Array<RelayToFlat<
     name: "Mugs",
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[7]],
-    taxClass: {
-      __typename: "TaxClass" as "TaxClass",
-      name: "Houseware",
-      id: "VGV4Q3xhc3M6MQ==",
+    taxType: {
+      __typename: "TaxType" as "TaxType",
+      description: "PC077426",
+      taxCode: "Cabling",
     },
     variantAttributes: [attributes[2], attributes[5]],
   },
@@ -1071,10 +1071,10 @@ export const productTypes: Array<RelayToFlat<
     name: "Coffee",
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[8]],
-    taxClass: {
-      __typename: "TaxClass" as "TaxClass",
-      name: "PB100000",
-      id: "Books / Manuals",
+    taxType: {
+      __typename: "TaxType" as "TaxType",
+      description: "PB100000",
+      taxCode: "Books / Manuals",
     },
     variantAttributes: [attributes[1], attributes[4]],
   },
@@ -1086,10 +1086,10 @@ export const productTypes: Array<RelayToFlat<
     name: "T-Shirt",
     kind: ProductTypeKindEnum.NORMAL,
     productAttributes: [attributes[4]],
-    taxClass: {
-      __typename: "TaxClass" as "TaxClass",
-      name: "PH403970",
-      id: "Wheelchair",
+    taxType: {
+      __typename: "TaxType" as "TaxType",
+      description: "PH403970",
+      taxCode: "Wheelchair",
     },
     variantAttributes: [attributes[1], attributes[6]],
   },
@@ -1151,10 +1151,10 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       unit: null,
     },
   ],
-  taxClass: {
-    __typename: "TaxClass",
-    name: "Shipping method",
-    id: "VGV4Q2xhc3M6MQ==",
+  taxType: {
+    __typename: "TaxType" as "TaxType",
+    description: "PH405458",
+    taxCode: "Shields",
   },
   variantAttributes: [
     {

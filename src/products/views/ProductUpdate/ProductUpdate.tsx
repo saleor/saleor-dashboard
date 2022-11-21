@@ -28,13 +28,12 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
@@ -50,7 +49,30 @@ import {
   createImageUploadHandler,
 } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
-import { productUpdatePageMessages as messages } from "./messages";
+
+const messages = defineMessages({
+  deleteProductDialogTitle: {
+    id: "TWVx7O",
+    defaultMessage: "Delete Product",
+    description: "delete product dialog title",
+  },
+  deleteProductDialogSubtitle: {
+    id: "ZHF4Z9",
+    defaultMessage: "Are you sure you want to delete {name}?",
+    description: "delete product dialog subtitle",
+  },
+  deleteVariantDialogTitle: {
+    id: "6iw4VR",
+    defaultMessage: "Delete Product Variants",
+    description: "delete variant dialog title",
+  },
+  deleteVariantDialogSubtitle: {
+    id: "ukdRUv",
+    defaultMessage:
+      "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}",
+    description: "delete variant dialog subtitle",
+  },
+});
 
 interface ProductUpdateProps {
   id: string;
@@ -288,8 +310,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     onFetchMore: loadMoreAttributeValues,
   };
 
-  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
-
   if (product === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
@@ -319,8 +339,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         placeholderImage={placeholderImg}
         product={product}
         warehouses={warehouses}
-        taxClasses={taxClasses ?? []}
-        fetchMoreTaxClasses={fetchMoreTaxClasses}
+        taxTypes={data?.taxTypes}
         variants={product?.variants}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}

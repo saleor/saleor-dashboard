@@ -1,4 +1,3 @@
-import { countries } from "@saleor/fixtures";
 import { mapCountriesToCountriesCodes } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -7,18 +6,13 @@ import ShippingZoneCountriesAssignDialog, {
   ShippingZoneCountriesAssignDialogProps,
 } from "../../../shipping/components/ShippingZoneCountriesAssignDialog";
 import Decorator from "../../Decorator";
+import { countries } from "../taxes/fixtures";
 
 const initialCountries = ["PL", "GB", "DE"];
 
-const mappedCountries = countries.map(({ code, name }) => ({
-  __typename: "CountryDisplay" as const,
-  code,
-  country: name,
-}));
-
 const props: ShippingZoneCountriesAssignDialogProps = {
   confirmButtonState: "default",
-  countries: mappedCountries,
+  countries,
   restWorldCountries: mapCountriesToCountriesCodes(countries).filter(
     countryCode => !initialCountries.includes(countryCode),
   ),

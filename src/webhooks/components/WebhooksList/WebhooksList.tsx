@@ -7,11 +7,7 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
-import {
-  commonMessages,
-  commonStatusMessages,
-  sectionNames,
-} from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { webhookPath } from "@saleor/webhooks/urls";
@@ -96,8 +92,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                     <Pill
                       label={
                         webhook.isActive
-                          ? intl.formatMessage(commonStatusMessages.active)
-                          : intl.formatMessage(commonStatusMessages.notActive)
+                          ? intl.formatMessage(commonMessages.active)
+                          : intl.formatMessage(commonMessages.notActive)
                       }
                       color={webhook.isActive ? "success" : "error"}
                     />

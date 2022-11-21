@@ -16,6 +16,7 @@ export const shopInfo = gql`
         ...CountryWithCode
       }
       defaultWeightUnit
+      displayGrossPrices
       domain {
         host
         url
@@ -23,6 +24,7 @@ export const shopInfo = gql`
       languages {
         ...Language
       }
+      includeTaxesInPrices
       name
       trackInventoryByDefault
       permissions {

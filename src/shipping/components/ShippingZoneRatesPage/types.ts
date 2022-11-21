@@ -13,7 +13,6 @@ export interface ShippingZoneRateCommonFormData {
   minDays: string;
   maxDays: string;
   type: ShippingMethodTypeEnum;
-  taxClassId: string;
 }
 
 export type ShippingZoneRateUpdateFormData = ShippingZoneRateCommonFormData &

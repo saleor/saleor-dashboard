@@ -134,7 +134,6 @@ export function getUpdateShippingPriceRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
     },
   };
 }
@@ -168,7 +167,6 @@ export function getUpdateShippingWeightRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
     },
   };
 }

@@ -7,21 +7,18 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
+  ProductTypeDetailsQuery,
   ProductTypeKindEnum,
-  TaxClassFragment,
   WeightUnitsEnum,
 } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import {
-  handleTaxClassChange,
-  makeProductTypeKindChangeHandler,
-} from "@saleor/productTypes/handlers";
+import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
 import { productTypeListUrl } from "@saleor/productTypes/urls";
-import { FetchMoreProps, UserError } from "@saleor/types";
+import { UserError } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -34,7 +31,7 @@ export interface ProductTypeForm extends MetadataFormData {
   name: string;
   kind: ProductTypeKindEnum;
   isShippingRequired: boolean;
-  taxClassId: string;
+  taxType: string;
   weight: number;
 }
 
@@ -44,11 +41,10 @@ export interface ProductTypeCreatePageProps {
   disabled: boolean;
   pageTitle: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxTypes: ProductTypeDetailsQuery["taxTypes"];
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;
-  onFetchMoreTaxClasses: FetchMoreProps;
 }
 
 const formInitialData: ProductTypeForm = {
@@ -57,9 +53,22 @@ const formInitialData: ProductTypeForm = {
   name: "",
   kind: ProductTypeKindEnum.NORMAL,
   privateMetadata: [],
-  taxClassId: "",
+  taxType: "",
   weight: 0,
 };
+
+function handleTaxTypeChange(
+  event: ChangeEvent,
+  taxTypes: ProductTypeDetailsQuery["taxTypes"],
+  formChange: FormChange,
+  displayChange: (name: string) => void,
+) {
+  formChange(event);
+  displayChange(
+    taxTypes.find(taxType => taxType.taxCode === event.target.value)
+      .description,
+  );
+}
 
 const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   defaultWeightUnit,
@@ -67,16 +76,15 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   errors,
   pageTitle,
   saveButtonBarState,
-  taxClasses,
+  taxTypes,
   kind,
   onChangeKind,
   onSubmit,
-  onFetchMoreTaxClasses,
 }: ProductTypeCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
+  const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
   const {
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
@@ -120,17 +128,16 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                 <ProductTypeTaxes
                   disabled={disabled}
                   data={data}
-                  taxClasses={taxClasses}
-                  taxClassDisplayName={taxClassDisplayName}
+                  taxTypes={taxTypes}
+                  taxTypeDisplayName={taxTypeDisplayName}
                   onChange={event =>
-                    handleTaxClassChange(
+                    handleTaxTypeChange(
                       event,
-                      taxClasses,
+                      taxTypes,
                       change,
-                      setTaxClassDisplayName,
+                      setTaxTypeDisplayName,
                     )
                   }
-                  onFetchMore={onFetchMoreTaxClasses}
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />

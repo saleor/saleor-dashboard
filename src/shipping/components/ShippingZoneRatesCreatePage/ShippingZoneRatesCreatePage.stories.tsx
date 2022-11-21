@@ -3,7 +3,6 @@ import {
   ShippingMethodTypeEnum,
 } from "@saleor/graphql";
 import Decorator from "@saleor/storybook//Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -74,8 +73,6 @@ const props: ShippingZoneRatesCreatePageProps = {
   saveButtonBarState: "default",
   shippingChannels: defaultChannels,
   variant: ShippingMethodTypeEnum.PRICE,
-  taxClasses,
-  fetchMoreTaxClasses: undefined,
 };
 
 storiesOf("Shipping / ShippingZoneRatesCreatePage page", module)

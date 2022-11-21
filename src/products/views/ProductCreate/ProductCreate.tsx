@@ -16,6 +16,7 @@ import {
   useProductDeleteMutation,
   useProductTypeQuery,
   useProductVariantChannelListingUpdateMutation,
+  useTaxTypeListQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
@@ -40,7 +41,6 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -123,7 +123,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
+  const taxTypes = useTaxTypeListQuery({});
   const { data: selectedProductType } = useProductTypeQuery({
     variables: {
       id: selectedProductTypeId,
@@ -355,8 +355,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
-        taxClasses={taxClasses ?? []}
-        fetchMoreTaxClasses={fetchMoreTaxClasses}
+        taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

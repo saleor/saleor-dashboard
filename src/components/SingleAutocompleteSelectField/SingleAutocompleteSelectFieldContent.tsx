@@ -167,7 +167,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
   React.useEffect(() => {
-    if (!calledForMore && onFetchMore && scrolledToBottom && hasMore) {
+    if (!calledForMore && onFetchMore && scrolledToBottom) {
       onFetchMore();
       setCalledForMore(true);
     } else if (scrolledToBottom && !onFetchMore) {

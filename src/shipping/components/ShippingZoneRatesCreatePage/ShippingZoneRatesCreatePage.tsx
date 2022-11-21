@@ -14,26 +14,22 @@ import {
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
-  TaxClassFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
-import { handleTaxClassChange } from "@saleor/productTypes/handlers";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
 import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { FetchMoreProps } from "@saleor/types";
 import { RichTextContext } from "@saleor/utils/richText/context";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 
@@ -56,8 +52,6 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
-  fetchMoreTaxClasses: FetchMoreProps;
 }
 
 export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
@@ -78,8 +72,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   variant,
   postalCodes,
   formId,
-  taxClasses,
-  fetchMoreTaxClasses,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -95,10 +87,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     description: null,
     orderValueRestricted: true,
     type: null,
-    taxClassId: "",
   };
-
-  const [taxClassDisplayName, setTaxClassDisplayName] = React.useState("");
 
   const {
     change,
@@ -217,22 +206,6 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 allChannelsCount={allChannelsCount}
                 channelsList={data.channelListings}
                 openModal={openChannelsModal}
-              />
-              <CardSpacer />
-              <ShippingMethodTaxes
-                value={formData.taxClassId}
-                taxClassDisplayName={taxClassDisplayName}
-                taxClasses={taxClasses}
-                disabled={false}
-                onChange={event =>
-                  handleTaxClassChange(
-                    event,
-                    taxClasses,
-                    change,
-                    setTaxClassDisplayName,
-                  )
-                }
-                onFetchMore={fetchMoreTaxClasses}
               />
             </div>
           </Grid>

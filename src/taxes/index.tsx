@@ -1,50 +1,18 @@
 import { sectionNames } from "@saleor/intl";
-import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import {
-  taxClassesListUrl,
-  taxConfigurationListPath,
-  taxCountriesListPath,
-  TaxesUrlQueryParams,
-} from "./urls";
-import TaxChannelsListComponent from "./views/TaxChannelsList";
-import TaxClassesListComponent from "./views/TaxClassesList";
-import TaxCountriesListComponent from "./views/TaxCountriesList";
+import { countryListPath, countryTaxRatesPath } from "./urls";
+import CountryList from "./views/CountryList";
+import CountryTaxesComponent, {
+  CountryTaxesParams,
+} from "./views/CountryTaxes";
 
-const TaxChannelsList: React.FC<RouteComponentProps<{ id: string }>> = ({
+const CountryTaxes: React.FC<RouteComponentProps<CountryTaxesParams>> = ({
   match,
-  location,
-}) => {
-  const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
-
-  return (
-    <TaxChannelsListComponent
-      id={decodeURIComponent(match.params.id)}
-      params={qs}
-    />
-  );
-};
-
-const TaxCountriesList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match,
-}) => {
-  const qs: TaxesUrlQueryParams = parseQs(location.search.substring(1));
-
-  return (
-    <TaxCountriesListComponent
-      id={decodeURIComponent(match.params.id)}
-      params={qs}
-    />
-  );
-};
-
-const TaxClassesList: React.FC<RouteComponentProps<{ id: string }>> = ({
-  match,
-}) => <TaxClassesListComponent id={decodeURIComponent(match.params.id)} />;
+}) => <CountryTaxesComponent code={match.params.code} />;
 
 const Component = () => {
   const intl = useIntl();
@@ -53,18 +21,12 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.taxes)} />
       <Switch>
+        <Route exact path={countryListPath} component={CountryList} />
         <Route
-          path={taxConfigurationListPath(":id")}
-          component={TaxChannelsList}
+          exact
+          path={countryTaxRatesPath(":code")}
+          component={CountryTaxes}
         />
-        <Route path={taxConfigurationListPath()} component={TaxChannelsList} />
-        <Route
-          path={taxCountriesListPath(":id")}
-          component={TaxCountriesList}
-        />
-        <Route path={taxCountriesListPath()} component={TaxCountriesList} />
-        <Route path={taxClassesListUrl(":id")} component={TaxClassesList} />
-        <Route path={taxClassesListUrl()} component={TaxClassesList} />
       </Switch>
     </>
   );

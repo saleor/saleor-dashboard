@@ -27,13 +27,12 @@ import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
-import { taxConfigurationListUrl } from "@saleor/taxes/urls";
+import { taxSection } from "@saleor/taxes/urls";
 import { warehouseSection } from "@saleor/warehouses/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import ConfigurationPage from "./ConfigurationPage";
-import { MenuSection } from "./types";
+import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
@@ -82,8 +81,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage how your store charges tax",
           }),
           icon: <Taxes />,
+          permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
-          url: taxConfigurationListUrl(),
+          url: taxSection,
           testId: "configuration-menu-taxes",
         },
       ],
