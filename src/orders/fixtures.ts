@@ -10,6 +10,7 @@ import {
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
+  OrderGrantedRefundFragment,
   OrderListQuery,
   OrderPaymentFragment,
   OrderSettingsFragment,
@@ -801,6 +802,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.VOID,
   ],
   payments: [],
+  grantedRefunds: [],
+  totalGrantedRefund: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalPendingRefund: prepareMoney(0),
   transactions: [
     {
       id: "VHJhbnNhY3Rpb25JdGVtOjE=",
@@ -1670,6 +1675,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     amount: 0,
     currency: "USD",
   },
+  totalRemainingGrant: prepareMoney(0),
   totalBalance: {
     __typename: "Money",
     amount: 0,
@@ -1691,6 +1697,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   user: null,
   userEmail: "melissa.simon@example.com",
 });
+
 export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
@@ -1700,6 +1707,10 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   canFinalize: true,
   payments: [],
   transactions: [],
+  grantedRefunds: [],
+  totalGrantedRefund: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalPendingRefund: prepareMoney(0),
   channel: {
     __typename: "Channel",
     slug: "channel-default",
@@ -1962,6 +1973,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       currency: "USD",
     },
   },
+  totalRemainingGrant: prepareMoney(0),
   total: {
     __typename: "TaxedMoney" as "TaxedMoney",
     gross: {
@@ -3012,3 +3024,31 @@ export const payments: Record<string, OrderPaymentFragment> = {
     ],
   },
 };
+
+export const grantedRefunds: OrderGrantedRefundFragment[] = [
+  {
+    id: "1234",
+    amount: prepareMoney(),
+    reason: "Products returned",
+    app: { id: "123", name: "Saleor Checkout", __typename: "App" },
+    user: null,
+    createdAt: "2022-08-22T10:40:22.226875+00:00",
+    __typename: "OrderGrantedRefund",
+  },
+  {
+    id: "12344",
+    amount: prepareMoney(),
+    reason: "Products arrived damaged",
+    app: null,
+    user: {
+      id: "123",
+      email: "john.doe@example.com",
+      avatar: null,
+      lastName: "John",
+      firstName: "Doe",
+      __typename: "User",
+    },
+    createdAt: "2022-08-22T10:40:22.226875+00:00",
+    __typename: "OrderGrantedRefund",
+  },
+];

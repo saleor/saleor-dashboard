@@ -334,12 +334,18 @@ export function getUserName(user?: User, returnEmail?: boolean) {
 }
 
 export function getUserInitials(user?: User) {
-  return user && (user.email || (user.firstName && user.lastName))
-    ? (user.firstName && user.lastName
-        ? user.firstName[0] + user.lastName[0]
-        : user.email.slice(0, 2)
-      ).toUpperCase()
-    : undefined;
+  const hasName = user?.firstName && user?.lastName;
+  const hasEmail = !!user?.email;
+
+  if (hasName) {
+    return `${user.firstName[0] + user.lastName[0]}`.toUpperCase();
+  }
+
+  if (hasEmail) {
+    return user.email.slice(0, 2).toUpperCase();
+  }
+
+  return undefined;
 }
 
 interface AnyEventWithPropagation {

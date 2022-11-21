@@ -510,11 +510,13 @@ export const orderGrantRefundCreateErrorFragment = gql`
     code
   }
 `;
+
 export const taxCountryConfigurationUpdateError = gql`
   fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
     field
     code
   }
+
 `;
 export const taxCountryConfigurationDeleteError = gql`
   fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
@@ -530,6 +532,7 @@ export const orderGrantRefundUpdateErrorFragment = gql`
     code
   }
 `;
+
 export const taxClassUpdateError = gql`
   fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
     field

@@ -40,6 +40,7 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
+import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment";
@@ -291,6 +292,39 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     onMarkAsPaid={onPaymentPaid}
                   />
                 </div>
+                <CardSpacer />
+                {order?.grantedRefunds?.length !== 0 ? (
+                  <>
+                    <OrderGrantedRefunds order={order} />
+                    <CardSpacer />
+                  </>
+                ) : null}
+                <div>
+                  {order?.transactions?.map(transaction => (
+                    <OrderTransaction
+                      key={transaction.id}
+                      transaction={transaction}
+                      onTransactionAction={onTransactionAction}
+                    />
+                  ))}
+                  {filteredPayments.map(payment => (
+                    <OrderTransactionPayment
+                      key={payment.id}
+                      payment={payment}
+                      allPaymentMethods={shop?.availablePaymentGateways}
+                      onCapture={onPaymentCapture}
+                      onVoid={onPaymentVoid}
+                    />
+                  ))}
+                  {order?.giftCards?.map(giftCard => (
+                    <OrderTransactionGiftCard
+                      key={giftCard.id}
+                      order={order}
+                      giftCard={giftCard}
+                    />
+                  ))}
+                </div>
+                <OrderAddTransaction order={order} />
                 <CardSpacer />
                 <div>
                   {order?.transactions?.map(transaction => (
