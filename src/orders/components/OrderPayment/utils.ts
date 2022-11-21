@@ -1,9 +1,10 @@
-import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { subtractMoney } from "@saleor/components/Money";
 import {
   GiftCardEventsEnum,
   OrderDetailsFragment,
   PaymentChargeStatusEnum,
 } from "@saleor/graphql";
+import { IMoney } from "@saleor/utils/intl";
 import compact from "lodash/compact";
 
 export const extractOrderGiftCardUsedAmount = (

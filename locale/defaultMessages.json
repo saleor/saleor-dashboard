@@ -741,6 +741,10 @@
     "context": "channel settings",
     "string": "Channel Settings"
   },
+  "3zdm8A": {
+    "context": "Dialog title",
+    "string": "Transaction {actionType}"
+  },
   "408KSO": {
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
@@ -760,6 +764,10 @@
   "43Nlay": {
     "context": "warehouse",
     "string": "Address Information"
+  },
+  "43QkTW": {
+    "context": "Transaction capture button - charge preauthorized transaction amount",
+    "string": "Capture"
   },
   "450Fty": {
     "string": "None"
@@ -1204,6 +1212,14 @@
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
   },
+  "7ejEbB": {
+    "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
+    "string": "Authorized"
+  },
+  "7f4YSA": {
+    "context": "Text displayed after PSP reference is copied to clipboard",
+    "string": "Copied"
+  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -1356,6 +1372,10 @@
   "9IWg/f": {
     "context": "button",
     "string": "SETUP END DATE"
+  },
+  "9Mro3c": {
+    "context": "Transaction event status - pending",
+    "string": "Pending"
   },
   "9OtpHt": {
     "string": "Order line deleted"
@@ -1581,6 +1601,9 @@
   "B/y6LC": {
     "context": "section header",
     "string": "Unfulfilled Products"
+  },
+  "B06DG8": {
+    "string": "Transaction wasn't found"
   },
   "B0PaVS": {
     "context": "pint unit",
@@ -2596,6 +2619,10 @@
     "context": "value input helper text",
     "string": "Invalid value"
   },
+  "INKsSL": {
+    "context": "Transaction event status - success",
+    "string": "Success"
+  },
   "INNPVX": {
     "context": "payment status",
     "string": "Partially paid"
@@ -3015,6 +3042,10 @@
   },
   "LWmYSU": {
     "string": "Completed Translations"
+  },
+  "LY5dS9": {
+    "context": "Charged transaction amount, data display header",
+    "string": "Charged"
   },
   "LkuDEb": {
     "context": "metadata field value, header",
@@ -4387,6 +4418,10 @@
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
   },
+  "VyKl39": {
+    "context": "Dialog warning text",
+    "string": "Are you sure you want to {actionType} this transaction?"
+  },
   "VyzsWZ": {
     "string": "Default Billing Address"
   },
@@ -4623,6 +4658,10 @@
   "XNeJay": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "XPiJex": {
+    "context": "Transaction void button - return preauthorized amount to client",
+    "string": "Void"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -5431,6 +5470,10 @@
     "context": "attribute is filterable in storefront",
     "string": "Use as filter"
   },
+  "e4UtKH": {
+    "context": "Transaction event status - failure",
+    "string": "Failure"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -5644,6 +5687,10 @@
     "context": "page content",
     "string": "Content"
   },
+  "gNm1li": {
+    "context": "Refunded transaction amount, data display header",
+    "string": "Refunded"
+  },
   "gQGUsN": {
     "context": "dialog title",
     "string": "Edit Address"
@@ -5688,6 +5735,9 @@
   "gr+oXW": {
     "context": "page title",
     "string": "Title"
+  },
+  "gr1BBC": {
+    "string": "Transaction action requested successfully"
   },
   "gr53VQ": {
     "context": "page header",
@@ -6783,6 +6833,9 @@
   "qCH2eZ": {
     "context": "header",
     "string": "Add Value to Authorization Field"
+  },
+  "qDfaDI": {
+    "string": "No app or plugin is configured to handle requested transaction action"
   },
   "qDwvZ4": {
     "string": "Unknown error"

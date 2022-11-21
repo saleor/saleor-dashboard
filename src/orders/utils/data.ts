@@ -1,4 +1,4 @@
-import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { subtractMoney } from "@saleor/components/Money";
 import {
   AddressFragment,
   AddressInput,
@@ -15,6 +15,7 @@ import {
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { findInEnum } from "@saleor/misc";
+import { IMoney } from "@saleor/utils/intl";
 
 import {
   LineItemData,
