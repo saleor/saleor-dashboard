@@ -90,7 +90,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                         selectedMedia.indexOf(mediaObj.id) !== -1,
                     },
                   ])}
-                  onClick={onMediaSelect(mediaObj.id)}
+                  onClick={() => onMediaSelect(mediaObj.id)}
                   key={mediaObj.id}
                 >
                   <img

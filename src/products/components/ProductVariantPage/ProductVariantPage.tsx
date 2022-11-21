@@ -118,7 +118,6 @@ interface ProductVariantPageProps {
   onAttributeSelectBlur: () => void;
   onDelete();
   onSubmit(data: ProductVariantUpdateSubmitData);
-  onMediaSelect(id: string);
   onSetDefaultVariant();
   onWarehouseConfigure();
 }
@@ -140,7 +139,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   referenceProducts = [],
   attributeValues,
   onDelete,
-  onMediaSelect,
   onSubmit,
   onVariantPreorderDeactivate,
   variantDeactivatePreoderButtonState,
@@ -172,13 +170,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     setIsEndPreorderModalOpened,
   ] = React.useState(false);
 
-  const variantMedia = variant?.media?.map(image => image.id);
   const productMedia = [
     ...(variant?.product?.media ?? []),
   ]?.sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
-  const media = productMedia
-    ?.filter(image => variantMedia.indexOf(image.id) !== -1)
-    .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
@@ -246,6 +240,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             const selectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
             );
+            const media = productMedia
+              ?.filter(image => data.media.indexOf(image.id) !== -1)
+              .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
             const errors = [...apiErrors, ...validationErrors];
 
@@ -423,28 +420,28 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                 )}
                 {variant && (
-                  <VariantChannelsDialog
-                    channelListings={variant.product.channelListings}
-                    selectedChannelListings={data.channelListings}
-                    open={isManageChannelsModalOpen}
-                    onClose={toggleManageChannels}
-                    onConfirm={handlers.updateChannels}
-                  />
+                  <>
+                    <VariantChannelsDialog
+                      channelListings={variant.product.channelListings}
+                      selectedChannelListings={data.channelListings}
+                      open={isManageChannelsModalOpen}
+                      onClose={toggleManageChannels}
+                      onConfirm={handlers.updateChannels}
+                    />
+                    <ProductVariantMediaSelectDialog
+                      onClose={toggleModal}
+                      onMediaSelect={handlers.changeMedia}
+                      open={isModalOpened}
+                      media={productMedia}
+                      selectedMedia={data.media}
+                    />
+                  </>
                 )}
               </>
             );
           }}
         </ProductVariantUpdateForm>
       </Container>
-      {variant && (
-        <ProductVariantMediaSelectDialog
-          onClose={toggleModal}
-          onMediaSelect={onMediaSelect}
-          open={isModalOpened}
-          media={productMedia}
-          selectedMedia={variant?.media.map(image => image.id)}
-        />
-      )}
       {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={variantDeactivatePreoderButtonState}

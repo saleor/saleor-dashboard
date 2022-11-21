@@ -44,6 +44,7 @@ import {
   getStockInputFromVariant,
 } from "@saleor/products/utils/data";
 import {
+  createMediaChangeHandler,
   createPreorderEndDateChangeHandler,
   getChannelsInput,
 } from "@saleor/products/utils/handlers";
@@ -78,6 +79,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
   name: string;
+  media: string[];
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   channelListings: FormsetData<
@@ -126,6 +128,7 @@ export interface ProductVariantUpdateHandlers
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
+  changeMedia: (id: string) => void;
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -191,6 +194,7 @@ function useProductVariantUpdateForm(
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
     name: variant?.name ?? "",
+    media: variant?.media?.map(({ id }) => id) || [],
   };
 
   const form = useForm(initial, undefined, {
@@ -299,6 +303,8 @@ function useProductVariantUpdateForm(
     triggerChange,
     intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
+
+  const handleMediaChange = createMediaChangeHandler(form, triggerChange);
 
   const handleUpdateChannels = (selectedIds: string[]) => {
     const allChannels = variant.product.channelListings.map(listing => {
@@ -428,6 +434,7 @@ function useProductVariantUpdateForm(
       changeMetadata,
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
+      changeMedia: handleMediaChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
