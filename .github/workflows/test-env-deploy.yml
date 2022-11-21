@@ -212,7 +212,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm install
+        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
 
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
