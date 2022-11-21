@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  saleor-dashboard
+spec:
+  selector:
+    app:  saleor-dashboard
+  type:  NodePort
+  ports:
+  - name: saleor-dsh
+    port: 9000
+    targetPort: saleor-dsh

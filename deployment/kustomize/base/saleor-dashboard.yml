@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor-dashboard
+spec:
+  selector:
+    matchLabels:
+      app: saleor-dashboard
+  template:
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: saleor-dashboard
+        image: skymoore/saleor-dashboard:3.8.4
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: saleor-dashboard-env
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "128M"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 90
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        ports:
+          - containerPort:  80
+            name:  saleor-dsh
