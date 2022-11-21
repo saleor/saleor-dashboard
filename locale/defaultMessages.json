@@ -6098,6 +6098,9 @@
     "context": "set balance dialog subtitle",
     "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
   },
+  "kFkPWB": {
+    "string": "Number"
+  },
   "kIXV5V": {
     "context": "install with app manifest button",
     "string": "Install with App Manifest"
@@ -6737,9 +6740,6 @@
   "ps+h1G": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
-  },
-  "ps0WUQ": {
-    "string": "No. of Order"
   },
   "ptPPVk": {
     "string": "No languages found"
