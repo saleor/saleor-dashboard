@@ -102,28 +102,17 @@ describe("As an admin I want to update gift card", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const name2 = `${startsWith}${faker.datatype.number()}`;
 
-      let giftCard01;
-      let giftCard02;
-
       createGiftCard({
         tag: name,
         amount: 3,
         currency: "THB",
       })
-        .then(giftCard01resp => {
-          giftCard01 = giftCard01resp;
-          cy.log(giftCardDetailsUrl(giftCard01.id));
+        .then(() => {
           createGiftCard({
             tag: name2,
             amount: 7,
             currency: "THB",
           });
-        })
-        .then(giftCard02resp => {
-          giftCard02 = giftCard02resp;
-          cy.log(giftCardDetailsUrl(giftCard01.id))
-            .log(giftCardDetailsUrl(giftCard02.id))
-            .log(`name: ${name}, name2: ${name2}`);
         })
         .then(() => {
           cy.visit(urlList.giftCards)
@@ -131,26 +120,30 @@ describe("As an admin I want to update gift card", () => {
             .click()
             .get(PRODUCTS_LIST.filters.filterBy.currency)
             .click()
-            .get("[class^=FilterOptionField")
+            .get(PRODUCTS_LIST.filters.filterOptionField)
             .contains("THB")
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click()
-            .get("[data-test-id^=gift-card-row]")
+            .get(GIFT_CARD_UPDATE.giftCardRow)
             .eq(1)
             .should("be.visible")
             .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
             .first()
-            .click()
-            .get(".MuiTypography-root")
+            .check()
+            .should("be.checked")
+            .get("tr")
             .contains("Selected 2 items")
             .should("be.visible")
             .get(BUTTON_SELECTORS.deleteItemsButton)
             .first()
-            .click();
-
-          // cy
-          // cy.get(BUTTON_SELECTORS.deleteItemsButton).click();
+            .click()
+            .get(GIFT_CARD_UPDATE.consentCheckbox)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+            .should("not.be.visible");
         });
     },
   );
