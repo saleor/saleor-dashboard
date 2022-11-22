@@ -22,7 +22,6 @@ const useStyles = makeStyles(
       },
       colName: {
         ...colName,
-        verticalAlign: "top",
       },
       colNameHeader: {
         ...colName,
