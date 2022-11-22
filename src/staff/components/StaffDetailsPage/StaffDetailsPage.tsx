@@ -24,6 +24,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
 import { staffListUrl } from "@saleor/staff/urls";
+import { getMemberPermissionGroups, isMemberActive } from "@saleor/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
@@ -86,16 +87,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
   const { locale, setLocale } = useLocale();
 
-  const isActive = !!(
-    staffMember &&
-    "isActive" in staffMember &&
-    staffMember.isActive
-  );
-  const permissionGroups =
-    (staffMember &&
-      "permissionGroups" in staffMember &&
-      staffMember.permissionGroups) ||
-    [];
+  const isActive = isMemberActive(staffMember);
+  const permissionGroups = getMemberPermissionGroups(staffMember);
 
   const [
     permissionGroupsDisplayValues,
