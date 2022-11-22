@@ -7,12 +7,12 @@ COPY nginx/ nginx/
 COPY assets/ assets/
 COPY locale/ locale/
 COPY testUtils testUtils/
-COPY codegen.yml .
-COPY webpack.config.js .
-COPY tsconfig.json .
-COPY *.d.ts .
-COPY schema.graphql .
-COPY introspection.json .
+COPY codegen.yml ./
+COPY webpack.config.js ./
+COPY tsconfig.json ./
+COPY *.d.ts ./
+COPY schema.graphql ./
+COPY introspection.json ./
 COPY src/ src/
 
 ARG API_URI

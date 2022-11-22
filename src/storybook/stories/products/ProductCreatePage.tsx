@@ -2,6 +2,7 @@ import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -15,7 +16,6 @@ import {
   productTypeSearch,
 } from "../../../productTypes/fixtures";
 import Decorator from "../../Decorator";
-import { taxTypes } from "../taxes/fixtures";
 
 const product = productFixture("");
 const channels = createChannelsData(channelsList);
@@ -47,7 +47,8 @@ storiesOf("Views / Products / Create product", module)
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
-      taxTypes={taxTypes}
+      taxClasses={taxClasses}
+      fetchMoreTaxClasses={undefined}
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}
@@ -83,7 +84,8 @@ storiesOf("Views / Products / Create product", module)
       saveButtonBarState="default"
       warehouses={undefined}
       onWarehouseConfigure={() => undefined}
-      taxTypes={taxTypes}
+      taxClasses={taxClasses}
+      fetchMoreTaxClasses={undefined}
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}
@@ -135,7 +137,8 @@ storiesOf("Views / Products / Create product", module)
       saveButtonBarState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
-      taxTypes={taxTypes}
+      taxClasses={taxClasses}
+      fetchMoreTaxClasses={undefined}
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}

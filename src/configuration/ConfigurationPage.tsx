@@ -1,32 +1,18 @@
 import { Typography } from "@material-ui/core";
-import { IconProps } from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { PermissionEnum, UserFragment } from "@saleor/graphql";
+import { UserFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
-
-export interface MenuItem {
-  description: string;
-  icon: React.ReactElement<IconProps>;
-  permissions: PermissionEnum[];
-  title: string;
-  url?: string;
-  testId?: string;
-}
-
-export interface MenuSection {
-  label: string;
-  menuItems: MenuItem[];
-}
+import { MenuSection } from "./types";
+import { hasUserMenuItemPermissions } from "./utils";
 
 interface VersionInfo {
   dashboardVersion: string;
@@ -115,7 +101,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
-            hasAnyPermissions(menuItem.permissions, user),
+            hasUserMenuItemPermissions(menuItem, user),
           ),
         )
         .map((menu, menuIndex) => (
@@ -125,9 +111,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             </div>
             <div className={classes.configurationItem}>
               {menu.menuItems
-                .filter(menuItem =>
-                  hasAnyPermissions(menuItem.permissions, user),
-                )
+                .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
                 .map((item, itemIndex) => (
                   <Link className={classes.link} to={item.url}>
                     <NavigationCard

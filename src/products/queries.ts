@@ -114,9 +114,6 @@ export const productDetailsQuery = gql`
     product(id: $id, channel: $channel) {
       ...Product
     }
-    taxTypes {
-      ...TaxType
-    }
   }
 `;
 
@@ -149,8 +146,9 @@ export const productTypeQuery = gql`
           ...AttributeValueList
         }
       }
-      taxType {
-        ...TaxType
+      taxClass {
+        id
+        name
       }
     }
   }

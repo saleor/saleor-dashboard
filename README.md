@@ -32,7 +32,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js v14+
+- Node.js v18+
 - A running instance of [Saleor](https://github.com/saleor/saleor/).
 
 ### Installing
@@ -161,7 +161,13 @@ docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
 
 Enter `http://localhost:8080/` to use dashboard.
 
-##### Usage with Sentry adapter:
+If you want to dynamically change `API_URL` in runtime you can use (assuming you have running container named `saleor-dashboard`):
+
+```shell
+docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-replace-api-url.sh
+```
+
+### Usage with Sentry adapter
 
 Sentry is used as the default tracker so no changes in code are necessary and the configuration is done via environment variables.
 
