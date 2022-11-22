@@ -16,28 +16,65 @@ export const countryFragment = gql`
     code
   }
 `;
-export const countryWithTaxesFragment = gql`
-  fragment CountryWithTaxes on CountryDisplay {
-    ...Country
-    vat {
-      standardRate
-      reducedRates {
-        rateType
-        rate
+
+export const taxConfigurationPerCountry = gql`
+  fragment TaxConfigurationPerCountry on TaxConfigurationPerCountry {
+    country {
+      ...CountryWithCode
+    }
+    chargeTaxes
+    taxCalculationStrategy
+    displayGrossPrices
+  }
+`;
+
+export const taxConfiguration = gql`
+  fragment TaxConfiguration on TaxConfiguration {
+    id
+    channel {
+      id
+      name
+    }
+    displayGrossPrices
+    pricesEnteredWithTax
+    chargeTaxes
+    taxCalculationStrategy
+    countries {
+      ...TaxConfigurationPerCountry
+    }
+  }
+`;
+
+export const taxCountryConfigurationFragment = gql`
+  fragment TaxCountryConfiguration on TaxCountryConfiguration {
+    country {
+      ...CountryWithCode
+    }
+    taxClassCountryRates {
+      rate
+      taxClass {
+        id
+        name
       }
     }
   }
 `;
-export const shopTaxesFragment = gql`
-  fragment ShopTaxes on Shop {
-    chargeTaxesOnShipping
-    includeTaxesInPrices
-    displayGrossPrices
+
+export const taxRateFragment = gql`
+  fragment TaxRate on TaxClassCountryRate {
+    country {
+      ...CountryWithCode
+    }
+    rate
   }
 `;
-export const taxTypeFragment = gql`
-  fragment TaxType on TaxType {
-    description
-    taxCode
+
+export const taxClassFragment = gql`
+  fragment TaxClass on TaxClass {
+    id
+    name
+    countries {
+      ...TaxRate
+    }
   }
 `;

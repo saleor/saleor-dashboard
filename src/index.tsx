@@ -229,11 +229,7 @@ const Routes: React.FC = () => {
                 path="/site-settings"
                 component={SiteSettingsSection}
               />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                path="/taxes"
-                component={TaxesSection}
-              />
+              <SectionRoute path="/taxes" component={TaxesSection} />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_SHIPPING]}
                 path="/shipping"

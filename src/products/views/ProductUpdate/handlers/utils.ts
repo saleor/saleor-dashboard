@@ -34,7 +34,6 @@ export function getProductUpdateVariables(
         updatedFileAttributes,
       }),
       category: data.category,
-      chargeTaxes: data.chargeTaxes,
       collections: data.collections,
       description: getParsedDataForJsonStringField(data.description),
       name: data.name,
@@ -44,7 +43,7 @@ export function getProductUpdateVariables(
         title: data.seoTitle,
       },
       slug: data.slug,
-      taxCode: data.changeTaxCode ? data.taxCode : null,
+      taxClass: data.taxClassId,
     },
     firstValues: VALUES_PAGINATE_BY,
   };

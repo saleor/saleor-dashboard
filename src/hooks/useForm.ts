@@ -34,6 +34,7 @@ export interface UseFormOpts<T> {
   formId?: FormId;
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;
   disabled?: boolean;
+  mergeData?: boolean;
 }
 
 export interface UseFormResult<TData>
@@ -87,10 +88,11 @@ function useForm<T extends FormData, TErrors>(
     formId: propsFormId,
     checkIfSaveIsDisabled,
     disabled,
+    mergeData = true,
   } = opts;
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
-    mergeFunc: merge,
+    mergeFunc: mergeData ? merge : undefined,
   });
 
   const isSaveDisabled = () => {

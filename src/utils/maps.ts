@@ -4,6 +4,7 @@ import {
   SingleAutocompleteChoiceType,
 } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  CountryFragment,
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
@@ -26,7 +27,7 @@ export function mapEdgesToItems<T>(
 }
 
 export function mapCountriesToCountriesCodes(
-  countries?: CountryWithCodeFragment[],
+  countries?: Array<Pick<CountryFragment, "code">>,
 ) {
   return countries?.map(country => country.code);
 }

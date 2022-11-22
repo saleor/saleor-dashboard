@@ -464,10 +464,10 @@ export const product: (
         },
       },
     ],
-    taxType: {
-      __typename: "TaxType",
-      description: "standard",
-      taxCode: "standard",
+    taxClass: {
+      __typename: "TaxClass",
+      name: "standard",
+      id: "standard",
     },
     variantAttributes: [
       {
@@ -591,10 +591,10 @@ export const product: (
   seoTitle: "Seo title",
   sku: "59661-34207",
   slug: "Borders",
-  taxType: {
-    __typename: "TaxType",
-    description: "standard",
-    taxCode: "standard",
+  taxClass: {
+    __typename: "TaxClass",
+    name: "standard",
+    id: "standard",
   },
   thumbnail: { __typename: "Image" as "Image", url: placeholderImage },
   url: "/example-url",
