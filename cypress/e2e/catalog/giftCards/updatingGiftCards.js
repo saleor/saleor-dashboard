@@ -142,14 +142,16 @@ describe("As an admin I want to update gift card", () => {
             .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
             .first()
             .click()
-            .get(BUTTON_SELECTORS.deleteButton)
+            .get(".MuiTypography-root")
+            .contains("Selected 2 items")
+            .should("be.visible")
+            .get(BUTTON_SELECTORS.deleteItemsButton)
+            .first()
             .click();
 
-          cy.get(".MuiTypography-root MuiTypography-body1")
-            .contains("Selected 2 items")
-            .should("be.visible");
-          cy.get(BUTTON_SELECTORS.deleteButton).click();
+          // cy
+          // cy.get(BUTTON_SELECTORS.deleteItemsButton).click();
         });
     },
   );
-}); // cla test3
+});
