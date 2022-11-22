@@ -230,6 +230,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onQueryChange={onColumnQueryChange}
           onFetchMore={onFetchMore}
           onSave={handleSave}
+          IconButtonProps={{ variant: "secondary" }}
         />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
