@@ -109,6 +109,15 @@ export const useAppActions = (
 
         return sendResponseStatus(actionId, success);
       }
+      case "updateRouting": {
+        const { newRoute, actionId } = action.payload;
+
+        const appCompletePath = appPath(encodeURIComponent(appId));
+
+        window.history.pushState(null, "", appCompletePath + newRoute);
+
+        return sendResponseStatus(actionId, true);
+      }
       default: {
         throw new Error("Unknown action type");
       }
