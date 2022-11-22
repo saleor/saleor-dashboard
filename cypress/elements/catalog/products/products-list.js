@@ -23,6 +23,7 @@ export const PRODUCTS_LIST = {
   showFiltersButton: '[data-test-id="show-filters-button"]',
   filters: {
     filterOption: '[data-test-id="filter-option"]',
+    filterOptionField: "[class^=FilterOptionField]",
     productsOutOfStockOption: '[data-test-id="filter-option-OUT_OF_STOCK"]',
     filterBy: {
       category: '[data-test-id="filter-group-active-categories"]',
@@ -30,6 +31,7 @@ export const PRODUCTS_LIST = {
       productType: '[data-test-id="filter-group-active-productType"]',
       stock: '[data-test-id="filter-group-active-stock"]',
       channel: '[data-test-id="filter-group-active-channel"]',
+      currency: '[data-test-id="filter-group-active-currency"]',
     },
     filterField: {
       filterField: '[data-test-id*="filter-field"]',
