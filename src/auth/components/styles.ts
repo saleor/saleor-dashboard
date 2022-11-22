@@ -50,7 +50,6 @@ const useStyles = makeStyles(
       position: "absolute",
       top: 6,
       right: 8,
-      borderColor: "transparent",
     },
     submit: {
       width: "100%",
