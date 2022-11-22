@@ -142,7 +142,7 @@ const FilterContentBody = <K extends string = string>({
                   data-test-id="filter-boolean"
                   data-test-is-checked={filter.value[0] === option.value}
                   checked={filter.value[0] === option.value}
-                  color="primary"
+                  color="secondary"
                 />
               }
               label={option.label}
