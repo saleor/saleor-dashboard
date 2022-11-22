@@ -182,7 +182,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Get API_URI
         id: api_uri
@@ -212,7 +212,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: NODE_OPTIONS=--max_old_space_size=4096 npm ci
+        run: NODE_OPTIONS=--max_old_space_size=4096 npm install
 
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
