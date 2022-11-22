@@ -1,14 +1,16 @@
 FROM node:18-alpine as builder
 WORKDIR /app
 COPY package*.json ./
+COPY scripts/patchReactVirtualized.js scripts/
 RUN npm ci --legacy-peer-deps
 
 COPY nginx/ nginx/
 COPY assets/ assets/
 COPY locale/ locale/
 COPY testUtils testUtils/
+COPY scripts/removeSourcemaps.js scripts/
 COPY codegen.yml ./
-COPY webpack.config.js ./
+COPY vite.config.js /.
 COPY tsconfig.json ./
 COPY *.d.ts ./
 COPY schema.graphql ./
