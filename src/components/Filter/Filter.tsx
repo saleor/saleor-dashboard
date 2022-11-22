@@ -75,7 +75,7 @@ const useStyles = makeStyles(
     separator: {
       backgroundColor: theme.palette.primary.main,
       display: "inline-block",
-      height: 28,
+      height: 14,
       margin: theme.spacing(0, 1.5, 0, 1),
       width: 1,
     },
