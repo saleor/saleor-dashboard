@@ -49,7 +49,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("md")]: {
       colName: {
-        minWidth: 250,
+        minWidth: 300,
       },
       colPrice: {
         width: 300,
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
         width: 200,
       },
       colType: {
-        width: 200,
+        width: 300,
       },
       colDate: {
         width: 200,
@@ -75,9 +75,13 @@ const useStyles = makeStyles(
       width: "100%",
     },
     colName: {
+      wordBreak: "break-all",
       "&$colNameFixed": {
-        width: 250,
+        width: 300,
       },
+    },
+    colAvatar: {
+      wordBreak: "break-all",
     },
     colNameFixed: {},
     colNameHeader: {
@@ -90,7 +94,9 @@ const useStyles = makeStyles(
       textAlign: "right",
     },
     colPublished: {},
-    colType: {},
+    colType: {
+      wordBreak: "break-all",
+    },
     link: {
       cursor: "pointer",
     },
@@ -348,6 +354,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar
+                    className={classes.colAvatar}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
                     {product?.name ? (
