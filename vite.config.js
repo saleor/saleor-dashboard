@@ -2,6 +2,7 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+import viteSentry from "vite-plugin-sentry";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 export default defineConfig(({ command, mode }) => {
@@ -63,6 +64,9 @@ export default defineConfig(({ command, mode }) => {
   return {
     root: "src",
     envDir: "..",
+    server: {
+      port: 9000,
+    },
     define: {
       ...globals,
 
