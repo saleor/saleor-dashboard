@@ -83,7 +83,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               />
               {order?.status !== OrderStatus.CANCELED &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-                  <div>
+                  <div className={classes.actions}>
                     {canCapture && (
                       <Button variant="tertiary" onClick={onCapture}>
                         <FormattedMessage {...paymentButtonMessages.capture} />
