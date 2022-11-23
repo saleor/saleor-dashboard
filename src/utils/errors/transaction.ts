@@ -50,7 +50,7 @@ export const transactionCreateMessages = defineMessages({
     id: "/eWPsp",
   },
   unique: {
-    defaultMessage: "Transaction is not uniqe",
+    defaultMessage: "Transaction is not unique",
     id: "TpocrP",
   },
 });
