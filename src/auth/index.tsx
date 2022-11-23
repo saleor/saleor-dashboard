@@ -29,6 +29,7 @@ export const UserContext = React.createContext<Context>({
   requestLoginByExternalPlugin: undefined,
   authenticating: false,
   authenticated: false,
+  errors: [],
 });
 
 const AuthRouter: React.FC = () => (
