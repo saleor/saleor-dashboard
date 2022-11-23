@@ -325,7 +325,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   ))}
                 </div>
                 <OrderAddTransaction order={order} />
-                <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

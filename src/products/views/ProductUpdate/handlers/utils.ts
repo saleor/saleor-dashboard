@@ -34,7 +34,6 @@ export function getProductUpdateVariables(
         updatedFileAttributes,
       }),
       category: data.category,
-      chargeTaxes: data.chargeTaxes,
       collections: data.collections,
       description: getParsedDataForJsonStringField(data.description),
       name: data.name,
@@ -44,7 +43,7 @@ export function getProductUpdateVariables(
         title: data.seoTitle,
       },
       slug: data.slug,
-      taxCode: data.changeTaxCode ? data.taxCode : null,
+      taxClass: data.taxClassId,
     },
     firstValues: VALUES_PAGINATE_BY,
   };
@@ -61,14 +60,30 @@ const hasChannel = (
   return variant.channelListings.some(c => c.channel.id === channelId);
 };
 
+export function inferProductChannelsAfterUpdate(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+) {
+  const productChannelsIds = product.channelListings.map(
+    listing => listing.channel.id,
+  );
+  const updatedChannelsIds =
+    data.channels.updateChannels?.map(listing => listing.channelId) || [];
+  const removedChannelsIds = data.channels.removeChannels || [];
+
+  return uniq([
+    ...productChannelsIds.filter(
+      channelId => !removedChannelsIds.includes(channelId),
+    ),
+    ...updatedChannelsIds,
+  ]);
+}
+
 export function getProductChannelsUpdateVariables(
   product: ProductFragment,
   data: ProductUpdateSubmitData,
 ): ProductChannelListingUpdateMutationVariables {
-  const channels = uniq([
-    ...product.channelListings.map(listing => listing.channel.id),
-    ...data.channels.updateChannels.map(listing => listing.channelId),
-  ]);
+  const channels = inferProductChannelsAfterUpdate(product, data);
 
   const dataUpdated = new Map<string, ProductChannelListingAddInput>();
   data.channels.updateChannels

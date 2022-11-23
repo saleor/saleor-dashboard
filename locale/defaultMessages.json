@@ -3,6 +3,10 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+2VydL": {
+    "context": "card title",
+    "string": "Country exceptions"
+  },
   "+2VzH4": {
     "context": "avatar change button",
     "string": "Change"
@@ -31,13 +35,13 @@
     "context": "variant sku",
     "string": "SKU {sku}"
   },
+  "+Jgot0": {
+    "context": "tax class for a product type",
+    "string": "Tax class"
+  },
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
-  },
-  "+OV+Gj": {
-    "context": "button",
-    "string": "Fetch taxes"
   },
   "+PbHKD": {
     "context": "dialog header",
@@ -156,6 +160,10 @@
     "context": "product type shipping settings, section header",
     "string": "Shipping"
   },
+  "/5r4he": {
+    "context": "label for button",
+    "string": "Add country"
+  },
   "/68iG8": {
     "context": "product export to csv file, header",
     "string": "Information exported"
@@ -184,8 +192,9 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
-  "/JENWS": {
-    "string": "Reduced Tax Rates"
+  "/ILyIf": {
+    "context": "tax classes menu header",
+    "string": "Tax class label"
   },
   "/KWNJW": {
     "context": "order discount was updated event title",
@@ -291,9 +300,6 @@
     "context": "order history message",
     "string": "Order cancel information was sent to customer"
   },
-  "07KB2d": {
-    "string": "Country Code"
-  },
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
   },
@@ -307,9 +313,6 @@
   "0FexL7": {
     "context": "min price in channel",
     "string": "Min. value"
-  },
-  "0GJfWd": {
-    "string": "Country Name"
   },
   "0MetrR": {
     "context": "webhook input help text",
@@ -331,6 +334,10 @@
     "context": "dialog header",
     "string": "Unassign Collection From Sale"
   },
+  "0V1q0d": {
+    "context": "add country dialog header",
+    "string": "Choose country you want to add"
+  },
   "0VDwAP": {
     "context": "checkbox label",
     "string": "Send shipment details to customer"
@@ -338,6 +345,10 @@
   "0Vyr8h": {
     "context": "menu item name",
     "string": "Name"
+  },
+  "0a0fLZ": {
+    "context": "countries list menu label when no countries are assigned",
+    "string": "There are no countries assigned"
   },
   "0dPP8O": {
     "string": "Order #{orderId} was placed"
@@ -702,9 +713,6 @@
     "context": "no category set error",
     "string": "Product category not set"
   },
-  "3BTtL2": {
-    "string": "No countries found"
-  },
   "3C3Nj5": {
     "context": "button",
     "string": "Add variant"
@@ -832,9 +840,6 @@
     "context": "order status",
     "string": "Returned"
   },
-  "4EuJKs": {
-    "string": "All products prices are entered with tax included"
-  },
   "4JW9iJ": {
     "context": "home section name",
     "string": "Home"
@@ -888,6 +893,10 @@
   "4k9rMQ": {
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
+  },
+  "4p3bjX": {
+    "context": "tax strategy combobox choice",
+    "string": "Use flat rates"
   },
   "4prRLv": {
     "string": "Permission is out of your scope"
@@ -1090,6 +1099,10 @@
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
   },
+  "6HHPFy": {
+    "context": "tax strategy combobox hint",
+    "string": "Select the method of tax calculation"
+  },
   "6JlXeD": {
     "context": "button",
     "string": "Create page type"
@@ -1174,6 +1187,10 @@
   "7+GBlj": {
     "string": "Error code {errorCode} {fieldError}"
   },
+  "720c51": {
+    "context": "tax classes name input placeholder",
+    "string": "Tax rate name"
+  },
   "73RU3R": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
@@ -1215,6 +1232,10 @@
   "7Oorx5": {
     "context": "navigator section header",
     "string": "Search in Catalog"
+  },
+  "7U/NPm": {
+    "context": "tax class rates list label when no country is selected",
+    "string": "Add country to access tax classes"
   },
   "7U8GRy": {
     "string": "Shipping method successfully updated"
@@ -1285,6 +1306,10 @@
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"
+  },
+  "8BBMRj": {
+    "context": "default tax class name for new tax classes",
+    "string": "New tax class"
   },
   "8EGagh": {
     "context": "search box label",
@@ -1372,12 +1397,13 @@
   "97l2MO": {
     "string": "Customer Email"
   },
+  "98Nw4g": {
+    "context": "card subtitle",
+    "string": "Rendered prices"
+  },
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
-  },
-  "98isC5": {
-    "string": "Show gross prices to customers in the storefront"
   },
   "9C7PZE": {
     "context": "navigation section name",
@@ -1494,9 +1520,6 @@
   "9vQR6c": {
     "context": "collection label",
     "string": "Visible"
-  },
-  "9xUIAh": {
-    "string": "Tax group"
   },
   "9xlPgt": {
     "context": "used staff users counter",
@@ -1660,6 +1683,10 @@
     "context": "number of subcategories",
     "string": "Subcategories"
   },
+  "BJtUQI": {
+    "context": "button",
+    "string": "Add"
+  },
   "BL/Lbk": {
     "context": "install app permissions",
     "string": "Installing this app will give it following permissions:"
@@ -1792,6 +1819,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
   },
+  "CFT171": {
+    "context": "card header title",
+    "string": "Country list"
+  },
   "CG+awx": {
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
@@ -1847,10 +1878,6 @@
   "CcEwXH": {
     "context": "dialog header",
     "string": "Delete Page Types"
-  },
-  "CdIHMu": {
-    "context": "select tax ratte",
-    "string": "Tax Rate"
   },
   "ChAjJu": {
     "context": "character limit",
@@ -1912,6 +1939,10 @@
   "D4nzdD": {
     "context": "checkbox label",
     "string": "Grant this app full access to the store"
+  },
+  "D5Wtf/": {
+    "context": "table header column",
+    "string": "Country name"
   },
   "D8nsBc": {
     "context": "no warehouses info",
@@ -2087,6 +2118,10 @@
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
   },
+  "EYkW1J": {
+    "context": "checkbox label",
+    "string": "Charge taxes for this channel"
+  },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
   },
@@ -2179,9 +2214,6 @@
   },
   "FNAZoh": {
     "string": "Last login"
-  },
-  "FNKhkx": {
-    "string": "Charge taxes on shipping rates"
   },
   "FNT4b+": {
     "context": "tabel column header",
@@ -2589,9 +2621,6 @@
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
-  },
-  "HtQGEH": {
-    "string": "Successfully fetched tax rates"
   },
   "HtfL5/": {
     "context": "button",
@@ -3098,6 +3127,10 @@
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
   },
+  "Ljtqmt": {
+    "context": "page header, order id unknown",
+    "string": "Order"
+  },
   "LkuDEb": {
     "context": "metadata field value, header",
     "string": "Value"
@@ -3357,6 +3390,14 @@
     "context": "section header",
     "string": "All Subcategories"
   },
+  "Nj9iSB": {
+    "context": "table header column",
+    "string": "Tax rate"
+  },
+  "NlEVVT": {
+    "context": "label for button",
+    "string": "Create class"
+  },
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
@@ -3587,10 +3628,6 @@
     "context": "window title",
     "string": "Create Product"
   },
-  "PajjqE": {
-    "context": "attribute list",
-    "string": "Attribute {number}"
-  },
   "PbQJY5": {
     "context": "section header",
     "string": "Saleor Apps"
@@ -3731,10 +3768,6 @@
     "context": "table header name col label",
     "string": "Name"
   },
-  "QHB48n": {
-    "context": "header",
-    "string": "Tax Rates in {countryName}"
-  },
   "QJG+d/": {
     "context": "staff added type order discount",
     "string": "Staff added"
@@ -3821,6 +3854,10 @@
   "Qox+kb": {
     "string": "on field {fieldName}"
   },
+  "QpBqa9": {
+    "context": "label for radio button",
+    "string": "Product prices are entered without tax"
+  },
   "Qph0GE": {
     "context": "dialog content",
     "string": "Add a new address:"
@@ -3899,6 +3936,10 @@
     "context": "issue card button label",
     "string": "Issue card"
   },
+  "Rfk+8B": {
+    "context": "tax classes menu label when there are no tax classes",
+    "string": "There are no tax classes"
+  },
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
@@ -3919,6 +3960,10 @@
   "Rpfa+t": {
     "context": "dialog header",
     "string": "Unassign Attribute from Page Type"
+  },
+  "RqtZQ6": {
+    "context": "tax classes card header",
+    "string": "Tax class rates"
   },
   "RrCui3": {
     "string": "Summary"
@@ -4118,6 +4163,10 @@
     "context": "product availability available date",
     "string": "Set available on"
   },
+  "TJ7WHA": {
+    "context": "tax strategy combobox choice",
+    "string": "Use tax app"
+  },
   "TKmub+": {
     "string": "This field is required"
   },
@@ -4152,17 +4201,13 @@
     "context": "orders section name",
     "string": "Orders"
   },
-  "TalJlD": {
-    "context": "tax rate for a product type",
-    "string": "Tax"
-  },
   "Tenl9A": {
     "context": "grant refund, refund card toggle",
     "string": "Refund shipment: {currency} {amount}"
   },
-  "TfY/Pi": {
-    "context": "checkbox",
-    "string": "Charge taxes on this product"
+  "TfzIXS": {
+    "context": "tax classes card header",
+    "string": "General information"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -4229,6 +4274,10 @@
     "context": "no gift card products and types alert message",
     "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
   },
+  "UBuKZ9": {
+    "context": "searchbar placeholder",
+    "string": "Country"
+  },
   "UCHtG6": {
     "context": "button",
     "string": "About"
@@ -4280,9 +4329,6 @@
   },
   "UaYJJ8": {
     "string": "Are you sure you want to delete {name} search tab?"
-  },
-  "Ubath+": {
-    "string": "No reduced tax categories found"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -4556,6 +4602,10 @@
     "context": "order refund amount",
     "string": "Shipment Cost"
   },
+  "WIxSDm": {
+    "context": "card header",
+    "string": "{country} class rates"
+  },
   "WK62MN": {
     "string": "Fulfillment"
   },
@@ -4629,6 +4679,10 @@
   "WnlZMO": {
     "context": "title",
     "string": "There’s a problem with app."
+  },
+  "Ww69SE": {
+    "context": "search input placeholder",
+    "string": "Search tax classes"
   },
   "WwNtFn": {
     "context": "delete product variant",
@@ -4958,6 +5012,10 @@
     "context": "stock exceeded dialog description",
     "string": "Stock for items shown below are not enough to prepare fulfillment:"
   },
+  "ZAaXfz": {
+    "context": "Taxes section title",
+    "string": "Countries"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -5096,6 +5154,10 @@
   "aI80kg": {
     "string": "Properties"
   },
+  "aJm/by": {
+    "context": "Taxes section title",
+    "string": "Tax classes"
+  },
   "aKSUWR": {
     "string": "Cannot create transaction to non-existing order"
   },
@@ -5185,6 +5247,10 @@
   "b1zuN9": {
     "string": "Price"
   },
+  "b2DlTO": {
+    "context": "Taxes section title",
+    "string": "Channels"
+  },
   "b6L9n7": {
     "context": "voucher is active until date",
     "string": "Ends"
@@ -5192,6 +5258,10 @@
   "b810WJ": {
     "context": "product price",
     "string": "Price"
+  },
+  "bDBiac": {
+    "context": "dropdown or column label",
+    "string": "Tax class"
   },
   "bDHiYK": {
     "context": "gift card export success alert description",
@@ -5368,6 +5438,10 @@
   "cNSLLO": {
     "context": "button",
     "string": "Unassign and save"
+  },
+  "cVjewM": {
+    "context": "label for radio button",
+    "string": "Product prices are entered with tax"
   },
   "cW1RIo": {
     "context": "section header",
@@ -6040,10 +6114,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
   },
-  "iYH3Y7": {
-    "context": "checkbox",
-    "string": "Override the product type's tax rate"
-  },
   "ibnmEd": {
     "context": "voucher country range",
     "string": "Countries"
@@ -6138,6 +6208,10 @@
   },
   "jHJmjf": {
     "string": "No results"
+  },
+  "jMzyU8": {
+    "context": "tax classes card header",
+    "string": "Tax classes"
   },
   "jNSOSu": {
     "context": "cancelled fulfillment, section header",
@@ -6310,6 +6384,10 @@
   "kWw0fr": {
     "string": "Grant refund"
   },
+  "kXqn6A": {
+    "context": "table header column",
+    "string": "Charge taxes"
+  },
   "kYYbrv": {
     "context": "channel publication date",
     "string": "Published since {date}"
@@ -6427,9 +6505,6 @@
     "context": "money",
     "string": "from {money}"
   },
-  "la9cZ4": {
-    "string": "Tax Rate"
-  },
   "labkPK": {
     "context": "search gift card placeholder",
     "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
@@ -6460,9 +6535,9 @@
     "context": "password reset, button",
     "string": "Send an email with reset link"
   },
-  "lnQAos": {
-    "context": "header",
-    "string": "Taxes"
+  "lnteBJ": {
+    "context": "country rates list label for the default rate",
+    "string": "Country default rate"
   },
   "lqIzC8": {
     "string": "This field needs to be unique"
@@ -6532,10 +6607,6 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
-  },
-  "mUb8Gt": {
-    "context": "section header",
-    "string": "Taxes"
   },
   "mWQt3s": {
     "string": "No. of Products"
@@ -6687,6 +6758,10 @@
   "ng0ZDW": {
     "context": "label, input for amount to refund in transaction",
     "string": "Refund amount"
+  },
+  "ngAgBy": {
+    "context": "tax class rates list label when no countries are assigned",
+    "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
   },
   "njBulj": {
     "context": "check to require attribute to have value",
@@ -6887,6 +6962,10 @@
   "pVFoOk": {
     "string": "Are you sure you want to delete {collectionName}?"
   },
+  "pWClYm": {
+    "context": "card title",
+    "string": "Default settings"
+  },
   "paa4m0": {
     "string": "Successfully created product type"
   },
@@ -6925,6 +7004,10 @@
   "puALFo": {
     "context": "notes about customer, header",
     "string": "Notes"
+  },
+  "puRlnN": {
+    "context": "card subtitle",
+    "string": "Entered prices"
   },
   "puikeb": {
     "context": "button",
@@ -7005,6 +7088,10 @@
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
+  },
+  "qbcNjQ": {
+    "context": "table header column",
+    "string": "Tax name"
   },
   "qbmeUI": {
     "context": "dialog header",
@@ -7310,6 +7397,10 @@
     "context": "button",
     "string": "Accept"
   },
+  "skklRz": {
+    "context": "table header column",
+    "string": "Show gross prices in storefront"
+  },
   "sn2awN": {
     "context": "ExitFormPrompt cancel button",
     "string": "Discard changes"
@@ -7431,6 +7522,9 @@
     "context": "window title",
     "string": "Create collection"
   },
+  "tthToS": {
+    "string": "Disabled"
+  },
   "ttk0w7": {
     "context": "resend code to customer description",
     "string": "Gift Card Code will be resent to email provided during checkout. You can provide a different email address if you want to:"
@@ -7463,6 +7557,10 @@
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
+  },
+  "u34css": {
+    "context": "label for empty list in channels list",
+    "string": "There are no exceptions for this channel"
   },
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
@@ -8018,6 +8116,10 @@
     "context": "attribute can be searched in dashboard",
     "string": "Searchable"
   },
+  "yLfbSh": {
+    "context": "support label",
+    "string": "Channel name"
+  },
   "yMi8I8": {
     "context": "dialog header",
     "string": "Dectivate App"
@@ -8173,6 +8275,10 @@
   "zfjAc7": {
     "context": "grant refund, card header",
     "string": "Unfulfilled products"
+  },
+  "zgqPGF": {
+    "context": "attribute list",
+    "string": "Attribute {name}"
   },
   "zjHH6b": {
     "context": "sale start date",

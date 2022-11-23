@@ -5,7 +5,6 @@ const debug = require("debug")("cypress-grep");
 const globby = require("globby");
 const { getTestNames } = require("find-test-names");
 const fs = require("fs");
-const path = require("path");
 const { version } = 10;
 const { resolveConfig, parseGrep, shouldTestRun } = require("./utils");
 
@@ -117,12 +116,13 @@ function cypressGrepPlugin(config) {
     }
     if (greppedSpecs.length) {
       config.specPattern = greppedSpecs;
-      console.log(config.specPattern);
     } else {
       // hmm, we filtered out all specs, probably something is wrong
       console.warn("grep and/or grepTags has eliminated all specs");
       if (grep) {
+        config.specPattern = "InvalidGrep";
         console.warn("grep: %s", grep);
+        console.error("Invalid grep, tests won't be executed");
       }
       if (grepTags) {
         console.warn("grepTags: %s", grepTags);

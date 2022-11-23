@@ -503,6 +503,12 @@ export const transactionCreateErrorFragment = gql`
     code
   }
 `;
+export const taxConfigurationUpdateError = gql`
+  fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
+    field
+    code
+  }
+`;
 
 export const orderGrantRefundCreateErrorFragment = gql`
   fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
@@ -512,10 +518,42 @@ export const orderGrantRefundCreateErrorFragment = gql`
   }
 `;
 
+export const taxCountryConfigurationUpdateError = gql`
+  fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+    field
+    code
+  }
+`;
+export const taxCountryConfigurationDeleteError = gql`
+  fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+    field
+    code
+  }
+`;
+
 export const orderGrantRefundUpdateErrorFragment = gql`
   fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
     field
     message
+    code
+  }
+`;
+
+export const taxClassUpdateError = gql`
+  fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+    field
+    code
+  }
+`;
+export const taxClassCreateError = gql`
+  fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+    field
+    code
+  }
+`;
+export const taxClassDeleteError = gql`
+  fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+    field
     code
   }
 `;

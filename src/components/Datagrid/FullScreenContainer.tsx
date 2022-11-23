@@ -50,12 +50,14 @@ const useAnimationStyles = (isOpen: boolean, duration: number) => {
   };
 };
 
-interface FullScreenContainerProps {
-  open?: boolean;
-  className?: string;
-}
+type FullScreenContainerProps = FC<
+  PropsWithChildren<{
+    open?: boolean;
+    className?: string;
+  }>
+>;
 
-const Portal = ({ className, children, open }) => {
+const Portal: FullScreenContainerProps = ({ className, children, open }) => {
   const { delayedState: delayedOpen, duration } = useDelayedState(open);
   const styles = useAnimationStyles(open, duration);
 
@@ -67,13 +69,12 @@ const Portal = ({ className, children, open }) => {
   );
 };
 
-export const FullScreenContainer: FC<PropsWithChildren<
-  FullScreenContainerProps
->> = ({ children, open, className }) => (
+export const FullScreenContainer: FullScreenContainerProps = ({
+  children,
+  ...rest
+}) => (
   <>
-    <Portal className={className} open={open}>
-      {children}
-    </Portal>
+    <Portal {...rest}>{children}</Portal>
     {children}
   </>
 );

@@ -37,10 +37,6 @@ export const productTypeDetailsQuery = gql`
     shop {
       defaultWeightUnit
     }
-    taxTypes {
-      taxCode
-      description
-    }
   }
 `;
 
@@ -48,10 +44,6 @@ export const productTypeCreateDataQuery = gql`
   query ProductTypeCreateData {
     shop {
       defaultWeightUnit
-    }
-    taxTypes {
-      taxCode
-      description
     }
   }
 `;
