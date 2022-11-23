@@ -10,7 +10,7 @@ COPY locale/ locale/
 COPY testUtils testUtils/
 COPY scripts/removeSourcemaps.js scripts/
 COPY codegen.yml ./
-COPY vite.config.js /.
+COPY vite.config.js ./
 COPY tsconfig.json ./
 COPY *.d.ts ./
 COPY schema.graphql ./
