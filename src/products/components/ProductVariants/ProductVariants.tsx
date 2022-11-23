@@ -29,6 +29,7 @@ interface ProductVariantsProps {
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
+  productName: string;
   onAttributeValuesSearch: (
     id: string,
     query: string,
@@ -43,6 +44,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   variants,
   warehouses,
   variantAttributes,
+  productName,
   onAttributeValuesSearch,
   onChange,
   onRowClick,
@@ -128,6 +130,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         </Button>
       )}
       title={intl.formatMessage(messages.title)}
+      fullScreenTitle={intl.formatMessage(messages.fullScreenTitle, {
+        name: productName,
+      })}
       onChange={onChange}
     />
   );

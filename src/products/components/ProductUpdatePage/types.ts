@@ -35,8 +35,7 @@ import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDia
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
-  changeTaxCode: boolean;
-  chargeTaxes: boolean;
+  taxClassId: string;
   collections: string[];
   isAvailable: boolean;
   name: string;
@@ -45,7 +44,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   seoDescription: string;
   seoTitle: string;
   sku: string;
-  taxCode: string;
   trackInventory: boolean;
   isPreorder: boolean;
   globalThreshold: string;
@@ -85,7 +83,7 @@ export interface ProductUpdateHandlers
       | "changeMetadata"
       | "selectCategory"
       | "selectCollection"
-      | "selectTaxRate",
+      | "selectTaxClass",
       FormChange
     >,
     Record<
@@ -119,14 +117,14 @@ export type UseProductUpdateFormRenderProps = Omit<
 
 export interface UseProductUpdateFormOpts
   extends Record<
-    "categories" | "collections" | "taxTypes",
+    "categories" | "collections" | "taxClasses",
     SingleAutocompleteChoiceType[]
   > {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<
     React.SetStateAction<MultiAutocompleteChoiceType[]>
   >;
-  setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   hasVariants: boolean;

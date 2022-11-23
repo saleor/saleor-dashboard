@@ -1,5 +1,6 @@
-import { TableCell, TableRow, Typography } from "@material-ui/core";
+import { TableCell, Typography } from "@material-ui/core";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
 import {
   getAttributesCaption,
@@ -33,7 +34,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
   );
 
   return (
-    <TableRow key={line?.id}>
+    <TableRowLink key={line?.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={line?.thumbnail?.url}
@@ -51,7 +52,7 @@ const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDia
       <TableCell className={classes.colWarehouseStock}>
         {getOrderLineAvailableQuantity(line, stock)}
       </TableCell>
-    </TableRow>
+    </TableRowLink>
   );
 };
 

@@ -28,7 +28,7 @@ import {
   SearchProductsQuery,
   SearchProductTypesQuery,
   SearchWarehousesQuery,
-  TaxTypeFragment,
+  TaxClassFragment,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -75,7 +75,8 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  taxTypes: TaxTypeFragment[];
+  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  fetchMoreTaxClasses: FetchMoreProps;
   selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
@@ -117,7 +118,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   referenceProducts = [],
   saveButtonBarState,
   warehouses,
-  taxTypes,
+  taxClasses,
+  fetchMoreTaxClasses,
   selectedProductType,
   fetchProductTypes,
   weightUnit,
@@ -149,18 +151,18 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     MultiAutocompleteChoiceType[]
   >([]);
 
-  const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
-    initial?.taxCode || null,
+  const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(
+    initial?.taxClassId ?? "",
   );
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const productTypes = getChoices(productTypeChoiceList);
-  const taxTypeChoices =
-    taxTypes?.map(taxType => ({
-      label: taxType.description,
-      value: taxType.taxCode,
-    })) || [];
+  const taxClassChoices =
+    taxClasses?.map(taxClass => ({
+      label: taxClass.name,
+      value: taxClass.id,
+    })) ?? [];
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
@@ -194,9 +196,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
-      setSelectedTaxType={setSelectedTaxType}
+      setSelectedTaxClass={setSelectedTaxClass}
       setChannels={onChannelsChange}
-      taxTypes={taxTypeChoices}
+      taxClasses={taxClassChoices}
       warehouses={warehouses}
       currentChannels={currentChannels}
       fetchReferencePages={fetchReferencePages}
@@ -362,12 +364,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 )}
                 <CardSpacer />
                 <ProductTaxes
-                  data={data}
+                  value={data.taxClassId}
                   disabled={loading}
-                  onChange={change}
-                  onTaxTypeChange={handlers.selectTaxRate}
-                  selectedTaxTypeDisplayName={selectedTaxType}
-                  taxTypes={taxTypes}
+                  onChange={handlers.selectTaxClass}
+                  taxClassDisplayName={selectedTaxClass}
+                  taxClasses={taxClasses}
+                  onFetchMore={fetchMoreTaxClasses}
                 />
               </div>
             </Grid>

@@ -9,21 +9,18 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
-import {
-  Button,
-  MoreHorizontalIcon,
-  PlusSmallIcon,
-  useTheme,
-} from "@saleor/macaw-ui";
+import { MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import CardMenu, { CardMenuItem } from "../CardMenu";
-import CardTitle from "../CardTitle";
 import ColumnPicker from "../ColumnPicker";
-import useStyles, { useDatagridTheme } from "./styles";
+import { FullScreenContainer } from "./FullScreenContainer";
+import { Header } from "./Header";
+import useStyles, { useDatagridTheme, useFullScreenStyles } from "./styles";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
 import useColumns from "./useColumns";
@@ -31,6 +28,8 @@ import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
 } from "./useDatagridChange";
+import { useFullScreenMode } from "./useFullScreenMode";
+import { usePortalClasses } from "./usePortalClasses";
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
@@ -52,6 +51,7 @@ export interface DatagridProps {
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
   title: string;
+  fullScreenTitle?: string;
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
@@ -69,11 +69,17 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rows,
   selectionActions,
   title,
+  fullScreenTitle,
   onChange,
 }): React.ReactElement => {
   const classes = useStyles();
+  const fullScreenClasses = useFullScreenStyles(classes);
   const datagridTheme = useDatagridTheme();
   const editor = React.useRef<DataEditorRef>();
+
+  const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
+
+  usePortalClasses({ className: classes.portal });
 
   const {
     availableColumnsChoices,
@@ -194,136 +200,150 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const rowsTotal = rows - removed.length + added.length;
   const hasColumnGroups = columns.some(col => col.group);
+  const headerTitle = isAnimationOpenFinished
+    ? fullScreenTitle ?? title
+    : title;
 
   return (
-    <Card className={classes.root}>
-      <CardTitle
-        title={title}
-        toolbar={
-          <div className={classes.btnContainer}>
-            <Button
-              data-test-id="button-add-variant"
-              className={classes.addBtn}
-              variant="tertiary"
-              onClick={onRowAdded}
-            >
-              <PlusSmallIcon />
-              {addButtonLabel}
-            </Button>
-          </div>
-        }
-      />
-      <CardContent classes={{ root: classes.cardContentRoot }}>
-        {rowsTotal > 0 ? (
-          <>
-            {selection?.rows.length > 0 && (
-              <div className={classes.actionBtnBar}>
-                {selectionActionsComponent}
-              </div>
+    <FullScreenContainer
+      open={isOpen}
+      className={fullScreenClasses.fullScreenContainer}
+    >
+      <Card className={classes.root}>
+        <Header title={headerTitle}>
+          <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
+            {isOpen ? (
+              <FormattedMessage
+                id="QjPJ78"
+                defaultMessage="Close"
+                description="close full-screen"
+              />
+            ) : (
+              <FormattedMessage
+                id="483Xnh"
+                defaultMessage="Open"
+                description="open full-screen"
+              />
             )}
-            <div className={classes.editorContainer}>
-              <DataEditor
-                {...props}
-                theme={datagridTheme}
-                className={classes.datagrid}
-                getCellContent={getCellContentEnh}
-                onCellEdited={onCellEditedEnh}
-                columns={columns}
-                rows={rowsTotal}
-                freezeColumns={1}
-                smoothScrollX
-                rowMarkers="checkbox"
-                rowSelect="multi"
-                rowSelectionMode="multi"
-                rangeSelect="multi-rect"
-                columnSelect="none"
-                getCellsForSelection
-                onColumnMoved={onColumnMoved}
-                onColumnResize={onColumnResize}
-                onGridSelectionChange={setSelection}
-                gridSelection={selection}
-                rowHeight={48}
-                headerHeight={48}
-                ref={editor}
-                onPaste
-                rightElementProps={{
-                  sticky: true,
-                }}
-                rightElement={
-                  <div
-                    className={classNames(classes.rowActionBar, {
-                      [classes.rowActionBarScrolledToRight]: scrolledToRight,
-                    })}
-                  >
+          </Header.ButtonFullScreen>
+          <Header.ButtonAddRow onAddRow={onRowAdded}>
+            {addButtonLabel}
+          </Header.ButtonAddRow>
+        </Header>
+        <CardContent classes={{ root: classes.cardContentRoot }}>
+          {rowsTotal > 0 ? (
+            <>
+              {selection?.rows.length > 0 && (
+                <div className={classes.actionBtnBar}>
+                  {selectionActionsComponent}
+                </div>
+              )}
+              <div className={classes.editorContainer}>
+                <DataEditor
+                  {...props}
+                  theme={datagridTheme}
+                  className={classes.datagrid}
+                  getCellContent={getCellContentEnh}
+                  onCellEdited={onCellEditedEnh}
+                  columns={columns}
+                  rows={rowsTotal}
+                  freezeColumns={1}
+                  smoothScrollX
+                  rowMarkers="checkbox"
+                  rowSelect="multi"
+                  rowSelectionMode="multi"
+                  rangeSelect="multi-rect"
+                  columnSelect="none"
+                  getCellsForSelection
+                  onColumnMoved={onColumnMoved}
+                  onColumnResize={onColumnResize}
+                  onGridSelectionChange={setSelection}
+                  gridSelection={selection}
+                  rowHeight={48}
+                  headerHeight={48}
+                  ref={editor}
+                  onPaste
+                  rightElementProps={{
+                    sticky: true,
+                  }}
+                  rightElement={
                     <div
-                      className={classNames(classes.rowActionBarShadow, {
-                        [classes.rowActionBarShadowActive]: !scrolledToRight,
+                      className={classNames(classes.rowActionBar, {
+                        [classes.rowActionBarScrolledToRight]: scrolledToRight,
                       })}
-                    />
-                    <div className={classes.columnPicker}>
-                      <ColumnPicker
-                        IconButtonProps={{
-                          className: classes.columnPickerBtn,
-                          variant: "secondary",
-                          hoverOutline: false,
-                        }}
-                        availableColumns={availableColumnsChoices}
-                        initialColumns={columnChoices}
-                        defaultColumns={defaultColumns}
-                        onSave={onColumnsChange}
-                        hasMore={false}
-                        loading={false}
-                        onFetchMore={() => undefined}
-                        onQueryChange={picker.setQuery}
-                        query={picker.query}
-                      />
-                    </div>
-                    {hasColumnGroups && (
+                    >
                       <div
-                        className={classNames(classes.rowAction, {
-                          [classes.rowActionScrolledToRight]: scrolledToRight,
+                        className={classNames(classes.rowActionBarShadow, {
+                          [classes.rowActionBarShadowActive]: !scrolledToRight,
                         })}
                       />
-                    )}
-                    {Array(rowsTotal)
-                      .fill(0)
-                      .map((_, index) => (
+                      <div className={classes.columnPicker}>
+                        <ColumnPicker
+                          IconButtonProps={{
+                            className: classes.columnPickerBtn,
+                            variant: "secondary",
+                            hoverOutline: false,
+                          }}
+                          availableColumns={availableColumnsChoices}
+                          initialColumns={columnChoices}
+                          defaultColumns={defaultColumns}
+                          onSave={onColumnsChange}
+                          hasMore={false}
+                          loading={false}
+                          onFetchMore={() => undefined}
+                          onQueryChange={picker.setQuery}
+                          query={picker.query}
+                        />
+                      </div>
+                      {hasColumnGroups && (
                         <div
                           className={classNames(classes.rowAction, {
-                            [classes.rowActionSelected]: selection?.rows.hasIndex(
-                              index,
-                            ),
                             [classes.rowActionScrolledToRight]: scrolledToRight,
                           })}
-                          key={index}
-                        >
-                          <CardMenu
-                            disabled={index >= rowsTotal - added.length}
-                            Icon={MoreHorizontalIcon}
-                            IconButtonProps={{
-                              className: classes.columnPickerBtn,
-                              hoverOutline: false,
-                              state: "default",
-                            }}
-                            menuItems={menuItems(index)}
-                          />
-                        </div>
-                      ))}
-                  </div>
-                }
-                rowMarkerWidth={48}
-              />
-              {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
-              {hasColumnGroups && <div className={classes.columnGroupFixer} />}
-            </div>
-          </>
-        ) : (
-          <Typography align="center">{emptyText}</Typography>
-        )}
-      </CardContent>
-      <div id="portal" className={classes.portal} />
-    </Card>
+                        />
+                      )}
+                      {Array(rowsTotal)
+                        .fill(0)
+                        .map((_, index) => (
+                          <div
+                            className={classNames(classes.rowAction, {
+                              [classes.rowActionSelected]: selection?.rows.hasIndex(
+                                index,
+                              ),
+                              [classes.rowActionScrolledToRight]: scrolledToRight,
+                            })}
+                            key={index}
+                          >
+                            <CardMenu
+                              disabled={index >= rowsTotal - added.length}
+                              Icon={MoreHorizontalIcon}
+                              IconButtonProps={{
+                                className: classes.columnPickerBtn,
+                                hoverOutline: false,
+                                state: "default",
+                              }}
+                              menuItems={menuItems(index)}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  }
+                  rowMarkerWidth={48}
+                />
+                {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
+                {hasColumnGroups && (
+                  <div className={classes.columnGroupFixer} />
+                )}
+              </div>
+            </>
+          ) : (
+            <Typography align="center">{emptyText}</Typography>
+          )}
+        </CardContent>
+      </Card>
+    </FullScreenContainer>
   );
 };
+
 Datagrid.displayName = "Datagrid";
 export default Datagrid;

@@ -276,7 +276,7 @@ function useMenuStructure(
     const userPermissions = (user?.userPermissions || []).map(
       permission => permission.code,
     );
-    if (!menuItem?.permissions) {
+    if (!menuItem?.permissions || menuItem?.permissions?.length < 1) {
       return true;
     }
     return menuItem.permissions.some(permission =>

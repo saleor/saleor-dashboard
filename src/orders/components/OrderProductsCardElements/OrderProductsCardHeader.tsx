@@ -1,4 +1,5 @@
-import { TableCell, TableHead, TableRow } from "@material-ui/core";
+import { TableCell, TableHead } from "@material-ui/core";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -65,7 +66,7 @@ const TableHeader = () => {
         <col className={classes.colTotal} />
       </colgroup>
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCell className={classes.colName}>
             <FormattedMessage
               id="WE8IFE"
@@ -101,7 +102,7 @@ const TableHeader = () => {
               description="order line total price"
             />
           </TableCell>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
     </>
   );

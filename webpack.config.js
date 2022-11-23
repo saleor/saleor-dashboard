@@ -35,12 +35,16 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: "index.html",
   hash: true,
   template: "./src/index.html",
+  templateParameters: {
+    // URI is kept for backwards compatibility.
+    // See more at https://github.com/saleor/saleor-dashboard/issues/2502
+    API_URL: process.env.API_URI,
+    APP_MOUNT_URI: process.env.APP_MOUNT_URI,
+  },
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
-  API_URI: "",
   MARKETPLACE_URL: "",
   SALEOR_APPS_ENDPOINT: "",
-  APP_MOUNT_URI: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",

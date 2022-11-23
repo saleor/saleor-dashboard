@@ -6,12 +6,12 @@ import {
   DialogTitle,
   TableBody,
   TableCell,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { SearchProductsQuery } from "@saleor/graphql";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
@@ -130,7 +130,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         id={scrollableTargetId}
       >
         <InfiniteScroll
-          dataLength={products?.length}
+          dataLength={products?.length ?? 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
@@ -148,7 +148,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                   const isSelected = productsDict[product.id] || false;
 
                   return (
-                    <TableRow
+                    <TableRowLink
                       key={product.id}
                       data-test-id="assign-product-table-row"
                     >
@@ -168,7 +168,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                           onChange={() => handleChange(product.id)}
                         />
                       </TableCell>
-                    </TableRow>
+                    </TableRowLink>
                   );
                 })}
             </TableBody>

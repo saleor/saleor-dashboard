@@ -64,6 +64,9 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
+            inputProps={{
+              spellCheck: false,
+            }}
           />
           <TextField
             disabled={disabled}
@@ -78,6 +81,9 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             type="text"
             value={data.customerLastName}
             onChange={onChange}
+            inputProps={{
+              spellCheck: false,
+            }}
           />
           <TextField
             disabled={disabled}
@@ -89,6 +95,9 @@ const CustomerCreateDetails: React.FC<CustomerCreateDetailsProps> = props => {
             type="email"
             value={data.email}
             onChange={onChange}
+            inputProps={{
+              spellCheck: false,
+            }}
           />
         </div>
       </CardContent>

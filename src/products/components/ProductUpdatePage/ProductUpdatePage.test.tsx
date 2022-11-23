@@ -3,7 +3,6 @@ import { channelsList } from "@saleor/channels/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits } from "@saleor/fixtures";
 import { product as productFixture } from "@saleor/products/fixtures";
-import { taxTypes } from "@saleor/storybook/stories/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
 import { configure, mount } from "enzyme";
@@ -14,6 +13,7 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 const product = productFixture(placeholderImage);
 
 import * as _useNavigator from "@saleor/hooks/useNavigator";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
@@ -82,7 +82,8 @@ const props: ProductUpdatePageProps = {
   referencePages: [],
   referenceProducts: [],
   saveButtonBarState: "default",
-  taxTypes,
+  taxClasses,
+  fetchMoreTaxClasses: undefined,
   variants: product.variants,
   warehouses: warehouseList,
   attributeValues: [],

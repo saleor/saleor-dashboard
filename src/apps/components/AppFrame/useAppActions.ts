@@ -6,7 +6,7 @@ import {
   RedirectAction,
 } from "@saleor/app-sdk/app-bridge";
 import { appPath } from "@saleor/apps/urls";
-import { APP_MOUNT_URI } from "@saleor/config";
+import { getAppMountUri } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
@@ -78,7 +78,7 @@ export const useAppActions = (
           if (newContext) {
             window.open(to);
           } else if (appDeepUrlChange) {
-            const exactLocation = urlJoin(APP_MOUNT_URI, to);
+            const exactLocation = urlJoin(getAppMountUri(), to);
 
             // Change only url without reloading if we are in the same app
             window.history.pushState(null, "", exactLocation);
@@ -108,6 +108,15 @@ export const useAppActions = (
         }
 
         return sendResponseStatus(actionId, success);
+      }
+      case "updateRouting": {
+        const { newRoute, actionId } = action.payload;
+
+        const appCompletePath = appPath(encodeURIComponent(appId));
+
+        window.history.pushState(null, "", appCompletePath + newRoute);
+
+        return sendResponseStatus(actionId, true);
       }
       default: {
         throw new Error("Unknown action type");

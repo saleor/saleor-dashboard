@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
@@ -12,6 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeFragment,
@@ -181,7 +181,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           <col className={classes.colAction} />
         </colgroup>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCell>
               {postalCodes === undefined ? (
                 <Skeleton className={classes.skeleton} />
@@ -210,14 +210,14 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                 />
               </IconButton>
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         {expanded && (
           <TableBody>
             {renderCollection(
               postalCodes,
               postalCodeRange => (
-                <TableRow key={postalCodeRange?.id}>
+                <TableRowLink key={postalCodeRange?.id}>
                   <TableCell>
                     {getPostalCodeRangeLabel(postalCodeRange)}
                   </TableCell>
@@ -231,10 +231,10 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
               () => (
-                <TableRow>
+                <TableRowLink>
                   <TableCell colSpan={2}>
                     <Typography color="textSecondary">
                       <FormattedMessage
@@ -243,7 +243,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       />
                     </Typography>
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               ),
             )}
           </TableBody>

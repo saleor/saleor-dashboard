@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -13,7 +7,11 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppQuery } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import {
+  commonMessages,
+  commonStatusMessages,
+  sectionNames,
+} from "@saleor/intl";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { webhookPath } from "@saleor/webhooks/urls";
@@ -58,7 +56,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
       />
       <ResponsiveTable className={classes.table}>
         <TableHead>
-          <TableRow>
+          <TableRowLink>
             <TableCellHeader>
               {intl.formatMessage(commonMessages.name)}
             </TableCellHeader>
@@ -70,7 +68,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
             >
               <FormattedMessage {...messages.action} />
             </TableCell>
-          </TableRow>
+          </TableRowLink>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -98,8 +96,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                     <Pill
                       label={
                         webhook.isActive
-                          ? intl.formatMessage(commonMessages.active)
-                          : intl.formatMessage(commonMessages.notActive)
+                          ? intl.formatMessage(commonStatusMessages.active)
+                          : intl.formatMessage(commonStatusMessages.notActive)
                       }
                       color={webhook.isActive ? "success" : "error"}
                     />
@@ -127,11 +125,11 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               </TableRowLink>
             ),
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   {intl.formatMessage(messages.noWebhooks)}
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

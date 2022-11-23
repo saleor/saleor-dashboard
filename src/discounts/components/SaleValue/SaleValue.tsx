@@ -4,12 +4,12 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { DiscountErrorFragment } from "@saleor/graphql";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -94,7 +94,7 @@ const SaleValue: React.FC<SaleValueProps> = ({
               );
 
               return (
-                <TableRow
+                <TableRowLink
                   key={listing?.id || `skeleton-${index}`}
                   className={classes.row}
                 >
@@ -119,18 +119,18 @@ const SaleValue: React.FC<SaleValueProps> = ({
                       <Skeleton />
                     )}
                   </TableCell>
-                </TableRow>
+                </TableRowLink>
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="/glQgs"
                     defaultMessage="No channels found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>

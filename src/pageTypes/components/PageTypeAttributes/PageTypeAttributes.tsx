@@ -1,4 +1,4 @@
-import { Card, TableCell, TableRow } from "@material-ui/core";
+import { Card, TableCell } from "@material-ui/core";
 import { attributeUrl } from "@saleor/attributes/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -11,6 +11,7 @@ import {
 } from "@saleor/components/SortableTable";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@saleor/components/TableHead";
+import TableRowLink from "@saleor/components/TableRowLink";
 import { AttributeFragment, AttributeTypeEnum } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -169,14 +170,14 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
               );
             },
             () => (
-              <TableRow>
+              <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     id="ztQgD8"
                     defaultMessage="No attributes found"
                   />
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </SortableTableBody>

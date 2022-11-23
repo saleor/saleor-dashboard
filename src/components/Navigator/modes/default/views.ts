@@ -16,7 +16,7 @@ import { productTypeListUrl } from "@saleor/productTypes/urls";
 import { shippingZonesListUrl } from "@saleor/shipping/urls";
 import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
-import { countryListUrl } from "@saleor/taxes/urls";
+import { taxConfigurationListUrl } from "@saleor/taxes/urls";
 import { languageListUrl } from "@saleor/translations/urls";
 import { warehouseListUrl } from "@saleor/warehouses/urls";
 import { score } from "fuzzaldrin";
@@ -108,7 +108,7 @@ function searchInViews(
     },
     {
       label: intl.formatMessage(sectionNames.taxes),
-      url: countryListUrl,
+      url: taxConfigurationListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.translations),

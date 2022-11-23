@@ -1,6 +1,7 @@
 import { listActionsProps } from "@saleor/fixtures";
 import { WeightUnitsEnum } from "@saleor/graphql";
 import { formError } from "@saleor/storybook/misc";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -25,7 +26,8 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   productAttributeList: listActionsProps,
   productType,
   saveButtonBarState: "default",
-  taxTypes: [],
+  taxClasses,
+  onFetchMoreTaxClasses: undefined,
   variantAttributeList: listActionsProps,
   setSelectedVariantAttributes: () => undefined,
   selectedVariantAttributes: [],

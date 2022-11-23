@@ -487,3 +487,42 @@ export const shippingPriceTranslateErrorFragment = gql`
     message
   }
 `;
+
+export const taxConfigurationUpdateError = gql`
+  fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
+    field
+    code
+  }
+`;
+
+export const taxCountryConfigurationUpdateError = gql`
+  fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+    field
+    code
+  }
+`;
+export const taxCountryConfigurationDeleteError = gql`
+  fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+    field
+    code
+  }
+`;
+
+export const taxClassUpdateError = gql`
+  fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+    field
+    code
+  }
+`;
+export const taxClassCreateError = gql`
+  fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+    field
+    code
+  }
+`;
+export const taxClassDeleteError = gql`
+  fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+    field
+    code
+  }
+`;

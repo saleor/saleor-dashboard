@@ -356,3 +356,22 @@ export function updateVariantPrice({ variantId, channelId, price }) {
     .sendRequestWithQuery(mutation)
     .its("body.data.productVariantChannelListingUpdate");
 }
+
+export function updateVariantWarehouse({ variantId, warehouseId }) {
+  const mutation = `mutation{
+    productVariantStocksCreate(variantId: "${variantId}", 
+      stocks: 
+      {
+        quantity: 0,
+        warehouse: "${warehouseId}"
+      }
+      ){
+      errors{
+        field
+        message
+      }
+    }
+  }
+  `;
+  return cy.sendRequestWithQuery(mutation);
+}

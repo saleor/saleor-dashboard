@@ -5,7 +5,11 @@ export interface UseStateFromPropsOpts<T> {
   mergeFunc?: (prevData: T, state: T, newData: T) => T;
   onRefresh?: (prevData: T, data: T) => void;
 }
-
+/**
+ * @deprecated This function updates state every time initial
+ * value changes, but uses deep comparisons to detect changes.
+ * You're most likely looking for `useStateUpdate` instead.
+ */
 function useStateFromProps<T>(
   data: T,
   opts: UseStateFromPropsOpts<T> = {},

@@ -3,7 +3,6 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -98,7 +97,7 @@ const StaffList: React.FC<StaffListProps> = props => {
         <col className={classes.colEmail} />
       </colgroup>
       <TableHead>
-        <TableRow>
+        <TableRowLink>
           <TableCellHeader
             direction={
               sort.sort === StaffListUrlSortField.name
@@ -125,17 +124,17 @@ const StaffList: React.FC<StaffListProps> = props => {
           >
             <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
           </TableCellHeader>
-        </TableRow>
+        </TableRowLink>
       </TableHead>
       <TableFooter>
-        <TableRow>
+        <TableRowLink>
           <TablePaginationWithContext
             colSpan={numberOfColumns}
             disabled={disabled}
             settings={settings}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </TableRow>
+        </TableRowLink>
       </TableFooter>
       <TableBody>
         {renderCollection(
@@ -189,14 +188,14 @@ const StaffList: React.FC<StaffListProps> = props => {
             </TableRowLink>
           ),
           () => (
-            <TableRow>
+            <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
                 <FormattedMessage
                   id="xJQX5t"
                   defaultMessage="No staff members found"
                 />
               </TableCell>
-            </TableRow>
+            </TableRowLink>
           ),
         )}
       </TableBody>

@@ -1,10 +1,4 @@
-import {
-  Card,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import { customAppAddUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
@@ -90,7 +84,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                 <AppsSkeleton key={index} />
               ),
             () => (
-              <TableRow className={classes.tableRow}>
+              <TableRowLink className={classes.tableRow}>
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
@@ -100,7 +94,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                     />
                   </Typography>
                 </TableCell>
-              </TableRow>
+              </TableRowLink>
             ),
           )}
         </TableBody>
