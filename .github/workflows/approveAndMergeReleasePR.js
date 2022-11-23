@@ -54,7 +54,7 @@ program
             if (!knownBug) {
               failedNewTests.push({
                 title: testCase.titleParts[1],
-                url: issue.url,
+                url: issue.html_url,
                 spec: testCase.titleParts[0],
               });
             }
