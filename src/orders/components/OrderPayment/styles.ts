@@ -36,6 +36,12 @@ export const useStyles = makeStyles(
     success: {
       color: theme.palette.success.dark,
     },
+    actions: {
+      gap: theme.spacing(1),
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "right",
+    },
   }),
   { name: "OrderPayment" },
 );
