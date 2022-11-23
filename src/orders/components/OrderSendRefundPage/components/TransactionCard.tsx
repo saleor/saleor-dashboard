@@ -18,7 +18,8 @@ import { refundPageMessages } from "../messages";
 
 interface TransactionCardProps {
   transaction: TransactionItemFragment;
-  order: OrderDetailsFragment;
+  orderId: OrderDetailsFragment["id"];
+  totalRemainingGrant: OrderDetailsFragment["totalRemainingGrant"];
 }
 
 const useStyles = makeStyles(
@@ -44,7 +45,8 @@ const useStyles = makeStyles(
 
 export const TransactionCard: React.FC<TransactionCardProps> = ({
   transaction,
-  order,
+  orderId,
+  totalRemainingGrant,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -57,7 +59,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     { status, loading, error, data },
   ] = useOrderSendRefundMutation({
     refetchQueries: [
-      { query: OrderDetailsDocument, variables: { id: order.id } },
+      { query: OrderDetailsDocument, variables: { id: orderId } },
     ],
     variables: {
       transactionId: transaction.id,
@@ -83,10 +85,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
   const setMaxRefundValue = () => {
     setValue(
-      Math.min(
-        order.totalRemainingGrant.amount,
-        transaction.chargedAmount.amount,
-      ),
+      Math.min(totalRemainingGrant.amount, transaction.chargedAmount.amount),
     );
   };
 

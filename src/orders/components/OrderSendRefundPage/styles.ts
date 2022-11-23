@@ -55,3 +55,32 @@ export const useDataLineSettledStyles = makeStyles(
     name: "DataLineSettled",
   },
 );
+
+export const useManualRefundCardStyles = makeStyles(
+  theme => ({
+    wrapper: {
+      display: "flex",
+      flexDirection: "column",
+      padding: theme.spacing(2),
+      alignItems: "flex-end",
+      gap: theme.spacing(1),
+    },
+    form: {
+      display: "flex",
+      gap: theme.spacing(1),
+      width: "100%",
+      justifyContent: "flex-end",
+    },
+    priceInput: {
+      maxWidth: "24rem",
+    },
+    descriptionInput: {
+      width: "100%",
+      maxWidth: "30rem",
+    },
+    submitButton: {
+      flexShrink: 0,
+    },
+  }),
+  { name: "ManualRefundCard" },
+);

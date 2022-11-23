@@ -3,40 +3,12 @@ import CardTitle from "@saleor/components/CardTitle";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import { commonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { manualRefundMessages, refundPageMessages } from "../messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    wrapper: {
-      display: "flex",
-      flexDirection: "column",
-      padding: theme.spacing(2),
-      alignItems: "flex-end",
-      gap: theme.spacing(1),
-    },
-    form: {
-      display: "flex",
-      gap: theme.spacing(1),
-      width: "100%",
-      justifyContent: "flex-end",
-    },
-    priceInput: {
-      maxWidth: "24rem",
-    },
-    descriptionInput: {
-      width: "100%",
-      maxWidth: "30rem",
-    },
-    submitButton: {
-      flexShrink: 0,
-    },
-  }),
-  { name: "ManualRefundCard" },
-);
+import { useManualRefundCardStyles } from "../styles";
 
 export interface ManualRefundCardProps {
   onAddRefund: (amount: number, description: string) => void;
@@ -51,7 +23,7 @@ export const ManualRefundCard: React.FC<ManualRefundCardProps> = ({
   submitState,
   error,
 }) => {
-  const classes = useStyles();
+  const classes = useManualRefundCardStyles();
   const intl = useIntl();
 
   const [amount, setAmount] = React.useState<number | undefined>();
