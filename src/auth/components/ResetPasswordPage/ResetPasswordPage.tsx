@@ -3,7 +3,7 @@ import { Button } from "@saleor/components/Button";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { IconButton } from "@saleor/components/IconButton";
-import { APP_MOUNT_URI } from "@saleor/config";
+import { getAppMountUri } from "@saleor/config";
 import { RequestPasswordResetMutation } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -36,7 +36,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          <IconButton className={classes.backBtn} href={APP_MOUNT_URI}>
+          <IconButton className={classes.backBtn} href={getAppMountUri()}>
             <ArrowRightIcon className={classes.arrow} />
           </IconButton>
           <Typography variant="h3" className={classes.header}>
@@ -61,6 +61,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             value={data.email}
             inputProps={{
               "data-test-id": "email",
+              spellCheck: false,
             }}
           />
           <FormSpacer />

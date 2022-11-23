@@ -31,7 +31,8 @@ describe("Tests for customer registration", () => {
   it("should register customer", { tags: ["@customer", "@stagedOnly"] }, () => {
     const email = `${startsWith}${faker.datatype.number()}@example.com`;
     customerRegistration({ email, channel: defaultChannel.slug });
-    getMailActivationLinkForUser(email)
+    const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
+    getMailActivationLinkForUser(email, registrationLinkRegex)
       .then(urlLink => {
         const tokenRegex = /token=(.*)/;
         const token = urlLink.match(tokenRegex)[1];

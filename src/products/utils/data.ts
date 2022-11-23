@@ -201,8 +201,7 @@ export function getProductUpdatePageFormData(
 
   return {
     category: maybe(() => product.category.id, ""),
-    changeTaxCode: !!product?.taxType.taxCode,
-    chargeTaxes: maybe(() => product.chargeTaxes, false),
+    taxClassId: product?.taxClass?.id,
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       [],
@@ -224,7 +223,6 @@ export function getProductUpdatePageFormData(
       "",
     ),
     slug: product?.slug || "",
-    taxCode: product?.taxType.taxCode,
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
     isPreorder: !!variant?.preorder || false,

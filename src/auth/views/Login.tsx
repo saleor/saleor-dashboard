@@ -1,7 +1,7 @@
-import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
 import { useAvailableExternalAuthenticationsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { getAppMountUriForRedirect } from "@saleor/utils/urls";
 import React, { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
@@ -23,7 +23,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     requestLoginByExternalPlugin,
     loginByExternalPlugin,
     authenticating,
-    error,
+    errors,
   } = useUser();
   const {
     data: externalAuthentications,
@@ -52,7 +52,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const result = await requestLoginByExternalPlugin(pluginId, {
       redirectUri: urlJoin(
         window.location.origin,
-        APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
+        getAppMountUriForRedirect(),
         loginCallbackPath,
       ),
     });
@@ -79,14 +79,17 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const { code, state } = params;
     const isCallbackPath = location.pathname.includes(loginCallbackPath);
 
-    if (code && state && isCallbackPath) {
+    const externalAuthParamsExist = code && state && isCallbackPath;
+    const externalAuthNotPerformed = !authenticating && !errors.length;
+
+    if (externalAuthParamsExist && externalAuthNotPerformed) {
       handleExternalAuthentication(code, state);
     }
   }, []);
 
   return (
     <LoginPage
-      error={error}
+      errors={errors}
       disabled={authenticating}
       externalAuthentications={
         externalAuthentications?.shop?.availableExternalAuthentications

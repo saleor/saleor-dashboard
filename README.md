@@ -1,6 +1,5 @@
 ![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
 
-
 <div align="center">
   <h1>Saleor Dashboard</h1>
 </div>
@@ -33,7 +32,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js v14+
+- Node.js v18+
 - A running instance of [Saleor](https://github.com/saleor/saleor/).
 
 ### Installing
@@ -54,7 +53,6 @@ $ cd saleor-dashboard
 
 Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release
 
-
 #### Using development version
 
 If you want to use the latest development version, checkout to the `main` branch:
@@ -71,7 +69,7 @@ $ npm i
 
 ### Configuration
 
-Create ```.env``` file in a root directory or set environment variables with following values:
+Create `.env` file in a root directory or set environment variables with following values:
 
 - `API_URI` (required) - URI of a running instance of Saleor GraphQL API.
   If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
@@ -90,6 +88,7 @@ To start the development server run:
 ```
 $ npm start
 ```
+
 In case you see CORS errors make sure to check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ### Production
@@ -120,7 +119,55 @@ import { CustomAdapter } from "./adapters/";
 const errorTracker = ErrorTrackerFactory(CustomAdapter(config));
 ```
 
-##### Usage with Sentry adapter:
+### Running e2e tests
+
+Add Cypress specific env variables to `.env` file (created in configuration section above):
+
+```
+CYPRESS_USER_NAME=
+CYPRESS_USER_PASSWORD=
+CYPRESS_SECOND_USER_NAME=
+CYPRESS_PERMISSIONS_USERS_PASSWORD=
+
+CYPRESS_mailHogUrl=
+STRIPE_SECRET_KEY=
+STRIPE_PUBLIC_KEY=
+
+// not required
+CYPRESS_RECORD_KEY= // if you want your local runs recorded
+```
+
+For values of those variables refer to our internal documentation.
+
+You are ready to run cypress commands like:
+
+```shell
+npm run cy:open
+```
+
+### Usage with docker
+
+Build docker image:
+
+```shell
+docker build --tag saleor-dashboard .
+```
+
+Run nginx from docker and bind it to port on your machine (in this example 8080):
+
+```shell
+docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
+```
+
+Enter `http://localhost:8080/` to use dashboard.
+
+If you want to dynamically change `API_URL` in runtime you can use (assuming you have running container named `saleor-dashboard`):
+
+```shell
+docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-replace-api-url.sh
+```
+
+### Usage with Sentry adapter
 
 Sentry is used as the default tracker so no changes in code are necessary and the configuration is done via environment variables.
 

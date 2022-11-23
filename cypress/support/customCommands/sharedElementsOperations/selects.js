@@ -48,7 +48,9 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
         cy.wrap(detachedOption).should(det => {
           Cypress.dom.isDetached(det);
         });
-        cy.contains(BUTTON_SELECTORS.selectOption, option).click();
+        cy.contains(BUTTON_SELECTORS.selectOption, option)
+          .should("be.visible")
+          .click();
         cy.wrap(option).as("option");
       });
   } else {

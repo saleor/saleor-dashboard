@@ -9,7 +9,7 @@ import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
-import { updatePlugin } from "../support/api/requests/Plugins";
+import { activatePlugin, updatePlugin } from "../support/api/requests/Plugins";
 import {
   deleteStaffMembersStartsWith,
   updateStaffMember,
@@ -37,6 +37,7 @@ describe("Staff members", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteStaffMembersStartsWith(startsWith);
+    activatePlugin({ id: "mirumee.notifications.admin_email" });
 
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {

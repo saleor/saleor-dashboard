@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.8.0-dev",
+  "version": "3.9.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -13,8 +13,8 @@
   },
   "homepage": "https://saleor.io/",
   "engines": {
-    "node": ">=14 <15",
-    "npm": ">=6.11.0 <7"
+    "node": ">=18 <19",
+    "npm": ">=8 <9"
   },
   "dependencies": {
     "@apollo/client": "3.4.15",
@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "~0.6.6",
+    "@saleor/macaw-ui": "0.6.5",
     "@saleor/sdk": "^0.4.4",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -113,7 +113,7 @@
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-sdk": "~0.11.0",
+    "@saleor/app-sdk": "~0.20.0",
     "@sentry/webpack-plugin": "^1.14.0",
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
@@ -136,7 +136,7 @@
     "@types/react-infinite-scroller": "^1.2.1",
     "@types/react-router-dom": "^4.3.4",
     "@types/react-sortable-hoc": "^0.7.1",
-    "@types/react-sortable-tree": "^0.3.6",
+    "@types/react-sortable-tree": "^0.3.15",
     "@types/react-test-renderer": "^16.9.5",
     "@types/semver-compare": "^1.0.1",
     "@types/setup-polly-jest": "^0.5.0",
@@ -144,8 +144,8 @@
     "@types/storybook__react": "^4.0.2",
     "@types/url-join": "^4.0.0",
     "@types/webappsec-credential-management": "^0.5.1",
-    "@typescript-eslint/eslint-plugin": "^4.16.1",
-    "@typescript-eslint/parser": "^4.16.1",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
@@ -199,7 +199,7 @@
     "start-server-and-test": "^1.11.0",
     "ts-jest": "^27.0.7",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "^4.3.5",
+    "typescript": "^4.8.4",
     "webpack": "^4.35.3",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^3.3.6",
@@ -219,7 +219,8 @@
     "resetMocks": false,
     "setupFiles": [
       "jest-canvas-mock",
-      "jest-localstorage-mock"
+      "jest-localstorage-mock",
+      "<rootDir>/testUtils/setup.ts"
     ],
     "transform": {
       "^.+\\.(jsx?|tsx?)$": "babel-jest",
@@ -265,18 +266,20 @@
     ]
   },
   "scripts": {
-    "build-storybook": "build-storybook -c src/storybook/ -o build/storybook",
+    "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook -c src/storybook/ -o build/storybook",
     "build-types": "graphql-codegen",
-    "build": "npm run build-types && webpack -p",
+    "prebuild": "npm run build-types",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
     "fetch-schema": "graphql-codegen --config ./fetch-schema.yml && node scripts/build-schema.js",
     "heroku-postbuild": "npm run build",
-    "serve:lhci": "NODE_ENV=production npm run server",
-    "start": "npm run build-types && webpack-dev-server -d",
-    "storybook": "start-storybook -p 3000 -c src/storybook/",
+    "serve:lhci": "cross-env NODE_ENV=production npm run server",
+    "prestart": "npm run build-types",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server -d",
+    "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 3000 -c src/storybook/",
     "cy:run": "cypress run",
     "cy:run:dashboard": "cypress run --record",
     "cy:open": "cypress open",
