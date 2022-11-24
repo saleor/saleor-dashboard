@@ -1,7 +1,7 @@
-import { LogLevels, OutputData } from "@editorjs/editorjs";
+import { LogLevels } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { Props as ReactEditorJSProps } from "@react-editor-js/core";
+import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
 import classNames from "classnames";
 import React from "react";
 import { createReactEditorJS } from "react-editor-js";
@@ -11,14 +11,6 @@ import { useHasRendered } from "./hooks";
 import useStyles from "./styles";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
-
-// https://github.com/Jungwoo-An/react-editor-js#how-to-access-editor-js-instance
-export interface EditorCore {
-  destroy(): Promise<void>;
-  clear(): Promise<void>;
-  save(): Promise<OutputData>;
-  render(data: OutputData): Promise<void>;
-}
 
 export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;

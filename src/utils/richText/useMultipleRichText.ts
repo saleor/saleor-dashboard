@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { EditorCore } from "@saleor/components/RichTextEditor";
+import { EditorCore } from "@react-editor-js/core";
 import { useCallback, useRef } from "react";
 
 import useMap from "../objects/useMap";
