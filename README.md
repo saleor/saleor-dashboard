@@ -86,7 +86,7 @@ Create `.env` file in a root directory or set environment variables with followi
 To start the development server run:
 
 ```
-$ npm start
+$ npm run dev
 ```
 
 In case you see CORS errors make sure to check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
