@@ -81,6 +81,14 @@ Create `.env` file in a root directory or set environment variables with followi
 - `STATIC_URL` - URL where the static files are located.
   E.g. if you use S3 bucket, you should set it to the bucket's URL. By default Saleor assumes you serve static files from the root of your site at `http://localhost:9000/`.
 
+- `MARKETPLACE_URL`  - URL where Marketplace App can is located, if not found, will not render navigation link to Marketplace
+
+- `SALEOR_APPS_PAGE_PATH` - Path joined to `MARKETPLACE_URL` to render Saleor Apps page
+ 
+- `SALEOR_APPS_JSON_PATH` - Path joined to `MARKETPLACE_URL` to fetch list of Saleor Apps as JSON
+- 
+- `APP_TEMPLATE_GALLERY_PATH` - Path joined to `MARKETPLACE_URL` to render App Template Gallery page
+
 ### Development
 
 To start the development server run:

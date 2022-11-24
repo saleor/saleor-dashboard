@@ -6,17 +6,23 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { MARKETPLACE_URL } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
+import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
+import { marketplaceUrl } from "@saleor/marketplace/urls";
 import React from "react";
 import { useIntl } from "react-intl";
+import useRouter from "use-react-router";
 
 import { useStyles } from "./styles";
+
+const getDeepPath = (path: string) => path.replace(marketplaceUrl, "");
 
 const Component = () => {
   const classes = useStyles();
   const intl = useIntl();
   const navigate = useNavigator();
+  const router = useRouter();
 
-  if (!MARKETPLACE_URL) {
+  if (!marketplaceUrlResolver.checkMarketplaceConfigExists()) {
     return <NotFoundPage onBack={() => navigate("/")} />;
   }
 
@@ -26,7 +32,9 @@ const Component = () => {
       <Container>
         <PreviewPill className={classes.previewPill} />
         <AppFrame
-          src={MARKETPLACE_URL}
+          src={
+            new URL(getDeepPath(router.location.pathname), MARKETPLACE_URL).href
+          }
           // Marketplace doesn't require app token nor id
           appToken=""
           appId=""

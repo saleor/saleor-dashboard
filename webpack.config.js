@@ -40,6 +40,10 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
     // See more at https://github.com/saleor/saleor-dashboard/issues/2502
     API_URL: process.env.API_URI,
     APP_MOUNT_URI: process.env.APP_MOUNT_URI,
+    APP_TEMPLATE_GALLERY_PATH: process.env.APP_TEMPLATE_GALLERY_PATH,
+    SALEOR_APPS_JSON_PATH: process.env.SALEOR_APPS_JSON_PATH,
+    SALEOR_APPS_PAGE_PATH: process.env.SALEOR_APPS_PAGE_PATH,
+    MARKETPLACE_URL: process.env.MARKETPLACE_URL,
   },
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({

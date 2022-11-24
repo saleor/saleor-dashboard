@@ -75,9 +75,16 @@ function useMenuStructure(
           },
           {
             ariaLabel: "marketplace",
-            label: intl.formatMessage(sectionNames.marketplace),
-            id: "marketplace",
-            url: marketplaceUrl,
+            // label: intl.formatMessage(sectionNames.marketplace),
+            label: "Saleor Apps Marketplace",
+            id: "marketplace-saleor-apps",
+            url: marketplaceUrl + "saleor-apps",
+          },
+          {
+            ariaLabel: "marketplace",
+            label: "Template Gallery",
+            id: "marketplace-template-gallery",
+            url: marketplaceUrl + "template-gallery",
           },
         ],
       };
