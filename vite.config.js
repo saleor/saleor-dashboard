@@ -90,7 +90,6 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
-      assetsDir: "./",
       commonjsOptions: {
         /*
           Fix dynamic imports by "require", Neccessary for react-editor-js
