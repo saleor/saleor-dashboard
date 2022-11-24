@@ -12,7 +12,9 @@ export const makeProductTypeKindChangeHandler = (
 
 export function handleTaxClassChange(
   event: ChangeEvent,
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>,
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >,
   formChange: FormChange,
   displayChange: (name: string) => void,
 ) {

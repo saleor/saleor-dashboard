@@ -70,7 +70,9 @@ export interface ShippingZoneRatesPageProps
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   fetchMoreTaxClasses: FetchMoreProps;
 }
 

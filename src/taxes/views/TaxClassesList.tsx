@@ -1,23 +1,30 @@
 import {
-  TaxClassCreateInput,
   TaxClassFragment,
-  TaxClassUpdateInput,
   useTaxClassCreateMutation,
   useTaxClassDeleteMutation,
   useTaxClassesListQuery,
   useTaxClassUpdateMutation,
   useTaxCountriesListQuery,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { taxesMessages } from "../messages";
 import TaxClassesPage from "../pages/TaxClassesPage";
+import { TaxClassesPageFormData } from "../pages/TaxClassesPage/form";
 import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
+import {
+  createTaxClassCreateInput,
+  createTaxClassUpdateInput,
+} from "../utils/data";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import { mapUndefinedCountriesToTaxClasses } from "../utils/utils";
 
@@ -40,11 +47,16 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       id: "new",
       name: intl.formatMessage(taxesMessages.newTaxClass),
       countries: [],
+      metadata: [],
+      privateMetadata: [],
     }),
     [intl],
   );
 
   const isNewTaxClass = id === "new";
+
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [taxClassDeleteMutation] = useTaxClassDeleteMutation({
     onCompleted: data => {
@@ -89,15 +101,14 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
-  const handleCreateTaxClass = async (input: TaxClassCreateInput) => {
+  const createTaxClass = async (data: TaxClassesPageFormData) => {
     const res = await taxClassCreateMutation({
       variables: {
-        input,
+        input: createTaxClassCreateInput(data),
       },
     });
-    refetch();
-    navigate(res?.data?.taxClassCreate?.taxClass?.id);
-    return res;
+
+    return res?.data?.taxClassCreate;
   };
 
   const handleDeleteTaxClass = async (id: string) => {
@@ -114,13 +125,16 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     }
   };
 
-  const handleUpdateTaxClass = async (id: string, input: TaxClassUpdateInput) =>
-    taxClassUpdateMutation({
+  const updateTaxClass = async (data: TaxClassesPageFormData) => {
+    const res = await taxClassUpdateMutation({
       variables: {
-        id,
-        input,
+        id: data.id,
+        input: createTaxClassUpdateInput(data),
       },
     });
+
+    return res?.data?.taxClassUpdate?.errors || [];
+  };
 
   const { data, refetch } = useTaxClassesListQuery({
     variables: { first: 100 },
@@ -152,10 +166,30 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     newTaxClass,
   ]);
 
-  const savebarState =
-    id === "new"
-      ? taxClassCreateMutationState.status
-      : taxClassUpdateMutationState.status;
+  const selectedTaxClass = React.useMemo(() => {
+    if (isNewTaxClass) {
+      return newTaxClass;
+    }
+
+    return taxClasses.find(taxClass => taxClass.id === id);
+  }, [id, isNewTaxClass, newTaxClass, taxClasses]);
+
+  const handleCreateTaxClass = createMetadataCreateHandler(
+    createTaxClass,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
+
+  const handleUpdateTaxClass = createMetadataUpdateHandler(
+    selectedTaxClass,
+    updateTaxClass,
+    variables => updateMetadata({ variables }),
+    variables => updatePrivateMetadata({ variables }),
+  );
+
+  const savebarState = isNewTaxClass
+    ? taxClassCreateMutationState.status
+    : taxClassUpdateMutationState.status;
 
   useTaxUrlRedirect({
     id,

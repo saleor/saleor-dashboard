@@ -14,7 +14,9 @@ import { ShippingZoneRateUpdateFormData } from "../ShippingZoneRatesPage/types";
 interface ShippingMethodTaxesProps {
   value: string;
   taxClassDisplayName: string;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onFetchMore: FetchMoreProps;

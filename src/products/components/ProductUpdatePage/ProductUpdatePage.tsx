@@ -89,7 +89,9 @@ export interface ProductUpdatePageProps {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;

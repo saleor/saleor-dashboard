@@ -76,5 +76,6 @@ export const taxClassFragment = gql`
     countries {
       ...TaxRate
     }
+    ...Metadata
   }
 `;

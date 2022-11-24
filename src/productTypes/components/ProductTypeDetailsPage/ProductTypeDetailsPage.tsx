@@ -64,7 +64,9 @@ export interface ProductTypeDetailsPageProps {
   pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;

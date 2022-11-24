@@ -56,7 +56,9 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   fetchMoreTaxClasses: FetchMoreProps;
 }
 

@@ -2455,8 +2455,10 @@ export const TaxClassFragmentDoc = gql`
   countries {
     ...TaxRate
   }
+  ...Metadata
 }
-    ${TaxRateFragmentDoc}`;
+    ${TaxRateFragmentDoc}
+${MetadataFragmentDoc}`;
 export const TimePeriodFragmentDoc = gql`
     fragment TimePeriod on TimePeriod {
   amount

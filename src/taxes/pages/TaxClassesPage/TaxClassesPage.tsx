@@ -9,15 +9,12 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
+import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { configurationMenuUrl } from "@saleor/configuration";
-import {
-  TaxClassCreateInput,
-  TaxClassFragment,
-  TaxClassUpdateInput,
-} from "@saleor/graphql";
+import { TaxClassFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -36,11 +33,13 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
 import { isLastElement } from "@saleor/taxes/utils/utils";
+import { getFormErrors } from "@saleor/utils/errors";
+import { getCommonFormFieldErrorMessage } from "@saleor/utils/errors/common";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
-import TaxClassesForm from "./form";
+import TaxClassesForm, { TaxClassesPageFormData } from "./form";
 import { useStyles } from "./styles";
 import TaxClassesMenu from "./TaxClassesMenu";
 
@@ -52,8 +51,8 @@ interface TaxClassesPageProps {
   disabled: boolean;
   onCreateNewButtonClick: () => void;
   onTaxClassDelete: (id: string) => SubmitPromise;
-  onTaxClassCreate: (input: TaxClassCreateInput) => SubmitPromise;
-  onTaxClassUpdate: (id: string, input: TaxClassUpdateInput) => SubmitPromise;
+  onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise;
+  onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise;
 }
 
 export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
@@ -90,10 +89,12 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
       onTaxClassUpdate={onTaxClassUpdate}
       disabled={disabled}
     >
-      {({ data, handlers, submit, change }) => {
+      {({ data, validationErrors, handlers, submit, change }) => {
         const filteredRates = data.updateTaxClassRates.filter(
           rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
+
+        const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
           <Container>
@@ -140,6 +141,11 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                         fullWidth
                         inputProps={{ className: classes.namePadding }}
                         inputRef={nameInputRef}
+                        error={!!formErrors.name}
+                        helperText={getCommonFormFieldErrorMessage(
+                          formErrors.name,
+                          intl,
+                        )}
                       />
                     </CardContent>
                   </Card>
@@ -238,6 +244,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                       </>
                     )}
                   </Card>
+                  <VerticalSpacer spacing={3} />
+                  <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
               )}
             </Grid>

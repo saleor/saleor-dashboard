@@ -7409,7 +7409,7 @@ export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfigura
 
 export type TaxRateFragment = { __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
+export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
@@ -8998,14 +8998,14 @@ export type TaxClassUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type TaxClassCreateMutationVariables = Exact<{
   input: TaxClassCreateInput;
 }>;
 
 
-export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type TaxClassDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9040,7 +9040,7 @@ export type TaxClassesListQueryVariables = Exact<{
 }>;
 
 
-export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }> } | null };
 
 export type TaxClassAssignQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;

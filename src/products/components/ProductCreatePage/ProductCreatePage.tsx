@@ -75,7 +75,9 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   fetchMoreTaxClasses: FetchMoreProps;
   selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;

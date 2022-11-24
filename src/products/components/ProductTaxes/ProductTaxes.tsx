@@ -14,7 +14,9 @@ import { ProductCreateFormData } from "../ProductCreatePage";
 interface ProductTaxesProps {
   value: string;
   taxClassDisplayName: string;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onFetchMore: FetchMoreProps;

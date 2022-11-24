@@ -44,7 +44,9 @@ export interface ProductTypeCreatePageProps {
   disabled: boolean;
   pageTitle: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: Array<
+    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
+  >;
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;

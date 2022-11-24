@@ -49,6 +49,7 @@ const messages = defineMessages({
 
 interface ErrorFragment {
   code: AccountErrorCode | SetPasswordData["errors"][number]["code"];
+  field: string | null;
 }
 
 function getAccountErrorMessage(err: ErrorFragment, intl: IntlShape): string {
