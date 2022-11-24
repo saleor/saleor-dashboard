@@ -28,10 +28,6 @@ export const useStyles = makeStyles(
       display: "flex",
       alignItems: "center",
     },
-    actions: {
-      display: "flex",
-      gap: theme.spacing(1),
-    },
     supportText: {
       color: theme.palette.saleor.main[3],
     },
