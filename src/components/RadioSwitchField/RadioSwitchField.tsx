@@ -87,7 +87,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
             classes.radioLabel,
             overrideClasses?.radioLabel,
           )}
-          control={<Radio color="primary" />}
+          control={<Radio color="secondary" />}
           label={firstOptionLabel}
           name={name}
         />
@@ -97,7 +97,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
             classes.radioLabel,
             overrideClasses?.radioLabel,
           )}
-          control={<Radio color="primary" />}
+          control={<Radio color="secondary" />}
           label={secondOptionLabel}
           name={name}
         />

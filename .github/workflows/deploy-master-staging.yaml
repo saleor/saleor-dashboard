@@ -17,8 +17,8 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      MARKETPLACE_URL: "https://apps.saleor.io/"
-      SALEOR_APPS_ENDPOINT: "https://apps.saleor.io/api/saleor-apps"
+      MARKETPLACE_URL: "https://marketplace-gray.vercel.app/"
+      SALEOR_APPS_ENDPOINT: "https://marketplace-gray.vercel.app/api/saleor-apps"
       ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
     steps:

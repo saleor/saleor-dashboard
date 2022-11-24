@@ -50,7 +50,11 @@ export const useStyles = makeStyles(
       padding: theme.spacing(1.5),
       width: "100%",
       justifyContent: "right",
-      border: `1px solid ${theme.palette.divider}`,
+      cursor: "pointer",
+      border: `1px solid ${theme.palette.primary.dark}`,
+      "&:hover": {
+        borderColor: "transparent",
+      },
     },
     warehouseButtonContent: {
       display: "flex",

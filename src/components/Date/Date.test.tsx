@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";
 import renderer, { ReactTestRendererJSON } from "react-test-renderer";
 
@@ -9,27 +10,33 @@ const expectedDate = "Apr 7, 2018";
 
 test("Render plain date with timezone GMT-11", () => {
   const date = renderer.create(
-    <TimezoneProvider value="Pacific/Midway">
-      <Date date={testDate} plain />
-    </TimezoneProvider>,
+    <ThemeProvider>
+      <TimezoneProvider value="Pacific/Midway">
+        <Date date={testDate} plain />
+      </TimezoneProvider>
+    </ThemeProvider>,
   );
   expect(date.toJSON()).toEqual(expectedDate);
 });
 
 test("Render plain date with timezone GMT+13", () => {
   const date = renderer.create(
-    <TimezoneProvider value="Pacific/Tongatapu">
-      <Date date={testDate} plain />
-    </TimezoneProvider>,
+    <ThemeProvider>
+      <TimezoneProvider value="Pacific/Tongatapu">
+        <Date date={testDate} plain />
+      </TimezoneProvider>
+    </ThemeProvider>,
   );
   expect(date.toJSON()).toEqual(expectedDate);
 });
 
 test("Render humanized date with timezone GMT-11", () => {
   const date = renderer.create(
-    <TimezoneProvider value="Pacific/Midway">
-      <Date date={testDate} />
-    </TimezoneProvider>,
+    <ThemeProvider>
+      <TimezoneProvider value="Pacific/Midway">
+        <Date date={testDate} />
+      </TimezoneProvider>
+    </ThemeProvider>,
   );
   expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
     testDate,
@@ -38,9 +45,11 @@ test("Render humanized date with timezone GMT-11", () => {
 
 test("Render humanized date with timezone GMT+13", () => {
   const date = renderer.create(
-    <TimezoneProvider value="Pacific/Tongatapu">
-      <Date date={testDate} />
-    </TimezoneProvider>,
+    <ThemeProvider>
+      <TimezoneProvider value="Pacific/Tongatapu">
+        <Date date={testDate} />
+      </TimezoneProvider>
+    </ThemeProvider>,
   );
   expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
     testDate,

@@ -43,7 +43,7 @@ const useStyles = makeStyles(
     },
     avatarDefault: {
       "& div": {
-        color: "#fff",
+        color: theme.palette.primary.contrastText,
         fontSize: 35,
         fontWeight: "bold",
         lineHeight: "120px",

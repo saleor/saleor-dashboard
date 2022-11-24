@@ -4,7 +4,7 @@ about: Create a report to help us improve
 
 ---
 
-### What I'm trying to achieve
+### Description of the issue
 
 …
 
@@ -13,7 +13,11 @@ about: Create a report to help us improve
 1.
 2.
 
-### What I expected to happen
+### Expected Result
+
+…
+
+### Actual Result
 
 …
 

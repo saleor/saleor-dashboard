@@ -18,13 +18,16 @@ const useStyles = makeStyles(
     },
     button: {
       zIndex: 2,
+      padding: `7px`,
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
     },
     cardActionsExpanded: {
       maxHeight: theme.spacing(6),
     },
     input: {
       "& > div": {
-        padding: "0 14px",
+        padding: "0 0 0 14px",
       },
       "& textarea": {
         "&::placeholder": {

@@ -1,5 +1,5 @@
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { FilterDateTimeField } from "@saleor/components/Filter/FilterContent/FilterDateTimeField";
 import { FilterNumericField } from "@saleor/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@saleor/components/Filter/FilterContent/FilterSingleSelectField";
@@ -27,7 +27,7 @@ import {
 const useStyles = makeStyles(
   theme => ({
     filterSettings: {
-      background: fade(theme.palette.primary.main, 0.1),
+      background: alpha(theme.palette.primary.main, 0.1),
       padding: theme.spacing(2, 3),
     },
 
@@ -142,7 +142,7 @@ const FilterContentBody = <K extends string = string>({
                   data-test-id="filter-boolean"
                   data-test-is-checked={filter.value[0] === option.value}
                   checked={filter.value[0] === option.value}
-                  color="primary"
+                  color="secondary"
                 />
               }
               label={option.label}

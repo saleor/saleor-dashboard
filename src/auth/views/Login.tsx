@@ -23,7 +23,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     requestLoginByExternalPlugin,
     loginByExternalPlugin,
     authenticating,
-    error,
+    errors,
   } = useUser();
   const {
     data: externalAuthentications,
@@ -79,14 +79,17 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const { code, state } = params;
     const isCallbackPath = location.pathname.includes(loginCallbackPath);
 
-    if (code && state && isCallbackPath) {
+    const externalAuthParamsExist = code && state && isCallbackPath;
+    const externalAuthNotPerformed = !authenticating && !errors.length;
+
+    if (externalAuthParamsExist && externalAuthNotPerformed) {
       handleExternalAuthentication(code, state);
     }
   }, []);
 
   return (
     <LoginPage
-      error={error}
+      errors={errors}
       disabled={authenticating}
       externalAuthentications={
         externalAuthentications?.shop?.availableExternalAuthentications

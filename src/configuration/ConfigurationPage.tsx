@@ -31,6 +31,7 @@ const useStyles = makeStyles(
       gridTemplateColumns: "1fr 3fr",
       padding: theme.spacing(4, 0),
     },
+
     configurationItem: {
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr",
@@ -42,9 +43,7 @@ const useStyles = makeStyles(
     configurationLabel: {
       paddingBottom: 20,
     },
-    header: {
-      margin: 0,
-    },
+
     link: {
       display: "contents",
       marginBottom: theme.spacing(4),
@@ -92,10 +91,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   return (
     <Container>
       {!isSmUp && renderVersionInfo}
-      <PageHeader
-        className={classes.header}
-        title={intl.formatMessage(sectionNames.configuration)}
-      >
+      <PageHeader title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
       </PageHeader>
       {menus
