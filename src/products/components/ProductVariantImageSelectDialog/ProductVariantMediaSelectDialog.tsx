@@ -30,6 +30,9 @@ const useStyles = makeStyles(
       position: "relative",
       transitionDuration: theme.transitions.duration.standard + "ms",
     },
+    content: {
+      overflowY: "scroll",
+    },
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
@@ -70,7 +73,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.content}>
         <div className={classes.root}>
           {media
             .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
