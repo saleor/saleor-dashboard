@@ -26,6 +26,7 @@ export const useStyles = makeStyles(
     },
     titleContainer: {
       display: "flex",
+      alignItems: "center",
     },
     supportText: {
       color: theme.palette.saleor.main[3],

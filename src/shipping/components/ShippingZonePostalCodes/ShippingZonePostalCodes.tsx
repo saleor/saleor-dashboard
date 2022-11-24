@@ -225,6 +225,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                     <IconButton
                       disabled={disabled}
                       color="primary"
+                      variant="secondary"
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >

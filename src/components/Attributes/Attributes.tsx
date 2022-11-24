@@ -1,5 +1,4 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
@@ -13,7 +12,7 @@ import {
   ProductErrorWithAttributesFragment,
 } from "@saleor/graphql";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
 import classNames from "classnames";
@@ -75,6 +74,7 @@ const useStyles = makeStyles(
       display: "flex",
     },
     expansionBarButton: {
+      padding: 4,
       marginBottom: theme.spacing(1),
     },
     expansionBarButtonIcon: {
@@ -148,11 +148,12 @@ const Attributes: React.FC<AttributesProps> = ({
           </div>
           <IconButton
             variant="secondary"
+            hoverOutline={false}
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
             data-test-id="attributes-expand"
           >
-            <ArrowDropDownIcon
+            <ChevronIcon
               className={classNames(classes.expansionBarButtonIcon, {
                 [classes.rotate]: expanded,
               })}

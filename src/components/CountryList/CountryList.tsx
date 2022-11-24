@@ -26,7 +26,8 @@ const useStyles = makeStyles(
   theme => ({
     iconCell: {
       "&:last-child": {
-        paddingRight: theme.spacing(2),
+        paddingRight: theme.spacing(3),
+        paddingLeft: 0,
       },
       width: `calc(48px + ${theme.spacing(4)})`,
     },
@@ -161,7 +162,7 @@ const CountryList: React.FC<CountryListProps> = props => {
                   >
                     <IconButton
                       data-test-id="delete-icon"
-                      color="primary"
+                      variant="secondary"
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >

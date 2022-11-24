@@ -107,7 +107,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             {/* Not using endAdornment as it looks weird with autocomplete */}
             <IconButton
               className={classes.showPasswordBtn}
-              variant="secondary"
+              variant="ghost"
               hoverOutline={false}
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}

@@ -42,7 +42,6 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
             onChange({ target: { name, value: !checked } } as any)
           }
           checked={checked}
-          color="primary"
           name={name}
         />
       }

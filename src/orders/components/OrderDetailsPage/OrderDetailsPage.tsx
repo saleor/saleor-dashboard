@@ -212,7 +212,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               title={<Title order={order} />}
               cardMenu={
                 <CardMenu
-                  outlined
                   menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
                 />
               }

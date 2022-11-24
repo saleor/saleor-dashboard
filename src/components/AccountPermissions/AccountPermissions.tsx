@@ -140,7 +140,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
               <ListItemIcon>
                 <Checkbox
                   data-test-id="full-access"
-                  color="primary"
+                  color="secondary"
                   edge="start"
                   checked={data.hasFullAccess}
                   disabled={disabled}
@@ -175,7 +175,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                     >
                       <ListItemIcon>
                         <Checkbox
-                          color="primary"
+                          color="secondary"
                           edge="start"
                           checked={
                             data.permissions.filter(

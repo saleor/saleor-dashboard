@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main,
       },
       borderBottom: "1px solid transparent",
-      color: fade(theme.palette.text.secondary, 0.6),
+      color: alpha(theme.palette.text.secondary, 0.6),
       cursor: "pointer",
       display: "inline-block",
       fontWeight: theme.typography.fontWeightRegular,

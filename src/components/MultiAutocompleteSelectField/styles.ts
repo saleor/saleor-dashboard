@@ -1,4 +1,4 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
@@ -10,6 +10,7 @@ export const useStyles = makeStyles(
       height: 32,
       padding: 0,
       width: 32,
+      border: 0,
     },
     chipContainer: {
       display: "flex",
@@ -21,7 +22,10 @@ export const useStyles = makeStyles(
         color: theme.palette.primary.contrastText,
       },
       alignItems: "center",
-      background: fade(theme.palette.primary.main, 0.8),
+      background:
+        theme.palette.type === "dark"
+          ? theme.palette.secondary.main
+          : alpha(theme.palette.primary.main, 0.8),
       borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
@@ -42,7 +46,7 @@ export const useStyles = makeStyles(
         color: theme.palette.grey[200],
       },
       alignItems: "center",
-      background: fade(theme.palette.grey[400], 0.8),
+      background: alpha(theme.palette.grey[400], 0.8),
       borderRadius: 18,
       color: theme.palette.primary.contrastText,
       display: "flex",
