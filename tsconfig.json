@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "strictNullChecks": true,
     "esModuleInterop": true,
     "jsx": "react",
     "lib": ["es2017", "dom", "esnext"],

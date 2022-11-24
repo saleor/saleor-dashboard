@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  WebhookDetailsQuery,
+  WebhookDetailsFragment,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
@@ -44,7 +44,7 @@ export interface WebhookDetailsPageProps {
   appId: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook?: WebhookDetailsQuery["webhook"];
+  webhook?: WebhookDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: FormData) => void;
 }
