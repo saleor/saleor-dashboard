@@ -23,7 +23,10 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_AUTH_TOKEN,
     SENTRY_DSN,
     ENVIRONMENT,
+    STATIC_URL,
   } = env;
+
+  const assetsDir = STATIC_URL ? `./${STATIC_URL}` : "./assets/";
 
   const enableSentry =
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
@@ -89,7 +92,8 @@ export default defineConfig(({ command, mode }) => {
       minify: false,
       sourcemap: true,
       emptyOutDir: true,
-      outDir: "../build/dashboard",
+      outDir: "../build/",
+      assetsDir,
       commonjsOptions: {
         /*
           Fix dynamic imports by "require", Neccessary for react-editor-js
