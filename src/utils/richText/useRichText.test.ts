@@ -66,6 +66,7 @@ describe("useRichText", () => {
       destroy: jest.fn(),
       clear: jest.fn(),
       render: jest.fn(),
+      dangerouslyLowLevelInstance: () => undefined,
     };
 
     expect(await result.current.getValue()).toStrictEqual(fixtures.short);
