@@ -1,11 +1,9 @@
-import { TaxClassFragment, useTaxClassAssignQuery } from "@saleor/graphql";
+import { TaxClassBaseFragment, useTaxClassAssignQuery } from "@saleor/graphql";
 import { FetchMoreProps } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
 interface UseTaxClassFetchMoreHookResult {
-  taxClasses: Array<
-    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
-  >;
+  taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
 }
 

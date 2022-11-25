@@ -1,4 +1,4 @@
-import { ProductTypeKindEnum, TaxClassFragment } from "@saleor/graphql";
+import { ProductTypeKindEnum, TaxClassBaseFragment } from "@saleor/graphql";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 
 export const makeProductTypeKindChangeHandler = (
@@ -12,9 +12,7 @@ export const makeProductTypeKindChangeHandler = (
 
 export function handleTaxClassChange(
   event: ChangeEvent,
-  taxClasses: Array<
-    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
-  >,
+  taxClasses: TaxClassBaseFragment[],
   formChange: FormChange,
   displayChange: (name: string) => void,
 ) {

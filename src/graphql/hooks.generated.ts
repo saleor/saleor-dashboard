@@ -2446,6 +2446,12 @@ export const TaxCountryConfigurationFragmentDoc = gql`
   }
 }
     ${CountryWithCodeFragmentDoc}`;
+export const TaxClassBaseFragmentDoc = gql`
+    fragment TaxClassBase on TaxClass {
+  id
+  name
+}
+    `;
 export const TaxRateFragmentDoc = gql`
     fragment TaxRate on TaxClassCountryRate {
   country {
@@ -2456,14 +2462,14 @@ export const TaxRateFragmentDoc = gql`
     ${CountryWithCodeFragmentDoc}`;
 export const TaxClassFragmentDoc = gql`
     fragment TaxClass on TaxClass {
-  id
-  name
+  ...TaxClassBase
   countries {
     ...TaxRate
   }
   ...Metadata
 }
-    ${TaxRateFragmentDoc}
+    ${TaxClassBaseFragmentDoc}
+${TaxRateFragmentDoc}
 ${MetadataFragmentDoc}`;
 export const TimePeriodFragmentDoc = gql`
     fragment TimePeriod on TimePeriod {

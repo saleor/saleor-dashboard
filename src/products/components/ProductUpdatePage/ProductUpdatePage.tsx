@@ -35,7 +35,7 @@ import {
   SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
-  TaxClassFragment,
+  TaxClassBaseFragment,
   WarehouseFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -89,9 +89,7 @@ export interface ProductUpdatePageProps {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
-  taxClasses: Array<
-    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
-  >;
+  taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;

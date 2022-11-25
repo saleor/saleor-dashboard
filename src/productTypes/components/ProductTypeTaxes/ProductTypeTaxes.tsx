@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { TaxClassFragment } from "@saleor/graphql";
+import { TaxClassBaseFragment } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
@@ -16,9 +16,7 @@ interface ProductTypeTaxesProps {
     taxClassId: string;
   };
   taxClassDisplayName: string;
-  taxClasses: Array<
-    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
-  >;
+  taxClasses: TaxClassBaseFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onFetchMore: FetchMoreProps;

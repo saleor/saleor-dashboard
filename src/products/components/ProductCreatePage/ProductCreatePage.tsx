@@ -28,7 +28,7 @@ import {
   SearchProductsQuery,
   SearchProductTypesQuery,
   SearchWarehousesQuery,
-  TaxClassFragment,
+  TaxClassBaseFragment,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -75,9 +75,7 @@ interface ProductCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
   warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  taxClasses: Array<
-    Omit<TaxClassFragment, "countries" | "metadata" | "privateMetadata">
-  >;
+  taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   selectedProductType?: ProductTypeQuery["productType"];
   fetchCategories: (data: string) => void;
