@@ -112,7 +112,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it(
       "should create published collection. TC: SALEOR_0302",
-      { tags: ["@collection", "@allEnv", "@stable"] },
+      { tags: ["@collection", "@allEnv", "@stable", "@oldRelease"] },
       () => {
         const collectionName = `${startsWith}${faker.datatype.number()}`;
         let collection;
