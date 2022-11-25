@@ -56,12 +56,12 @@ class ReturnFormDataParser {
       ? this.formData.amount
       : undefined;
 
-  private getParsedLineData = function<
+  private getParsedLineData = <
     T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
   >(
     itemsQuantities: FormsetQuantityData,
     idKey: "fulfillmentLineId" | "orderLineId",
-  ): T[] {
+  ): T[] => {
     const { itemsToBeReplaced } = this.formData;
 
     return itemsQuantities.reduce((result, { value: quantity, id }) => {
