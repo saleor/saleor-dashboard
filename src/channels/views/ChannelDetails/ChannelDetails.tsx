@@ -5,7 +5,6 @@ import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
@@ -14,12 +13,8 @@ import {
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
-  useChannelShippingZonesQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
-  useChannelWarehousesQuery,
-  useShippingZonesCountQuery,
-  useWarehousesCountQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -28,8 +23,6 @@ import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/ut
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -42,6 +35,8 @@ import {
   ChannelUrlDialog,
   ChannelUrlQueryParams,
 } from "../../urls";
+import { useShippingZones } from "./useShippingZones";
+import { useWarehouses } from "./useWarehouses";
 
 interface ChannelDetailsProps {
   id: string;
@@ -166,52 +161,24 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const {
-    data: shippingZonesCountData,
-    loading: shippingZonesCountLoading,
-  } = useShippingZonesCountQuery();
+    shippingZonesCountData,
+    shippingZonesCountLoading,
+    channelShippingZonesData,
+    channelsShippingZonesLoading,
+    fetchMoreShippingZones,
+    searchShippingZones,
+    searchShippingZonesResult,
+  } = useShippingZones(id);
 
   const {
-    data: channelShippingZonesData,
-    loading: channelsShippingZonesLoading,
-  } = useChannelShippingZonesQuery({
-    variables: {
-      filter: {
-        channels: [id],
-      },
-    },
-  });
-
-  const {
-    loadMore: fetchMoreShippingZones,
-    search: searchShippingZones,
-    result: searchShippingZonesResult,
-  } = useShippingZonesSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery();
-
-  const {
-    data: channelWarehousesData,
-    loading: channelsWarehousesLoading,
-  } = useChannelWarehousesQuery({
-    variables: {
-      filter: {
-        channels: [id],
-      },
-    },
-  });
-
-  const {
-    loadMore: fetchMoreWarehouses,
-    search: searchWarehouses,
-    result: searchWarehousesResult,
-  } = useWarehouseSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+    warehousesCountData,
+    warehousesCountLoading,
+    channelWarehousesData,
+    channelWarehousesLoading,
+    fetchMoreWarehouses,
+    searchWarehouses,
+    searchWarehousesResult,
+  } = useWarehouses();
 
   return (
     <>
@@ -257,7 +224,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             shippingZonesCountLoading ||
             warehousesCountLoading ||
             channelsShippingZonesLoading ||
-            channelsWarehousesLoading
+            channelWarehousesLoading
           }
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading
