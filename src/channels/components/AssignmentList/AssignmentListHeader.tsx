@@ -14,11 +14,11 @@ const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
   assignCount,
   itemsName,
 }) => {
-  const classes = useHeaderStyles();
+  const { container, ...accordion } = useHeaderStyles();
 
   return (
-    <div className={classes.container}>
-      <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
+    <div className={container}>
+      <AccordionSummary expandIcon={<IconChevronDown />} classes={accordion}>
         <Typography variant="subtitle2" color="textSecondary">
           {`${assignCount} ${itemsName.toLowerCase()}`}
         </Typography>

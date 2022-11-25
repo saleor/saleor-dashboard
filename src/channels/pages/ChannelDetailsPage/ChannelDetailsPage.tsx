@@ -4,6 +4,7 @@ import { channelsListUrl } from "@saleor/channels/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import RequirePermissions from "@saleor/components/RequirePermissions";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
@@ -11,6 +12,7 @@ import {
   ChannelErrorFragment,
   CountryCode,
   CountryFragment,
+  PermissionEnum,
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
 } from "@saleor/graphql";
@@ -265,25 +267,37 @@ const ChannelDetailsPage = function<TErrors>({
                     <CardSpacer />
                   </>
                 )}
-                <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices()}
-                  shippingZones={shippingZonesToDisplay}
-                  addShippingZone={addShippingZone}
-                  removeShippingZone={removeShippingZone}
-                  searchShippingZones={searchShippingZones}
-                  fetchMoreShippingZones={fetchMoreShippingZones}
-                  totalCount={allShippingZonesCount}
-                />
-                <CardSpacer />
-                <Warehouses
-                  warehousesChoices={getFilteredWarehousesChoices()}
-                  warehouses={warehousesToDisplay}
-                  addWarehouse={addWarehouse}
-                  removeWarehouse={removeWarehouse}
-                  searchWarehouses={searchWarehouses}
-                  fetchMoreWarehouses={fetchMoreWarehouses}
-                  totalCount={allWarehousesCount}
-                />
+                <RequirePermissions
+                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                >
+                  <ShippingZones
+                    shippingZonesChoices={getFilteredShippingZonesChoices()}
+                    shippingZones={shippingZonesToDisplay}
+                    addShippingZone={addShippingZone}
+                    removeShippingZone={removeShippingZone}
+                    searchShippingZones={searchShippingZones}
+                    fetchMoreShippingZones={fetchMoreShippingZones}
+                    totalCount={allShippingZonesCount}
+                  />
+                  <CardSpacer />
+                </RequirePermissions>
+                <RequirePermissions
+                  oneOfPermissions={[
+                    PermissionEnum.MANAGE_SHIPPING,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PRODUCTS,
+                  ]}
+                >
+                  <Warehouses
+                    warehousesChoices={getFilteredWarehousesChoices()}
+                    warehouses={warehousesToDisplay}
+                    addWarehouse={addWarehouse}
+                    removeWarehouse={removeWarehouse}
+                    searchWarehouses={searchWarehouses}
+                    fetchMoreWarehouses={fetchMoreWarehouses}
+                    totalCount={allWarehousesCount}
+                  />
+                </RequirePermissions>
               </div>
             </Grid>
             <Savebar
