@@ -19,18 +19,18 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
   return (
     <PageTabs {...props}>
       <PageTab
-        value="THIRD_PARTY"
-        label={intl.formatMessage({
-          defaultMessage: "3rd party apps",
-          id: "J8frvS",
-        })}
-      />
-      <PageTab
         value="WEBHOOKS_AND_EVENTS"
         id="WEBHOOKS_AND_EVENTS"
         label={intl.formatMessage({
           defaultMessage: "Webhooks & Events",
           id: "UxTSw7",
+        })}
+      />
+      <PageTab
+        value="THIRD_PARTY"
+        label={intl.formatMessage({
+          defaultMessage: "3rd party apps",
+          id: "J8frvS",
         })}
       />
       {showSaleorApps && (
