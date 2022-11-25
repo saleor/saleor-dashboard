@@ -11,7 +11,7 @@ describe("User authorization", () => {
 
   it(
     "should successfully log in an user",
-    { tags: ["@login", "@allEnv", "@stable"] },
+    { tags: ["@login", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
