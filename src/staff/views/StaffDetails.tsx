@@ -55,12 +55,15 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
       }),
     );
 
+  const isUserSameAsViewer = user.user?.id === id;
+
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
+    skip: isUserSameAsViewer,
   });
 
-  const staffMember = data?.user;
+  const staffMember = isUserSameAsViewer ? user.user : data?.user;
 
   const [changePassword, changePasswordOpts] = useChangeStaffPasswordMutation({
     onCompleted: data => {
@@ -158,8 +161,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         },
       }),
     );
-
-  const isUserSameAsViewer = user.user?.id === data?.user?.id;
 
   return (
     <>
