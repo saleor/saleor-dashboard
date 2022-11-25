@@ -972,40 +972,46 @@ export const ShippingPriceTranslateErrorFragmentFragmentDoc = gql`
   message
 }
     `;
-export const TaxConfigurationUpdateErrorFragmentFragmentDoc = gql`
-    fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
+export const TaxConfigurationUpdateErrorFragmentDoc = gql`
+    fragment TaxConfigurationUpdateError on TaxConfigurationUpdateError {
   field
   code
+  message
 }
     `;
-export const TaxCountryConfigurationUpdateErrorFragmentFragmentDoc = gql`
-    fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+export const TaxCountryConfigurationUpdateErrorFragmentDoc = gql`
+    fragment TaxCountryConfigurationUpdateError on TaxCountryConfigurationUpdateError {
   field
   code
+  message
 }
     `;
-export const TaxCountryConfigurationDeleteErrorFragmentFragmentDoc = gql`
-    fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+export const TaxCountryConfigurationDeleteErrorFragmentDoc = gql`
+    fragment TaxCountryConfigurationDeleteError on TaxCountryConfigurationDeleteError {
   field
   code
+  message
 }
     `;
-export const TaxClassUpdateErrorFragmentFragmentDoc = gql`
-    fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+export const TaxClassUpdateErrorFragmentDoc = gql`
+    fragment TaxClassUpdateError on TaxClassUpdateError {
   field
   code
+  message
 }
     `;
-export const TaxClassCreateErrorFragmentFragmentDoc = gql`
-    fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+export const TaxClassCreateErrorFragmentDoc = gql`
+    fragment TaxClassCreateError on TaxClassCreateError {
   field
   code
+  message
 }
     `;
-export const TaxClassDeleteErrorFragmentFragmentDoc = gql`
-    fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+export const TaxClassDeleteErrorFragmentDoc = gql`
+    fragment TaxClassDeleteError on TaxClassDeleteError {
   field
   code
+  message
 }
     `;
 export const GiftCardsSettingsFragmentDoc = gql`
@@ -14769,14 +14775,14 @@ export const TaxConfigurationUpdateDocument = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {
     errors {
-      ...TaxConfigurationUpdateErrorFragment
+      ...TaxConfigurationUpdateError
     }
     taxConfiguration {
       ...TaxConfiguration
     }
   }
 }
-    ${TaxConfigurationUpdateErrorFragmentFragmentDoc}
+    ${TaxConfigurationUpdateErrorFragmentDoc}
 ${TaxConfigurationFragmentDoc}`;
 export type TaxConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>;
 
@@ -14812,14 +14818,14 @@ export const TaxCountryConfigurationUpdateDocument = gql`
     updateTaxClassRates: $updateTaxClassRates
   ) {
     errors {
-      ...TaxCountryConfigurationUpdateErrorFragment
+      ...TaxCountryConfigurationUpdateError
     }
     taxCountryConfiguration {
       ...TaxCountryConfiguration
     }
   }
 }
-    ${TaxCountryConfigurationUpdateErrorFragmentFragmentDoc}
+    ${TaxCountryConfigurationUpdateErrorFragmentDoc}
 ${TaxCountryConfigurationFragmentDoc}`;
 export type TaxCountryConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
 
@@ -14852,14 +14858,14 @@ export const TaxCountryConfigurationDeleteDocument = gql`
     mutation TaxCountryConfigurationDelete($countryCode: CountryCode!) {
   taxCountryConfigurationDelete(countryCode: $countryCode) {
     errors {
-      ...TaxCountryConfigurationDeleteErrorFragment
+      ...TaxCountryConfigurationDeleteError
     }
     taxCountryConfiguration {
       ...TaxCountryConfiguration
     }
   }
 }
-    ${TaxCountryConfigurationDeleteErrorFragmentFragmentDoc}
+    ${TaxCountryConfigurationDeleteErrorFragmentDoc}
 ${TaxCountryConfigurationFragmentDoc}`;
 export type TaxCountryConfigurationDeleteMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
 
@@ -14891,14 +14897,14 @@ export const TaxClassUpdateDocument = gql`
     mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
   taxClassUpdate(id: $id, input: $input) {
     errors {
-      ...TaxClassUpdateErrorFragment
+      ...TaxClassUpdateError
     }
     taxClass {
       ...TaxClass
     }
   }
 }
-    ${TaxClassUpdateErrorFragmentFragmentDoc}
+    ${TaxClassUpdateErrorFragmentDoc}
 ${TaxClassFragmentDoc}`;
 export type TaxClassUpdateMutationFn = Apollo.MutationFunction<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>;
 
@@ -14931,14 +14937,14 @@ export const TaxClassCreateDocument = gql`
     mutation TaxClassCreate($input: TaxClassCreateInput!) {
   taxClassCreate(input: $input) {
     errors {
-      ...TaxClassCreateErrorFragment
+      ...TaxClassCreateError
     }
     taxClass {
       ...TaxClass
     }
   }
 }
-    ${TaxClassCreateErrorFragmentFragmentDoc}
+    ${TaxClassCreateErrorFragmentDoc}
 ${TaxClassFragmentDoc}`;
 export type TaxClassCreateMutationFn = Apollo.MutationFunction<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>;
 
@@ -14970,11 +14976,11 @@ export const TaxClassDeleteDocument = gql`
     mutation TaxClassDelete($id: ID!) {
   taxClassDelete(id: $id) {
     errors {
-      ...TaxClassDeleteErrorFragment
+      ...TaxClassDeleteError
     }
   }
 }
-    ${TaxClassDeleteErrorFragmentFragmentDoc}`;
+    ${TaxClassDeleteErrorFragmentDoc}`;
 export type TaxClassDeleteMutationFn = Apollo.MutationFunction<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>;
 
 /**

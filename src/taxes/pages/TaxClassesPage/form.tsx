@@ -1,20 +1,14 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import {
-  TaxClassFragment,
-  TaxClassRateInput,
-  TaxClassUpdateErrorCode,
-} from "@saleor/graphql";
+import { TaxClassFragment, TaxClassRateInput } from "@saleor/graphql";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { validateTaxClassFormData } from "@saleor/taxes/utils/validation";
-import { CommonError } from "@saleor/utils/errors/common";
+import { TaxClassError } from "@saleor/utils/errors/taxes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React, { useState } from "react";
-
-export type TaxClassesErrors = Array<CommonError<TaxClassUpdateErrorCode>>;
 
 export interface TaxClassesPageFormData extends MetadataFormData {
   id: string;
@@ -28,9 +22,9 @@ interface TaxClassesFormHandlers {
 }
 
 export interface UseTaxClassesFormResult {
-  validationErrors: TaxClassesErrors;
+  validationErrors: TaxClassError[];
   data: TaxClassesPageFormData;
-  submit: () => SubmitPromise<TaxClassesErrors>;
+  submit: () => SubmitPromise<TaxClassError[]>;
   change: FormChange;
   handlers: TaxClassesFormHandlers;
 }
@@ -40,10 +34,10 @@ interface TaxClassesFormProps {
   taxClass: TaxClassFragment | undefined;
   onTaxClassCreate: (
     data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassesErrors>;
+  ) => SubmitPromise<TaxClassError[]>;
   onTaxClassUpdate: (
     data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassesErrors>;
+  ) => SubmitPromise<TaxClassError[]>;
   disabled: boolean;
 }
 
@@ -51,10 +45,10 @@ function useTaxClassesForm(
   taxClass: TaxClassFragment,
   onTaxClassCreate: (
     data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassesErrors>,
+  ) => SubmitPromise<TaxClassError[]>,
   onTaxClassUpdate: (
     data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassesErrors>,
+  ) => SubmitPromise<TaxClassError[]>,
   disabled: boolean,
 ): UseTaxClassesFormResult {
   // Initial
@@ -88,9 +82,7 @@ function useTaxClassesForm(
     },
   );
 
-  const [validationErrors, setValidationErrors] = useState<TaxClassesErrors>(
-    [],
-  );
+  const [validationErrors, setValidationErrors] = useState<TaxClassError[]>([]);
 
   if (isNewTaxClass) {
     triggerChange();

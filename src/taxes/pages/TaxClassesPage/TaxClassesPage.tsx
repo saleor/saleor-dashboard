@@ -34,7 +34,7 @@ import { taxesMessages } from "@saleor/taxes/messages";
 import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
 import { isLastElement } from "@saleor/taxes/utils/utils";
 import { getFormErrors } from "@saleor/utils/errors";
-import { getCommonFormFieldErrorMessage } from "@saleor/utils/errors/common";
+import getTaxesErrorMessage from "@saleor/utils/errors/taxes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -142,10 +142,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                         inputProps={{ className: classes.namePadding }}
                         inputRef={nameInputRef}
                         error={!!formErrors.name}
-                        helperText={getCommonFormFieldErrorMessage(
-                          formErrors.name,
-                          intl,
-                        )}
+                        helperText={getTaxesErrorMessage(formErrors.name, intl)}
                       />
                     </CardContent>
                   </Card>

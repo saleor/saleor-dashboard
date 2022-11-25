@@ -1,4 +1,5 @@
 import {
+  TaxClassCreateErrorFragment,
   TaxClassFragment,
   useTaxClassCreateMutation,
   useTaxClassDeleteMutation,
@@ -11,7 +12,9 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import createMetadataCreateHandler, {
+  CreateMetadataHandlerFunctionResult,
+} from "@saleor/utils/handlers/metadataCreateHandler";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -101,14 +104,23 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
     },
   });
 
-  const createTaxClass = async (data: TaxClassesPageFormData) => {
+  const createTaxClass = async (
+    data: TaxClassesPageFormData,
+  ): Promise<CreateMetadataHandlerFunctionResult<
+    TaxClassCreateErrorFragment
+  >> => {
     const res = await taxClassCreateMutation({
       variables: {
         input: createTaxClassCreateInput(data),
       },
     });
 
-    return res?.data?.taxClassCreate;
+    const taxClassCreate = res?.data?.taxClassCreate;
+
+    return {
+      id: taxClassCreate?.taxClass?.id,
+      errors: taxClassCreate?.errors,
+    };
   };
 
   const handleDeleteTaxClass = async (id: string) => {
@@ -171,13 +183,17 @@ export const TaxClassesList: React.FC<TaxClassesListProps> = ({ id }) => {
       return newTaxClass;
     }
 
-    return taxClasses.find(taxClass => taxClass.id === id);
+    return taxClasses?.find(taxClass => taxClass.id === id);
   }, [id, isNewTaxClass, newTaxClass, taxClasses]);
 
   const handleCreateTaxClass = createMetadataCreateHandler(
     createTaxClass,
     updateMetadata,
     updatePrivateMetadata,
+    id => {
+      refetch();
+      navigate(id);
+    },
   );
 
   const handleUpdateTaxClass = createMetadataUpdateHandler(

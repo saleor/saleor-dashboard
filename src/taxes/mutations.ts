@@ -7,7 +7,7 @@ export const taxConfigurationUpdate = gql`
   ) {
     taxConfigurationUpdate(id: $id, input: $input) {
       errors {
-        ...TaxConfigurationUpdateErrorFragment
+        ...TaxConfigurationUpdateError
       }
       taxConfiguration {
         ...TaxConfiguration
@@ -26,7 +26,7 @@ export const taxCountryConfigurationUpdate = gql`
       updateTaxClassRates: $updateTaxClassRates
     ) {
       errors {
-        ...TaxCountryConfigurationUpdateErrorFragment
+        ...TaxCountryConfigurationUpdateError
       }
       taxCountryConfiguration {
         ...TaxCountryConfiguration
@@ -39,7 +39,7 @@ export const taxCountryConfigurationDelete = gql`
   mutation TaxCountryConfigurationDelete($countryCode: CountryCode!) {
     taxCountryConfigurationDelete(countryCode: $countryCode) {
       errors {
-        ...TaxCountryConfigurationDeleteErrorFragment
+        ...TaxCountryConfigurationDeleteError
       }
       taxCountryConfiguration {
         ...TaxCountryConfiguration
@@ -52,7 +52,7 @@ export const taxClassUpdate = gql`
   mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
     taxClassUpdate(id: $id, input: $input) {
       errors {
-        ...TaxClassUpdateErrorFragment
+        ...TaxClassUpdateError
       }
       taxClass {
         ...TaxClass
@@ -65,7 +65,7 @@ export const taxClassCreate = gql`
   mutation TaxClassCreate($input: TaxClassCreateInput!) {
     taxClassCreate(input: $input) {
       errors {
-        ...TaxClassCreateErrorFragment
+        ...TaxClassCreateError
       }
       taxClass {
         ...TaxClass
@@ -78,7 +78,7 @@ export const taxClassDelete = gql`
   mutation TaxClassDelete($id: ID!) {
     taxClassDelete(id: $id) {
       errors {
-        ...TaxClassDeleteErrorFragment
+        ...TaxClassDeleteError
       }
     }
   }
