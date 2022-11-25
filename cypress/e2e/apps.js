@@ -40,7 +40,7 @@ describe("As a staff user I want to manage apps", () => {
 
   it(
     "should be able to create app. TC: SALEOR_3001",
-    { tags: ["@app", "@allEnv", "@stable"] },
+    { tags: ["@app", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const randomAppName = `${startsWith}${faker.datatype.number()}`;
 
