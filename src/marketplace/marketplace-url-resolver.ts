@@ -27,20 +27,12 @@ export class MarketplaceUrlResolver {
     return path.replace(this.rootSection, "");
   }
 
-  getTemplateGalleryDashboardUrl(dashboardLocation: string) {
-    return urlJoin(
-      new URL(dashboardLocation).origin,
-      this.rootSection,
-      MARKETPLACE_APP_TEMPLATE_GALLERY_PATH,
-    );
+  getTemplateGalleryDashboardPath() {
+    return urlJoin(this.rootSection, MARKETPLACE_APP_TEMPLATE_GALLERY_PATH);
   }
 
-  getSaleorAppsDashboardUrl(dashboardLocation: string) {
-    return urlJoin(
-      new URL(dashboardLocation).origin,
-      this.rootSection,
-      MARKETPLACE_SALEOR_APPS_PAGE_PATH,
-    );
+  getSaleorAppsDashboardPath() {
+    return urlJoin(this.rootSection, MARKETPLACE_SALEOR_APPS_PAGE_PATH);
   }
 
   getSaleorAppsJsonEndpoint() {

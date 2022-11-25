@@ -7,8 +7,10 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
+import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { ListProps } from "@saleor/types";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -69,6 +71,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   const styles = useStyles();
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState<AppPageTabValue>("THIRD_PARTY");
+  const navigate = useNavigator();
 
   const appsInProgress = appsInProgressList?.appsInstallations;
 
@@ -172,8 +175,12 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
               {...listProps}
             />
             <div className={styles.browseMarketplaceContainer}>
-              <Button variant="primary">
-                {" "}
+              <Button
+                variant="primary"
+                onClick={() => {
+                  navigate(marketplaceUrlResolver.getSaleorAppsDashboardPath());
+                }}
+              >
                 <FormattedMessage
                   defaultMessage="Browse Marketplace"
                   id="u0VQMN"
