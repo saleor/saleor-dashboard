@@ -164,22 +164,26 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
-        <IconButton
-          onClick={onWarehouseChange}
-          className={classes.warehouseButton}
-          data-test-id="select-warehouse-button"
-        >
-          <div className={classes.warehouseButtonContent}>
-            <Typography
-              color={lineFormWarehouse ? "textPrimary" : "textSecondary"}
-              className={classes.warehouseButtonContentText}
-            >
-              {lineFormWarehouse?.name ??
-                intl.formatMessage(messages.selectWarehouse)}
-            </Typography>
-            <ChevronIcon />
-          </div>
-        </IconButton>
+        {isPreorder ? (
+          "-"
+        ) : (
+          <IconButton
+            onClick={onWarehouseChange}
+            className={classes.warehouseButton}
+            data-test-id="select-warehouse-button"
+          >
+            <div className={classes.warehouseButtonContent}>
+              <Typography
+                color={lineFormWarehouse ? "textPrimary" : "textSecondary"}
+                className={classes.warehouseButtonContentText}
+              >
+                {lineFormWarehouse?.name ??
+                  intl.formatMessage(messages.selectWarehouse)}
+              </Typography>
+              <ChevronIcon />
+            </div>
+          </IconButton>
+        )}
       </TableCell>
     </TableRowLink>
   );
