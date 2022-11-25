@@ -156,7 +156,27 @@ jobs:
         env:
           version: ${{github.event.client_payload.version}}
         run: |
-              echo "::set-output name=formatted_version::$(echo $version | grep -ohE "[0-9]\.[0-9]+" | sed s/\\.// )" 
+              echo "::set-output name=ref::$(echo $version | grep -ohE "[0-9]\.[0-9]+" )"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.branch.outputs.ref }}
+
+      - name: Set tag for tests
+        id: set-tag-for-tests
+        uses: actions/github-script@v6
+        env:
+          is_old_version: ${{ needs.get-environment-variables.outputs.is_old_version }}
+        with:
+          result-encoding: string
+          script: |
+            const { is_old_version } = process.env
+            if(is_old_version == "true"){
+              return "@oldRelease"
+            }else{
+              return "@stable"
+            }
               
       - name: Cypress run - automatically
         uses: cypress-io/github-action@v4
