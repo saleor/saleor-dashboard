@@ -6,9 +6,10 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { MARKETPLACE_URL } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
+import { useTheme } from "@saleor/macaw-ui";
 import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { marketplaceUrl } from "@saleor/marketplace/urls";
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
@@ -21,6 +22,14 @@ const Component = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const router = useRouter();
+  const { themeType } = useTheme();
+
+  const marketplaceUrl = useMemo(
+    () => new URL(getDeepPath(router.location.pathname), MARKETPLACE_URL).href,
+    [router.location.pathname, themeType],
+  );
+
+  const appParams = useMemo(() => ({ theme: themeType }), [themeType]);
 
   if (!marketplaceUrlResolver.checkMarketplaceConfigExists()) {
     return <NotFoundPage onBack={() => navigate("/")} />;
@@ -32,12 +41,11 @@ const Component = () => {
       <Container>
         <PreviewPill className={classes.previewPill} />
         <AppFrame
-          src={
-            new URL(getDeepPath(router.location.pathname), MARKETPLACE_URL).href
-          }
+          src={marketplaceUrl}
           // Marketplace doesn't require app token nor id
           appToken=""
           appId=""
+          params={appParams}
           className={classes.iframe}
         />
       </Container>
