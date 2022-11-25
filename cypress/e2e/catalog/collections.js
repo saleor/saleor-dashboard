@@ -127,7 +127,7 @@ describe("As an admin I want to manage collections.", () => {
 
   it(
     "should create collection not available for channel. TC: SALEOR_0303",
-    { tags: ["@collection", "@allEnv", "@stable"] },
+    { tags: ["@collection", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
