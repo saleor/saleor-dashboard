@@ -38,28 +38,32 @@ describe("Warehouse settings", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should create warehouse", { tags: ["@warehouse", "@allEnv"] }, () => {
-    const name = `${startsWith}${faker.datatype.number()}`;
-    cy.visit(urlList.warehouses)
-      .get(WAREHOUSES_LIST.createNewButton)
-      .click()
-      .get(WAREHOUSES_DETAILS.nameInput)
-      .type(name)
-      .fillUpBasicAddress(usAddress)
-      .addAliasToGraphRequest("WarehouseCreate")
-      .get(BUTTON_SELECTORS.confirm)
-      .click()
-      .waitForRequestAndCheckIfNoErrors("@WarehouseCreate")
-      .its("response.body.data.createWarehouse.warehouse")
-      .then(warehouse => {
-        getWarehouse(warehouse.id);
-      })
-      .then(warehouse => {
-        const addressResp = warehouse.address;
-        expect(warehouse.name).to.be.eq(name);
-        cy.expectCorrectBasicAddress(addressResp, usAddress);
-      });
-  });
+  it(
+    "should create warehouse",
+    { tags: ["@warehouse", "@allEnv", "@oldRelease"] },
+    () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      cy.visit(urlList.warehouses)
+        .get(WAREHOUSES_LIST.createNewButton)
+        .click()
+        .get(WAREHOUSES_DETAILS.nameInput)
+        .type(name)
+        .fillUpBasicAddress(usAddress)
+        .addAliasToGraphRequest("WarehouseCreate")
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .waitForRequestAndCheckIfNoErrors("@WarehouseCreate")
+        .its("response.body.data.createWarehouse.warehouse")
+        .then(warehouse => {
+          getWarehouse(warehouse.id);
+        })
+        .then(warehouse => {
+          const addressResp = warehouse.address;
+          expect(warehouse.name).to.be.eq(name);
+          cy.expectCorrectBasicAddress(addressResp, usAddress);
+        });
+    }
+  );
 
   it(
     "should add warehouse to shipping zone",

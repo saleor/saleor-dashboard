@@ -32,8 +32,6 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   let secondVariantsList;
   let warehouse;
   let attribute;
-  let category;
-  let productType;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -63,8 +61,6 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           attribute: attributeResp
         }) => {
           attribute = attributeResp;
-          category = categoryResp;
-          productType = productTypeResp;
 
           productsUtils.createProductInChannel({
             name,
@@ -103,7 +99,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
 
   it(
     "should be able to create price based shipping method. TC: SALEOR_0803",
-    { tags: ["@shipping", "@allEnv"] },
+    { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
       cy.clearSessionData().loginUserViaRequest(
