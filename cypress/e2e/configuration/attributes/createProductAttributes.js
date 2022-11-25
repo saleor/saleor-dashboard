@@ -65,7 +65,7 @@ describe("As an admin I want to create product attribute", () => {
   attributesTypes.forEach(attributeType => {
     it(
       `should be able to create ${attributeType.type} attribute. TC:${attributeType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable", "@oldRelease"] },
       () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
 
