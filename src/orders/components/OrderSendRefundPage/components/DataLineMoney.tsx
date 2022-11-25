@@ -1,5 +1,6 @@
+import { formatMoneyAmount } from "@saleor/components/Money";
 import useLocale from "@saleor/hooks/useLocale";
-import { getMoneyFormatted, IMoney } from "@saleor/utils/intl";
+import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import { useDataLineMoneyStyles } from "../styles";
@@ -16,7 +17,7 @@ export const DataLineMoney: React.FC<DataLineMoneyProps> = ({ money }) => {
     return null;
   }
 
-  const amount = getMoneyFormatted(locale, money);
+  const amount = formatMoneyAmount(money, locale);
 
   return (
     <span>

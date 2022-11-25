@@ -3,13 +3,13 @@ import { useId } from "@reach/auto-id";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
+import { formatMoney, formatMoneyAmount } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
 import useLocale from "@saleor/hooks/useLocale";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, LayoutButton } from "@saleor/macaw-ui";
-import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,9 +64,9 @@ export const RefundCard = ({
                 {...grantRefundPageMessages.refundShipment}
                 values={{
                   currency,
-                  amount: getMoneyFormatted(
-                    locale,
+                  amount: formatMoneyAmount(
                     order?.shippingPrice?.gross,
+                    locale,
                   ),
                 }}
               />
@@ -85,11 +85,13 @@ export const RefundCard = ({
             />
           </span>
           <span className={classes.totalMoney}>
-            {currency}&nbsp;
-            {getMoneyFormatted(locale, {
-              amount: totalSelectedPrice ?? 0,
-              currency: currency || "USD",
-            })}
+            {formatMoney(
+              {
+                amount: totalSelectedPrice ?? 0,
+                currency: currency || "USD",
+              },
+              locale,
+            )}
           </span>
           <LayoutButton
             state={!loading && "hover"}

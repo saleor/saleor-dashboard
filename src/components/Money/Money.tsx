@@ -1,7 +1,9 @@
 import useLocale from "@saleor/hooks/useLocale";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getMoneyFormatted, IMoney } from "@saleor/utils/intl";
+import { IMoney } from "@saleor/utils/intl";
 import React from "react";
+
+import { formatMoneyAmount } from ".";
 
 const useStyles = makeStyles(
   {
@@ -25,7 +27,7 @@ export const Money: React.FC<MoneyProps> = ({ money }) => {
     return null;
   }
 
-  const amount = getMoneyFormatted(locale, money);
+  const amount = formatMoneyAmount(money, locale);
 
   return (
     <>

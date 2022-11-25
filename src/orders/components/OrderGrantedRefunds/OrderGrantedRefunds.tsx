@@ -2,7 +2,7 @@ import { Card, TableCell, TableRow } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import EventTime from "@saleor/components/EventTime";
-import Money from "@saleor/components/Money";
+import Money, { formatMoney } from "@saleor/components/Money";
 import OverflowTooltip from "@saleor/components/OverflowTooltip";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderDetailsFragment } from "@saleor/graphql";
@@ -11,7 +11,6 @@ import { buttonMessages } from "@saleor/intl";
 import { Avatar, Pill } from "@saleor/macaw-ui";
 import { getUserInitials, renderCollection } from "@saleor/misc";
 import { orderGrantRefundEditUrl } from "@saleor/orders/urls";
-import { getMoneyFormatted } from "@saleor/utils/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -51,8 +50,7 @@ const OrderGrantedRefunds: React.FC<OrderGrantedRefundsProps> = ({ order }) => {
                   label={intl.formatMessage(
                     orderGrantedRefundsMessages.unsettled,
                     {
-                      currency: unsettled.currency,
-                      money: getMoneyFormatted(locale, unsettled),
+                      money: formatMoney(unsettled, locale),
                     },
                   )}
                 />

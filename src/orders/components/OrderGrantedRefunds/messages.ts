@@ -7,8 +7,8 @@ export const orderGrantedRefundsMessages = defineMessages({
     description: "order, granted refunds card, title",
   },
   unsettled: {
-    defaultMessage: "Unsettled {currency} {money}",
-    id: "xEM9Of",
+    defaultMessage: "Unsettled {money}",
+    id: "7t+oJp",
     description: "orde, granted refunds card, unsettled amount",
   },
 });

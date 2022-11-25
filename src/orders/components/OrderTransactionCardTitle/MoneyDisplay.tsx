@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
+import { formatMoneyAmount } from "@saleor/components/Money";
 import useLocale from "@saleor/hooks/useLocale";
-import { getMoneyFormatted, IMoney } from "@saleor/utils/intl";
+import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import { useMoneyDisplayStyles } from "./styles";
@@ -14,7 +15,7 @@ export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
   const { locale } = useLocale();
   const classes = useMoneyDisplayStyles();
 
-  const amount = getMoneyFormatted(locale, money);
+  const amount = formatMoneyAmount(money, locale);
 
   return (
     <dl className={classes.wrapper}>
