@@ -1,5 +1,6 @@
 *.py[cod]
 .*
+!.gitattributes
 !.babelrc
 !.circleci
 !.codeclimate.yml
