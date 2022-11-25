@@ -10,6 +10,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitThis": true,
+    "alwaysStrict": true,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
