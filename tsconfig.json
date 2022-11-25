@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    // Migration to strict null checks is in progress.
+    // https://github.com/saleor/saleor-dashboard/issues/2584
     "strictNullChecks": false,
     "esModuleInterop": true,
     "jsx": "react",
