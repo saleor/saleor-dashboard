@@ -163,9 +163,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     !shopSettings?.fulfillmentAllowUnpaid &&
     !order?.isPaid;
 
-  const areWarehousesSet = formsetData.every(line =>
-    line.value.every(v => v.warehouse),
-  );
+  const areWarehousesSet = formsetData
+    .filter(item => !!item?.value) // preorder case
+    .every(line => line.value.every(v => v.warehouse));
 
   const shouldEnableSave = () => {
     if (!order || loading) {
