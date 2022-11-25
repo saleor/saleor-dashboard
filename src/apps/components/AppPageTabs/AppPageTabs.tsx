@@ -1,17 +1,22 @@
+import { AppPagePathSegment } from "@saleor/apps/hooks/useAppsPageNavigation";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import React, { ComponentProps } from "react";
 import { useIntl } from "react-intl";
 
-export type AppPageTabValue =
-  | "THIRD_PARTY"
-  | "WEBHOOKS_AND_EVENTS"
-  | "SALEOR_APPS";
+/**
+ * Bind tab value to path segment to avoid unnecessary mapping
+ */
+const TabValue: Record<string, AppPagePathSegment> = {
+  SALEOR_APPS: "saleor-apps",
+  THIRD_PARTY: "third-party",
+  WEBHOOKS_AND_EVENTS: "webhooks-and-events",
+};
 
 type AllProps = ComponentProps<typeof PageTabs>;
 type AvailableProps = Omit<AllProps, "children" | "onChange" | "value"> & {
-  value: AppPageTabValue;
+  value: AppPagePathSegment;
   showSaleorApps: boolean;
-  onChange(newValue: AppPageTabValue): void;
+  onChange(newValue: AppPagePathSegment): void;
 };
 
 export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
@@ -19,7 +24,7 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
   return (
     <PageTabs {...props}>
       <PageTab
-        value="WEBHOOKS_AND_EVENTS"
+        value={TabValue.WEBHOOKS_AND_EVENTS}
         id="WEBHOOKS_AND_EVENTS"
         label={intl.formatMessage({
           defaultMessage: "Webhooks & Events",
@@ -27,7 +32,7 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
         })}
       />
       <PageTab
-        value="THIRD_PARTY"
+        value={TabValue.THIRD_PARTY}
         label={intl.formatMessage({
           defaultMessage: "3rd party apps",
           id: "J8frvS",
@@ -35,7 +40,7 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
       />
       {showSaleorApps && (
         <PageTab
-          value="SALEOR_APPS"
+          value={TabValue.SALEOR_APPS}
           label={intl.formatMessage({
             defaultMessage: "Saleor Apps",
             id: "+niGip",
