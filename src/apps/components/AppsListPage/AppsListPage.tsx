@@ -8,7 +8,7 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { ListProps } from "@saleor/types";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -32,6 +32,10 @@ const useStyles = makeStyles(
   theme => ({
     topTabs: {
       marginBottom: theme.spacing(4),
+    },
+    browseMarketplaceContainer: {
+      display: "flex",
+      justifyContent: "flex-end",
     },
   }),
   {
@@ -167,6 +171,15 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
               onRemove={onInstalledAppRemove}
               {...listProps}
             />
+            <div className={styles.browseMarketplaceContainer}>
+              <Button variant="primary">
+                {" "}
+                <FormattedMessage
+                  defaultMessage="Browse Marketplace"
+                  id="u0VQMN"
+                />
+              </Button>
+            </div>
           </>
         );
       }
