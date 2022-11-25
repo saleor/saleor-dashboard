@@ -39,7 +39,7 @@ const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
         <Typography>
           <FormattedMessage
             id="w3sGrD"
-            defaultMessage="Enter any extra infotmation regarding this customer."
+            defaultMessage="Enter any extra information regarding this customer."
           />
         </Typography>
         <FormSpacer />
