@@ -26,10 +26,14 @@ const Component = () => {
 
   const marketplaceUrl = useMemo(
     () => new URL(getDeepPath(router.location.pathname), MARKETPLACE_URL).href,
-    [router.location.pathname, themeType],
+    [router.location.pathname],
   );
 
-  const appParams = useMemo(() => ({ theme: themeType }), [themeType]);
+  /**
+   * Dont add dependency on purpose. At this moment theme is loaded properly. When it changes, iframe should stay monted.
+   * Then new Theme is send via AppBridge
+   */
+  const appParams = useMemo(() => ({ theme: themeType }), []);
 
   if (!marketplaceUrlResolver.checkMarketplaceConfigExists()) {
     return <NotFoundPage onBack={() => navigate("/")} />;

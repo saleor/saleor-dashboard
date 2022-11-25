@@ -10,7 +10,7 @@ describe("resolveAppIframeUrl", () => {
     jest.clearAllMocks();
   });
 
-  it.each<[string, string, string, Record<string, unknown>, string]>([
+  it.each<[string, string, string, Record<string, string>, string]>([
     [
       "XyZ123",
       "https://my-app.vercel.app",
