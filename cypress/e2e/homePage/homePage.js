@@ -8,7 +8,7 @@ import { expectWelcomeMessageIncludes } from "../../support/pages/homePage";
 describe("Displaying welcome message on home page", () => {
   it(
     "should display user name on home page",
-    { tags: ["@homePage", "@allEnv", "@stable"] },
+    { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.loginUserViaRequest().visit(urlList.homePage);
       expectWelcomeMessageIncludes(
@@ -19,7 +19,7 @@ describe("Displaying welcome message on home page", () => {
 
   it(
     "should display user email on home page",
-    { tags: ["@homePage", "@allEnv", "@stable"] },
+    { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.loginUserViaRequest("auth", USER_WITHOUT_NAME).visit(urlList.homePage);
       expectWelcomeMessageIncludes(`${USER_WITHOUT_NAME.email}`);
@@ -28,7 +28,7 @@ describe("Displaying welcome message on home page", () => {
 
   it(
     "should refresh page without errors",
-    { tags: ["@homePage", "@allEnv", "@stable"] },
+    { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.loginUserViaRequest()
         .visit(urlList.homePage)
