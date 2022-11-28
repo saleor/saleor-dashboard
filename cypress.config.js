@@ -6,7 +6,7 @@ const fs = require("fs");
 
 module.exports = defineConfig({
   projectId: "51ef7c",
-  videoCompression: 15,
+  videoCompression: false,
   chromeWebSecurity: false,
   videoUploadOnPasses: false,
   defaultCommandTimeout: 20000,
