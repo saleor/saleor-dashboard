@@ -26,7 +26,7 @@ export default defineConfig(({ command, mode }) => {
     STATIC_URL,
   } = env;
 
-  const assetsDir = STATIC_URL ? `./${STATIC_URL}` : "./assets/";
+  const assetsDir = STATIC_URL ? `./${STATIC_URL}` : "./dashboard/";
 
   const enableSentry =
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
@@ -51,7 +51,7 @@ export default defineConfig(({ command, mode }) => {
     plugins.push(
       viteSentry({
         sourceMaps: {
-          include: "./build/dashboard/",
+          include: `./build/${assetsDir}`,
           urlPrefix: process.env.SENTRY_URL_PREFIX,
         },
       }),
