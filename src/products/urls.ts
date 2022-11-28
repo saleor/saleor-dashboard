@@ -42,9 +42,14 @@ export enum ProductListUrlFiltersWithMultipleValues {
   collections = "collections",
   productTypes = "productTypes",
 }
-export enum ProductListUrlFiltersAsDictWithMultipleValues {
-  attributes = "attributes",
-}
+export const ProductListUrlFiltersAsDictWithMultipleValues = {
+  booleanAttributes: "boolean-attributes",
+  dateAttributes: "date-attributes",
+  dateTimeAttributes: "datetime-attributes",
+  numericAttributes: "numeric-attributes",
+  stringAttributes: "string-attributes",
+} as const;
+export type ProductListUrlFiltersAsDictWithMultipleValues = typeof ProductListUrlFiltersAsDictWithMultipleValues[keyof typeof ProductListUrlFiltersAsDictWithMultipleValues];
 export enum ProductListUrlFiltersWithKeyValueValues {
   metadata = "metadata",
 }

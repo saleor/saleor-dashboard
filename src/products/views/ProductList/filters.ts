@@ -1,5 +1,6 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  AttributeInputTypeEnum,
   InitialProductFilterAttributesQuery,
   InitialProductFilterCategoriesQuery,
   InitialProductFilterCollectionsQuery,
@@ -27,7 +28,6 @@ import {
   mapNodeToChoice,
   mapSlugNodeToChoice,
 } from "@saleor/utils/maps";
-import moment from "moment-timezone";
 
 import {
   FilterElement,
@@ -56,6 +56,42 @@ import {
 } from "../../urls";
 import { getProductGiftCardFilterParam } from "./utils";
 export const PRODUCT_FILTERS_KEY = "productFilters";
+
+function getFilterType(inputType: AttributeInputTypeEnum) {
+  switch (inputType) {
+    case AttributeInputTypeEnum.DATE:
+      return ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes;
+    case AttributeInputTypeEnum.DATE_TIME:
+      return ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes;
+    case AttributeInputTypeEnum.NUMERIC:
+      return ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
+    case AttributeInputTypeEnum.BOOLEAN:
+      return ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes;
+    default:
+      return ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes;
+  }
+}
+
+function mapAllTypeAttributesToOne(
+  attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
+  params: ProductListUrlFilters,
+) {
+  return attributes
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .map(attr => ({
+      active: maybe(
+        () => params[getFilterType(attr.inputType)][attr.slug].length > 0,
+        false,
+      ),
+      id: attr.id,
+      name: attr.name,
+      slug: attr.slug,
+      inputType: attr.inputType,
+      value: dedupeFilter(
+        params[getFilterType(attr.inputType)]?.[attr.slug] || [],
+      ),
+    }));
+}
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
@@ -89,16 +125,7 @@ export function getFilterOpts(
   channels: SingleAutocompleteChoiceType[],
 ): ProductListFilterOpts {
   return {
-    attributes: attributes
-      .sort((a, b) => (a.name > b.name ? 1 : -1))
-      .map(attr => ({
-        active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        id: attr.id,
-        name: attr.name,
-        slug: attr.slug,
-        inputType: attr.inputType,
-        value: dedupeFilter(params.attributes?.[attr.slug] || []),
-      })),
+    attributes: mapAllTypeAttributesToOne(attributes, params),
     attributeChoices: {
       active: true,
       choices: mapSlugNodeToChoice(
@@ -236,35 +263,17 @@ export function getFilterOpts(
 const parseFilterValue = (
   params: ProductListUrlFilters,
   key: string,
+  type: ProductListUrlFiltersAsDictWithMultipleValues,
 ): {
-  type: "boolean" | "date" | "dateTime" | "numeric" | "string";
   isMulti: boolean;
   value: string[];
 } => {
-  const value = params.attributes[key];
-  const isMulti = params.attributes[key].length > 1;
-
-  const isBooleanValue = value.every(val => val === "true" || val === "false");
-  const isDateValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.HTML5_FMT.DATE, true).isValid(),
-  );
-  const isDateTimeValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.ISO_8601, true).isValid(),
-  );
-  const isNumericValue = value.some(value => !isNaN(parseFloat(value)));
+  const value = params[type][key];
+  const isMulti = params[type][key].length > 1;
 
   const data = { isMulti, value };
 
-  if (isBooleanValue) {
-    return { ...data, type: "boolean" };
-  } else if (isDateValue) {
-    return { ...data, type: "date" };
-  } else if (isDateTimeValue) {
-    return { ...data, type: "dateTime" };
-  } else if (isNumericValue) {
-    return { ...data, type: "numeric" };
-  }
-  return { ...data, type: "string" };
+  return { ...data };
 };
 
 interface BaseFilterParam {
@@ -292,47 +301,189 @@ function getFilteredAttributeValue(
   | DateFilterParam
   | DefaultFilterParam
 > {
-  return !!params.attributes
-    ? Object.keys(params.attributes).map(key => {
-        const { isMulti, type, value } = parseFilterValue(params, key);
+  const attrValues = Object.keys(
+    ProductListUrlFiltersAsDictWithMultipleValues,
+  ).reduce((attrValues, attributeType) => {
+    const attributeTypeKey = attributeType as ProductListUrlFiltersAsDictWithMultipleValues;
+
+    const attributes = params[attributeTypeKey];
+
+    return [
+      ...(attrValues || []),
+      ...Object.keys(attributes).map(key => {
+        const { isMulti, value } = parseFilterValue(
+          params,
+          key,
+          attributeTypeKey,
+        );
         const name = { slug: key };
 
-        switch (type) {
-          case "boolean":
-            return { ...name, boolean: JSON.parse(value[0]) };
-
-          case "date":
-            return {
-              ...name,
-              date: getGteLteVariables({
-                gte: value[0] || null,
-                lte: isMulti ? value[1] || null : value[0],
-              }),
-            };
-
-          case "dateTime":
-            return {
-              ...name,
-              dateTime: getGteLteVariables({
-                gte: value[0] || null,
-                lte: isMulti ? value[1] || null : value[0],
-              }),
-            };
-
-          case "numeric":
-            return {
-              ...name,
-              valuesRange: {
-                gte: value[0] || undefined,
-                lte: isMulti ? value[1] || undefined : value[0] || undefined,
-              },
-            };
-
-          default:
-            return { ...name, values: value };
+        if (
+          attributeType ===
+          ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes
+        ) {
+          return { ...name, values: value };
         }
-      })
-    : null;
+        if (
+          attributeType ===
+          ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes
+        ) {
+          return { ...name, boolean: JSON.parse(value[0]) };
+        }
+        if (
+          attributeType ===
+          ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes
+        ) {
+          return {
+            ...name,
+            date: getGteLteVariables({
+              gte: value[0] || null,
+              lte: isMulti ? value[1] || null : value[0],
+            }),
+          };
+        }
+        if (
+          attributeType ===
+          ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes
+        ) {
+          return {
+            ...name,
+            dateTime: getGteLteVariables({
+              gte: value[0] || null,
+              lte: isMulti ? value[1] || null : value[0],
+            }),
+          };
+        }
+        if (
+          attributeType ===
+          ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes
+        ) {
+          return {
+            ...name,
+            valuesRange: {
+              gte: value[0] || undefined,
+              lte: isMulti ? value[1] || undefined : value[0] || undefined,
+            },
+          };
+        }
+      }),
+    ];
+  }, []);
+
+  if (!attrValues.length) {
+    return null;
+  }
+  return attrValues;
+
+  // const stringAttributes =
+  //   params[ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes];
+  // const stringAttributesValues =
+  //   !!stringAttributes &&
+  //   Object.keys(stringAttributes).map(key => {
+  //     const { value } = parseFilterValue(
+  //       params,
+  //       key,
+  //       ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes,
+  //     );
+  //     const name = { slug: key };
+
+  //     return { ...name, values: value };
+  //   });
+
+  // const booleanAttributes =
+  //   params[ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes];
+  // const booleanAttributesValues =
+  //   !!booleanAttributes &&
+  //   Object.keys(booleanAttributes).map(key => {
+  //     const { value } = parseFilterValue(
+  //       params,
+  //       key,
+  //       ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes,
+  //     );
+  //     const name = { slug: key };
+
+  //     return { ...name, boolean: JSON.parse(value[0]) };
+  //   });
+
+  // const dateAttributes =
+  //   params[ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes];
+  // const dateAttributesValues =
+  //   !!dateAttributes &&
+  //   Object.keys(dateAttributes).map(key => {
+  //     const { value, isMulti } = parseFilterValue(
+  //       params,
+  //       key,
+  //       ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes,
+  //     );
+  //     const name = { slug: key };
+
+  //     return {
+  //       ...name,
+  //       date: getGteLteVariables({
+  //         gte: value[0] || null,
+  //         lte: isMulti ? value[1] || null : value[0],
+  //       }),
+  //     };
+  //   });
+
+  // const dateTimeAttributes =
+  //   params[ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes];
+  // const dateTimeAttributesValues =
+  //   !!dateTimeAttributes &&
+  //   Object.keys(dateTimeAttributes).map(key => {
+  //     const { value, isMulti } = parseFilterValue(
+  //       params,
+  //       key,
+  //       ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes,
+  //     );
+  //     const name = { slug: key };
+
+  //     return {
+  //       ...name,
+  //       dateTime: getGteLteVariables({
+  //         gte: value[0] || null,
+  //         lte: isMulti ? value[1] || null : value[0],
+  //       }),
+  //     };
+  //   });
+
+  // const numericAttributes =
+  //   params[ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes];
+  // const numericAttributesValues =
+  //   !!numericAttributes &&
+  //   Object.keys(numericAttributes).map(key => {
+  //     const { value, isMulti } = parseFilterValue(
+  //       params,
+  //       key,
+  //       ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes,
+  //     );
+  //     const name = { slug: key };
+
+  //     return {
+  //       ...name,
+  //       valuesRange: {
+  //         gte: value[0] || undefined,
+  //         lte: isMulti ? value[1] || undefined : value[0] || undefined,
+  //       },
+  //     };
+  //   });
+
+  // if (
+  //   stringAttributesValues ||
+  //   booleanAttributesValues ||
+  //   dateAttributesValues ||
+  //   dateTimeAttributesValues ||
+  //   numericAttributesValues
+  // ) {
+  //   return [
+  //     ...(stringAttributesValues || []),
+  //     ...(booleanAttributesValues || []),
+  //     ...(dateAttributesValues || []),
+  //     ...(dateTimeAttributesValues || []),
+  //     ...(numericAttributesValues || []),
+  //   ];
+  // }
+  // return null;
 }
 
 export function getFilterVariables(
