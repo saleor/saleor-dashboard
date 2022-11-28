@@ -1,9 +1,11 @@
 import { Card, CardContent, Container } from "@material-ui/core";
 import { Backlink } from "@saleor/components/Backlink";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { Grid } from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
+import Skeleton from "@saleor/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
@@ -24,6 +26,7 @@ import { useStyles } from "./styles";
 
 export interface OrderSendRefundPageProps {
   order: OrderDetailsFragment;
+  loading: boolean;
   onAddManualRefund: (
     args: CreateManualTransactionRefundMutationVariables,
   ) => void;
@@ -33,21 +36,18 @@ export interface OrderSendRefundPageProps {
 
 const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
   order,
+  loading,
   onAddManualRefund,
   addManualRefundState,
   addManualRefundError,
 }) => {
   const classes = useStyles();
 
-  if (!order) {
-    return null;
-  }
-
-  const currency = order.totalBalance.currency;
+  const currency = order?.totalBalance?.currency || "";
 
   return (
     <Container>
-      <Backlink href={orderUrl(order.id)}>
+      <Backlink href={orderUrl(order?.id)}>
         {order?.number ? (
           <FormattedMessage
             {...orderMessages.headerOrderNumber}
@@ -64,12 +64,20 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
       />
       <Grid>
         <div>
+          {loading && (
+            <>
+              <Card>
+                <CardContent className={classes.cardLoading} />
+              </Card>
+              <CardSpacer />
+            </>
+          )}
           {order?.transactions.map(transaction => (
             <TransactionCard
               key={transaction.id}
               transaction={transaction}
-              totalRemainingGrant={order.totalRemainingGrant}
-              orderId={order.id}
+              totalRemainingGrant={order?.totalRemainingGrant}
+              orderId={order?.id}
             />
           ))}
           <ManualRefundCard
@@ -81,7 +89,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
                 currency,
                 description,
                 amount,
-                orderId: order.id,
+                orderId: order?.id,
               });
             }}
           />
@@ -105,14 +113,14 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
                     <FormattedMessage {...refundPageMessages.grantedRefund} />
                   }
                 >
-                  <DataLineMoney money={order.totalGrantedRefund} />
+                  <DataLineMoney money={order?.totalGrantedRefund} />
                 </DataLine>
                 <DataLine
                   label={
                     <FormattedMessage {...refundPageMessages.pendingRefunds} />
                   }
                 >
-                  <DataLineMoney money={order.totalPendingRefund} />
+                  <DataLineMoney money={order?.totalPendingRefund} />
                 </DataLine>
               </ul>
             </CardContent>
@@ -125,8 +133,9 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
               }
             />
             <CardContent>
+              {loading && <Skeleton />}
               <ul className={classes.dataList}>
-                {order.transactions.map(transaction => (
+                {order?.transactions.map(transaction => (
                   <DataLine label={transaction.type}>
                     <DataLineMoney money={transaction.refundedAmount} />
                   </DataLine>

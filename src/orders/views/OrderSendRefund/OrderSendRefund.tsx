@@ -25,7 +25,7 @@ const OrderSendRefund: React.FC<OrderSendRefund> = ({ orderId }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
-  const { data } = useOrderDetailsQuery({
+  const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
@@ -53,6 +53,7 @@ const OrderSendRefund: React.FC<OrderSendRefund> = ({ orderId }) => {
 
   return (
     <OrderSendRefundPage
+      loading={loading}
       order={data?.order}
       onAddManualRefund={args => createRefundTransaction({ variables: args })}
       addManualRefundState={createRefundStatus}

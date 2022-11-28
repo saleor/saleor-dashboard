@@ -10,6 +10,10 @@ export const useStyles = makeStyles(
       padding: 0,
       margin: 0,
     },
+    cardLoading: {
+      height: "20em",
+      background: "white",
+    },
   },
   { name: "OrderSendRefundPage" },
 );

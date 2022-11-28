@@ -10,6 +10,7 @@ const order = getOrder(placeholderImage);
 
 const props: OrderSendRefundPageProps = {
   order,
+  loading: false,
   onAddManualRefund: () => undefined,
   addManualRefundState: "default",
   addManualRefundError: undefined,
@@ -27,4 +28,5 @@ storiesOf("Views / Orders / Send refund order", module)
         totalRemainingGrant: prepareMoney(10),
       }}
     />
-  ));
+  ))
+  .add("loading", () => <OrderSendRefund {...props} loading={true} />);
