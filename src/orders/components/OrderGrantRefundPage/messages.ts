@@ -77,3 +77,21 @@ export const grantRefundPageMessages = defineMessages({
     description: "button. form submit, grant refund edit",
   },
 });
+
+export const productCardMessages = defineMessages({
+  quantity: {
+    defaultMessage: "Quantity",
+    id: "S5/nSq",
+    description: "grant refund table, column header",
+  },
+  product: {
+    defaultMessage: "Product",
+    id: "rxlJJ/",
+    description: "grant refund table, column header",
+  },
+  qtyToRefund: {
+    defaultMessage: "Qty to refund",
+    id: "1/oauz",
+    description: "grant refund table, column header",
+  },
+});

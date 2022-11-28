@@ -16,6 +16,18 @@ export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
   };
 }
 
+export const formatMoneyAmount = (money: IMoney, locale: string) => {
+  const currencyFractionDigits = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: money.currency,
+  }).resolvedOptions().maximumFractionDigits;
+
+  return money.amount.toLocaleString(locale, {
+    maximumFractionDigits: currencyFractionDigits,
+    minimumFractionDigits: currencyFractionDigits,
+  });
+};
+
 export const formatMoney = (money: IMoney, locale: string) => {
   try {
     const formattedMoney = Intl.NumberFormat(locale, {

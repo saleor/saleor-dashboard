@@ -540,3 +540,47 @@ export const orderGrantRefundEditMutation = gql`
     }
   }
 `;
+
+export const orderSendRefundMutation = gql`
+  mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
+    transactionRequestAction(
+      actionType: REFUND
+      amount: $amount
+      id: $transactionId
+    ) {
+      transaction {
+        ...TransactionItem
+      }
+      errors {
+        ...TransactionRequestActionError
+      }
+    }
+  }
+`;
+
+export const createManualTransactionRefund = gql`
+  mutation CreateManualTransactionRefund(
+    $orderId: ID!
+    $amount: PositiveDecimal!
+    $currency: String!
+    $description: String
+  ) {
+    transactionCreate(
+      id: $orderId
+      transaction: {
+        type: "Manual refund"
+        status: "Success"
+        reference: $description
+        amountRefunded: { amount: $amount, currency: $currency }
+      }
+      transactionEvent: { status: SUCCESS, type: REFUND, name: $description }
+    ) {
+      transaction {
+        ...TransactionItem
+      }
+      errors {
+        ...TransactionCreateError
+      }
+    }
+  }
+`;

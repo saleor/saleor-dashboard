@@ -31,6 +31,7 @@ import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
+import { orderMessages } from "@saleor/orders/messages";
 import {
   OrderFulfillUrlDialog,
   OrderFulfillUrlQueryParams,
@@ -198,10 +199,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       <Container>
         <Backlink href={orderUrl(order?.id)}>
           {order?.number
-            ? intl.formatMessage(messages.headerOrderNumber, {
+            ? intl.formatMessage(orderMessages.headerOrderNumber, {
                 orderNumber: order.number,
               })
-            : intl.formatMessage(messages.headerOrder)}
+            : intl.formatMessage(orderMessages.headerOrder)}
         </Backlink>
         <PageHeader
           title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {

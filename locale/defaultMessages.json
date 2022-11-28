@@ -1,4 +1,8 @@
 {
+  "++8ZWj": {
+    "context": "Transaction event status - requested",
+    "string": "Requested"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -237,6 +241,9 @@
     "context": "products in collection",
     "string": "Products in {name}"
   },
+  "/eWPsp": {
+    "string": "Invalid currency used to create transaction"
+  },
   "/glQgs": {
     "string": "No channels found"
   },
@@ -250,6 +257,10 @@
   "/lBLBI": {
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
+  },
+  "/nZy6A": {
+    "context": "page subtitle",
+    "string": "Issue refund"
   },
   "/oaqFS": {
     "context": "section header",
@@ -389,6 +400,10 @@
     "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
   },
+  "0whAeC": {
+    "context": "sum of all pending refunds inside an order",
+    "string": "Pending refunds"
+  },
   "1+M/52": {
     "context": "section header",
     "string": "Webhook Status"
@@ -495,6 +510,10 @@
   },
   "1n1tOR": {
     "string": "Group is out of your permission scope"
+  },
+  "1oYjZc": {
+    "context": "sum of all granted refunds for an order",
+    "string": "Granted refund"
   },
   "1qRwgQ": {
     "context": "app installation",
@@ -641,6 +660,10 @@
   "2r4cTE": {
     "context": "button",
     "string": "Enable Dark Mode"
+  },
+  "2x9ZgK": {
+    "context": "card title",
+    "string": "Refund balance"
   },
   "2yU+q9": {
     "context": "tab name",
@@ -1264,6 +1287,10 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
+  "7t+oJp": {
+    "context": "orde, granted refunds card, unsettled amount",
+    "string": "Unsettled {money}"
+  },
   "7v2oBd": {
     "context": "header",
     "string": "Error"
@@ -1465,6 +1492,10 @@
   "9mrWKz": {
     "context": "no products placeholder",
     "string": "No products are available matching query in the channel assigned to this order."
+  },
+  "9pLPLn": {
+    "context": "refund amounts were unsettled",
+    "string": "Unsettled"
   },
   "9piUVz": {
     "context": "order history message",
@@ -2550,6 +2581,10 @@
     "context": "product field",
     "string": "Export Variant ID"
   },
+  "Hc58JL": {
+    "context": "card title",
+    "string": "Balance after requests"
+  },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
     "string": "Sold units"
@@ -3075,6 +3110,10 @@
     "context": "refund type",
     "string": "Miscellaneous Refund"
   },
+  "LLrOK3": {
+    "context": "paragraph, description in manual refund card",
+    "string": "Create a manual refund for non-integrated payments"
+  },
   "LOSNq0": {
     "context": "dialog header",
     "string": "Unassign Categories From Voucher"
@@ -3091,6 +3130,10 @@
   "LY5dS9": {
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
+  },
+  "Ljtqmt": {
+    "context": "page header, order id unknown",
+    "string": "Order"
   },
   "LkuDEb": {
     "context": "metadata field value, header",
@@ -3363,6 +3406,10 @@
     "context": "channels section name",
     "string": "Channels"
   },
+  "NnhrxZ": {
+    "context": "amount of sent refund for transaction",
+    "string": "{transactionType} refund"
+  },
   "Np7J92": {
     "context": "deactivate local named app",
     "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app."
@@ -3554,6 +3601,10 @@
   "PLCwT/": {
     "context": "search results",
     "string": "Show more"
+  },
+  "PLX6FH": {
+    "context": "sum of all manual refunds for transaction",
+    "string": "Manual refund"
   },
   "PRXpBm": {
     "context": "dialog header",
@@ -4483,6 +4534,9 @@
     "context": "section header",
     "string": "App permissions"
   },
+  "Vtjlpw": {
+    "string": "Transaction is not unique"
+  },
   "Vu9nol": {
     "context": "header",
     "string": "Order settings"
@@ -4746,10 +4800,6 @@
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
     "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
-  },
-  "XRf1Bi": {
-    "context": "order refunded success message",
-    "string": "Refunded Items"
   },
   "XT/ZvF": {
     "context": "voucher requirement",
@@ -5112,6 +5162,9 @@
     "context": "Taxes section title",
     "string": "Tax classes"
   },
+  "aKSUWR": {
+    "string": "Cannot create transaction to non-existing order"
+  },
   "aMwxYb": {
     "string": "Countries"
   },
@@ -5249,6 +5302,10 @@
     "context": "add tracking button",
     "string": "Add tracking"
   },
+  "bT71VU": {
+    "context": "total of all sent refunds",
+    "string": "Result"
+  },
   "bVY7j0": {
     "context": "Translated Name",
     "string": "Translation"
@@ -5271,6 +5328,10 @@
   "bcf60I": {
     "context": "voucher",
     "string": "Applies to"
+  },
+  "bfuxy3": {
+    "context": "button, create new transaction with refund amount",
+    "string": "Refund"
   },
   "bgO+7G": {
     "context": "order return amount button",
@@ -5469,6 +5530,10 @@
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
+  },
+  "d7dT8o": {
+    "context": "button, sets granted refund amount in input",
+    "string": "Set max"
   },
   "d9UqaJ": {
     "context": "error message",
@@ -5700,6 +5765,10 @@
   "fjPWOA": {
     "context": "header",
     "string": "Customer Overview"
+  },
+  "fkgack": {
+    "context": "button, sends refund for transaction",
+    "string": "Request refund"
   },
   "fkplbE": {
     "context": "order history message",
@@ -6017,6 +6086,10 @@
   "iFM716": {
     "context": "grant refund, refund card subtitle",
     "string": "How much money do you want to return to the customer for the order?"
+  },
+  "iIfq2+": {
+    "context": "Transaction cancel button - return preauthorized amount to client",
+    "string": "Cancel"
   },
   "iJrw63": {
     "context": "section header",
@@ -6686,6 +6759,10 @@
     "context": "attribute internal name",
     "string": "Slug"
   },
+  "ng0ZDW": {
+    "context": "label, input for amount to refund in transaction",
+    "string": "Refund amount"
+  },
   "ngAgBy": {
     "context": "tax class rates list label when no countries are assigned",
     "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
@@ -6823,6 +6900,10 @@
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
+  },
+  "p1D4Ok": {
+    "context": "order send refund, manual transaction refund was created",
+    "string": "Manual refund was created successfully"
   },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
@@ -7801,6 +7882,10 @@
     "context": "sale value, header",
     "string": "Value"
   },
+  "wJep/X": {
+    "context": "refund amounts were settled",
+    "string": "Settled"
+  },
   "wL7VAE": {
     "string": "Actions"
   },
@@ -7889,10 +7974,6 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
-  },
-  "xEM9Of": {
-    "context": "orde, granted refunds card, unsettled amount",
-    "string": "Unsettled {currency} {money}"
   },
   "xGC2Ge": {
     "context": "grant refund, button",
@@ -8186,6 +8267,10 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zf48rQ": {
+    "context": "sum of captured amount of all transactions",
+    "string": "Total captured"
   },
   "zfjAc7": {
     "context": "grant refund, card header",

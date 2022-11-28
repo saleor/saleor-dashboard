@@ -7269,6 +7269,8 @@ export type ShippingPriceTranslateErrorFragmentFragment = { __typename: 'Transla
 
 export type TransactionRequestActionErrorFragment = { __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode };
 
+export type TransactionCreateErrorFragment = { __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode };
+
 export type TaxConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode };
 
 export type OrderGrantRefundCreateErrorFragment = { __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode };
@@ -8036,6 +8038,24 @@ export type OrderGrantRefundEditMutationVariables = Exact<{
 
 
 export type OrderGrantRefundEditMutation = { __typename: 'Mutation', orderGrantRefundUpdate: { __typename: 'OrderGrantRefundUpdate', errors: Array<{ __typename: 'OrderGrantRefundUpdateError', field: string | null, message: string | null, code: OrderGrantRefundUpdateErrorCode }> } | null };
+
+export type OrderSendRefundMutationVariables = Exact<{
+  amount: Scalars['PositiveDecimal'];
+  transactionId: Scalars['ID'];
+}>;
+
+
+export type OrderSendRefundMutation = { __typename: 'Mutation', transactionRequestAction: { __typename: 'TransactionRequestAction', transaction: { __typename: 'TransactionItem', id: string, type: string, reference: string, actions: Array<TransactionActionEnum>, events: Array<{ __typename: 'TransactionEvent', id: string, reference: string, createdAt: any, status: TransactionEventStatus, name: string | null }>, refundedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, authorizedAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode }> } | null };
+
+export type CreateManualTransactionRefundMutationVariables = Exact<{
+  orderId: Scalars['ID'];
+  amount: Scalars['PositiveDecimal'];
+  currency: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CreateManualTransactionRefundMutation = { __typename: 'Mutation', transactionCreate: { __typename: 'TransactionCreate', transaction: { __typename: 'TransactionItem', id: string, type: string, reference: string, actions: Array<TransactionActionEnum>, events: Array<{ __typename: 'TransactionEvent', id: string, reference: string, createdAt: any, status: TransactionEventStatus, name: string | null }>, refundedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, authorizedAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode }> } | null };
 
 export type OrderListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;

@@ -29,8 +29,8 @@ import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
-import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
+import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
@@ -80,8 +80,8 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
 const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
@@ -113,7 +113,7 @@ const Component = () => {
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
-        <Route path={orderRefundPath(":id")} component={OrderRefund} />
+        <Route path={orderRefundPath(":id")} component={OrderSendRefund} />
         <Route
           path={orderGrantRefundEditPath(":orderId", ":refundId")}
           component={OrderGrantRefundEdit}

@@ -325,43 +325,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   ))}
                 </div>
                 <OrderAddTransaction order={order} />
-                <CardSpacer />
-                <div>
-                  {order?.transactions?.map(transaction => (
-                    <OrderTransaction
-                      key={transaction.id}
-                      transaction={transaction}
-                      onTransactionAction={onTransactionAction}
-                    />
-                  ))}
-                  {filteredPayments.map(payment => (
-                    <OrderTransactionPayment
-                      key={payment.id}
-                      payment={payment}
-                      allPaymentMethods={shop?.availablePaymentGateways}
-                      onCapture={onPaymentCapture}
-                      onVoid={onPaymentVoid}
-                    />
-                  ))}
-                  {order?.giftCards?.map(giftCard => (
-                    <OrderTransactionGiftCard
-                      key={giftCard.id}
-                      order={order}
-                      giftCard={giftCard}
-                    />
-                  ))}
-                </div>
-                <OrderAddTransaction order={order} />
-                <CardSpacer />
-                {order?.transactions?.map(transaction => (
-                  <React.Fragment key={transaction.id}>
-                    <OrderTransaction
-                      transaction={transaction}
-                      onTransactionAction={onTransactionAction}
-                    />
-                    <CardSpacer />
-                  </React.Fragment>
-                ))}
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

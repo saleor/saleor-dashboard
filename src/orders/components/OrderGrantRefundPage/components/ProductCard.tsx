@@ -16,7 +16,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useGrantRefundContext } from "../context";
-import { grantRefundPageMessages } from "../messages";
+import { grantRefundPageMessages, productCardMessages } from "../messages";
 import { useProductsCardStyles } from "../styles";
 
 interface ProductsCardProps {
@@ -75,25 +75,13 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
       <Table>
         <TableHead>
           <TableCell className={classes.colProduct}>
-            <FormattedMessage
-              defaultMessage="Product"
-              description="grant refund table, column header"
-              id="rxlJJ/"
-            />
+            <FormattedMessage {...productCardMessages.product} />
           </TableCell>
           <TableCell className={classes.colQuantity}>
-            <FormattedMessage
-              defaultMessage="Quantity"
-              description="grant refund table, column header"
-              id="S5/nSq"
-            />
+            <FormattedMessage {...productCardMessages.quantity} />
           </TableCell>
           <TableCell className={classes.colQuantityInput}>
-            <FormattedMessage
-              defaultMessage="Qty to refund"
-              description="grant refund table, column header"
-              id="1/oauz"
-            />
+            <FormattedMessage {...productCardMessages.qtyToRefund} />
           </TableCell>
         </TableHead>
         <TableBody>

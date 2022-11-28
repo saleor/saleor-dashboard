@@ -496,6 +496,13 @@ export const transactionRequestActionErrorFragment = gql`
   }
 `;
 
+export const transactionCreateErrorFragment = gql`
+  fragment TransactionCreateError on TransactionCreateError {
+    field
+    message
+    code
+  }
+`;
 export const taxConfigurationUpdateError = gql`
   fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
     field
@@ -516,7 +523,6 @@ export const taxCountryConfigurationUpdateError = gql`
     field
     code
   }
-
 `;
 export const taxCountryConfigurationDeleteError = gql`
   fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
