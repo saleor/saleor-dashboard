@@ -43,7 +43,6 @@ describe("As an unlogged customer I want to order physical and digital products"
       shippingMethod = resp.shippingMethod;
       digitalVariants = resp.digitalVariants;
       physicalVariants = resp.physicalVariants;
-      cy.clearSessionData();
     });
   });
 
