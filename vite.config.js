@@ -26,8 +26,6 @@ export default defineConfig(({ command, mode }) => {
     STATIC_URL,
   } = env;
 
-  const assetsDir = STATIC_URL ? `./${STATIC_URL}` : "./dashboard/";
-
   const enableSentry =
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
@@ -51,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
     plugins.push(
       viteSentry({
         sourceMaps: {
-          include: `./build/${assetsDir}`,
+          include: "./build/dashboard",
           urlPrefix: process.env.SENTRY_URL_PREFIX,
         },
       }),
@@ -66,6 +64,7 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     root: "src",
+    base: STATIC_URL ?? "/",
     envDir: "..",
     server: {
       port: 9000,
@@ -92,11 +91,11 @@ export default defineConfig(({ command, mode }) => {
       minify: false,
       sourcemap: true,
       emptyOutDir: true,
-      outDir: "../build/",
-      assetsDir,
+      outDir: "../build/dashboard",
+      assetsDir: ".",
       commonjsOptions: {
         /*
-          Fix dynamic imports by "require", Neccessary for react-editor-js
+          Fix dynamic imports by "require", Necessary for react-editor-js
           Ref: https://github.com/Jungwoo-An/react-editor-js/blob/e58b7ba5e66d07912bb78f65ac911e4018d363e1/packages/react-editor-js/src/factory.ts#L5
          */
         transformMixedEsModules: true,
