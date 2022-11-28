@@ -51,7 +51,7 @@ export const transactionCreateMessages = defineMessages({
   },
   unique: {
     defaultMessage: "Transaction is not unique",
-    id: "TpocrP",
+    id: "Vtjlpw",
   },
 });
 

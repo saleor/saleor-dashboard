@@ -1287,6 +1287,10 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
+  "7t+oJp": {
+    "context": "orde, granted refunds card, unsettled amount",
+    "string": "Unsettled {money}"
+  },
   "7v2oBd": {
     "context": "header",
     "string": "Error"
@@ -4233,9 +4237,6 @@
     "context": "navigator placeholder",
     "string": "Search Customer"
   },
-  "TpocrP": {
-    "string": "Transaction is not uniqe"
-  },
   "TtZg/K": {
     "context": "ExitFormPrompt title",
     "string": "Would you like to save changes?"
@@ -4532,6 +4533,9 @@
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
+  },
+  "Vtjlpw": {
+    "string": "Transaction is not unique"
   },
   "Vu9nol": {
     "context": "header",
@@ -7970,10 +7974,6 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
-  },
-  "xEM9Of": {
-    "context": "orde, granted refunds card, unsettled amount",
-    "string": "Unsettled {currency} {money}"
   },
   "xGC2Ge": {
     "context": "grant refund, button",
