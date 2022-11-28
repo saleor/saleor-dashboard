@@ -1,11 +1,10 @@
+import { Typography } from "@material-ui/core";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { makeStyles } from "@saleor/macaw-ui";
+  makeStyles,
+} from "@saleor/macaw-ui";
 import React from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
@@ -15,11 +14,11 @@ const useStyles = makeStyles(
     dot: {
       backgroundColor: theme.palette.primary.main,
       borderRadius: "100%",
-      height: 8,
-      left: -29,
+      height: 7,
+      left: -28,
       position: "absolute",
       top: 6,
-      width: 8,
+      width: 7,
     },
     panel: {
       "& .MuiAccordionDetails-root": {
@@ -94,10 +93,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
       <span className={classes.dot} />
       {children ? (
         <Accordion className={classes.panel} elevation={0}>
-          <AccordionSummary
-            className={classes.panelExpander}
-            expandIcon={<ExpandMoreIcon />}
-          >
+          <AccordionSummary className={classes.panelExpander}>
             <TimelineEventHeader
               title={title}
               date={date}

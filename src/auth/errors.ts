@@ -1,11 +1,21 @@
+import { ApolloError } from "@apollo/client";
 import { findValueInEnum } from "@saleor/misc";
 import { GraphQLError } from "graphql";
+
+import { UserContextError } from "./types";
 
 export enum JWTError {
   invalid = "InvalidTokenError",
   invalidSignature = "InvalidSignatureError",
   expired = "ExpiredSignatureError",
 }
+
+export const AuthError = {
+  PermissionDenied: "PermissionDenied",
+  OAuthError: "OAuthError",
+} as const;
+
+export type AuthError = typeof AuthError[keyof typeof AuthError];
 
 export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
@@ -20,4 +30,23 @@ export function isJwtError(error: GraphQLError): boolean {
 
 export function isTokenExpired(error: GraphQLError): boolean {
   return error.extensions.exception.code === JWTError.expired;
+}
+
+export function getAuthErrorType(graphQLError: GraphQLError): UserContextError {
+  switch (graphQLError.extensions?.exception?.code as AuthError) {
+    case AuthError.PermissionDenied:
+      return UserContextError.noPermissionsError;
+    case AuthError.OAuthError:
+      return UserContextError.externalLoginError;
+    default:
+      return UserContextError.unknownLoginError;
+  }
+}
+
+export function parseAuthError(authError: ApolloError): UserContextError[] {
+  return (
+    authError?.graphQLErrors?.map(graphQLError =>
+      getAuthErrorType(graphQLError),
+    ) || []
+  );
 }

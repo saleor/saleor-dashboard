@@ -40,7 +40,7 @@ const useStyles = makeStyles(
   theme => ({
     deliveryTimeFields: {
       display: "grid",
-      gridColumnGap: theme.spacing(2),
+      gridColumnGap: theme.spacing(1),
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "1fr 1fr 1fr",
       [theme.breakpoints.down("md")]: {

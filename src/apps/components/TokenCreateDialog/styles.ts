@@ -1,4 +1,4 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(
       right: theme.spacing(1),
     },
     paper: {
-      background: fade(theme.palette.primary.main, 0.05),
+      background: alpha(theme.palette.primary.main, 0.05),
       padding: theme.spacing(2, 3),
     },
   }),

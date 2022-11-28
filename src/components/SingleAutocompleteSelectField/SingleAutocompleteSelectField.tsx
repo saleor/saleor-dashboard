@@ -1,5 +1,6 @@
 import {
   InputBase,
+  OutlinedInputProps,
   Popper,
   PopperPlacementType,
   TextField,
@@ -226,10 +227,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   // Downshift doesn't seem to be fully compatible with MUI
                   // https://github.com/downshift-js/downshift/issues/718
                   inputProps={{
-                    ...getInputProps({
+                    ...(getInputProps({
                       placeholder,
                       onClick: handleToggleMenu,
-                    }),
+                    }) as OutlinedInputProps["inputProps"]),
                   }}
                   error={error}
                   disabled={disabled}

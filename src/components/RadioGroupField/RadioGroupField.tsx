@@ -88,7 +88,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
                   className={classNames({
                     [classes.alignTop]: alignTop,
                   })}
-                  color="primary"
+                  color="secondary"
                 />
               }
               label={choice.label}

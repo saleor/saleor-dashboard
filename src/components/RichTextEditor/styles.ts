@@ -1,13 +1,15 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => {
     const hover = {
       "&:hover": {
-        background: fade(theme.palette.primary.main, 0.1),
+        background: alpha(theme.palette.primary.main, 0.1),
       },
     };
+
+    const isDarkMode = theme.palette.type === "dark";
 
     return {
       editor: {
@@ -18,7 +20,7 @@ const useStyles = makeStyles(
           minHeight: 24,
         },
         "& .ce-block--selected .ce-block__content": {
-          background: `${fade(theme.palette.primary.main, 0.2)} !important`,
+          background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
         },
         "& .ce-block__content": {
           margin: 0,
@@ -28,7 +30,7 @@ const useStyles = makeStyles(
           ...hover,
         },
         "& .ce-conversion-tool--focused": {
-          background: `${fade(theme.palette.primary.main, 0.1)} !important`,
+          background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
         },
         "& .ce-conversion-tool__icon": {
           background: "none",
@@ -71,6 +73,17 @@ const useStyles = makeStyles(
         },
         "& .ce-toolbar__plus": {
           left: -9,
+          color: theme.palette.text.primary,
+          ...hover,
+        },
+        "& .ce-popover": {
+          backgroundColor: theme.palette.background.paper,
+        },
+        "& .ce-popover__item": {
+          ...hover,
+        },
+        "& .ce-popover__item-icon": {
+          color: theme.palette.saleor.generic.verydark,
         },
         "& .ce-toolbox.ce-toolbox--opened": {
           left: 16,
@@ -83,13 +96,19 @@ const useStyles = makeStyles(
           color: theme.palette.primary.light,
         },
         "&:not($rootDisabled):hover": {
-          borderColor: theme.palette.primary.main,
+          borderColor: isDarkMode
+            ? theme.palette.saleor.main[2]
+            : theme.palette.saleor.main[4],
+          boxShadow: `0 0 0 3px ${
+            isDarkMode
+              ? theme.palette.saleor.main[4]
+              : theme.palette.saleor.main[6]
+          }`,
         },
       },
       root: {
-        border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
+        border: `1px solid ${theme.palette.saleor.main[4]}`,
         borderRadius: 4,
-        boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
         fontSize: theme.typography.body1.fontSize,
         minHeight: 56,
         padding: theme.spacing(3, 2),
@@ -99,7 +118,7 @@ const useStyles = makeStyles(
         transition: theme.transitions.duration.short + "ms",
       },
       rootActive: {
-        boxShadow: `inset 0px 0px 0 2px ${theme.palette.primary.main}`,
+        borderColor: theme.palette.saleor.main[1],
       },
       rootDisabled: {
         ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],

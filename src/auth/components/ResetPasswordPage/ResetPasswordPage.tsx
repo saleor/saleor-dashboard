@@ -36,7 +36,11 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          <IconButton className={classes.backBtn} href={getAppMountUri()}>
+          <IconButton
+            className={classes.backBtn}
+            href={getAppMountUri()}
+            variant="secondary"
+          >
             <ArrowRightIcon className={classes.arrow} />
           </IconButton>
           <Typography variant="h3" className={classes.header}>

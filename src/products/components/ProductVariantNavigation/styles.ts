@@ -1,4 +1,4 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     defaultVariant: {
-      color: fade(theme.palette.text.secondary, 0.6),
+      color: alpha(theme.palette.text.secondary, 0.6),
       display: "block",
     },
     firstVariant: {
