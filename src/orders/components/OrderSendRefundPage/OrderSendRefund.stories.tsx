@@ -29,4 +29,6 @@ storiesOf("Views / Orders / Send refund order", module)
       }}
     />
   ))
-  .add("loading", () => <OrderSendRefund {...props} loading={true} />);
+  .add("loading", () => (
+    <OrderSendRefund {...props} order={null} loading={true} />
+  ));

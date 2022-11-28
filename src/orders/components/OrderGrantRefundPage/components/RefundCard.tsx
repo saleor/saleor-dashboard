@@ -3,7 +3,7 @@ import { useId } from "@reach/auto-id";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
-import { formatMoney, formatMoneyAmount } from "@saleor/components/Money";
+import { formatMoneyAmount } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
@@ -85,10 +85,11 @@ export const RefundCard = ({
             />
           </span>
           <span className={classes.totalMoney}>
-            {formatMoney(
+            {currency}{" "}
+            {formatMoneyAmount(
               {
                 amount: totalSelectedPrice ?? 0,
-                currency: currency || "USD",
+                currency,
               },
               locale,
             )}
