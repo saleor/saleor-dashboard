@@ -60,16 +60,20 @@ export const RefundCard = ({
               onChange={() => dispatch({ type: "toggleRefundShipping" })}
             />
             <label htmlFor={`checkbox-${id}`}>
-              <FormattedMessage
-                {...grantRefundPageMessages.refundShipment}
-                values={{
-                  currency,
-                  amount: formatMoneyAmount(
-                    order?.shippingPrice?.gross,
-                    locale,
-                  ),
-                }}
-              />
+              {!currency ? (
+                <Skeleton />
+              ) : (
+                <FormattedMessage
+                  {...grantRefundPageMessages.refundShipment}
+                  values={{
+                    currency,
+                    amount: formatMoneyAmount(
+                      order?.shippingPrice?.gross,
+                      locale,
+                    ),
+                  }}
+                />
+              )}
             </label>
           </div>
         ) : (
