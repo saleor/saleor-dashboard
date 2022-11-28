@@ -15,9 +15,11 @@
     "cypress",
     "chai-friendly",
     "formatjs",
-    "react-hooks"
+    "react-hooks",
+    "react-refresh"
   ],
   "rules": {
+    "react-refresh/only-export-components": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": [
       "error",
