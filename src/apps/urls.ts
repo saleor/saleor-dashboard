@@ -123,7 +123,7 @@ export const resolveAppIframeUrl = (
   appUrl: string,
   params: AppDetailsUrlQueryParams,
 ) => {
-  const apiUrl = getApiUrl();
+  const apiUrl = new URL(getApiUrl(), window.location.origin);
   const apiUrlHost = new URL(getApiUrl()).hostname;
 
   const iframeContextQueryString = `?${stringifyQs(
