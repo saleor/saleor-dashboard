@@ -46,9 +46,12 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     triggerChange: () => setIsDirty(true),
   });
 
-  useEffect(() => setExitDialogSubmitRef(onSubmit), [onSubmit]);
+  useEffect(() => setExitDialogSubmitRef(submit), [onSubmit]);
 
-  const submit = async () => onSubmit(await getValue());
+  const submit = async () => {
+    setIsDirty(false);
+    return onSubmit(await getValue());
+  };
 
   return edit ? (
     <form onSubmit={submit}>
