@@ -123,8 +123,11 @@ export const resolveAppIframeUrl = (
   appUrl: string,
   params: AppDetailsUrlQueryParams,
 ) => {
-  const apiUrl = getApiUrl();
-  const apiUrlHost = new URL(getApiUrl()).hostname;
+  const apiUrl = new URL(getApiUrl(), window.location.origin).href;
+  /**
+   * Use host to preserve port, in case of multiple Saleors running on localhost
+   */
+  const apiUrlHost = new URL(apiUrl).host;
 
   const iframeContextQueryString = `?${stringifyQs(
     {
