@@ -102,7 +102,7 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, shop.domain.host, params)}
+      src={resolveAppIframeUrl(appId, src, params)}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}

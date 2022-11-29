@@ -3,96 +3,100 @@ import { CONFIGURATION_SELECTORS } from "../elements/configuration/configuration
 
 const configurationAsParent = {
   parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.configuration,
-  parentSelectors: CONFIGURATION_SELECTORS
+  parentSelectors: CONFIGURATION_SELECTORS,
 };
 
 export const PERMISSIONS = {
   channel: {
     parent: configurationAsParent,
-    permissionSelectors: [CONFIGURATION_SELECTORS.channels]
+    permissionSelectors: [CONFIGURATION_SELECTORS.channels],
   },
   customer: {
-    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.customers]
+    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.customers],
   },
   discounts: {
     parent: {
       parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.discounts,
-      parentSelectors: [menuSelectors.DISCOUNTS_MENU_SELECTORS]
+      parentSelectors: [menuSelectors.DISCOUNTS_MENU_SELECTORS],
     },
     permissionSelectors: [
       menuSelectors.DISCOUNTS_MENU_SELECTORS.sales,
-      menuSelectors.DISCOUNTS_MENU_SELECTORS.vouchers
-    ]
+      menuSelectors.DISCOUNTS_MENU_SELECTORS.vouchers,
+    ],
   },
   order: {
     parent: {
       parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.orders,
-      parentSelectors: menuSelectors.ORDERS
+      parentSelectors: menuSelectors.ORDERS,
     },
     permissionSelectors: [
       menuSelectors.ORDERS.orders,
-      menuSelectors.ORDERS.draftOrders
-    ]
+      menuSelectors.ORDERS.draftOrders,
+    ],
   },
   page: {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.pageTypes,
-      menuSelectors.LEFT_MENU_SELECTORS.pages
-    ]
+      menuSelectors.LEFT_MENU_SELECTORS.pages,
+    ],
   },
   plugin: {
     parent: configurationAsParent,
-    permissionSelectors: [CONFIGURATION_SELECTORS.plugin]
+    permissionSelectors: [CONFIGURATION_SELECTORS.plugin],
   },
   product: {
     parent: {
       parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.catalog,
-      parentSelectors: menuSelectors.CATALOG
+      parentSelectors: menuSelectors.CATALOG,
     },
     permissionSelectors: [
       menuSelectors.CATALOG.categories,
       menuSelectors.CATALOG.collections,
-      menuSelectors.CATALOG.products
-    ]
+      menuSelectors.CATALOG.products,
+    ],
   },
   productTypeAndAttribute: {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.attributes,
-      CONFIGURATION_SELECTORS.productTypes
-    ]
+      CONFIGURATION_SELECTORS.productTypes,
+    ],
   },
   pageTypeAndAttribute: {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.pageTypes,
-      CONFIGURATION_SELECTORS.attributes
-    ]
+      CONFIGURATION_SELECTORS.attributes,
+    ],
   },
   settings: {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.taxes,
-      CONFIGURATION_SELECTORS.settings
-    ]
+      CONFIGURATION_SELECTORS.settings,
+    ],
   },
   shipping: {
     parent: configurationAsParent,
-    permissionSelectors: [CONFIGURATION_SELECTORS.shipping]
+    permissionSelectors: [CONFIGURATION_SELECTORS.shipping],
   },
   staff: {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.staffMembers,
-      CONFIGURATION_SELECTORS.permissionGroups
-    ]
+      CONFIGURATION_SELECTORS.permissionGroups,
+    ],
   },
   translations: {
-    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.translations]
+    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.translations],
   },
   warehouse: {
     parent: configurationAsParent,
-    permissionSelectors: [CONFIGURATION_SELECTORS.warehouse]
-  }
+    permissionSelectors: [CONFIGURATION_SELECTORS.warehouse],
+  },
+  taxes: {
+    parent: configurationAsParent,
+    permissionSelectors: [CONFIGURATION_SELECTORS.taxes],
+  },
 };

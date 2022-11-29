@@ -122,9 +122,11 @@ export const appsListUrl = (params?: AppListUrlQueryParams) =>
 export const resolveAppIframeUrl = (
   appId: string,
   appUrl: string,
-  shopDomainHost: string,
   params: AppDetailsUrlQueryParams,
 ) => {
+  const apiUrl = getApiUrl();
+  const apiUrlHost = new URL(getApiUrl()).hostname;
+
   const iframeContextQueryString = `?${stringifyQs(
     {
       /**
@@ -134,8 +136,8 @@ export const resolveAppIframeUrl = (
        * Difference will be:
        * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
        */
-      domain: shopDomainHost,
-      saleorApiUrl: getApiUrl(),
+      domain: apiUrlHost,
+      saleorApiUrl: apiUrl,
       id: appId,
       ...params,
     },

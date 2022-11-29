@@ -164,22 +164,26 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
-        <IconButton
-          onClick={onWarehouseChange}
-          className={classNames(
-            classes.warehouseButton,
-            "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
-          )}
-          data-test-id="select-warehouse-button"
-        >
-          <div className={classes.warehouseButtonContent}>
-            <Typography className={classes.warehouseButtonContentText}>
-              {lineFormWarehouse?.name ??
-                intl.formatMessage(messages.selectWarehouse)}
-            </Typography>
-            <ChevronIcon />
-          </div>
-        </IconButton>
+        {isPreorder ? (
+          "-"
+        ) : (
+          <IconButton
+            onClick={onWarehouseChange}
+            className={classNames(
+              classes.warehouseButton,
+              "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
+            )}
+            data-test-id="select-warehouse-button"
+          >
+            <div className={classes.warehouseButtonContent}>
+              <Typography className={classes.warehouseButtonContentText}>
+                {lineFormWarehouse?.name ??
+                  intl.formatMessage(messages.selectWarehouse)}
+              </Typography>
+              <ChevronIcon />
+            </div>
+          </IconButton>
+        )}
       </TableCell>
     </TableRowLink>
   );
