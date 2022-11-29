@@ -1,6 +1,6 @@
 import { CommonError, CommonErrorCode } from "@saleor/utils/errors/common";
 
-import { TaxClassesPageFormData } from "../pages/TaxClassesPage/form";
+import { TaxClassesPageFormData } from "../types";
 
 export const createEmptyRequiredError = (
   field: string,

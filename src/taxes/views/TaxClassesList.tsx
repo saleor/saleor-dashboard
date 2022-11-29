@@ -22,7 +22,7 @@ import { useIntl } from "react-intl";
 
 import { taxesMessages } from "../messages";
 import TaxClassesPage from "../pages/TaxClassesPage";
-import { TaxClassesPageFormData } from "../pages/TaxClassesPage/form";
+import { TaxClassesPageFormData } from "../types";
 import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
 import {
   createTaxClassCreateInput,

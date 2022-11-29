@@ -1,20 +1,14 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { TaxClassFragment, TaxClassRateInput } from "@saleor/graphql";
+import { TaxClassFragment } from "@saleor/graphql";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import { TaxClassesPageFormData } from "@saleor/taxes/types";
+import { getTaxClassInitialFormData } from "@saleor/taxes/utils/data";
 import { validateTaxClassFormData } from "@saleor/taxes/utils/validation";
 import { TaxClassError } from "@saleor/utils/errors/taxes";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React, { useState } from "react";
-
-export interface TaxClassesPageFormData extends MetadataFormData {
-  id: string;
-  updateTaxClassRates: FormsetData<TaxClassRateInput>;
-  name?: string;
-}
 
 interface TaxClassesFormHandlers {
   handleRateChange: (id: string, value: string) => void;
@@ -55,22 +49,8 @@ function useTaxClassesForm(
 
   const isNewTaxClass = taxClass?.id === "new";
 
-  const initialFormsetData = taxClass?.countries
-    .map(item => ({
-      id: item.country.code,
-      label: item.country.country,
-      value: item.rate?.toString() ?? "",
-      data: null,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label));
-
-  const initialFormData: TaxClassesPageFormData = {
-    id: taxClass?.id,
-    name: taxClass?.name ?? "",
-    metadata: taxClass?.metadata?.map(mapMetadataItemToInput),
-    privateMetadata: taxClass?.privateMetadata?.map(mapMetadataItemToInput),
-    updateTaxClassRates: initialFormsetData,
-  };
+  const initialFormData = getTaxClassInitialFormData(taxClass);
+  const initialFormsetData = initialFormData.updateTaxClassRates;
 
   const formset = useFormset(initialFormsetData);
 

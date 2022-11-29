@@ -31,6 +31,7 @@ import {
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
+import { TaxClassesPageFormData } from "@saleor/taxes/types";
 import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
 import { isLastElement } from "@saleor/taxes/utils/utils";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -39,7 +40,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
-import TaxClassesForm, { TaxClassesPageFormData } from "./form";
+import TaxClassesForm from "./form";
 import { useStyles } from "./styles";
 import TaxClassesMenu from "./TaxClassesMenu";
 
