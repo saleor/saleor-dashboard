@@ -18,7 +18,7 @@ import { giftCardListUrl } from "@saleor/giftCards/urls";
 import { PermissionEnum, UserFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
-import { marketplaceUrl } from "@saleor/marketplace/urls";
+import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { pageListPath } from "@saleor/pages/urls";
 import { IntlShape } from "react-intl";
 
@@ -75,16 +75,15 @@ function useMenuStructure(
           },
           {
             ariaLabel: "marketplace",
-            // label: intl.formatMessage(sectionNames.marketplace),
-            label: "Saleor Apps Marketplace",
+            label: intl.formatMessage(sectionNames.marketplace),
             id: "marketplace-saleor-apps",
-            url: marketplaceUrl + "saleor-apps",
+            url: marketplaceUrlResolver.getSaleorAppsDashboardPath(),
           },
           {
             ariaLabel: "marketplace",
-            label: "Template Gallery",
+            label: intl.formatMessage(sectionNames.appTemplateGallery),
             id: "marketplace-template-gallery",
-            url: marketplaceUrl + "template-gallery",
+            url: marketplaceUrlResolver.getTemplateGalleryDashboardPath(),
           },
         ],
       };

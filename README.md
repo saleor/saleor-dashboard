@@ -86,7 +86,7 @@ Create `.env` file in a root directory or set environment variables with followi
 - `SALEOR_APPS_PAGE_PATH` - Path joined to `MARKETPLACE_URL` to render Saleor Apps page
  
 - `SALEOR_APPS_JSON_PATH` - Path joined to `MARKETPLACE_URL` to fetch list of Saleor Apps as JSON
-- 
+
 - `APP_TEMPLATE_GALLERY_PATH` - Path joined to `MARKETPLACE_URL` to render App Template Gallery page
 
 ### Development
