@@ -1,16 +1,15 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Typography } from "@material-ui/core";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
 import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
+import { useRichTextSubmit } from "./useRichTextSubmit";
 
 interface TranslationFieldsRichProps {
   disabled: boolean;
@@ -33,35 +32,13 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
-
   const {
-    defaultValue,
-    editorRef,
     isReadyForMount,
-    handleChange,
-    getValue,
-  } = useRichText({
-    initial,
-    triggerChange: () => setIsDirty(true),
-  });
-
-  const handleSubmit = React.useCallback(async () => {
-    const result = onSubmit(await getValue());
-    const errors = await result;
-    if (errors?.length === 0) {
-      setIsDirty(false);
-
-      return [];
-    }
-
-    return errors;
-  }, [getValue, onSubmit, setIsDirty]);
-
-  React.useEffect(() => setExitDialogSubmitRef(handleSubmit), [
     handleSubmit,
-    setExitDialogSubmitRef,
-  ]);
+    defaultValue,
+    handleChange,
+    editorRef,
+  } = useRichTextSubmit(initial, onSubmit);
 
   return edit ? (
     <form onSubmit={handleSubmit}>
