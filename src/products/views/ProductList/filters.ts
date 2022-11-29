@@ -1,5 +1,6 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  AttributeFragment,
   AttributeInputTypeEnum,
   InitialProductFilterAttributesQuery,
   InitialProductFilterCategoriesQuery,
@@ -57,7 +58,7 @@ import {
 import { getProductGiftCardFilterParam } from "./utils";
 export const PRODUCT_FILTERS_KEY = "productFilters";
 
-function getFilterType(inputType: AttributeInputTypeEnum) {
+function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
   switch (inputType) {
     case AttributeInputTypeEnum.DATE:
       return ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes;
@@ -72,25 +73,35 @@ function getFilterType(inputType: AttributeInputTypeEnum) {
   }
 }
 
-function mapAllTypeAttributesToOne(
+function getAttributeValuesFromParams(
+  params: ProductListUrlFilters,
+  attribute: Pick<AttributeFragment, "inputType" | "slug">,
+) {
+  return (
+    params[getAttributeFilterParamType(attribute.inputType)]?.[
+      attribute.slug
+    ] || []
+  );
+}
+
+function mapAttributeParamsToFilterOpts(
   attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
   params: ProductListUrlFilters,
 ) {
   return attributes
     .sort((a, b) => (a.name > b.name ? 1 : -1))
-    .map(attr => ({
-      active: maybe(
-        () => params[getFilterType(attr.inputType)][attr.slug].length > 0,
-        false,
-      ),
-      id: attr.id,
-      name: attr.name,
-      slug: attr.slug,
-      inputType: attr.inputType,
-      value: dedupeFilter(
-        params[getFilterType(attr.inputType)]?.[attr.slug] || [],
-      ),
-    }));
+    .map(attr => {
+      const attrValues = getAttributeValuesFromParams(params, attr);
+
+      return {
+        active: attrValues.length > 0,
+        id: attr.id,
+        name: attr.name,
+        slug: attr.slug,
+        inputType: attr.inputType,
+        value: dedupeFilter(attrValues),
+      };
+    });
 }
 
 export function getFilterOpts(
@@ -125,7 +136,7 @@ export function getFilterOpts(
   channels: SingleAutocompleteChoiceType[],
 ): ProductListFilterOpts {
   return {
-    attributes: mapAllTypeAttributesToOne(attributes, params),
+    attributes: mapAttributeParamsToFilterOpts(attributes, params),
     attributeChoices: {
       active: true,
       choices: mapSlugNodeToChoice(
@@ -260,22 +271,6 @@ export function getFilterOpts(
   };
 }
 
-const parseFilterValue = (
-  params: ProductListUrlFilters,
-  key: string,
-  type: ProductListUrlFiltersAsDictWithMultipleValues,
-): {
-  isMulti: boolean;
-  value: string[];
-} => {
-  const value = params[type][key];
-  const isMulti = params[type][key].length > 1;
-
-  const data = { isMulti, value };
-
-  return { ...data };
-};
-
 interface BaseFilterParam {
   slug: string;
 }
@@ -291,82 +286,77 @@ interface DateTimeFilterParam extends BaseFilterParam {
 interface DefaultFilterParam extends BaseFilterParam {
   values: string[];
 }
+interface NumericFilterParam extends BaseFilterParam {
+  valuesRange: GteLte<number>;
+}
+type FilterParam =
+  | BooleanFilterParam
+  | DateFilterParam
+  | DateTimeFilterParam
+  | DefaultFilterParam
+  | NumericFilterParam;
+
+const parseFilterValue = (
+  params: ProductListUrlFilters,
+  key: string,
+  type: ProductListUrlFiltersAsDictWithMultipleValues,
+): FilterParam => {
+  const value = params[type][key];
+  const isMulti = params[type][key].length > 1;
+
+  const name = { slug: key };
+
+  switch (type) {
+    case ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes:
+      return { ...name, boolean: JSON.parse(value[0]) };
+    case ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes:
+      return {
+        ...name,
+        date: getGteLteVariables({
+          gte: value[0] || null,
+          lte: isMulti ? value[1] || null : value[0],
+        }),
+      };
+    case ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes:
+      return {
+        ...name,
+        dateTime: getGteLteVariables({
+          gte: value[0] || null,
+          lte: isMulti ? value[1] || null : value[0],
+        }),
+      };
+    case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes:
+      const [gte, lte] = value.map(v => parseFloat(v));
+
+      return {
+        ...name,
+        valuesRange: {
+          gte: gte || undefined,
+          lte: isMulti ? lte || undefined : gte || undefined,
+        },
+      };
+    default:
+      return { ...name, values: value };
+  }
+};
 
 function getFilteredAttributeValue(
   params: ProductListUrlFilters,
-): Array<
-  | BooleanFilterParam
-  | BaseFilterParam
-  | DateTimeFilterParam
-  | DateFilterParam
-  | DefaultFilterParam
-> {
-  const attrValues = Object.keys(
+): FilterParam[] {
+  const attrValues = Object.values(
     ProductListUrlFiltersAsDictWithMultipleValues,
-  ).reduce((attrValues, attributeType) => {
-    const attributeTypeKey = attributeType as ProductListUrlFiltersAsDictWithMultipleValues;
+  ).reduce<FilterParam[]>((attrValues, attributeType) => {
+    const attributes = params[attributeType];
 
-    const attributes = params[attributeTypeKey];
+    if (!attributes) {
+      return attrValues;
+    }
 
     return [
-      ...(attrValues || []),
-      ...Object.keys(attributes).map(key => {
-        const { isMulti, value } = parseFilterValue(
-          params,
-          key,
-          attributeTypeKey,
-        );
-        const name = { slug: key };
-
-        if (
-          attributeType ===
-          ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes
-        ) {
-          return { ...name, values: value };
-        }
-        if (
-          attributeType ===
-          ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes
-        ) {
-          return { ...name, boolean: JSON.parse(value[0]) };
-        }
-        if (
-          attributeType ===
-          ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes
-        ) {
-          return {
-            ...name,
-            date: getGteLteVariables({
-              gte: value[0] || null,
-              lte: isMulti ? value[1] || null : value[0],
-            }),
-          };
-        }
-        if (
-          attributeType ===
-          ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes
-        ) {
-          return {
-            ...name,
-            dateTime: getGteLteVariables({
-              gte: value[0] || null,
-              lte: isMulti ? value[1] || null : value[0],
-            }),
-          };
-        }
-        if (
-          attributeType ===
-          ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes
-        ) {
-          return {
-            ...name,
-            valuesRange: {
-              gte: value[0] || undefined,
-              lte: isMulti ? value[1] || undefined : value[0] || undefined,
-            },
-          };
-        }
-      }),
+      ...attrValues,
+      ...Object.keys(attributes).map(key =>
+        parseFilterValue(params, key, attributeType),
+      ),
     ];
   }, []);
 
@@ -374,116 +364,6 @@ function getFilteredAttributeValue(
     return null;
   }
   return attrValues;
-
-  // const stringAttributes =
-  //   params[ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes];
-  // const stringAttributesValues =
-  //   !!stringAttributes &&
-  //   Object.keys(stringAttributes).map(key => {
-  //     const { value } = parseFilterValue(
-  //       params,
-  //       key,
-  //       ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes,
-  //     );
-  //     const name = { slug: key };
-
-  //     return { ...name, values: value };
-  //   });
-
-  // const booleanAttributes =
-  //   params[ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes];
-  // const booleanAttributesValues =
-  //   !!booleanAttributes &&
-  //   Object.keys(booleanAttributes).map(key => {
-  //     const { value } = parseFilterValue(
-  //       params,
-  //       key,
-  //       ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes,
-  //     );
-  //     const name = { slug: key };
-
-  //     return { ...name, boolean: JSON.parse(value[0]) };
-  //   });
-
-  // const dateAttributes =
-  //   params[ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes];
-  // const dateAttributesValues =
-  //   !!dateAttributes &&
-  //   Object.keys(dateAttributes).map(key => {
-  //     const { value, isMulti } = parseFilterValue(
-  //       params,
-  //       key,
-  //       ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes,
-  //     );
-  //     const name = { slug: key };
-
-  //     return {
-  //       ...name,
-  //       date: getGteLteVariables({
-  //         gte: value[0] || null,
-  //         lte: isMulti ? value[1] || null : value[0],
-  //       }),
-  //     };
-  //   });
-
-  // const dateTimeAttributes =
-  //   params[ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes];
-  // const dateTimeAttributesValues =
-  //   !!dateTimeAttributes &&
-  //   Object.keys(dateTimeAttributes).map(key => {
-  //     const { value, isMulti } = parseFilterValue(
-  //       params,
-  //       key,
-  //       ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes,
-  //     );
-  //     const name = { slug: key };
-
-  //     return {
-  //       ...name,
-  //       dateTime: getGteLteVariables({
-  //         gte: value[0] || null,
-  //         lte: isMulti ? value[1] || null : value[0],
-  //       }),
-  //     };
-  //   });
-
-  // const numericAttributes =
-  //   params[ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes];
-  // const numericAttributesValues =
-  //   !!numericAttributes &&
-  //   Object.keys(numericAttributes).map(key => {
-  //     const { value, isMulti } = parseFilterValue(
-  //       params,
-  //       key,
-  //       ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes,
-  //     );
-  //     const name = { slug: key };
-
-  //     return {
-  //       ...name,
-  //       valuesRange: {
-  //         gte: value[0] || undefined,
-  //         lte: isMulti ? value[1] || undefined : value[0] || undefined,
-  //       },
-  //     };
-  //   });
-
-  // if (
-  //   stringAttributesValues ||
-  //   booleanAttributesValues ||
-  //   dateAttributesValues ||
-  //   dateTimeAttributesValues ||
-  //   numericAttributesValues
-  // ) {
-  //   return [
-  //     ...(stringAttributesValues || []),
-  //     ...(booleanAttributesValues || []),
-  //     ...(dateAttributesValues || []),
-  //     ...(dateTimeAttributesValues || []),
-  //     ...(numericAttributesValues || []),
-  //   ];
-  // }
-  // return null;
 }
 
 export function getFilterVariables(
@@ -559,7 +439,7 @@ export function getFilterQueryParam(
 
     case ProductFilterKeys.stock:
       return getSingleEnumValueQueryParam(
-        filter as FilterElementRegular<ProductFilterKeys.stock>,
+        filter as FilterElementRegular<ProductFilterKeys>,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability,
       );
