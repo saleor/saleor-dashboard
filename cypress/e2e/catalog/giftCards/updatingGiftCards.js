@@ -99,52 +99,52 @@ describe("As an admin I want to update gift card", () => {
     "should be able to delete several gift cards. TC: SALEOR_1009",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const name2 = `${startsWith}${faker.datatype.number()}`;
+      const giftCard01 = `${startsWith}${faker.datatype.number()}`;
+      const giftCard02 = `${startsWith}${faker.datatype.number()}`;
 
       createGiftCard({
-        tag: name,
+        tag: giftCard01,
         amount: 3,
         currency: "THB",
-      })
-        .then(() => {
-          createGiftCard({
-            tag: name2,
-            amount: 7,
-            currency: "THB",
-          });
-        })
-        .then(() => {
-          cy.visit(urlList.giftCards)
-            .get(PRODUCTS_LIST.showFiltersButton)
-            .click()
-            .get(PRODUCTS_LIST.filters.filterBy.currency)
-            .click()
-            .get(PRODUCTS_LIST.filters.filterOptionField)
-            .contains("THB")
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .get(GIFT_CARD_UPDATE.giftCardRow)
-            .eq(1)
-            .should("be.visible")
-            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-            .first()
-            .check()
-            .should("be.checked")
-            .get("tr")
-            .contains("Selected 2 items")
-            .should("be.visible")
-            .get(BUTTON_SELECTORS.deleteItemsButton)
-            .first()
-            .click()
-            .get(GIFT_CARD_UPDATE.consentCheckbox)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-            .should("not.be.visible");
-        });
+      });
+
+      createGiftCard({
+        tag: giftCard02,
+        amount: 7,
+        currency: "THB",
+      });
+
+      cy.visit(urlList.giftCards)
+        .get(PRODUCTS_LIST.showFiltersButton)
+        .click()
+        .get(PRODUCTS_LIST.filters.filterBy.currency)
+        .click()
+        .get(PRODUCTS_LIST.filters.filterOptionField)
+        .contains("THB")
+        .click()
+        .get(BUTTON_SELECTORS.submit)
+        .click()
+        .get(GIFT_CARD_UPDATE.giftCardRow)
+        .eq(1)
+        .should("be.visible")
+        .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+        .first()
+        .check()
+        .should("be.checked")
+        .get("tr")
+        .contains("Selected 2 items")
+        .should("be.visible")
+        .get(BUTTON_SELECTORS.deleteItemsButton)
+        .first()
+        .click()
+        .get(GIFT_CARD_UPDATE.consentCheckbox)
+        .click()
+        .get(BUTTON_SELECTORS.submit)
+        .click()
+        .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+        .should("not.be.visible");
+      getGiftCardWithId(giftCard01.id).should("be.null");
+      getGiftCardWithId(giftCard02.id).should("be.null");
     },
   );
 });
