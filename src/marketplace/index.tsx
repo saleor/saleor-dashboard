@@ -6,7 +6,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { MARKETPLACE_URL } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { useTheme } from "@saleor/macaw-ui";
 import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { marketplaceUrl } from "@saleor/marketplace/urls";
 import React, { useMemo } from "react";
@@ -22,18 +21,11 @@ const Component = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const router = useRouter();
-  const { themeType } = useTheme();
 
   const marketplaceUrl = useMemo(
     () => new URL(getDeepPath(router.location.pathname), MARKETPLACE_URL).href,
     [router.location.pathname],
   );
-
-  /**
-   * Dont add dependency on purpose. At this moment theme is loaded properly. When it changes, iframe should stay monted.
-   * Then new Theme is send via AppBridge
-   */
-  const appParams = useMemo(() => ({ theme: themeType }), []);
 
   if (!marketplaceUrlResolver.checkMarketplaceConfigExists()) {
     return <NotFoundPage onBack={() => navigate("/")} />;
@@ -49,7 +41,6 @@ const Component = () => {
           // Marketplace doesn't require app token nor id
           appToken=""
           appId=""
-          params={appParams}
           className={classes.iframe}
         />
       </Container>

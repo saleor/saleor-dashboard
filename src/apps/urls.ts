@@ -30,8 +30,7 @@ export interface AppDetailsUrlMountQueryParams {
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   SingleAction &
-  AppDetailsUrlMountQueryParams &
-  Record<string, string>;
+  AppDetailsUrlMountQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
