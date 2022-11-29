@@ -7,7 +7,7 @@ import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTex
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
@@ -46,17 +46,8 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     triggerChange: () => setIsDirty(true),
   });
 
-  const handleSubmit = React.useCallback(
-    async () => onSubmit(await getValue()),
-    [getValue, onSubmit],
-  );
-  useEffect(() => setExitDialogSubmitRef(handleSubmit), [
-    handleSubmit,
-    setExitDialogSubmitRef,
-  ]);
-
-  const submit = async () => {
-    const result = handleSubmit();
+  const handleSubmit = React.useCallback(async () => {
+    const result = onSubmit(await getValue());
     const errors = await result;
     if (errors?.length === 0) {
       setIsDirty(false);
@@ -65,10 +56,15 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     }
 
     return errors;
-  };
+  }, [getValue, onSubmit, setIsDirty]);
+
+  React.useEffect(() => setExitDialogSubmitRef(handleSubmit), [
+    handleSubmit,
+    setExitDialogSubmitRef,
+  ]);
 
   return edit ? (
-    <form onSubmit={submit}>
+    <form onSubmit={handleSubmit}>
       {isReadyForMount ? (
         <RichTextEditor
           defaultValue={defaultValue}
@@ -97,7 +93,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
       <TranslationFieldsSave
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
-        onSave={submit}
+        onSave={handleSubmit}
       />
     </form>
   ) : initial === null ? (
