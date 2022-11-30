@@ -1,40 +1,23 @@
-import { SubmitPromise } from "@saleor/hooks/useForm";
+import useRichText from "@saleor/utils/richText/useRichText";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useRichTextSubmit } from "./useRichTextSubmit";
 
-const richTextMock = `{
-  time: 1669371906847,
-  blocks: [
-    {
-      id: "TLzBn1f3y0",
-      data: { text: "40x40 Terracota" },
-      type: "paragraph",
-    },
-  ],
-  version: "2.24.3",
-}`;
-
-const setup = (inital: string, submitFn: () => SubmitPromise) =>
-  renderHook(() => {
-    const { handleSubmit, editorRef } = useRichTextSubmit(inital, submitFn);
-
-    return {
-      handleSubmit,
-      editorRef,
-    };
-  });
+jest.mock("@saleor/utils/richText/useRichText", () => jest.fn());
 
 describe("useRichTextSubmit", () => {
-  it("Submits the data", async () => {
+  it("submits value from editor succesfully", async () => {
     // Given
-    const submitFn = jest.fn(() => Promise.resolve([]));
-    const { result } = setup(richTextMock, submitFn);
+    const textEditorValue = "text editor value";
+    const getValue = jest.fn(() => textEditorValue);
+    (useRichText as jest.Mock).mockImplementation(() => ({ getValue }));
+    const submitFn = jest.fn();
+    const { result } = renderHook(() => useRichTextSubmit("initial", submitFn));
 
     // When
-    result.current.handleSubmit();
+    await result.current.handleSubmit();
 
     // Then
-    expect(submitFn).toHaveBeenCalledWith(richTextMock);
+    expect(submitFn).toHaveBeenCalledWith(textEditorValue);
   });
 });
