@@ -109,7 +109,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
             >
               <div className={classes.container}>
                 {selected && (
-                  <Typography>
+                  <Typography data-test-id="SelectedText">
                     <FormattedMessage
                       id="qu/hXD"
                       defaultMessage="Selected {number} items"

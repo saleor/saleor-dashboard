@@ -2,7 +2,6 @@ export const GIFT_CARD_UPDATE = {
   changeActiveStatusButton: '[data-test-id="enable-button"]',
   consentCheckbox: '[name="delete-assigned-items-consent"]',
   giftCardTagSelect: '[data-test-id="gift-card-tag-select-field"]',
-  giftCardRow: "[data-test-id^=gift-card-row]",
   expireCheckbox: '[name="cardExpires"]',
   expireDateInput: '[name="expiryDate"]',
   autocompleteCustomOption:

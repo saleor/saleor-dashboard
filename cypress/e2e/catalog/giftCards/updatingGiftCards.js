@@ -3,17 +3,18 @@
 
 import faker from "faker";
 
+import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
 import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
+import { giftCardDetailsUrl } from "../../../fixtures/urlList";
 import {
   createGiftCard,
   getGiftCardWithId,
 } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
+import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to update gift card", () => {
   const startsWith = "updateGCard";
@@ -27,7 +28,7 @@ describe("As an admin I want to update gift card", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it.skip(
+  it(
     "should be able to delete gift card. TC: SALEOR_1004",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
@@ -52,7 +53,7 @@ describe("As an admin I want to update gift card", () => {
     },
   );
 
-  it.skip(
+  it(
     "should be able to update gift card. TC: SALEOR_1005",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
@@ -101,48 +102,46 @@ describe("As an admin I want to update gift card", () => {
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
       const giftCard02 = `${startsWith}${faker.datatype.number()}`;
-      cy.log(giftCard01, giftCard01);
+      let giftCard01hash;
+      let giftCard02hash;
 
       createGiftCard({
         tag: giftCard01,
         amount: 3,
         currency: "THB",
-      });
-
-      createGiftCard({
-        tag: giftCard02,
-        amount: 7,
-        currency: "THB",
-      });
-
-      cy.visit(urlList.giftCards)
-        .get(PRODUCTS_LIST.showFiltersButton)
-        .click()
-        .get(PRODUCTS_LIST.filters.filterBy.currency)
-        .click()
-        .get(PRODUCTS_LIST.filters.filterBy.currencySpecific.THB)
-        .click()
-        .get(BUTTON_SELECTORS.submit)
-        .click()
-        // enterAndSelectGiftCards
-        .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-        .first()
-        .check()
-        .should("be.checked")
-        .get("tr")
-        .contains("Selected 2 items")
-        .should("be.visible");
-      //   .get(BUTTON_SELECTORS.deleteItemsButton)
-      //   .first()
-      //   .click()
-      //   .get(GIFT_CARD_UPDATE.consentCheckbox)
-      //   .click()
-      //   .get(BUTTON_SELECTORS.submit)
-      //   .click()
-      //   .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-      //   .should("not.be.visible");
-      // getGiftCardWithId(giftCard01.id).should("be.null");
-      // getGiftCardWithId(giftCard02.id).should("be.null");
+      })
+        .then(hash => {
+          cy.log(hash.id);
+          giftCard01hash = hash.id;
+          createGiftCard({
+            tag: giftCard02,
+            amount: 7,
+            currency: "THB",
+          });
+        })
+        .then(hash2 => {
+          cy.log(hash2.id);
+          giftCard02hash = hash2.id;
+          enterAndSelectGiftCards([giftCard01hash, giftCard02hash]);
+          cy.get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+            .first()
+            .check()
+            .should("be.checked")
+            .get(GIFT_CARD_LIST.selectedAmount)
+            .contains("Selected 2 items")
+            .should("be.visible")
+            .get(BUTTON_SELECTORS.deleteItemsButton)
+            .first()
+            .click()
+            .get(GIFT_CARD_UPDATE.consentCheckbox)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+            .should("not.be.visible");
+          getGiftCardWithId(giftCard01.id).should("be.null");
+          getGiftCardWithId(giftCard02.id).should("be.null");
+        });
     },
   );
 });
