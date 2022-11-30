@@ -198,9 +198,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       <AppPageTabs
         showSaleorApps={saleorAppsEnabled}
         className={styles.topTabs}
-        onChange={v => {
-          updatePath(v);
-        }}
+        onChange={updatePath}
         value={activeTab}
       />
       {renderContent()}
