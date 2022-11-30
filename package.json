@@ -120,7 +120,6 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/apollo-upload-client": "^17.0.0",
-    "@types/classnames": "^2.2.9",
     "@types/color-convert": "^2.0.0",
     "@types/enzyme": "^3.10.8",
     "@types/fuzzaldrin": "^2.1.2",
