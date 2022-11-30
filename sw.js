@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-restricted-globals */
-const {
-  CacheableResponsePlugin,
-} = require("workbox-cacheable-response/CacheableResponsePlugin");
-const { ExpirationPlugin } = require("workbox-expiration/ExpirationPlugin");
-const { precacheAndRoute } = require("workbox-precaching/precacheAndRoute");
-const { registerRoute } = require("workbox-routing/registerRoute");
-const { CacheFirst } = require("workbox-strategies/CacheFirst");
-const {
-  StaleWhileRevalidate,
-} = require("workbox-strategies/StaleWhileRevalidate");
+import { CacheableResponsePlugin } from "workbox-cacheable-response/CacheableResponsePlugin";
+import { ExpirationPlugin } from "workbox-expiration/ExpirationPlugin";
+import { precacheAndRoute } from "workbox-precaching/precacheAndRoute";
+import { registerRoute } from "workbox-routing/registerRoute";
+import { CacheFirst } from "workbox-strategies/CacheFirst";
+import { StaleWhileRevalidate } from "workbox-strategies/StaleWhileRevalidate";
 
 precacheAndRoute(self.__WB_MANIFEST);
 
