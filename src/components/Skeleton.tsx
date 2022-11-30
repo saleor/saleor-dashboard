@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -43,7 +43,7 @@ const Skeleton: React.FC<SkeletonProps> = props => {
   return (
     <span
       data-test-id="skeleton"
-      className={classNames(classes.skeleton, className, {
+      className={clsx(classes.skeleton, className, {
         [classes.primary]: primary,
       })}
       style={style}

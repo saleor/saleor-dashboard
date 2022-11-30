@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import Hr from "../Hr";
@@ -54,7 +54,7 @@ const Accordion: React.FC<AccordionProps> = ({
   const [expanded, setExpanded] = React.useState(!!initialExpand);
 
   return (
-    <div className={classNames(classes.root, className)} {...props}>
+    <div className={clsx(classes.root, className)} {...props}>
       <div className={classes.title}>
         <Typography className={classes.titleText}>{title}</Typography>
         <div className={classes.expandButton}>

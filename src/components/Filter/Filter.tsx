@@ -1,7 +1,7 @@
 import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -128,7 +128,7 @@ const Filter: React.FC<FilterProps> = props => {
     >
       <div ref={anchor}>
         <Button
-          className={classNames(classes.filterButton, {
+          className={clsx(classes.filterButton, {
             [classes.addFilterButtonActive]:
               isFilterMenuOpened || isFilterActive,
           })}

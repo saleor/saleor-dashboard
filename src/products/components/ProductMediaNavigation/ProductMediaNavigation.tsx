@@ -2,7 +2,7 @@ import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -81,7 +81,7 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
 
               return (
                 <div
-                  className={classNames({
+                  className={clsx({
                     [classes.imageContainer]: true,
                     [classes.highlightedImageContainer]:
                       mediaObj.id === highlighted,

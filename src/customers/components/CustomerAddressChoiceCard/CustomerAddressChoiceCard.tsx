@@ -3,7 +3,7 @@ import AddressFormatter from "@saleor/components/AddressFormatter";
 import { AddressFragment } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { EditIcon } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,7 +25,7 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
 
   return (
     <Card
-      className={classNames(classes.card, {
+      className={clsx(classes.card, {
         [classes.cardSelected]: selected,
         [classes.selectableCard]: !editable && !selected,
       })}

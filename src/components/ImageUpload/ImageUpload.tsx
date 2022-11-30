@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -78,14 +78,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
         <>
           <div
             {...getRootProps()}
-            className={classNames(className, classes.photosIconContainer, {
+            className={clsx(className, classes.photosIconContainer, {
               [classes.backdrop]: isDragActive,
               [isActiveClassName]: isDragActive,
             })}
           >
             {!hideUploadIcon && (
               <div
-                className={classNames(iconContainerClassName, {
+                className={clsx(iconContainerClassName, {
                   [iconContainerActiveClassName]: isDragActive,
                 })}
               >

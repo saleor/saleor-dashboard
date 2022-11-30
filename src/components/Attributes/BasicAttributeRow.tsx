@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import Grid from "@saleor/components/Grid";
 import { Tooltip } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import { useBasicAttributeStyles } from "./styles";
@@ -38,7 +38,7 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
       </div>
       <div
         data-test-id="attribute-value"
-        className={classNames(classes.value, {
+        className={clsx(classes.value, {
           [classes.flex]: flexValueContainer,
         })}
       >

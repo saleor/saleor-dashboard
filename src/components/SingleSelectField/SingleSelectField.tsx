@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import { SelectProps } from "@material-ui/core/Select";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -91,7 +90,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
 
   return (
     <FormControl
-      className={classNames(classes.formControl, className)}
+      className={clsx(classes.formControl, className)}
       error={error}
       disabled={disabled}
     >
@@ -114,7 +113,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             {...InputProps}
             classes={{
               ...(InputProps?.classes || {}),
-              input: classNames(InputProps?.classes?.input, {
+              input: clsx(InputProps?.classes?.input, {
                 [classes.noLabel]: !label,
               }),
             }}

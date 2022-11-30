@@ -30,7 +30,7 @@ import {
   RelayToFlat,
   SearchPageProps,
 } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -303,7 +303,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
         </InfiniteScroll>
       </DialogContent>
       <DialogActions
-        className={classNames({
+        className={clsx({
           [classes.dropShadow]: dropShadow,
         })}
       >

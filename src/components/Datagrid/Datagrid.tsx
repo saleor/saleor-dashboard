@@ -10,7 +10,7 @@ import DataEditor, {
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
 import { MoreHorizontalIcon, useTheme } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
 import React from "react";
@@ -268,12 +268,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   }}
                   rightElement={
                     <div
-                      className={classNames(classes.rowActionBar, {
+                      className={clsx(classes.rowActionBar, {
                         [classes.rowActionBarScrolledToRight]: scrolledToRight,
                       })}
                     >
                       <div
-                        className={classNames(classes.rowActionBarShadow, {
+                        className={clsx(classes.rowActionBarShadow, {
                           [classes.rowActionBarShadowActive]: !scrolledToRight,
                         })}
                       />
@@ -297,7 +297,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       </div>
                       {hasColumnGroups && (
                         <div
-                          className={classNames(classes.rowAction, {
+                          className={clsx(classes.rowAction, {
                             [classes.rowActionScrolledToRight]: scrolledToRight,
                           })}
                         />
@@ -306,7 +306,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         .fill(0)
                         .map((_, index) => (
                           <div
-                            className={classNames(classes.rowAction, {
+                            className={clsx(classes.rowAction, {
                               [classes.rowActionSelected]: selection?.rows.hasIndex(
                                 index,
                               ),

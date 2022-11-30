@@ -19,7 +19,7 @@ import {
   TranslationFieldType,
 } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -145,7 +145,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
             onClick={() => setExpandedState(!expanded)}
           >
             <ArrowIcon
-              className={classNames({
+              className={clsx({
                 [classes.rotate]: expanded,
               })}
             />

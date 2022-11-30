@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -31,7 +31,7 @@ export const Container: React.FC<ContainerProps> = props => {
 
   const classes = useStyles(props);
 
-  return <div className={classNames(classes.root, className)} {...rest} />;
+  return <div className={clsx(classes.root, className)} {...rest} />;
 };
 Container.displayName = "Container";
 export default Container;

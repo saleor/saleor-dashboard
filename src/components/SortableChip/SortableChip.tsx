@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
@@ -56,7 +56,7 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   };
 
   return (
-    <div className={classNames(classes.root, className)}>
+    <div className={clsx(classes.root, className)}>
       <div className={classes.content}>
         <SortableHandle
           className={classes.sortableHandle}

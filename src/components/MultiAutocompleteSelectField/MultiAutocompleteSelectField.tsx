@@ -8,7 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -157,7 +157,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                             handleToggleMenu();
                             handleFocus();
                           }}
-                          className={classNames(classes.adornment, {
+                          className={clsx(classes.adornment, {
                             [classes.adornmentRotate]: isOpen,
                           })}
                         >

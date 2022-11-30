@@ -1,6 +1,6 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 export const AVATAR_MARGIN = 40;
@@ -57,18 +57,18 @@ const Avatar: React.FC<AvatarProps> = ({
 
   return (
     <div
-      className={classNames(classes.content, {
+      className={clsx(classes.content, {
         [classes.alignRight]: alignRight,
       })}
     >
       {badge}
       {!thumbnail ? (
-        <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
+        <MuiAvatar className={clsx(classes.avatar, avatarProps)}>
           <ImageIcon color="primary" data-test-id="imageIcon" />
         </MuiAvatar>
       ) : (
         <MuiAvatar
-          className={classNames(classes.avatar, avatarProps)}
+          className={clsx(classes.avatar, avatarProps)}
           src={thumbnail}
         />
       )}

@@ -5,7 +5,7 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -71,7 +71,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
 
   return (
     <FormControl
-      className={classNames(classes.formControl, className)}
+      className={clsx(classes.formControl, className)}
       error={error}
       disabled={disabled}
     >
@@ -83,20 +83,14 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
       >
         <FormControlLabel
           value="true"
-          className={classNames(
-            classes.radioLabel,
-            overrideClasses?.radioLabel,
-          )}
+          className={clsx(classes.radioLabel, overrideClasses?.radioLabel)}
           control={<Radio color="secondary" />}
           label={firstOptionLabel}
           name={name}
         />
         <FormControlLabel
           value="false"
-          className={classNames(
-            classes.radioLabel,
-            overrideClasses?.radioLabel,
-          )}
+          className={clsx(classes.radioLabel, overrideClasses?.radioLabel)}
           control={<Radio color="secondary" />}
           label={secondOptionLabel}
           name={name}

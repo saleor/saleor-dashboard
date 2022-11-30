@@ -1,7 +1,7 @@
 import { CircularProgress } from "@material-ui/core";
 import { IconButton } from "@saleor/components/IconButton";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -103,7 +103,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
   return (
     <div className={classes.mediaContainer} data-test-id="product-image">
       <div
-        className={classNames(classes.mediaOverlay, {
+        className={clsx(classes.mediaOverlay, {
           [classes.mediaOverlayShadow]: loading,
         })}
       >

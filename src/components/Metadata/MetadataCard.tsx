@@ -14,7 +14,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { MetadataInput } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
 import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -74,7 +74,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   description: "header",
                 })}
             <IconButton
-              className={classNames(classes.expandBtn, {
+              className={clsx(classes.expandBtn, {
                 [classes.rotate]: expanded,
               })}
               hoverOutline={false}

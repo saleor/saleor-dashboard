@@ -2,7 +2,7 @@ import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";
 import { LayoutButton, makeStyles, NavigatorIcon } from "@saleor/macaw-ui";
 import { triangle } from "@saleor/styles/mixins";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -89,7 +89,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
   return (
     <>
       <LayoutButton
-        className={classNames(className, classes.root)}
+        className={clsx(className, classes.root)}
         data-test-id="navigator"
         onMouseEnter={setHelper}
         onMouseLeave={clearHelper}

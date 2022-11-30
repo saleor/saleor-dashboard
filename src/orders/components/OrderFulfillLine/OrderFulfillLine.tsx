@@ -16,7 +16,7 @@ import {
   getWarehouseStock,
   OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -121,7 +121,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           <TextField
             type="number"
             inputProps={{
-              className: classNames(classes.quantityInnerInput, {
+              className: clsx(classes.quantityInnerInput, {
                 [classes.quantityInnerInputNoRemaining]: !line.variant
                   ?.trackInventory,
               }),
@@ -169,7 +169,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         ) : (
           <IconButton
             onClick={onWarehouseChange}
-            className={classNames(
+            className={clsx(
               classes.warehouseButton,
               "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
             )}
