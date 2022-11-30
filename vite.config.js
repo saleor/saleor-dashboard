@@ -24,6 +24,9 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_DSN,
     ENVIRONMENT,
     STATIC_URL,
+    SALEOR_APPS_PAGE_PATH,
+    SALEOR_APPS_JSON_PATH,
+    APP_TEMPLATE_GALLERY_PATH,
   } = env;
 
   const enableSentry =
@@ -38,6 +41,10 @@ export default defineConfig(({ command, mode }) => {
         data: {
           API_URL: API_URI,
           APP_MOUNT_URI,
+          SALEOR_APPS_PAGE_PATH,
+          SALEOR_APPS_JSON_PATH,
+          APP_TEMPLATE_GALLERY_PATH,
+          MARKETPLACE_URL,
         },
       },
     }),

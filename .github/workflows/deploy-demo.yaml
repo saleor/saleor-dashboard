@@ -15,8 +15,12 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      MARKETPLACE_URL: "https://apps.saleor.io/"
-      SALEOR_APPS_ENDPOINT: "https://apps.saleor.io/api/saleor-apps"
+      # Disable preview when new Marketplace features are in progress.
+      # If marketplace is done till next release this can be easily enabled
+      # MARKETPLACE_URL: "https://apps.saleor.io/"
+      # SALEOR_APPS_PAGE_PATH=saleor-apps
+      # SALEOR_APPS_JSON_PATH=api/saleor-apps
+      # APP_TEMPLATE_GALLERY_PATH=template-gallery
       ENVIRONMENT: demo
       DEMO_MODE: true
     steps:

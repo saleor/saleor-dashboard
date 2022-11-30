@@ -397,9 +397,14 @@ export const sectionNames = defineMessages({
     description: "home section name",
   },
   marketplace: {
-    id: "E+M17x",
-    defaultMessage: "Marketplace",
-    description: "marketplace section name",
+    id: "ti4Hqw",
+    defaultMessage: "Saleor Apps Marketplace",
+    description: "saleor marketplace section name",
+  },
+  appTemplateGallery: {
+    id: "M2dPzK",
+    defaultMessage: "App Templates Gallery",
+    description: "app template gallery section name",
   },
   navigation: {
     id: "9C7PZE",

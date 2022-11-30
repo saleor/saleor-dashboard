@@ -1,16 +1,16 @@
-import {
-  AppPageTabs,
-  AppPageTabValue,
-} from "@saleor/apps/components/AppPageTabs/AppPageTabs";
+import { AppPageTabs } from "@saleor/apps/components/AppPageTabs/AppPageTabs";
+import { useAppsPageNavigation } from "@saleor/apps/hooks/useAppsPageNavigation";
 import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
+import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { ListProps } from "@saleor/types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
@@ -32,6 +32,10 @@ const useStyles = makeStyles(
   theme => ({
     topTabs: {
       marginBottom: theme.spacing(4),
+    },
+    browseMarketplaceContainer: {
+      display: "flex",
+      justifyContent: "flex-end",
     },
   }),
   {
@@ -56,6 +60,8 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     saleorAppsEnabled,
   } = useSaleorApps();
 
+  const { updatePath, activeTab } = useAppsPageNavigation();
+
   useEffect(() => {
     if (saleorAppsEnabled) {
       fetchApps();
@@ -64,7 +70,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
 
   const styles = useStyles();
   const intl = useIntl();
-  const [activeTab, setActiveTab] = useState<AppPageTabValue>("THIRD_PARTY");
+  const navigate = useNavigator();
 
   const appsInProgress = appsInProgressList?.appsInstallations;
 
@@ -93,7 +99,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
 
   const renderContent = () => {
     switch (activeTab) {
-      case "THIRD_PARTY": {
+      case "third-party": {
         return (
           <>
             <p>
@@ -129,7 +135,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
           </>
         );
       }
-      case "WEBHOOKS_AND_EVENTS": {
+      case "webhooks-and-events": {
         return (
           <>
             <p>
@@ -147,7 +153,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
           </>
         );
       }
-      case "SALEOR_APPS": {
+      case "saleor-apps": {
         return (
           <>
             <p>
@@ -167,6 +173,19 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
               onRemove={onInstalledAppRemove}
               {...listProps}
             />
+            <div className={styles.browseMarketplaceContainer}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  navigate(marketplaceUrlResolver.getSaleorAppsDashboardPath());
+                }}
+              >
+                <FormattedMessage
+                  defaultMessage="Browse Marketplace"
+                  id="u0VQMN"
+                />
+              </Button>
+            </div>
           </>
         );
       }
@@ -179,7 +198,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       <AppPageTabs
         showSaleorApps={saleorAppsEnabled}
         className={styles.topTabs}
-        onChange={setActiveTab}
+        onChange={updatePath}
         value={activeTab}
       />
       {renderContent()}
