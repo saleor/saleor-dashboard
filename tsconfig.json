@@ -9,6 +9,7 @@
     "target": "es5",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitThis": true,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
