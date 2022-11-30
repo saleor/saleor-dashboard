@@ -64,7 +64,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
       }),
     );
 
-  if (!webhook) {
+  if (!webhook && !loading) {
     return <NotFoundPage backHref={appsListUrl()} />;
   }
 
