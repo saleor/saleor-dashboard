@@ -39,6 +39,7 @@
     "@uiw/react-color-saturation": "0.0.34",
     "apollo-upload-client": "^17.0.0",
     "classnames": "^2.2.6",
+    "clsx": "^1.2.1",
     "color-convert": "^2.0.1",
     "crc-32": "^1.2.0",
     "currency-codes": "^2.1.0",
