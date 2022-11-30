@@ -8,7 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
   ProductTypeKindEnum,
-  TaxClassFragment,
+  TaxClassBaseFragment,
   WeightUnitsEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -44,7 +44,7 @@ export interface ProductTypeCreatePageProps {
   disabled: boolean;
   pageTitle: string;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: TaxClassBaseFragment[];
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;

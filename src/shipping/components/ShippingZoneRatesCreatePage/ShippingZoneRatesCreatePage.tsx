@@ -14,7 +14,7 @@ import {
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
-  TaxClassFragment,
+  TaxClassBaseFragment,
 } from "@saleor/graphql";
 import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
@@ -56,7 +56,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   variant: ShippingMethodTypeEnum;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
 }
 

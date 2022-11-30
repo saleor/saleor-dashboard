@@ -12,7 +12,7 @@ import {
   ProductAttributeType,
   ProductTypeDetailsQuery,
   ProductTypeKindEnum,
-  TaxClassFragment,
+  TaxClassBaseFragment,
   WeightUnitsEnum,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -64,7 +64,7 @@ export interface ProductTypeDetailsPageProps {
   pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
-  taxClasses: Array<Omit<TaxClassFragment, "countries">>;
+  taxClasses: TaxClassBaseFragment[];
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
