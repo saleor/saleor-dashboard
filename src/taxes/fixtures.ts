@@ -166,6 +166,8 @@ export const taxClasses: TaxClassFragment[] = [
         rate: 0.15,
       },
     ],
+    metadata: [],
+    privateMetadata: [],
   },
   {
     __typename: "TaxClass",
@@ -191,5 +193,7 @@ export const taxClasses: TaxClassFragment[] = [
         rate: 0.0,
       },
     ],
+    metadata: [],
+    privateMetadata: [],
   },
 ];

@@ -1,56 +1,58 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import {
-  CountryCode,
-  TaxClassCreateInput,
-  TaxClassFragment,
-  TaxClassRateInput,
-  TaxClassUpdateInput,
-} from "@saleor/graphql";
+import { TaxClassFragment } from "@saleor/graphql";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import React from "react";
+import { TaxClassesPageFormData } from "@saleor/taxes/types";
+import { getTaxClassInitialFormData } from "@saleor/taxes/utils/data";
+import { validateTaxClassFormData } from "@saleor/taxes/utils/validation";
+import { TaxClassError } from "@saleor/utils/errors/taxes";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import React, { useState } from "react";
 
-export interface TaxClassesPageFormData {
-  updateTaxClassRates: FormsetData<TaxClassRateInput>;
-  name?: string;
+interface TaxClassesFormHandlers {
+  handleRateChange: (id: string, value: string) => void;
+  changeMetadata: FormChange;
 }
+
 export interface UseTaxClassesFormResult {
+  validationErrors: TaxClassError[];
   data: TaxClassesPageFormData;
-  submit: () => SubmitPromise;
+  submit: () => SubmitPromise<TaxClassError[]>;
   change: FormChange;
-  handlers: { handleRateChange: (id: string, value: string) => void };
+  handlers: TaxClassesFormHandlers;
 }
 
 interface TaxClassesFormProps {
-  children: (props: any) => React.ReactNode;
+  children: (props: UseTaxClassesFormResult) => React.ReactNode;
   taxClass: TaxClassFragment | undefined;
-  onTaxClassCreate: (data: TaxClassCreateInput) => SubmitPromise;
-  onTaxClassUpdate: (id: string, data: TaxClassUpdateInput) => SubmitPromise;
+  onTaxClassCreate: (
+    data: TaxClassesPageFormData,
+  ) => SubmitPromise<TaxClassError[]>;
+  onTaxClassUpdate: (
+    data: TaxClassesPageFormData,
+  ) => SubmitPromise<TaxClassError[]>;
   disabled: boolean;
 }
 
 function useTaxClassesForm(
   taxClass: TaxClassFragment,
-  onTaxClassCreate,
-  onTaxClassUpdate,
-  disabled,
+  onTaxClassCreate: (
+    data: TaxClassesPageFormData,
+  ) => SubmitPromise<TaxClassError[]>,
+  onTaxClassUpdate: (
+    data: TaxClassesPageFormData,
+  ) => SubmitPromise<TaxClassError[]>,
+  disabled: boolean,
 ): UseTaxClassesFormResult {
   // Initial
-  const initialFormData: TaxClassUpdateInput = {
-    name: taxClass?.name ?? "",
-  };
 
   const isNewTaxClass = taxClass?.id === "new";
 
-  const initialFormsetData = taxClass?.countries
-    .map(item => ({
-      id: item.country.code,
-      label: item.country.country,
-      value: item.rate?.toString() ?? "",
-      data: null,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  const initialFormData = getTaxClassInitialFormData(taxClass);
+  const initialFormsetData = initialFormData.updateTaxClassRates;
+
+  const formset = useFormset(initialFormsetData);
 
   const { formId, triggerChange, data, handleChange } = useForm(
     initialFormData,
@@ -60,42 +62,41 @@ function useTaxClassesForm(
     },
   );
 
+  const [validationErrors, setValidationErrors] = useState<TaxClassError[]>([]);
+
   if (isNewTaxClass) {
     triggerChange();
   }
 
-  const formset = useFormset(initialFormsetData);
-
   // Handlers
+
   const handleRateChange = (id: string, value: string) => {
     triggerChange();
     formset.change(id, value);
   };
 
+  const {
+    makeChangeHandler: makeMetadataChangeHandler,
+  } = useMetadataChangeTrigger();
+
+  const changeMetadata = makeMetadataChangeHandler(handleChange);
+
   // Submit
-  const submitData = {
-    name: data.name,
-    [isNewTaxClass
-      ? "createCountryRates"
-      : "updateCountryRates"]: formset.data.flatMap(item => {
-      const { id, value } = item;
-      if (!value && isNewTaxClass) {
-        return [];
-      }
-      const parsedRate = parseFloat(value);
-      return {
-        rate: parsedRate,
-        countryCode: id as CountryCode,
-      };
-    }),
-  };
 
-  const handleSubmit = async (data: TaxClassUpdateInput) => {
-    const errors = isNewTaxClass
-      ? await onTaxClassCreate(data)
-      : await onTaxClassUpdate(taxClass.id, data);
+  const handleSubmit = async (data: TaxClassesPageFormData) => {
+    const errors = validateTaxClassFormData(data);
 
-    return errors;
+    setValidationErrors(errors);
+
+    if (errors.length) {
+      return errors;
+    }
+
+    if (isNewTaxClass) {
+      return onTaxClassCreate(data);
+    }
+
+    return onTaxClassUpdate(data);
   };
 
   const handleFormSubmit = useHandleFormSubmit({
@@ -103,7 +104,11 @@ function useTaxClassesForm(
     onSubmit: handleSubmit,
   });
 
-  const submit = () => handleFormSubmit(submitData);
+  const submit = () =>
+    handleFormSubmit({
+      ...data,
+      updateTaxClassRates: formset.data,
+    });
 
   // Exit form util
 
@@ -118,8 +123,9 @@ function useTaxClassesForm(
   setIsSubmitDisabled(disabled);
 
   return {
+    validationErrors,
     data: { ...data, updateTaxClassRates: formset.data },
-    handlers: { handleRateChange },
+    handlers: { handleRateChange, changeMetadata },
     change: handleChange,
     submit,
   };

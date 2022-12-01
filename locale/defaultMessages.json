@@ -1968,10 +1968,6 @@
     "context": "date time attribute type",
     "string": "Date Time"
   },
-  "E+M17x": {
-    "context": "marketplace section name",
-    "string": "Marketplace"
-  },
   "E22x4H": {
     "context": "no card defuned alert message",
     "string": "You haven’t defined a gift card product!"
@@ -3058,6 +3054,10 @@
   "M1uijW": {
     "context": "collection",
     "string": "Not Published"
+  },
+  "M2dPzK": {
+    "context": "app template gallery section name",
+    "string": "App Templates Gallery"
   },
   "M6s/9e": {
     "context": "unassign country, dialog header",
@@ -7238,6 +7238,10 @@
     "context": "order total amount",
     "string": "Total"
   },
+  "ti4Hqw": {
+    "context": "saleor marketplace section name",
+    "string": "Saleor Apps Marketplace"
+  },
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
@@ -7286,6 +7290,9 @@
   },
   "u0V06N": {
     "string": "Max. Order Weight"
+  },
+  "u0VQMN": {
+    "string": "Browse Marketplace"
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"

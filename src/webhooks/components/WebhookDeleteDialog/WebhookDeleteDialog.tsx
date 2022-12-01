@@ -1,14 +1,13 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface WebhookDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name: string;
+  name?: string;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -36,7 +35,7 @@ const WebhookDeleteDialog: React.FC<WebhookDeleteDialogProps> = ({
       variant="delete"
     >
       <DialogContentText>
-        {["", null].includes(name) ? (
+        {!name ? (
           <FormattedMessage
             id="hS+ZjH"
             defaultMessage="Are you sure you want to delete this webhook?"
@@ -48,7 +47,7 @@ const WebhookDeleteDialog: React.FC<WebhookDeleteDialogProps> = ({
             defaultMessage="Are you sure you want to delete {name}?"
             description="delete webhook"
             values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
+              name: <strong>{name}</strong>,
             }}
           />
         )}

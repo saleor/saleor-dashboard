@@ -2,10 +2,12 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 export default defineConfig(({ command, mode }) => {
+  const isDev = command !== "build";
   const env = loadEnv(mode, process.cwd(), "");
   /*
     Using explicit env variables, there is no need to expose all of them (security).
@@ -24,6 +26,9 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_DSN,
     ENVIRONMENT,
     STATIC_URL,
+    SALEOR_APPS_PAGE_PATH,
+    SALEOR_APPS_JSON_PATH,
+    APP_TEMPLATE_GALLERY_PATH,
   } = env;
 
   const enableSentry =
@@ -38,6 +43,10 @@ export default defineConfig(({ command, mode }) => {
         data: {
           API_URL: API_URI,
           APP_MOUNT_URI,
+          SALEOR_APPS_PAGE_PATH,
+          SALEOR_APPS_JSON_PATH,
+          APP_TEMPLATE_GALLERY_PATH,
+          MARKETPLACE_URL,
         },
       },
     }),
@@ -49,9 +58,26 @@ export default defineConfig(({ command, mode }) => {
     plugins.push(
       viteSentry({
         sourceMaps: {
-          include: "./build/dashboard",
+          include: ["./build/dashboard"],
           urlPrefix: process.env.SENTRY_URL_PREFIX,
         },
+      }),
+    );
+  }
+
+  if (!isDev) {
+    console.log("Enabling service worker...");
+
+    plugins.push(
+      VitePWA({
+        strategies: "injectManifest",
+
+        /*
+          Since "src" is exposed as a root,
+          sw.js has to be moved above, to preventing loading in a dev mode.
+        */
+        srcDir: "../",
+        filename: "sw.js",
       }),
     );
   }
@@ -60,7 +86,7 @@ export default defineConfig(({ command, mode }) => {
    "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
    Issue presents only on development mode.
   */
-  const globals = command !== "build" ? { global: {} } : {};
+  const globals = isDev ? { global: {} } : {};
 
   return {
     root: "src",

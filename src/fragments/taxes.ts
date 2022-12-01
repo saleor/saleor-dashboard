@@ -69,12 +69,19 @@ export const taxRateFragment = gql`
   }
 `;
 
-export const taxClassFragment = gql`
-  fragment TaxClass on TaxClass {
+export const taxClassBaseFragment = gql`
+  fragment TaxClassBase on TaxClass {
     id
     name
+  }
+`;
+
+export const taxClassFragment = gql`
+  fragment TaxClass on TaxClass {
+    ...TaxClassBase
     countries {
       ...TaxRate
     }
+    ...Metadata
   }
 `;

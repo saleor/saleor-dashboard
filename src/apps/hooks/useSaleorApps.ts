@@ -1,4 +1,4 @@
-import { SALEOR_APPS_ENDPOINT } from "@saleor/config";
+import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
 import { useCallback, useState } from "react";
 
 export interface SaleorApp {
@@ -6,7 +6,7 @@ export interface SaleorApp {
   hostname: string;
 }
 
-const saleorAppsEnabled = Boolean(SALEOR_APPS_ENDPOINT);
+const saleorAppsEnabled = marketplaceUrlResolver.checkMarketplaceConfigExists();
 
 export const useSaleorApps = () => {
   const [apps, setApps] = useState<SaleorApp[] | undefined>(undefined);
@@ -16,7 +16,7 @@ export const useSaleorApps = () => {
       return;
     }
 
-    return fetch(SALEOR_APPS_ENDPOINT)
+    return fetch(marketplaceUrlResolver.getSaleorAppsJsonEndpoint())
       .then(response => response.json())
       .then((data: SaleorApp[]) => {
         if (
