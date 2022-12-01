@@ -24,14 +24,12 @@
   <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
 </div>
 
-## Quickstart
-
-### Prerequisites
+## Prerequisites
 
 - Node.js v18+
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 
-### Installation
+## Development
 
 1. Clone the repository:
 
@@ -62,7 +60,7 @@ npm run dev
 > Note:
 > If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
-## Development
+## Docs
 
 - [Configuration ⚙️](docs/configuration.md)
 - [Error tracking ⚠️](docs/error-tracking.md)
