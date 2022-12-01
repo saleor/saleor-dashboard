@@ -18,13 +18,12 @@
   <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
 </div>
 
-## Demo
 
-See the [public demo](https://demo.saleor.io/dashboard/) of Saleor Dashboard!
-
-Or launch the demo on a free Heroku instance.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+<div align="center">
+  <a href="https://demo.saleor.io/dashboard">▶️ Demo</a>
+   <span> • </span>
+  <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
+</div>
 
 ## Getting Started
 
@@ -51,7 +50,7 @@ $ cd saleor-dashboard
 
 #### Using stable release
 
-Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release
+Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release.
 
 #### Using development version
 
