@@ -6,7 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { AppQuery } from "@saleor/graphql";
+import { WebhookFragment } from "@saleor/graphql";
 import {
   commonMessages,
   commonStatusMessages,
@@ -24,7 +24,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface WebhooksListProps {
-  webhooks: AppQuery["app"]["webhooks"];
+  webhooks: WebhookFragment[];
   onRemove: (id: string) => void;
   createHref?: string;
 }

@@ -7,8 +7,8 @@ import {
 } from "@saleor/graphql";
 import React from "react";
 
-export function isUnnamed(webhook: WebhookFragment): boolean {
-  return ["", null].includes(webhook?.name);
+export function isUnnamed(webhook: WebhookFragment | undefined): boolean {
+  return !webhook?.name;
 }
 
 type WebhookEventType = WebhookEventTypeSyncEnum | WebhookEventTypeAsyncEnum;

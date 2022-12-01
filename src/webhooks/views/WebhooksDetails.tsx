@@ -1,4 +1,4 @@
-import { customAppUrl } from "@saleor/apps/urls";
+import { appsListUrl } from "@saleor/apps/urls";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
@@ -31,7 +31,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
       const errors = data.webhookUpdate?.errors;
       const webhook = data.webhookUpdate?.webhook;
 
-      if (errors.length === 0 && webhook) {
+      if (errors?.length === 0 && webhook) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -41,11 +41,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
   });
 
   const webhook = webhookDetails?.webhook;
-  const formErrors = webhookUpdateOpts.data?.webhookUpdate.errors || [];
-
-  if (webhook === null) {
-    return <NotFoundPage backHref={customAppUrl(webhook.app.id)} />;
-  }
+  const formErrors = webhookUpdateOpts.data?.webhookUpdate?.errors || [];
 
   const handleSubmit = (data: WebhookFormData) =>
     extractMutationErrors(
@@ -67,6 +63,9 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         },
       }),
     );
+  if (!webhook && !loading) {
+    return <NotFoundPage backHref={appsListUrl()} />;
+  }
 
   return (
     <>
@@ -74,8 +73,8 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
       />
       <WebhookDetailsPage
-        appId={webhook?.app?.id}
-        appName={webhook?.app?.name}
+        appId={webhook?.app.id ?? ""}
+        appName={webhook?.app.name ?? ""}
         disabled={loading}
         errors={formErrors}
         saveButtonBarState={webhookUpdateOpts.status}
