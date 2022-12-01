@@ -180,9 +180,11 @@ export const createMediaChangeHandler = (
   triggerChange();
 };
 
-export const handleAssignMedia = async (
+export const handleAssignMedia = async <
+  T extends Pick<ProductVariantFragment, "id" | "media">
+>(
   media: string[],
-  variant: ProductVariantFragment,
+  variant: T,
   assignMedia: (
     variables: VariantMediaAssignMutationVariables,
   ) => Promise<FetchResult<VariantMediaAssignMutation>>,
