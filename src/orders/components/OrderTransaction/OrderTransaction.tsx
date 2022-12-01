@@ -31,8 +31,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
     <Card className={classes.card}>
       <CardTitle
         title={transaction.type}
-        // TODO: Add transaction link
-        // link={}
+        link={transaction.externalUrl}
         id={transaction.id}
         actions={transaction.actions}
         authorizedAmount={transaction.authorizedAmount}

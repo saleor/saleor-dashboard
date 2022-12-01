@@ -12,7 +12,7 @@ import {
   findMethodName,
   getTransactionAmount,
   mapOrderActionsToTransactionActions,
-  mapTransactionsToEvents,
+  mapPaymentToTransactionEvents,
 } from "./utils";
 
 interface OrderTransactionPaymentProps {
@@ -36,7 +36,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const refunded = total - captured - authorized;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const events = React.useMemo(() => mapTransactionsToEvents(payment), [
+  const events = React.useMemo(() => mapPaymentToTransactionEvents(payment), [
     payment.transactions,
   ]);
 
@@ -45,7 +45,9 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     type: findMethodName(payment.gateway, allPaymentMethods),
     events,
     actions: mapOrderActionsToTransactionActions(payment.actions),
-    reference: "",
+    pspReference: "",
+    status: "",
+    externalUrl: null,
     chargedAmount: getTransactionAmount(payment.capturedAmount, currency),
     authorizedAmount: getTransactionAmount(
       payment.availableCaptureAmount,

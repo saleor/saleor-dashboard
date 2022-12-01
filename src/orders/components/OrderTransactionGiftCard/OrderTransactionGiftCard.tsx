@@ -48,7 +48,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
       createdAt: event.date,
     })),
     actions: [],
-    reference: giftCard.last4CodeChars,
+    pspReference: giftCard.last4CodeChars,
     chargedAmount: {
       currency,
       amount,

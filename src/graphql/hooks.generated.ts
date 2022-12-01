@@ -67,6 +67,12 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
+export const AppAvatarFragmentDoc = gql`
+    fragment AppAvatar on App {
+  id
+  name
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -1284,18 +1290,25 @@ ${MoneyFragmentDoc}`;
 export const TransactionEventFragmentDoc = gql`
     fragment TransactionEvent on TransactionEvent {
   id
-  reference
+  pspReference
+  amount {
+    ...Money
+  }
   createdAt
   status
+  type
   name
 }
-    `;
+    ${MoneyFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
   id
   type
-  reference
+  pspReference
   actions
+  type
+  status
+  externalUrl
   events {
     ...TransactionEvent
   }
@@ -2582,6 +2595,14 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
+  avatar(size: 120) {
+    url
+  }
+}
+    ${StaffMemberFragmentDoc}`;
+export const StaffMemberAvatarFragmentDoc = gql`
+    fragment StaffMemberAvatar on User {
+  ...StaffMember
   avatar(size: 120) {
     url
   }
