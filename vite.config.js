@@ -58,7 +58,7 @@ export default defineConfig(({ command, mode }) => {
     plugins.push(
       viteSentry({
         sourceMaps: {
-          include: "./build/dashboard",
+          include: ["./build/dashboard"],
           urlPrefix: process.env.SENTRY_URL_PREFIX,
         },
       }),
