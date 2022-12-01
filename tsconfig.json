@@ -11,6 +11,7 @@
     "noUnusedParameters": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "strictBindCallApply": true,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
