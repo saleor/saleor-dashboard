@@ -52,15 +52,15 @@ $ cd saleor-dashboard
 
 Check [release log](https://github.com/saleor/saleor-dashboard/releases/) for the latest release.
 
-#### Using development version
+#### Using the development version
 
-If you want to use the latest development version, checkout to the `main` branch:
+If you want to use the latest development version, `checkout` to the `main` branch:
 
 ```
 $ git checkout main
 ```
 
-Install NPM dependencies:
+Install the dependencies:
 
 ```
 $ npm i
@@ -68,39 +68,39 @@ $ npm i
 
 ### Configuration
 
-Create `.env` file in a root directory or set environment variables with following values:
+Create `.env` file in a root directory or set environment variables with the following values:
 
-- `API_URI` (required) - URI of a running instance of Saleor GraphQL API.
-  If you are running Saleor locally with the default settings, set `API_URI` to: `http://localhost:8000/graphql/`.
-  Make sure that you have `/` at the end of `API_URI`.
+- `API_URI` (required) - URI of Saleor GraphQL API instance.
+  If you are running Saleor locally with the default settings, set `API_URI` to: "http://localhost:8000/graphql/".
+  Make sure you have "/" at the end of `API_URI`.
 
 - `APP_MOUNT_URI` - URI at which the Dashboard app will be mounted.
-  E.g. if you set `APP_MOUNT_URI` to `/dashboard/`, your app will be mounted at `http://localhost:9000/dashboard/`.
+  E.g., if you set `APP_MOUNT_URI` to "/dashboard/", your app will be mounted at "http://localhost:9000/dashboard/".
 
 - `STATIC_URL` - URL where the static files are located.
-  E.g. if you use S3 bucket, you should set it to the bucket's URL. By default Saleor assumes you serve static files from the root of your site at `http://localhost:9000/`.
+  E.g., if you use an S3 bucket, you should set it to the bucket's URL. By default, Saleor assumes you serve static files from the root of your site at "http://localhost:9000/".
 
-- `MARKETPLACE_URL`  - URL where Marketplace App can is located, if not found, will not render navigation link to Marketplace
+- `MARKETPLACE_URL`  - URL where Marketplace App is located. If not found, it will not render a navigation link to the Marketplace.
 
-- `SALEOR_APPS_PAGE_PATH` - Path joined to `MARKETPLACE_URL` to render Saleor Apps page
+- `SALEOR_APPS_PAGE_PATH` - Path appended to `MARKETPLACE_URL` to render Saleor Apps page.
  
-- `SALEOR_APPS_JSON_PATH` - Path joined to `MARKETPLACE_URL` to fetch list of Saleor Apps as JSON
+- `SALEOR_APPS_JSON_PATH` - Path appended to `MARKETPLACE_URL` to fetch a list of Saleor Apps as JSON.
 
-- `APP_TEMPLATE_GALLERY_PATH` - Path joined to `MARKETPLACE_URL` to render App Template Gallery page
+- `APP_TEMPLATE_GALLERY_PATH` - Path appended to `MARKETPLACE_URL` to render App Template Gallery page.
 
 ### Development
 
-To start the development server run:
+To start the development server, run:
 
 ```
 $ npm run dev
 ```
 
-In case you see CORS errors make sure to check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
+If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ### Production
 
-To build the application bundle run:
+To build the application bundle, run:
 
 ```
 $ npm run build
@@ -108,13 +108,13 @@ $ npm run build
 
 ### Error Tracking
 
-Saleor Dashboard is using a generic error tracking wrapper function that takes care of the most popular use cases:
+Saleor Dashboard uses a generic error-tracking wrapper function that takes care of the most popular use cases:
 
 - initializing the tracker
 - capturing exceptions and (optionally) displaying the event id
 - setting basic user data (this is opt-in and disabled by default)
 
-By default it ships with a Sentry adapter but any kind of error tracking software can be used by creating a custom adapter (using Sentry and TS types as an example).
+By default, it ships with a Sentry adapter, but you can use any error-tracking software by creating a custom adapter (using Sentry and TS types as an example).
 
 Example:
 
@@ -128,7 +128,7 @@ const errorTracker = ErrorTrackerFactory(CustomAdapter(config));
 
 ### Running e2e tests
 
-Add Cypress specific env variables to `.env` file (created in configuration section above):
+Add Cypress-specific env variables to `.env` file (created in the configuration section above):
 
 ```
 CYPRESS_USER_NAME=
@@ -144,31 +144,31 @@ STRIPE_PUBLIC_KEY=
 CYPRESS_RECORD_KEY= // if you want your local runs recorded
 ```
 
-For values of those variables refer to our internal documentation.
+For values of those variables, refer to our internal documentation.
 
-You are ready to run cypress commands like:
+You are ready to run Cypress commands like:
 
 ```shell
 npm run cy:open
 ```
 
-### Usage with docker
+### Usage with Docker
 
-Build docker image:
+Build Docker image:
 
 ```shell
 docker build --tag saleor-dashboard .
 ```
 
-Run nginx from docker and bind it to port on your machine (in this example 8080):
+Run nginx from Docker and bind it to port on your machine (in this example, it is "8080"):
 
 ```shell
 docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
 ```
 
-Enter `http://localhost:8080/` to use dashboard.
+Enter `http://localhost:8080/` to use the dashboard.
 
-If you want to dynamically change `API_URL` in runtime you can use (assuming you have running container named `saleor-dashboard`):
+If you want to change `API_URL` in runtime, you can use (assuming you have a running container named `saleor-dashboard`):
 
 ```shell
 docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-replace-api-url.sh
@@ -176,7 +176,7 @@ docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-repl
 
 ### Usage with Sentry adapter
 
-Sentry is used as the default tracker so no changes in code are necessary and the configuration is done via environment variables.
+We use Sentry as the default tracker. No changes in code are required for it to work. You can configure it with the environment variables.
 
 The following environment variables are available:
 
