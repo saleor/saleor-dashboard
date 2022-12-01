@@ -2,10 +2,12 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 export default defineConfig(({ command, mode }) => {
+  const isDev = command !== "build";
   const env = loadEnv(mode, process.cwd(), "");
   /*
     Using explicit env variables, there is no need to expose all of them (security).
@@ -63,11 +65,28 @@ export default defineConfig(({ command, mode }) => {
     );
   }
 
+  if (!isDev) {
+    console.log("Enabling service worker...");
+
+    plugins.push(
+      VitePWA({
+        strategies: "injectManifest",
+
+        /*
+          Since "src" is exposed as a root,
+          sw.js has to be moved above, to preventing loading in a dev mode.
+        */
+        srcDir: "../",
+        filename: "sw.js",
+      }),
+    );
+  }
+
   /*
    "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
    Issue presents only on development mode.
   */
-  const globals = command !== "build" ? { global: {} } : {};
+  const globals = isDev ? { global: {} } : {};
 
   return {
     root: "src",
