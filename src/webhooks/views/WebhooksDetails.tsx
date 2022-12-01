@@ -63,7 +63,6 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         },
       }),
     );
-
   if (!webhook && !loading) {
     return <NotFoundPage backHref={appsListUrl()} />;
   }
@@ -74,8 +73,8 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
       />
       <WebhookDetailsPage
-        appId={webhook.app.id}
-        appName={webhook.app.name ?? ""}
+        appId={webhook?.app.id ?? ""}
+        appName={webhook?.app.name ?? ""}
         disabled={loading}
         errors={formErrors}
         saveButtonBarState={webhookUpdateOpts.status}

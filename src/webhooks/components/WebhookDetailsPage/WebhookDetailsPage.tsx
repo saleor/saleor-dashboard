@@ -44,7 +44,7 @@ export interface WebhookDetailsPageProps {
   appId: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook?: WebhookDetailsFragment;
+  webhook?: WebhookDetailsFragment | null;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: FormData) => void;
 }
