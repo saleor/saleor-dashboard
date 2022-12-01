@@ -24,7 +24,6 @@
   <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
 </div>
 
-
 ## Quickstart
 
 ### Prerequisites
@@ -64,7 +63,8 @@ npm run dev
 > If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ## Development
+
 - [Error tracking](docs/error-tracking.md)
 - [Running tests](docs/running-tests.md)
-- [Running with Docker](docs/docker.md)
+- [Usage with Docker](docs/docker.md)
 - [Sentry adapter](docs/sentry.md)
