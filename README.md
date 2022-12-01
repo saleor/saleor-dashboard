@@ -29,7 +29,7 @@
 ### Prerequisites
 
 - Node.js v18+
-- A running instance of [Saleor](https://github.com/saleor/saleor/).
+- A running instance of [Saleor](https://github.com/saleor/saleor/)
 
 ### Installation
 
@@ -64,7 +64,8 @@ npm run dev
 
 ## Development
 
-- [Error tracking](docs/error-tracking.md)
-- [Running tests](docs/running-tests.md)
-- [Usage with Docker](docs/docker.md)
-- [Sentry adapter](docs/sentry.md)
+- [Configuration ⚙️](docs/configuration.md)
+- [Error tracking ⚠️](docs/error-tracking.md)
+- [Running tests 🏁](docs/running-tests.md)
+- [Usage with Docker 🐳](docs/docker.md)
+- [Sentry adapter 🗼](docs/sentry.md)
