@@ -29,6 +29,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { VariantDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@saleor/products/urls";
+import { getSelectedMedia } from "@saleor/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -240,9 +241,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             const selectionAttributes = data.attributes.filter(
               byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
             );
-            const media = productMedia
-              ?.filter(image => data.media.indexOf(image.id) !== -1)
-              .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
+            const media = getSelectedMedia(productMedia, data.media);
 
             const errors = [...apiErrors, ...validationErrors];
 
