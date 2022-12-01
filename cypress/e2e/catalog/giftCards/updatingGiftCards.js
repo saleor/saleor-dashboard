@@ -111,7 +111,6 @@ describe("As an admin I want to update gift card", () => {
         currency: "THB",
       })
         .then(hash => {
-          cy.log(hash.id);
           giftCard01hash = hash.id;
           createGiftCard({
             tag: giftCard02,
@@ -120,7 +119,6 @@ describe("As an admin I want to update gift card", () => {
           });
         })
         .then(hash2 => {
-          cy.log(hash2.id);
           giftCard02hash = hash2.id;
           enterAndSelectGiftCards([giftCard01hash, giftCard02hash]);
           cy.get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
