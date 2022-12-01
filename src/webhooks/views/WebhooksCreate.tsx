@@ -27,12 +27,13 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
 
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
     onCompleted: data => {
-      if (data.webhookCreate.errors.length === 0) {
+      const webhook = data.webhookCreate?.webhook;
+      if (webhook && data?.webhookCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(webhookUrl(data.webhookCreate.webhook.id));
+        navigate(webhookUrl(webhook.id));
       }
     },
   });
@@ -68,10 +69,10 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
         })}
       />
       <WebhookDetailsPage
-        appName={data?.app?.name}
+        appName={data?.app?.name ?? ""}
         appId={id}
         disabled={false}
-        errors={webhookCreateOpts.data?.webhookCreate.errors || []}
+        errors={webhookCreateOpts.data?.webhookCreate?.errors ?? []}
         onSubmit={handleSubmit}
         saveButtonBarState={webhookCreateOpts.status}
       />

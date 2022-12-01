@@ -7,7 +7,7 @@ export const webhookCreate = gql`
         ...WebhookError
       }
       webhook {
-        ...WebhooksDetails
+        ...WebhookDetails
       }
     }
   }
@@ -20,7 +20,7 @@ export const webhookUpdate = gql`
         ...WebhookError
       }
       webhook {
-        ...WebhooksDetails
+        ...WebhookDetails
       }
     }
   }

@@ -1,4 +1,4 @@
-import { customAppUrl } from "@saleor/apps/urls";
+import { appsListUrl, customAppUrl } from "@saleor/apps/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
-  WebhookDetailsQuery,
+  WebhookDetailsFragment,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
@@ -44,7 +44,7 @@ export interface WebhookDetailsPageProps {
   appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook?: WebhookDetailsQuery["webhook"];
+  webhook?: WebhookDetailsFragment;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
 }
@@ -68,6 +68,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
   };
+
+  const backUrl = webhook ? customAppUrl(webhook.app.id) : appsListUrl();
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
@@ -93,7 +95,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink href={customAppUrl(webhook?.app?.id)}>{appName}</Backlink>
+            <Backlink href={backUrl}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
             <Grid>
               <div>
@@ -123,7 +125,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
-              onCancel={() => navigate(customAppUrl(webhook.app.id))}
+              onCancel={() => navigate(backUrl)}
               onSubmit={submit}
             />
           </Container>

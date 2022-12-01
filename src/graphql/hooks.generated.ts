@@ -2738,9 +2738,17 @@ export const WarehouseDetailsFragmentDoc = gql`
 }
     ${WarehouseWithShippingFragmentDoc}
 ${AddressFragmentDoc}`;
-export const WebhooksDetailsFragmentDoc = gql`
-    fragment WebhooksDetails on Webhook {
+export const WebhookDetailsFragmentDoc = gql`
+    fragment WebhookDetails on Webhook {
   ...Webhook
+  syncEvents {
+    eventType
+  }
+  asyncEvents {
+    eventType
+  }
+  secretKey
+  targetUrl
 }
     ${WebhookFragmentDoc}`;
 export const AppCreateDocument = gql`
@@ -16674,12 +16682,12 @@ export const WebhookCreateDocument = gql`
       ...WebhookError
     }
     webhook {
-      ...WebhooksDetails
+      ...WebhookDetails
     }
   }
 }
     ${WebhookErrorFragmentDoc}
-${WebhooksDetailsFragmentDoc}`;
+${WebhookDetailsFragmentDoc}`;
 export type WebhookCreateMutationFn = Apollo.MutationFunction<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>;
 
 /**
@@ -16713,12 +16721,12 @@ export const WebhookUpdateDocument = gql`
       ...WebhookError
     }
     webhook {
-      ...WebhooksDetails
+      ...WebhookDetails
     }
   }
 }
     ${WebhookErrorFragmentDoc}
-${WebhooksDetailsFragmentDoc}`;
+${WebhookDetailsFragmentDoc}`;
 export type WebhookUpdateMutationFn = Apollo.MutationFunction<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>;
 
 /**
@@ -16784,18 +16792,10 @@ export type WebhookDeleteMutationOptions = Apollo.BaseMutationOptions<Types.Webh
 export const WebhookDetailsDocument = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {
-    ...Webhook
-    syncEvents {
-      eventType
-    }
-    asyncEvents {
-      eventType
-    }
-    secretKey
-    targetUrl
+    ...WebhookDetails
   }
 }
-    ${WebhookFragmentDoc}`;
+    ${WebhookDetailsFragmentDoc}`;
 
 /**
  * __useWebhookDetailsQuery__
