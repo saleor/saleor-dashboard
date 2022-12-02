@@ -73,7 +73,7 @@ function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
   }
 }
 
-function getAttributeValuesFromParams(
+export function getAttributeValuesFromParams(
   params: ProductListUrlFilters,
   attribute: Pick<AttributeFragment, "inputType" | "slug">,
 ) {
@@ -84,7 +84,7 @@ function getAttributeValuesFromParams(
   );
 }
 
-function mapAttributeParamsToFilterOpts(
+export function mapAttributeParamsToFilterOpts(
   attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
   params: ProductListUrlFilters,
 ) {
@@ -289,14 +289,14 @@ interface DefaultFilterParam extends BaseFilterParam {
 interface NumericFilterParam extends BaseFilterParam {
   valuesRange: GteLte<number>;
 }
-type FilterParam =
+export type FilterParam =
   | BooleanFilterParam
   | DateFilterParam
   | DateTimeFilterParam
   | DefaultFilterParam
   | NumericFilterParam;
 
-const parseFilterValue = (
+export const parseFilterValue = (
   params: ProductListUrlFilters,
   key: string,
   type: ProductListUrlFiltersAsDictWithMultipleValues,
