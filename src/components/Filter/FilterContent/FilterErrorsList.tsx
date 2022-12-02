@@ -55,7 +55,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
         { dependencies: dependencies?.join() },
       );
     } catch (e) {
-      errorTracker.captureException(e);
+      errorTracker.captureException(e as Error);
       console.warn("Translation missing for filter error code: ", code);
       return intl.formatMessage(validationMessages.UNKNOWN_ERROR);
     }
