@@ -38,7 +38,7 @@ import TDisplayColumn, {
   DisplayColumnProps,
 } from "@saleor/utils/columns/DisplayColumn";
 import { getArrowDirection } from "@saleor/utils/sort";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -187,7 +187,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <TableCellHeader
             data-test-id="col-name-header"
             arrowPosition="right"
-            className={classNames(classes.colName, {
+            className={clsx(classes.colName, {
               [classes.colNameFixed]: settings.columns.length > 4,
             })}
             direction={

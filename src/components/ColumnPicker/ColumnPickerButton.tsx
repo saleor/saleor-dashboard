@@ -2,7 +2,7 @@ import { alpha } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -42,7 +42,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
 
   return (
     <Button
-      className={classNames(classes.root, className, {
+      className={clsx(classes.root, className, {
         [classes.rootActive]: active,
       })}
       onClick={onClick}
@@ -54,7 +54,7 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
         description="select visible columns button"
       />
       <ArrowDropDownIcon
-        className={classNames(classes.icon, {
+        className={clsx(classes.icon, {
           [classes.rotate]: active,
         })}
       />

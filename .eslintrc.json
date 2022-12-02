@@ -190,7 +190,7 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["lodash", "@material-ui/icons/Delete"]
+        "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ]
   },

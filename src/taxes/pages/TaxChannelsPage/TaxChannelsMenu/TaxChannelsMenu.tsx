@@ -6,7 +6,7 @@ import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { taxConfigurationListUrl } from "@saleor/taxes/urls";
 import { isLastElement } from "@saleor/taxes/utils/utils";
-import clsx from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -24,7 +24,7 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -212,7 +212,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         </DialogContent>
       )}
       <DialogActions
-        className={classNames(classes.actions, {
+        className={clsx(classes.actions, {
           [classes.dropShadow]: !isScrolledToBottom(anchor, position),
         })}
       >

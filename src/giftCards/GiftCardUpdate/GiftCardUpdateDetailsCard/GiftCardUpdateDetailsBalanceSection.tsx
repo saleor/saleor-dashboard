@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Money from "@saleor/components/Money";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -24,9 +24,7 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
 
   return (
     <>
-      <div
-        className={classNames(classes.labelsContainer, classes.wideContainer)}
-      >
+      <div className={clsx(classes.labelsContainer, classes.wideContainer)}>
         <Typography>{intl.formatMessage(messages.cardBalanceLabel)}</Typography>
         <Typography className={classes.labelsContainer}>
           <Money money={currentBalance} />

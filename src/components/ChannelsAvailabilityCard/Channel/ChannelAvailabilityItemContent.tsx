@@ -6,7 +6,7 @@ import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -244,7 +244,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             disabled={disabled}
             label={
               <>
-                <p className={classNames(classes.label, classes.listingLabel)}>
+                <p className={clsx(classes.label, classes.listingLabel)}>
                   {intl.formatMessage(availabilityItemMessages.hideInListings)}
                 </p>
                 <span className={classes.secondLabel}>

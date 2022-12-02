@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 interface HrProps {
@@ -25,7 +25,7 @@ export const Hr: React.FC<HrProps> = props => {
 
   const classes = useStyles(props);
 
-  return <hr className={classNames(classes.root, className)} />;
+  return <hr className={clsx(classes.root, className)} />;
 };
 Hr.displayName = "Hr";
 export default Hr;

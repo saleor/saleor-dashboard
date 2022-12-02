@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
 import { isExternalURL } from "@saleor/utils/urls";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -60,7 +60,7 @@ const Link: React.FC<LinkProps> = props => {
   const opensNewTab = target === "_blank";
 
   const commonLinkProps = {
-    className: classNames(className, {
+    className: clsx(className, {
       [classes.root]: true,
       [classes[color]]: true,
       [classes.underline]: underline,

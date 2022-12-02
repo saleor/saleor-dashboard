@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -51,7 +51,7 @@ export function Tab<T>(value: T) {
       <Typography
         component="span"
         data-test-id={testId}
-        className={classNames({
+        className={clsx({
           [classes.root]: true,
           [classes.active]: isActive,
         })}

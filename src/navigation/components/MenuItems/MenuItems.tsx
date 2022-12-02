@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@saleor/macaw-ui";
 import { RecursiveMenuItem } from "@saleor/navigation/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import SortableTree, { NodeRendererProps } from "react-sortable-tree";
@@ -152,12 +152,12 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const draggedClassName = classNames(
+  const draggedClassName = clsx(
     classes.rowContainer,
     classes.rowContainerDragged,
   );
   const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
-  const placeholderClassName = classNames(
+  const placeholderClassName = clsx(
     classes.rowContainer,
     classes.rowContainerPlaceholder,
   );
@@ -244,7 +244,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         }
       />
       <div
-        className={classNames(classes.container, {
+        className={clsx(classes.container, {
           [classes.darkContainer]: themeType === "dark",
         })}
         style={{
