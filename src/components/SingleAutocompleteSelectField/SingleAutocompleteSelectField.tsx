@@ -11,7 +11,6 @@ import { ChevronIcon } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import Downshift from "downshift";
-import { filter } from "fuzzaldrin";
 import React from "react";
 
 import Debounce, { DebounceProps } from "../Debounce";
@@ -301,9 +300,12 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
   return (
     <SingleAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
-      choices={filter(choices, query, {
-        key: "label",
-      })}
+      choices={choices.filter(c =>
+        c.label
+          .toString()
+          .toLowerCase()
+          .includes(query.toLowerCase()),
+      )}
       {...rest}
     />
   );
