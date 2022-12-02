@@ -1,3 +1,5 @@
+import { configure } from "@testing-library/react";
+
 document.getElementById = () => document.createElement("div");
 
 window.__SALEOR_CONFIG__ = {
@@ -8,3 +10,5 @@ window.__SALEOR_CONFIG__ = {
   SALEOR_APPS_JSON_PATH: "/api/saleor-apps",
   APP_TEMPLATE_GALLERY_PATH: "/template-gallery",
 };
+
+configure({ testIdAttribute: "data-test-id" });
