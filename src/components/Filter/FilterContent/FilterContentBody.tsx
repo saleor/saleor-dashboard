@@ -7,7 +7,7 @@ import { useCommonStyles } from "@saleor/components/Filter/FilterContent/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import FilterAutocompleteField, {
@@ -133,7 +133,7 @@ const FilterContentBody = <K extends string = string>({
       {isFilterType(filter, FieldType.boolean) &&
         filter.options.map(option => (
           <div
-            className={classNames(classes.option, classes.optionRadio)}
+            className={clsx(classes.option, classes.optionRadio)}
             key={option.value}
           >
             <FormControlLabel

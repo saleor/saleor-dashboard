@@ -15,7 +15,7 @@ import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -154,7 +154,7 @@ const Attributes: React.FC<AttributesProps> = ({
             data-test-id="attributes-expand"
           >
             <ChevronIcon
-              className={classNames(classes.expansionBarButtonIcon, {
+              className={clsx(classes.expansionBarButtonIcon, {
                 [classes.rotate]: expanded,
               })}
             />

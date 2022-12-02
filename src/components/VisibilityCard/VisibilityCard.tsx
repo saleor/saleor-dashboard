@@ -9,7 +9,7 @@ import { ChangeEvent } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -279,9 +279,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               disabled={disabled}
               label={
                 <>
-                  <p
-                    className={classNames(classes.label, classes.listingLabel)}
-                  >
+                  <p className={clsx(classes.label, classes.listingLabel)}>
                     {intl.formatMessage(visibilityCardMessages.hideInListings)}
                   </p>
 

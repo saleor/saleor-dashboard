@@ -7,7 +7,7 @@ import {
 import BackButton from "@saleor/components/BackButton";
 import { ProductMediaFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -83,7 +83,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                 parsedMediaOembedData?.thumbnail_url || mediaObj.url;
               return (
                 <div
-                  className={classNames([
+                  className={clsx([
                     classes.imageContainer,
                     {
                       [classes.selectedImageContainer]:

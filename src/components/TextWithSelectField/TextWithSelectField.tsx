@@ -3,7 +3,7 @@ import SingleSelectField, {
   Choices,
 } from "@saleor/components/SingleSelectField";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -99,7 +99,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
           min: textFieldMinValue,
         }}
         InputProps={{
-          className: classNames(classes.textField, {
+          className: clsx(classes.textField, {
             [classes.textFieldCentered]: !textFieldLabel,
           }),
           endAdornment: (

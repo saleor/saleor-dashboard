@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 export interface ChipProps {
@@ -38,7 +38,7 @@ const Chip: React.FC<ChipProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <div className={classNames(classes.root, className)}>
+    <div className={clsx(classes.root, className)}>
       <Typography className={classes.label} variant="caption">
         {label}
         {onClose && (

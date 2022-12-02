@@ -42,7 +42,7 @@ import {
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -235,7 +235,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           <FormattedMessage {...messages.sku} />
                         </TableCell>
                         <TableCell
-                          className={classNames(
+                          className={clsx(
                             classes.colQuantity,
                             classes.colQuantityHeader,
                           )}

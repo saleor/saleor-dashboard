@@ -1,6 +1,6 @@
 import { Tab } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -46,7 +46,7 @@ export const FilterTab: React.FC<FilterTabProps> = props => {
       label={label}
       classes={{
         root: classes.tabRoot,
-        wrapper: classNames(classes.tabLabel, {
+        wrapper: clsx(classes.tabLabel, {
           [classes.selectedTabLabel]: selected,
         }),
       }}

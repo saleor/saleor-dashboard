@@ -8,7 +8,7 @@ import {
 import { TextFieldProps } from "@material-ui/core/TextField";
 import useForm from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -77,7 +77,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
   const disable = () => setOpenStatus(false);
 
   return (
-    <TableCell className={classNames(classes.container, className)}>
+    <TableCell className={clsx(classes.container, className)}>
       {opened && <div className={classes.overlay} onClick={disable} />}
       <Typography variant="caption" onClick={enable} className={classes.text}>
         {value || defaultValue}
