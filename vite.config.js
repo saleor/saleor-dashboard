@@ -70,10 +70,10 @@ export default defineConfig(({ command, mode }) => {
 
     plugins.push(
       VitePWA({
-        /*
-          We use 'register-service-worker' for registering sw.js
-         */
         injectRegister: null,
+        /*
+          We use 'register-service-worker' for registering sw.js.
+         */
         strategies: "injectManifest",
 
         /*
