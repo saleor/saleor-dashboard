@@ -5,10 +5,13 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import BackButton from "@saleor/components/BackButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import { ProductMediaFragment } from "@saleor/graphql";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
+import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
@@ -56,13 +59,43 @@ interface ProductVariantImageSelectDialogProps {
   media?: ProductMediaFragment[];
   selectedMedia?: string[];
   open: boolean;
-  onClose();
-  onMediaSelect(id: string);
+  onClose: () => void;
+  onConfirm: (selectedIds: string[]) => void;
 }
 
 const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
-  const { media, open, selectedMedia, onClose, onMediaSelect } = props;
+  const {
+    media,
+    open,
+    selectedMedia: initialMedia,
+    onClose,
+    onConfirm,
+  } = props;
   const classes = useStyles(props);
+
+  const [selectedMedia, setSelectedMedia] = useState(initialMedia);
+
+  useModalDialogOpen(open, {
+    onOpen: () => setSelectedMedia(initialMedia),
+    onClose: () => setSelectedMedia(initialMedia),
+  });
+
+  const handleMediaSelect = (id: string) => {
+    const isMediaAssigned = selectedMedia.includes(id);
+
+    if (isMediaAssigned) {
+      setSelectedMedia(selectedMedia =>
+        selectedMedia.filter(mediaId => mediaId !== id),
+      );
+    } else {
+      setSelectedMedia(selectedMedia => [...selectedMedia, id]);
+    }
+  };
+
+  const handleConfirm = () => {
+    onConfirm(selectedMedia);
+    onClose();
+  };
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -90,7 +123,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
                         selectedMedia.indexOf(mediaObj.id) !== -1,
                     },
                   ])}
-                  onClick={() => onMediaSelect(mediaObj.id)}
+                  onClick={() => handleMediaSelect(mediaObj.id)}
                   key={mediaObj.id}
                 >
                   <img
@@ -105,6 +138,13 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
+        <ConfirmButton
+          transitionState="default"
+          onClick={handleConfirm}
+          data-test-id="submit"
+        >
+          <FormattedMessage {...buttonMessages.confirm} />
+        </ConfirmButton>
       </DialogActions>
     </Dialog>
   );

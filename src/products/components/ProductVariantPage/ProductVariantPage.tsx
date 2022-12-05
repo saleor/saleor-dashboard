@@ -429,7 +429,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                     <ProductVariantMediaSelectDialog
                       onClose={toggleModal}
-                      onMediaSelect={handlers.changeMedia}
+                      onConfirm={handlers.changeMedia}
                       open={isModalOpened}
                       media={productMedia}
                       selectedMedia={data.media}

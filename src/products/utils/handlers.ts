@@ -157,25 +157,13 @@ export const createPreorderEndDateChangeHandler = (
 export const createMediaChangeHandler = (
   form: UseFormResult<{ media: string[] }>,
   triggerChange: () => void,
-) => (id: string) => {
-  const media = form.data.media;
-  const isMediaAssigned = media.includes(id);
-
-  if (isMediaAssigned) {
-    form.change({
-      target: {
-        name: "media",
-        value: media.filter(mediaId => mediaId !== id),
-      },
-    });
-  } else {
-    form.change({
-      target: {
-        name: "media",
-        value: [...media, id],
-      },
-    });
-  }
+) => (ids: string[]) => {
+  form.change({
+    target: {
+      name: "media",
+      value: ids,
+    },
+  });
 
   triggerChange();
 };

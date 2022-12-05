@@ -128,7 +128,7 @@ export interface ProductVariantUpdateHandlers
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
-  changeMedia: (id: string) => void;
+  changeMedia: (ids: string[]) => void;
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
