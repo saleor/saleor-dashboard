@@ -6,7 +6,7 @@ export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () =>
   window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
-export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10);
+export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 export const MARKETPLACE_URL = window.__SALEOR_CONFIG__.MARKETPLACE_URL;
 export const MARKETPLACE_SALEOR_APPS_PAGE_PATH =
