@@ -58,9 +58,9 @@ describe("As an admin I want to export gift card", () => {
             .get(BUTTON_SELECTORS.showMoreButton)
             .click()
             .get(GIFT_CARD_SHOWMORE.exportCodesMenu)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
             .click();
-          //   .get(BUTTON_SELECTORS.submit)
-          //   .click()
           //   .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
           //   .should("not.be.visible");
           // getGiftCardWithId(giftCard01.id).should("be.null");
