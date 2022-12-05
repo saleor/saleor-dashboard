@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@saleor/macaw-ui";
+import { render, screen } from "@testing-library/react";
 import React from "react";
-import renderer, { ReactTestRendererJSON } from "react-test-renderer";
 
 import { TimezoneProvider } from "../Timezone";
 import Date from "./Date";
@@ -8,50 +8,52 @@ import Date from "./Date";
 const testDate = "2018-04-07";
 const expectedDate = "Apr 7, 2018";
 
-test("Render plain date with timezone GMT-11", () => {
-  const date = renderer.create(
-    <ThemeProvider>
-      <TimezoneProvider value="Pacific/Midway">
-        <Date date={testDate} plain />
-      </TimezoneProvider>
-    </ThemeProvider>,
-  );
-  expect(date.toJSON()).toEqual(expectedDate);
-});
+describe("Date", () => {
+  it("Render plain date with timezone GMT-11", () => {
+    render(
+      <ThemeProvider>
+        <TimezoneProvider value="Pacific/Midway">
+          <Date date={testDate} plain />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+    expect(screen.queryByText(expectedDate)).toBeInTheDocument();
+  });
 
-test("Render plain date with timezone GMT+13", () => {
-  const date = renderer.create(
-    <ThemeProvider>
-      <TimezoneProvider value="Pacific/Tongatapu">
-        <Date date={testDate} plain />
-      </TimezoneProvider>
-    </ThemeProvider>,
-  );
-  expect(date.toJSON()).toEqual(expectedDate);
-});
+  it("Render plain date with timezone GMT+13", () => {
+    render(
+      <ThemeProvider>
+        <TimezoneProvider value="Pacific/Tongatapu">
+          <Date date={testDate} plain />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+    expect(screen.queryByText(expectedDate)).toBeInTheDocument();
+  });
 
-test("Render humanized date with timezone GMT-11", () => {
-  const date = renderer.create(
-    <ThemeProvider>
-      <TimezoneProvider value="Pacific/Midway">
-        <Date date={testDate} />
-      </TimezoneProvider>
-    </ThemeProvider>,
-  );
-  expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
-    testDate,
-  );
-});
+  it("Render humanized date with timezone GMT-11", () => {
+    render(
+      <ThemeProvider>
+        <TimezoneProvider value="Pacific/Midway">
+          <Date date={testDate} />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
+      testDate,
+    );
+  });
 
-test("Render humanized date with timezone GMT+13", () => {
-  const date = renderer.create(
-    <ThemeProvider>
-      <TimezoneProvider value="Pacific/Tongatapu">
-        <Date date={testDate} />
-      </TimezoneProvider>
-    </ThemeProvider>,
-  );
-  expect((date.toJSON() as ReactTestRendererJSON).props.dateTime).toEqual(
-    testDate,
-  );
+  it("Render humanized date with timezone GMT+13", () => {
+    render(
+      <ThemeProvider>
+        <TimezoneProvider value="Pacific/Tongatapu">
+          <Date date={testDate} />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
+      testDate,
+    );
+  });
 });
