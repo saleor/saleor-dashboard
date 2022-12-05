@@ -2,23 +2,19 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@saleor/channels/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits } from "@saleor/fixtures";
+import * as _useNavigator from "@saleor/hooks/useNavigator";
 import { product as productFixture } from "@saleor/products/fixtures";
+import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
-import { configure, mount } from "enzyme";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
-
-import * as _useNavigator from "@saleor/hooks/useNavigator";
-import { taxClasses } from "@saleor/taxes/fixtures";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { act } from "react-dom/test-utils";
-import { MemoryRouter } from "react-router-dom";
-
-configure({ adapter: new Adapter() });
 
 const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
@@ -28,23 +24,16 @@ jest.mock("@saleor/utils/richText/useRichText");
  * Mocking glide library. We do want to test only if page renders, grid itself has dedicated tests.
  */
 jest.mock("@glideapps/glide-data-grid", () => {
-  const { forwardRef } = jest.requireActual("react");
+  const { forwardRef } = jest.requireActual<typeof import("react")>("react");
+  const dataGrid = jest.requireActual<
+    typeof import("@glideapps/glide-data-grid")
+  >("@glideapps/glide-data-grid");
+
   return {
-    ...jest.requireActual("@glideapps/glide-data-grid"),
+    ...dataGrid,
     __esModule: true,
     default: forwardRef((_: any, ref: any) => <div ref={ref} />),
   };
-});
-
-(global as any).document.createRange = () => ({
-  // eslint-disable-next-line
-  setStart: () => {},
-  // eslint-disable-next-line
-  setEnd: () => {},
-  commonAncestorContainer: {
-    nodeName: "BODY",
-    ownerDocument: document,
-  },
 });
 
 const props: ProductUpdatePageProps = {
@@ -89,54 +78,43 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-const selectors = {
-  dropdown: `[data-test-id="autocomplete-dropdown"]`,
-  empty: `[data-test-type="empty"]`,
-  input: `[data-test-id="attribute-value"] input`,
-};
-
 describe("Product details page", () => {
   useNavigator.mockImplementation();
-  // DataEditor.mockImplementation();
   it("can select empty option on attribute", async () => {
-    const component = mount(
+    render(
       <MemoryRouter>
         <Wrapper>
           <ProductUpdatePage {...props} />
         </Wrapper>
       </MemoryRouter>,
     );
-    expect(component.find(selectors.dropdown).exists()).toBeFalsy();
+    const user = userEvent.setup();
 
-    component
-      .find(selectors.input)
-      .first()
-      .simulate("click");
+    const attributeInput = screen.getAllByRole("textbox")[1];
 
-    expect(component.find(selectors.dropdown).exists()).toBeTruthy();
+    expect(attributeInput).toHaveAttribute(
+      "aria-labelledby",
+      "downshift-0-label",
+    );
 
-    expect(component.find(selectors.empty).exists());
+    await user.click(attributeInput);
 
-    component
-      .find(selectors.empty)
-      .first()
-      .simulate("click");
+    expect(screen.queryByTestId("autocomplete-dropdown")).toBeInTheDocument();
 
-    expect(
-      component
-        .find(selectors.input)
-        .first()
-        .prop("value"),
-    ).toEqual("");
+    const emptyOption = screen.queryAllByTestId(
+      "single-autocomplete-select-option",
+    )[0];
 
-    await act(async () => {
-      component
-        .find("form")
-        .first()
-        .simulate("submit");
-      // wait for async function to complete
-      await new Promise(process.nextTick);
-    });
+    expect(emptyOption).toBeInTheDocument();
+
+    await user.click(emptyOption);
+
+    expect(attributeInput).toHaveValue("");
+
+    await waitFor(() =>
+      fireEvent.submit(screen.getByTestId("product-update-form")),
+    );
+
     expect(onSubmit.mock.calls[0][0].attributes[0].value.length).toEqual(0);
   });
 });
