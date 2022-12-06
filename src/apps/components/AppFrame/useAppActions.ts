@@ -33,6 +33,9 @@ const isAppDeepUrlChange = (appId: string, from: string, to: string) => {
   return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
 };
 
+/**
+ * TODO - refactor, introduce SRP, each action should be encapsulated
+ */
 export const useAppActions = (
   frameEl: React.MutableRefObject<HTMLIFrameElement>,
   appOrigin: string,
@@ -117,6 +120,11 @@ export const useAppActions = (
         window.history.pushState(null, "", appCompletePath + newRoute);
 
         return sendResponseStatus(actionId, true);
+      }
+      case "notifyReady": {
+        frameEl.current.style.height = "";
+
+        return sendResponseStatus(action.payload.actionId, true);
       }
       default: {
         throw new Error("Unknown action type");

@@ -27,6 +27,15 @@ interface Props {
 
 const getOrigin = (url: string) => new URL(url).origin;
 
+/**
+ * Hide app initially and wait till app informs Dashboard thats its ready to be shown
+ *
+ * TODO - what about older apps? They will never appear. Add timeout? Or add field to manifest?
+ */
+const iframeStyle = {
+  height: 0,
+};
+
 export const AppFrame: React.FC<Props> = ({
   src,
   appToken,
@@ -101,6 +110,7 @@ export const AppFrame: React.FC<Props> = ({
 
   return (
     <iframe
+      style={iframeStyle}
       ref={frameRef}
       src={resolveAppIframeUrl(appId, src, params)}
       onError={onError}
