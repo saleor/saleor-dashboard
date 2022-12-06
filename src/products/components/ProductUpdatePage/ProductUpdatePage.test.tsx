@@ -80,7 +80,9 @@ const props: ProductUpdatePageProps = {
 
 describe("Product details page", () => {
   useNavigator.mockImplementation();
+
   it("can select empty option on attribute", async () => {
+    // Arrange
     render(
       <MemoryRouter>
         <Wrapper>
@@ -89,32 +91,31 @@ describe("Product details page", () => {
       </MemoryRouter>,
     );
     const user = userEvent.setup();
-
     const attributeInput = screen.getAllByRole("textbox")[1];
-
+    // Assert
     expect(attributeInput).toHaveAttribute(
       "aria-labelledby",
       "downshift-0-label",
     );
-
+    // Act
     await user.click(attributeInput);
-
+    // Assert
     expect(screen.queryByTestId("autocomplete-dropdown")).toBeInTheDocument();
-
+    // Arrange
     const emptyOption = screen.queryAllByTestId(
       "single-autocomplete-select-option",
     )[0];
-
+    // Assert
     expect(emptyOption).toBeInTheDocument();
-
+    // Act
     await user.click(emptyOption);
-
+    // Assert
     expect(attributeInput).toHaveValue("");
-
+    // Act
     await waitFor(() =>
       fireEvent.submit(screen.getByTestId("product-update-form")),
     );
-
+    // Assert
     expect(onSubmit.mock.calls[0][0].attributes[0].value.length).toEqual(0);
   });
 });

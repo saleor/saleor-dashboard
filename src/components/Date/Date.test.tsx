@@ -10,6 +10,7 @@ const expectedDate = "Apr 7, 2018";
 
 describe("Date", () => {
   it("Render plain date with timezone GMT-11", () => {
+    // Arrange & Act
     render(
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Midway">
@@ -17,10 +18,12 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+    // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
 
   it("Render plain date with timezone GMT+13", () => {
+    // Arrange & Act
     render(
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Tongatapu">
@@ -28,10 +31,12 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+    // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
 
   it("Render humanized date with timezone GMT-11", () => {
+    // Arrange & Act
     render(
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Midway">
@@ -39,12 +44,14 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+    // Assert
     expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
       testDate,
     );
   });
 
   it("Render humanized date with timezone GMT+13", () => {
+    // Arrange & Act
     render(
       <ThemeProvider>
         <TimezoneProvider value="Pacific/Tongatapu">
@@ -52,6 +59,7 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+    // Assert
     expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
       testDate,
     );
