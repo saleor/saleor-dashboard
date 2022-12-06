@@ -33,19 +33,19 @@
 
 1. Clone the repository:
 
-```
+```bash
 git clone https://github.com/saleor/saleor-dashboard.git
 ```
 
 2. Enter the project directory:
 
-```
+```bash
 cd saleor-dashboard
 ```
 
 3. Install the dependencies:
 
-```
+```bash
 npm i
 ```
 
@@ -53,7 +53,7 @@ npm i
 
 5. Start the development server with:
 
-```
+```bash
 npm run dev
 ```
 
@@ -66,4 +66,5 @@ npm run dev
 - [Error tracking ⚠️](docs/error-tracking.md)
 - [Running tests 🏁](docs/running-tests.md)
 - [Usage with Docker 🐳](docs/docker.md)
-- [Sentry adapter 🗼](docs/sentry.md)
+- [Sentry adapter 🗼](docs/sentry-adapter.md)
+- [Deployment 🌐](docs/deployment.md)
