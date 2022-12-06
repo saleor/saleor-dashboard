@@ -8,7 +8,8 @@ import {
 import { RelayToFlat } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
-import { AppData, useExternalApp } from "./components/ExternalAppContext";
+import { useExternalApp } from "./components/ExternalAppContext/";
+import { AppData } from "./components/ExternalAppContext/context";
 import { AppDetailsUrlMountQueryParams } from "./urls";
 
 export interface Extension {
