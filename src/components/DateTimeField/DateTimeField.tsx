@@ -10,6 +10,8 @@ import { joinDateTime, splitDateTime } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { useStyles } from "./styles";
+
 type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
   onChange: (value: string) => void;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
@@ -24,6 +26,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   value,
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 
@@ -44,6 +47,11 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         type="date"
         value={parsedValue.date}
         InputLabelProps={{ shrink: true }}
+        InputProps={{
+          classes: {
+            root: classes.dateField,
+          },
+        }}
       />
       <TextField
         fullWidth
@@ -60,6 +68,11 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         type="time"
         value={parsedValue.time}
         InputLabelProps={{ shrink: true }}
+        InputProps={{
+          classes: {
+            root: classes.timeField,
+          },
+        }}
       />
     </>
   );
