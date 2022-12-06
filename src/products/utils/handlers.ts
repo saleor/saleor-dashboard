@@ -1,11 +1,20 @@
+import { FetchResult } from "@apollo/client";
 import {
   ChannelData,
   ChannelPriceAndPreorderData,
   ChannelPriceArgs,
   ChannelPriceData,
 } from "@saleor/channels/utils";
-import { ProductChannelListingAddInput } from "@saleor/graphql";
+import {
+  ProductChannelListingAddInput,
+  ProductVariantFragment,
+  VariantMediaAssignMutation,
+  VariantMediaAssignMutationVariables,
+  VariantMediaUnassignMutation,
+  VariantMediaUnassignMutationVariables,
+} from "@saleor/graphql";
 import { FormChange, UseFormResult } from "@saleor/hooks/useForm";
+import { diff } from "fast-array-diff";
 import moment from "moment";
 
 export function createChannelsPriceChangeHandler(
@@ -143,4 +152,70 @@ export const createPreorderEndDateChangeHandler = (
     form.clearErrors("preorderEndDateTime");
   }
   triggerChange();
+};
+
+export const createMediaChangeHandler = (
+  form: UseFormResult<{ media: string[] }>,
+  triggerChange: () => void,
+) => (ids: string[]) => {
+  form.change({
+    target: {
+      name: "media",
+      value: ids,
+    },
+  });
+
+  triggerChange();
+};
+
+export const handleAssignMedia = async <
+  T extends Pick<ProductVariantFragment, "id" | "media">
+>(
+  media: string[],
+  variant: T,
+  assignMedia: (
+    variables: VariantMediaAssignMutationVariables,
+  ) => Promise<FetchResult<VariantMediaAssignMutation>>,
+  unassignMedia: (
+    variables: VariantMediaUnassignMutationVariables,
+  ) => Promise<FetchResult<VariantMediaUnassignMutation>>,
+) => {
+  const { added, removed } = diff(
+    variant.media.map(mediaObj => mediaObj.id),
+    media,
+  );
+
+  const assignResults = await Promise.all(
+    added.map(mediaId =>
+      assignMedia({
+        mediaId,
+        variantId: variant.id,
+      }),
+    ),
+  );
+  const unassignResults = await Promise.all(
+    removed.map(mediaId =>
+      unassignMedia({
+        mediaId,
+        variantId: variant.id,
+      }),
+    ),
+  );
+
+  const assignErrors = assignResults.reduce(
+    (errors, result) => [
+      ...errors,
+      ...(result.data?.variantMediaAssign.errors || []),
+    ],
+    [],
+  );
+  const unassignErrors = unassignResults.reduce(
+    (errors, result) => [
+      ...errors,
+      ...(result.data?.variantMediaUnassign.errors || []),
+    ],
+    [],
+  );
+
+  return [...assignErrors, ...unassignErrors];
 };

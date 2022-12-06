@@ -19,7 +19,7 @@ storiesOf("Products / ProductVariantImageSelectDialog", module)
       media={variantProductImages}
       selectedMedia={variantImages.map(image => image.id)}
       onClose={() => undefined}
-      onMediaSelect={() => undefined}
+      onConfirm={() => undefined}
       open={true}
     />
   ));
