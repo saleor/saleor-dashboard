@@ -28,7 +28,7 @@ export const Date: React.FC<DateProps> = ({ date, plain }) => {
               localizeDate(date)
             ) : (
               <Tooltip title={localizeDate(date)}>
-                <time dateTime={date}>
+                <time dateTime={date} data-test-id="dateTime">
                   {getHumanized(date, locale, currentDate)}
                 </time>
               </Tooltip>

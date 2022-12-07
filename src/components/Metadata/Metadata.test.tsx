@@ -1,17 +1,13 @@
 import useForm from "@saleor/hooks/useForm";
 import Wrapper from "@test/wrapper";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { configure, mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { props } from "./fixtures";
 import Metadata from "./Metadata";
 
-configure({ adapter: new Adapter() });
-
-const expandButton = 'data-test-id="expand"';
-
-const Component: React.FC = () => {
+const Component = () => {
   const { change, data } = useForm(props.data, jest.fn());
 
   return (
@@ -21,140 +17,89 @@ const Component: React.FC = () => {
   );
 };
 
+const getFirstExpandIcon = () => screen.getAllByTestId("expand")[0];
+
 describe("Metadata editor", () => {
-  it("can expand field", () => {
-    const wrapper = mount(<Component />);
-
-    const expandDataEl = "data-test-expanded";
-
-    expect(
-      wrapper
-        .find(`[${expandDataEl}]`)
-        .first()
-        .prop(expandDataEl),
-    ).toEqual(false);
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
-    expect(
-      wrapper
-        .find(`[${expandDataEl}]`)
-        .first()
-        .prop(expandDataEl),
-    ).toEqual(true);
+  it("can expand field", async () => {
+    // Arrange
+    render(<Component />);
+    const user = userEvent.setup();
+    const isExpandedAttribute = "data-test-expanded";
+    const editor = screen.getAllByTestId("metadata-editor")[0];
+    // Assert
+    expect(editor).toHaveAttribute(isExpandedAttribute, "false");
+    // Act
+    await user.click(getFirstExpandIcon());
+    // Assert
+    expect(editor).toHaveAttribute(isExpandedAttribute, "true");
   });
 
-  it("can edit field name", () => {
-    const wrapper = mount(<Component />);
-
-    const inputNameSelector = '[name="name:1"] input';
-
-    // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
-
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual(props.data.metadata[1].key);
-
-    wrapper
-      .find(inputNameSelector)
-      .first()
-      .simulate("change", { target: { name: "name:1", value: "x" } });
-
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual("x");
+  it("can edit field name", async () => {
+    // Arrange
+    render(<Component />);
+    const user = userEvent.setup();
+    // Act
+    await user.click(getFirstExpandIcon());
+    // Arrange
+    const input = screen.getByRole("textbox", {
+      name: /name:0/i,
+    });
+    // Assert
+    expect(input).toHaveValue(props.data.metadata[0].key);
+    // Act
+    await user.type(input, " with new name");
+    // Assert
+    expect(input).toHaveValue("key with new name");
   });
 
-  it("can edit field value", () => {
-    const wrapper = mount(<Component />);
-
-    const inputNameSelector = '[name="value:1"] textarea';
-
-    // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
-
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual(props.data.metadata[1].value);
-
-    wrapper
-      .find(inputNameSelector)
-      .first()
-      .simulate("change", { target: { name: "value:1", value: "x" } });
-
-    expect(
-      wrapper
-        .find(inputNameSelector)
-        .first()
-        .prop("value"),
-    ).toEqual("x");
+  it("can edit field value", async () => {
+    // Arrange
+    render(<Component />);
+    const user = userEvent.setup();
+    // Act
+    await user.click(getFirstExpandIcon());
+    // Arrange
+    const input = screen.getByRole("textbox", { name: /value:0/i });
+    // Assert
+    expect(input).toHaveValue(props.data.metadata[0].value);
+    // Act
+    await user.type(input, " with new field value");
+    // Assert
+    expect(input).toHaveValue("value with new field value");
   });
 
-  it("can delete field", () => {
-    const wrapper = mount(<Component />);
-
-    const fieldSelector = 'tr[data-test-id="field"]';
-    const deleteButtonSelector = '[data-test-id*="delete-field"]';
-
-    // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
-
-    expect(wrapper.find(fieldSelector).length).toEqual(
+  it("can delete field", async () => {
+    // Arrange
+    render(<Component />);
+    const user = userEvent.setup();
+    // Act
+    await user.click(getFirstExpandIcon());
+    // Assert
+    expect(screen.getAllByTestId("field")).toHaveLength(
       props.data.metadata.length,
     );
-
-    wrapper
-      .find(deleteButtonSelector)
-      .first()
-      .simulate("click");
-
-    expect(wrapper.find(fieldSelector).length).toEqual(
+    // Act
+    await user.click(screen.getByTestId("delete-field-0"));
+    // Assert
+    expect(screen.getAllByTestId("field")).toHaveLength(
       props.data.metadata.length - 1,
     );
   });
 
-  it("can add field", () => {
-    const wrapper = mount(<Component />);
-
-    const fieldSelector = 'tr[data-test-id="field"]';
-    const addButtonSelector = '[data-test-id="add-field"]';
-
-    // Expand to reveal fields
-    wrapper
-      .find(`[${expandButton}]`)
-      .first()
-      .simulate("click");
-
-    expect(wrapper.find(fieldSelector).length).toEqual(
+  it("can add field", async () => {
+    // Arrange
+    render(<Component />);
+    const user = userEvent.setup();
+    // Act
+    await user.click(getFirstExpandIcon());
+    // Assert
+    expect(screen.getAllByTestId("field")).toHaveLength(
       props.data.metadata.length,
     );
-
-    wrapper
-      .find(addButtonSelector)
-      .first()
-      .simulate("click");
-
-    expect(wrapper.find(fieldSelector).length).toEqual(
+    // Act
+    await user.click(screen.getAllByTestId("add-field")[0]);
+    // Assert
+    expect(screen.getAllByTestId("field")).toHaveLength(
       props.data.metadata.length + 1,
     );
   });
