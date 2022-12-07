@@ -1,14 +1,14 @@
 import {
   getDefaultAddress,
   getDefaultAddressWithoutType,
-  getValueWithDefault
+  getValueWithDefault,
 } from "./utils/Utils";
 
 export function createCustomer(email, customerName, address, isActive = false) {
   const addressesLines = getValueWithDefault(
     address,
     `${getDefaultAddress(address, "defaultBillingAddress")}
-    ${getDefaultAddress(address, "defaultShippingAddress")}`
+    ${getDefaultAddress(address, "defaultShippingAddress")}`,
   );
   const mutation = `
   mutation{
@@ -76,7 +76,7 @@ export function getCustomers(startsWith) {
 export function customerRegistration({
   email,
   password = Cypress.env("USER_PASSWORD"),
-  channel
+  channel,
 }) {
   const mutation = `mutation{
     accountRegister(input:{
@@ -113,8 +113,10 @@ export function requestPasswordReset(email, channel) {
 }
 
 export function confirmAccount(email, token) {
+  const serverStoredEmail = email.toLowerCase();
+
   const mutation = `mutation{
-    confirmAccount(email:"${email}", token:"${token}"){
+    confirmAccount(email:"${serverStoredEmail}", token:"${token}"){
       user{
         email
       }

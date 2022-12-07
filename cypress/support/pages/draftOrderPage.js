@@ -12,7 +12,9 @@ export function finalizeDraftOrder(name) {
     .get(DRAFT_ORDER_SELECTORS.selectCustomer)
     .type(name);
   return cy
-    .contains(DRAFT_ORDER_SELECTORS.selectCustomerOption, name)
+    .contains(DRAFT_ORDER_SELECTORS.selectCustomerOption, name, {
+      matchCase: false,
+    })
     .click()
     .get(DRAFT_ORDER_SELECTORS.customerEmail)
     .should("be.visible")
