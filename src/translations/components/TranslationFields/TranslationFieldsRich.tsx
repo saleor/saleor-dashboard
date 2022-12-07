@@ -1,16 +1,15 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Typography } from "@material-ui/core";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
 import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
+import { useRichTextSubmit } from "./useRichTextSubmit";
 
 interface TranslationFieldsRichProps {
   disabled: boolean;
@@ -33,25 +32,16 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
-
   const {
-    defaultValue,
-    editorRef,
     isReadyForMount,
+    handleSubmit,
+    defaultValue,
     handleChange,
-    getValue,
-  } = useRichText({
-    initial,
-    triggerChange: () => setIsDirty(true),
-  });
-
-  useEffect(() => setExitDialogSubmitRef(onSubmit), [onSubmit]);
-
-  const submit = async () => onSubmit(await getValue());
+    editorRef,
+  } = useRichTextSubmit(initial, onSubmit);
 
   return edit ? (
-    <form onSubmit={submit}>
+    <form onSubmit={handleSubmit}>
       {isReadyForMount ? (
         <RichTextEditor
           defaultValue={defaultValue}
@@ -80,7 +70,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
       <TranslationFieldsSave
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
-        onSave={submit}
+        onSave={handleSubmit}
       />
     </form>
   ) : initial === null ? (

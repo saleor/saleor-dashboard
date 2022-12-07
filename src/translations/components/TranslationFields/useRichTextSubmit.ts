@@ -1,0 +1,49 @@
+import { OutputData } from "@editorjs/editorjs";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import useRichText from "@saleor/utils/richText/useRichText";
+import React from "react";
+
+export function useRichTextSubmit(
+  initial: string,
+  onSubmit: (data: OutputData) => SubmitPromise,
+) {
+  const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
+
+  const {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange,
+    getValue,
+  } = useRichText({
+    initial,
+    triggerChange: () => setIsDirty(true),
+  });
+
+  const handleSubmit = React.useCallback(async () => {
+    const result = onSubmit(await getValue());
+
+    const errors = await result;
+    if (errors?.length === 0) {
+      setIsDirty(false);
+
+      return [];
+    }
+
+    return errors;
+  }, [getValue, onSubmit, setIsDirty]);
+
+  React.useEffect(() => setExitDialogSubmitRef(handleSubmit), [
+    handleSubmit,
+    setExitDialogSubmitRef,
+  ]);
+
+  return {
+    defaultValue,
+    editorRef,
+    isReadyForMount,
+    handleChange,
+    handleSubmit,
+  };
+}
