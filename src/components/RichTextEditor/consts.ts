@@ -4,6 +4,7 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
+import RawTool from "@editorjs/raw";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import createGenericInlineTool from "editorjs-inline-tool";
 
@@ -39,4 +40,5 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     tagName: "s",
     toolboxIcon: strikethroughIcon,
   }),
+  raw: RawTool,
 };

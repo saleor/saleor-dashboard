@@ -6,7 +6,7 @@ export const shop: SiteSettingsQuery["shop"] = {
     __typename: "Address",
     city: "Kenstad",
     cityArea: "Alabama",
-    companyName: "Saleor e-commerce",
+    companyName: "Musafir",
     country: {
       __typename: "CountryDisplay",
       code: "UA",
@@ -36,7 +36,7 @@ export const shop: SiteSettingsQuery["shop"] = {
     __typename: "Domain",
     host: "localhost:8000",
   },
-  name: "Saleor e-commerce",
+  name: "Musafir",
   reserveStockDurationAnonymousUser: 10,
   reserveStockDurationAuthenticatedUser: 10,
   limitQuantityPerCheckout: 50,
