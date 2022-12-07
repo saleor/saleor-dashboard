@@ -1,26 +1,11 @@
-import { appDeepUrl, AppDetailsUrlMountQueryParams } from "@saleor/apps/urls";
+import { appDeepUrl } from "@saleor/apps/urls";
 import { AppExtensionTargetEnum } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
-
-export interface AppData {
-  id: string;
-  appToken: string;
-  src: string;
-  label: string;
-  target: AppExtensionTargetEnum;
-  params?: AppDetailsUrlMountQueryParams;
-}
-
-const ExternalAppContext = React.createContext<{
-  open: boolean;
-  appData: AppData | undefined;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppData: React.Dispatch<React.SetStateAction<AppData | undefined>>;
-}>(undefined);
+import { AppData, ExternalAppContext } from "./context";
 
 export const ExternalAppProvider: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false);
