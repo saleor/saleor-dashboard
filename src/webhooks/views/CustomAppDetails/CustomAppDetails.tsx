@@ -27,7 +27,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
-import { webhookAddPath } from "@saleor/webhooks/urls";
+import { customAppWebhookAddPath } from "@saleor/webhooks/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,15 +35,15 @@ import CustomAppDetailsPage, {
   CustomAppDetailsPageFormData,
 } from "../../components/CustomAppDetailsPage";
 import {
-  appsListUrl,
+  CustomAppDetailsUrlDialog,
+  CustomAppDetailsUrlQueryParams,
+  customAppListUrl,
   customAppUrl,
-  CustomAppUrlDialog,
-  CustomAppUrlQueryParams,
 } from "../../urls";
 
 interface OrderListProps {
   id: string;
-  params: CustomAppUrlQueryParams;
+  params: CustomAppDetailsUrlQueryParams;
   token: string;
   onTokenClose: () => void;
 }
@@ -62,8 +62,8 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   React.useEffect(() => onTokenClose, []);
 
   const [openModal, closeModal] = createDialogActionHandlers<
-    CustomAppUrlDialog,
-    CustomAppUrlQueryParams
+    CustomAppDetailsUrlDialog,
+    CustomAppDetailsUrlQueryParams
   >(navigate, params => customAppUrl(id, params), params);
 
   const { data, loading, refetch } = useAppQuery({
@@ -213,7 +213,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
 
   if (customApp === null) {
-    return <NotFoundPage backHref={appsListUrl()} />;
+    return <NotFoundPage backHref={customAppListUrl()} />;
   }
 
   return (
@@ -233,7 +233,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id,
           })
         }
-        webhookCreateHref={webhookAddPath(id)}
+        webhookCreateHref={customAppWebhookAddPath(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id,

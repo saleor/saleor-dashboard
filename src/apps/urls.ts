@@ -38,18 +38,8 @@ export enum AppListUrlSortField {
   active = "active",
 }
 
-export type CustomAppUrlDialog =
-  | "create-token"
-  | "remove-webhook"
-  | "remove-token"
-  | "app-activate"
-  | "app-deactivate";
-export type CustomAppUrlQueryParams = Dialog<CustomAppUrlDialog> & SingleAction;
-
 export const appsSection = "/apps/";
 export const appsListPath = appsSection;
-
-export const customAppListPath = "/apps/custom/";
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
 export const appPath = (id: string) => urlJoin(appsSection, id, "app");

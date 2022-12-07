@@ -12,14 +12,16 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
+import { WebhookFormData } from "../components/CustomAppWebhookDetailsPage/CustomAppWebhookDetailsPage";
 import WebhookDetailsPage from "../components/WebhookDetailsPage";
-import { WebhookFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
 
-export interface WebhooksDetailsProps {
+export interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
+export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = ({
+  id,
+}) => {
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -85,5 +87,5 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
   );
 };
 
-WebhooksDetails.displayName = "WebhooksDetails";
-export default WebhooksDetails;
+CustomAppWebhookDetails.displayName = "CustomAppWebhookDetails";
+export default CustomAppWebhookDetails;

@@ -1,30 +1,40 @@
-import { appsSection, customAppListPath } from "@saleor/apps/urls";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
-import { ActiveTab, Dialog, SingleAction, TabActionDialog } from "../types";
+import { Dialog, SingleAction } from "../types";
 
-export const webhookSection = "/webhooks/";
-export const webhookListPath = webhookSection;
+export const customAppsSection = "/custom-apps/";
+export const webhooksSection = "/webhooks/";
+export const customAppListPath = customAppsSection;
 
-export type WebhookListUrlDialog =
-  | "remove"
-  | "remove-custom-app"
-  | TabActionDialog;
-export type WebhookListUrlQueryParams = ActiveTab &
-  Dialog<WebhookListUrlDialog> &
+export type CustomAppListUrlDialog = "remove-custom-app";
+export type CustomAppListUrlQueryParams = Dialog<CustomAppListUrlDialog> &
   SingleAction;
-export const webhookListUrl = (params?: WebhookListUrlQueryParams) =>
-  webhookListPath + "?" + stringifyQs(params);
 
-export const webhookPath = (id: string) =>
-  urlJoin(appsSection, webhookSection, id);
+export const customAppListUrl = (params?: CustomAppListUrlQueryParams) =>
+  customAppListPath + "?" + stringifyQs(params);
 
-export type WebhookUrlDialog = "remove";
-export type WebhookUrlQueryParams = Dialog<WebhookUrlDialog> & SingleAction;
-export const webhookUrl = (id: string, params?: WebhookUrlQueryParams) =>
-  webhookPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export type CustomAppDetailsUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token"
+  | "app-activate"
+  | "app-deactivate";
+export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> &
+  SingleAction;
 
-export const webhookAddPath = (id: string) =>
-  urlJoin(customAppListPath, id, webhookSection, "add");
-export const webhookAddUrl = webhookAddPath;
+export const customAppPath = (id: string) => urlJoin(customAppsSection, id);
+
+export const customAppUrl = (
+  id: string,
+  params?: CustomAppDetailsUrlQueryParams,
+) => customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const customAppAddPath = urlJoin(customAppListPath, "add");
+export const customAppAddUrl = customAppAddPath;
+
+export const customAppWebhookPath = (appId: string, id: string) =>
+  urlJoin(customAppsSection, appId, webhooksSection, id);
+
+export const customAppWebhookAddPath = (appId: string) =>
+  urlJoin(customAppsSection, appId, webhooksSection, "add");

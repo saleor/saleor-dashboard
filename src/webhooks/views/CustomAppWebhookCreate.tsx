@@ -14,16 +14,18 @@ import { useIntl } from "react-intl";
 import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
 import { webhookUrl } from "../urls";
 
-export interface WebhooksCreateProps {
-  id: string;
+export interface CustomAppWebhookCreateProps {
+  appId: string;
 }
 
-export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
+export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
+  appId,
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data } = useAppQuery({ variables: { id } });
+  const { data } = useAppQuery({ variables: { id: appId } });
 
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
     onCompleted: data => {
@@ -43,7 +45,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
       webhookCreate({
         variables: {
           input: {
-            app: id,
+            app: appId,
             syncEvents: data.syncEvents,
             asyncEvents: data.asyncEvents.includes(
               WebhookEventTypeAsyncEnum.ANY_EVENTS,
@@ -70,7 +72,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
       />
       <WebhookDetailsPage
         appName={data?.app?.name ?? ""}
-        appId={id}
+        appId={appId}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate?.errors ?? []}
         onSubmit={handleSubmit}
@@ -80,5 +82,5 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
   );
 };
 
-WebhooksCreate.displayName = "WebhooksCreate";
-export default WebhooksCreate;
+CustomAppWebhookCreate.displayName = "CustomAppWebhookCreate";
+export default CustomAppWebhookCreate;

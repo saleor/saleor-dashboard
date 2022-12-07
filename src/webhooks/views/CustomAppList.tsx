@@ -18,12 +18,12 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhooksListPage from "../components/WebhooksListPage";
+import CustomAppListPage from "../components/CustomAppListPage";
 import { messages } from "../messages";
 import {
-  webhookListUrl,
-  WebhookListUrlDialog,
-  WebhookListUrlQueryParams,
+  customAppListUrl,
+  CustomAppListUrlDialog,
+  CustomAppListUrlQueryParams,
 } from "../urls";
 
 const getCurrentAppName = (
@@ -31,20 +31,20 @@ const getCurrentAppName = (
   collection?: AppsListQuery["apps"]["edges"],
 ) => collection?.find(edge => edge.node.id === id)?.node?.name;
 
-interface WebhooksListProps {
-  params: WebhookListUrlQueryParams;
+interface CustomAppListProps {
+  params: CustomAppListUrlQueryParams;
 }
 
-export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
+export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const client = useApolloClient();
 
   const [openModal, closeModal] = createDialogActionHandlers<
-    WebhookListUrlDialog,
-    WebhookListUrlQueryParams
-  >(navigate, webhookListUrl, params);
+    CustomAppListUrlDialog,
+    CustomAppListUrlQueryParams
+  >(navigate, customAppListUrl, params);
 
   const removeAppNotify = () => {
     notify({
@@ -110,7 +110,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
         type={"CUSTOM"}
         open={params.action === "remove-custom-app"}
       />
-      <WebhooksListPage
+      <CustomAppListPage
         appsList={customApps}
         getCustomAppHref={id => customAppUrl(id)}
         onRemove={id =>
@@ -123,5 +123,5 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ params }) => {
   );
 };
 
-WebhooksList.displayName = "WebhooksList";
-export default WebhooksList;
+CustomAppList.displayName = "CustomAppList";
+export default CustomAppList;

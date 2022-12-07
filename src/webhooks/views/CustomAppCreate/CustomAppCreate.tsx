@@ -10,8 +10,8 @@ import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {
   CustomAppCreatePageFormData,
-} from "../../components/CustomAppCreatePage";
-import { customAppUrl } from "../../urls";
+} from "../../../apps/components/CustomAppCreatePage";
+import { customAppUrl } from "../../../apps/urls";
 import { messages } from "./messages";
 
 interface CustomAppCreateProps {
