@@ -9,6 +9,7 @@ import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-eleme
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { createGiftCard } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
+import { getMailWithGiftCardExport } from "../../../support/api/utils/users";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to export gift card", () => {
@@ -24,7 +25,7 @@ describe("As an admin I want to export gift card", () => {
   });
 
   it(
-    "should be able to export several gift cards. TC: SALEOR_101010",
+    "should be able to export several gift cards. TC: SALEOR_1010",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
@@ -34,21 +35,22 @@ describe("As an admin I want to export gift card", () => {
 
       createGiftCard({
         tag: giftCard01,
-        amount: 3,
+        amount: 5,
         currency: "THB",
       })
         .then(hash => {
           giftCard01hash = hash.id;
           createGiftCard({
             tag: giftCard02,
-            amount: 7,
+            amount: 10,
             currency: "THB",
           });
         })
         .then(hash2 => {
           giftCard02hash = hash2.id;
           enterAndSelectGiftCards([giftCard01hash, giftCard02hash]);
-          cy.get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+          cy
+            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
             .first()
             .check()
             .should("be.checked")
@@ -60,11 +62,11 @@ describe("As an admin I want to export gift card", () => {
             .get(GIFT_CARD_SHOWMORE.exportCodesMenu)
             .click()
             .get(BUTTON_SELECTORS.submit)
-            .click();
-          //   .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
-          //   .should("not.be.visible");
-          // getGiftCardWithId(giftCard01.id).should("be.null");
-          // getGiftCardWithId(giftCard02.id).should("be.null");
+            .click().confirmationMessageShouldDisappear;
+          getMailWithGiftCardExport(
+            "testers+dashboard@saleor.io",
+            "Your exported gift cards data is ready",
+          );
         });
     },
   );
