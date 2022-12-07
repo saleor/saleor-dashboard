@@ -7,11 +7,15 @@ import { ActiveTab, Dialog, SingleAction, TabActionDialog } from "../types";
 export const webhookSection = "/webhooks/";
 export const webhookListPath = webhookSection;
 
-export type WebhookListUrlDialog = "remove" | TabActionDialog;
-
+export type WebhookListUrlDialog =
+  | "remove"
+  | "remove-custom-app"
+  | TabActionDialog;
 export type WebhookListUrlQueryParams = ActiveTab &
   Dialog<WebhookListUrlDialog> &
   SingleAction;
+export const webhookListUrl = (params?: WebhookListUrlQueryParams) =>
+  webhookListPath + "?" + stringifyQs(params);
 
 export const webhookPath = (id: string) =>
   urlJoin(appsSection, webhookSection, id);

@@ -11,7 +11,7 @@ import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDec
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { appsInProgress, appsList, customAppsList } from "../../fixtures";
+import { appsInProgress, appsList } from "../../fixtures";
 import AppsListPage, { AppsListPageProps } from "./AppsListPage";
 
 const props: AppsListPageProps = {
@@ -24,13 +24,10 @@ const props: AppsListPageProps = {
     __typename: "Query",
     appsInstallations: appsInProgress,
   },
-  customAppsList,
   disabled: false,
   installedAppsList: appsList,
-  getCustomAppHref: () => "",
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,
-  onCustomAppRemove: () => undefined,
   onInstalledAppRemove: () => undefined,
 };
 
@@ -51,7 +48,6 @@ storiesOf("Views / Apps / Apps list", module)
       appsInProgressList={undefined}
       disabled={true}
       installedAppsList={undefined}
-      customAppsList={undefined}
     />
   ))
   .add("no data", () => (
@@ -59,6 +55,5 @@ storiesOf("Views / Apps / Apps list", module)
       {...props}
       appsInProgressList={undefined}
       installedAppsList={[]}
-      customAppsList={[]}
     />
   ));

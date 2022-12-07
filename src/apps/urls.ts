@@ -9,7 +9,6 @@ export const MANIFEST_ATTR = "manifestUrl";
 export type AppListUrlDialog =
   | "remove"
   | "remove-app"
-  | "remove-custom-app"
   | "app-activate"
   | "app-deactivate";
 

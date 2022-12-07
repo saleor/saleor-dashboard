@@ -38,7 +38,6 @@ import {
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
-  customAppUrl,
 } from "../../urls";
 import { messages } from "./messages";
 
@@ -102,21 +101,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     queryString: params,
   });
 
-  const {
-    data: customAppsData,
-    loading: customAppsLoading,
-    refetch: customAppsRefetch,
-  } = useAppsListQuery({
-    displayLoader: true,
-    variables: {
-      first: 100,
-      ...queryVariables,
-      filter: {
-        type: AppTypeEnum.LOCAL,
-      },
-    },
-  });
-
   const refetchExtensionList = () => {
     client.refetchQueries({
       include: [EXTENSION_LIST_QUERY],
@@ -173,11 +157,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
       if (!data?.appDelete?.errors?.length) {
-        if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
-          customAppsRefetch();
-        } else {
-          refetch();
-        }
+        refetch();
         closeModal();
         refetchExtensionList();
         removeAppNotify();
@@ -278,7 +258,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     retryInstallApp({ variables: { id } });
 
   const installedApps = data?.apps?.edges;
-  const customApps = customAppsData?.apps?.edges;
 
   const context: AppListContextValues = React.useMemo(
     () => ({
@@ -293,14 +272,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       <PaginatorContext.Provider value={paginationValues}>
         <AppDeleteDialog
           confirmButtonState={deleteAppOpts.status}
-          name={getCurrentAppName(
-            params.id,
-            action === "remove-app" ? installedApps : customApps,
-          )}
+          name={getCurrentAppName(params.id, installedApps)}
           onClose={closeModal}
           onConfirm={handleRemoveConfirm}
-          type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
-          open={action === "remove-app" || action === "remove-custom-app"}
+          type={"EXTERNAL"}
+          open={action === "remove-app"}
         />
         <AppActivateDialog
           confirmButtonState={activateAppResult.status}
@@ -328,20 +304,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         />
         <AppsListPage
           installedAppsList={installedApps}
-          customAppsList={customApps}
           appsInProgressList={appsInProgressData}
-          disabled={loading || customAppsLoading}
+          disabled={loading}
           settings={settings}
           onUpdateListSettings={updateListSettings}
           onAppInstallRetry={onAppInstallRetry}
-          getCustomAppHref={id => customAppUrl(id)}
           onInstalledAppRemove={id =>
             openModal("remove-app", {
-              id,
-            })
-          }
-          onCustomAppRemove={id =>
-            openModal("remove-custom-app", {
               id,
             })
           }

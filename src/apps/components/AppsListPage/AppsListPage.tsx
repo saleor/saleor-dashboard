@@ -14,16 +14,12 @@ import React, { useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
-import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
 
 export interface AppsListPageProps extends ListProps {
   installedAppsList: AppsListQuery["apps"]["edges"];
-  customAppsList: AppsListQuery["apps"]["edges"];
   appsInProgressList?: AppsInstallationsQuery;
-  getCustomAppHref: (id: string) => string;
   onInstalledAppRemove: (id: string) => void;
-  onCustomAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
 }
@@ -45,11 +41,8 @@ const useStyles = makeStyles(
 
 const AppsListPage: React.FC<AppsListPageProps> = ({
   appsInProgressList,
-  customAppsList,
   installedAppsList,
-  getCustomAppHref,
   onInstalledAppRemove,
-  onCustomAppRemove,
   onAppInProgressRemove,
   onAppInstallRetry,
   ...listProps
@@ -132,24 +125,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             />
 
             <CardSpacer />
-          </>
-        );
-      }
-      case "webhooks-and-events": {
-        return (
-          <>
-            <p>
-              <FormattedMessage
-                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
-              connect apps and access Saleor API."
-                id="GDJHXl"
-              />
-            </p>
-            <CustomApps
-              appsList={customAppsList}
-              getCustomAppHref={getCustomAppHref}
-              onRemove={onCustomAppRemove}
-            />
           </>
         );
       }

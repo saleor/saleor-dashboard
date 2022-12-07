@@ -70,6 +70,7 @@ import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
+import WebhooksSection from "./webhooks";
 
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -281,6 +282,7 @@ const Routes: React.FC = () => {
                 path="/configuration"
                 component={ConfigurationSection}
               />
+              <SectionRoute path="/webhooks" component={WebhooksSection} />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>

@@ -41,7 +41,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage(sectionNames.webhooks)}
+        title={intl.formatMessage(sectionNames.webhooksAndEvents)}
         toolbar={
           !!createHref && (
             <Button

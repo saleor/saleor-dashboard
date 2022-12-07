@@ -7,6 +7,7 @@ import { PermissionEnum } from "@saleor/graphql";
 import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
 import Channels from "@saleor/icons/Channels";
+import Miscellaneous from "@saleor/icons/Miscellaneous";
 import Navigation from "@saleor/icons/Navigation";
 import PageTypes from "@saleor/icons/PageTypes";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
@@ -29,6 +30,7 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxConfigurationListUrl } from "@saleor/taxes/urls";
 import { warehouseSection } from "@saleor/warehouses/urls";
+import { webhookListUrl } from "@saleor/webhooks/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -234,6 +236,16 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginListUrl(),
           testId: "configuration-plugins-pages",
+        },
+        {
+          description: intl.formatMessage({
+            id: "Zz67wc",
+            defaultMessage: "View and update your webhooks and events.",
+          }),
+          icon: <Miscellaneous />,
+          title: intl.formatMessage(sectionNames.webhooksAndEvents),
+          url: webhookListUrl(),
+          testId: "configuration-menu-webhooks-and-events",
         },
       ],
     },

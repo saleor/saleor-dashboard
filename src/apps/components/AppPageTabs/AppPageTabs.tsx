@@ -9,7 +9,6 @@ import { useIntl } from "react-intl";
 const TabValue: Record<string, AppPagePathSegment> = {
   SALEOR_APPS: "saleor-apps",
   THIRD_PARTY: "third-party",
-  WEBHOOKS_AND_EVENTS: "webhooks-and-events",
 };
 
 type AllProps = ComponentProps<typeof PageTabs>;
@@ -23,14 +22,6 @@ export const AppPageTabs = ({ showSaleorApps, ...props }: AvailableProps) => {
   const intl = useIntl();
   return (
     <PageTabs {...props}>
-      <PageTab
-        value={TabValue.WEBHOOKS_AND_EVENTS}
-        id="WEBHOOKS_AND_EVENTS"
-        label={intl.formatMessage({
-          defaultMessage: "Webhooks & Events",
-          id: "UxTSw7",
-        })}
-      />
       <PageTab
         value={TabValue.THIRD_PARTY}
         label={intl.formatMessage({
