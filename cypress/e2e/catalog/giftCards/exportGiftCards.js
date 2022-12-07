@@ -4,11 +4,12 @@
 import faker from "faker";
 
 import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
-import { GIFT_CARD_SHOWMORE } from "../../../elements/catalog/giftCard/giftCardShowMore";
+import { GIFT_CARD_SHOW_MORE } from "../../../elements/catalog/giftCard/giftCardShowMore";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { TEST_ADMIN_USER } from "../../../fixtures/users";
 import { createGiftCard } from "../../../support/api/requests/GiftCard";
+import { updatePlugin } from "../../../support/api/requests/Plugins";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { getMailWithGiftCardExport } from "../../../support/api/utils/users";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
@@ -31,9 +32,16 @@ describe("As an admin I want to export gift card", () => {
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
       const giftCard02 = `${startsWith}${faker.datatype.number()}`;
+      const exportId = `${faker.datatype.number()}`;
+      cy.log(exportId);
       let giftCard01hash;
       let giftCard02hash;
 
+      updatePlugin(
+        "mirumee.notifications.admin_email",
+        "csv_export_success_subject",
+        `Your exported {{ data_type }} data #${exportId} is ready`,
+      );
       createGiftCard({
         tag: giftCard01,
         amount: 5,
@@ -60,13 +68,13 @@ describe("As an admin I want to export gift card", () => {
             .should("be.visible")
             .get(BUTTON_SELECTORS.showMoreButton)
             .click()
-            .get(GIFT_CARD_SHOWMORE.exportCodesMenu)
+            .get(GIFT_CARD_SHOW_MORE.exportCodesMenu)
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click().confirmationMessageShouldDisappear;
           getMailWithGiftCardExport(
             TEST_ADMIN_USER.email,
-            "Your exported gift cards data is ready",
+            `Your exported gift cards data #${exportId} is ready`,
           );
         });
     },
