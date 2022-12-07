@@ -15,6 +15,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
+    "useUnknownInCatchVariables": true,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
