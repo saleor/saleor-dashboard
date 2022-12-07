@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -136,6 +137,15 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       include: ["esm-dep > cjs-dep"],
+      esbuildOptions: {
+        plugins: [
+          /*
+            react-markdown and its dependency tried to call process.cwd().
+            Since it's not present in the browser, we need to polyfill that.
+           */
+          NodeGlobalsPolyfillPlugin({ process: true }),
+        ],
+      },
     },
     resolve: {
       alias: {
