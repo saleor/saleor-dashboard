@@ -214,6 +214,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         className={classes.content}
         ref={anchor}
         data-test-id="autocomplete-dropdown"
+        aria-label="autocomplete-dropdown"
       >
         {choices.length > 0 || displayCustomValue ? (
           <>

@@ -156,6 +156,9 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                                 input: classes.nameInput,
                               },
                             }}
+                            inputProps={{
+                              "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
+                            }}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             fullWidth
                             onChange={onChange}
@@ -168,6 +171,9 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                               classes: {
                                 root: classes.input,
                               },
+                            }}
+                            inputProps={{
+                              "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
                             }}
                             multiline
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}

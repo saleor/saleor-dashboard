@@ -18,6 +18,14 @@
     "react-hooks",
     "react-refresh"
   ],
+  "overrides": [
+    {
+      "files": ["src/**/*.test.*"],
+      "rules": {
+        "react-refresh/only-export-components": "off"
+      }
+    }
+  ],
   "rules": {
     "react-refresh/only-export-components": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
