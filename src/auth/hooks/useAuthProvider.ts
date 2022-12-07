@@ -157,7 +157,11 @@ export function useAuthProvider({
 
       return result.data.tokenCreate;
     } catch (error) {
-      handleLoginError(error);
+      if (error instanceof ApolloError) {
+        handleLoginError(error);
+      } else {
+        setErrors(["unknownLoginError"]);
+      }
     }
   };
 
@@ -195,7 +199,11 @@ export function useAuthProvider({
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {
-      handleLoginError(error);
+      if (error instanceof ApolloError) {
+        handleLoginError(error);
+      } else {
+        setErrors(["unknownLoginError"]);
+      }
     }
   };
 
