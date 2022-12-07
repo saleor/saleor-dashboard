@@ -30,7 +30,10 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
     DEMO_MODE,
+    SKIP_SOURCEMAPS,
   } = env;
+
+  const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
   const enableSentry =
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
@@ -120,8 +123,8 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     build: {
+      sourcemap,
       minify: false,
-      sourcemap: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
       assetsDir: ".",
