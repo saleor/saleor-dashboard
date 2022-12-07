@@ -7,6 +7,7 @@ import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList"
 import { GIFT_CARD_SHOWMORE } from "../../../elements/catalog/giftCard/giftCardShowMore";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { TEST_ADMIN_USER } from "../../../fixtures/users";
 import { createGiftCard } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { getMailWithGiftCardExport } from "../../../support/api/utils/users";
@@ -64,7 +65,7 @@ describe("As an admin I want to export gift card", () => {
             .get(BUTTON_SELECTORS.submit)
             .click().confirmationMessageShouldDisappear;
           getMailWithGiftCardExport(
-            "testers+dashboard@saleor.io",
+            TEST_ADMIN_USER.email,
             "Your exported gift cards data is ready",
           );
         });
