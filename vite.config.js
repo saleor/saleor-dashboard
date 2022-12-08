@@ -30,6 +30,7 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
     SKIP_SOURCEMAPS,
+    DEMO_MODE,
   } = env;
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
@@ -118,6 +119,7 @@ export default defineConfig(({ command, mode }) => {
         APP_MOUNT_URI,
         SENTRY_DSN,
         ENVIRONMENT,
+        DEMO_MODE,
       },
     },
     build: {
