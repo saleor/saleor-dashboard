@@ -67,7 +67,7 @@ describe("As an admin I want to export gift card", () => {
             .contains("Selected 2 items")
             .should("be.visible")
             .get(BUTTON_SELECTORS.showMoreButton)
-            .click()
+            .click({ force: true })
             .get(GIFT_CARD_SHOW_MORE.exportCodesMenu)
             .click()
             .get(BUTTON_SELECTORS.submit)

@@ -116,8 +116,20 @@ export function getMailWithGiftCardExport(email, subject, i = 0) {
       cy.wait(3000);
       getMailWithGiftCardExport(email, subject, i + 1);
     } else {
-      cy.mhGetMailsBySubject(subject);
-      return mails;
+      cy.mhGetMailsBySubject(subject).should(mailsWithSubject => {
+        if (!mailsWithSubject.length) {
+          cy.wait(10000);
+          getMailWithGiftCardExport(email, subject, i + 1);
+        } else {
+          cy.wrap(mailsWithSubject)
+            .mhFirst()
+            .should("not.eq", undefined)
+            .mhGetBody()
+            .then(body => {
+              expect(body).to.contain(".csv");
+            });
+        }
+      });
     }
   });
 }
