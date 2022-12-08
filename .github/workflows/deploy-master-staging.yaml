@@ -23,6 +23,8 @@ jobs:
       APP_TEMPLATE_GALLERY_PATH: template-gallery
       ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
+      DASHBOARD_DOMAIN: "master.staging.saleor.cloud"
+      DASHBOARD_URL: "https://master.staging.saleor.cloud/dashboard/"
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node

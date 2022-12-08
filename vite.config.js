@@ -30,6 +30,8 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
     SKIP_SOURCEMAPS,
+    DASHBOARD_DOMAIN,
+    DASHBOARD_URL,
   } = env;
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
@@ -44,6 +46,8 @@ export default defineConfig(({ command, mode }) => {
       template: "index.html",
       inject: {
         data: {
+          DASHBOARD_DOMAIN,
+          DASHBOARD_URL,
           API_URL: API_URI,
           APP_MOUNT_URI,
           SALEOR_APPS_PAGE_PATH,
