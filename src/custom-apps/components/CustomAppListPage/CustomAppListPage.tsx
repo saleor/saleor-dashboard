@@ -1,11 +1,11 @@
 import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import { customAppAddUrl } from "@saleor/apps/urls";
 import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
+import { customAppAddUrl } from "@saleor/custom-apps/urls";
 import { AppsListQuery } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
@@ -17,13 +17,13 @@ import AppsSkeleton from "../../../apps/components/AppsSkeleton";
 import DeactivatedText from "../../../apps/components/DeactivatedText";
 import { useStyles } from "../../../apps/styles";
 
-export interface WebhooksListPageProps {
+export interface CustomAppListPageProps {
   appsList: AppsListQuery["apps"]["edges"];
   getCustomAppHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
 
-const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
+const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   appsList,
   onRemove,
   getCustomAppHref,
@@ -115,5 +115,5 @@ const WebhooksListPage: React.FC<WebhooksListPageProps> = ({
   );
 };
 
-WebhooksListPage.displayName = "WebhooksListPage";
-export default WebhooksListPage;
+CustomAppListPage.displayName = "CustomAppListPage";
+export default CustomAppListPage;

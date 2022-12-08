@@ -1,11 +1,13 @@
 import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
-import TokenCreateDialog from "@saleor/apps/components/TokenCreateDialog";
-import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
 import { appMessages } from "@saleor/apps/messages";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { getApiUrl } from "@saleor/config";
+import TokenCreateDialog from "@saleor/custom-apps/components/TokenCreateDialog";
+import TokenDeleteDialog from "@saleor/custom-apps/components/TokenDeleteDialog";
+import WebhookDeleteDialog from "@saleor/custom-apps/components/WebhookDeleteDialog";
+import { customAppWebhookAddUrl } from "@saleor/custom-apps/urls";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -26,8 +28,6 @@ import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
-import { customAppWebhookAddPath } from "@saleor/webhooks/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -233,7 +233,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id,
           })
         }
-        webhookCreateHref={customAppWebhookAddPath(id)}
+        webhookCreateHref={customAppWebhookAddUrl(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id,

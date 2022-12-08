@@ -11,8 +11,10 @@ import { extractMutationErrors } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
-import { webhookUrl } from "../urls";
+import WebhookDetailsPage, {
+  WebhookFormData,
+} from "../components/WebhookDetailsPage";
+import { customAppWebhookUrl } from "../urls";
 
 export interface CustomAppWebhookCreateProps {
   appId: string;
@@ -35,12 +37,12 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(webhookUrl(webhook.id));
+        navigate(customAppWebhookUrl(appId, webhook.id));
       }
     },
   });
 
-  const handleSubmit = (data: FormData) =>
+  const handleSubmit = (data: WebhookFormData) =>
     extractMutationErrors(
       webhookCreate({
         variables: {
@@ -71,8 +73,8 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
         })}
       />
       <WebhookDetailsPage
-        appName={data?.app?.name ?? ""}
         appId={appId}
+        appName={data?.app?.name ?? ""}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate?.errors ?? []}
         onSubmit={handleSubmit}

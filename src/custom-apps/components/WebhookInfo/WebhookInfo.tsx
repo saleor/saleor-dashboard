@@ -17,7 +17,7 @@ import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from "../WebhooksDetailsPage/WebhooksDetailsPage";
+import { WebhookFormData } from "../WebhookDetailsPage";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 

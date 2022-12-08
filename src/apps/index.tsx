@@ -1,5 +1,5 @@
+import WebhooksRoutes from "@saleor/custom-apps";
 import { sectionNames } from "@saleor/intl";
-import WebhooksRoutes from "@saleor/webhooks";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -14,9 +14,6 @@ import {
   AppListUrlQueryParams,
   appPath,
   appsListPath,
-  customAppAddPath,
-  customAppPath,
-  CustomAppUrlQueryParams,
 } from "./urls";
 import AppView from "./views/App";
 import AppDetailsView from "./views/AppDetails";
@@ -53,7 +50,6 @@ const AppsList: React.FC<RouteComponentProps> = () => {
 };
 const Component = () => {
   const intl = useIntl();
-  const [token, setToken] = React.useState<string>(null);
 
   return (
     <>

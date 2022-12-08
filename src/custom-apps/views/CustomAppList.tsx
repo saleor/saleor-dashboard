@@ -1,7 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 import AppDeleteDialog from "@saleor/apps/components/AppDeleteDialog";
 import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
-import { customAppUrl } from "@saleor/apps/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
   AppsListQuery,
@@ -24,6 +23,7 @@ import {
   customAppListUrl,
   CustomAppListUrlDialog,
   CustomAppListUrlQueryParams,
+  customAppUrl,
 } from "../urls";
 
 const getCurrentAppName = (

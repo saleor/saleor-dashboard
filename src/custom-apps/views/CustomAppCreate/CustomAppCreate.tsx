@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { customAppUrl } from "@saleor/custom-apps/urls";
 import { AppCreateMutation, useAppCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -10,13 +11,13 @@ import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {
   CustomAppCreatePageFormData,
-} from "../../../apps/components/CustomAppCreatePage";
-import { customAppUrl } from "../../../apps/urls";
+} from "../../components/CustomAppCreatePage";
 import { messages } from "./messages";
 
 interface CustomAppCreateProps {
   setToken: (token: string) => void;
 }
+
 export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
   setToken,
 }) => {

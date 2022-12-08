@@ -1,4 +1,3 @@
-import { appsListUrl } from "@saleor/apps/urls";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -7,6 +6,8 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import WebhooksList from "@saleor/custom-apps/components/WebhooksList";
+import { customAppListUrl } from "@saleor/custom-apps/urls";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -19,15 +20,14 @@ import { sectionNames } from "@saleor/intl";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
-import WebhooksList from "@saleor/webhooks/components/WebhooksList";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
-import { useStyles } from "../../styles";
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
 import CustomAppInformation from "../CustomAppInformation";
 import CustomAppTokens from "../CustomAppTokens";
+import { useStyles } from "./styles";
 
 export interface CustomAppDetailsPageFormData {
   hasFullAccess: boolean;
@@ -76,7 +76,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     onAppDeactivateOpen,
   } = props;
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
   const navigate = useNavigator();
 
   const webhooks = app?.webhooks;
@@ -105,7 +105,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={appsListUrl()}>
+          <Backlink href={customAppListUrl()}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader title={app?.name}>
@@ -188,7 +188,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={() => navigate(appsListUrl())}
+            onCancel={() => navigate(customAppListUrl())}
             onSubmit={submit}
           />
         </Container>

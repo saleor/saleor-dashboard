@@ -3,6 +3,7 @@ import { useUser } from "@saleor/auth";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@saleor/config";
+import { customAppListUrl } from "@saleor/custom-apps/urls";
 import { PermissionEnum } from "@saleor/graphql";
 import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
@@ -30,7 +31,6 @@ import { siteSettingsUrl } from "@saleor/siteSettings/urls";
 import { staffListUrl } from "@saleor/staff/urls";
 import { taxConfigurationListUrl } from "@saleor/taxes/urls";
 import { warehouseSection } from "@saleor/warehouses/urls";
-import { webhookListUrl } from "@saleor/webhooks/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -244,7 +244,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           }),
           icon: <Miscellaneous />,
           title: intl.formatMessage(sectionNames.webhooksAndEvents),
-          url: webhookListUrl(),
+          url: customAppListUrl(),
           testId: "configuration-menu-webhooks-and-events",
         },
       ],

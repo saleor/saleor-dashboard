@@ -42,6 +42,8 @@ import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
+import CustomAppsSection from "./custom-apps";
+import { customAppsSection } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
@@ -70,7 +72,6 @@ import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
-import WebhooksSection from "./webhooks";
 
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -282,7 +283,10 @@ const Routes: React.FC = () => {
                 path="/configuration"
                 component={ConfigurationSection}
               />
-              <SectionRoute path="/webhooks" component={WebhooksSection} />
+              <SectionRoute
+                path={customAppsSection}
+                component={CustomAppsSection}
+              />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>

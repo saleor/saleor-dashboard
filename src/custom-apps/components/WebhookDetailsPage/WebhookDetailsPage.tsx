@@ -1,4 +1,3 @@
-import { appsListUrl, customAppUrl } from "@saleor/apps/urls";
 import { Backlink } from "@saleor/components/Backlink";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -6,6 +5,18 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import WebhookEvents from "@saleor/custom-apps/components/WebhookEvents";
+import WebhookInfo from "@saleor/custom-apps/components/WebhookInfo";
+import WebhookStatus from "@saleor/custom-apps/components/WebhookStatus";
+import {
+  createAsyncEventsSelectHandler,
+  createSyncEventsSelectHandler,
+} from "@saleor/custom-apps/handlers";
+import { customAppUrl } from "@saleor/custom-apps/urls";
+import {
+  mapAsyncEventsToChoices,
+  mapSyncEventsToChoices,
+} from "@saleor/custom-apps/utils";
 import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
@@ -15,17 +26,6 @@ import {
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
-import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
-import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
-import {
-  createAsyncEventsSelectHandler,
-  createSyncEventsSelectHandler,
-} from "@saleor/webhooks/handlers";
-import {
-  mapAsyncEventsToChoices,
-  mapSyncEventsToChoices,
-} from "@saleor/webhooks/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -41,15 +41,17 @@ export interface WebhookFormData {
 }
 
 export interface WebhookDetailsPageProps {
+  appId: string;
   appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook?: WebhookDetailsFragment;
+  webhook?: WebhookDetailsFragment | null;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
 }
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
+  appId,
   appName,
   disabled,
   errors,
@@ -69,7 +71,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     targetUrl: webhook?.targetUrl || "",
   };
 
-  const backUrl = webhook ? customAppUrl(webhook.app.id) : appsListUrl();
+  const backUrl = customAppUrl(appId);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
@@ -97,7 +99,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <Container>
             <Backlink href={backUrl}>{appName}</Backlink>
             <PageHeader title={getHeaderTitle(intl, webhook)} />
-            <Grid>
+            <Grid variant="uniform">
               <div>
                 <WebhookInfo
                   data={data}
@@ -107,18 +109,18 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 />
               </div>
               <div>
+                <WebhookStatus
+                  data={data.isActive}
+                  disabled={disabled}
+                  onChange={change}
+                />
+                <FormSpacer />
                 <WebhookEvents
                   data={data}
                   syncEventsChoices={syncEventsChoices}
                   asyncEventsChoices={asyncEventsChoices}
                   onSyncEventChange={handleSyncEventsSelect}
                   onAsyncEventChange={handleAsyncEventsSelect}
-                />
-                <FormSpacer />
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
                 />
               </div>
             </Grid>

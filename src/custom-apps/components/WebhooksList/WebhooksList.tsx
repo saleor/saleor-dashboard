@@ -6,6 +6,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
+import { customAppWebhookUrl } from "@saleor/custom-apps/urls";
+import { isUnnamed } from "@saleor/custom-apps/utils";
 import { WebhookFragment } from "@saleor/graphql";
 import {
   commonMessages,
@@ -14,8 +16,6 @@ import {
 } from "@saleor/intl";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
-import { webhookPath } from "@saleor/webhooks/urls";
-import { isUnnamed } from "@saleor/webhooks/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -75,7 +75,9 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               <TableRowLink
                 hover={!!webhook}
                 className={!!webhook ? classes.tableRow : undefined}
-                href={webhook && webhookPath(webhook.id)}
+                href={
+                  webhook && customAppWebhookUrl(webhook.app.id, webhook.id)
+                }
                 key={webhook ? webhook.id : "skeleton"}
               >
                 <TableCell

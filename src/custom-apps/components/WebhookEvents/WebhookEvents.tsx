@@ -6,14 +6,14 @@ import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
 } from "@saleor/components/MultiAutocompleteSelectField";
 import {
+  mapAsyncEventsToChoices,
+  mapSyncEventsToChoices,
+} from "@saleor/custom-apps/utils";
+import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
 } from "@saleor/graphql";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import {
-  mapAsyncEventsToChoices,
-  mapSyncEventsToChoices,
-} from "@saleor/webhooks/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

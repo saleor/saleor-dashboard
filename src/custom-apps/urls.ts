@@ -36,5 +36,22 @@ export const customAppAddUrl = customAppAddPath;
 export const customAppWebhookPath = (appId: string, id: string) =>
   urlJoin(customAppsSection, appId, webhooksSection, id);
 
+export const customAppWebhookUrl = (
+  appId: string,
+  id: string,
+  params?: CustomAppDetailsUrlQueryParams,
+) =>
+  customAppWebhookPath(encodeURIComponent(appId), encodeURIComponent(id)) +
+  "?" +
+  stringifyQs(params);
+
 export const customAppWebhookAddPath = (appId: string) =>
   urlJoin(customAppsSection, appId, webhooksSection, "add");
+
+export const customAppWebhookAddUrl = (
+  appId: string,
+  params?: CustomAppDetailsUrlQueryParams,
+) =>
+  customAppWebhookAddPath(encodeURIComponent(appId)) +
+  "?" +
+  stringifyQs(params);

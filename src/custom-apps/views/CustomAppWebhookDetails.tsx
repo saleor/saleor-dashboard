@@ -1,4 +1,3 @@
-import { appsListUrl } from "@saleor/apps/urls";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
@@ -12,8 +11,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
-import { WebhookFormData } from "../components/CustomAppWebhookDetailsPage/CustomAppWebhookDetailsPage";
-import WebhookDetailsPage from "../components/WebhookDetailsPage";
+import WebhookDetailsPage, {
+  WebhookFormData,
+} from "../components/WebhookDetailsPage";
+import { customAppListUrl } from "../urls";
 
 export interface CustomAppWebhookDetailsProps {
   id: string;
@@ -66,7 +67,7 @@ export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = (
       }),
     );
   if (!webhook && !loading) {
-    return <NotFoundPage backHref={appsListUrl()} />;
+    return <NotFoundPage backHref={customAppListUrl()} />;
   }
 
   return (
