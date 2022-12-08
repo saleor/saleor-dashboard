@@ -114,10 +114,6 @@
     "@release-it/bumper": "^2.0.0",
     "@saleor/app-sdk": "~0.23.0",
     "@sentry/webpack-plugin": "^1.14.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^14.4.3",
     "@types/apollo-upload-client": "^17.0.0",
     "@types/color-convert": "^2.0.0",
     "@types/fuzzaldrin": "^2.1.2",
@@ -204,7 +200,11 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "fsevents": "^1.2.9",
     "prettier": "^1.19.1",
-    "ts-jest": "^27.0.7"
+    "ts-jest": "^27.0.7",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.4.3"
   },
   "jest": {
     "resetMocks": false,
