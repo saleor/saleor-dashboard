@@ -9,7 +9,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TablePaginationWithContext } from "@saleor/components/TablePagination";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -79,7 +79,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
           entities,
           entity => (
             <TableRowLink
-              className={classNames({
+              className={clsx({
                 [classes.tableRow]: !!entity,
               })}
               hover={!!entity}

@@ -19,7 +19,7 @@ import {
   productVariantEditUrl,
 } from "@saleor/products/urls";
 import { ReorderAction } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -70,7 +70,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 hover={!!variant}
                 key={variant ? variant.id : "skeleton"}
                 index={variantIndex || 0}
-                className={classNames(classes.link, {
+                className={clsx(classes.link, {
                   [classes.rowActive]: isActive,
                 })}
                 href={
@@ -109,7 +109,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
             <TableRowLink>
               <TableCellAvatar
                 alignRight
-                className={classNames(
+                className={clsx(
                   classes.colAvatar,
                   classes.rowActive,
                   classes.noHandle,

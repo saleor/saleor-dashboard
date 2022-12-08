@@ -1,7 +1,7 @@
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
 import { FormChange } from "@saleor/hooks/useForm";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import classNames from "classnames";
+import clsx from "clsx";
 import { codes } from "keycode";
 import React from "react";
 
@@ -66,7 +66,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
 
   return (
     <span
-      className={classNames(classes.root, className)}
+      className={clsx(classes.root, className)}
       ref={anchor}
       onKeyDown={handleKeyPress}
       tabIndex={0}
@@ -74,7 +74,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
       <Link onClick={() => setOpen(open => !open)}>
         {current.label}
         <ArrowDropdown
-          className={classNames(classes.arrow, {
+          className={clsx(classes.arrow, {
             [classes.rotate]: open,
           })}
           color="primary"
@@ -96,7 +96,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
           <Paper className={classes.paper}>
             {choices.map((choice, choiceIndex) => (
               <MenuItem
-                className={classNames(classes.menuItem, {
+                className={clsx(classes.menuItem, {
                   [classes.highlighted]: highlightedIndex === choiceIndex,
                 })}
                 selected={choice.value === value}

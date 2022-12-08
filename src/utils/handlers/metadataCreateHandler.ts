@@ -15,6 +15,7 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
   create: (data: T) => Promise<CreateMetadataHandlerFunctionResult<TError>>,
   setMetadata: UpdateMetadataMutationFn,
   setPrivateMetadata: UpdatePrivateMetadataMutationFn,
+  onComplete?: (id: string) => void,
 ) {
   return async (data: T) => {
     const { id, errors } = await create(data);
@@ -58,6 +59,10 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
       if (updatePrivateMetaErrors.length > 0) {
         return updatePrivateMetaErrors;
       }
+    }
+
+    if (onComplete) {
+      onComplete(id);
     }
 
     return [];

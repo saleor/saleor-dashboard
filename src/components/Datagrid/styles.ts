@@ -91,6 +91,7 @@ const useStyles = makeStyles(
         boxSizing: "content-box",
         width: "100%",
         paddingBottom: "1px",
+        color: "red",
       },
       root: {
         position: "relative",
@@ -194,7 +195,7 @@ export function useDatagridTheme() {
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.palette.primary.main,
+      accentColor: theme.palette.secondary.main,
       accentLight: theme.palette.background.default,
       accentFg: "transparent",
       bgCell: theme.palette.background.paper,

@@ -8,7 +8,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@saleor/types";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
@@ -280,7 +280,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                     media={media}
                     preview={imagesToUpload}
                     onSortEnd={onImageReorder}
-                    className={classNames({
+                    className={clsx({
                       [classes.root]: true,
                       [classes.rootDragActive]: isDragActive,
                     })}

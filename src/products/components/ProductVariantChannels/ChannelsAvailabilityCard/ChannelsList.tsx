@@ -1,10 +1,6 @@
-import {
-  Accordion,
-  AccordionSummary,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { CardContent, Typography } from "@material-ui/core";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
 import React from "react";
 
 import {
@@ -30,7 +26,7 @@ export const ChannelsList: React.FC<ChannelListProps> = ({
       <CardContent className={classes.summaryContent}>
         <AccordionSummary
           expandIcon={<IconChevronDown />}
-          classes={summaryClasses}
+          className={summaryClasses.root}
           data-test-id="channels-variant-availability-summary"
         >
           <Typography variant="caption">{summary}</Typography>

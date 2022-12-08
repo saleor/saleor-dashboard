@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import CardTitle from "../CardTitle";
@@ -27,7 +27,7 @@ const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Card className={classNames(classes.root, className)}>
+    <Card className={clsx(classes.root, className)}>
       <CardTitle title={header} />
       <CardContent>
         <CompanyAddressForm {...formProps} />

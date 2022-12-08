@@ -107,7 +107,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           onClick={() => onSort(OrderDraftListUrlSortField.number)}
           className={classes.colNumber}
         >
-          <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
+          <FormattedMessage id="kFkPWB" defaultMessage="Number" />
         </TableCellHeader>
         <TableCellHeader
           direction={

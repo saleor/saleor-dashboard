@@ -16,7 +16,7 @@ import {
   getWarehouseStock,
   OrderFulfillLineFormData,
 } from "@saleor/orders/utils/data";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -121,7 +121,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           <TextField
             type="number"
             inputProps={{
-              className: classNames(classes.quantityInnerInput, {
+              className: clsx(classes.quantityInnerInput, {
                 [classes.quantityInnerInputNoRemaining]: !line.variant
                   ?.trackInventory,
               }),
@@ -164,22 +164,26 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
-        <IconButton
-          onClick={onWarehouseChange}
-          className={classes.warehouseButton}
-          data-test-id="select-warehouse-button"
-        >
-          <div className={classes.warehouseButtonContent}>
-            <Typography
-              color={lineFormWarehouse ? "textPrimary" : "textSecondary"}
-              className={classes.warehouseButtonContentText}
-            >
-              {lineFormWarehouse?.name ??
-                intl.formatMessage(messages.selectWarehouse)}
-            </Typography>
-            <ChevronIcon />
-          </div>
-        </IconButton>
+        {isPreorder ? (
+          "-"
+        ) : (
+          <IconButton
+            onClick={onWarehouseChange}
+            className={clsx(
+              classes.warehouseButton,
+              "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
+            )}
+            data-test-id="select-warehouse-button"
+          >
+            <div className={classes.warehouseButtonContent}>
+              <Typography className={classes.warehouseButtonContentText}>
+                {lineFormWarehouse?.name ??
+                  intl.formatMessage(messages.selectWarehouse)}
+              </Typography>
+              <ChevronIcon />
+            </div>
+          </IconButton>
+        )}
       </TableCell>
     </TableRowLink>
   );

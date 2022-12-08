@@ -1,7 +1,7 @@
 import { FormControlLabel, Radio } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import Checkbox from "../Checkbox";
@@ -44,7 +44,7 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
     <div className={classes.root} {...rest}>
       {filter.options.map(option => (
         <div
-          className={classNames(classes.option, {
+          className={clsx(classes.option, {
             [classes.optionRadio]: !filter.multiple,
           })}
           key={option.value}

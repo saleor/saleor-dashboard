@@ -15,9 +15,19 @@
     "cypress",
     "chai-friendly",
     "formatjs",
-    "react-hooks"
+    "react-hooks",
+    "react-refresh"
+  ],
+  "overrides": [
+    {
+      "files": ["src/**/*.test.*"],
+      "rules": {
+        "react-refresh/only-export-components": "off"
+      }
+    }
   ],
   "rules": {
+    "react-refresh/only-export-components": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": [
       "error",
@@ -188,7 +198,7 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["lodash", "@material-ui/icons/Delete"]
+        "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ]
   },

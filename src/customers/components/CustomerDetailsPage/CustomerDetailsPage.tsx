@@ -112,7 +112,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               title={getUserName(customer, true)}
               cardMenu={
                 extensionMenuItems.length > 0 && (
-                  <CardMenu outlined menuItems={extensionMenuItems} />
+                  <CardMenu menuItems={extensionMenuItems} />
                 )
               }
             />

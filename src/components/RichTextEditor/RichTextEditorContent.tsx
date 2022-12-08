@@ -1,6 +1,6 @@
 import { LogLevels } from "@editorjs/editorjs";
 import { useId } from "@reach/auto-id";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { createReactEditorJS } from "react-editor-js";
 
@@ -44,7 +44,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
     >
       <div
         id={id}
-        className={classNames(classes.editor, classes.rootStatic, className)}
+        className={clsx(classes.editor, classes.rootStatic, className)}
       />
     </ReactEditorJS>
   );

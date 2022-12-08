@@ -14,7 +14,7 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { InvoiceFragment } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -90,7 +90,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         }
       />
       <CardContent
-        className={classNames({
+        className={clsx({
           [classes.cardContentTable]: generatedInvoices?.length,
         })}
       >

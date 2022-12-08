@@ -1,6 +1,6 @@
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -80,13 +80,13 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     <>
       <div
         data-test-id={testId}
-        className={classNames(classes.root, className, {
+        className={clsx(classes.root, className, {
           [classes.block]: !inline,
           [classes.underline]: underline,
         })}
       >
         <div className={classes.titleRow}>{title}</div>
-        <div className={classNames(classes.action, childrenWrapperClassName)}>
+        <div className={clsx(classes.action, childrenWrapperClassName)}>
           {children}
         </div>
       </div>

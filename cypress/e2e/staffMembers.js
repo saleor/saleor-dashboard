@@ -91,18 +91,22 @@ describe("Staff members", () => {
   );
 
   it("should activate user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
+    const serverStoredEmail = email.toLowerCase();
+
     updateStaffMember({ userId: user.id, isActive: false });
     updateUserActiveFlag(user.id);
     cy.clearSessionData()
       .loginUserViaRequest("auth", { email, password })
       .visit(urlList.homePage);
-    expectWelcomeMessageIncludes(email);
+    expectWelcomeMessageIncludes(serverStoredEmail);
   });
 
   it(
     "should remove user permissions",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
+      const serverStoredEmail = email.toLowerCase();
+
       cy.visit(userDetailsUrl(user.id))
         .get(STAFF_MEMBER_DETAILS.removePermissionButton)
         .click()
@@ -114,7 +118,7 @@ describe("Staff members", () => {
         .clearSessionData()
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);
-      expectWelcomeMessageIncludes(email);
+      expectWelcomeMessageIncludes(serverStoredEmail);
       getDisplayedSelectors().then(displayedSelectors => {
         expect(Object.values(displayedSelectors)).to.have.length(1);
         expect(Object.values(displayedSelectors)[0]).to.eq(
