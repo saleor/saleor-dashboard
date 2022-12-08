@@ -1105,10 +1105,6 @@
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
   },
-  "6nSTuC": {
-    "context": "webhooks section name",
-    "string": "Webhooks"
-  },
   "6sjBvJ": {
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
@@ -1611,6 +1607,10 @@
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
+  },
+  "BFR6CF": {
+    "context": "webhooks and events section name",
+    "string": "Webhooks & Events"
   },
   "BHQrgz": {
     "context": "number of subcategories",
@@ -2290,9 +2290,6 @@
     "context": "label",
     "string": "Min Delivery Time"
   },
-  "GDJHXl": {
-    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
-  },
   "GFJabu": {
     "context": "dialog header",
     "string": "Delete Variant"
@@ -2968,6 +2965,9 @@
   "L/O4LQ": {
     "context": "order refund amount",
     "string": "Authorized Amount"
+  },
+  "L/sNGY": {
+    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
   "L5io1l": {
     "context": "returned products list title",
@@ -4236,9 +4236,6 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
-  "UxTSw7": {
-    "string": "Webhooks & Events"
-  },
   "UxdBmI": {
     "context": "collection availability",
     "string": "Availability"
@@ -4928,6 +4925,9 @@
   "ZuqkSp": {
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
+  },
+  "Zz67wc": {
+    "string": "View and update your webhooks and events."
   },
   "a+iRI1": {
     "context": "single gift card title",
