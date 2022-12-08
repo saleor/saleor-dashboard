@@ -46,6 +46,10 @@ const useStyles = makeStyles(
       borderRight: `1px solid  ${greyDark}`,
       height: theme.spacing(2),
     },
+    githubStarButton: {
+      lineHeight: 0,
+      marginLeft: "15px",
+    },
   }),
   {
     name: "DemoBanner",

@@ -29,6 +29,7 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_PAGE_PATH,
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
+    DEMO_MODE,
   } = env;
 
   const enableSentry =
@@ -115,6 +116,7 @@ export default defineConfig(({ command, mode }) => {
         APP_MOUNT_URI,
         SENTRY_DSN,
         ENVIRONMENT,
+        DEMO_MODE,
       },
     },
     build: {
