@@ -2,6 +2,7 @@ import { IFilter } from "@saleor/components/Filter";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AttributeInputTypeEnum, StockAvailability } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { ProductListUrlFiltersAsDictWithMultipleValues } from "@saleor/products/urls";
 import {
   AutocompleteFilterOpts,
   FilterOpts,
@@ -20,17 +21,18 @@ import {
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
-export enum ProductFilterKeys {
-  attributes = "attributes",
-  categories = "categories",
-  collections = "collections",
-  metadata = "metadata",
-  price = "price",
-  productType = "productType",
-  stock = "stock",
-  channel = "channel",
-  productKind = "productKind",
-}
+export const ProductFilterKeys = {
+  ...ProductListUrlFiltersAsDictWithMultipleValues,
+  categories: "categories",
+  collections: "collections",
+  metadata: "metadata",
+  price: "price",
+  productType: "productType",
+  stock: "stock",
+  channel: "channel",
+  productKind: "productKind",
+} as const;
+export type ProductFilterKeys = typeof ProductFilterKeys[keyof typeof ProductFilterKeys];
 
 export type AttributeFilterOpts = FilterOpts<string[]> & {
   id: string;
@@ -260,7 +262,7 @@ export function createFilterStructure(
         },
       ),
       active: attr.active,
-      group: ProductFilterKeys.attributes,
+      group: ProductFilterKeys.booleanAttributes,
     })),
     ...dateAttributes.map(attr => ({
       ...createDateField(attr.slug, attr.name, {
@@ -268,7 +270,7 @@ export function createFilterStructure(
         max: attr.value[1] ?? attr.value[0],
       }),
       active: attr.active,
-      group: ProductFilterKeys.attributes,
+      group: ProductFilterKeys.dateAttributes,
     })),
     ...dateTimeAttributes.map(attr => ({
       ...createDateTimeField(attr.slug, attr.name, {
@@ -276,7 +278,7 @@ export function createFilterStructure(
         max: attr.value[1] ?? attr.value[0],
       }),
       active: attr.active,
-      group: ProductFilterKeys.attributes,
+      group: ProductFilterKeys.dateTimeAttributes,
     })),
     ...numericAttributes.map(attr => ({
       ...createNumberField(attr.slug, attr.name, {
@@ -284,7 +286,7 @@ export function createFilterStructure(
         max: attr.value[1] ?? attr.value[0],
       }),
       active: attr.active,
-      group: ProductFilterKeys.attributes,
+      group: ProductFilterKeys.numericAttributes,
     })),
     ...defaultAttributes.map(attr => ({
       ...createAutocompleteField(
@@ -304,7 +306,7 @@ export function createFilterStructure(
         attr.id,
       ),
       active: attr.active,
-      group: ProductFilterKeys.attributes,
+      group: ProductFilterKeys.stringAttributes,
     })),
   ];
 }

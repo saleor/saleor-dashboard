@@ -1,5 +1,7 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
+  AttributeFragment,
+  AttributeInputTypeEnum,
   InitialProductFilterAttributesQuery,
   InitialProductFilterCategoriesQuery,
   InitialProductFilterCollectionsQuery,
@@ -27,7 +29,6 @@ import {
   mapNodeToChoice,
   mapSlugNodeToChoice,
 } from "@saleor/utils/maps";
-import moment from "moment-timezone";
 
 import {
   FilterElement,
@@ -56,6 +57,52 @@ import {
 } from "../../urls";
 import { getProductGiftCardFilterParam } from "./utils";
 export const PRODUCT_FILTERS_KEY = "productFilters";
+
+function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
+  switch (inputType) {
+    case AttributeInputTypeEnum.DATE:
+      return ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes;
+    case AttributeInputTypeEnum.DATE_TIME:
+      return ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes;
+    case AttributeInputTypeEnum.NUMERIC:
+      return ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
+    case AttributeInputTypeEnum.BOOLEAN:
+      return ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes;
+    default:
+      return ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes;
+  }
+}
+
+export function getAttributeValuesFromParams(
+  params: ProductListUrlFilters,
+  attribute: Pick<AttributeFragment, "inputType" | "slug">,
+) {
+  return (
+    params[getAttributeFilterParamType(attribute.inputType)]?.[
+      attribute.slug
+    ] || []
+  );
+}
+
+export function mapAttributeParamsToFilterOpts(
+  attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
+  params: ProductListUrlFilters,
+) {
+  return attributes
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .map(attr => {
+      const attrValues = getAttributeValuesFromParams(params, attr);
+
+      return {
+        active: attrValues.length > 0,
+        id: attr.id,
+        name: attr.name,
+        slug: attr.slug,
+        inputType: attr.inputType,
+        value: dedupeFilter(attrValues),
+      };
+    });
+}
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
@@ -89,16 +136,7 @@ export function getFilterOpts(
   channels: SingleAutocompleteChoiceType[],
 ): ProductListFilterOpts {
   return {
-    attributes: attributes
-      .sort((a, b) => (a.name > b.name ? 1 : -1))
-      .map(attr => ({
-        active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        id: attr.id,
-        name: attr.name,
-        slug: attr.slug,
-        inputType: attr.inputType,
-        value: dedupeFilter(params.attributes?.[attr.slug] || []),
-      })),
+    attributes: mapAttributeParamsToFilterOpts(attributes, params),
     attributeChoices: {
       active: true,
       choices: mapSlugNodeToChoice(
@@ -233,40 +271,6 @@ export function getFilterOpts(
   };
 }
 
-const parseFilterValue = (
-  params: ProductListUrlFilters,
-  key: string,
-): {
-  type: "boolean" | "date" | "dateTime" | "numeric" | "string";
-  isMulti: boolean;
-  value: string[];
-} => {
-  const value = params.attributes[key];
-  const isMulti = params.attributes[key].length > 1;
-
-  const isBooleanValue = value.every(val => val === "true" || val === "false");
-  const isDateValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.HTML5_FMT.DATE, true).isValid(),
-  );
-  const isDateTimeValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.ISO_8601, true).isValid(),
-  );
-  const isNumericValue = value.some(value => !isNaN(parseFloat(value)));
-
-  const data = { isMulti, value };
-
-  if (isBooleanValue) {
-    return { ...data, type: "boolean" };
-  } else if (isDateValue) {
-    return { ...data, type: "date" };
-  } else if (isDateTimeValue) {
-    return { ...data, type: "dateTime" };
-  } else if (isNumericValue) {
-    return { ...data, type: "numeric" };
-  }
-  return { ...data, type: "string" };
-};
-
 interface BaseFilterParam {
   slug: string;
 }
@@ -282,57 +286,84 @@ interface DateTimeFilterParam extends BaseFilterParam {
 interface DefaultFilterParam extends BaseFilterParam {
   values: string[];
 }
+interface NumericFilterParam extends BaseFilterParam {
+  valuesRange: GteLte<number>;
+}
+export type FilterParam =
+  | BooleanFilterParam
+  | DateFilterParam
+  | DateTimeFilterParam
+  | DefaultFilterParam
+  | NumericFilterParam;
+
+export const parseFilterValue = (
+  params: ProductListUrlFilters,
+  key: string,
+  type: ProductListUrlFiltersAsDictWithMultipleValues,
+): FilterParam => {
+  const value = params[type][key];
+  const isMulti = params[type][key].length > 1;
+
+  const name = { slug: key };
+
+  switch (type) {
+    case ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes:
+      return { ...name, boolean: JSON.parse(value[0]) };
+    case ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes:
+      return {
+        ...name,
+        date: getGteLteVariables({
+          gte: value[0] || null,
+          lte: isMulti ? value[1] || null : value[0],
+        }),
+      };
+    case ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes:
+      return {
+        ...name,
+        dateTime: getGteLteVariables({
+          gte: value[0] || null,
+          lte: isMulti ? value[1] || null : value[0],
+        }),
+      };
+    case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes:
+      const [gte, lte] = value.map(v => parseFloat(v));
+
+      return {
+        ...name,
+        valuesRange: {
+          gte: gte || undefined,
+          lte: isMulti ? lte || undefined : gte || undefined,
+        },
+      };
+    default:
+      return { ...name, values: value };
+  }
+};
 
 function getFilteredAttributeValue(
   params: ProductListUrlFilters,
-): Array<
-  | BooleanFilterParam
-  | BaseFilterParam
-  | DateTimeFilterParam
-  | DateFilterParam
-  | DefaultFilterParam
-> {
-  return !!params.attributes
-    ? Object.keys(params.attributes).map(key => {
-        const { isMulti, type, value } = parseFilterValue(params, key);
-        const name = { slug: key };
+): FilterParam[] {
+  const attrValues = Object.values(
+    ProductListUrlFiltersAsDictWithMultipleValues,
+  ).reduce<FilterParam[]>((attrValues, attributeType) => {
+    const attributes = params[attributeType];
 
-        switch (type) {
-          case "boolean":
-            return { ...name, boolean: JSON.parse(value[0]) };
+    if (!attributes) {
+      return attrValues;
+    }
 
-          case "date":
-            return {
-              ...name,
-              date: getGteLteVariables({
-                gte: value[0] || null,
-                lte: isMulti ? value[1] || null : value[0],
-              }),
-            };
+    return [
+      ...attrValues,
+      ...Object.keys(attributes).map(key =>
+        parseFilterValue(params, key, attributeType),
+      ),
+    ];
+  }, []);
 
-          case "dateTime":
-            return {
-              ...name,
-              dateTime: getGteLteVariables({
-                gte: value[0] || null,
-                lte: isMulti ? value[1] || null : value[0],
-              }),
-            };
-
-          case "numeric":
-            return {
-              ...name,
-              valuesRange: {
-                gte: value[0] || undefined,
-                lte: isMulti ? value[1] || undefined : value[0] || undefined,
-              },
-            };
-
-          default:
-            return { ...name, values: value };
-        }
-      })
-    : null;
+  if (!attrValues.length) {
+    return null;
+  }
+  return attrValues;
 }
 
 export function getFilterVariables(
@@ -408,7 +439,7 @@ export function getFilterQueryParam(
 
     case ProductFilterKeys.stock:
       return getSingleEnumValueQueryParam(
-        filter as FilterElementRegular<ProductFilterKeys.stock>,
+        filter as FilterElementRegular<ProductFilterKeys>,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability,
       );
