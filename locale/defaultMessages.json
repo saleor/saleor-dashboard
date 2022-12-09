@@ -464,10 +464,6 @@
   "1div9r": {
     "string": "Search Attribute"
   },
-  "1eEyJv": {
-    "context": "ExitFormPrompt continue editing button",
-    "string": "Continue editing"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -2164,10 +2160,6 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
-  "FWWliu": {
-    "context": "ExitFormPrompt title",
-    "string": "You have unsaved changes"
-  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
@@ -3093,10 +3085,6 @@
   "MNZY28": {
     "context": "table column header",
     "string": "Channel threshold"
-  },
-  "MPOj0I": {
-    "context": "ExitFormPrompt confirm button",
-    "string": "Save changes"
   },
   "MPfyne": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
@@ -4085,10 +4073,6 @@
   "TpPx7V": {
     "context": "navigator placeholder",
     "string": "Search Customer"
-  },
-  "TtZg/K": {
-    "context": "ExitFormPrompt title",
-    "string": "Would you like to save changes?"
   },
   "U1eJIw": {
     "context": "order history message",
@@ -5187,6 +5171,10 @@
     "context": "ProductTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this product type and assigned products"
   },
+  "blZJmA": {
+    "context": "ExitFormPrompt ignore changes button",
+    "string": "Ignore changes"
+  },
   "bp/i0x": {
     "context": "header",
     "string": "Quantity"
@@ -5222,6 +5210,10 @@
   },
   "c4gbXr": {
     "string": "Draft order successfully finalized"
+  },
+  "c5fFin": {
+    "context": "ExitFormPrompt title",
+    "string": "Leave without saving changes?"
   },
   "c5pMZ8": {
     "string": "API error"
@@ -7137,10 +7129,6 @@
     "context": "table header column",
     "string": "Show gross prices in storefront"
   },
-  "sn2awN": {
-    "context": "ExitFormPrompt cancel button",
-    "string": "Discard changes"
-  },
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
@@ -7854,6 +7842,10 @@
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "ySqncG": {
+    "context": "ExitFormPrompt keep editing button",
+    "string": "Keep editing"
   },
   "ySqrUU": {
     "context": "button",
