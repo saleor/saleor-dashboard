@@ -107,14 +107,19 @@ export function getMailsForUser(email, i = 0) {
   });
 }
 
-export function getMailWithGiftCardExport(email, subject, i = 0) {
+export function getMailWithGiftCardExport(
+  email,
+  subject,
+  attachmentFileType,
+  i = 0,
+) {
   if (i > 5) {
     throw new Error(`There is no email Gift Card export for user ${email}`);
   }
   return cy.mhGetMailsByRecipient(email).should(mails => {
     if (!mails.length) {
       cy.wait(3000);
-      getMailWithGiftCardExport(email, subject, i + 1);
+      getMailWithGiftCardExport(email, subject, attachmentFileType, i + 1);
     } else {
       cy.mhGetMailsBySubject(subject).should(mailsWithSubject => {
         if (!mailsWithSubject.length) {
@@ -125,9 +130,7 @@ export function getMailWithGiftCardExport(email, subject, i = 0) {
             .mhFirst()
             .should("not.eq", undefined)
             .mhGetBody()
-            .then(body => {
-              expect(body).to.contain(".csv");
-            });
+            .then(body => body);
         }
       });
     }
