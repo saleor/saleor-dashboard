@@ -145,6 +145,7 @@ function useOrderCustomerAddressesEditForm(
           value: {
             ...formData.shippingAddress,
             [event.target.name]: event.target.value,
+            countryArea: "",
           },
         },
       }),
@@ -159,6 +160,7 @@ function useOrderCustomerAddressesEditForm(
           value: {
             ...formData.billingAddress,
             [event.target.name]: event.target.value,
+            countryArea: "",
           },
         },
       }),

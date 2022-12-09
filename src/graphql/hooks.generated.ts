@@ -5039,6 +5039,45 @@ export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
 export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
 export type CollectionDetailsQueryResult = Apollo.QueryResult<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>;
+export const AddressValidationRulesDocument = gql`
+    query addressValidationRules($countryCode: CountryCode!) {
+  addressValidationRules(countryCode: $countryCode) {
+    countryAreaChoices {
+      raw
+      verbose
+    }
+    allowedFields
+  }
+}
+    `;
+
+/**
+ * __useAddressValidationRulesQuery__
+ *
+ * To run a query within a React component, call `useAddressValidationRulesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddressValidationRulesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddressValidationRulesQuery({
+ *   variables: {
+ *      countryCode: // value for 'countryCode'
+ *   },
+ * });
+ */
+export function useAddressValidationRulesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesDocument, options);
+      }
+export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesDocument, options);
+        }
+export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
+export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
+export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
 export const CheckIfOrderExistsDocument = gql`
     query CheckIfOrderExists($id: ID!) {
   order(id: $id) {
