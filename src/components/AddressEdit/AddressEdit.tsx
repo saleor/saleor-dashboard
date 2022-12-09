@@ -6,7 +6,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
-import React, { useRef } from "react";
+import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import FormSpacer from "../FormSpacer";
@@ -75,7 +75,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     onChange,
     onCountryChange,
   } = props;
-  const countryAreaRef = useRef();
   const classes = useStyles(props);
   const intl = useIntl();
   const { areas, isFieldAllowed } = useAddressValidation(data.country);
@@ -281,7 +280,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               choices={areas}
               InputProps={{
                 spellCheck: false,
-                ref: countryAreaRef,
               }}
             />
           )}
