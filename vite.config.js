@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import path from "path";
+import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
@@ -133,6 +134,9 @@ export default defineConfig(({ command, mode }) => {
           Ref: https://github.com/Jungwoo-An/react-editor-js/blob/e58b7ba5e66d07912bb78f65ac911e4018d363e1/packages/react-editor-js/src/factory.ts#L5
          */
         transformMixedEsModules: true,
+      },
+      rollupOptions: {
+        plugins: [nodePolyfills()],
       },
     },
     optimizeDeps: {
