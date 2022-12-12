@@ -192,6 +192,7 @@
     "jest-localstorage-mock": "^2.4.3",
     "husky": "^4.3.0",
     "eslint": "^7.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-chai-friendly": "^0.6.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-formatjs": "^2.18.0",
