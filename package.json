@@ -180,6 +180,8 @@
     "@types/storybook__react": "^4.0.2",
     "cypress": "^10.0.2",
     "cypress-file-upload": "^5.0.8",
+    "cypress-mailhog": "^1.3.0",
+    "cypress-mochawesome-reporter": "^2.3.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-timings": "^1.0.0",
     "eslint": "^7.4.0",
