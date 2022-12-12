@@ -70,6 +70,8 @@ describe("As an admin I want to export gift card", () => {
             .click({ force: true })
             .get(GIFT_CARD_SHOW_MORE.exportCodesMenu)
             .click()
+            .get(GIFT_CARD_SHOW_MORE.exportAsRadioBtn.csv)
+            .click()
             .get(BUTTON_SELECTORS.submit)
             .click().confirmationMessageShouldDisappear;
           getMailWithGiftCardExport(
@@ -115,7 +117,8 @@ describe("As an admin I want to export gift card", () => {
         .then(hash2 => {
           giftCard02hash = hash2.id;
           enterAndSelectGiftCards([giftCard01hash, giftCard02hash]);
-          cy.get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
+          cy
+            .get(ASSIGN_ELEMENTS_SELECTORS.checkbox)
             .first()
             .check()
             .should("be.checked")
@@ -125,15 +128,18 @@ describe("As an admin I want to export gift card", () => {
             .get(BUTTON_SELECTORS.showMoreButton)
             .click({ force: true })
             .get(GIFT_CARD_SHOW_MORE.exportCodesMenu)
-            .click();
-          //   .get(BUTTON_SELECTORS.submit)
-          //   .click().confirmationMessageShouldDisappear;
-          // getMailWithGiftCardExport(
-          //   TEST_ADMIN_USER.email,
-          //   `Your exported gift cards data #${exportId} is ready`, 'xlsx'
-          // ).then((body) => {
-          //   expect(body).to.contain('.xlsx')
-          // });
+            .click()
+            .get(GIFT_CARD_SHOW_MORE.exportAsRadioBtn.xlsx)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click().confirmationMessageShouldDisappear;
+          getMailWithGiftCardExport(
+            TEST_ADMIN_USER.email,
+            `Your exported gift cards data #${exportId} is ready`,
+            "xlsx",
+          ).then(body => {
+            expect(body).to.contain(".xlsx");
+          });
         });
     },
   );
