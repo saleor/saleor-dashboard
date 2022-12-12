@@ -119,12 +119,22 @@ export function getMailWithGiftCardExportWithAttachment(
   return cy.mhGetMailsByRecipient(email).should(mails => {
     if (!mails.length) {
       cy.wait(3000);
-      getMailWithGiftCardExport(email, subject, attachmentFileType, i + 1);
+      getMailWithGiftCardExportWithAttachment(
+        email,
+        subject,
+        attachmentFileType,
+        i + 1,
+      );
     } else {
       cy.mhGetMailsBySubject(subject).should(mailsWithSubject => {
         if (!mailsWithSubject.length) {
           cy.wait(10000);
-          getMailWithGiftCardExport(email, subject, i + 1);
+          getMailWithGiftCardExportWithAttachment(
+            email,
+            subject,
+            attachmentFileType,
+            i + 1,
+          );
         } else {
           cy.wrap(mailsWithSubject)
             .mhFirst()

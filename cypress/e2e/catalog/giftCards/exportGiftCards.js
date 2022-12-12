@@ -11,7 +11,7 @@ import { TEST_ADMIN_USER } from "../../../fixtures/users";
 import { createGiftCard } from "../../../support/api/requests/GiftCard";
 import { updatePlugin } from "../../../support/api/requests/Plugins";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
-import { getMailWithGiftCardExport } from "../../../support/api/utils/users";
+import { getMailWithGiftCardExportWithAttachment } from "../../../support/api/utils/users";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
 describe("As an admin I want to export gift card", () => {
@@ -74,7 +74,7 @@ describe("As an admin I want to export gift card", () => {
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click().confirmationMessageShouldDisappear;
-          getMailWithGiftCardExport(
+          getMailWithGiftCardExportWithAttachment(
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
             "csv",
