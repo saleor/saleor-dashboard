@@ -145,6 +145,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const closeDialog = () => {
+    onCloseDialog({ "product-type-id": selectedProductType.id });
+  };
+
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || "",
@@ -183,7 +187,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         data.attributes,
       ),
     );
-    onCloseDialog({ "product-type-id": selectedProductType.id });
+
+    closeDialog();
   };
 
   return (
@@ -396,9 +401,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onFetch={handlers.fetchReferences}
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
-                onClose={() =>
-                  onCloseDialog({ "product-type-id": selectedProductType.id })
-                }
+                onClose={closeDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues,
