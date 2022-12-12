@@ -92,7 +92,6 @@ describe("As an admin I want to export gift card", () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
       const giftCard02 = `${startsWith}${faker.datatype.number()}`;
       const exportId = `${faker.datatype.number()}`;
-      cy.log(exportId);
       let giftCard01hash;
       let giftCard02hash;
 
