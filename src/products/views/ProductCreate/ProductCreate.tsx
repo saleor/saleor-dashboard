@@ -290,9 +290,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     productCreateOpts.loading ||
     productVariantCreateOpts.loading ||
     updateChannelsOpts.loading ||
-    updateVariantChannelsOpts.loading ||
-    searchProductTypesOpts.loading ||
-    searchAttributeValuesOpts.loading;
+    updateVariantChannelsOpts.loading;
 
   const channelsErrors = [
     ...getMutationErrors(updateVariantChannelsOpts),
