@@ -11,6 +11,7 @@ import { ChevronIcon } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import Downshift from "downshift";
+import Fuse from "fuse.js";
 import React from "react";
 
 import Debounce, { DebounceProps } from "../Debounce";
@@ -297,15 +298,12 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
     );
   }
 
+  const fuse = new Fuse(choices, { useExtendedSearch: true, keys: ["label"] });
+
   return (
     <SingleAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
-      choices={choices.filter(c =>
-        c.label
-          .toString()
-          .toLowerCase()
-          .includes(query.toLowerCase()),
-      )}
+      choices={fuse.search(`'${query}`).map(v => v.item)}
       {...rest}
     />
   );
