@@ -107,7 +107,7 @@ export function getMailsForUser(email, i = 0) {
   });
 }
 
-export function getMailWithGiftCardExport(
+export function getMailWithGiftCardExportWithAttachment(
   email,
   subject,
   attachmentFileType,

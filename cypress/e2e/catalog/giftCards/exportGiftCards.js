@@ -133,7 +133,7 @@ describe("As an admin I want to export gift card", () => {
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click().confirmationMessageShouldDisappear;
-          getMailWithGiftCardExport(
+          getMailWithGiftCardExportWithAttachment(
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
             "xlsx",
