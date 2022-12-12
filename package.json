@@ -144,6 +144,7 @@
     "esbuild-loader": "^2.18.0",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "graphql-request": "^3.7.0",
+    "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jscodeshift": "^0.13.0",
     "regenerator-runtime": "^0.11.1",
@@ -189,6 +190,7 @@
     "jest-localstorage-mock": "^2.4.3",
     "husky": "^4.3.0",
     "eslint": "^7.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-chai-friendly": "^0.6.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-formatjs": "^2.18.0",
@@ -240,12 +242,6 @@
       "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run check-types"
-    }
-  },
   "overrides": {
     "resolve": "1.20.0"
   },
@@ -285,11 +281,12 @@
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
     "test": "jest src/",
     "test:watch": "jest --watch src/",
-    "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
+    "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
     "postbuild": "node scripts/removeSourcemaps.js",
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
-    "release": "release-it"
+    "release": "release-it",
+    "prepare": "husky install"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
 }
