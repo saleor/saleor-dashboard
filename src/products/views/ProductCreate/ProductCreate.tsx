@@ -239,6 +239,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productAddUrl({
+        ...params,
         action: "assign-attribute-value",
         id: attribute.id,
       }),
@@ -289,7 +290,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     productCreateOpts.loading ||
     productVariantCreateOpts.loading ||
     updateChannelsOpts.loading ||
-    updateVariantChannelsOpts.loading;
+    updateVariantChannelsOpts.loading ||
+    searchProductTypesOpts.loading ||
+    searchAttributeValuesOpts.loading;
 
   const channelsErrors = [
     ...getMutationErrors(updateVariantChannelsOpts),
@@ -373,7 +376,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productAddUrl())}
+        onCloseDialog={currentParams => navigate(productAddUrl(currentParams))}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={handleSelectProductType}
         onAttributeSelectBlur={searchAttributeReset}
