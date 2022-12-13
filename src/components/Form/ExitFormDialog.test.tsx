@@ -1,21 +1,20 @@
-import { ThemeProvider } from "@saleor/macaw-ui";
-import { render as rtlRender } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
-import { IntlProvider } from "react-intl";
 
-import { Locale } from "../Locale";
 import ExitFormDialog from "./ExitFormDialog";
 
-function render(ui, { locale = Locale.EN, ...renderOptions } = {}) {
-  function Wrapper({ children }) {
-    return (
-      <ThemeProvider>
-        <IntlProvider locale={locale}>{children}</IntlProvider>
-      </ThemeProvider>
-    );
-  }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
-}
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+}));
+
+jest.mock("@saleor/macaw-ui", () => ({
+  useStyles: jest.fn(() => () => ({})),
+  makeStyles: jest.fn(() => () => ({})),
+  DialogHeader: jest.fn(() => () => <></>),
+}));
 
 describe("ExitFormDialog", () => {
   it("closes when ignore changes is clicked", () => {
@@ -25,10 +24,12 @@ describe("ExitFormDialog", () => {
       onLeave: jest.fn(),
       isOpen: true,
     };
+
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
     const button = getByTestId("ignore-changes");
     button.click();
+
     // Assert
     expect(props.onLeave).toHaveBeenCalled();
   });
@@ -39,10 +40,12 @@ describe("ExitFormDialog", () => {
       onLeave: jest.fn(),
       isOpen: true,
     };
+
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
     const button = getByTestId("keep-editing");
     button.click();
+
     // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
