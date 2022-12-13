@@ -1,3 +1,4 @@
+import { createCountryHandler } from "@saleor/components/AddressEdit/createCountryHandler";
 import { Backlink } from "@saleor/components/Backlink";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import Container from "@saleor/components/Container";
@@ -125,13 +126,15 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, isSaveDisabled, submit }) => {
+      {({ change, data, set, isSaveDisabled, submit }) => {
         const countryChoices = mapCountriesToChoices(shop?.countries || []);
-        const handleCountryChange = createSingleAutocompleteSelectHandler(
+        const countrySelect = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
           countryChoices,
         );
+
+        const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
           <Container>
@@ -174,7 +177,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   description: "section header",
                 })}
                 onChange={change}
-                onCountryChange={handleCountryChange}
+                onCountryChange={handleCountrySelect}
               />
             </Grid>
             <Savebar

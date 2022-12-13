@@ -19,6 +19,8 @@ import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
+import { useAddressValidation } from "../AddressEdit/useAddressValidation";
+
 export interface CompanyAddressFormProps {
   countries: SingleAutocompleteChoiceType[];
   data: AddressTypeInput;
@@ -62,7 +64,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
     onChange,
     onCountryChange,
   } = props;
-
+  const { areas, isFieldAllowed } = useAddressValidation(data.country);
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -191,23 +193,26 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
             spellCheck: false,
           }}
         />
-        <TextField
-          disabled={disabled}
-          error={!!formErrors.countryArea}
-          helperText={getErrorMessage(formErrors.countryArea, intl)}
-          label={intl.formatMessage({
-            id: "AuwpCm",
-            defaultMessage: "Country area",
-          })}
-          name={"countryArea" as keyof AddressTypeInput}
-          onChange={onChange}
-          value={data.countryArea}
-          fullWidth
-          InputProps={{
-            autoComplete: "address-level1",
-            spellCheck: false,
-          }}
-        />
+        {isFieldAllowed("countryArea") && (
+          <SingleAutocompleteSelectField
+            disabled={disabled}
+            data-test-id="address-edit-country-area-field"
+            displayValue={data.countryArea}
+            error={!!formErrors.countryArea}
+            helperText={getErrorMessage(formErrors.countryArea, intl)}
+            label={intl.formatMessage({
+              id: "AuwpCm",
+              defaultMessage: "Country area",
+            })}
+            name="countryArea"
+            onChange={onChange}
+            value={data.countryArea}
+            choices={areas}
+            InputProps={{
+              spellCheck: false,
+            }}
+          />
+        )}
       </Grid>
       <FormSpacer />
       <TextField
