@@ -4,7 +4,7 @@ import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment, AppsInstallationsQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -17,7 +17,7 @@ import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import InstalledApps from "../InstalledApps/InstalledApps";
 
 export interface AppsListPageProps extends ListProps {
-  installedAppsList: AppsListQuery["apps"]["edges"];
+  installedAppsList: AppListItemFragment[];
   appsInProgressList?: AppsInstallationsQuery;
   onInstalledAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
@@ -72,7 +72,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       installedAppsList?.filter(
         app =>
           !(fetchedSaleorApps ?? []).find(fetchedApp =>
-            app.node.manifestUrl?.includes(fetchedApp.hostname),
+            app.manifestUrl?.includes(fetchedApp.hostname),
           ),
       ),
     [installedAppsList, fetchedSaleorApps],
@@ -83,7 +83,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       fetchedSaleorApps
         ?.map(app =>
           installedAppsList?.find(installedApp =>
-            installedApp.node.manifestUrl?.includes(app.hostname),
+            installedApp.manifestUrl?.includes(app.hostname),
           ),
         )
         .filter(Boolean),

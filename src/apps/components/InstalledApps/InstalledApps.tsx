@@ -14,7 +14,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { AppListItemFragment, AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -27,7 +27,7 @@ import { AppPermissions } from "../AppPermissions/AppPermissions";
 import AppsSkeleton from "../AppsSkeleton";
 
 export interface InstalledAppsProps extends ListProps {
-  appsList: AppsListQuery["apps"]["edges"];
+  appsList: AppListItemFragment[];
   onRemove: (id: string) => void;
   displayQuickManifestButton?: boolean;
   title: string;
@@ -80,16 +80,15 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             (app, index) =>
               app ? (
                 <TableRowLink
-                  key={app.node.id}
+                  key={app.id}
                   className={classes.tableRow}
-                  href={appUrl(app.node.id)}
+                  href={appUrl(app.id)}
                 >
                   <TableCell className={classes.colName}>
                     <span data-tc="name" className={classes.appName}>
-                      {app.node.name}
+                      {app.name}
                     </span>
-                    {app.node.manifestUrl &&
-                    isAppInTunnel(app.node.manifestUrl) ? (
+                    {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
                       <Typography variant="caption">
                         <FormattedMessage
                           defaultMessage="(TUNNEL - DEVELOPMENT)"
@@ -100,23 +99,21 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                   </TableCell>
 
                   <TableCell className={classes.colAction}>
-                    {app.node.manifestUrl && (
-                      <AppManifestTableDisplay
-                        manifestUrl={app.node.manifestUrl}
-                      />
+                    {app.manifestUrl && (
+                      <AppManifestTableDisplay manifestUrl={app.manifestUrl} />
                     )}
                     <TableButtonWrapper>
                       <Switch
-                        checked={app.node.isActive}
-                        onChange={getHandleToggle(app.node)}
+                        checked={app.isActive}
+                        onChange={getHandleToggle(app)}
                       />
                     </TableButtonWrapper>
-                    <AppPermissions permissions={app.node.permissions} />
+                    <AppPermissions permissions={app.permissions} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
                         color="primary"
-                        onClick={() => onRemove(app.node.id)}
+                        onClick={() => onRemove(app.id)}
                       >
                         <DeleteIcon />
                       </IconButton>

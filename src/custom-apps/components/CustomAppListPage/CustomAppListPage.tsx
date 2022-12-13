@@ -6,7 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { customAppAddUrl } from "@saleor/custom-apps/urls";
-import { AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -18,7 +18,7 @@ import DeactivatedText from "../../../apps/components/DeactivatedText";
 import { useStyles } from "../../../apps/styles";
 
 export interface CustomAppListPageProps {
-  appsList: AppsListQuery["apps"]["edges"];
+  appsList: AppListItemFragment[];
   getCustomAppHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
@@ -65,15 +65,15 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
               (app, index) =>
                 app ? (
                   <TableRowLink
-                    key={app.node.id}
+                    key={app.id}
                     className={classes.tableRow}
-                    href={getCustomAppHref(app.node.id)}
+                    href={getCustomAppHref(app.id)}
                   >
                     <TableCell className={classes.colName}>
                       <span data-tc="name" className={classes.appName}>
-                        {app.node.name}
+                        {app.name}
                       </span>
-                      {!app.node.isActive && (
+                      {!app.isActive && (
                         <div className={classes.statusWrapper}>
                           <DeactivatedText />
                         </div>
@@ -84,7 +84,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
                         <IconButton
                           variant="secondary"
                           color="primary"
-                          onClick={() => onRemove(app.node.id)}
+                          onClick={() => onRemove(app.id)}
                         >
                           <DeleteIcon />
                         </IconButton>

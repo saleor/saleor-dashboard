@@ -3,7 +3,6 @@ import AppDeleteDialog from "@saleor/apps/components/AppDeleteDialog";
 import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
-  AppsListQuery,
   AppSortField,
   AppTypeEnum,
   OrderDirection,
@@ -13,7 +12,9 @@ import {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
+import { findById } from "@saleor/misc";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,11 +26,6 @@ import {
   CustomAppListUrlQueryParams,
   customAppUrl,
 } from "../urls";
-
-const getCurrentAppName = (
-  id: string,
-  collection?: AppsListQuery["apps"]["edges"],
-) => collection?.find(edge => edge.node.id === id)?.node?.name;
 
 interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
@@ -97,17 +93,18 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
       },
     });
 
-  const customApps = customAppsData?.apps?.edges;
+  const customApps = mapEdgesToItems(customAppsData?.apps);
+  const currentAppName = findById(params.id, customApps)?.name;
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.webhooksAndEvents)} />
       <AppDeleteDialog
         confirmButtonState={deleteAppOpts.status}
-        name={getCurrentAppName(params.id, customApps)}
+        name={currentAppName}
         onClose={closeModal}
         onConfirm={handleRemoveConfirm}
-        type={"CUSTOM"}
+        type="CUSTOM"
         open={params.action === "remove-custom-app"}
       />
       <CustomAppListPage

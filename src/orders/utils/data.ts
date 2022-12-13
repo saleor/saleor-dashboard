@@ -14,7 +14,7 @@ import {
   WarehouseFragment,
 } from "@saleor/graphql";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { findInEnum } from "@saleor/misc";
+import { findInEnum, getById } from "@saleor/misc";
 
 import {
   LineItemData,
@@ -23,7 +23,6 @@ import {
 import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
-  getById,
 } from "../components/OrderReturnPage/utils";
 
 export type OrderWithTotalAndTotalCaptured = Pick<

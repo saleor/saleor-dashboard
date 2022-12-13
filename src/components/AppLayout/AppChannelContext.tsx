@@ -1,7 +1,7 @@
 import { useUser } from "@saleor/auth";
 import { ChannelFragment, useBaseChannelsQuery } from "@saleor/graphql";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById } from "@saleor/misc";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 

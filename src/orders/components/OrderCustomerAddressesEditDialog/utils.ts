@@ -8,9 +8,8 @@ import {
   OrderErrorFragment,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
-import { flatten } from "@saleor/misc";
+import { flatten, getById } from "@saleor/misc";
 
-import { getById } from "../OrderReturnPage/utils";
 import {
   OrderCustomerAddressesEditData,
   OrderCustomerAddressesEditHandlers,

@@ -25,13 +25,13 @@ import {
   SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
+import { getById } from "@saleor/misc";
 import { getLineAvailableQuantityInWarehouse } from "@saleor/orders/utils/data";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getById } from "../OrderReturnPage/utils";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
