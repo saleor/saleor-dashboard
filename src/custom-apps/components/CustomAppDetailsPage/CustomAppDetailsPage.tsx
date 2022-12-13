@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import WebhooksList from "@saleor/custom-apps/components/WebhooksList";
-import { customAppListUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -105,7 +105,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={customAppListUrl()}>
+          <Backlink href={CustomAppUrls.resolveAppListUrl()}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader title={app?.name}>
@@ -188,7 +188,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={() => navigate(customAppListUrl())}
+            onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
         </Container>

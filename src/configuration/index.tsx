@@ -3,7 +3,7 @@ import { useUser } from "@saleor/auth";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@saleor/config";
-import { customAppListUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import { PermissionEnum } from "@saleor/graphql";
 import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
@@ -244,7 +244,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           }),
           icon: <Miscellaneous />,
           title: intl.formatMessage(sectionNames.webhooksAndEvents),
-          url: customAppListUrl(),
+          url: CustomAppUrls.resolveAppListUrl(),
           testId: "configuration-menu-webhooks-and-events",
         },
       ],

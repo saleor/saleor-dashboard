@@ -43,7 +43,7 @@ import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import CustomAppsSection from "./custom-apps";
-import { customAppsSection } from "./custom-apps/urls";
+import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
@@ -284,7 +284,7 @@ const Routes: React.FC = () => {
                 component={ConfigurationSection}
               />
               <SectionRoute
-                path={customAppsSection}
+                path={CustomAppSections.appsSection}
                 component={CustomAppsSection}
               />
               <Route component={NotFound} />

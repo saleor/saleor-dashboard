@@ -1,5 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { customAppUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import { AppCreateMutation, useAppCreateMutation } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -32,7 +32,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate(customAppUrl(data.appCreate.app.id));
+      navigate(CustomAppUrls.resolveAppUrl(data.appCreate.app.id));
       setToken(data.appCreate.authToken);
     }
   };

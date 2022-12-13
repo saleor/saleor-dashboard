@@ -21,10 +21,9 @@ import { useIntl } from "react-intl";
 import CustomAppListPage from "../components/CustomAppListPage";
 import { messages } from "../messages";
 import {
-  customAppListUrl,
   CustomAppListUrlDialog,
   CustomAppListUrlQueryParams,
-  customAppUrl,
+  CustomAppUrls,
 } from "../urls";
 
 interface CustomAppListProps {
@@ -40,7 +39,7 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomAppListUrlDialog,
     CustomAppListUrlQueryParams
-  >(navigate, customAppListUrl, params);
+  >(navigate, CustomAppUrls.resolveAppListUrl, params);
 
   const removeAppNotify = () => {
     notify({
@@ -109,7 +108,7 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
       />
       <CustomAppListPage
         appsList={customApps}
-        getCustomAppHref={id => customAppUrl(id)}
+        getCustomAppHref={id => CustomAppUrls.resolveAppUrl(id)}
         onRemove={id =>
           openModal("remove-custom-app", {
             id,

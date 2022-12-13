@@ -12,7 +12,7 @@ import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
 } from "@saleor/custom-apps/handlers";
-import { customAppUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices,
@@ -71,7 +71,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     targetUrl: webhook?.targetUrl || "",
   };
 
-  const backUrl = customAppUrl(appId);
+  const backUrl = CustomAppUrls.resolveAppUrl(appId);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>

@@ -6,7 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { customAppWebhookUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import { isUnnamed } from "@saleor/custom-apps/utils";
 import { WebhookFragment } from "@saleor/graphql";
 import {
@@ -76,7 +76,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 hover={!!webhook}
                 className={!!webhook ? classes.tableRow : undefined}
                 href={
-                  webhook && customAppWebhookUrl(webhook.app.id, webhook.id)
+                  webhook &&
+                  CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)
                 }
                 key={webhook ? webhook.id : "skeleton"}
               >

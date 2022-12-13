@@ -5,7 +5,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { customAppListUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
   AppErrorFragment,
   PermissionEnum,
@@ -60,7 +60,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <Container>
-          <Backlink href={customAppListUrl()}>
+          <Backlink href={CustomAppUrls.resolveAppListUrl()}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader
@@ -102,7 +102,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
-            onCancel={() => navigate(customAppListUrl())}
+            onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
         </Container>

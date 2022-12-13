@@ -7,7 +7,7 @@ import { getApiUrl } from "@saleor/config";
 import TokenCreateDialog from "@saleor/custom-apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@saleor/custom-apps/components/TokenDeleteDialog";
 import WebhookDeleteDialog from "@saleor/custom-apps/components/WebhookDeleteDialog";
-import { customAppWebhookAddUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -37,8 +37,6 @@ import CustomAppDetailsPage, {
 import {
   CustomAppDetailsUrlDialog,
   CustomAppDetailsUrlQueryParams,
-  customAppListUrl,
-  customAppUrl,
 } from "../../urls";
 
 interface OrderListProps {
@@ -64,7 +62,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomAppDetailsUrlDialog,
     CustomAppDetailsUrlQueryParams
-  >(navigate, params => customAppUrl(id, params), params);
+  >(navigate, params => CustomAppUrls.resolveAppUrl(id, params), params);
 
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
@@ -117,7 +115,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate(customAppUrl(id));
+      navigate(CustomAppUrls.resolveAppUrl(id));
       closeModal();
       refetch();
     }
@@ -213,7 +211,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
 
   if (customApp === null) {
-    return <NotFoundPage backHref={customAppListUrl()} />;
+    return <NotFoundPage backHref={CustomAppUrls.resolveAppListUrl()} />;
   }
 
   return (
@@ -233,7 +231,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id,
           })
         }
-        webhookCreateHref={customAppWebhookAddUrl(id)}
+        webhookCreateHref={CustomAppUrls.resolveWebhookAddUrl(id)}
         onWebhookRemove={id =>
           openModal("remove-webhook", {
             id,

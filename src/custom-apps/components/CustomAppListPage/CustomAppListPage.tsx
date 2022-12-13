@@ -5,7 +5,7 @@ import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { customAppAddUrl } from "@saleor/custom-apps/urls";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import { AppListItemFragment } from "@saleor/graphql";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
@@ -46,7 +46,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           toolbar={
             <Button
               variant="secondary"
-              href={customAppAddUrl}
+              href={CustomAppUrls.appAddUrl}
               data-test-id="create-app"
             >
               <FormattedMessage

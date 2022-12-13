@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import WebhookDetailsPage, {
   WebhookFormData,
 } from "../components/WebhookDetailsPage";
-import { customAppWebhookUrl } from "../urls";
+import { CustomAppUrls } from "../urls";
 
 export interface CustomAppWebhookCreateProps {
   appId: string;
@@ -37,7 +37,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(customAppWebhookUrl(appId, webhook.id));
+        navigate(CustomAppUrls.resolveWebhookUrl(appId, webhook.id));
       }
     },
   });

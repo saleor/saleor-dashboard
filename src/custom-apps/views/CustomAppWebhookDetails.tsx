@@ -14,7 +14,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage, {
   WebhookFormData,
 } from "../components/WebhookDetailsPage";
-import { customAppListUrl } from "../urls";
+import { CustomAppUrls } from "../urls";
 
 export interface CustomAppWebhookDetailsProps {
   id: string;
@@ -67,7 +67,7 @@ export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = (
       }),
     );
   if (!webhook && !loading) {
-    return <NotFoundPage backHref={customAppListUrl()} />;
+    return <NotFoundPage backHref={CustomAppUrls.resolveAppListUrl()} />;
   }
 
   return (
