@@ -1,21 +1,15 @@
 import { gql } from "@apollo/client";
 
-export const appBaseFragment = gql`
-  fragment AppBase on App {
-    id
-    name
-    isActive
-    type
-    appUrl
-    manifestUrl
-  }
-`;
-
 export const appFragment = gql`
   fragment App on App {
-    ...AppBase
+    id
+    name
     created
+    isActive
+    type
     homepageUrl
+    appUrl
+    manifestUrl
     configurationUrl
     supportUrl
     version
