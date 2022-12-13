@@ -126,3 +126,43 @@ export function getMailsForUser(email, i = 0) {
     }
   });
 }
+
+export function getMailWithGiftCardExportWithAttachment(
+  email,
+  subject,
+  attachmentFileType,
+  i = 0,
+) {
+  if (i > 5) {
+    throw new Error(`There is no email Gift Card export for user ${email}`);
+  }
+  return cy.mhGetMailsByRecipient(email).should(mails => {
+    if (!mails.length) {
+      cy.wait(3000);
+      getMailWithGiftCardExportWithAttachment(
+        email,
+        subject,
+        attachmentFileType,
+        i + 1,
+      );
+    } else {
+      cy.mhGetMailsBySubject(subject).should(mailsWithSubject => {
+        if (!mailsWithSubject.length) {
+          cy.wait(10000);
+          getMailWithGiftCardExportWithAttachment(
+            email,
+            subject,
+            attachmentFileType,
+            i + 1,
+          );
+        } else {
+          cy.wrap(mailsWithSubject)
+            .mhFirst()
+            .should("not.eq", undefined)
+            .mhGetBody()
+            .then(body => body);
+        }
+      });
+    }
+  });
+}

@@ -97,7 +97,7 @@ describe("As an admin I want to update gift card", () => {
   );
 
   it(
-    "should be able to delete several gift cards. TC: SALEOR_1009",
+    "should be able to delete several gift cards. TC: SALEOR_1011",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
