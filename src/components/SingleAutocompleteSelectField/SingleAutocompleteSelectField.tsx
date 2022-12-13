@@ -298,12 +298,12 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
     );
   }
 
-  const fuse = new Fuse(choices, { useExtendedSearch: true, keys: ["label"] });
+  const fuse = new Fuse(choices, { keys: ["label"] });
 
   return (
     <SingleAutocompleteSelectFieldComponent
       fetchChoices={q => setQuery(q || "")}
-      choices={fuse.search(`'${query}`).map(v => v.item)}
+      choices={query !== "" ? fuse.search(query).map(v => v.item) : choices}
       {...rest}
     />
   );
