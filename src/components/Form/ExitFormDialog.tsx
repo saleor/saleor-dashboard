@@ -50,7 +50,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
       </DialogHeader>
       <DialogContent className={classes.dialogContent}>
         <div className={classes.buttonsContainer}>
-          <Button onClick={onClose} data-test-id="leave-without-saving">
+          <Button onClick={onClose} data-test-id="keep-editing">
             {intl.formatMessage(messages.keepEditing)}
           </Button>
           <HorizontalSpacer />
@@ -58,7 +58,7 @@ const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
             variant="contained"
             color="primary"
             onClick={onLeave}
-            data-test-id="save-and-continue"
+            data-test-id="ignore-changes"
           >
             {intl.formatMessage(messages.ignoreChanges)}
           </Button>
