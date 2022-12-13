@@ -19,31 +19,31 @@ function render(ui, { locale = Locale.EN, ...renderOptions } = {}) {
 
 describe("ExitFormDialog", () => {
   it("closes when ignore changes is clicked", () => {
-    // Given
+    // Arrange
     const props = {
       onClose: jest.fn(),
       onLeave: jest.fn(),
       isOpen: true,
     };
-    // When
+    // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
     const button = getByTestId("ignore-changes");
     button.click();
-    // Then
+    // Assert
     expect(props.onLeave).toHaveBeenCalled();
   });
   it("closes when keep editing is clicked", () => {
-    // Given
+    // Arrange
     const props = {
       onClose: jest.fn(),
       onLeave: jest.fn(),
       isOpen: true,
     };
-    // When
+    // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
     const button = getByTestId("keep-editing");
     button.click();
-    // Then
+    // Assert
     expect(props.onClose).toHaveBeenCalled();
   });
 });
