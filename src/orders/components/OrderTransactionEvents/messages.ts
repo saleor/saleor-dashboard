@@ -17,11 +17,3 @@ export const statusMessages = defineMessages({
     description: "Transaction event status - failure",
   },
 });
-
-export const messages = defineMessages({
-  copied: {
-    defaultMessage: "Copied",
-    id: "7f4YSA",
-    description: "Text displayed after PSP reference is copied to clipboard",
-  },
-});

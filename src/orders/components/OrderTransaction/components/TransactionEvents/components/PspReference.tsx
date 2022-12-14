@@ -1,101 +1,67 @@
 import { makeStyles } from "@material-ui/core";
 import useClipboard from "@saleor/hooks/useClipboard";
-import { CopyIcon, Pill } from "@saleor/macaw-ui";
-import React, { useEffect, useRef, useState } from "react";
-import { useIntl } from "react-intl";
-
-import { messages } from "../messages";
+import { CopyIcon, IconButton } from "@saleor/macaw-ui";
+import clsx from "classnames";
+import React from "react";
 
 const useStyles = makeStyles(
-  {
-    pill: {
-      willChange: "contents",
+  theme => ({
+    wrapper: {
+      display: "flex",
+      gap: theme.spacing(1),
     },
-  },
+    pill: {
+      // TODO: change to new dashboard monospace font
+      fontFamily: "monospace",
+      fontWeight: 600,
+      fontSize: "12px",
+      borderRadius: "4px",
+      background: "#F5F5F5",
+      padding: "4px",
+      cursor: "default",
+    },
+    copyButton: {
+      height: "26px",
+      width: "26px",
+    },
+    copiedButton: {
+      "& span": {
+        color: theme.palette.success.dark,
+        animation: "$pulse 0.2s",
+      },
+    },
+  }),
   {
     name: "PspReference",
   },
 );
 
-enum RenderStep {
-  initial,
-  checkedMinimal,
-  final,
-}
-
-/** Calculate static width:
-  - must fit at least "Copied"
-  - cannot shrink when text changes from pspReference to "Copied"
-
-1. `RenderStep.initial` = Render with text "Copied", save width
-2. `RenderStep.checkMinimal` = Render with actual pspReference, save width if larger than "Copied"
-
-If pspReference changes to back to step 1.
-*/
-const useStaticWidth = (watch: string[] = []) => {
-  const ref = useRef<HTMLElement | undefined>();
-  const [renderStep, setRenderStep] = useState<RenderStep>(RenderStep.initial);
-  const [width, setWidth] = useState<number>(null);
-
-  const onMount = (el: HTMLElement | undefined) => {
-    // Initial render, text = "Copied"
-    if (el && renderStep === RenderStep.initial) {
-      const { width } = el.getBoundingClientRect();
-      setWidth(width);
-      setRenderStep(RenderStep.checkedMinimal);
-    }
-    ref.current = el;
-  };
-
-  useEffect(() => {
-    if (renderStep === RenderStep.checkedMinimal && ref.current) {
-      const { width } = ref.current.getBoundingClientRect();
-      // Update width if psp reference is logner than "Copied"
-      setWidth(prevWidth => (prevWidth > width ? prevWidth : width));
-      setRenderStep(RenderStep.final);
-    }
-  }, [renderStep]);
-
-  useEffect(() => {
-    if (ref.current && renderStep === RenderStep.final) {
-      // Forces re-calculation of width when text changes
-      setWidth(null);
-      setRenderStep(RenderStep.initial);
-    }
-  }, watch);
-
-  return { ref: onMount, width, renderStep };
-};
-
-export const PspReference: React.FC<{ reference: string }> = ({
+export const PspReference: React.FC<{ reference: string; url?: string }> = ({
   reference,
+  url,
 }) => {
-  const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
-  const { ref, width, renderStep } = useStaticWidth([reference]);
+
+  const Element = url ? "a" : "span";
 
   return (
-    <Pill
-      icon={<CopyIcon />}
-      outlined
-      // preserve width, see useStaticWidth hook
-      style={{
-        width:
-          width && renderStep === RenderStep.final ? `${width}px` : undefined,
-      }}
-      color="generic"
-      label={
-        copied || renderStep === RenderStep.initial
-          ? intl.formatMessage(messages.copied)
-          : reference
-      }
-      onClick={event => {
-        event.preventDefault();
-        copy(reference);
-      }}
-      className={classes.pill}
-      ref={ref}
-    />
+    <div className={classes.wrapper}>
+      <Element className={classes.pill} href={url}>
+        {reference}
+      </Element>
+      {!!navigator.clipboard && (
+        <IconButton
+          color="primary"
+          className={clsx(classes.copyButton, copied && classes.copiedButton)}
+          onClick={event => {
+            event.preventDefault();
+            copy(reference);
+          }}
+        >
+          <CopyIcon />
+        </IconButton>
+      )}
+    </div>
   );
 };

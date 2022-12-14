@@ -111,6 +111,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
             <TableCell
               className={classnames(classes.colSmall, classes.colPspReference)}
             >
+              {/* TODO: Add url to psp reference */}
               <PspReference reference={transactionEvent.pspReference} />
             </TableCell>
           )}
