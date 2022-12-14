@@ -35,7 +35,10 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { productListUrl } from "@saleor/products/urls";
+import {
+  ProductCreateUrlQueryParams,
+  productListUrl,
+} from "@saleor/products/urls";
 import { getChoices } from "@saleor/products/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -92,7 +95,7 @@ interface ProductCreatePageProps {
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   onAttributeSelectBlur: () => void;
-  onCloseDialog: () => void;
+  onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
   onSubmit?(data: ProductCreateData);
 }
@@ -142,6 +145,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const closeDialog = () => {
+    onCloseDialog({ "product-type-id": selectedProductType.id });
+  };
+
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || "",
@@ -164,7 +171,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxClass.id,
     })) ?? [];
 
-  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog =
+    !!assignReferencesAttributeId && !fetchMoreReferenceProducts.loading;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -179,7 +187,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         data.attributes,
       ),
     );
-    onCloseDialog();
+
+    closeDialog();
   };
 
   return (
@@ -222,7 +231,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         const isSimpleProduct = data.productType?.hasVariants === false;
 
         const errors = [...apiErrors, ...validationErrors];
-
         return (
           <Container>
             <Backlink href={productListUrl()}>
@@ -393,7 +401,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onFetch={handlers.fetchReferences}
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
-                onClose={onCloseDialog}
+                onClose={closeDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues,
