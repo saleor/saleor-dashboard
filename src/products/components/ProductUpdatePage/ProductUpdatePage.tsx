@@ -199,7 +199,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxClass.id,
     })) || [];
 
-  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+  const canOpenAssignReferencesAttributeDialog =
+    !!assignReferencesAttributeId && !fetchMoreReferenceProducts.loading;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
