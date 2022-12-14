@@ -1,6 +1,4 @@
 import { Typography } from "@material-ui/core";
-import Link from "@saleor/components/Link";
-import { customAppUrl } from "@saleor/custom-apps/urls";
 import { NavigationCardBase } from "@saleor/macaw-ui";
 import { SaleorMarketplaceApp } from "@saleor/new-apps/types";
 import React from "react";
@@ -15,7 +13,7 @@ const AppsListCard: React.FC<AppsListCardProps> = ({ app }) => {
   const classes = useStyles();
 
   return (
-    <Link href={customAppUrl(app.id)}>
+    <>
       {/* <NavigationCard
         className={classes.appCard}
         title={name}
@@ -63,7 +61,7 @@ const AppsListCard: React.FC<AppsListCardProps> = ({ app }) => {
         )}
         {/* <div className={classes.actions}>{renderCardFooter(app)}</div> */}
       </NavigationCardBase>
-    </Link>
+    </>
   );
 };
 
