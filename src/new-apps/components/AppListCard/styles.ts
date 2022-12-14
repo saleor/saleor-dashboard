@@ -3,27 +3,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    intro: {},
-    grid: {
-      marginTop: "3.2rem",
-      display: "grid",
-      gridGap: theme.spacing(5),
-      gridTemplateColumns: `repeat(auto-fit, minmax(400px, 1fr))`,
-    },
     card: {
-      "& .MuiCardContent-root": {
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-      },
-      "& ul": {
-        padding: "0 0 5px 0",
-        marginLeft: 20,
-        marginBottom: 20,
-        "& li": {
-          padding: "5px 0",
-        },
-      },
+      display: "flex",
+      flexDirection: "column",
+    },
+    cardContent: {
+      height: "100%",
     },
     cardHeader: {
       fontWeight: 600,
@@ -35,11 +20,15 @@ export const useStyles = makeStyles(
       alignItems: "center",
     },
     logo: {
+      color: "#fff",
       width: 50,
       overflow: "hidden",
       height: 50,
       marginRight: 20,
       borderRadius: 10,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       "& img": {
         maxWidth: "100%",
         maxHeight: "100%",
@@ -50,33 +39,35 @@ export const useStyles = makeStyles(
         theme.palette.type === "dark"
           ? alpha(theme.palette.saleor.generic.light, 0.8)
           : theme.palette.saleor.generic.dark,
-      padding: 20,
-      fontSize: 16,
+      margin: theme.spacing(3, 0, 1, 0),
     },
     listHeader: {
       fontSize: 14,
       fontWeight: 700,
-      marginTop: 10,
-      marginBottom: 10,
+      color:
+        theme.palette.type === "dark"
+          ? alpha(theme.palette.saleor.generic.light, 0.8)
+          : theme.palette.saleor.generic.dark,
+      margin: theme.spacing(2, 0),
       textTransform: "uppercase",
-      "&:last-of-type": {
-        marginTop: "auto",
-      },
+    },
+    linkList: {
+      display: "flex",
+      gap: 10,
+      margin: theme.spacing(1, 0, 4, 0),
+      padding: 0,
+      listStyleType: "none",
     },
     logoList: {
       display: "flex",
-      gap: 10,
-      paddingLeft: 16,
+      gap: theme.spacing(2),
+      margin: 0,
+      padding: 0,
     },
     vendorLogo: {
-      width: 50,
-      height: 50,
-      padding: 10,
-      borderRadius: 5,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      border: `1px solid ${theme.palette.saleor.generic.mid}`,
       "& img": {
         maxWidth: "100%",
         maxHeight: "100%",
@@ -86,12 +77,10 @@ export const useStyles = makeStyles(
           ? "transparent"
           : alpha(theme.palette.saleor.generic.light, 0.3),
     },
-    actions: {
+    cardActions: {
       display: "flex",
-      gap: 20,
       justifyContent: "flex-end",
-      // marginTop: "auto",
-      paddingTop: "20px",
+      padding: theme.spacing(2, 4),
     },
     detailsButton: {},
     installButton: {},

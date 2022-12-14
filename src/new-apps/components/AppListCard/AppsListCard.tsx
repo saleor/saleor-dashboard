@@ -1,66 +1,112 @@
-import { Typography } from "@material-ui/core";
-import { NavigationCardBase } from "@saleor/macaw-ui";
-import { SaleorMarketplaceApp } from "@saleor/new-apps/types";
+import { Card, CardActions, CardContent, Typography } from "@material-ui/core";
+import Hr from "@saleor/components/Hr";
+import Link from "@saleor/components/Link";
+import { Button, useTheme } from "@saleor/macaw-ui";
+import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import React from "react";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
+import { messages } from "./messages";
 import { useStyles } from "./styles";
 
+interface AppLink {
+  name: string;
+  url: string;
+}
+
+const getAppLinks = (intl: IntlShape): AppLink[] => [
+  {
+    name: intl.formatMessage(messages.repository),
+    url: "",
+  },
+  {
+    name: intl.formatMessage(messages.support),
+    url: "",
+  },
+  {
+    name: intl.formatMessage(messages.dataPrivacy),
+    url: "",
+  },
+];
+
 interface AppsListCardProps {
-  app: SaleorMarketplaceApp;
+  app: GetV2SaleorAppsResponse.SaleorApp;
 }
 
 const AppsListCard: React.FC<AppsListCardProps> = ({ app }) => {
+  const { themeType } = useTheme();
   const classes = useStyles();
+  const intl = useIntl();
+
+  const appLinks = getAppLinks(intl);
 
   return (
     <>
-      {/* <NavigationCard
-        className={classes.appCard}
-        title={name}
-        description={shortDescription}
-        // "layout="raw"" is used to prevent the image from being wrapped in a div
-        // It's an experimental feature in NextJS for now
-        icon={<img src={logo} width={64} height={64} alt={name} />}
-      /> */}
-
-      <NavigationCardBase key={app.name} className={classes.card}>
-        <div className={classes.cardToolbar}>
-          <div className={classes.logo}>
-            <img src={app.logo ?? "/apps/saleor.png"} />
-          </div>
-          <Typography className={classes.cardHeader} variant="h2">
-            {app.name}
-          </Typography>
-        </div>
-        <p className={classes.description}>{app.description}</p>
-        <Typography variant="h3" className={classes.listHeader}>
-          🚀 Highlighted features:
-        </Typography>
-        <ul>
-          {app.features.map(feature => (
-            <li key={feature}>
-              <Typography>{feature}</Typography>
-            </li>
-          ))}
-        </ul>
-        {app.integrations.length > 0 && (
-          <>
-            <h3 className={classes.listHeader}>🧩 Integrations:</h3>
-            <div className={classes.logoList}>
-              {app.integrations.map(integration => (
-                <div className={classes.vendorLogo} key={integration.name}>
-                  <img
-                    title={integration.name}
-                    src={integration.legacyLogo}
-                    alt={integration.name}
-                  />
-                </div>
-              ))}
+      <Card className={classes.card}>
+        <CardContent className={classes.cardContent}>
+          <div className={classes.cardToolbar}>
+            <div
+              className={classes.logo}
+              style={{
+                backgroundColor: app.logo.color,
+              }}
+            >
+              {app.logo.source && <img src={app.logo.source} />}
+              {!app.logo.source && (
+                <Typography variant="h2">{app.name.en[0] || ""}</Typography>
+              )}
             </div>
-          </>
-        )}
-        {/* <div className={classes.actions}>{renderCardFooter(app)}</div> */}
-      </NavigationCardBase>
+            <Typography className={classes.cardHeader} variant="h2">
+              {app.name.en}
+            </Typography>
+          </div>
+          <Typography className={classes.description} variant="body1">
+            {app.description.en}
+          </Typography>
+          {appLinks.length > 0 && (
+            <ul className={classes.linkList}>
+              {appLinks.map(link => (
+                <li key={link.name}>
+                  <Typography>
+                    <Link href={link.url}>{link.name}</Link>
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          )}
+          {app.integrations.length > 0 && (
+            <>
+              <Typography className={classes.listHeader} variant="h3">
+                <FormattedMessage {...messages.integrations} />
+              </Typography>
+              <ul className={classes.logoList}>
+                {app.integrations.map(integration => (
+                  <li className={classes.vendorLogo} key={integration.name}>
+                    <img
+                      title={integration.name}
+                      src={
+                        themeType === "dark"
+                          ? integration.logo.dark.source
+                          : integration.logo.light.source
+                      }
+                      alt={integration.name}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </CardContent>
+        <Hr />
+        <CardActions className={classes.cardActions}>
+          <Button variant="secondary">
+            <FormattedMessage {...messages.deployToVercel} />
+          </Button>
+          <Button variant="primary">
+            <FormattedMessage {...messages.install} />
+          </Button>
+        </CardActions>
+      </Card>
     </>
   );
 };
