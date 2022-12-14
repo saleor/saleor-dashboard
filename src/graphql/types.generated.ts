@@ -8054,6 +8054,7 @@ export type OrderSendRefundMutation = { __typename: 'Mutation', transactionReque
 export type CreateManualTransactionRefundMutationVariables = Exact<{
   orderId: Scalars['ID'];
   amount: Scalars['PositiveDecimal'];
+  amount2: Scalars['Decimal'];
   currency: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
 }>;

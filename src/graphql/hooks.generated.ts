@@ -9563,11 +9563,11 @@ export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRe
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
 export const CreateManualTransactionRefundDocument = gql`
-    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String) {
+    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $amount2: Decimal!, $currency: String!, $description: String) {
   transactionCreate(
     id: $orderId
     transaction: {type: "Manual refund", status: "Success", reference: $description, amountRefunded: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, type: REFUND, name: $description}
+    transactionEvent: {status: SUCCESS, type: REFUND, pspReference: $description, amount: $amount2}
   ) {
     transaction {
       ...TransactionItem
@@ -9596,6 +9596,7 @@ export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Ty
  *   variables: {
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
+ *      amount2: // value for 'amount2'
  *      currency: // value for 'currency'
  *      description: // value for 'description'
  *   },
