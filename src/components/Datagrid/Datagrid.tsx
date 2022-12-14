@@ -20,7 +20,7 @@ import { CardMenuItem } from "../CardMenu";
 import ColumnPicker from "../ColumnPicker";
 import { FullScreenContainer } from "./FullScreenContainer";
 import { Header } from "./Header";
-import { RowMenu } from "./RowMenu";
+import { RowActions } from "./RowActions";
 import useStyles, { useDatagridTheme, useFullScreenStyles } from "./styles";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
@@ -306,10 +306,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       {Array(rowsTotal)
                         .fill(0)
                         .map((_, index) => (
-                          <RowMenu
-                            isRowSelected={selection?.rows.hasIndex(index)}
+                          <RowActions
                             menuItems={menuItems(index)}
-                            scrolledToRight={scrolledToRight}
                             disabled={index >= rowsTotal - added.length}
                           />
                         ))}

@@ -13,7 +13,7 @@ import {
   WarehouseFragment,
 } from "@saleor/graphql";
 import { buttonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { Button, EditIcon } from "@saleor/macaw-ui";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 // import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -121,6 +121,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         {
           label: "Edit Variant",
           onSelect: () => onRowClick(variants[index].id),
+          Icon: <EditIcon />,
         },
       ]}
       rows={variants?.length ?? 0}
