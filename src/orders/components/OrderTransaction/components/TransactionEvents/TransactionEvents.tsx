@@ -3,7 +3,7 @@ import EventTime from "@saleor/components/EventTime";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import classnames from "classnames";
+import clsx from "clsx";
 import React, { useState } from "react";
 
 import { EventStatus, PspReference } from "./components";
@@ -86,13 +86,11 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           onMouseOver={() =>
             setHoveredPspReference(transactionEvent.reference || null)
           }
-          className={classnames(
+          className={clsx(
             transactionEvent.reference === hoveredPspReference && classes.hover,
           )}
         >
-          <TableCell
-            className={classnames(classes.colSmall, classes.colStatus)}
-          >
+          <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
             <EventStatus status={transactionEvent.status} />
           </TableCell>
           <TableCell
@@ -103,7 +101,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           </TableCell>
           {transactionEvent.reference && (
             <TableCell
-              className={classnames(classes.colSmall, classes.colPspReference)}
+              className={clsx(classes.colSmall, classes.colPspReference)}
             >
               <PspReference reference={transactionEvent.reference} />
             </TableCell>
