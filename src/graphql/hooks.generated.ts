@@ -62,6 +62,7 @@ export const AppListItemFragmentDoc = gql`
   type
   appUrl
   manifestUrl
+  version
   permissions {
     ...AppPermission
   }

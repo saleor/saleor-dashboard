@@ -1,2 +1,2 @@
-export * from "./AppsListCard";
-export { default } from "./AppsListCard";
+export * from "./AppListCard";
+export { default } from "./AppListCard";

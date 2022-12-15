@@ -5,11 +5,11 @@ import React from "react";
 import AppListCard from "../AppListCard";
 import { useStyles } from "./styles";
 
-interface AppListContentProps {
+interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];
 }
 
-const AppListContent: React.FC<AppListContentProps> = ({ appList }) => {
+const AllAppList: React.FC<AllAppListProps> = ({ appList }) => {
   const classes = useStyles();
 
   if (!appList) {
@@ -17,14 +17,12 @@ const AppListContent: React.FC<AppListContentProps> = ({ appList }) => {
   }
 
   return (
-    <div className={classes.appContent}>
-      <div className={classes.appListWrapper}>
-        {appList.map(app => (
-          <AppListCard app={app} key={app.name.en} />
-        ))}
-      </div>
+    <div className={classes.appListWrapper}>
+      {appList.map(app => (
+        <AppListCard app={app} key={app.name.en} />
+      ))}
     </div>
   );
 };
 
-export default AppListContent;
+export default AllAppList;

@@ -1,9 +1,11 @@
 import { stringifyQs } from "@saleor/utils/urls";
 
-import { Dialog, SingleAction } from "../types";
+import { Dialog, Pagination, SingleAction } from "../types";
 
 export type AppListUrlDialog = "remove-app";
-export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
+export type AppListUrlQueryParams = Dialog<AppListUrlDialog> &
+  SingleAction &
+  Pagination;
 
 export const AppSections = {
   appsSection: "/new-apps/",

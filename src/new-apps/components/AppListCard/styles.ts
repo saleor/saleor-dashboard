@@ -94,5 +94,5 @@ export const useStyles = makeStyles(
       fontSize: 12,
     },
   }),
-  { name: "AppsListCard" },
+  { name: "AppListCard" },
 );

@@ -29,11 +29,11 @@ const getAppLinks = (intl: IntlShape): AppLink[] => [
   },
 ];
 
-interface AppsListCardProps {
+interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
 }
 
-const AppsListCard: React.FC<AppsListCardProps> = ({ app }) => {
+const AppListCard: React.FC<AppListCardProps> = ({ app }) => {
   const { themeType } = useTheme();
   const classes = useStyles();
   const intl = useIntl();
@@ -111,4 +111,4 @@ const AppsListCard: React.FC<AppsListCardProps> = ({ app }) => {
   );
 };
 
-export default AppsListCard;
+export default AppListCard;

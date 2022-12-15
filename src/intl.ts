@@ -186,6 +186,10 @@ export const commonMessages = defineMessages({
     id: "z9c6/C",
     defaultMessage: "Deprecated",
   },
+  settings: {
+    id: "D3idYv",
+    defaultMessage: "Settings",
+  },
 });
 
 export const errorMessages = defineMessages({
