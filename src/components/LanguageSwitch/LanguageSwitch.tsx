@@ -11,7 +11,7 @@ import {
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { LanguageCodeEnum, LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
@@ -71,7 +71,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
       >
         <Typography>{currentLanguage}</Typography>
         <ArrowDropDown
-          className={classNames(classes.arrow, {
+          className={clsx(classes.arrow, {
             [classes.rotate]: isExpanded,
           })}
         />

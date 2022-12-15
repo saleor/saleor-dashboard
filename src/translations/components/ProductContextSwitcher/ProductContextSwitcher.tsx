@@ -17,7 +17,7 @@ import {
   productVariantUrl,
   TranslatableEntities,
 } from "@saleor/translations/urls";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -118,7 +118,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
             {items.find(({ value }) => value === selectedId)?.label || "-"}
           </Typography>
           <ArrowDropDown
-            className={classNames(classes.arrow, {
+            className={clsx(classes.arrow, {
               [classes.rotate]: isExpanded,
             })}
           />

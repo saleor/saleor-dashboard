@@ -504,9 +504,10 @@ export const transactionCreateErrorFragment = gql`
   }
 `;
 export const taxConfigurationUpdateError = gql`
-  fragment TaxConfigurationUpdateErrorFragment on TaxConfigurationUpdateError {
+  fragment TaxConfigurationUpdateError on TaxConfigurationUpdateError {
     field
     code
+    message
   }
 `;
 
@@ -519,15 +520,17 @@ export const orderGrantRefundCreateErrorFragment = gql`
 `;
 
 export const taxCountryConfigurationUpdateError = gql`
-  fragment TaxCountryConfigurationUpdateErrorFragment on TaxCountryConfigurationUpdateError {
+  fragment TaxCountryConfigurationUpdateError on TaxCountryConfigurationUpdateError {
     field
     code
+    message
   }
 `;
 export const taxCountryConfigurationDeleteError = gql`
-  fragment TaxCountryConfigurationDeleteErrorFragment on TaxCountryConfigurationDeleteError {
+  fragment TaxCountryConfigurationDeleteError on TaxCountryConfigurationDeleteError {
     field
     code
+    message
   }
 `;
 
@@ -540,20 +543,23 @@ export const orderGrantRefundUpdateErrorFragment = gql`
 `;
 
 export const taxClassUpdateError = gql`
-  fragment TaxClassUpdateErrorFragment on TaxClassUpdateError {
+  fragment TaxClassUpdateError on TaxClassUpdateError {
     field
     code
+    message
   }
 `;
 export const taxClassCreateError = gql`
-  fragment TaxClassCreateErrorFragment on TaxClassCreateError {
+  fragment TaxClassCreateError on TaxClassCreateError {
     field
     code
+    message
   }
 `;
 export const taxClassDeleteError = gql`
-  fragment TaxClassDeleteErrorFragment on TaxClassDeleteError {
+  fragment TaxClassDeleteError on TaxClassDeleteError {
     field
     code
+    message
   }
 `;

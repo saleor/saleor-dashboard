@@ -1,6 +1,6 @@
 import FullScreenIcon from "@saleor/icons/FullScreenIcon";
 import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { FC, PropsWithChildren } from "react";
 
 import CardTitle from "../CardTitle";
@@ -46,7 +46,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
       onClick={onToggle}
     >
       <FullScreenIcon
-        className={classNames(classes.fullScreenIcon, {
+        className={clsx(classes.fullScreenIcon, {
           [classes.fullScreenIconClose]: isOpen,
         })}
       />

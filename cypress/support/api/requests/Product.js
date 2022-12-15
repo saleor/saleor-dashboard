@@ -158,12 +158,7 @@ export function createVariant({
   trackInventory = true,
   weight = 1,
   attributeName = "value",
-  preorder,
 }) {
-  const preorderLines = getValueWithDefault(
-    preorder,
-    `preorder:${stringify(preorder)}`,
-  );
   const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
 
   const attributeLines = getValueWithDefault(
@@ -194,7 +189,6 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
-      ${preorderLines}
       ${attributeLines}
       weight: ${weight}
       ${skuLines}
@@ -250,12 +244,6 @@ export function getVariants(variantsList) {
 }
 
 export function getVariant(id, channelSlug, auth = "auth") {
-  const preorder = `preorder{
-    globalThreshold
-    globalSoldUnits
-    endDate
-  }`;
-
   const query = `query{
     productVariant(id:"${id}" channel:"${channelSlug}"){
       id
@@ -266,7 +254,6 @@ export function getVariant(id, channelSlug, auth = "auth") {
         }
         quantityAllocated
       }
-      ${preorder}
       sku
       attributes{
         attribute{
@@ -297,46 +284,6 @@ export function getVariant(id, channelSlug, auth = "auth") {
     }
   }`;
   return cy.sendRequestWithQuery(query, auth).its("body.data.productVariant");
-}
-
-export function deactivatePreorderOnVariant(variantId) {
-  const mutation = `mutation{
-    productVariantPreorderDeactivate(id:"${variantId}"){
-      errors{
-        field
-        message
-      }
-    }
-  }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productVariantPreorderDeactivate");
-}
-
-export function activatePreorderOnVariant({
-  variantId,
-  threshold = 50,
-  endDate,
-}) {
-  const thresholdLine = getValueWithDefault(
-    threshold,
-    `globalThreshold:${threshold}`,
-  );
-  const endDateLine = getValueWithDefault(endDate, `endDate:${endDate}`);
-  const mutation = `mutation{
-    productVariantUpdate(id:"${variantId}", input:{
-      preorder:{
-        ${thresholdLine}
-        ${endDateLine}
-      }
-    }){
-      errors{
-        field
-        message
-      }
-    }
-  }`;
-  return cy.sendRequestWithQuery(mutation);
 }
 
 export function updateVariantPrice({ variantId, channelId, price }) {

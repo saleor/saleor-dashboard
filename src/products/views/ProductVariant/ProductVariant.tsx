@@ -36,6 +36,7 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { weight } from "@saleor/misc";
 import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
+import { handleAssignMedia } from "@saleor/products/utils/handlers";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
@@ -181,26 +182,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
-  const handleMediaSelect = (id: string) => () => {
-    if (variant) {
-      if (variant?.media?.map(media_obj => media_obj.id).indexOf(id) !== -1) {
-        unassignMedia({
-          variables: {
-            mediaId: id,
-            variantId: variant.id,
-          },
-        });
-      } else {
-        assignMedia({
-          variables: {
-            mediaId: id,
-            variantId: variant.id,
-          },
-        });
-      }
-    }
-  };
-
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
@@ -216,6 +197,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult,
+    );
+
+    const assignMediaErrors = await handleAssignMedia(
+      data.media,
+      variant,
+      variables => assignMedia({ variables }),
+      variables => unassignMedia({ variables }),
     );
 
     const result = await updateVariant({
@@ -255,6 +243,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       ...result.data?.productVariantStocksDelete.errors,
       ...result.data?.productVariantStocksUpdate.errors,
       ...result.data?.productVariantUpdate.errors,
+      ...assignMediaErrors,
       ...channelErrors,
     ];
   };
@@ -340,7 +329,6 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onDelete={() => openModal("remove")}
-        onMediaSelect={handleMediaSelect}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}

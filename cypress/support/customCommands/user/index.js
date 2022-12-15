@@ -35,7 +35,7 @@ Cypress.Commands.add(
       }
     }
   }`;
-    return cy.sendRequestWithQuery(mutation, authorization).then(resp => {
+    return cy.sendRequestWithQuery(mutation, null).then(resp => {
       window.localStorage.setItem(
         "_saleorCSRFToken",
         resp.body.data.tokenCreate.csrfToken,

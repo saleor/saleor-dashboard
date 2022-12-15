@@ -1,4 +1,4 @@
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@saleor/components/messages";
 import { DEMO_MODE } from "@saleor/config";
 import { useUserDetailsQuery } from "@saleor/graphql";
@@ -21,6 +21,7 @@ import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
+import { parseAuthError } from "../errors";
 import {
   ExternalLoginInput,
   RequestExternalLoginInput,
@@ -53,12 +54,12 @@ export function useAuthProvider({
     "requestedExternalPluginId",
     null,
   );
-  const [error, setError] = useState<UserContextError>();
+  const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
 
   useEffect(() => {
-    if (authenticating && error) {
-      setError(undefined);
+    if (authenticating && errors.length) {
+      setErrors([]);
     }
   }, [authenticating]);
 
@@ -87,6 +88,16 @@ export function useAuthProvider({
     // state will cause an error
     fetchPolicy: "cache-and-network",
   });
+
+  const handleLoginError = (error: ApolloError) => {
+    const parsedErrors = parseAuthError(error);
+
+    if (parsedErrors.length) {
+      setErrors(parsedErrors);
+    } else {
+      setErrors(["unknownLoginError"]);
+    }
+  };
 
   const handleLogout = async () => {
     const returnTo = urlJoin(
@@ -139,14 +150,18 @@ export function useAuthProvider({
         }
         saveCredentials(result.data.tokenCreate.user, password);
       } else {
-        setError("loginError");
+        setErrors(["loginError"]);
       }
 
       await logoutNonStaffUser(result.data.tokenCreate);
 
       return result.data.tokenCreate;
     } catch (error) {
-      setError("serverError");
+      if (error instanceof ApolloError) {
+        handleLoginError(error);
+      } else {
+        setErrors(["unknownLoginError"]);
+      }
     }
   };
 
@@ -177,14 +192,18 @@ export function useAuthProvider({
           displayDemoMessage(intl, notify);
         }
       } else {
-        setError("externalLoginError");
+        setErrors(["externalLoginError"]);
       }
 
       await logoutNonStaffUser(result.data.externalObtainAccessTokens);
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {
-      setError("serverError");
+      if (error instanceof ApolloError) {
+        handleLoginError(error);
+      } else {
+        setErrors(["unknownLoginError"]);
+      }
     }
   };
 
@@ -206,9 +225,9 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    authenticating: authenticating && !error,
+    authenticating: authenticating && !errors.length,
     authenticated: authenticated && user?.isStaff,
     user: userDetails.data?.me,
-    error,
+    errors,
   };
 }

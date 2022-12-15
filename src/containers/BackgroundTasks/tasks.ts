@@ -37,7 +37,11 @@ export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
       });
     }
   } catch (error) {
-    task.onError(error);
+    if (error instanceof Error) {
+      task.onError(error);
+    } else {
+      console.error("Unknown error", error);
+    }
   }
 
   return status;

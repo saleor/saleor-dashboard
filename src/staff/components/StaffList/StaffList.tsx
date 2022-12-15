@@ -24,7 +24,7 @@ import {
 } from "@saleor/staff/urls";
 import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -141,7 +141,7 @@ const StaffList: React.FC<StaffListProps> = props => {
           staffMembers,
           staffMember => (
             <TableRowLink
-              className={classNames({
+              className={clsx({
                 [classes.tableRow]: !!staffMember,
               })}
               hover={!!staffMember}

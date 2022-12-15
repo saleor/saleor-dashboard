@@ -11,7 +11,7 @@ import useElementScroll, {
 } from "@saleor/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import { GetItemPropsOptions } from "downshift";
 import React, { ReactElement } from "react";
 import SVG from "react-inlinesvg";
@@ -206,7 +206,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   return (
     <Paper
       // click-outside-ignore is used by glide-datagrid
-      className={classNames("click-outside-ignore", classes.root)}
+      className={clsx("click-outside-ignore", classes.root)}
       elevation={8}
       style={style}
     >
@@ -214,6 +214,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         className={classes.content}
         ref={anchor}
         data-test-id="autocomplete-dropdown"
+        aria-label="autocomplete-dropdown"
       >
         {choices.length > 0 || displayCustomValue ? (
           <>
@@ -323,7 +324,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
       {choices.length > maxMenuItems && (
         <div className={classes.arrowContainer}>
           <div
-            className={classNames(classes.arrowInnerContainer, {
+            className={clsx(classes.arrowInnerContainer, {
               // Needs to be explicitly compared to false because
               // scrolledToBottom can be either true, false or undefined
               [classes.hide]: scrolledToBottom !== false,

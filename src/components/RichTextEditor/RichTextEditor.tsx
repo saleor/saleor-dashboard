@@ -2,7 +2,7 @@ import { LogLevels } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { createReactEditorJS } from "react-editor-js";
 
@@ -83,7 +83,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         >
           <div
             id={id}
-            className={classNames(classes.editor, classes.root, {
+            className={clsx(classes.editor, classes.root, {
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,

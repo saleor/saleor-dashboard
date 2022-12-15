@@ -19,7 +19,7 @@ import {
   TooltipMountWrapper,
 } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -58,10 +58,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
               </TableCell>
               {status === JobStatusEnum.PENDING && (
                 <TableCell
-                  className={classNames(
-                    classes.colAction,
-                    classes.colInstallAction,
-                  )}
+                  className={clsx(classes.colAction, classes.colInstallAction)}
                 >
                   <Typography variant="body2" className={classes.text}>
                     <FormattedMessage
@@ -77,10 +74,7 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
               )}
               {status === JobStatusEnum.FAILED && (
                 <TableCell
-                  className={classNames(
-                    classes.colAction,
-                    classes.colInstallAction,
-                  )}
+                  className={clsx(classes.colAction, classes.colInstallAction)}
                 >
                   <Typography variant="body2" className={classes.error}>
                     <FormattedMessage

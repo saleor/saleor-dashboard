@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { TableCellProps } from "@material-ui/core/TableCell";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import ArrowSort from "../../icons/ArrowSort";
@@ -88,13 +88,13 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
             onClick(e);
           }
         }}
-        className={classNames(classes.root, className, {
+        className={clsx(classes.root, className, {
           [classes.disabled]: disabled,
           [classes.notSortable]: !onClick,
         })}
       >
         <div
-          className={classNames(classes.labelContainer, {
+          className={clsx(classes.labelContainer, {
             [classes.labelContainerActive]: !!direction && !!arrowPosition,
             [classes.labelContainerCenter]: textAlign === "center",
             [classes.labelContainerRight]: textAlign === "right",
@@ -102,7 +102,7 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
         >
           {!!direction && arrowPosition === "left" && (
             <ArrowSort
-              className={classNames(classes.arrow, classes.arrowLeft, {
+              className={clsx(classes.arrow, classes.arrowLeft, {
                 [classes.arrowUp]: direction === "asc",
               })}
             />
@@ -110,7 +110,7 @@ const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
           <div className={classes.label}>{children}</div>
           {!!direction && arrowPosition === "right" && (
             <ArrowSort
-              className={classNames(classes.arrow, {
+              className={clsx(classes.arrow, {
                 [classes.arrowUp]: direction === "asc",
               })}
             />

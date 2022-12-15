@@ -45,6 +45,7 @@ export const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "flex-end",
       textAlign: "right",
+      gap: theme.spacing(1),
     },
     colInstallAction: {
       "& > *": {

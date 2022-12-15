@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 interface ContentWithProgressProps {
@@ -30,7 +30,7 @@ const ContentWithProgress: React.FC<ContentWithProgressProps> = ({
   return children ? (
     <>{children}</>
   ) : (
-    <div className={classNames(classes.container, containerClassName)}>
+    <div className={clsx(classes.container, containerClassName)}>
       <CircularProgress />
     </div>
   );

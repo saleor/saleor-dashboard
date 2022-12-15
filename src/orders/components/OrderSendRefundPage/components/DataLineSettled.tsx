@@ -1,5 +1,5 @@
 import { IMoney } from "@saleor/utils/intl";
-import classnames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -22,14 +22,14 @@ export const DataLineSettled: React.FC<DataLineSettledProps> = ({
 
   if (unsettledMoney.amount === 0) {
     return (
-      <span className={classnames(classes.text, classes.settled)}>
+      <span className={clsx(classes.text, classes.settled)}>
         <FormattedMessage {...dataLineMessages.settled} />
       </span>
     );
   }
 
   return (
-    <span className={classnames(classes.text, classes.unsettled)}>
+    <span className={clsx(classes.text, classes.unsettled)}>
       <FormattedMessage {...dataLineMessages.unsettled} />
       &nbsp;
       <DataLineMoney money={unsettledMoney} />

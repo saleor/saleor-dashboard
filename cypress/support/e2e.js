@@ -27,6 +27,7 @@ cypressGrep();
 Cypress.Commands.add("clearSessionData", () => {
   cy.clearCookies();
   cy.clearLocalStorage();
+  window.sessionStorage.clear();
 });
 
 Cypress.Commands.add("addAliasToGraphRequest", operationName => {

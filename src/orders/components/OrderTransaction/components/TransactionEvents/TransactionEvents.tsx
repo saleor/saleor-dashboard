@@ -4,7 +4,7 @@ import Money from "@saleor/components/Money";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import classnames from "classnames";
+import clsx from "clsx";
 import React, { useState } from "react";
 
 import { EventStatus, PspReference } from "./components";
@@ -93,9 +93,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
               classes.hover,
           )}
         >
-          <TableCell
-            className={classnames(classes.colSmall, classes.colStatus)}
-          >
+          <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
             <EventStatus status={transactionEvent.status} />
           </TableCell>
           <TableCell>
@@ -109,7 +107,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           </TableCell>
           {transactionEvent.pspReference && (
             <TableCell
-              className={classnames(classes.colSmall, classes.colPspReference)}
+              className={clsx(classes.colSmall, classes.colPspReference)}
             >
               {/* TODO: Add url to psp reference */}
               <PspReference reference={transactionEvent.pspReference} />

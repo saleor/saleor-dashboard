@@ -1,5 +1,6 @@
 *.py[cod]
 .*
+!.gitattributes
 !.babelrc
 !.circleci
 !.codeclimate.yml
@@ -19,6 +20,7 @@
 !.pylintrc
 !.travis*
 !.tx
+!.husky
 *.css
 *.log
 *.pyc

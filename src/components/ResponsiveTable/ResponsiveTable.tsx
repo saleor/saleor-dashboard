@@ -1,6 +1,6 @@
 import { Table } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -36,7 +36,7 @@ const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
   return (
     <div className={classes.root}>
       <Table
-        className={classNames(classes.table, className)}
+        className={clsx(classes.table, className)}
         onMouseLeave={onMouseLeave}
       >
         {children}

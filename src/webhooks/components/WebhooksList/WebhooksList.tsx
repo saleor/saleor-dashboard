@@ -6,7 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableRowLink from "@saleor/components/TableRowLink";
-import { AppQuery } from "@saleor/graphql";
+import { WebhookFragment } from "@saleor/graphql";
 import {
   commonMessages,
   commonStatusMessages,
@@ -16,7 +16,7 @@ import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { webhookPath } from "@saleor/webhooks/urls";
 import { isUnnamed } from "@saleor/webhooks/utils";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,7 +24,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface WebhooksListProps {
-  webhooks: AppQuery["app"]["webhooks"];
+  webhooks: WebhookFragment[];
   onRemove: (id: string) => void;
   createHref?: string;
 }
@@ -63,9 +63,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
             <TableCellHeader>
               {intl.formatMessage(commonMessages.status)}
             </TableCellHeader>
-            <TableCell
-              className={classNames(classes.colAction, classes.colRight)}
-            >
+            <TableCell className={clsx(classes.colAction, classes.colRight)}>
               <FormattedMessage {...messages.action} />
             </TableCell>
           </TableRowLink>
@@ -81,7 +79,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 key={webhook ? webhook.id : "skeleton"}
               >
                 <TableCell
-                  className={classNames(classes.colName, {
+                  className={clsx(classes.colName, {
                     [classes.colNameUnnamed]: isUnnamed(webhook),
                   })}
                 >
@@ -106,7 +104,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                   )}
                 </TableCell>
                 <TableCell
-                  className={classNames(classes.colAction, classes.colRight)}
+                  className={clsx(classes.colAction, classes.colRight)}
                 >
                   <TableButtonWrapper>
                     <IconButton

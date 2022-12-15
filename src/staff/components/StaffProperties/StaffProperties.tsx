@@ -4,6 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import {
   StaffErrorFragment,
   StaffMemberDetailsFragment,
+  UserFragment,
 } from "@saleor/graphql";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -43,7 +44,7 @@ const useStyles = makeStyles(
     },
     avatarDefault: {
       "& div": {
-        color: "#fff",
+        color: theme.palette.primary.contrastText,
         fontSize: 35,
         fontWeight: "bold",
         lineHeight: "120px",
@@ -105,7 +106,7 @@ interface StaffPropertiesProps {
   };
   errors: StaffErrorFragment[];
   disabled: boolean;
-  staffMember: StaffMemberDetailsFragment;
+  staffMember: StaffMemberDetailsFragment | UserFragment;
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;

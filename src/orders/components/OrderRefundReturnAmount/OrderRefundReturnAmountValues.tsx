@@ -2,7 +2,7 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import { IMoney } from "@saleor/utils/intl";
-import classNames from "classnames";
+import clsx from "clsx";
 import reduce from "lodash/reduce";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -122,7 +122,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
     <div className={classes.container}>
       {items.map(({ key, data, highlighted }) => (
         <div
-          className={classNames(classes.row, {
+          className={clsx(classes.row, {
             [classes.highlightedRow]: highlighted,
           })}
           key={key}

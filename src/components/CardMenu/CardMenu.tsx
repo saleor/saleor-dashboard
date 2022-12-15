@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -139,7 +139,6 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
-        color="primary"
         disabled={disabled}
         ref={anchorRef}
         onClick={handleToggle}
@@ -181,7 +180,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                       button
                     >
                       <div
-                        className={classNames(className, {
+                        className={clsx(className, {
                           [classes.loadingContent]: isWithLoading,
                         })}
                       >

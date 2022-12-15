@@ -1,5 +1,6 @@
 import {
   InputBase,
+  OutlinedInputProps,
   Popper,
   PopperPlacementType,
   TextField,
@@ -8,7 +9,7 @@ import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { ChevronIcon } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -188,7 +189,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                     handleToggleMenu();
                     handleFocus();
                   }}
-                  className={classNames(classes.adornment, {
+                  className={clsx(classes.adornment, {
                     [classes.adornmentRotate]: isOpen,
                   })}
                 >
@@ -213,7 +214,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             return (
               <div
-                className={classNames(
+                className={clsx(
                   classes.container,
                   "click-outside-ignore",
                   className,
@@ -226,10 +227,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   // Downshift doesn't seem to be fully compatible with MUI
                   // https://github.com/downshift-js/downshift/issues/718
                   inputProps={{
-                    ...getInputProps({
+                    ...(getInputProps({
                       placeholder,
                       onClick: handleToggleMenu,
-                    }),
+                    }) as OutlinedInputProps["inputProps"]),
                   }}
                   error={error}
                   disabled={disabled}

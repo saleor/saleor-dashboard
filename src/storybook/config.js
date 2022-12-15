@@ -1,6 +1,11 @@
 /* eslint-disable */
-import requireContext from "require-context.macro";
 import { configure } from "@storybook/react";
+import requireContext from "require-context.macro";
+
+window.__SALEOR_CONFIG__ = {
+  APP_MOUNT_URI: "/",
+  MARKETPLACE_URL: "",
+};
 
 const req = requireContext("../", true, /.stories.tsx$/);
 

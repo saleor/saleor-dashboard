@@ -6,7 +6,7 @@ import {
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -89,7 +89,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
         {(items === undefined || items.length > 0) && (
           <TableCell
             padding="checkbox"
-            className={classNames(classes.cell, {
+            className={clsx(classes.cell, {
               [classes.dragRows]: dragRows,
             })}
           >
@@ -104,12 +104,12 @@ const TableHead: React.FC<TableHeadProps> = props => {
         {selected ? (
           <>
             <TableCell
-              className={classNames(classes.cell, classes.root)}
+              className={clsx(classes.cell, classes.root)}
               colSpan={getColSpan(colSpan, dragRows)}
             >
               <div className={classes.container}>
                 {selected && (
-                  <Typography>
+                  <Typography data-test-id="SelectedText">
                     <FormattedMessage
                       id="qu/hXD"
                       defaultMessage="Selected {number} items"

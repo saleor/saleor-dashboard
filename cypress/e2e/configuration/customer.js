@@ -71,7 +71,9 @@ describe("Tests for customer", () => {
           expect(customer.lastName, "Expect correct last name").to.eq(
             randomName,
           );
-          expect(customer.email, "Expect correct email").to.eq(email);
+          expect(customer.email, "Expect correct email").to.eq(
+            email.toLowerCase(),
+          );
           expect(customer.note, "Expect correct note").to.eq(note);
           cy.expectCorrectFullAddress(customer.addresses[0], address);
         });
@@ -277,7 +279,7 @@ describe("Tests for customer", () => {
           );
           expect(user.lastName, "Expect correct last name").to.eq(updatedName);
           expect(user.email, "Expect correct email").to.eq(
-            `${updatedName}@example.com`,
+            `${updatedName}@example.com`.toLowerCase(),
           );
           expect(user.note, "Expect correct note").to.eq(updatedName);
         });

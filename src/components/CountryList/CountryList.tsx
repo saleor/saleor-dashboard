@@ -7,7 +7,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { CountryFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -26,7 +26,8 @@ const useStyles = makeStyles(
   theme => ({
     iconCell: {
       "&:last-child": {
-        paddingRight: theme.spacing(2),
+        paddingRight: theme.spacing(3),
+        paddingLeft: 0,
       },
       width: `calc(48px + ${theme.spacing(4)})`,
     },
@@ -109,9 +110,7 @@ const CountryList: React.FC<CountryListProps> = props => {
       <ResponsiveTable>
         <TableBody>
           <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
-            <TableCell
-              className={classNames(classes.wideColumn, classes.toLeft)}
-            >
+            <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
               <FormattedMessage
                 id="62Ywh2"
                 defaultMessage="{number} Countries"
@@ -121,13 +120,11 @@ const CountryList: React.FC<CountryListProps> = props => {
                 }}
               />
             </TableCell>
-            <TableCell
-              className={classNames(classes.textRight, classes.iconCell)}
-            >
+            <TableCell className={clsx(classes.textRight, classes.iconCell)}>
               <IconButton variant="secondary">
                 <ArrowDropDownIcon
                   data-test-id="countries-drop-down-icon"
-                  className={classNames({
+                  className={clsx({
                     [classes.rotate]: !isCollapsed,
                   })}
                 />
@@ -157,11 +154,11 @@ const CountryList: React.FC<CountryListProps> = props => {
                     )}
                   </TableCell>
                   <TableCell
-                    className={classNames(classes.textRight, classes.iconCell)}
+                    className={clsx(classes.textRight, classes.iconCell)}
                   >
                     <IconButton
                       data-test-id="delete-icon"
-                      color="primary"
+                      variant="secondary"
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >

@@ -1218,6 +1218,10 @@
     "context": "product field",
     "string": "Export Product Weight"
   },
+  "7Jg9ec": {
+    "context": "error message",
+    "string": "You don't have permission to login."
+  },
   "7NFfmz": {
     "string": "Products"
   },
@@ -2047,10 +2051,6 @@
     "context": "date time attribute type",
     "string": "Date Time"
   },
-  "E+M17x": {
-    "context": "marketplace section name",
-    "string": "Marketplace"
-  },
   "E22x4H": {
     "context": "no card defuned alert message",
     "string": "You haven’t defined a gift card product!"
@@ -2301,6 +2301,10 @@
   },
   "Fn3bE0": {
     "string": "Order line updated"
+  },
+  "FopBSj": {
+    "context": "error message",
+    "string": "Your username and/or password are incorrect. Please try again."
   },
   "FpIcp9": {
     "string": "No customers found"
@@ -3170,9 +3174,9 @@
     "context": "collection",
     "string": "Not Published"
   },
-  "M4q0Ye": {
-    "context": "error message",
-    "string": "Sorry, login went wrong. Please try again."
+  "M2dPzK": {
+    "context": "app template gallery section name",
+    "string": "App Templates Gallery"
   },
   "M6s/9e": {
     "context": "unassign country, dialog header",
@@ -4687,6 +4691,10 @@
   "WnlZMO": {
     "context": "title",
     "string": "There’s a problem with app."
+  },
+  "Wr5UOV": {
+    "context": "error message",
+    "string": "Login went wrong. Please try again."
   },
   "Ww69SE": {
     "context": "search input placeholder",
@@ -6352,6 +6360,9 @@
     "context": "set balance dialog subtitle",
     "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
   },
+  "kFkPWB": {
+    "string": "Number"
+  },
   "kIXV5V": {
     "context": "install with app manifest button",
     "string": "Install with App Manifest"
@@ -7011,9 +7022,6 @@
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
   },
-  "ps0WUQ": {
-    "string": "No. of Order"
-  },
   "ptPPVk": {
     "string": "No languages found"
   },
@@ -7489,10 +7497,6 @@
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"
   },
-  "tTtoKd": {
-    "context": "error message",
-    "string": "Sorry, your username and/or password are incorrect. Please try again."
-  },
   "tTuCYj": {
     "context": "all gift cards label",
     "string": "All Gift Cards"
@@ -7525,6 +7529,10 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "ti4Hqw": {
+    "context": "saleor marketplace section name",
+    "string": "Saleor Apps Marketplace"
   },
   "tlGXkh": {
     "context": "input description",
@@ -7574,6 +7582,9 @@
   },
   "u0V06N": {
     "string": "Max. Order Weight"
+  },
+  "u0VQMN": {
+    "string": "Browse Marketplace"
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"

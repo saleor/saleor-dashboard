@@ -18,7 +18,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -259,7 +259,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   />
                 </TableCell>
                 <TableCell
-                  className={classNames(classes.colName, classes.textOverflow)}
+                  className={clsx(classes.colName, classes.textOverflow)}
                 >
                   {voucher?.code ?? <Skeleton />}
                 </TableCell>

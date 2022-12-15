@@ -110,7 +110,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             onClick={() => onSort(OrderListUrlSortField.number)}
             className={classes.colNumber}
           >
-            <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
+            <FormattedMessage id="kFkPWB" defaultMessage="Number" />
           </TableCellHeader>
           <TableCellHeader
             direction={
