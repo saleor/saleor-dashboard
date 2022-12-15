@@ -18,6 +18,10 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
     firstMenuItem.onSelect();
   };
 
+  if (!menuItems.length) {
+    return null;
+  }
+
   return (
     <div className={classes.rowAction}>
       {hasSingleMenuItem && firstMenuItem.Icon ? (
