@@ -24,12 +24,11 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
-import { transformAddressToAddressInput } from "@saleor/misc";
+import { getById, transformAddressToAddressInput } from "@saleor/misc";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
-import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
   OrderCustomerAddressesEditFormData,

@@ -17,10 +17,10 @@ import {
   ConfirmButtonTransitionState,
   SearchIcon,
 } from "@saleor/macaw-ui";
+import { getById } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getById } from "../OrderReturnPage/utils";
 import { dialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseQuery, stringifyAddress } from "./utils";

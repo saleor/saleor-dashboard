@@ -501,10 +501,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Warehouses",
     description: "warehouses section name",
   },
-  webhooks: {
-    id: "6nSTuC",
-    defaultMessage: "Webhooks",
-    description: "webhooks section name",
+  webhooksAndEvents: {
+    id: "BFR6CF",
+    defaultMessage: "Webhooks & Events",
+    description: "webhooks and events section name",
   },
 });
 

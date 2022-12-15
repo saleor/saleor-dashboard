@@ -4,7 +4,6 @@ import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import { AppListContext, AppListContextValues } from "@saleor/apps/context";
 import {
   AppsInstallationsQuery,
-  AppsListQuery,
   AppSortField,
   AppTypeEnum,
   JobStatusEnum,
@@ -25,8 +24,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
+import { findById } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -38,14 +39,8 @@ import {
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
-  customAppUrl,
 } from "../../urls";
 import { messages } from "./messages";
-
-const getCurrentAppName = (
-  id: string,
-  collection?: AppsListQuery["apps"]["edges"],
-) => collection?.find(edge => edge.node.id === id)?.node?.name;
 
 const getAppInProgressName = (
   id: string,
@@ -100,21 +95,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     pageInfo: data?.apps?.pageInfo,
     paginationState,
     queryString: params,
-  });
-
-  const {
-    data: customAppsData,
-    loading: customAppsLoading,
-    refetch: customAppsRefetch,
-  } = useAppsListQuery({
-    displayLoader: true,
-    variables: {
-      first: 100,
-      ...queryVariables,
-      filter: {
-        type: AppTypeEnum.LOCAL,
-      },
-    },
   });
 
   const refetchExtensionList = () => {
@@ -173,11 +153,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
       if (!data?.appDelete?.errors?.length) {
-        if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
-          customAppsRefetch();
-        } else {
-          refetch();
-        }
+        refetch();
         closeModal();
         refetchExtensionList();
         removeAppNotify();
@@ -277,9 +253,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
-  const installedApps = data?.apps?.edges;
-  const customApps = customAppsData?.apps?.edges;
-
   const context: AppListContextValues = React.useMemo(
     () => ({
       activateApp: id => openModal("app-activate", { id }),
@@ -288,30 +261,30 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     [activateApp, deactivateApp],
   );
 
+  const installedApps = mapEdgesToItems(data?.apps);
+  const currentAppName = findById(params.id, installedApps)?.name;
+
   return (
     <AppListContext.Provider value={context}>
       <PaginatorContext.Provider value={paginationValues}>
         <AppDeleteDialog
           confirmButtonState={deleteAppOpts.status}
-          name={getCurrentAppName(
-            params.id,
-            action === "remove-app" ? installedApps : customApps,
-          )}
+          name={currentAppName}
           onClose={closeModal}
           onConfirm={handleRemoveConfirm}
-          type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
-          open={action === "remove-app" || action === "remove-custom-app"}
+          type="EXTERNAL"
+          open={action === "remove-app"}
         />
         <AppActivateDialog
           confirmButtonState={activateAppResult.status}
-          name={getCurrentAppName(params.id, installedApps)}
+          name={currentAppName}
           onClose={closeModal}
           onConfirm={handleActivateAppConfirm}
           open={params.action === "app-activate"}
         />
         <AppDeactivateDialog
           confirmButtonState={deactivateAppResult.status}
-          name={getCurrentAppName(params.id, installedApps)}
+          name={currentAppName}
           onClose={closeModal}
           onConfirm={handleDeactivateAppConfirm}
           open={params.action === "app-deactivate"}
@@ -328,20 +301,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         />
         <AppsListPage
           installedAppsList={installedApps}
-          customAppsList={customApps}
           appsInProgressList={appsInProgressData}
-          disabled={loading || customAppsLoading}
+          disabled={loading}
           settings={settings}
           onUpdateListSettings={updateListSettings}
           onAppInstallRetry={onAppInstallRetry}
-          getCustomAppHref={id => customAppUrl(id)}
           onInstalledAppRemove={id =>
             openModal("remove-app", {
-              id,
-            })
-          }
-          onCustomAppRemove={id =>
-            openModal("remove-custom-app", {
               id,
             })
           }

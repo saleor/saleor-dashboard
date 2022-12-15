@@ -17,8 +17,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { getMutationStatus, maybe } from "@saleor/misc";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById, getMutationStatus, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";

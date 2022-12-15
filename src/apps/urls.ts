@@ -9,7 +9,6 @@ export const MANIFEST_ATTR = "manifestUrl";
 export type AppListUrlDialog =
   | "remove"
   | "remove-app"
-  | "remove-custom-app"
   | "app-activate"
   | "app-deactivate";
 
@@ -39,24 +38,13 @@ export enum AppListUrlSortField {
   active = "active",
 }
 
-export type CustomAppUrlDialog =
-  | "create-token"
-  | "remove-webhook"
-  | "remove-token"
-  | "app-activate"
-  | "app-deactivate";
-export type CustomAppUrlQueryParams = Dialog<CustomAppUrlDialog> & SingleAction;
-
 export const appsSection = "/apps/";
 export const appsListPath = appsSection;
-
-export const customAppListPath = "/apps/custom/";
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
 export const appPath = (id: string) => urlJoin(appsSection, id, "app");
 export const appDeepPath = (id: string, subPath: string) =>
   urlJoin(appPath(id), subPath);
-export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
 export const appInstallPath = urlJoin(appsSection, "install");
 export const createAppInstallUrl = (manifestUrl: string) =>
   `${appInstallPath}?manifestUrl=${manifestUrl}`;
@@ -109,11 +97,6 @@ export const getDashboardUrFromAppCompleteUrl = (
   const dashboardUrl = urlJoin(appPath(encodeURIComponent(appId)), deepSubPath);
   return dashboardUrl;
 };
-
-export const customAppUrl = (id: string, params?: CustomAppUrlQueryParams) =>
-  customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
-export const customAppAddPath = urlJoin(customAppListPath, "add");
-export const customAppAddUrl = customAppAddPath;
 
 export const appsListUrl = (params?: AppListUrlQueryParams) =>
   appsListPath + "?" + stringifyQs(params);

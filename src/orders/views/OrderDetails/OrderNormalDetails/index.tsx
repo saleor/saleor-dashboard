@@ -11,12 +11,17 @@ import {
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
+import {
+  extractMutationErrors,
+  getById,
+  getMutationState,
+  getStringOrPlaceholder,
+} from "@saleor/misc";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { transformFuflillmentLinesToStockFormsetData } from "@saleor/orders/utils/data";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -24,11 +29,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import {
-  extractMutationErrors,
-  getMutationState,
-  getStringOrPlaceholder,
-} from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";

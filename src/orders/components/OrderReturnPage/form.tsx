@@ -9,11 +9,11 @@ import useFormset, {
   FormsetData,
 } from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import { getById } from "@saleor/misc";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
-  getById,
   getLineItem,
   getOrderUnfulfilledLines,
   getParsedLineData,

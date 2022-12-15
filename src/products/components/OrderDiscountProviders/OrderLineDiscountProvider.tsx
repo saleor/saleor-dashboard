@@ -6,8 +6,8 @@ import {
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { getById } from "@saleor/misc";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
 

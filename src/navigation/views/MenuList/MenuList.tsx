@@ -17,8 +17,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById, getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";

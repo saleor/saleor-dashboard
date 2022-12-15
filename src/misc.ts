@@ -7,6 +7,7 @@ import {
   PaymentChargeStatusEnum,
 } from "@saleor/graphql";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
+import { Node, SlugNode } from "@saleor/types";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -541,5 +542,15 @@ export const isInDevelopment =
 export type WithOptional<T, K extends keyof T> = Omit<T, K> &
   Partial<Pick<T, K>>;
 
-export const getBySlug = (slugToCompare: string) => (obj: { slug: string }) =>
+export const getBySlug = (slugToCompare: string) => (obj: SlugNode) =>
   obj.slug === slugToCompare;
+
+export const getById = (idToCompare: string) => (obj: Node) =>
+  obj.id === idToCompare;
+
+export const getByUnmatchingId = (idToCompare: string) => (obj: {
+  id: string;
+}) => obj.id !== idToCompare;
+
+export const findById = <T extends Node>(id: string, list?: T[]) =>
+  list?.find(getById(id));

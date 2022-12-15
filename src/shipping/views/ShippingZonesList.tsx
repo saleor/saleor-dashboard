@@ -21,10 +21,10 @@ import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import {
   extractMutationErrors,
+  getById,
   getStringOrPlaceholder,
   maybe,
 } from "@saleor/misc";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";

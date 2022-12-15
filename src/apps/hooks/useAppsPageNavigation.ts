@@ -3,12 +3,9 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { useCallback, useMemo } from "react";
 import useRouter from "use-react-router";
 
-export type AppPagePathSegment =
-  | "webhooks-and-events"
-  | "third-party"
-  | "saleor-apps";
+export type AppPagePathSegment = "third-party" | "saleor-apps";
 
-const defaultTab: AppPagePathSegment = "webhooks-and-events";
+const defaultTab: AppPagePathSegment = "third-party";
 const appTypeQueryParam = "type";
 
 export const useAppsPageNavigation = () => {
