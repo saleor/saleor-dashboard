@@ -1,9 +1,9 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -14,12 +14,12 @@ const useStyles = makeStyles(
       },
       "&$disabled": {
         "& svg": {
-          color: fade(theme.palette.primary.main, 0.2),
+          color: alpha(theme.palette.primary.main, 0.2),
         },
       },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
-          backgroundColor: fade(theme.palette.primary.main, 0.2),
+          backgroundColor: alpha(theme.palette.primary.main, 0.2),
         },
       },
     },
@@ -36,7 +36,7 @@ const useStyles = makeStyles(
       },
       "&:focus, &:hover": {
         "& > span:first-of-type": {
-          backgroundColor: fade(theme.palette.primary.main, 0.2),
+          backgroundColor: alpha(theme.palette.primary.main, 0.2),
         },
         backgroundColor: "transparent",
       },
@@ -79,10 +79,10 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
   const isDark = isDarkTheme(themeType);
 
   return (
-    <div className={classNames(classes.root, className)} {...other}>
+    <div className={clsx(classes.root, className)} {...other}>
       <IconButton
         variant="secondary"
-        className={classNames(classes.iconButton, {
+        className={clsx(classes.iconButton, {
           [classes.dark]: isDark,
           [classes.disabled]: !hasPreviousPage,
         })}
@@ -94,7 +94,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         {direction === "rtl" ? <ArrowRight /> : <ArrowLeft />}
       </IconButton>
       <IconButton
-        className={classNames(classes.iconButton, {
+        className={clsx(classes.iconButton, {
           [classes.dark]: isDark,
           [classes.disabled]: !hasNextPage,
         })}

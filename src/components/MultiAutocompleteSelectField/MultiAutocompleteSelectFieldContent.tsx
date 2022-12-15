@@ -13,7 +13,7 @@ import useElementScroll, {
 } from "@saleor/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import { GetItemPropsOptions } from "downshift";
 import React, { ReactNode } from "react";
 import SVG from "react-inlinesvg";
@@ -337,7 +337,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
       {choices.length > maxMenuItems && (
         <div className={classes.arrowContainer}>
           <div
-            className={classNames(classes.arrowInnerContainer, {
+            className={clsx(classes.arrowInnerContainer, {
               // Needs to be explicitely compared to false because
               // scrolledToBottom can be either true, false or undefined
               [classes.hide]: scrolledToBottom !== false,

@@ -8,7 +8,7 @@ import {
 import { makeStyles } from "@saleor/macaw-ui";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -179,9 +179,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
       />
       <CardContent>
         {shouldDisplayHelperText && (
-          <Typography
-            className={classNames({ [classes.helperText]: expanded })}
-          >
+          <Typography className={clsx({ [classes.helperText]: expanded })}>
             {helperText}
           </Typography>
         )}

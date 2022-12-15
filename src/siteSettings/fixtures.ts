@@ -12,14 +12,14 @@ export const shop: SiteSettingsQuery["shop"] = {
       code: "UA",
       country: "United Arab Emirates",
     },
-    countryArea: null,
-    firstName: null,
+    countryArea: "",
+    firstName: "",
     id: "1",
-    lastName: null,
+    lastName: "",
     phone: "+41 876-373-9137",
     postalCode: "89880-6342",
     streetAddress1: "01419 Bernhard Plain",
-    streetAddress2: null,
+    streetAddress2: "s",
   },
   countries: [
     {

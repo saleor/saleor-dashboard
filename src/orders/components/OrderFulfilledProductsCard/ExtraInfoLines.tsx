@@ -2,7 +2,7 @@ import { TableCell, Typography } from "@material-ui/core";
 import TableRowLink from "@saleor/components/TableRowLink";
 import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -37,7 +37,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
                   : extraInfoMessages.fulfilled,
               )}
               <Typography
-                className={classNames(classes.infoLabel, {
+                className={clsx(classes.infoLabel, {
                   [classes.infoLabelWithMargin]: !!trackingNumber,
                 })}
                 color="textPrimary"

@@ -212,16 +212,18 @@ jobs:
 
       - name: Set tag for tests
         id: set-tag-for-tests
+        uses: actions/github-script@v6
         env:
           is_old_version: ${{ needs.get-environment-variables.outputs.is_old_version }}
-          old_version_test_tag: "@oldRelease"
-          new_version_test_tag: "@stable"
-        run: |
-          if [[ $is_old_version == "true" ]]; then
-              echo "TEST_TAG=$old_version_test_tag" >> $GITHUB_OUTPUT
-          else
-              echo "TEST_TAG=$new_version_test_tag" >> $GITHUB_OUTPUT
-          fi
+        with:
+          result-encoding: string
+          script: |
+            const { is_old_version } = process.env
+            if(is_old_version == "true"){
+              return "@oldRelease"
+            }else{
+              return "@stable"
+            }
               
       - name: Cypress run - automatically
         id: cypress
@@ -241,7 +243,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
           COMMIT_INFO_MESSAGE: Triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
-          CYPRESS_grepTags: ${{steps.set-tag-for-tests.outputs.TEST_TAG}}
+          CYPRESS_grepTags: ${{steps.set-tag-for-tests.outputs.result}}
         with:
           parallel: true
           group: 'UI - Chrome'
@@ -270,11 +272,11 @@ jobs:
 
       - name: Add review and merge if patch DASHBOARD
         env: 
-         tests_status: ${{ needs.run-tests-on-release.outputs.status}}
-         version: ${{github.event.client_payload.version}}
-         pull_request_number: ${{ github.event.client_payload.pullRequestNumber}}
-         auto_release: ${{github.event.client_payload.autoRelease}}
-         dashboard_url: ${{ needs.run-tests-on-release.outputs.dashboard_url}}
+         tests_status: ${{ needs.run-tests-on-release.outputs.status }}
+         version: ${{ github.event.client_payload.version }}
+         pull_request_number: ${{ github.event.client_payload.pullRequestNumber }}
+         dashboard_url: ${{ needs.run-tests-on-release.outputs.dashboard_url }}
+         auto_release: ${{ (github.event.client_payload.autoRelease && '--auto_release') || '' }}
         run: |
             export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
@@ -282,5 +284,5 @@ jobs:
             node .github/workflows/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
-            --auto_release $auto_release \
-            --dashboard_url $dashboard_url
+            --dashboard_url $dashboard_url \
+            $auto_release

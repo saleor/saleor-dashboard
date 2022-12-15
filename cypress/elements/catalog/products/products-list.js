@@ -30,6 +30,12 @@ export const PRODUCTS_LIST = {
       productType: '[data-test-id="filter-group-active-productType"]',
       stock: '[data-test-id="filter-group-active-stock"]',
       channel: '[data-test-id="filter-group-active-channel"]',
+      currency: '[data-test-id="filter-group-active-currency"]',
+      currencySpecific: {
+        THB: '[data-test-id="filter-option-THB"]',
+        PLN: '[data-test-id="filter-option-PLN"]',
+        USD: '[data-test-id="filter-option-USD"]',
+      },
     },
     filterField: {
       filterField: '[data-test-id*="filter-field"]',

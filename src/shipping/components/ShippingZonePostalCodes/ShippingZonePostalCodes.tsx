@@ -19,7 +19,7 @@ import {
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -125,7 +125,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
           </Button>
         }
       />
-      <CardContent className={classNames(classes.radioContainer)}>
+      <CardContent className={clsx(classes.radioContainer)}>
         <RadioGroupField
           alignTop
           choices={[
@@ -204,7 +204,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                 onClick={() => setExpanded(!expanded)}
               >
                 <ArrowDropdown
-                  className={classNames(classes.arrow, {
+                  className={clsx(classes.arrow, {
                     [classes.arrowRotate]: expanded,
                   })}
                 />
@@ -225,6 +225,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                     <IconButton
                       disabled={disabled}
                       color="primary"
+                      variant="secondary"
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >

@@ -6,5 +6,5 @@ export const GIFT_CARD_UPDATE = {
   expireDateInput: '[name="expiryDate"]',
   autocompleteCustomOption:
     '[data-test-id="multi-autocomplete-select-option-custom"]',
-  removeTagButton: '[data-test-id="remove"]'
+  removeTagButton: '[data-test-id="remove"]',
 };

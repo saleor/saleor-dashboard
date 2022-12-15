@@ -37,6 +37,12 @@ export const useStyles = makeStyles(
       color: theme.palette.saleor.main[3],
       fontWeight: 400,
     },
+    actions: {
+      gap: theme.spacing(1),
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "right",
+    },
   }),
   { name: "OrderPayment" },
 );

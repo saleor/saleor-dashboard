@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { alpha, makeStyles } from "@material-ui/core/styles";
 import InlineAlert from "@saleor/components/Alert/InlineAlert";
 import errorTracker from "@saleor/services/errorTracking";
 import React from "react";
@@ -11,7 +11,7 @@ import { FilterElement, FilterErrorMessages, FilterErrors } from "../types";
 const useStyles = makeStyles(
   theme => ({
     container: {
-      backgroundColor: fade(theme.palette.primary.main, 0.1),
+      backgroundColor: alpha(theme.palette.primary.main, 0.1),
       padding: theme.spacing(3, 3, 0, 3),
     },
     listItemTitle: {
@@ -55,7 +55,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
         { dependencies: dependencies?.join() },
       );
     } catch (e) {
-      errorTracker.captureException(e);
+      errorTracker.captureException(e as Error);
       console.warn("Translation missing for filter error code: ", code);
       return intl.formatMessage(validationMessages.UNKNOWN_ERROR);
     }

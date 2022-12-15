@@ -10,6 +10,13 @@ about: Suggest an idea for this project
 ### Describe a proposed solution
 ...
 
+### Acceptance Criteria 
+<!-- Conditions that a feature must satisfy to be approved by QA
+Example:  When I click on red button a blue popup appears !-->
+
+- [ ] 
+- [ ] 
+
 ### Other solutions I've tried and won't work
 …
 

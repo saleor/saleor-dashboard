@@ -1,7 +1,7 @@
-import { AccordionSummary, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Skeleton from "@saleor/components/Skeleton";
-import IconChevronDown from "@saleor/icons/ChevronDown";
+import { AccordionSummary } from "@saleor/macaw-ui";
 import React from "react";
 
 import { useHeaderStyles } from "./styles";
@@ -21,7 +21,7 @@ const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
 
   return (
     <div className={container}>
-      <AccordionSummary expandIcon={<IconChevronDown />} classes={accordion}>
+      <AccordionSummary className={accordion.root}>
         {loading ? (
           <Skeleton className={skeleton} />
         ) : (

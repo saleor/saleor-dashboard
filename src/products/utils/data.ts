@@ -11,6 +11,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
+  ProductMediaFragment,
   ProductTypeQuery,
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
@@ -247,3 +248,13 @@ export const getPreorderEndDateFormData = (endDate?: string) =>
 
 export const getPreorderEndHourFormData = (endDate?: string) =>
   endDate ? moment(endDate).format("HH:mm") : "";
+
+export const getSelectedMedia = <
+  T extends Pick<ProductMediaFragment, "id" | "sortOrder">
+>(
+  media: T[] = [],
+  selectedMediaIds: string[],
+) =>
+  media
+    .filter(image => selectedMediaIds.indexOf(image.id) !== -1)
+    .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));

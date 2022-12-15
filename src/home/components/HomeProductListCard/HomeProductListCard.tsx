@@ -9,7 +9,7 @@ import { HomeQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { productVariantEditUrl } from "@saleor/products/urls";
 import { RelayToFlat } from "@saleor/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -77,7 +77,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
               <TableRowLink
                 key={variant ? variant.id : "skeleton"}
                 hover={!!variant}
-                className={classNames({
+                className={clsx({
                   [classes.tableRow]: !!variant,
                 })}
                 href={productVariantEditUrl(variant.product.id, variant.id)}

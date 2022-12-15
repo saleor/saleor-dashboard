@@ -2,6 +2,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ExternalLink from "@saleor/components/ExternalLink";
 import React from "react";
+import GitHubButton from "react-github-btn";
 import { FormattedMessage } from "react-intl";
 
 import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from "./constants";
@@ -52,6 +53,18 @@ export const DemoBanner: React.FC = () => {
               </div>
             )}
           </ExternalLink>
+
+          <div className={classes.githubStarButton}>
+            <GitHubButton
+              href="https://github.com/saleor/saleor"
+              data-icon="octicon-star"
+              data-show-count="true"
+              data-size="large"
+              aria-label="Star saleor/saleor on GitHub"
+            >
+              Star us on GitHub
+            </GitHubButton>
+          </div>
         </div>
       </div>
     </div>

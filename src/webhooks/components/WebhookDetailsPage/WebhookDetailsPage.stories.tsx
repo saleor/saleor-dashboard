@@ -21,9 +21,6 @@ storiesOf("Views / Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookDetailsPage {...props} />)
   .add("undefined", () => <WebhookDetailsPage {...props} webhook={undefined} />)
-  .add("unnamed", () => (
-    <WebhookDetailsPage {...props} webhook={{ ...webhook, name: null }} />
-  ))
   .add("loading", () => (
     <WebhookDetailsPage {...props} webhook={undefined} disabled={true} />
   ))

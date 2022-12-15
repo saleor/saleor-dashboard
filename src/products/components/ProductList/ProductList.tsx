@@ -38,7 +38,7 @@ import TDisplayColumn, {
   DisplayColumnProps,
 } from "@saleor/utils/columns/DisplayColumn";
 import { getArrowDirection } from "@saleor/utils/sort";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,7 +49,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("md")]: {
       colName: {
-        minWidth: 250,
+        minWidth: 300,
       },
       colPrice: {
         width: 300,
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
         width: 200,
       },
       colType: {
-        width: 200,
+        width: 300,
       },
       colDate: {
         width: 200,
@@ -75,9 +75,13 @@ const useStyles = makeStyles(
       width: "100%",
     },
     colName: {
+      wordBreak: "break-all",
       "&$colNameFixed": {
-        width: 250,
+        width: 300,
       },
+    },
+    colAvatar: {
+      wordBreak: "break-all",
     },
     colNameFixed: {},
     colNameHeader: {
@@ -90,7 +94,9 @@ const useStyles = makeStyles(
       textAlign: "right",
     },
     colPublished: {},
-    colType: {},
+    colType: {
+      wordBreak: "break-all",
+    },
     link: {
       cursor: "pointer",
     },
@@ -187,7 +193,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <TableCellHeader
             data-test-id="col-name-header"
             arrowPosition="right"
-            className={classNames(classes.colName, {
+            className={clsx(classes.colName, {
               [classes.colNameFixed]: settings.columns.length > 4,
             })}
             direction={
@@ -348,6 +354,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar
+                    className={classes.colAvatar}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
                     {product?.name ? (

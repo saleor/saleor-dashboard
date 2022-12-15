@@ -11,16 +11,55 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * The `Date` scalar type represents a Date
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   Date: any;
+  /**
+   * The `DateTime` scalar type represents a DateTime
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   DateTime: any;
+  /**
+   * Custom Decimal implementation.
+   *
+   * Returns Decimal as a float in the API,
+   * parses float to the Decimal on the way back.
+   */
   Decimal: any;
+  /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
   GenericScalar: any;
   JSONString: any;
+  /**
+   * Metadata is a map of key-value pairs, both keys and values are `String`.
+   *
+   * Example:
+   * ```
+   * {
+   *     "key1": "value1",
+   *     "key2": "value2"
+   * }
+   * ```
+   */
   Metadata: any;
+  /**
+   * Positive Decimal scalar implementation.
+   *
+   * Should be used in places where value must be positive.
+   */
   PositiveDecimal: any;
   UUID: any;
+  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
+  /** _Any value scalar as defined by Federation spec. */
   _Any: any;
 };
 
@@ -7271,21 +7310,21 @@ export type TransactionRequestActionErrorFragment = { __typename: 'TransactionRe
 
 export type TransactionCreateErrorFragment = { __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode };
 
-export type TaxConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode };
+export type TaxConfigurationUpdateErrorFragment = { __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null };
 
 export type OrderGrantRefundCreateErrorFragment = { __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode };
 
-export type TaxCountryConfigurationUpdateErrorFragmentFragment = { __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode };
+export type TaxCountryConfigurationUpdateErrorFragment = { __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode, message: string | null };
 
-export type TaxCountryConfigurationDeleteErrorFragmentFragment = { __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode };
+export type TaxCountryConfigurationDeleteErrorFragment = { __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode, message: string | null };
 
 export type OrderGrantRefundUpdateErrorFragment = { __typename: 'OrderGrantRefundUpdateError', field: string | null, message: string | null, code: OrderGrantRefundUpdateErrorCode };
 
-export type TaxClassUpdateErrorFragmentFragment = { __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode };
+export type TaxClassUpdateErrorFragment = { __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode, message: string | null };
 
-export type TaxClassCreateErrorFragmentFragment = { __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode };
+export type TaxClassCreateErrorFragment = { __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode, message: string | null };
 
-export type TaxClassDeleteErrorFragmentFragment = { __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode };
+export type TaxClassDeleteErrorFragment = { __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode, message: string | null };
 
 export type FileFragment = { __typename: 'File', url: string, contentType: string | null };
 
@@ -7513,7 +7552,9 @@ export type TaxCountryConfigurationFragment = { __typename: 'TaxCountryConfigura
 
 export type TaxRateFragment = { __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } };
 
-export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> };
+export type TaxClassBaseFragment = { __typename: 'TaxClass', id: string, name: string };
+
+export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, type: TimePeriodTypeEnum };
 
@@ -7553,7 +7594,7 @@ export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boo
 
 export type WebhookFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
 
-export type WebhooksDetailsFragment = { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
+export type WebhookDetailsFragment = { __typename: 'Webhook', secretKey: string | null, targetUrl: string, id: string, name: string, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } };
 
 export type WeightFragment = { __typename: 'Weight', unit: WeightUnitsEnum, value: number };
 
@@ -9137,7 +9178,7 @@ export type TaxConfigurationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxConfigurationUpdateMutation = { __typename: 'Mutation', taxConfigurationUpdate: { __typename: 'TaxConfigurationUpdate', errors: Array<{ __typename: 'TaxConfigurationUpdateError', field: string | null, code: TaxConfigurationUpdateErrorCode, message: string | null }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
 
 export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
   countryCode: CountryCode;
@@ -9145,14 +9186,14 @@ export type TaxCountryConfigurationUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxCountryConfigurationUpdateMutation = { __typename: 'Mutation', taxCountryConfigurationUpdate: { __typename: 'TaxCountryConfigurationUpdate', errors: Array<{ __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
+export type TaxCountryConfigurationUpdateMutation = { __typename: 'Mutation', taxCountryConfigurationUpdate: { __typename: 'TaxCountryConfigurationUpdate', errors: Array<{ __typename: 'TaxCountryConfigurationUpdateError', field: string | null, code: TaxCountryConfigurationUpdateErrorCode, message: string | null }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
 
 export type TaxCountryConfigurationDeleteMutationVariables = Exact<{
   countryCode: CountryCode;
 }>;
 
 
-export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
+export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode, message: string | null }>, taxCountryConfiguration: { __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> } | null } | null };
 
 export type TaxClassUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9160,21 +9201,21 @@ export type TaxClassUpdateMutationVariables = Exact<{
 }>;
 
 
-export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxClassUpdateMutation = { __typename: 'Mutation', taxClassUpdate: { __typename: 'TaxClassUpdate', errors: Array<{ __typename: 'TaxClassUpdateError', field: string | null, code: TaxClassUpdateErrorCode, message: string | null }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type TaxClassCreateMutationVariables = Exact<{
   input: TaxClassCreateInput;
 }>;
 
 
-export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } | null } | null };
+export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode, message: string | null }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type TaxClassDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type TaxClassDeleteMutation = { __typename: 'Mutation', taxClassDelete: { __typename: 'TaxClassDelete', errors: Array<{ __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode }> } | null };
+export type TaxClassDeleteMutation = { __typename: 'Mutation', taxClassDelete: { __typename: 'TaxClassDelete', errors: Array<{ __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode, message: string | null }> } | null };
 
 export type TaxConfigurationsListQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -9202,7 +9243,7 @@ export type TaxClassesListQueryVariables = Exact<{
 }>;
 
 
-export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
+export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }> } | null };
 
 export type TaxClassAssignQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -9570,7 +9611,7 @@ export type WebhookCreateMutationVariables = Exact<{
 }>;
 
 
-export type WebhookCreateMutation = { __typename: 'Mutation', webhookCreate: { __typename: 'WebhookCreate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
+export type WebhookCreateMutation = { __typename: 'Mutation', webhookCreate: { __typename: 'WebhookCreate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, id: string, name: string, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
 
 export type WebhookUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9578,7 +9619,7 @@ export type WebhookUpdateMutationVariables = Exact<{
 }>;
 
 
-export type WebhookUpdateMutation = { __typename: 'Mutation', webhookUpdate: { __typename: 'WebhookUpdate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
+export type WebhookUpdateMutation = { __typename: 'Mutation', webhookUpdate: { __typename: 'WebhookUpdate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, id: string, name: string, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
 
 export type WebhookDeleteMutationVariables = Exact<{
   id: Scalars['ID'];

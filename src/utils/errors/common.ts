@@ -16,11 +16,18 @@ const commonErrorMessages = defineMessages({
   },
 });
 
-type CommonErrorCode = "GRAPHQL_ERROR" | "INVALID" | "REQUIRED";
+export const CommonErrorCode = {
+  GRAPHQL_ERROR: "GRAPHQL_ERROR",
+  INVALID: "INVALID",
+  REQUIRED: "REQUIRED",
+} as const;
 
-interface CommonError<ErrorCode> {
+export type CommonErrorCode = typeof CommonErrorCode[keyof typeof CommonErrorCode];
+
+export interface CommonError<ErrorCode> {
   code: ErrorCode | CommonErrorCode;
-  field?: string | null;
+  field: string | null;
+  message?: string | null;
 }
 
 export function getCommonFormFieldErrorMessage<ErrorCode>(

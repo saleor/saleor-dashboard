@@ -11,7 +11,7 @@ import {
 } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useRef } from "react";
 
 import { maybe } from "../../../misc";
@@ -106,7 +106,7 @@ const TableLine: React.FC<TableLineProps> = ({
   return (
     <TableRowLink key={id}>
       <TableCell
-        className={classNames({
+        className={clsx({
           [classes.colStatusEmpty]: !alerts.length,
         })}
       >

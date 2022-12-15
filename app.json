@@ -1,5 +1,6 @@
 {
   "name": "saleor-dashboard",
+  "stack": "heroku-20",
   "description": "A GraphQL-powered, single-page dashboard application for Saleor",
   "repository": "https://github.com/mirumee/saleor-dashboard",
   "website": "http://getsaleor.com/",

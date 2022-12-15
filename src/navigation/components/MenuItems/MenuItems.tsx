@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@saleor/macaw-ui";
 import { RecursiveMenuItem } from "@saleor/navigation/types";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import SortableTree, { NodeRendererProps } from "react-sortable-tree";
@@ -63,6 +63,10 @@ const useStyles = makeStyles(
     nodeTitle: {
       cursor: "pointer",
       marginLeft: theme.spacing(7),
+    },
+    nodeActions: {
+      display: "flex",
+      gap: theme.spacing(1),
     },
     root: {
       "& .rst__collapseButton": {
@@ -148,12 +152,12 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const draggedClassName = classNames(
+  const draggedClassName = clsx(
     classes.rowContainer,
     classes.rowContainerDragged,
   );
   const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
-  const placeholderClassName = classNames(
+  const placeholderClassName = clsx(
     classes.rowContainer,
     classes.rowContainerPlaceholder,
   );
@@ -183,26 +187,28 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
           {node.title}
         </Typography>
         <div className={classes.spacer} />
-        <Button onClick={node.onClick}>
-          <FormattedMessage {...buttonMessages.show} />
-        </Button>
-        <IconButton variant="secondary" onClick={node.onEdit}>
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          className={classes.deleteButton}
-          variant="secondary"
-          onClick={() =>
-            node.onChange([
-              {
-                id: node.id,
-                type: "remove",
-              },
-            ])
-          }
-        >
-          <DeleteIcon />
-        </IconButton>
+        <div className={classes.nodeActions}>
+          <Button onClick={node.onClick}>
+            <FormattedMessage {...buttonMessages.show} />
+          </Button>
+          <IconButton variant="secondary" onClick={node.onEdit}>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            className={classes.deleteButton}
+            variant="secondary"
+            onClick={() =>
+              node.onChange([
+                {
+                  id: node.id,
+                  type: "remove",
+                },
+              ])
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
       </Paper>
     </div>,
   );
@@ -238,7 +244,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         }
       />
       <div
-        className={classNames(classes.container, {
+        className={clsx(classes.container, {
           [classes.darkContainer]: themeType === "dark",
         })}
         style={{

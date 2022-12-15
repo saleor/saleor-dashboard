@@ -25,7 +25,6 @@ storiesOf("Views / Products / Product variant details", module)
       variant={variant}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
@@ -54,7 +53,6 @@ storiesOf("Views / Products / Product variant details", module)
       placeholderImage={placeholderImage}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
@@ -82,7 +80,6 @@ storiesOf("Views / Products / Product variant details", module)
       variant={variant}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
@@ -108,7 +105,6 @@ storiesOf("Views / Products / Product variant details", module)
       variant={variant}
       onDelete={undefined}
       onSetDefaultVariant={() => undefined}
-      onMediaSelect={() => undefined}
       onSubmit={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"

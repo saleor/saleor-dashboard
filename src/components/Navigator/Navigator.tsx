@@ -152,9 +152,9 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                   <NavigatorInput
                     mode={mode}
                     value={query}
-                    {...getInputProps({
+                    {...(getInputProps({
                       value: query,
-                    })}
+                    }) as React.InputHTMLAttributes<HTMLInputElement>)}
                     ref={input}
                   />
                   {hasAnything && <Divider />}

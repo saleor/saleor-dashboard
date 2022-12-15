@@ -45,7 +45,7 @@ export interface SiteSettingsPageFormData
 export interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop: SiteSettingsQuery["shop"];
+  shop?: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -107,10 +107,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
-    reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
+    reserveStockDurationAnonymousUser:
+      shop?.reserveStockDurationAnonymousUser ?? 0,
     reserveStockDurationAuthenticatedUser:
-      shop?.reserveStockDurationAuthenticatedUser,
-    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout,
+      shop?.reserveStockDurationAuthenticatedUser ?? 0,
+    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
   };
 
   return (
@@ -179,7 +180,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             </Grid>
             <Savebar
               state={saveButtonBarState}
-              disabled={isSaveDisabled}
+              disabled={!!isSaveDisabled}
               onCancel={() => navigate(configurationMenuUrl)}
               onSubmit={submit}
             />

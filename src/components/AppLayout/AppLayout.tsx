@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
@@ -212,7 +212,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
               </Container>
             </div>
             <main
-              className={classNames(classes.view, {
+              className={clsx(classes.view, {
                 [classes.viewMargins]: !fullSize,
               })}
             >

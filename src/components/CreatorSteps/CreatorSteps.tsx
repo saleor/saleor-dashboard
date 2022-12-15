@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 export interface Step<T> {
@@ -60,7 +60,7 @@ function makeCreatorSteps<T extends string | number>() {
 
           return (
             <div
-              className={classNames(classes.tab, {
+              className={clsx(classes.tab, {
                 [classes.tabActive]: step.value === currentStep,
                 [classes.tabVisited]: visitedStep,
               })}

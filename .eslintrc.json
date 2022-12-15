@@ -7,6 +7,7 @@
   "parserOptions": {
     "sourceType": "module"
   },
+  "extends": ["prettier"],
   "plugins": [
     "@typescript-eslint",
     "import",
@@ -15,9 +16,19 @@
     "cypress",
     "chai-friendly",
     "formatjs",
-    "react-hooks"
+    "react-hooks",
+    "react-refresh"
+  ],
+  "overrides": [
+    {
+      "files": ["src/**/*.test.*"],
+      "rules": {
+        "react-refresh/only-export-components": "off"
+      }
+    }
   ],
   "rules": {
+    "react-refresh/only-export-components": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": [
       "error",
@@ -81,7 +92,6 @@
     "camelcase": "off",
     "capitalized-comments": "off",
     "chai-friendly/no-unused-expressions": "error",
-    "comma-dangle": ["error", "always-multiline"],
     "complexity": "off",
     "constructor-super": "error",
     "curly": "error",
@@ -188,7 +198,7 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["lodash", "@material-ui/icons/Delete"]
+        "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ]
   },

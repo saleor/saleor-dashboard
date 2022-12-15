@@ -43,6 +43,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
       position: "relative",
       right: theme.spacing(-1.5),
+      gap: theme.spacing(1),
     },
     colActions: {
       textAlign: "right",

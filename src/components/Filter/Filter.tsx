@@ -1,13 +1,7 @@
-import {
-  ButtonBase,
-  ClickAwayListener,
-  Grow,
-  Popper,
-  Typography,
-} from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
+import { alpha } from "@material-ui/core/styles";
+import { Button, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -34,7 +28,7 @@ const useStyles = makeStyles(
     addFilterButton: {
       "&$filterButton": {
         "&:hover, &:focus": {
-          backgroundColor: fade(theme.palette.primary.main, 0.1),
+          backgroundColor: alpha(theme.palette.primary.main, 0.1),
         },
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.primary.main}`,
@@ -47,7 +41,7 @@ const useStyles = makeStyles(
     },
     addFilterButtonActive: {
       "&$addFilterButton": {
-        backgroundColor: fade(theme.palette.primary.main, 0.1),
+        backgroundColor: alpha(theme.palette.primary.main, 0.1),
       },
     },
     addFilterIcon: {
@@ -60,16 +54,8 @@ const useStyles = makeStyles(
       textTransform: "uppercase",
     },
     filterButton: {
-      alignItems: "center",
-      backgroundColor: fade(theme.palette.primary.main, 0.6),
-      borderRadius: "4px",
-      display: "flex",
-      height: 40,
-      justifyContent: "space-around",
-      margin: theme.spacing(2, 1),
-      marginLeft: 0,
-      padding: theme.spacing(0, 2),
-      position: "relative",
+      padding: theme.spacing(1, 2),
+      marginRight: theme.spacing(2),
     },
     paper: {
       "& p": {
@@ -89,7 +75,7 @@ const useStyles = makeStyles(
     separator: {
       backgroundColor: theme.palette.primary.main,
       display: "inline-block",
-      height: 28,
+      height: 14,
       margin: theme.spacing(0, 1.5, 0, 1),
       width: 1,
     },
@@ -141,13 +127,14 @@ const Filter: React.FC<FilterProps> = props => {
       mouseEvent="onMouseUp"
     >
       <div ref={anchor}>
-        <ButtonBase
-          className={classNames(classes.filterButton, classes.addFilterButton, {
+        <Button
+          className={clsx(classes.filterButton, {
             [classes.addFilterButtonActive]:
               isFilterMenuOpened || isFilterActive,
           })}
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
           data-test-id="show-filters-button"
+          variant="secondary"
         >
           <Typography className={classes.addFilterText}>
             <FormattedMessage
@@ -174,7 +161,7 @@ const Filter: React.FC<FilterProps> = props => {
               </Typography>
             </>
           )}
-        </ButtonBase>
+        </Button>
         <Popper
           className={classes.popover}
           open={isFilterMenuOpened}

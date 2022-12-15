@@ -13,6 +13,7 @@ import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
   StaffMemberDetailsFragment,
+  UserFragment,
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
@@ -23,6 +24,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import UserStatus from "@saleor/staff/components/UserStatus";
 import { staffListUrl } from "@saleor/staff/urls";
+import { getMemberPermissionGroups, isMemberActive } from "@saleor/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
@@ -51,7 +53,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   disabled: boolean;
   fetchMorePermissionGroups: FetchMoreProps;
   saveButtonBarState: ConfirmButtonTransitionState;
-  staffMember: StaffMemberDetailsFragment;
+  staffMember: StaffMemberDetailsFragment | UserFragment;
   errors: StaffErrorFragment[];
   onChangePassword: () => void;
   onDelete: () => void;
@@ -85,11 +87,14 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
   const { locale, setLocale } = useLocale();
 
+  const isActive = isMemberActive(staffMember);
+  const permissionGroups = getMemberPermissionGroups(staffMember);
+
   const [
     permissionGroupsDisplayValues,
     setPermissionGroupsDisplayValues,
   ] = useStateFromProps<MultiAutocompleteChoiceType[]>(
-    (staffMember?.permissionGroups || []).map(group => ({
+    permissionGroups.map(group => ({
       disabled: !group.userCanManage,
       label: group.name,
       value: group.id,
@@ -99,9 +104,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
-    isActive: !!staffMember?.isActive,
+    isActive,
     lastName: staffMember?.lastName || "",
-    permissionGroups: staffMember?.permissionGroups.map(pg => pg.id) || [],
+    permissionGroups: permissionGroups.map(pg => pg.id),
   };
 
   return (

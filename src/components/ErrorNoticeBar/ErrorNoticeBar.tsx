@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 interface ErrorNoticeBarProps {
   className?: string;
@@ -23,7 +23,7 @@ const ErrorNoticeBar: React.FC<ErrorNoticeBarProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Card className={classNames(classes.root, className)}>
+    <Card className={clsx(classes.root, className)}>
       <CardContent>
         <Typography variant="body1">{message}</Typography>
       </CardContent>

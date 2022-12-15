@@ -21,7 +21,7 @@ import LoginForm, { LoginFormData } from "./form";
 import { getErrorMessage } from "./messages";
 
 export interface LoginCardProps {
-  error?: UserContextError;
+  errors: UserContextError[];
   disabled: boolean;
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
@@ -31,7 +31,7 @@ export interface LoginCardProps {
 
 const LoginCard: React.FC<LoginCardProps> = props => {
   const {
-    error,
+    errors,
     disabled,
     loading,
     externalAuthentications = [],
@@ -62,11 +62,15 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               description="card header"
             />
           </Typography>
-          {error && (
-            <div className={classes.panel} data-test-id="login-error-message">
+          {errors.map(error => (
+            <div
+              className={classes.panel}
+              key={error}
+              data-test-id="login-error-message"
+            >
               {getErrorMessage(error, intl)}
             </div>
-          )}
+          ))}
           <TextField
             autoFocus
             fullWidth
@@ -103,7 +107,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             {/* Not using endAdornment as it looks weird with autocomplete */}
             <IconButton
               className={classes.showPasswordBtn}
-              variant="secondary"
+              variant="ghost"
               hoverOutline={false}
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}

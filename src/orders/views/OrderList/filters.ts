@@ -211,4 +211,5 @@ export const {
 } = createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({
   ...OrderListUrlFiltersEnum,
   ...OrderListUrlFiltersWithMultipleValues,
+  ...OrderListFitersWithKeyValueValues,
 });
