@@ -55,21 +55,25 @@ describe("Staff members", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should invite user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
-    const firstName = faker.name.firstName();
-    const emailInvite = `${startsWith}${firstName}@example.com`;
+  it(
+    "should be able to invite staff user. TC: SALEOR_3501",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const firstName = faker.name.firstName();
+      const emailInvite = `${startsWith}${firstName}@example.com`;
 
-    cy.visit(urlList.staffMembers)
-      .expectSkeletonIsVisible()
-      .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
-      .click();
-    fillUpUserDetails(firstName, lastName, emailInvite);
-    getMailActivationLinkForUser(emailInvite).then(urlLink => {
-      cy.clearSessionData().visit(urlLink);
-      fillUpSetPassword(password);
-      expectWelcomeMessageIncludes(`${firstName} ${lastName}`);
-    });
-  });
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .click();
+      fillUpUserDetails(firstName, lastName, emailInvite);
+      getMailActivationLinkForUser(emailInvite).then(urlLink => {
+        cy.clearSessionData().visit(urlLink);
+        fillUpSetPassword(password);
+        expectWelcomeMessageIncludes(`${firstName} ${lastName}`);
+      });
+    },
+  );
 
   it(
     "should deactivate user",
