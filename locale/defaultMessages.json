@@ -1264,10 +1264,6 @@
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
   },
-  "7f4YSA": {
-    "context": "Text displayed after PSP reference is copied to clipboard",
-    "string": "Copied"
-  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -5679,6 +5675,10 @@
   },
   "eUjFjW": {
     "string": "Permission group created"
+  },
+  "eVjgIx": {
+    "context": "tooltip, Transaction reference received from payment provider",
+    "string": "PSP reference"
   },
   "eWV760": {
     "string": "Attribute with this slug already exists"

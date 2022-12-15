@@ -24,9 +24,10 @@ export const statusMessages = defineMessages({
 });
 
 export const messages = defineMessages({
-  copied: {
-    defaultMessage: "Copied",
-    id: "7f4YSA",
-    description: "Text displayed after PSP reference is copied to clipboard",
+  pspReference: {
+    defaultMessage: "PSP reference",
+    id: "eVjgIx",
+    description:
+      "tooltip, Transaction reference received from payment provider",
   },
 });

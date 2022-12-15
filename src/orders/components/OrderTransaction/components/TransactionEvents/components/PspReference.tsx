@@ -1,8 +1,11 @@
-import { makeStyles } from "@material-ui/core";
+import OverflowTooltip from "@saleor/components/OverflowTooltip";
 import useClipboard from "@saleor/hooks/useClipboard";
-import { CopyIcon, IconButton } from "@saleor/macaw-ui";
+import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
+import { useIntl } from "react-intl";
+
+import { messages } from "../messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,15 +22,22 @@ const useStyles = makeStyles(
       background: "#F5F5F5",
       padding: "4px",
       cursor: "default",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
     },
     copyButton: {
       height: "26px",
       width: "26px",
-    },
-    copiedButton: {
-      "& span": {
-        color: theme.palette.success.dark,
-        animation: "$pulse 0.2s",
+      "&&": {
+        transition: theme.transitions.create(["color", "background"], {
+          duration: theme.transitions.duration.short,
+        }),
+      },
+
+      "&&.copied": {
+        background: theme.palette.saleor.success.mid,
+        color: theme.palette.saleor.main[1],
       },
     },
   }),
@@ -36,30 +46,44 @@ const useStyles = makeStyles(
   },
 );
 
+const ReferenceLink = ({ href, children }) => {
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferer">
+        {children}
+      </a>
+    );
+  }
+
+  return children;
+};
+
 export const PspReference: React.FC<{ reference: string; url?: string }> = ({
   reference,
   url,
 }) => {
+  const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
 
-  const Element = url ? "a" : "span";
-
   return (
     <div className={classes.wrapper}>
-      <Element className={classes.pill} href={url}>
-        {reference}
-      </Element>
+      <OverflowTooltip
+        className={classes.pill}
+        header={intl.formatMessage(messages.pspReference)}
+      >
+        <ReferenceLink href={url}>{reference}</ReferenceLink>
+      </OverflowTooltip>
       {!!navigator.clipboard && (
         <IconButton
-          color="primary"
-          className={clsx(classes.copyButton, copied && classes.copiedButton)}
+          variant="secondary"
+          className={clsx(classes.copyButton, copied && "copied")}
           onClick={event => {
             event.preventDefault();
             copy(reference);
           }}
         >
-          <CopyIcon />
+          {copied ? <CheckIcon /> : <CopyIcon />}
         </IconButton>
       )}
     </div>
