@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import useClipboard from "@saleor/hooks/useClipboard";
 import { CopyIcon, IconButton } from "@saleor/macaw-ui";
-import clsx from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles(

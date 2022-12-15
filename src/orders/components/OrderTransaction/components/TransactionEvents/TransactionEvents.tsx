@@ -88,7 +88,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
           onMouseOver={() =>
             setHoveredPspReference(transactionEvent.pspReference || null)
           }
-          className={classnames(
+          className={clsx(
             transactionEvent.pspReference === hoveredPspReference &&
               classes.hover,
           )}
