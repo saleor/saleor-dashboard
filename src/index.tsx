@@ -46,6 +46,7 @@ import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import { FeatureFlagsProvider, FlagsmmishAdapter } from "./featureFlags";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
@@ -95,7 +96,11 @@ const App: React.FC = () => (
                         <AppChannelProvider>
                           <ExternalAppProvider>
                             <ExitFormDialogProvider>
-                              <Routes />
+                              <FeatureFlagsProvider
+                                adapter={new FlagsmmishAdapter()}
+                              >
+                                <Routes />
+                              </FeatureFlagsProvider>
                             </ExitFormDialogProvider>
                           </ExternalAppProvider>
                         </AppChannelProvider>

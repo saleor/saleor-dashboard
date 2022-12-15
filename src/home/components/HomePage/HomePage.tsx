@@ -9,6 +9,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { RelayToFlat } from "@saleor/types";
 import React from "react";
 
+import { useFlag } from "../../../featureFlags";
 import Orders from "../../../icons/Orders";
 import Sales from "../../../icons/Sales";
 import HomeActivityCard from "../HomeActivityCard";
@@ -73,6 +74,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const flag = useFlag("show_login_button");
 
   return (
     <Container>
@@ -84,25 +86,28 @@ const HomePage: React.FC<HomePageProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <div className={classes.cardContainer}>
-              <HomeAnalyticsCard
-                title={"Sales"}
-                testId="sales-analytics"
-                icon={
-                  <Sales
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
-              >
-                {noChannel ? (
-                  0
-                ) : sales ? (
-                  <Money money={sales} />
-                ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
-              </HomeAnalyticsCard>
+              {flag.enabled && (
+                <HomeAnalyticsCard
+                  title={"Sales"}
+                  testId="sales-analytics"
+                  icon={
+                    <Sales
+                      className={classes.icon}
+                      fontSize={"inherit"}
+                      viewBox="0 0 64 64"
+                    />
+                  }
+                >
+                  {noChannel ? (
+                    0
+                  ) : sales ? (
+                    <Money money={sales} />
+                  ) : (
+                    <Skeleton style={{ width: "5em" }} />
+                  )}
+                </HomeAnalyticsCard>
+              )}
+
               <HomeAnalyticsCard
                 title={"Orders"}
                 testId="orders-analytics"
