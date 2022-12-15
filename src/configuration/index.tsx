@@ -3,10 +3,12 @@ import { useUser } from "@saleor/auth";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@saleor/config";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import { PermissionEnum } from "@saleor/graphql";
 import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
 import Channels from "@saleor/icons/Channels";
+import Miscellaneous from "@saleor/icons/Miscellaneous";
 import Navigation from "@saleor/icons/Navigation";
 import PageTypes from "@saleor/icons/PageTypes";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
@@ -234,6 +236,16 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.plugins),
           url: pluginListUrl(),
           testId: "configuration-plugins-pages",
+        },
+        {
+          description: intl.formatMessage({
+            id: "Zz67wc",
+            defaultMessage: "View and update your webhooks and events.",
+          }),
+          icon: <Miscellaneous />,
+          title: intl.formatMessage(sectionNames.webhooksAndEvents),
+          url: CustomAppUrls.resolveAppListUrl(),
+          testId: "configuration-menu-webhooks-and-events",
         },
       ],
     },

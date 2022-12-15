@@ -1,8 +1,5 @@
 import { SearchProductsQuery } from "@saleor/graphql";
-import {
-  getById,
-  getByUnmatchingId,
-} from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById, getByUnmatchingId } from "@saleor/misc";
 import { RelayToFlat } from "@saleor/types";
 
 export type SearchVariant = RelayToFlat<

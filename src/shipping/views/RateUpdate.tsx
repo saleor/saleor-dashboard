@@ -27,10 +27,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { PaginatorContext } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import {
-  getById,
-  getByUnmatchingId,
-} from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById, getByUnmatchingId } from "@saleor/misc";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";

@@ -1,10 +1,7 @@
 import { FormData } from "@saleor/channels/components/ChannelForm";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
-import {
-  getById,
-  getByUnmatchingId,
-} from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById, getByUnmatchingId } from "@saleor/misc";
 import { ReorderAction, ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
 
