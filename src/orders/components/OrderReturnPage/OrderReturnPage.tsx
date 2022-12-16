@@ -11,9 +11,9 @@ import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ItemsCard } from "./components";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
-import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
   getParsedLines,
