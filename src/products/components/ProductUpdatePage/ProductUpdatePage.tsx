@@ -445,7 +445,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               />
               {canOpenAssignReferencesAttributeDialog && entityType && (
                 <AssignAttributeValueDialog
-                  entityType={entiyType}
+                  entityType={entityType}
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}
