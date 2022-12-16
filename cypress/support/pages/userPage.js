@@ -36,6 +36,22 @@ export function fillUpUserDetails(firstName, lastName, email) {
     .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate");
 }
 
+export function fillUpUserDetailsWithNotUniqueEmail(
+  firstName,
+  lastName,
+  email,
+) {
+  cy.get(INVITE_STAFF_MEMBER_FORM.firstNameInput)
+    .type(firstName)
+    .get(INVITE_STAFF_MEMBER_FORM.lastNameInput)
+    .type(lastName)
+    .get(INVITE_STAFF_MEMBER_FORM.emailInput)
+    .type(email)
+    .get(BUTTON_SELECTORS.submit)
+    .click()
+    .confirmationErrorMessageShouldAppear();
+}
+
 export function updateUserActiveFlag(userId) {
   cy.visitAndWaitForProgressBarToDisappear(userDetailsUrl(userId))
     .get(STAFF_MEMBER_DETAILS.isActiveCheckBox)

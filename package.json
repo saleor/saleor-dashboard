@@ -42,6 +42,7 @@
     "color-convert": "^2.0.1",
     "crc-32": "^1.2.0",
     "currency-codes": "^2.1.0",
+    "cypress-repeat": "^2.3.3",
     "downshift": "^6.1.7",
     "editorjs-inline-tool": "^0.4.0",
     "faker": "^5.1.0",

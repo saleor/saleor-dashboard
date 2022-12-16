@@ -24,6 +24,7 @@ import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
   fillUpSetPassword,
   fillUpUserDetails,
+  fillUpUserDetailsWithNotUniqueEmail,
   updateUserActiveFlag,
 } from "../support/pages/userPage";
 
@@ -76,7 +77,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should deactivate user",
+    "should deactivate user. TC: SALEOR_3502",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
@@ -94,19 +95,23 @@ describe("Staff members", () => {
     },
   );
 
-  it("should activate user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
-    const serverStoredEmail = email.toLowerCase();
+  it(
+    "should activate user. TC: SALEOR_3503",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const serverStoredEmail = email.toLowerCase();
 
-    updateStaffMember({ userId: user.id, isActive: false });
-    updateUserActiveFlag(user.id);
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", { email, password })
-      .visit(urlList.homePage);
-    expectWelcomeMessageIncludes(serverStoredEmail);
-  });
+      updateStaffMember({ userId: user.id, isActive: false });
+      updateUserActiveFlag(user.id);
+      cy.clearSessionData()
+        .loginUserViaRequest("auth", { email, password })
+        .visit(urlList.homePage);
+      expectWelcomeMessageIncludes(serverStoredEmail);
+    },
+  );
 
   it(
-    "should remove user permissions",
+    "should remove user permissions. TC: SALEOR_3504",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
@@ -133,7 +138,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should reset password",
+    "should reset password. TC: SALEOR_3505",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
       const newPassword = faker.random.alphaNumeric(8);
@@ -165,6 +170,21 @@ describe("Staff members", () => {
             .should("be.visible")
             .loginUserViaRequest({ email, password: newPassword });
         });
+    },
+  );
+
+  it(
+    "should not be able to create staff member with not unique email. TC: SALEOR_3508",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const firstName = faker.name.firstName();
+      const emailInvite = `testers+dashboard@saleor.io`;
+
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .click();
+      fillUpUserDetailsWithNotUniqueEmail(firstName, lastName, emailInvite);
     },
   );
 });
