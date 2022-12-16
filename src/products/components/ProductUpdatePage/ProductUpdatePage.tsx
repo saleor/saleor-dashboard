@@ -199,8 +199,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       value: taxClass.id,
     })) || [];
 
-  const canOpenAssignReferencesAttributeDialog =
-    !!assignReferencesAttributeId && !fetchMoreReferenceProducts.loading;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -308,6 +307,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               currency: channel.currencyCode,
             };
           },
+        );
+
+        const entityType = getReferenceAttributeEntityTypeFromAttribute(
+          assignReferencesAttributeId,
+          data.attributes,
         );
 
         return (
@@ -439,12 +443,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 state={saveButtonBarState}
                 disabled={isSaveDisabled}
               />
-              {canOpenAssignReferencesAttributeDialog && (
+              {canOpenAssignReferencesAttributeDialog && entityType && (
                 <AssignAttributeValueDialog
-                  entityType={getReferenceAttributeEntityTypeFromAttribute(
-                    assignReferencesAttributeId,
-                    data.attributes,
-                  )}
+                  entityType={entiyType}
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}
