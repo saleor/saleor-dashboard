@@ -6,7 +6,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import { transformPaymentStatus } from "@saleor/misc";
-import { orderGrantRefundUrl } from "@saleor/orders/urls";
+import { orderGrantRefundUrl, orderRefundUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,13 +24,11 @@ import { useStyles } from "./styles";
 
 interface OrderPaymementProps {
   order: OrderDetailsFragment | undefined;
-  onRefund: () => void;
   onMarkAsPaid: () => void;
 }
 
 const OrderPayment: React.FC<OrderPaymementProps> = ({
   order,
-  onRefund,
   onMarkAsPaid,
 }) => {
   const classes = useStyles();
@@ -111,7 +109,7 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
                 {canSendRefund && (
                   <Button
                     variant="secondary"
-                    onClick={onRefund}
+                    href={orderRefundUrl(order.id)}
                     data-test-id="refund-button"
                   >
                     <FormattedMessage

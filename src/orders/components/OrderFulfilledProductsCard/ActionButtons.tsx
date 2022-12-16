@@ -2,6 +2,7 @@ import { CardActions, Typography } from "@material-ui/core";
 import { Button } from "@saleor/components/Button";
 import { FulfillmentStatus } from "@saleor/graphql";
 import { buttonMessages, commonMessages } from "@saleor/intl";
+import { orderRefundUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -9,12 +10,12 @@ import { actionButtonsMessages } from "./messages";
 import useStyles from "./styles";
 
 interface AcionButtonsProps {
+  orderId: string;
   status: FulfillmentStatus;
   trackingNumber?: string;
   orderIsPaid?: boolean;
   fulfillmentAllowUnpaid: boolean;
   onTrackingCodeAdd();
-  onRefund();
   onApprove();
 }
 
@@ -25,12 +26,12 @@ const statusesToShow = [
 ];
 
 const ActionButtons: React.FC<AcionButtonsProps> = ({
+  orderId,
   status,
   trackingNumber,
   orderIsPaid,
   fulfillmentAllowUnpaid,
   onTrackingCodeAdd,
-  onRefund,
   onApprove,
 }) => {
   const classes = useStyles();
@@ -61,7 +62,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   if (status === FulfillmentStatus.RETURNED) {
     return (
       <CardActions>
-        <Button variant="primary" onClick={onRefund}>
+        <Button variant="primary" href={orderRefundUrl(orderId)}>
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>

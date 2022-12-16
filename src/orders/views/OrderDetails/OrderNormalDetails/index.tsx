@@ -47,7 +47,6 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
-  orderRefundUrl,
   orderReturnUrl,
   orderUrl,
   OrderUrlDialog,
@@ -242,7 +241,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         onPaymentCapture={() => openModal("capture")}
         onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => navigate(orderRefundUrl(id))}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
