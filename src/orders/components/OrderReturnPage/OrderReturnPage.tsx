@@ -8,11 +8,12 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { renderCollection } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderAmount from "../OrderRefundReturnAmount";
 import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
@@ -20,19 +21,6 @@ import {
   getUnfulfilledLines,
   getWaitingFulfillments,
 } from "./utils";
-
-const messages = defineMessages({
-  appTitle: {
-    id: "rVIlBs",
-    defaultMessage: "Order #{orderNumber}",
-    description: "page header with order number",
-  },
-  pageTitle: {
-    id: "BBIQxQ",
-    defaultMessage: "Order no. {orderNumber} - Replace/Return",
-    description: "page header",
-  },
-});
 
 export interface OrderReturnPageProps {
   order: OrderDetailsFragment;
@@ -50,12 +38,12 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
       {({ data, handlers, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink href={orderUrl(order?.id)}>
-            {intl.formatMessage(messages.appTitle, {
+            {intl.formatMessage(orderReturnMessages.appTitle, {
               orderNumber: order?.number,
             })}
           </Backlink>
           <PageHeader
-            title={intl.formatMessage(messages.pageTitle, {
+            title={intl.formatMessage(orderReturnMessages.pageTitle, {
               orderNumber: order?.number,
             })}
           />
