@@ -12,8 +12,9 @@ import {
   RefreshLimitsQuery,
   WarehouseFragment,
 } from "@saleor/graphql";
+import EditIcon from "@saleor/icons/Edit";
 import { buttonMessages } from "@saleor/intl";
-import { Button, EditIcon } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
 // import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";

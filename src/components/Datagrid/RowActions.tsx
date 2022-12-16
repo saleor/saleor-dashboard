@@ -29,7 +29,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           data-test-id="row-action-button"
           disabled={disabled}
           onClick={handleIconClick}
-          variant="secondary"
+          variant="ghost"
         >
           {firstMenuItem.Icon}
         </IconButton>
