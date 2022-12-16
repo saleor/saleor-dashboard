@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  installExternalApp: {
-    id: "puUvKO",
-    defaultMessage: "Install external app",
-    description: "button",
-  },
   installAppDescription: {
     id: "ARfw53",
     defaultMessage:
@@ -20,6 +15,11 @@ export const messages = defineMessages({
   allApps: {
     id: "yZB41s",
     defaultMessage: "All Apps",
+    description: "section header",
+  },
+  comingSoonApps: {
+    id: "VTq2gn",
+    defaultMessage: "Coming Soon",
     description: "section header",
   },
 });

@@ -81,9 +81,16 @@ export const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       padding: theme.spacing(2, 4),
+      minHeight: theme.spacing(9),
     },
     detailsButton: {},
     installButton: {},
+    releaseDate: {
+      color:
+        theme.palette.type === "dark"
+          ? alpha(theme.palette.saleor.generic.light, 0.8)
+          : theme.palette.saleor.generic.dark,
+    },
     bottomInfo: {
       textAlign: "center",
       borderTop: `1px solid ${theme.palette.saleor.main["5"]}`,

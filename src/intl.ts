@@ -337,6 +337,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Undo",
     description: "button",
   },
+  install: {
+    id: "KDvRBi",
+    defaultMessage: "Install",
+    description: "button",
+  },
 });
 
 export const sectionNames = defineMessages({

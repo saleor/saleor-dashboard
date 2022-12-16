@@ -1,14 +1,13 @@
 import {
   AppFetchMutation,
   AppListItemFragment,
-  AppQuery,
   AppsInstallationsQuery,
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
 } from "@saleor/graphql";
 
-export const appsList: AppListItemFragment[] = [
+export const installedAppsList: AppListItemFragment[] = [
   {
     __typename: "App",
     id: "QXBwOjE3Ng==",
@@ -50,31 +49,6 @@ export const appsList: AppListItemFragment[] = [
   },
 ];
 
-export const customAppsList: AppListItemFragment[] = [
-  {
-    __typename: "App",
-    id: "QXBwOjE3Ng==",
-    isActive: true,
-    name: "app custom",
-    type: AppTypeEnum.LOCAL,
-    version: "1.0.0",
-    appUrl: null,
-    manifestUrl: null,
-    permissions: [
-      {
-        __typename: "Permission",
-        code: PermissionEnum.MANAGE_ORDERS,
-        name: "Manage orders.",
-      },
-      {
-        __typename: "Permission",
-        code: PermissionEnum.MANAGE_USERS,
-        name: "Manage customers.",
-      },
-    ],
-  },
-];
-
 export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
   {
     __typename: "AppInstallation",
@@ -101,41 +75,6 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
     status: JobStatusEnum.SUCCESS,
   },
 ];
-
-export const appDetails: AppQuery["app"] = {
-  __typename: "App",
-  aboutApp: "Lorem ipsum",
-  accessToken: "token",
-  appUrl: "http://localhost:8888/app",
-  manifestUrl: "http://localhost:8888/api/manifest",
-  configurationUrl: "htpp://localhost:8888/configuration",
-  created: "2020-06-02T12:24:26.818138+00:00",
-  dataPrivacy: "Lorem ipsum",
-  dataPrivacyUrl: "http://localhost:8888/app-data-privacy",
-  homepageUrl: "http://localhost:8888/homepage",
-  id: "QXBwOjE4MQ==",
-  isActive: true,
-  metadata: [],
-  name: "app1",
-  permissions: [
-    {
-      __typename: "Permission",
-      code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders.",
-    },
-    {
-      __typename: "Permission",
-      code: PermissionEnum.MANAGE_USERS,
-      name: "Manage customers.",
-    },
-  ],
-  privateMetadata: [],
-  supportUrl: "http://localhost:8888/support",
-  tokens: [],
-  type: AppTypeEnum.THIRDPARTY,
-  version: "1.0.0",
-  webhooks: [],
-};
 
 export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
   __typename: "Manifest",

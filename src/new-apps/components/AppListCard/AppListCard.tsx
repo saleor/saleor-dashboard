@@ -1,6 +1,7 @@
 import { Card, CardActions, CardContent, Typography } from "@material-ui/core";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
+import { buttonMessages } from "@saleor/intl";
 import { Button, useTheme } from "@saleor/macaw-ui";
 import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import React from "react";
@@ -31,14 +32,28 @@ const getAppLinks = (intl: IntlShape): AppLink[] => [
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
+  navigateToAppInstallPage?: (manifestUrl: string) => void;
+  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
-const AppListCard: React.FC<AppListCardProps> = ({ app }) => {
+const AppListCard: React.FC<AppListCardProps> = ({
+  app,
+  navigateToAppInstallPage,
+  navigateToVercelDeploymentPage,
+}) => {
   const { themeType } = useTheme();
   const classes = useStyles();
   const intl = useIntl();
 
   const appLinks = getAppLinks(intl);
+
+  const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
+  const isAppVercelDeployable =
+    "vercelDeploymentUrl" in app && !!navigateToVercelDeploymentPage;
+  const isAppComingSoon =
+    !("manifestUrl" in app) &&
+    !("vercelDeploymentUrl" in app) &&
+    "releaseDate" in app;
 
   return (
     <>
@@ -97,15 +112,41 @@ const AppListCard: React.FC<AppListCardProps> = ({ app }) => {
             </>
           )}
         </CardContent>
-        <Hr />
-        <CardActions className={classes.cardActions}>
-          <Button variant="secondary">
-            <FormattedMessage {...messages.deployToVercel} />
-          </Button>
-          <Button variant="primary">
-            <FormattedMessage {...messages.install} />
-          </Button>
-        </CardActions>
+        {(isAppInstallable || isAppVercelDeployable || isAppComingSoon) && (
+          <>
+            <Hr />
+            <CardActions className={classes.cardActions}>
+              {isAppVercelDeployable && (
+                <Button
+                  variant="secondary"
+                  onClick={() =>
+                    navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
+                  }
+                >
+                  <FormattedMessage {...messages.deployToVercel} />
+                </Button>
+              )}
+              {isAppInstallable && (
+                <Button
+                  variant="primary"
+                  onClick={() => navigateToAppInstallPage(app.manifestUrl)}
+                >
+                  <FormattedMessage {...buttonMessages.install} />
+                </Button>
+              )}
+              {isAppComingSoon && (
+                <Typography className={classes.releaseDate}>
+                  <FormattedMessage
+                    {...messages.releaseComingSoon}
+                    values={{
+                      releaseDate: app.releaseDate,
+                    }}
+                  />
+                </Typography>
+              )}
+            </CardActions>
+          </>
+        )}
       </Card>
     </>
   );

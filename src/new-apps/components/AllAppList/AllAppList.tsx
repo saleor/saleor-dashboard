@@ -7,9 +7,15 @@ import { useStyles } from "./styles";
 
 interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];
+  navigateToAppInstallPage?: (manifestUrl: string) => void;
+  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
-const AllAppList: React.FC<AllAppListProps> = ({ appList }) => {
+const AllAppList: React.FC<AllAppListProps> = ({
+  appList,
+  navigateToAppInstallPage,
+  navigateToVercelDeploymentPage,
+}) => {
   const classes = useStyles();
 
   if (!appList) {
@@ -19,7 +25,12 @@ const AllAppList: React.FC<AllAppListProps> = ({ appList }) => {
   return (
     <div className={classes.appListWrapper}>
       {appList.map(app => (
-        <AppListCard app={app} key={app.name.en} />
+        <AppListCard
+          key={app.name.en}
+          app={app}
+          navigateToAppInstallPage={navigateToAppInstallPage}
+          navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
+        />
       ))}
     </div>
   );

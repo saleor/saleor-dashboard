@@ -26,9 +26,9 @@ export const messages = defineMessages({
     defaultMessage: "Deploy to Vercel",
     description: "button",
   },
-  install: {
-    id: "KDvRBi",
-    defaultMessage: "Install",
-    description: "button",
+  releaseComingSoon: {
+    id: "oGIPb7",
+    defaultMessage: "Coming soon ({releaseDate})",
+    description: "information",
   },
 });
