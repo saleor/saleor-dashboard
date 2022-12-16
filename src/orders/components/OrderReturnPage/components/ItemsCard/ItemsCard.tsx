@@ -29,8 +29,8 @@ import {
   getQuantityDataFromItems,
   getReplacementDataFromItems,
 } from "../../utils";
-import MaximalButton from "../MaximalButton";
-import ProductErrorCell from "../ProductErrorCell";
+import { MaximalButton } from "../MaximalButton";
+import { ProductErrorCell } from "../ProductErrorCell";
 import { itemsCardMessages } from "./messages";
 import { useItemCardStyles } from "./styles";
 

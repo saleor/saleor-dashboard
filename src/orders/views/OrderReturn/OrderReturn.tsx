@@ -25,7 +25,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, loading } = useOrderDetailsQuery({
+  const { data } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
@@ -87,8 +87,8 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     <OrderReturnPage
       errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
-      loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
+      submitStatus={returnCreateOpts.status}
     />
   );
 };

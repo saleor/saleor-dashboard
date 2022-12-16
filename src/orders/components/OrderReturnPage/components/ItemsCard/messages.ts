@@ -1,3 +1,5 @@
+import { defineMessages } from "react-intl";
+
 export const itemsCardMessages = defineMessages({
   improperValue: {
     id: "xoyCZ/",
