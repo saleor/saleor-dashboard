@@ -3,7 +3,11 @@ import { transactionEventTypeMap } from "@saleor/orders/messages";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export const EventType = ({ event }: { event: TransactionEventFragment }) => {
+interface EventTypeProps {
+  event: TransactionEventFragment;
+}
+
+export const EventType = ({ event }: EventTypeProps) => {
   const mapEventToMessage = transactionEventTypeMap[event.type];
 
   if (mapEventToMessage) {

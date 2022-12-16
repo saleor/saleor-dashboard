@@ -34,7 +34,7 @@ export const findMethodName = (
 
 const mapPaymentKindToTransactionType = (
   kind: TransactionKind,
-): [TransactionEventActionTypeEnum | null, TransactionEventStatus | null] => {
+): [TransactionEventActionTypeEnum, TransactionEventStatus] | [null, null] => {
   switch (kind) {
     case TransactionKind.REFUND:
       return [
