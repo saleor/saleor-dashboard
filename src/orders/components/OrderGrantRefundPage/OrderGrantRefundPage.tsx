@@ -17,11 +17,10 @@ import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getTitle } from "../OrderRefundFulfilledProducts/messages";
 import { ProductsCard, RefundCard } from "./components";
 import { GrantRefundContext } from "./context";
 import { OrderGrantRefundFormData, useGrantRefundForm } from "./form";
-import { grantRefundPageMessages } from "./messages";
+import { getTitle, grantRefundPageMessages } from "./messages";
 import {
   getGrantRefundReducerInitialState,
   grantRefundDefaultState,

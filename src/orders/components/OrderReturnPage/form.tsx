@@ -11,7 +11,6 @@ import useFormset, {
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React, { useEffect } from "react";
 
-import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
   getById,
   getLineItem,
@@ -37,7 +36,6 @@ export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 export interface OrderReturnData {
   amount: number;
   refundShipmentCosts: boolean;
-  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
 export interface OrderReturnHandlers {
@@ -71,7 +69,6 @@ interface OrderReturnProps {
 
 const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
-  amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false,
 });
 

@@ -5,13 +5,12 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { Button } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import OrderAmount from "../OrderRefundReturnAmount";
-import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
@@ -35,7 +34,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, change, submit, isSaveDisabled }) => (
+      {({ data, handlers, /* change,*/ submit, isSaveDisabled }) => (
         <Container>
           <Backlink href={orderUrl(order?.id)}>
             {intl.formatMessage(orderReturnMessages.appTitle, {
@@ -110,18 +109,10 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               )}
             </div>
             <div>
-              <OrderAmount
-                allowNoRefund
-                isReturn
-                amountData={getReturnProductsAmountValues(order, data)}
-                data={data}
-                order={order}
-                disableSubmitButton={isSaveDisabled}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-                onRefund={submit}
-              />
+              {/* TODO */}
+              <Button disabled={isSaveDisabled || loading} onClick={submit}>
+                Submit
+              </Button>
             </div>
           </Grid>
         </Container>

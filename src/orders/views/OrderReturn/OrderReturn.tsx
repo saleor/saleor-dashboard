@@ -77,7 +77,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       returnCreate({
         variables: {
           id: data.order.id,
-          input: new ReturnFormDataParser(data.order, formData).getParsedData(),
+          input: new ReturnFormDataParser(formData).getParsedData(),
         },
       }),
     );
