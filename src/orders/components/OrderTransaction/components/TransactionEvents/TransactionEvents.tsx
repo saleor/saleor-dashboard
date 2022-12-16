@@ -1,5 +1,6 @@
 import { TableCell, TableRow } from "@material-ui/core";
 import EventTime from "@saleor/components/EventTime";
+import Money from "@saleor/components/Money";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -7,6 +8,7 @@ import clsx from "clsx";
 import React, { useState } from "react";
 
 import { EventStatus, PspReference } from "./components";
+import { EventType } from "./components/EventType";
 
 export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[];
@@ -84,26 +86,31 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
       {renderCollection(events, transactionEvent => (
         <TableRow
           onMouseOver={() =>
-            setHoveredPspReference(transactionEvent.reference || null)
+            setHoveredPspReference(transactionEvent.pspReference || null)
           }
           className={clsx(
-            transactionEvent.reference === hoveredPspReference && classes.hover,
+            transactionEvent.pspReference === hoveredPspReference &&
+              classes.hover,
           )}
         >
           <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
             <EventStatus status={transactionEvent.status} />
           </TableCell>
+          <TableCell>
+            <Money money={transactionEvent.amount} />
+          </TableCell>
           <TableCell
             className={classes.colSmall}
-            colSpan={!transactionEvent.reference && 2}
+            colSpan={!transactionEvent.pspReference && 2}
           >
-            {transactionEvent.name}
+            <EventType event={transactionEvent} />
           </TableCell>
-          {transactionEvent.reference && (
+          {transactionEvent.pspReference && (
             <TableCell
               className={clsx(classes.colSmall, classes.colPspReference)}
             >
-              <PspReference reference={transactionEvent.reference} />
+              {/* TODO: Add url to psp reference */}
+              <PspReference reference={transactionEvent.pspReference} />
             </TableCell>
           )}
           <TableCell className={classes.colLast}>

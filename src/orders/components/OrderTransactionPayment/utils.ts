@@ -3,6 +3,7 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
+  TransactionEventActionTypeEnum,
   TransactionEventFragment,
   TransactionEventStatus,
   TransactionKind,
@@ -31,7 +32,51 @@ export const findMethodName = (
 ): string =>
   allMethods.find(method => method.id === gatewayId)?.name ?? gatewayId;
 
-export const mapTransactionsToEvents = (
+const mapPaymentKindToTransactionType = (
+  kind: TransactionKind,
+): [TransactionEventActionTypeEnum, TransactionEventStatus] | [null, null] => {
+  switch (kind) {
+    case TransactionKind.REFUND:
+      return [
+        TransactionEventActionTypeEnum.REFUND,
+        TransactionEventStatus.SUCCESS,
+      ];
+    case TransactionKind.REFUND_ONGOING:
+      return [
+        TransactionEventActionTypeEnum.REFUND,
+        TransactionEventStatus.PENDING,
+      ];
+    case TransactionKind.CANCEL:
+      return [
+        TransactionEventActionTypeEnum.CANCEL,
+        TransactionEventStatus.PENDING,
+      ];
+    case TransactionKind.VOID:
+      return [
+        TransactionEventActionTypeEnum.CANCEL,
+        TransactionEventStatus.SUCCESS,
+      ];
+    case TransactionKind.AUTH:
+      return [
+        TransactionEventActionTypeEnum.AUTHORIZE,
+        TransactionEventStatus.SUCCESS,
+      ];
+    case TransactionKind.CAPTURE:
+      return [
+        TransactionEventActionTypeEnum.CHARGE,
+        TransactionEventStatus.SUCCESS,
+      ];
+    case TransactionKind.PENDING:
+      return [
+        TransactionEventActionTypeEnum.CHARGE,
+        TransactionEventStatus.PENDING,
+      ];
+    default:
+      return [null, null];
+  }
+};
+
+export const mapPaymentToTransactionEvents = (
   payment: OrderPaymentFragment,
 ): TransactionEventFragment[] => {
   const transactions = payment.transactions ?? [];
@@ -40,29 +85,32 @@ export const mapTransactionsToEvents = (
     return [
       {
         id: "",
-        reference: undefined,
-        name: TransactionKind.PENDING,
+        pspReference: undefined,
+        type: TransactionEventActionTypeEnum.AUTHORIZE,
+        name: undefined,
         status: TransactionEventStatus.PENDING,
         createdAt: payment.modified ?? new Date(),
+        amount: null,
         __typename: "TransactionEvent" as const,
       },
     ];
   }
 
   return transactions
-    .map(({ id, isSuccess, kind, created, token }) => ({
-      id,
-      reference: token,
-      name: kind,
-      status:
-        kind === TransactionKind.PENDING
-          ? TransactionEventStatus.PENDING
-          : isSuccess
-          ? TransactionEventStatus.SUCCESS
-          : TransactionEventStatus.FAILURE,
-      createdAt: created,
-      __typename: "TransactionEvent" as const,
-    }))
+    .map(({ id, isSuccess, kind, created, token }) => {
+      const [mappedType, mappedStatus] = mapPaymentKindToTransactionType(kind);
+
+      return {
+        id,
+        pspReference: token,
+        type: mappedType,
+        name: kind,
+        status: !isSuccess ? TransactionEventStatus.FAILURE : mappedStatus,
+        createdAt: created,
+        amount: null,
+        __typename: "TransactionEvent" as const,
+      };
+    })
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),

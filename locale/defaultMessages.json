@@ -1264,10 +1264,6 @@
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
   },
-  "7f4YSA": {
-    "context": "Text displayed after PSP reference is copied to clipboard",
-    "string": "Copied"
-  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -4178,6 +4174,10 @@
   "TKmub+": {
     "string": "This field is required"
   },
+  "TLDkvR": {
+    "context": "transaction event type, transaction was cancelled / voided",
+    "string": "Cancel"
+  },
   "TLNf6K": {
     "context": "window title",
     "string": "Draft Order #{orderNumber}"
@@ -5676,6 +5676,10 @@
   "eUjFjW": {
     "string": "Permission group created"
   },
+  "eVjgIx": {
+    "context": "tooltip, Transaction reference received from payment provider",
+    "string": "PSP reference"
+  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -5719,6 +5723,10 @@
   "f2F1NJ": {
     "context": "section title",
     "string": "Quick Pick"
+  },
+  "f2WJW7": {
+    "context": "transaction event type, amount was captured from client",
+    "string": "Capture"
   },
   "f3B4tc": {
     "context": "attributes, section header",
@@ -6450,6 +6458,10 @@
     "context": "attributes section name",
     "string": "Attributes"
   },
+  "l3iOju": {
+    "context": "transaction event type, transaction was refunded to client",
+    "string": "Refund"
+  },
   "l5V0QT": {
     "context": "boolean attribute type",
     "string": "Boolean"
@@ -7134,6 +7146,10 @@
   },
   "qrWOxx": {
     "string": "No members found"
+  },
+  "qtF0Ft": {
+    "context": "transaction event type, amount was authorized, but not captured",
+    "string": "Authorization"
   },
   "qu/hXD": {
     "string": "Selected {number} items"

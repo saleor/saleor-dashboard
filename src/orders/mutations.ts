@@ -562,6 +562,8 @@ export const createManualTransactionRefund = gql`
   mutation CreateManualTransactionRefund(
     $orderId: ID!
     $amount: PositiveDecimal!
+    # Hack for types mismatch
+    $amount2: Decimal!
     $currency: String!
     $description: String
   ) {
@@ -573,7 +575,12 @@ export const createManualTransactionRefund = gql`
         reference: $description
         amountRefunded: { amount: $amount, currency: $currency }
       }
-      transactionEvent: { status: SUCCESS, type: REFUND, name: $description }
+      transactionEvent: {
+        status: SUCCESS
+        type: REFUND
+        pspReference: $description
+        amount: $amount2
+      }
     ) {
       transaction {
         ...TransactionItem

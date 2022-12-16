@@ -89,6 +89,8 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
                 currency,
                 description,
                 amount,
+                // hack for types mismatch in graphql types
+                amount2: amount,
                 orderId: order?.id,
               });
             }}

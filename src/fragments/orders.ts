@@ -184,10 +184,15 @@ export const invoiceFragment = gql`
 export const transactionEvent = gql`
   fragment TransactionEvent on TransactionEvent {
     id
-    reference
+    pspReference
+    amount {
+      ...Money
+    }
     createdAt
     status
+    type
     name
+    # TODO: Add user and app fields when they're added
   }
 `;
 
@@ -195,8 +200,11 @@ export const transactionItemFragment = gql`
   fragment TransactionItem on TransactionItem {
     id
     type
-    reference
+    pspReference
     actions
+    type
+    status
+    externalUrl
     events {
       ...TransactionEvent
     }

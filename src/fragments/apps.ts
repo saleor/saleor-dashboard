@@ -53,3 +53,11 @@ export const appPermissionFragment = gql`
     code
   }
 `;
+
+export const appAvatarFragment = gql`
+  fragment AppAvatar on App {
+    id
+    name
+    # TODO: Add app image
+  }
+`;
