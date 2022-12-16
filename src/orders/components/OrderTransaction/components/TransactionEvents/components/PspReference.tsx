@@ -6,6 +6,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
+import { PspReferenceLink } from "./PspReferenceLink";
 
 const useStyles = makeStyles(
   theme => ({
@@ -46,19 +47,12 @@ const useStyles = makeStyles(
   },
 );
 
-const ReferenceLink = ({ href, children }) => {
-  if (href) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferer">
-        {children}
-      </a>
-    );
-  }
+export interface PspReferenceProps {
+  reference: string;
+  url?: string;
+}
 
-  return children;
-};
-
-export const PspReference: React.FC<{ reference: string; url?: string }> = ({
+export const PspReference: React.FC<PspReferenceProps> = ({
   reference,
   url,
 }) => {
@@ -72,7 +66,7 @@ export const PspReference: React.FC<{ reference: string; url?: string }> = ({
         className={classes.pill}
         header={intl.formatMessage(messages.pspReference)}
       >
-        <ReferenceLink href={url}>{reference}</ReferenceLink>
+        <PspReferenceLink href={url}>{reference}</PspReferenceLink>
       </OverflowTooltip>
       {!!navigator.clipboard && (
         <IconButton
