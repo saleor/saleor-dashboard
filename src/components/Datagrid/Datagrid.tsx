@@ -281,8 +281,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       <div className={classes.columnPicker}>
                         <ColumnPicker
                           IconButtonProps={{
-                            className: classes.columnPickerBtn,
-                            variant: "secondary",
+                            className: classes.ghostIcon,
+                            variant: "ghost",
                             hoverOutline: false,
                           }}
                           availableColumns={availableColumnsChoices}

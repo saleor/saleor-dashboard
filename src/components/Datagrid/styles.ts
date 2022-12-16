@@ -34,10 +34,8 @@ const useStyles = makeStyles(
         justifyContent: "center",
         height: 48,
       },
-      columnPickerBtn: {
-        "&:hover": {
-          color: theme.palette.saleor.main[1],
-        },
+      ghostIcon: {
+        color: theme.palette.saleor.main[1],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {

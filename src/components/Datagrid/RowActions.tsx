@@ -29,6 +29,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           data-test-id="row-action-button"
           disabled={disabled}
           onClick={handleIconClick}
+          className={classes.ghostIcon}
           variant="ghost"
         >
           {firstMenuItem.Icon}
@@ -38,7 +39,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           disabled={disabled}
           Icon={MoreHorizontalIcon}
           IconButtonProps={{
-            className: classes.columnPickerBtn,
+            className: classes.ghostIcon,
             hoverOutline: false,
             state: "default",
           }}
