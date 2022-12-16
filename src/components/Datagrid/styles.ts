@@ -35,7 +35,7 @@ const useStyles = makeStyles(
         height: 48,
       },
       ghostIcon: {
-        color: theme.palette.saleor.main[1],
+        color: theme.palette.saleor.main[3],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
