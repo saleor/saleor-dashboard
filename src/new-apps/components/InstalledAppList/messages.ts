@@ -6,4 +6,9 @@ export const messages = defineMessages({
     defaultMessage: "External app",
     description: "label",
   },
+  tunnelDevelopment: {
+    id: "RjT+Vo",
+    defaultMessage: "Tunnel - development",
+    description: "label",
+  },
 });

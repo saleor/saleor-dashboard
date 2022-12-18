@@ -70,6 +70,10 @@
   "+a+2ug": {
     "string": "Members"
   },
+  "+b3KCV": {
+    "context": "button",
+    "string": "Activate"
+  },
   "+c/f61": {
     "context": "retry installation",
     "string": "Retry"
@@ -200,6 +204,10 @@
     "context": "section header",
     "string": "Media"
   },
+  "/PhkXi": {
+    "context": "section header",
+    "string": "Installed Apps"
+  },
   "/TF6BZ": {
     "string": "Search Products"
   },
@@ -232,6 +240,10 @@
   "/dnWE8": {
     "context": "products in collection",
     "string": "Products in {name}"
+  },
+  "/eTYOp": {
+    "context": "app support",
+    "string": "Support"
   },
   "/glQgs": {
     "string": "No channels found"
@@ -1504,6 +1516,10 @@
     "context": "order discount was updated automatically event title",
     "string": "Order discount was updated automatically updated"
   },
+  "ARfw53": {
+    "context": "description",
+    "string": "Install apps created by Saleor team or install external apps."
+  },
   "AVF5T5": {
     "context": "voucher end date, switch button",
     "string": "Set end date"
@@ -1853,6 +1869,9 @@
     "context": "order history message",
     "string": "Order was refunded by {refundedBy}"
   },
+  "D3idYv": {
+    "string": "Settings"
+  },
   "D4CsYK": {
     "context": "status filter label",
     "string": "Status"
@@ -2057,6 +2076,10 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
+  },
+  "EnAQ3D": {
+    "context": "label",
+    "string": "App manifest URL"
   },
   "Epm41J": {
     "context": "change warehouse dialog warehouse list label",
@@ -2297,6 +2320,10 @@
   "GJAX0z": {
     "context": "order history message",
     "string": "Order was placed"
+  },
+  "GKQGKG": {
+    "context": "app data privacy",
+    "string": "Data privacy"
   },
   "GLX9II": {
     "context": "billing address",
@@ -2882,6 +2909,10 @@
     "context": "dialog title",
     "string": "Delete products"
   },
+  "KDvRBi": {
+    "context": "button",
+    "string": "Install"
+  },
   "KFv8hX": {
     "string": "An attribute already exists."
   },
@@ -3128,6 +3159,10 @@
   },
   "MYA6EV": {
     "string": "Third party apps are installed with App Manifests. They contain UI accessible from dashboard and can extend it."
+  },
+  "MaTR88": {
+    "context": "header",
+    "string": "Integrations"
   },
   "MbZHXE": {
     "context": "column title balance",
@@ -3816,6 +3851,10 @@
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
+  "RjT+Vo": {
+    "context": "label",
+    "string": "Tunnel - development"
+  },
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
@@ -4345,6 +4384,10 @@
   "VTITVe": {
     "context": "section header",
     "string": "Staff Member Information"
+  },
+  "VTq2gn": {
+    "context": "section header",
+    "string": "Coming Soon"
   },
   "VZsE96": {
     "string": "Collection Name"
@@ -5517,6 +5560,10 @@
     "context": "attributes, section header",
     "string": "Variant Attributes"
   },
+  "f91E8b": {
+    "context": "app repository",
+    "string": "Repository"
+  },
   "fEfCtO": {
     "context": "voucher discount type",
     "string": "Percentage"
@@ -5710,6 +5757,10 @@
   },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
+  },
+  "gygOA1": {
+    "context": "button",
+    "string": "Deactivate"
   },
   "gz9v22": {
     "context": "PluginChannelConfigurationCell channel title",
@@ -6459,6 +6510,10 @@
     "context": "money amount input label",
     "string": "Enter amount"
   },
+  "nA2g2e": {
+    "context": "label",
+    "string": "External app"
+  },
   "nEWp+k": {
     "context": "quantity of ordered products",
     "string": "Quantity"
@@ -6583,6 +6638,10 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
+  "oGIPb7": {
+    "context": "information",
+    "string": "Coming soon ({releaseDate})"
+  },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
@@ -6626,6 +6685,10 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
+  },
+  "ohQrzn": {
+    "context": "button",
+    "string": "Deploy to Vercel"
   },
   "oiuwOl": {
     "context": "button",
@@ -6759,6 +6822,10 @@
   "puRlnN": {
     "context": "card subtitle",
     "string": "Entered prices"
+  },
+  "puUvKO": {
+    "context": "button",
+    "string": "Install external app"
   },
   "puikeb": {
     "context": "button",
@@ -7865,6 +7932,10 @@
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
   },
+  "yZB41s": {
+    "context": "section header",
+    "string": "All Apps"
+  },
   "yatGsm": {
     "context": "card title",
     "string": "Order Value"
@@ -7918,6 +7989,10 @@
   "z1y9oL": {
     "context": "file attribute type",
     "string": "File"
+  },
+  "z2yYL3": {
+    "context": "hint",
+    "string": "Usually ends with /api/manifest"
   },
   "z8jo8h": {
     "context": "button",

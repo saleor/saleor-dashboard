@@ -342,6 +342,16 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Install",
     description: "button",
   },
+  activate: {
+    id: "+b3KCV",
+    defaultMessage: "Activate",
+    description: "button",
+  },
+  deactivate: {
+    id: "gygOA1",
+    defaultMessage: "Deactivate",
+    description: "button",
+  },
 });
 
 export const sectionNames = defineMessages({

@@ -17,7 +17,9 @@ import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import { resolveSectionsAvailability } from "./utils";
 
-export type AppListPageProps = AppListPageSections & ListProps;
+export interface AppListPageProps extends AppListPageSections, ListProps {
+  onInstalledAppRemove: (id: string) => void;
+}
 
 export const AppListPage: React.FC<AppListPageProps> = props => {
   const {
@@ -26,6 +28,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     comingSoonMarketplaceApps,
     disabled,
     settings,
+    onInstalledAppRemove,
     onUpdateListSettings,
   } = props;
   const intl = useIntl();
@@ -63,6 +66,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               appList={installedApps}
               disabled={disabled}
               settings={settings}
+              onRemove={onInstalledAppRemove}
               onUpdateListSettings={onUpdateListSettings}
             />
           </>

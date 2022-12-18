@@ -16,3 +16,8 @@ export const getComingSoonMarketplaceApps = (
       !("vercelDeploymentUrl" in app) &&
       "releaseDate" in app,
   ) as GetV2SaleorAppsResponse.ComingSoonSaleorApp[] | undefined;
+
+const tunnelKeywords = [".ngrok.io", ".saleor.live"];
+
+export const isAppInTunnel = (manifestUrl: string) =>
+  Boolean(tunnelKeywords.find(keyword => manifestUrl.includes(keyword)));

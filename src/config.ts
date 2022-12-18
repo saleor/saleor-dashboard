@@ -2,10 +2,6 @@ import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
 
-window.__SALEOR_CONFIG__ = window.__SALEOR_CONFIG__
-  ? window.__SALEOR_CONFIG__
-  : {};
-
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () =>
   window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
