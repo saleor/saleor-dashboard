@@ -29,7 +29,7 @@ export interface AppDetailsUrlMountQueryParams {
 }
 
 interface FeatureFlagsQueryParams {
-  featureFlags?: Flag[];
+  featureFlags?: Record<string, string>;
 }
 
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
