@@ -2,6 +2,7 @@ import { getApiUrl } from "@saleor/config";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
+import { Flag } from "../hooks/useFlag/types";
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
 
 export const MANIFEST_ATTR = "manifestUrl";
@@ -27,9 +28,14 @@ export interface AppDetailsUrlMountQueryParams {
   customerIds?: string[];
 }
 
+interface FeatureFlagsQueryParams {
+  featureFlags?: Flag[];
+}
+
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   SingleAction &
-  AppDetailsUrlMountQueryParams;
+  AppDetailsUrlMountQueryParams &
+  FeatureFlagsQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
@@ -131,3 +137,13 @@ export const resolveAppIframeUrl = (
 
   return urlJoin(appUrl, window.location.search, iframeContextQueryString);
 };
+
+export const prepareFeatureFlagsList = (
+  flags: Flag[],
+): Record<string, string> =>
+  flags.reduce<Record<string, string>>((acc, flag) => {
+    if (flag.enabled) {
+      acc[flag.name] = `${flag.value}`;
+    }
+    return acc;
+  }, {});

@@ -10,6 +10,8 @@ import clsx from "clsx";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router";
 
+import { useAllFlags } from "../../../hooks/useFlag";
+import { prepareFeatureFlagsList } from "../../urls";
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
 import useTokenRefresh from "./useTokenRefresh";
@@ -42,6 +44,7 @@ export const AppFrame: React.FC<Props> = ({
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
+  const flags = useAllFlags();
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
   const { locale } = useLocale();
@@ -102,7 +105,10 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, params)}
+      src={resolveAppIframeUrl(appId, src, {
+        ...params,
+        featureFlags: prepareFeatureFlagsList(flags),
+      })}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}
