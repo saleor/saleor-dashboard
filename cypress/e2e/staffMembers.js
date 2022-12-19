@@ -204,7 +204,7 @@ describe("Staff members", () => {
       cy.get('[data-test-id="staffEmail"]')
         .click()
         .clear()
-        .type("testers+dashboard@saleor.io { enter }");
+        .type("testers+dashboard@saleor.io { enter }"); // TODO change to access current admin email
     },
   );
 });
