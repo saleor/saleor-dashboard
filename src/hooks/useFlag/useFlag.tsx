@@ -15,7 +15,7 @@ export const useFlag = (flags: string[]): Flag[] => {
   return envFlags;
 };
 
-export const useFlags = (): Flag[] => {
+export const useAllFlags = (): Flag[] => {
   const envFlags = useAllEnvFlags();
   const flagsmishFlags = useAllFlagsmishFlags();
 
