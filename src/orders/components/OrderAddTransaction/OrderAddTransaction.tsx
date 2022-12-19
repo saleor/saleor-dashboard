@@ -8,8 +8,7 @@ import { addTransactionMessages } from "./messages";
 
 interface OrderAddTransactionProps {
   order: OrderDetailsFragment;
-  // TODO: Add transactions by staff members
-  // onAddTransaction: () => void;
+  onAddTransaction: () => void;
 }
 
 const useStyles = makeStyles(
@@ -18,12 +17,16 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
   }),
   { name: "OrderAddTransaction" },
 );
 
-const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order }) => {
+const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
+  order,
+  onAddTransaction,
+}) => {
   const classes = useStyles();
 
   if (!order) {
@@ -41,9 +44,8 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order }) => {
   }
 
   return (
-    // TODO: Add transaction by staff members
     <div className={classes.wrapper}>
-      <Button variant="primary">
+      <Button variant="primary" onClick={onAddTransaction}>
         <FormattedMessage {...addTransactionMessages.captureTransaction} />
       </Button>
     </div>

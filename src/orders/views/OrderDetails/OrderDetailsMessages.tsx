@@ -1,6 +1,8 @@
 import { handleNestedMutationErrors } from "@saleor/auth";
+import { formatMoney } from "@saleor/components/Money";
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import {
+  CreateManualTransactionCaptureMutation,
   InvoiceEmailSendMutation,
   InvoiceRequestMutation,
   OrderAddNoteMutation,
@@ -22,11 +24,14 @@ import {
   OrderUpdateMutation,
   OrderVoidMutation,
 } from "@saleor/graphql";
+import useLocale from "@saleor/hooks/useLocale";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import {
   getOrderTransactionErrorMessage,
+  getTransactionCreateErrorMessage,
+  transactionCreateMessages,
   transactionRequestMessages as transactionMessages,
 } from "@saleor/utils/errors/transaction";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -67,6 +72,9 @@ interface OrderDetailsMessages {
     handleTransactionAction: (
       data: OrderTransactionRequestActionMutation,
     ) => void;
+    handleAddManualTransaction: (
+      data: CreateManualTransactionCaptureMutation,
+    ) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
@@ -80,6 +88,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const [, closeModal] = createDialogActionHandlers(
     navigate,
@@ -350,7 +359,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
-
   const handleTransactionAction = (
     data: OrderTransactionRequestActionMutation,
   ) => {
@@ -365,6 +373,29 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
         ? getOrderTransactionErrorMessage(errors[0], intl)
         : intl.formatMessage(transactionMessages.success),
     });
+  };
+  const handleAddManualTransaction = (
+    data: CreateManualTransactionCaptureMutation,
+  ) => {
+    const {
+      transactionCreate: { errors, transaction },
+    } = data;
+    const isError = !!errors.length;
+
+    if (!isError) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(transactionCreateMessages.success, {
+          amount: formatMoney(transaction.chargedAmount, locale),
+        }),
+      });
+      closeModal();
+    } else {
+      notify({
+        status: "error",
+        text: getTransactionCreateErrorMessage(errors[0], intl),
+      });
+    }
   };
 
   return children({
@@ -388,5 +419,6 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleShippingMethodUpdate,
     handleUpdate,
     handleTransactionAction,
+    handleAddManualTransaction,
   });
 };

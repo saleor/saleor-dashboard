@@ -1,6 +1,8 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
   FulfillmentStatus,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
@@ -16,6 +18,7 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderManualTransactionDialog } from "@saleor/orders/components/OrderManualTransactionDialog";
 import { OrderTransactionActionDialog } from "@saleor/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -80,6 +83,10 @@ interface OrderUnconfirmedDetailsProps {
     OrderTransactionRequestActionMutation,
     OrderTransactionRequestActionMutationVariables
   >;
+  orderAddManualTransaction: PartialMutationProviderOutput<
+    CreateManualTransactionCaptureMutation,
+    CreateManualTransactionCaptureMutationVariables
+  >;
   orderInvoiceSend: any;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
@@ -110,6 +117,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   orderTransactionAction,
+  orderAddManualTransaction,
   openModal,
   closeModal,
 }) => {
@@ -252,6 +260,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onPaymentPaid={() => openModal("mark-paid")}
             onProfileView={() => navigate(customerUrl(order.user.id))}
+            onAddManualTransaction={() => openModal("add-manual-transaction")}
             onInvoiceClick={id =>
               window.open(
                 order.invoices.find(invoice => invoice.id === id)?.url,
@@ -438,6 +447,22 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
+      />
+      <OrderManualTransactionDialog
+        open={params.action === "add-manual-transaction"}
+        onClose={closeModal}
+        confirmButtonState={orderAddManualTransaction.opts.status}
+        currency={data?.order?.totalBalance?.currency}
+        onCreateTransaction={({ amount, description }) =>
+          orderAddManualTransaction.mutate({
+            currency: data?.order?.totalBalance?.currency,
+            orderId: id,
+            amount,
+            // hack for GraphQL different types
+            amount2: amount,
+            description,
+          })
+        }
       />
       <OrderAddressFields
         action={params?.action}
