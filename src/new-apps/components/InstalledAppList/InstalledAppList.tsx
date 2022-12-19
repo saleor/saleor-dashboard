@@ -16,7 +16,7 @@ import { AppListItemFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { useAppListContext } from "@saleor/new-apps/context";
 import { AppUrls } from "@saleor/new-apps/urls";
-import { isAppInTunnel } from "@saleor/new-apps/utils";
+import { isAppInternal, isAppInTunnel } from "@saleor/new-apps/utils";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
@@ -75,11 +75,13 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
                 <Typography variant="body1" className={classes.version}>
                   {`v${app.version}`}
                 </Typography>
-                <Pill
-                  color="warning"
-                  className={classes.externalAppLabel}
-                  label={intl.formatMessage(messages.externalApp)}
-                />
+                {app.manifestUrl && isAppInternal(app.manifestUrl) && (
+                  <Pill
+                    color="warning"
+                    className={classes.externalAppLabel}
+                    label={intl.formatMessage(messages.externalApp)}
+                  />
+                )}
               </div>
               {app.manifestUrl && (
                 <AppManifestTableDisplay manifestUrl={app.manifestUrl} />

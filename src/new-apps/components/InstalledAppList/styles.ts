@@ -25,6 +25,7 @@ export const useStyles = makeStyles(
         theme.palette.type === "dark"
           ? alpha(theme.palette.saleor.generic.light, 0.8)
           : theme.palette.saleor.generic.dark,
+      whiteSpace: "nowrap",
     },
     actions: {
       alignItems: "center",
@@ -45,7 +46,6 @@ export const useStyles = makeStyles(
       paddingBottom: theme.spacing(1),
     },
     colLogo: {
-      display: "flex",
       width: "100%",
       "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
         paddingLeft: 0,

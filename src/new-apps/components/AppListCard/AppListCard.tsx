@@ -15,18 +15,21 @@ interface AppLink {
   url: string;
 }
 
-const getAppLinks = (intl: IntlShape): AppLink[] => [
+const getAppLinks = (
+  intl: IntlShape,
+  app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
+): AppLink[] => [
   {
     name: intl.formatMessage(messages.repository),
-    url: "",
+    url: app.repositoryUrl,
   },
   {
     name: intl.formatMessage(messages.support),
-    url: "",
+    url: app.supportUrl,
   },
   {
     name: intl.formatMessage(messages.dataPrivacy),
-    url: "",
+    url: app.privacyUrl,
   },
 ];
 
@@ -45,8 +48,6 @@ const AppListCard: React.FC<AppListCardProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const appLinks = getAppLinks(intl);
-
   const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
   const isAppVercelDeployable =
     "vercelDeploymentUrl" in app && !!navigateToVercelDeploymentPage;
@@ -54,6 +55,8 @@ const AppListCard: React.FC<AppListCardProps> = ({
     !("manifestUrl" in app) &&
     !("vercelDeploymentUrl" in app) &&
     "releaseDate" in app;
+
+  const appLinks = isAppComingSoon ? [] : getAppLinks(intl, app);
 
   return (
     <>
@@ -83,7 +86,9 @@ const AppListCard: React.FC<AppListCardProps> = ({
               {appLinks.map(link => (
                 <li key={link.name}>
                   <Typography>
-                    <Link href={link.url}>{link.name}</Link>
+                    <Link href={link.url} target="_blank">
+                      {link.name}
+                    </Link>
                   </Typography>
                 </li>
               ))}
