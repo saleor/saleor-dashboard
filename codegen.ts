@@ -1,0 +1,88 @@
+import { CodegenConfig } from "@graphql-codegen/cli";
+
+const config: CodegenConfig = {
+  overwrite: true,
+  schema: "./introspection.json",
+  generates: {
+    "./src/graphql/fragmentTypes.generated.ts": {
+      plugins: [
+        {
+          add: {
+            content: "/* eslint-disable */",
+          },
+        },
+        "fragment-matcher",
+      ],
+      config: {
+        minify: false,
+        apolloClientVersion: 3,
+      },
+    },
+    "./src/graphql/typePolicies.generated.ts": {
+      plugins: [
+        {
+          add: {
+            content: "/* eslint-disable */",
+          },
+        },
+        "typescript-apollo-client-helpers",
+      ],
+    },
+    "./src/graphql/types.generated.ts": {
+      documents: [
+        "./src/**/queries.ts",
+        "./src/**/mutations.ts",
+        "./src/**/fragments/*.ts",
+        "./src/searches/*.ts",
+      ],
+      config: {
+        nonOptionalTypename: true,
+        avoidOptionals: {
+          field: true,
+          inputValue: false,
+          object: false,
+          defaultValue: false,
+        },
+        namingConvention: {
+          enumValues: "change-case-all#upperCase",
+        },
+        onlyOperationTypes: true,
+      },
+      plugins: [
+        {
+          add: {
+            content: "/* eslint-disable */",
+          },
+        },
+        "typescript",
+        "typescript-operations",
+      ],
+    },
+    "./src/graphql/hooks.generated.ts": {
+      documents: [
+        "./src/**/queries.ts",
+        "./src/**/mutations.ts",
+        "./src/**/fragments/*.ts",
+        "./src/searches/*.ts",
+      ],
+      preset: "import-types",
+      presetConfig: {
+        typesPath: "./types.generated",
+      },
+      config: {
+        withHooks: true,
+        apolloReactHooksImportFrom: "@saleor/hooks/graphql",
+      },
+      plugins: [
+        {
+          add: {
+            content: "/* eslint-disable */",
+          },
+        },
+        "typescript-react-apollo",
+      ],
+    },
+  },
+};
+
+export default config;
