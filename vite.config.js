@@ -37,6 +37,10 @@ export default defineConfig(({ command, mode }) => {
     FLAGSMISH_ID,
   } = env;
 
+  const featureFlagsEnvs = Object.fromEntries(
+    Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
+  );
+
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
   const enableSentry =
@@ -126,6 +130,7 @@ export default defineConfig(({ command, mode }) => {
         DEMO_MODE,
         FLAGSMISH_ID,
         FLAGS_ENABLED,
+        ...featureFlagsEnvs,
       },
     },
     build: {
