@@ -178,6 +178,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         <SingleAutocompleteSelectField
           data-test-id="address-edit-country-select-field"
           disabled={disabled}
+          autocomplete="new-password"
           displayValue={displayCountry}
           error={!!formErrors.country}
           helperText={getErrorMessage(formErrors.country, intl)}
@@ -191,11 +192,13 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           choices={countries}
           InputProps={{
             spellCheck: false,
+            autoComplete: "new-password",
           }}
         />
         {isFieldAllowed("countryArea") && (
           <SingleAutocompleteSelectField
             disabled={disabled}
+            autocomplete="new-password"
             data-test-id="address-edit-country-area-field"
             displayValue={data.countryArea}
             error={!!formErrors.countryArea}

@@ -245,6 +245,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <SingleAutocompleteSelectField
             disabled={disabled}
+            autocomplete="new-password"
             data-test-id="address-edit-country-select-field"
             displayValue={countryDisplayValue}
             error={!!formErrors.country}
@@ -266,6 +267,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           {isFieldAllowed(PossibleFormFields.COUNTRY_AREA) && (
             <SingleAutocompleteSelectField
               disabled={disabled}
+              autocomplete="new-password"
               data-test-id="address-edit-country-area-field"
               displayValue={data.countryArea}
               error={!!formErrors.countryArea}
