@@ -1,20 +1,6 @@
-export interface SaleorAppIntegration {
-  name: string;
-  /**
-   * @deprecated
-   */
-  legacyLogo: string;
-  logo: {
-    light: string;
-    dark: string;
-  };
-}
+import { AppListItemFragment } from "@saleor/graphql";
 
-export interface SaleorMarketplaceApp {
-  id: string;
-  name: string;
-  logo: string | null;
-  description: string;
-  features: string[];
-  integrations: SaleorAppIntegration[];
+export interface InstalledApp {
+  app: AppListItemFragment;
+  isExternal: boolean;
 }

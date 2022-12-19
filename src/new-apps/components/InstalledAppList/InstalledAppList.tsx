@@ -15,8 +15,9 @@ import TableRowLink from "@saleor/components/TableRowLink";
 import { AppListItemFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import { useAppListContext } from "@saleor/new-apps/context";
+import { InstalledApp } from "@saleor/new-apps/types";
 import { AppUrls } from "@saleor/new-apps/urls";
-import { isAppInternal, isAppInTunnel } from "@saleor/new-apps/utils";
+import { isAppInTunnel } from "@saleor/new-apps/utils";
 import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
@@ -28,7 +29,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface InstalledAppListProps extends ListProps {
-  appList?: AppListItemFragment[];
+  appList?: InstalledApp[];
   onRemove: (id: string) => void;
 }
 
@@ -58,13 +59,14 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   return (
     <Table className={classes.table}>
       <TableBody>
-        {appList.map(app => (
+        {appList.map(({ app, isExternal }) => (
           <TableRowLink
             key={app.id}
             className={classes.row}
             href={AppUrls.resolveAppUrl(app.id)}
           >
             <TableCellAvatar
+              initials={app.name[0]?.toUpperCase()}
               thumbnail={undefined}
               className={clsx(classes.col, classes.colLogo)}
             >
@@ -75,7 +77,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
                 <Typography variant="body1" className={classes.version}>
                   {`v${app.version}`}
                 </Typography>
-                {app.manifestUrl && isAppInternal(app.manifestUrl) && (
+                {isExternal && (
                   <Pill
                     color="warning"
                     className={classes.externalAppLabel}

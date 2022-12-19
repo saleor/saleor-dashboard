@@ -1,4 +1,4 @@
-import { Avatar as MuiAvatar } from "@material-ui/core";
+import { Avatar as MuiAvatar, Typography } from "@material-ui/core";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -39,6 +39,7 @@ const useStyles = makeStyles(
 );
 
 export interface AvatarProps {
+  initials?: string;
   thumbnail?: string;
   alignRight?: boolean;
   avatarProps?: string;
@@ -49,11 +50,12 @@ export interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({
   children,
   alignRight,
+  initials,
   thumbnail,
   avatarProps,
   badge,
 }) => {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   return (
     <div
@@ -62,7 +64,11 @@ const Avatar: React.FC<AvatarProps> = ({
       })}
     >
       {badge}
-      {!thumbnail ? (
+      {!thumbnail && initials ? (
+        <MuiAvatar className={clsx(classes.avatar, avatarProps)}>
+          <Typography variant="h3">{initials}</Typography>
+        </MuiAvatar>
+      ) : !thumbnail ? (
         <MuiAvatar className={clsx(classes.avatar, avatarProps)}>
           <ImageIcon color="primary" data-test-id="imageIcon" />
         </MuiAvatar>

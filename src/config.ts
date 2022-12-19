@@ -16,6 +16,13 @@ export const MARKETPLACE_SALEOR_APPS_JSON_PATH =
 export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
   window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 
+export const AppsConfig = {
+  marketplaceUrl: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_URL,
+  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
+    ";",
+  ) || [".ngrok.io", ".saleor.live"],
+};
+
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
   first: 20,

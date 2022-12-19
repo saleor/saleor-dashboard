@@ -49,6 +49,7 @@ export const useStyles = makeStyles(
       width: "100%",
       "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
         paddingLeft: 0,
+        width: "100%",
       },
       height: "auto",
     },

@@ -15,7 +15,11 @@ import SectionHeader from "../SectionHeader";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
-import { resolveSectionsAvailability } from "./utils";
+import {
+  getVerifiedInstallableMarketplaceApps,
+  getVerifiedInstalledApps,
+  resolveSectionsAvailability,
+} from "./utils";
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
   onInstalledAppRemove: (id: string) => void;
@@ -33,7 +37,18 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
-  const sectionsAvailability = resolveSectionsAvailability(props);
+  const verifiedInstalledApps = getVerifiedInstalledApps(
+    installedApps,
+    installableMarketplaceApps,
+  );
+  const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
+    installedApps,
+    installableMarketplaceApps,
+  );
+  const sectionsAvailability = resolveSectionsAvailability({
+    ...props,
+    installableMarketplaceApps: verifiedInstallableMarketplaceApps,
+  });
   const navigate = useNavigator();
 
   const navigateToAppInstallPage = useCallback(
@@ -63,7 +78,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           <>
             <SectionHeader title={intl.formatMessage(messages.installedApps)} />
             <InstalledAppList
-              appList={installedApps}
+              appList={verifiedInstalledApps}
               disabled={disabled}
               settings={settings}
               onRemove={onInstalledAppRemove}
@@ -75,7 +90,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           <>
             <SectionHeader title={intl.formatMessage(messages.allApps)} />
             <AllAppList
-              appList={installableMarketplaceApps}
+              appList={verifiedInstallableMarketplaceApps}
               navigateToAppInstallPage={navigateToAppInstallPage}
               navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
             />
