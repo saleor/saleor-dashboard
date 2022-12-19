@@ -149,7 +149,7 @@ const StaffList: React.FC<StaffListProps> = props => {
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
-                <div className={classes.avatar}>
+                <div className={classes.avatar} data-test-id="staffAvatar">
                   {maybe(() => staffMember.avatar.url) ? (
                     <img
                       className={classes.avatarImage}

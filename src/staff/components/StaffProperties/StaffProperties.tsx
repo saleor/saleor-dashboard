@@ -235,6 +235,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   fullWidth
                   inputProps={{
                     spellCheck: false,
+                    "data-test-id": "staffEmail",
                   }}
                 />
               </div>

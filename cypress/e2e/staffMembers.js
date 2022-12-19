@@ -6,6 +6,7 @@ import faker from "faker";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
@@ -178,13 +179,32 @@ describe("Staff members", () => {
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
       const firstName = faker.name.firstName();
-      const emailInvite = `testers+dashboard@saleor.io`;
+      const emailInvite = `testers+dashboard@saleor.io`; // TODO change to access current admin email
 
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click();
       fillUpUserDetailsWithNotUniqueEmail(firstName, lastName, emailInvite);
+    },
+  );
+
+  it(
+    "should not be able to update staff member with not unique email. TC: SALEOR_3509",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const lowerCasemail = email.toLowerCase();
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(SHARED_ELEMENTS.searchInput)
+        .type(`${lowerCasemail} {enter}`);
+      cy.get('[data-test-id="staffAvatar"]')
+        .first()
+        .click();
+      cy.get('[data-test-id="staffEmail"]')
+        .click()
+        .clear()
+        .type("testers+dashboard@saleor.io { enter }");
     },
   );
 });
