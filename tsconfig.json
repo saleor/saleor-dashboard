@@ -10,8 +10,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es5",
-    "module": "es2022",
-    "moduleResolution": "Node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitThis": true,
@@ -26,6 +24,5 @@
     },
     "resolveJsonModule": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "cypress"]
 }

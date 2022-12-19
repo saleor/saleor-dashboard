@@ -3,7 +3,7 @@ import flagsmith from "flagsmith";
 import { Flag } from "./types";
 
 flagsmith.init({
-  environmentID: import.meta.env.FLAGSMISH_ID,
+  environmentID: process.env.FLAGSMISH_ID,
   cacheFlags: false,
 });
 

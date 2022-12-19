@@ -33,6 +33,8 @@ export default defineConfig(({ command, mode }) => {
     APP_TEMPLATE_GALLERY_PATH,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
+    FLAGS_ENABLED,
+    FLAGSMISH_ID,
   } = env;
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
@@ -122,6 +124,8 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
+        FLAGSMISH_ID,
+        FLAGS_ENABLED,
       },
     },
     build: {
