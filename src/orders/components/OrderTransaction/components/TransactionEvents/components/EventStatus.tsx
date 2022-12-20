@@ -37,5 +37,8 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill color="info" label={intl.formatMessage(statusMessages.request)} />
       );
+    default:
+      console.error("Unknown EventStatus", status);
+      return null;
   }
 };
