@@ -9,7 +9,7 @@ export const useFlagsmithFlag = (flagNames: string[]): Flag[] => {
 
   useEffect(() => {
     flagsmith.init({
-      environmentID: process.env.FLAGSMISH_ID || "",
+      environmentID: process.env.FLAGSMISH_ID || "AsFrgeahtvixnb6YhVimuT",
       cacheFlags: true,
       onChange() {
         setFlags(flagsmith.getAllFlags());
@@ -35,7 +35,7 @@ export const useAllFlagsmishFlags = (): Flag[] => {
 
   useEffect(() => {
     flagsmith.init({
-      environmentID: process.env.FLAGSMISH_ID || "",
+      environmentID: process.env.FLAGSMISH_ID || "AsFrgeahtvixnb6YhVimuT",
       cacheFlags: true,
       onChange: () => {
         const all = flagsmith.getAllFlags();
