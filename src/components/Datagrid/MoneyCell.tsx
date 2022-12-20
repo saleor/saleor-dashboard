@@ -128,6 +128,6 @@ export const moneyCellRenderer = (
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: void parseCurrency(value, locale, data.currency),
+    value: parseCurrency(value, locale, data.currency),
   }),
 });
