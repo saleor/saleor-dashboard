@@ -91,8 +91,7 @@ async function generateTypes(suffix) {
           ],
           preset: "import-types",
           presetConfig: {
-            typesPath:
-              process.cwd() + "/src/graphql/types" + suffix + ".generated.ts",
+            typesPath: "./types" + suffix + ".generated",
           },
           config: {
             withHooks: true,
