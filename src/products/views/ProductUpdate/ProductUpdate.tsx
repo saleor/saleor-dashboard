@@ -14,12 +14,15 @@ import {
   ProductMediaCreateMutationVariables,
   useProductDeleteMutation,
   useProductDetailsQuery,
+  useProductDetailsWithTaxesQuery,
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
   useWarehouseListQuery,
 } from "@saleor/graphql";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
+import { useFlag } from "@saleor/hooks/useFlag";
+import { Flag } from "@saleor/hooks/useFlag/types";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@saleor/intl";
@@ -96,13 +99,41 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const { data, loading, refetch } = useProductDetailsQuery({
+  const [taxesFlag = {} as Flag] = useFlag(["show_tax_icluded"]);
+
+  const {
+    data: productDetails,
+    loading: productDetailsLoading,
+    refetch: productDetailsRefetch,
+  } = useProductDetailsQuery({
     displayLoader: true,
     variables: {
       id,
       firstValues: VALUES_PAGINATE_BY,
     },
+    skip: taxesFlag?.enabled,
   });
+
+  const {
+    data: productDetailsWithTaxes,
+    loading: productDetailsWithTaxesLoading,
+    refetch: productDetailsWithTaxesRefetch,
+  } = useProductDetailsWithTaxesQuery({
+    displayLoader: true,
+    variables: {
+      id,
+      firstValues: VALUES_PAGINATE_BY,
+    },
+    skip: !taxesFlag.enabled,
+  });
+
+  const data = taxesFlag.enabled ? productDetailsWithTaxes : productDetails;
+  const loading = taxesFlag.enabled
+    ? productDetailsWithTaxesLoading
+    : productDetailsLoading;
+  const refetch = taxesFlag.enabled
+    ? productDetailsWithTaxesRefetch
+    : productDetailsRefetch;
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
 

@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItemsForProductDetails,
@@ -13,6 +14,7 @@ import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import { Backlink } from "@saleor/components/Backlink";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
+import CardTitle from "@saleor/components/CardTitle";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -38,6 +40,8 @@ import {
   TaxClassBaseFragment,
   WarehouseFragment,
 } from "@saleor/graphql";
+import { useFlag } from "@saleor/hooks/useFlag";
+import { Flag } from "@saleor/hooks/useFlag/types";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -173,6 +177,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
+  const [taxesFlag = {} as Flag] = useFlag(["show_tax_icluded"]);
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || "",
@@ -399,6 +404,16 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
                 <div>
+                  {taxesFlag.enabled ? (
+                    <>
+                      <Card>
+                        <CardTitle title="Taxes" />
+                        <CardContent>Here are your taxes</CardContent>
+                      </Card>
+                      <CardSpacer />
+                    </>
+                  ) : null}
+
                   <ProductOrganization
                     canChangeType={false}
                     categories={categories}
