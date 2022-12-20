@@ -77,17 +77,6 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           defaultMessage: "Invoices",
           description: "section header",
         })}
-        toolbar={
-          onInvoiceGenerate && (
-            <Button onClick={onInvoiceGenerate}>
-              <FormattedMessage
-                id="e0RKe+"
-                defaultMessage="Generate"
-                description="generate invoice button"
-              />
-            </Button>
-          )
-        }
       />
       <CardContent
         className={classNames({
