@@ -51,4 +51,16 @@ describe("parseCurrency", () => {
     // Assert
     expect(parsed).toBe(0.273);
   });
+  it("rounds down correctly (floating point difficult case)", () => {
+        // Arrange
+        const value = "2.07";
+        const currency = "EUR";
+        const locale = Locale.PL;
+    
+        // Act
+        const parsed = parseCurrency(value, locale, currency);
+    
+        // Assert
+        expect(parsed).toBe(2.07);
+  })
 });

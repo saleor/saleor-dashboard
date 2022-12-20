@@ -64,10 +64,15 @@ export const parseCurrency = (
   locale: Locale,
   currency: string,
 ): number => {
-  // Thousand seperators are not allowed
-  const number = parseFloat(value.replace(/,/, "."));
-  const currencyCoefficient = 10 ** getFractionDigits(locale, currency);
-  return Math.floor(number * currencyCoefficient) / currencyCoefficient;
+  // Thousand seperators are not allowedd
+  const number = value.replace(/,/, ".");
+  const fractionDigits = getFractionDigits(locale, currency);
+  const trimmedNumber = number.slice(
+    0,
+    number.lastIndexOf(".") + 1 + fractionDigits,
+  );
+
+  return parseFloat(trimmedNumber);
 };
 
 export const moneyCellRenderer = (
@@ -123,6 +128,6 @@ export const moneyCellRenderer = (
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: parseCurrency(value, locale, data.currency),
+    value: void parseCurrency(value, locale, data.currency),
   }),
 });
