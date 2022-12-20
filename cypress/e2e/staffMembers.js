@@ -10,6 +10,7 @@ import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
+import { TEST_ADMIN_USER } from "../fixtures/users";
 import { activatePlugin, updatePlugin } from "../support/api/requests/Plugins";
 import {
   deleteStaffMembersStartsWith,
@@ -34,6 +35,7 @@ describe("Staff members", () => {
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;
+
   let user;
 
   before(() => {
@@ -67,7 +69,7 @@ describe("Staff members", () => {
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
-        .click();
+        .click({ force: true });
       fillUpUserDetails(firstName, lastName, emailInvite);
       getMailActivationLinkForUser(emailInvite).then(urlLink => {
         cy.clearSessionData().visit(urlLink);
@@ -179,12 +181,12 @@ describe("Staff members", () => {
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
       const firstName = faker.name.firstName();
-      const emailInvite = `testers+dashboard@saleor.io`; // TODO change to access current admin email
-
+      const emailInvite = TEST_ADMIN_USER.email;
+      activatePlugin({ id: "mirumee.notifications.admin_email" });
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
-        .click();
+        .click({ force: true });
       fillUpUserDetailsWithNotUniqueEmail(firstName, lastName, emailInvite);
     },
   );
@@ -193,18 +195,53 @@ describe("Staff members", () => {
     "should not be able to update staff member with not unique email. TC: SALEOR_3509",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
-      const lowerCasemail = email.toLowerCase();
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(SHARED_ELEMENTS.searchInput)
-        .type(`${lowerCasemail} {enter}`);
+        .type(`${email} {enter}`, { delay: 100 });
+      cy.waitForProgressBarToNotExist()
+        .get('[data-test-id="staffStatusText"')
+        .first()
+        .should("be.visible");
+      cy.waitForProgressBarToNotExist();
       cy.get('[data-test-id="staffAvatar"]')
         .first()
         .click();
       cy.get('[data-test-id="staffEmail"]')
         .click()
         .clear()
-        .type("testers+dashboard@saleor.io { enter }"); // TODO change to access current admin email
+        .type(`${TEST_ADMIN_USER.email} {enter}`)
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationErrorMessageShouldAppear();
+    },
+  );
+
+  it(
+    "should create new user and successfully change password. TC: SALEOR_3510",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const newLastName = faker.name.lastName();
+      cy.log(`lastName2: ${newLastName}`);
+      const newEmail = `${startsWith}${newLastName}@example.com`;
+      cy.log(`newEmail: ${newEmail}`);
+      cy.log(`user: ${JSON.stringify(user)}`);
+      inviteStaffMemberWithFirstPermission({ email: newEmail })
+        .then(({ user: userResp }) => {
+          user = userResp;
+          cy.log(`user: ${user}`);
+          getMailActivationLinkForUser(newEmail);
+        })
+        .then(urlLink => {
+          cy.clearSessionData().visit(urlLink);
+          fillUpSetPassword(password);
+          cy.clearSessionData();
+        });
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: Cypress.env("USER_PASSWORD"),
+      });
+      cy.visit(urlList.staffMembers);
     },
   );
 });

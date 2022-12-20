@@ -164,7 +164,11 @@ const StaffList: React.FC<StaffListProps> = props => {
                 <Typography>
                   {getUserName(staffMember) || <Skeleton />}
                 </Typography>
-                <Typography variant={"caption"} className={classes.statusText}>
+                <Typography
+                  variant={"caption"}
+                  className={classes.statusText}
+                  data-test-id="staffStatusText"
+                >
                   {maybe<React.ReactNode>(
                     () =>
                       staffMember.isActive
