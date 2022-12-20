@@ -1,4 +1,3 @@
-import { alpha } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
@@ -15,16 +14,10 @@ export const useStyles = makeStyles(
       fontWeight: 600,
     },
     version: {
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
     },
     tunnel: {
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
       whiteSpace: "nowrap",
     },
     actions: {
@@ -48,7 +41,7 @@ export const useStyles = makeStyles(
     colLogo: {
       width: "100%",
       "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
-        paddingLeft: 0,
+        paddingLeft: theme.spacing(3),
         width: "100%",
       },
       height: "auto",

@@ -2115,6 +2115,10 @@
     "context": "dialog header",
     "string": "Select a page type"
   },
+  "F2cR19": {
+    "context": "error message",
+    "string": "Error details: {message}"
+  },
   "F3Upht": {
     "string": "Product type deleted"
   },
@@ -5303,6 +5307,10 @@
     "context": "input label",
     "string": "New Password"
   },
+  "cMov2n": {
+    "context": "error message",
+    "string": "Error loading apps marketplace"
+  },
   "cNSLLO": {
     "context": "button",
     "string": "Unassign and save"
@@ -7500,6 +7508,10 @@
   "v01/tY": {
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
+  },
+  "v14g7d": {
+    "context": "error message",
+    "string": "Please check if marketplace is properly configured for dashboard, as error might be caused by wrong configuration."
   },
   "v17Lly": {
     "context": "label",

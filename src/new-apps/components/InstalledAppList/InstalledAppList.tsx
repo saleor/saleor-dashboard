@@ -120,7 +120,6 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
       <TableFooter>
         <TableRow>
           <TablePaginationWithContext
-            // colSpan={numberOfColumns}
             disabled={disabled}
             settings={settings}
             onUpdateListSettings={onUpdateListSettings}

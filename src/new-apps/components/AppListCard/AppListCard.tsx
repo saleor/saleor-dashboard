@@ -4,34 +4,12 @@ import Link from "@saleor/components/Link";
 import { buttonMessages } from "@saleor/intl";
 import { Button, useTheme } from "@saleor/macaw-ui";
 import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
+import { getAppDetails } from "@saleor/new-apps/utils";
 import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-
-interface AppLink {
-  name: string;
-  url: string;
-}
-
-const getAppLinks = (
-  intl: IntlShape,
-  app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
-): AppLink[] => [
-  {
-    name: intl.formatMessage(messages.repository),
-    url: app.repositoryUrl,
-  },
-  {
-    name: intl.formatMessage(messages.support),
-    url: app.supportUrl,
-  },
-  {
-    name: intl.formatMessage(messages.dataPrivacy),
-    url: app.privacyUrl,
-  },
-];
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
@@ -48,15 +26,12 @@ const AppListCard: React.FC<AppListCardProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
-  const isAppVercelDeployable =
-    "vercelDeploymentUrl" in app && !!navigateToVercelDeploymentPage;
-  const isAppComingSoon =
-    !("manifestUrl" in app) &&
-    !("vercelDeploymentUrl" in app) &&
-    "releaseDate" in app;
-
-  const appLinks = isAppComingSoon ? [] : getAppLinks(intl, app);
+  const details = getAppDetails(
+    intl,
+    app,
+    navigateToAppInstallPage,
+    navigateToVercelDeploymentPage,
+  );
 
   return (
     <>
@@ -81,9 +56,9 @@ const AppListCard: React.FC<AppListCardProps> = ({
           <Typography className={classes.description} variant="body1">
             {app.description.en}
           </Typography>
-          {appLinks.length > 0 && (
+          {details.links.length > 0 && (
             <ul className={classes.linkList}>
-              {appLinks.map(link => (
+              {details.links.map(link => (
                 <li key={link.name}>
                   <Typography>
                     <Link href={link.url} target="_blank">
@@ -117,34 +92,31 @@ const AppListCard: React.FC<AppListCardProps> = ({
             </>
           )}
         </CardContent>
-        {(isAppInstallable || isAppVercelDeployable || isAppComingSoon) && (
+        {(details.installHandler ||
+          details.vercelDeployHandler ||
+          details.releaseDate) && (
           <>
             <Hr />
             <CardActions className={classes.cardActions}>
-              {isAppVercelDeployable && (
+              {details.vercelDeployHandler && (
                 <Button
                   variant="secondary"
-                  onClick={() =>
-                    navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
-                  }
+                  onClick={details.vercelDeployHandler}
                 >
                   <FormattedMessage {...messages.deployToVercel} />
                 </Button>
               )}
-              {isAppInstallable && (
-                <Button
-                  variant="primary"
-                  onClick={() => navigateToAppInstallPage(app.manifestUrl)}
-                >
+              {details.installHandler && (
+                <Button variant="primary" onClick={details.installHandler}>
                   <FormattedMessage {...buttonMessages.install} />
                 </Button>
               )}
-              {isAppComingSoon && (
+              {details.releaseDate && (
                 <Typography className={classes.releaseDate}>
                   <FormattedMessage
                     {...messages.releaseComingSoon}
                     values={{
-                      releaseDate: app.releaseDate,
+                      releaseDate: details.releaseDate,
                     }}
                   />
                 </Typography>

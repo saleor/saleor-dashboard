@@ -14,7 +14,7 @@ export const resolveSectionsAvailability = ({
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
 
-export const isAppExternal = (
+const isAppExternal = (
   manifestUrl: string,
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
 ) => installableMarketplaceApps?.every(app => app.manifestUrl !== manifestUrl);
@@ -33,7 +33,7 @@ export const getVerifiedInstalledApps = (
  * Installed app list is paginated, it needs to be replace in the future with proper solution,
  * not relying on one page of installed apps list.
  */
-export const isAppNotInstalled = (
+const isAppNotInstalled = (
   manifestUrl: string,
   installedApps?: AppListItemFragment[],
 ) => installedApps?.every(app => app.manifestUrl !== manifestUrl);

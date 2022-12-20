@@ -1,4 +1,3 @@
-import { alpha } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
@@ -9,10 +8,7 @@ export const useStyles = makeStyles(
     sectionHeader: {
       fontSize: 14,
       fontWeight: 700,
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
       margin: theme.spacing(8, 0, 3, 0),
       textTransform: "uppercase",
     },

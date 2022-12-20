@@ -7,6 +7,8 @@ import {
   PermissionEnum,
 } from "@saleor/graphql";
 
+import { GetV2SaleorAppsResponse } from "./marketplace.types";
+
 export const installedAppsList: AppListItemFragment[] = [
   {
     __typename: "App",
@@ -101,4 +103,38 @@ export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
   supportUrl: null,
   tokenTargetUrl: null,
   version: "1.0",
+};
+
+export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+  name: {
+    en: "Test app",
+  },
+  description: {
+    en: "Test app description",
+  },
+  logo: {
+    source: "https://www.example.com/logo",
+    color: "#000000",
+  },
+  integrations: [],
+  manifestUrl: "https://www.example.com/manifest",
+  privacyUrl: "https://www.example.com/privacy",
+  supportUrl: "https://www.example.com/support",
+  repositoryUrl: "https://www.example.com/repository",
+  vercelDeploymentUrl: "https://www.example.com/deployment",
+};
+
+export const comingSoonApp: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+  name: {
+    en: "Test app",
+  },
+  description: {
+    en: "Test app description",
+  },
+  logo: {
+    source: "https://www.example.com/logo",
+    color: "#000000",
+  },
+  integrations: [],
+  releaseDate: "2019-12-16",
 };

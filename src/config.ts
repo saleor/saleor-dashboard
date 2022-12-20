@@ -17,7 +17,9 @@ export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
   window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 
 export const AppsConfig = {
-  marketplaceUrl: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_URL,
+  marketplaceUrl:
+    window.__SALEOR_CONFIG__.APPS_MARKETPLACE_URL ||
+    "https://marketplace-gray.vercel.app/api/v2/saleor-apps",
   tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
     ";",
   ) || [".ngrok.io", ".saleor.live"],

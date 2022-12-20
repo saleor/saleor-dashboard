@@ -1,5 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
+import { AppsConfig } from "@saleor/config";
 import {
   AppSortField,
   AppTypeEnum,
@@ -152,11 +153,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     [activateApp, deactivateApp],
   );
 
-  const { data: marketplaceAppList } = useFetch<
+  const { data: marketplaceAppList, error } = useFetch<
     GetV2SaleorAppsResponse.SaleorApp[]
-  >(
-    "https://marketplace-gray.vercel.app/api/v2/saleor-apps?saleor-url=https://master.staging.saleor.cloud/",
-  );
+  >(AppsConfig.marketplaceUrl);
 
   const installableMarketplaceApps = getInstallableMarketplaceApps(
     marketplaceAppList,
@@ -198,6 +197,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           comingSoonMarketplaceApps={comingSoonMarketplaceApps}
           disabled={loading}
           settings={settings}
+          marketplaceError={error}
           onUpdateListSettings={updateListSettings}
           onInstalledAppRemove={id =>
             openModal("remove-app", {

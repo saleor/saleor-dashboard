@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AllAppList from "../AllAppList";
 import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
+import MarketplaceAlert from "../MarketplaceAlert";
 import SectionHeader from "../SectionHeader";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -22,6 +23,7 @@ import {
 } from "./utils";
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
+  marketplaceError?: Error;
   onInstalledAppRemove: (id: string) => void;
 }
 
@@ -32,6 +34,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     comingSoonMarketplaceApps,
     disabled,
     settings,
+    marketplaceError,
     onInstalledAppRemove,
     onUpdateListSettings,
   } = props;
@@ -86,7 +89,8 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             />
           </>
         )}
-        {sectionsAvailability.all && (
+        <MarketplaceAlert error={marketplaceError} />
+        {sectionsAvailability.all && !marketplaceError && (
           <>
             <SectionHeader title={intl.formatMessage(messages.allApps)} />
             <AllAppList
@@ -96,7 +100,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             />
           </>
         )}
-        {sectionsAvailability.comingSoon && (
+        {sectionsAvailability.comingSoon && !marketplaceError && (
           <>
             <SectionHeader
               title={intl.formatMessage(messages.comingSoonApps)}

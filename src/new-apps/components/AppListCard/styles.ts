@@ -35,19 +35,13 @@ export const useStyles = makeStyles(
       },
     },
     description: {
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
       margin: theme.spacing(3, 0, 1, 0),
     },
     listHeader: {
       fontSize: 14,
       fontWeight: 700,
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
       margin: theme.spacing(2, 0),
       textTransform: "uppercase",
     },
@@ -86,10 +80,7 @@ export const useStyles = makeStyles(
     detailsButton: {},
     installButton: {},
     releaseDate: {
-      color:
-        theme.palette.type === "dark"
-          ? alpha(theme.palette.saleor.generic.light, 0.8)
-          : theme.palette.saleor.generic.dark,
+      color: theme.palette.saleor.main[3],
     },
     bottomInfo: {
       textAlign: "center",
