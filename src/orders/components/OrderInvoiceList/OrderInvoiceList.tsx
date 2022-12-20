@@ -59,7 +59,7 @@ export interface OrderInvoiceListProps {
 }
 
 const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
-  const { invoices, onInvoiceGenerate, onInvoiceClick, onInvoiceSend } = props;
+  const { invoices, onInvoiceClick, onInvoiceSend } = props;
 
   const classes = useStyles(props);
 
