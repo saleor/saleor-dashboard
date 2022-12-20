@@ -29,6 +29,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
 export interface WebhookFormData {
@@ -38,6 +39,7 @@ export interface WebhookFormData {
   name: string;
   secretKey: string | null;
   targetUrl: string;
+  subscriptionQuery: string;
 }
 
 export interface WebhookDetailsPageProps {
@@ -69,6 +71,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
+    subscriptionQuery: webhook?.subscriptionQuery || "",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
@@ -124,6 +127,12 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 />
               </div>
             </Grid>
+            <FormSpacer />
+            <WebhookSubscriptionQuery
+              data={data}
+              onChange={change}
+              errors={errors}
+            />
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}

@@ -1,0 +1,11 @@
+.graphiql-editor {
+  font-size: 20px;
+}
+
+#graphiql-session > div:last-child {
+  display: none !important;
+}
+
+.graphiql-execute-button, .graphiql-sidebar:last-child {
+  display: none;
+}

@@ -58,6 +58,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
             name: data.name,
             secretKey: data.secretKey,
             targetUrl: data.targetUrl,
+            query: data.subscriptionQuery,
           },
         },
       }),
