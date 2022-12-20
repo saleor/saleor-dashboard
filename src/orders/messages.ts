@@ -12,6 +12,18 @@ export const orderMessages = defineMessages({
     defaultMessage: "Order #{orderNumber}",
     description: "page header",
   },
+  grantRefund: {
+    defaultMessage: "Grant refund",
+    id: "kWw0fr",
+  },
+  sendRefund: {
+    defaultMessage: "Send refund",
+    id: "2WenNh",
+  },
+  markAsPaid: {
+    defaultMessage: "Mark as paid",
+    id: "01+5kQ",
+  },
 });
 
 export const transactionEventTypeMap = defineMessages<

@@ -49,6 +49,7 @@ import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import { OrderUngrantedRefunds } from "../OrderUngratedRefunds";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import Title from "./Title";
@@ -244,6 +245,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div data-test-id="order-fulfillment">
+                {order?.totalRemainingGrant?.amount < 0 && (
+                  <OrderUngrantedRefunds orderId={order?.id} />
+                )}
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     showFulfillmentAction={canFulfill}
