@@ -37,6 +37,7 @@ export interface SingleAutocompleteSelectFieldProps
   helperText?: string;
   label?: string;
   InputProps?: InputProps;
+  autocomplete?: string,
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;
@@ -65,6 +66,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     label,
     loading,
     name,
+    autocomplete,
     placeholder,
     value,
     InputProps,
@@ -229,6 +231,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   inputProps={{
                     ...(getInputProps({
                       placeholder,
+                      autocomplete,
                       onClick: handleToggleMenu,
                     }) as OutlinedInputProps["inputProps"]),
                   }}
