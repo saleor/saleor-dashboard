@@ -198,16 +198,16 @@ describe("Staff members", () => {
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(SHARED_ELEMENTS.searchInput)
-        .type(`${email} {enter}`, { delay: 100 });
+        .type(`${email} {enter}`, { delay: 50 });
       cy.waitForProgressBarToNotExist()
-        .get('[data-test-id="staffStatusText"')
+        .get(STAFF_MEMBERS_LIST.staffStatusText)
         .first()
         .should("be.visible");
       cy.waitForProgressBarToNotExist();
-      cy.get('[data-test-id="staffAvatar"]')
+      cy.get(STAFF_MEMBERS_LIST.staffAvatar)
         .first()
         .click();
-      cy.get('[data-test-id="staffEmail"]')
+      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
         .click()
         .clear()
         .type(`${TEST_ADMIN_USER.email} {enter}`)
@@ -221,15 +221,13 @@ describe("Staff members", () => {
     "should create new user and successfully change password. TC: SALEOR_3510",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
+      const newPass = "newTestPass";
       const newLastName = faker.name.lastName();
-      cy.log(`lastName2: ${newLastName}`);
       const newEmail = `${startsWith}${newLastName}@example.com`;
-      cy.log(`newEmail: ${newEmail}`);
-      cy.log(`user: ${JSON.stringify(user)}`);
+
       inviteStaffMemberWithFirstPermission({ email: newEmail })
         .then(({ user: userResp }) => {
           user = userResp;
-          cy.log(`user: ${user}`);
           getMailActivationLinkForUser(newEmail);
         })
         .then(urlLink => {
@@ -237,11 +235,31 @@ describe("Staff members", () => {
           fillUpSetPassword(password);
           cy.clearSessionData();
         });
+
       cy.clearSessionData().loginUserViaRequest("auth", {
         email: newEmail,
         password: Cypress.env("USER_PASSWORD"),
       });
-      cy.visit(urlList.staffMembers);
+
+      cy.visit(urlList.staffMembers)
+        .get(LOGIN_SELECTORS.userMenu)
+        .click();
+      cy.get(LOGIN_SELECTORS.accountSettings).click();
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordBtn).click();
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
+        Cypress.env("USER_PASSWORD"),
+      );
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword)
+        .type(newPass)
+        .get(BUTTON_SELECTORS.submit)
+        .click()
+        .confirmationErrorMessageShouldAppear();
+
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: newPass,
+      });
+      cy.visit(urlList.staffMembers).expectSkeletonIsVisible();
     },
   );
 });
