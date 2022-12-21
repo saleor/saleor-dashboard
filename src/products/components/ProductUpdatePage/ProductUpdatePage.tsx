@@ -178,6 +178,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
   const [taxesFlag = {} as Flag] = useFlag(["show_tax_icluded"]);
+  // eslint-disable-next-line no-console
+  console.log(taxesFlag);
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || "",
