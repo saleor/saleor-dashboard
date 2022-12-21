@@ -154,8 +154,6 @@ export function enterVariantEditPage() {
   cy.get(PRODUCT_DETAILS.dataGridTable)
     .should("be.visible")
     .wait(1000)
-    .get(BUTTON_SELECTORS.showMoreButton)
-    .click()
     .get(PRODUCT_DETAILS.editVariant)
     .click();
 }
