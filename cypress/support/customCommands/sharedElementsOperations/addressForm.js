@@ -14,8 +14,11 @@ Cypress.Commands.add("fillUpBasicAddress", address => {
     .clearAndType(address.city)
     .get(ADDRESS_SELECTORS.postalCode)
     .clearAndType(address.postalCode)
-    .fillAutocompleteSelect(ADDRESS_SELECTORS.country, address.countryFullName);
-  cy.get(ADDRESS_SELECTORS.countryArea).clearAndType(address.countryArea);
+    .fillAutocompleteSelect(ADDRESS_SELECTORS.country, address.countryFullName)
+    .fillAutocompleteSelect(
+      ADDRESS_SELECTORS.countryArea,
+      address.countryAreaFullName,
+    );
 });
 
 Cypress.Commands.add("fillUpAddressForm", address => {
