@@ -244,6 +244,7 @@ export const ProductDetailsWithTaxesDocument = gql`
     slug
     description
     seoTitle
+    taxIncluded
     seoDescription
     rating
     defaultVariant {
