@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import AddressEdit from "@saleor/components/AddressEdit";
+import { createCountryHandler } from "@saleor/components/AddressEdit/createCountryHandler";
 import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
@@ -94,12 +95,14 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
       maxWidth="sm"
     >
       <Form initial={initialForm} onSubmit={handleSubmit}>
-        {({ change, data }) => {
-          const handleCountrySelect = createSingleAutocompleteSelectHandler(
+        {({ change, set, data }) => {
+          const countrySelect = createSingleAutocompleteSelectHandler(
             change,
             setCountryDisplayName,
             countryChoices,
           );
+
+          const handleCountrySelect = createCountryHandler(countrySelect, set);
 
           return (
             <>
