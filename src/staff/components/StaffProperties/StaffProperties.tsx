@@ -215,6 +215,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   fullWidth
                   inputProps={{
                     spellCheck: false,
+                    "data-test-id": "staffFirstName",
                   }}
                 />
               </div>
@@ -225,6 +226,7 @@ const StaffProperties: React.FC<StaffPropertiesProps> = props => {
                   fullWidth
                   inputProps={{
                     spellCheck: false,
+                    "data-test-id": "staffLastName",
                   }}
                 />
               </div>

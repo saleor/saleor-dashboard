@@ -198,7 +198,7 @@ describe("Staff members", () => {
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
         .get(SHARED_ELEMENTS.searchInput)
-        .type(`${email} {enter}`, { delay: 50 });
+        .type(`${email} {enter}`);
       cy.waitForProgressBarToNotExist()
         .get(STAFF_MEMBERS_LIST.staffStatusText)
         .first()
@@ -214,6 +214,62 @@ describe("Staff members", () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationErrorMessageShouldAppear();
+    },
+  );
+
+  // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
+  it(
+    "should update staff member name and email. TC: SALEOR_3507",
+    { tags: ["@staffMembers", "@stagedOnly"] },
+    () => {
+      const newLastName = faker.name.lastName();
+      const newEmail = `${startsWith}${newLastName}@example.com`;
+      const changedName = faker.name.lastName();
+      const changedEmail = `${startsWith}${changedName}@example.com`;
+
+      inviteStaffMemberWithFirstPermission({ email: newEmail })
+        .then(({ user: userResp }) => {
+          user = userResp;
+          getMailActivationLinkForUser(newEmail);
+        })
+        .then(urlLink => {
+          cy.clearSessionData().visit(urlLink);
+          fillUpSetPassword(password);
+          cy.clearSessionData();
+        });
+
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: Cypress.env("USER_PASSWORD"),
+      });
+
+      cy.visit(urlList.staffMembers)
+        .get(LOGIN_SELECTORS.userMenu)
+        .click();
+      cy.get(LOGIN_SELECTORS.accountSettings).click();
+      cy.get(STAFF_MEMBER_DETAILS.staffFirstName)
+        .clear()
+        .type("สมชาย");
+      cy.get(STAFF_MEMBER_DETAILS.staffLastName)
+        .clear()
+        .type(newLastName);
+      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
+        .clear()
+        .type(changedEmail);
+
+      // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
+
+      // cy.get(BUTTON_SELECTORS.confirm)
+      //   .confirmationMessageShouldAppear();
+      // cy.clearSessionData().loginUserViaRequest("auth", {
+      //   email: changedEmail,
+      //   password: Cypress.env("USER_PASSWORD"),
+      // });
+
+      // cy.visit(urlList.staffMembers)
+      // expectWelcomeMessageIncludes(
+      //   `${changedName}`,
+      // );
     },
   );
 
@@ -249,11 +305,12 @@ describe("Staff members", () => {
       cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
         Cypress.env("USER_PASSWORD"),
       );
-      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword)
-        .type(newPass)
-        .get(BUTTON_SELECTORS.submit)
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(
+        newPass,
+      );
+      cy.get(BUTTON_SELECTORS.submit)
         .click()
-        .confirmationErrorMessageShouldAppear();
+        .confirmationMessageShouldAppear();
 
       cy.clearSessionData().loginUserViaRequest("auth", {
         email: newEmail,
