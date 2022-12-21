@@ -1,20 +1,15 @@
 import {
   CopyIcon,
-  Dialog,
-  ExecuteButton,
   GraphiQLProvider,
   GraphiQLProviderProps,
   PrettifyIcon,
   QueryEditor,
-  ResponseEditor,
-  Spinner,
   ToolbarButton,
   Tooltip,
   UnStyledButton,
   useCopyQuery,
   useDragResize,
   useEditorContext,
-  useExecutionContext,
   UseHeaderEditorArgs,
   usePluginContext,
   usePrettifyEditors,
@@ -27,7 +22,6 @@ import React, {
   ComponentType,
   PropsWithChildren,
   ReactNode,
-  useState,
 } from 'react';
 
 export interface GraphiQLToolbarConfig {
@@ -114,9 +108,7 @@ export function GraphiQL({
   );
 }
 // Export main windows/panes to be used separately if desired.
-GraphiQL.Logo = GraphiQLLogo;
 GraphiQL.Toolbar = GraphiQLToolbar;
-GraphiQL.Footer = GraphiQLFooter;
 
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
@@ -153,7 +145,6 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
 
 export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const editorContext = useEditorContext({ nonNull: true });
-  const executionContext = useExecutionContext({ nonNull: true });
   const pluginContext = usePluginContext();
 
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
@@ -200,9 +191,9 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     storageKey: 'secondaryEditorFlex',
   });
 
-  const [showDialog, setShowDialog] = useState<
-    'settings' | 'short-keys' | null
-  >(null);
+  // const [showDialog, setShowDialog] = useState<
+  //   'settings' | 'short-keys' | null
+  // >(null);
 
   const children = React.Children.toArray(props.children);
 
@@ -223,22 +214,18 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     </>
   );
 
-  const footer = children.find(child =>
-    isChildComponentType(child, GraphiQL.Footer),
-  );
-
   const onClickReference = () => {
     if (pluginResize.hiddenElement === 'first') {
       pluginResize.setHiddenElement(null);
     }
   };
 
-  const modifier =
-    window.navigator.platform.toLowerCase().indexOf('mac') === 0 ? (
-      <code className="graphiql-key">Cmd</code>
-    ) : (
-      <code className="graphiql-key">Ctrl</code>
-    );
+  // const modifier =
+  //   window.navigator.platform.toLowerCase().indexOf('mac') === 0 ? (
+  //     <code className="graphiql-key">Cmd</code>
+  //   ) : (
+  //     <code className="graphiql-key">Ctrl</code>
+  //   );
 
   return (
     <div data-testid="graphiql-container" className="graphiql-container">
@@ -306,20 +293,21 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
               role="tabpanel"
               id="graphiql-session"
               className="graphiql-session"
+              style={{padding: '2rem 0 0 0'}}
               aria-labelledby={`graphiql-session-tab-${editorContext.activeTabIndex}`}
             >
               <div ref={editorResize.firstRef}>
                 <div
-                  className={`graphiql-editors${
-                    editorContext.tabs.length === 1 ? ' full-height' : ''
-                  }`}
+                  className="graphiql-editors full-height"
+                  style={{boxShadow: "none"}}
                 >
                   <div ref={editorToolsResize.firstRef}>
                     <section
                       className="graphiql-query-editor"
                       aria-label="Query Editor"
+                      style={{borderBottom: 0}}
                     >
-                      <div className="graphiql-query-editor-wrapper">
+                      <div className="graphiql-query-editor-wrapper" style={{fontSize: '1.6rem'}}>
                         <QueryEditor
                           editorTheme={props.editorTheme}
                           keyMap={props.keyMap}
@@ -334,29 +322,17 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                         role="toolbar"
                         aria-label="Editor Commands"
                       >
-                        <ExecuteButton />
                         {toolbar}
                       </div>
                     </section>
                   </div>
                 </div>
               </div>
-              <div ref={editorResize.secondRef}>
-                <div className="graphiql-response">
-                  {executionContext.isFetching ? <Spinner /> : null}
-                  <ResponseEditor
-                    editorTheme={props.editorTheme}
-                    responseTooltip={props.responseTooltip}
-                    keyMap={props.keyMap}
-                  />
-                  {footer}
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <Dialog
+      {/* <Dialog
         isOpen={showDialog === 'short-keys'}
         onDismiss={() => setShowDialog(null)}
       >
@@ -454,32 +430,10 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             </p>
           </div>
         </div>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }
-
-// Configure the UI by providing this Component as a child of GraphiQL.
-function GraphiQLLogo<TProps>(props: PropsWithChildren<TProps>) {
-  return (
-    <div className="graphiql-logo">
-      {props.children || (
-        <a
-          className="graphiql-logo-link"
-          href="https://github.com/graphql/graphiql"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Graph
-          <em>i</em>
-          QL
-        </a>
-      )}
-    </div>
-  );
-}
-
-GraphiQLLogo.displayName = 'GraphiQLLogo';
 
 // Configure the UI by providing this Component as a child of GraphiQL.
 function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
@@ -487,13 +441,6 @@ function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
 }
 
 GraphiQLToolbar.displayName = 'GraphiQLToolbar';
-
-// Configure the UI by providing this Component as a child of GraphiQL.
-function GraphiQLFooter<TProps>(props: PropsWithChildren<TProps>) {
-  return <div className="graphiql-footer">{props.children}</div>;
-}
-
-GraphiQLFooter.displayName = 'GraphiQLFooter';
 
 // Determines if the React child is of the same type of the provided React component
 function isChildComponentType<T extends ComponentType>(

@@ -1,11 +1,11 @@
 import "graphiql/graphiql.min.css";
-import "./globals.css";
 
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { WebhookErrorFragment } from "@saleor/graphql";
+import { parse, print} from "graphql";
 import React, { useRef, useState } from "react";
 
 // import GraphiQL from "graphiql";
@@ -27,7 +27,13 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   data,
   onChange,
 }) => {
-  const [query, setQuery] = useState(data.subscriptionQuery);
+  let prettified = '';
+  try {
+    prettified = print(parse(data.subscriptionQuery));
+  } catch {
+    prettified = data.subscriptionQuery;
+  }
+  const [query, setQuery] = useState(prettified)
   const ref = useRef(null);
 
   const explorerPlugin = useExplorerPlugin({
