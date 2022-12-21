@@ -260,7 +260,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   </div>
                   <div>
                     <ProductVariantName
-                      value={data.name}
+                      value={data.variantName}
                       onChange={change}
                       disabled={loading}
                       errors={errors}
