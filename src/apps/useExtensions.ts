@@ -78,7 +78,7 @@ const filterAndMapToTarget = (
     }),
   );
 
-const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
+const mapToMenuItem = ({ label, id, open }: Extension) => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
