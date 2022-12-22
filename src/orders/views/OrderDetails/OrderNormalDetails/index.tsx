@@ -425,11 +425,18 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
       />
       <OrderManualTransactionDialog
-        open={params.action === "add-manual-transaction"}
-        onClose={closeModal}
-        confirmButtonState={orderAddManualTransaction.opts.status}
+        dialogProps={{
+          open: params.action === "add-manual-transaction",
+          onClose: closeModal,
+        }}
+        submitState={orderAddManualTransaction.opts.status}
+        error={
+          orderAddManualTransaction.opts?.error?.message ||
+          orderAddManualTransaction.opts?.data?.transactionCreate?.errors?.[0]
+            ?.message
+        }
         currency={data?.order?.totalBalance?.currency}
-        onCreateTransaction={({ amount, description }) =>
+        onAddTransaction={({ amount, description }) =>
           orderAddManualTransaction.mutate({
             currency: data?.order?.totalBalance?.currency,
             orderId: id,

@@ -25,24 +25,26 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
           <FormattedMessage {...manualRefundMessages.refundManualDescription} />
         </Typography>
       </CardContent>
-      <div className={classes.wrapper}>
-        <OrderManualTransactionForm
-          {...props}
-          className={classes.form}
-          descriptionFieldProps={{
-            className: classes.descriptionInput,
-            label: intl.formatMessage(commonMessages.description),
-          }}
-          priceFieldProps={{
-            className: classes.priceInput,
-            label: intl.formatMessage(refundPageMessages.refundAmount),
-          }}
-          submitButtonProps={{
-            children: intl.formatMessage(manualRefundMessages.refund),
-            className: classes.submitButton,
-          }}
-        />
-      </div>
+      <OrderManualTransactionForm {...props}>
+        <div className={classes.wrapper}>
+          <OrderManualTransactionForm.Form className={classes.form}>
+            <OrderManualTransactionForm.DescriptionField
+              className={classes.descriptionInput}
+              label={intl.formatMessage(commonMessages.description)}
+            />
+            <OrderManualTransactionForm.PriceInputField
+              className={classes.priceInput}
+              label={intl.formatMessage(refundPageMessages.refundAmount)}
+            />
+            <OrderManualTransactionForm.SubmitButton
+              className={classes.submitButton}
+            >
+              <FormattedMessage {...manualRefundMessages.refund} />
+            </OrderManualTransactionForm.SubmitButton>
+          </OrderManualTransactionForm.Form>
+          <OrderManualTransactionForm.ErrorText />
+        </div>
+      </OrderManualTransactionForm>
     </Card>
   );
 };

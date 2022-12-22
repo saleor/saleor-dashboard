@@ -5,6 +5,8 @@ interface ManualRefundHookProps {
   submitState: ConfirmButtonTransitionState;
 }
 
+export type ManualRefundData = ReturnType<typeof useManualRefund>;
+
 export const useManualRefund = ({ submitState }: ManualRefundHookProps) => {
   const [amount, setAmount] = React.useState<number | undefined>();
   const [description, setDescription] = React.useState("");
