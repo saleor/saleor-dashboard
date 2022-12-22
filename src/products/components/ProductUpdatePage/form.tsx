@@ -35,13 +35,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import { RichTextContext } from "@saleor/utils/richText/context";
 import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
@@ -52,16 +46,6 @@ import {
   UseProductUpdateFormOpts,
   UseProductUpdateFormOutput,
 } from "./types";
-
-const useMemonizedReferences = references => {
-  const memRefs = useRef(references || []);
-
-  useLayoutEffect(() => {
-    memRefs.current = memRefs.current.concat(references);
-  }, [references]);
-
-  return memRefs.current;
-};
 
 function useProductUpdateForm(
   product: ProductFragment,
@@ -186,16 +170,13 @@ function useProductUpdateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const referencePages = useMemonizedReferences(opts.referencePages);
-  const referenceProducts = useMemonizedReferences(opts.referenceProducts);
-
   const data: ProductUpdateData = {
     ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
-      referencePages,
-      referenceProducts,
+      opts.referencePages,
+      opts.referenceProducts,
     ),
     channels,
     description: null,
