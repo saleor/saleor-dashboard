@@ -13,7 +13,7 @@ program
   .description("Approve and merge PR if patch release")
   .option("--version <version>", "version of a project")
   .option("--pull_request_number <pull_request_number>", "Pull Request number")
-  .option("--auto_release <auto_release>", "is auto release")
+  .option("--auto_release", "is auto release")
   .option("--dashboard_url <dashboard_url>", "Cypress dashboard url")
   .action(async options => {
     const octokit = new Octokit({

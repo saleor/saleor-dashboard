@@ -13,9 +13,12 @@ export const useStyles = makeStyles(
       display: "flex",
       flexDirection: "column",
       overflowY: "scroll",
-      maxHeight: 450,
+      maxHeight: "60vh",
       marginLeft: -15,
       paddingLeft: 15,
+    },
+    dialog: {
+      maxHeight: "unset",
     },
   }),
   { name: "TaxCountryDialog" },

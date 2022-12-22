@@ -6,8 +6,7 @@ import { siteSettingsPath, SiteSettingsUrlQueryParams } from "./urls";
 import SiteSettingsComponent from "./views/";
 
 const SiteSettings: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: SiteSettingsUrlQueryParams = qs;
+  const params: SiteSettingsUrlQueryParams = parseQs(location.search.slice(1));
 
   return <SiteSettingsComponent params={params} />;
 };

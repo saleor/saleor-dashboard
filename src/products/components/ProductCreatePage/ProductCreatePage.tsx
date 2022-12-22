@@ -35,7 +35,10 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
-import { productListUrl } from "@saleor/products/urls";
+import {
+  ProductCreateUrlQueryParams,
+  productListUrl,
+} from "@saleor/products/urls";
 import { getChoices } from "@saleor/products/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -92,7 +95,7 @@ interface ProductCreatePageProps {
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   onAttributeSelectBlur: () => void;
-  onCloseDialog: () => void;
+  onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
   onSubmit?(data: ProductCreateData);
 }
@@ -142,6 +145,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  const closeDialog = () => {
+    onCloseDialog({ "product-type-id": selectedProductType.id });
+  };
+
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     initial?.category || "",
@@ -179,7 +186,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         data.attributes,
       ),
     );
-    onCloseDialog();
+
+    closeDialog();
   };
 
   return (
@@ -222,6 +230,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         const isSimpleProduct = data.productType?.hasVariants === false;
 
         const errors = [...apiErrors, ...validationErrors];
+
+        const entityType = getReferenceAttributeEntityTypeFromAttribute(
+          assignReferencesAttributeId,
+          data.attributes,
+        );
 
         return (
           <Container>
@@ -379,12 +392,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               state={saveButtonBarState}
               disabled={isSaveDisabled}
             />
-            {canOpenAssignReferencesAttributeDialog && (
+            {canOpenAssignReferencesAttributeDialog && entityType && (
               <AssignAttributeValueDialog
-                entityType={getReferenceAttributeEntityTypeFromAttribute(
-                  assignReferencesAttributeId,
-                  data.attributes,
-                )}
+                entityType={entityType}
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
@@ -393,7 +403,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onFetch={handlers.fetchReferences}
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
-                onClose={onCloseDialog}
+                onClose={closeDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues,

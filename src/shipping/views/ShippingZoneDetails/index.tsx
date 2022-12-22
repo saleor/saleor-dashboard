@@ -21,7 +21,12 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import {
+  extractMutationErrors,
+  findValueInEnum,
+  getById,
+  getStringOrPlaceholder,
+} from "@saleor/misc";
 import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
@@ -37,11 +42,6 @@ import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  extractMutationErrors,
-  findValueInEnum,
-  getStringOrPlaceholder,
-} from "../../../misc";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import {

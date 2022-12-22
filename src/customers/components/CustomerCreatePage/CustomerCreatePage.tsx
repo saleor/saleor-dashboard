@@ -1,3 +1,4 @@
+import { createCountryHandler } from "@saleor/components/AddressEdit/createCountryHandler";
 import { Backlink } from "@saleor/components/Backlink";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
@@ -143,12 +144,14 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       onSubmit={handleSubmit}
       disabled={disabled}
     >
-      {({ change, data, isSaveDisabled, submit }) => {
-        const handleCountrySelect = createSingleAutocompleteSelectHandler(
+      {({ change, set, data, isSaveDisabled, submit }) => {
+        const countrySelect = createSingleAutocompleteSelectHandler(
           change,
           setCountryDisplayName,
           countryChoices,
         );
+
+        const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
           <Container>

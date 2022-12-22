@@ -52,7 +52,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   >(countries, country => country.country);
 
   return (
-    <Dialog open={open} fullWidth onClose={onClose}>
+    <Dialog open={open} fullWidth onClose={onClose} className={classes.dialog}>
       <DialogHeader onClose={onClose}>
         <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
       </DialogHeader>

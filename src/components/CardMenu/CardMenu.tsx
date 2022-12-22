@@ -25,6 +25,7 @@ export interface CardMenuItem {
   loading?: boolean;
   withLoading?: boolean;
   hasError?: boolean;
+  Icon?: React.ReactElement;
 }
 
 export interface CardMenuProps {

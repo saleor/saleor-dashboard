@@ -13,7 +13,6 @@ export interface ExitFormDialogData {
   setEnableExitDialog: (value: boolean) => void;
   shouldBlockNavigation: () => boolean;
   setIsSubmitting: (value: boolean) => void;
-  submit: () => SubmitPromise;
   leave: () => void;
   setIsSubmitDisabled: (value: boolean) => void;
 }
@@ -41,7 +40,6 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setExitDialogSubmitRef: () => undefined,
   shouldBlockNavigation: () => false,
   setIsSubmitting: () => undefined,
-  submit: () => Promise.resolve([]),
   leave: () => undefined,
   setIsSubmitDisabled: () => undefined,
 });
@@ -51,7 +49,6 @@ const defaultValues = {
   showDialog: false,
   blockNav: true,
   navAction: null,
-  submit: null,
   enableExitDialog: false,
   isSubmitting: false,
   formsData: {},
@@ -203,37 +200,6 @@ export function useExitFormDialogProvider() {
     setStateDefaultValues();
   };
 
-  const getDirtyFormsSubmitFn = () =>
-    getFormsDataValuesArray()
-      .filter(({ isDirty }) => isDirty)
-      .map(({ submitFn }) => submitFn);
-
-  const hasAnySubmitFn = () =>
-    getFormsDataValuesArray().some(({ submitFn }) => !!submitFn);
-
-  const handleSubmit = async () => {
-    if (!hasAnySubmitFn()) {
-      return;
-    }
-
-    setShowDialog(false);
-    setIsSubmitting(true);
-
-    const errors = await Promise.all(
-      getDirtyFormsSubmitFn().map(submitFn => submitFn()),
-    );
-
-    setIsSubmitting(false);
-
-    const isError = errors.flat().some(errors => errors);
-
-    if (!isError) {
-      continueNavigation();
-    }
-
-    setDefaultNavAction();
-  };
-
   const handleLeave = () => {
     continueNavigation();
   };
@@ -253,7 +219,6 @@ export function useExitFormDialogProvider() {
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
     setIsSubmitting,
-    submit: handleSubmit,
     setIsSubmitDisabled,
     leave: handleLeave,
   };
@@ -261,7 +226,6 @@ export function useExitFormDialogProvider() {
   return {
     providerData,
     showDialog,
-    handleSubmit,
     handleLeave,
     handleClose,
     shouldBlockNav,
@@ -273,11 +237,9 @@ const ExitFormDialogProvider = ({ children }) => {
   const {
     handleClose,
     handleLeave,
-    handleSubmit,
     providerData,
     showDialog,
     shouldBlockNav,
-    isSubmitDisabled,
   } = useExitFormDialogProvider();
 
   useBeforeUnload(e => {
@@ -293,10 +255,8 @@ const ExitFormDialogProvider = ({ children }) => {
     <ExitFormDialogContext.Provider value={providerData}>
       <ExitFormDialog
         isOpen={showDialog}
-        onSubmit={handleSubmit}
         onLeave={handleLeave}
         onClose={handleClose}
-        isSubmitDisabled={isSubmitDisabled.current}
       />
       {children}
     </ExitFormDialogContext.Provider>

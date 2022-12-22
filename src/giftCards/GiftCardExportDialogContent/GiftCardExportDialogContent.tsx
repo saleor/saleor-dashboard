@@ -148,7 +148,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
           transitionState={exportGiftCardsOpts.status}
           variant="primary"
           type="submit"
-          data-test="submit"
+          data-test-id="submit"
           onClick={submit}
         >
           <FormattedMessage {...messages.confirmButtonLabel} />

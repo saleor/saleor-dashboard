@@ -1,3 +1,4 @@
+import { createCountryHandler } from "@saleor/components/AddressEdit/createCountryHandler";
 import { Backlink } from "@saleor/components/Backlink";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import Container from "@saleor/components/Container";
@@ -45,7 +46,7 @@ export interface SiteSettingsPageFormData
 export interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop: SiteSettingsQuery["shop"];
+  shop?: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -107,10 +108,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
-    reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
+    reserveStockDurationAnonymousUser:
+      shop?.reserveStockDurationAnonymousUser ?? 0,
     reserveStockDurationAuthenticatedUser:
-      shop?.reserveStockDurationAuthenticatedUser,
-    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout,
+      shop?.reserveStockDurationAuthenticatedUser ?? 0,
+    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
   };
 
   return (
@@ -125,13 +127,15 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
       confirmLeave
       disabled={disabled}
     >
-      {({ change, data, isSaveDisabled, submit }) => {
+      {({ change, data, set, isSaveDisabled, submit }) => {
         const countryChoices = mapCountriesToChoices(shop?.countries || []);
-        const handleCountryChange = createSingleAutocompleteSelectHandler(
+        const countrySelect = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
           countryChoices,
         );
+
+        const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
           <Container>
@@ -174,12 +178,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   description: "section header",
                 })}
                 onChange={change}
-                onCountryChange={handleCountryChange}
+                onCountryChange={handleCountrySelect}
               />
             </Grid>
             <Savebar
               state={saveButtonBarState}
-              disabled={isSaveDisabled}
+              disabled={!!isSaveDisabled}
               onCancel={() => navigate(configurationMenuUrl)}
               onSubmit={submit}
             />

@@ -1,7 +1,7 @@
 export const urlList = {
   apiUri: Cypress.env("API_URI"),
   addProduct: "products/add",
-  apps: "apps/",
+  apps: "custom-apps/",
   attributes: "attributes/",
   channels: "channels/",
   categories: "categories/",
@@ -35,7 +35,7 @@ export const urlList = {
 export const addVariantUrl = productId =>
   `${urlList.products}${productId}/${urlList.variants}add`;
 
-export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;
+export const appDetailsUrl = appId => `${urlList.apps}${appId}`;
 
 export const attributeDetailsUrl = attributeId =>
   `${urlList.attributes}${attributeId}`;

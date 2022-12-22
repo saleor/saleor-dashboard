@@ -309,6 +309,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           },
         );
 
+        const entityType = getReferenceAttributeEntityTypeFromAttribute(
+          assignReferencesAttributeId,
+          data.attributes,
+        );
+
         return (
           <>
             <Container>
@@ -438,12 +443,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 state={saveButtonBarState}
                 disabled={isSaveDisabled}
               />
-              {canOpenAssignReferencesAttributeDialog && (
+              {canOpenAssignReferencesAttributeDialog && entityType && (
                 <AssignAttributeValueDialog
-                  entityType={getReferenceAttributeEntityTypeFromAttribute(
-                    assignReferencesAttributeId,
-                    data.attributes,
-                  )}
+                  entityType={entityType}
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}

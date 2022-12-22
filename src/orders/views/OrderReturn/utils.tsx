@@ -4,12 +4,12 @@ import {
   OrderReturnLineInput,
   OrderReturnProductsInput,
 } from "@saleor/graphql";
+import { getById } from "@saleor/misc";
 import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
   OrderReturnFormData,
 } from "@saleor/orders/components/OrderReturnPage/form";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 class ReturnFormDataParser {
   private order: OrderDetailsFragment;
