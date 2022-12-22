@@ -188,6 +188,7 @@ describe("Staff members", () => {
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
       fillUpUserDetailsWithNotUniqueEmail(firstName, lastName, emailInvite);
+      cy.confirmationErrorMessageShouldAppear();
     },
   );
 
@@ -218,7 +219,7 @@ describe("Staff members", () => {
   );
 
   // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
-  it(
+  it.skip(
     "should update staff member name and email. TC: SALEOR_3507",
     { tags: ["@staffMembers", "@stagedOnly"] },
     () => {
@@ -257,15 +258,14 @@ describe("Staff members", () => {
         .clear()
         .type(changedEmail);
 
-      // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
-
+      // Test blocked at this point by https://github.com/saleor/saleor-dashboard/issues/2847
       // cy.get(BUTTON_SELECTORS.confirm)
       //   .confirmationMessageShouldAppear();
       // cy.clearSessionData().loginUserViaRequest("auth", {
       //   email: changedEmail,
       //   password: Cypress.env("USER_PASSWORD"),
       // });
-
+      //
       // cy.visit(urlList.staffMembers)
       // expectWelcomeMessageIncludes(
       //   `${changedName}`,

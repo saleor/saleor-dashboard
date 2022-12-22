@@ -48,8 +48,7 @@ export function fillUpUserDetailsWithNotUniqueEmail(
     .get(INVITE_STAFF_MEMBER_FORM.emailInput)
     .type(email)
     .get(BUTTON_SELECTORS.submit)
-    .click()
-    .confirmationErrorMessageShouldAppear();
+    .click();
 }
 
 export function updateUserActiveFlag(userId) {
