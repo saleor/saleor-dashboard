@@ -30,10 +30,7 @@ import {
   AppListUrlQueryParams,
   AppUrls,
 } from "@saleor/new-apps/urls";
-import {
-  getComingSoonMarketplaceApps,
-  getInstallableMarketplaceApps,
-} from "@saleor/new-apps/utils";
+import { getMarketplaceAppsLists } from "@saleor/new-apps/utils";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -155,12 +152,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   const { data: marketplaceAppList, error } = useFetch<
     GetV2SaleorAppsResponse.SaleorApp[]
-  >(AppsConfig.marketplaceUrl);
+  >(AppsConfig.marketplaceApiUri);
 
-  const installableMarketplaceApps = getInstallableMarketplaceApps(
-    marketplaceAppList,
-  );
-  const comingSoonMarketplaceApps = getComingSoonMarketplaceApps(
+  const {
+    installableMarketplaceApps,
+    comingSoonMarketplaceApps,
+  } = getMarketplaceAppsLists(
+    !!AppsConfig.marketplaceApiUri,
     marketplaceAppList,
   );
   const installedApps = mapEdgesToItems(installedAppsData?.apps);

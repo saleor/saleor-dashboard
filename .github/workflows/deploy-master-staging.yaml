@@ -21,6 +21,7 @@ jobs:
       SALEOR_APPS_PAGE_PATH: saleor-apps
       SALEOR_APPS_JSON_PATH: api/saleor-apps
       APP_TEMPLATE_GALLERY_PATH: template-gallery
+      APPS_MARKETPLACE_API_URI: "https://marketplace-gray.vercel.app/api/v2/saleor-apps"
       ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
     steps:

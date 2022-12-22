@@ -5,14 +5,14 @@ import { GetV2SaleorAppsResponse } from "./marketplace.types";
 import { messages } from "./messages";
 import { AppLink } from "./types";
 
-export const getInstallableMarketplaceApps = (
+const getInstallableMarketplaceApps = (
   marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
 ) =>
   marketplaceAppList?.filter(
     app => "manifestUrl" in app || "vercelDeploymentUrl" in app,
   ) as GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined;
 
-export const getComingSoonMarketplaceApps = (
+const getComingSoonMarketplaceApps = (
   marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
 ) =>
   marketplaceAppList?.filter(
@@ -21,6 +21,25 @@ export const getComingSoonMarketplaceApps = (
       !("vercelDeploymentUrl" in app) &&
       "releaseDate" in app,
   ) as GetV2SaleorAppsResponse.ComingSoonSaleorApp[] | undefined;
+
+export const getMarketplaceAppsLists = (
+  isMarketplaceAvailable: boolean,
+  marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
+) => {
+  if (!isMarketplaceAvailable) {
+    return {
+      installableMarketplaceApps: [],
+      comingSoonMarketplaceApps: [],
+    };
+  }
+
+  return {
+    installableMarketplaceApps: getInstallableMarketplaceApps(
+      marketplaceAppList,
+    ),
+    comingSoonMarketplaceApps: getComingSoonMarketplaceApps(marketplaceAppList),
+  };
+};
 
 export const isAppInTunnel = (manifestUrl: string) =>
   Boolean(

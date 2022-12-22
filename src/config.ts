@@ -17,12 +17,10 @@ export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
   window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 
 export const AppsConfig = {
-  marketplaceUrl:
-    window.__SALEOR_CONFIG__.APPS_MARKETPLACE_URL ||
-    "https://marketplace-gray.vercel.app/api/v2/saleor-apps",
+  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URI,
   tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
     ";",
-  ) || [".ngrok.io", ".saleor.live"],
+  ) || [".ngrok.io", ".saleor.live", ".trycloudflare.com"],
 };
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {

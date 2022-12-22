@@ -7509,10 +7509,6 @@
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
   },
-  "v14g7d": {
-    "context": "error message",
-    "string": "Please check if marketplace is properly configured for dashboard, as error might be caused by wrong configuration."
-  },
   "v17Lly": {
     "context": "label",
     "string": "Max Delivery Time"

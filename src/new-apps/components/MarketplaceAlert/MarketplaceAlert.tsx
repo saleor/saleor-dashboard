@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { Alert } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,10 +27,6 @@ export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({
       close={true}
       title={intl.formatMessage(msgs.marketplaceError)}
     >
-      <Typography>
-        <FormattedMessage {...msgs.marketplaceErrorDescription} />
-      </Typography>
-      <VerticalSpacer spacing={2} />
       <Typography>
         <FormattedMessage
           {...msgs.marketplaceErrorMessage}
