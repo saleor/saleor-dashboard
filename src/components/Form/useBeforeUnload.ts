@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useBeforeUnload = fn => {
+const useBeforeUnload = (fn: (event: BeforeUnloadEvent) => void) => {
   const cb = useRef(fn);
 
   useEffect(() => {
@@ -8,7 +8,7 @@ const useBeforeUnload = fn => {
   }, [fn]);
 
   useEffect(() => {
-    const onBeforeUnload = (...args) => cb.current?.(...args);
+    const onBeforeUnload = (event: BeforeUnloadEvent) => cb.current?.(event);
 
     window.addEventListener("beforeunload", onBeforeUnload);
 
