@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import { copyFileSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv } from "vite";
@@ -7,6 +8,14 @@ import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
+
+const copyOgImage = () => ({
+  name: "copy-og-image",
+  apply: "build",
+  writeBundle: () => {
+    copyFileSync("./assets/og.png", "./build/dashboard/og.png");
+  },
+});
 
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
@@ -32,11 +41,10 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
     SKIP_SOURCEMAPS,
-    DASHBOARD_DOMAIN,
-    DASHBOARD_URL,
     DEMO_MODE,
   } = env;
 
+  const base = STATIC_URL ?? "/";
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
   const enableSentry =
@@ -49,17 +57,30 @@ export default defineConfig(({ command, mode }) => {
       template: "index.html",
       inject: {
         data: {
-          DASHBOARD_DOMAIN,
-          DASHBOARD_URL,
           API_URL: API_URI,
           APP_MOUNT_URI,
           SALEOR_APPS_PAGE_PATH,
           SALEOR_APPS_JSON_PATH,
           APP_TEMPLATE_GALLERY_PATH,
           MARKETPLACE_URL,
+
+          /*
+            Open-graph related tags. We generate url and domian only when it's demo.
+          */
+          ogImageUrl: `${base}og.png`,
+          injectOgUrl:
+            DEMO_MODE &&
+            `<meta property="og:url" content="https://demo.saleor.io/dashboard/">`,
+          injectOgTwitterDomain:
+            DEMO_MODE &&
+            `<meta property="twitter:domain" content="demo.saleor.io">`,
+          injectOgTwitterUrl:
+            DEMO_MODE &&
+            `<meta property="twitter:url" content="https://demo.saleor.io/dashboard/">`,
         },
       },
     }),
+    copyOgImage(),
   ];
 
   if (enableSentry) {
@@ -104,7 +125,7 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     root: "src",
-    base: STATIC_URL ?? "/",
+    base,
     envDir: "..",
     server: {
       port: 9000,

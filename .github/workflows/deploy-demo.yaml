@@ -23,8 +23,6 @@ jobs:
       # APP_TEMPLATE_GALLERY_PATH=template-gallery
       ENVIRONMENT: demo
       DEMO_MODE: true
-      DASHBOARD_DOMAIN: "demo.saleor.io"
-      DASHBOARD_URL: "https://demo.saleor.io/dashboard/"
     steps:
       - uses: actions/checkout@v2
         with:
