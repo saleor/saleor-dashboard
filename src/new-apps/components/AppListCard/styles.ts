@@ -2,7 +2,7 @@ import { alpha } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  theme => ({
+  () => ({
     card: {
       display: "flex",
       flexDirection: "column",
@@ -10,6 +10,12 @@ export const useStyles = makeStyles(
     cardContent: {
       height: "100%",
     },
+  }),
+  { name: "AppListCard" },
+);
+
+export const useDescriptionStyles = makeStyles(
+  theme => ({
     cardHeader: {
       fontWeight: 600,
       fontSize: 20,
@@ -38,19 +44,33 @@ export const useStyles = makeStyles(
       color: theme.palette.saleor.main[3],
       margin: theme.spacing(3, 0, 1, 0),
     },
-    listHeader: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: theme.palette.saleor.main[3],
-      margin: theme.spacing(2, 0),
-      textTransform: "uppercase",
-    },
+  }),
+  {
+    name: "AppListCardDescription",
+  },
+);
+
+export const useLinksStyles = makeStyles(
+  theme => ({
     linkList: {
       display: "flex",
       gap: 10,
       margin: theme.spacing(1, 0, 4, 0),
       padding: 0,
       listStyleType: "none",
+    },
+  }),
+  { name: "AppListCardLinks" },
+);
+
+export const useIntegrationsStyles = makeStyles(
+  theme => ({
+    listHeader: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: theme.palette.saleor.main[3],
+      margin: theme.spacing(2, 0),
+      textTransform: "uppercase",
     },
     logoList: {
       display: "flex",
@@ -71,26 +91,21 @@ export const useStyles = makeStyles(
           ? "transparent"
           : alpha(theme.palette.saleor.generic.light, 0.3),
     },
+  }),
+  { name: "AppListCardIntegrations" },
+);
+
+export const useActionsStyles = makeStyles(
+  theme => ({
     cardActions: {
       display: "flex",
       justifyContent: "flex-end",
       padding: theme.spacing(2, 4),
       minHeight: theme.spacing(9),
     },
-    detailsButton: {},
-    installButton: {},
     releaseDate: {
       color: theme.palette.saleor.main[3],
     },
-    bottomInfo: {
-      textAlign: "center",
-      borderTop: `1px solid ${theme.palette.saleor.main["5"]}`,
-      width: "100%",
-      paddingTop: 20,
-      color: theme.palette.saleor.main["1"],
-      textTransform: "uppercase",
-      fontSize: 12,
-    },
   }),
-  { name: "AppListCard" },
+  { name: "AppListCardActions" },
 );
