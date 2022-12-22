@@ -51,8 +51,8 @@ describe("useAddressValidation", () => {
 
     // Assert
     expect(current.areas).toEqual([
-      { label: "Alabama", value: "Alabama" },
-      { label: "Ancona", value: "Ancona" },
+      { label: "Alabama", value: "Alabama", raw: "AL" },
+      { label: "Ancona", value: "Ancona", raw: "AN" },
     ]);
     expect(current.loading).toBeFalsy();
     expect(useAddressValidationRulesQuery).toBeCalledWith({
