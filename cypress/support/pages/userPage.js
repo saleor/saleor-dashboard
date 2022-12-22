@@ -15,7 +15,11 @@ export function fillUpSetPassword(password) {
     .waitForRequestAndCheckIfNoErrors("@setPassword");
 }
 
-export function fillUpUserDetails(firstName, lastName, email) {
+export function fillUpUserDetailsAndAddFirstPermission(
+  firstName,
+  lastName,
+  email,
+) {
   cy.get(INVITE_STAFF_MEMBER_FORM.firstNameInput)
     .type(firstName)
     .get(INVITE_STAFF_MEMBER_FORM.lastNameInput)
@@ -36,11 +40,7 @@ export function fillUpUserDetails(firstName, lastName, email) {
     .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate");
 }
 
-export function fillUpUserDetailsWithNotUniqueEmail(
-  firstName,
-  lastName,
-  email,
-) {
+export function fillUpOnlyUserDetails(firstName, lastName, email) {
   cy.get(INVITE_STAFF_MEMBER_FORM.firstNameInput)
     .type(firstName)
     .get(INVITE_STAFF_MEMBER_FORM.lastNameInput)

@@ -24,9 +24,9 @@ import {
 import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
 import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
+  fillUpOnlyUserDetails,
   fillUpSetPassword,
-  fillUpUserDetails,
-  fillUpUserDetailsWithNotUniqueEmail,
+  fillUpUserDetailsAndAddFirstPermission,
   updateUserActiveFlag,
 } from "../support/pages/userPage";
 
@@ -70,7 +70,7 @@ describe("Staff members", () => {
         .expectSkeletonIsVisible()
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
-      fillUpUserDetails(firstName, lastName, emailInvite);
+      fillUpUserDetailsAndAddFirstPermission(firstName, lastName, emailInvite);
       getMailActivationLinkForUser(emailInvite).then(urlLink => {
         cy.clearSessionData().visit(urlLink);
         fillUpSetPassword(password);
@@ -187,7 +187,7 @@ describe("Staff members", () => {
         .expectSkeletonIsVisible()
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
-      fillUpUserDetailsWithNotUniqueEmail(firstName, lastName, emailInvite);
+      fillUpOnlyUserDetails(firstName, lastName, emailInvite);
       cy.confirmationErrorMessageShouldAppear();
     },
   );
@@ -200,13 +200,14 @@ describe("Staff members", () => {
         .expectSkeletonIsVisible()
         .get(SHARED_ELEMENTS.searchInput)
         .type(`${email} {enter}`);
-      cy.waitForProgressBarToNotExist()
-        .get(STAFF_MEMBERS_LIST.staffStatusText)
-        .first()
-        .should("be.visible");
       cy.waitForProgressBarToNotExist();
       cy.get(STAFF_MEMBERS_LIST.staffAvatar)
         .first()
+        .should("be.visible");
+      cy.waitForProgressBarToNotExist()
+        .get(STAFF_MEMBERS_LIST.staffStatusText)
+        .first()
+        .should("be.visible")
         .click();
       cy.get(STAFF_MEMBER_DETAILS.staffEmail)
         .click()
