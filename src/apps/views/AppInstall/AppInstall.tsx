@@ -24,7 +24,9 @@ interface InstallAppCreateProps extends RouteComponentProps {
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   params,
 }) => {
-  const [, setActiveInstallations] = useLocalStorage("activeInstallations", []);
+  const [, setActiveInstallations] = useLocalStorage<
+    Array<Record<"id" | "name", string>>
+  >("activeInstallations", []);
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -32,7 +34,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
 
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
     onCompleted: data => {
-      if (data.appFetchManifest.errors.length) {
+      if (data?.appFetchManifest?.errors.length) {
         data.appFetchManifest.errors.forEach(error => {
           notify({
             status: "error",
@@ -44,15 +46,18 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   });
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
-      const installationData = data.appInstall.appInstallation;
-      if (data.appInstall.errors.length === 0) {
+      if (data.appInstall?.errors.length === 0) {
+        const installationData = data?.appInstall?.appInstallation;
         setActiveInstallations(activeInstallations => [
           ...activeInstallations,
-          { id: installationData.id, name: installationData.appName },
+          {
+            id: installationData?.id || "",
+            name: installationData?.appName || "",
+          },
         ]);
         navigateToAppsList();
       } else {
-        data.appInstall.errors.forEach(error => {
+        (data?.appInstall?.errors ?? []).forEach(error => {
           notify({
             status: "error",
             text: getAppErrorMessage(error, intl),
@@ -72,7 +77,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
           input: {
             appName: manifest?.name,
             manifestUrl,
-            permissions: manifest?.permissions.map(
+            permissions: manifest?.permissions?.map(
               permission => permission.code,
             ),
           },
@@ -97,7 +102,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
         <AppInstallErrorPage onBack={() => navigate("/")} />
       ) : (
         <AppInstallPage
-          data={fetchManifestOpts?.data?.appFetchManifest?.manifest}
+          data={fetchManifestOpts?.data?.appFetchManifest?.manifest ?? null}
           navigateToAppsList={navigateToAppsList}
           onSubmit={handleSubmit}
           loading={fetchManifestOpts?.loading}

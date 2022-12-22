@@ -3,7 +3,7 @@
     "baseUrl": ".",
     // Migration to strict null checks is in progress.
     // https://github.com/saleor/saleor-dashboard/issues/2584
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "esModuleInterop": true,
     "jsx": "react",
     "lib": ["es2017", "dom", "esnext"],

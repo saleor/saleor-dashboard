@@ -15,4 +15,4 @@ const props: AppActivateDialogProps = {
 storiesOf("Views / Apps / Activate app", module)
   .addDecorator(Decorator)
   .add("default", () => <AppActivateDialog {...props} />)
-  .add("unnamed app", () => <AppActivateDialog {...props} name={null} />);
+  .add("unnamed app", () => <AppActivateDialog {...props} name="" />);

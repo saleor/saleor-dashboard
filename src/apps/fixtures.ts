@@ -134,7 +134,9 @@ export const appDetails: AppQuery["app"] = {
   webhooks: [],
 };
 
-export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
+export const installApp: NonNullable<
+  AppFetchMutation["appFetchManifest"]
+>["manifest"] = {
   __typename: "Manifest",
   about: "Lorem ipsum",
   appUrl: null,

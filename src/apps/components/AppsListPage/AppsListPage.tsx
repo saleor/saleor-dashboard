@@ -78,15 +78,19 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     [installedAppsList, fetchedSaleorApps],
   );
 
-  const saleorApps = useMemo(
+  const saleorApps = useMemo<AppListItemFragment[]>(
     () =>
-      fetchedSaleorApps
-        ?.map(app =>
-          installedAppsList?.find(installedApp =>
-            installedApp.manifestUrl?.includes(app.hostname),
-          ),
-        )
-        .filter(Boolean),
+      (fetchedSaleorApps || []).reduce<AppListItemFragment[]>((acc, app) => {
+        const founded = installedAppsList?.find(installedApp =>
+          installedApp.manifestUrl?.includes(app.hostname),
+        );
+
+        if (founded) {
+          acc.push(founded);
+        }
+
+        return acc;
+      }, []),
     [installedAppsList, fetchedSaleorApps],
   );
 
@@ -144,7 +148,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
                 defaultMessage: "Saleor Apps",
                 description: "section header",
               })}
-              appsList={saleorApps}
+              appsList={saleorApps || []}
               onRemove={onInstalledAppRemove}
               {...listProps}
             />

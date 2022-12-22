@@ -9,7 +9,10 @@ interface AppToken {
 const TIME_BEFORE_REFRESH = 30 * 1000; // 30 seconds
 
 const useTokenRefresh = (token?: string, refetch?: () => void) => {
-  let decoded: AppToken;
+  let decoded: AppToken = {
+    exp: 0,
+    iat: 0,
+  };
 
   // For some reason jwt_decode causes seemingly unrelated error in tests
   // It seems like at some point undefined token is passed
@@ -26,11 +29,13 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
 
   const refreshTimeout = useRef<null | ReturnType<typeof setTimeout>>(null);
 
-  const tokenLife = (decoded?.exp - decoded?.iat) * 1000; // in ms
+  const tokenLife = ((decoded?.exp || 0) - (decoded?.iat || 0)) * 1000; // in ms
   const refreshTime = tokenLife - TIME_BEFORE_REFRESH;
 
   const setUpTimeout = () => {
-    refetch();
+    if (refetch) {
+      refetch();
+    }
     createTimeout();
   };
 
@@ -50,7 +55,11 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
       createTimeout();
     }
 
-    return () => !!refetch && decodedSuccesfully && deleteTimeout();
+    return () => {
+      if (!!refetch && decodedSuccesfully) {
+        deleteTimeout();
+      }
+    };
   }, [token]);
 };
 

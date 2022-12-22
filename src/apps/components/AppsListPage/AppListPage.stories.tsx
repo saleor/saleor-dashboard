@@ -47,7 +47,7 @@ storiesOf("Views / Apps / Apps list", module)
       {...props}
       appsInProgressList={undefined}
       disabled={true}
-      installedAppsList={undefined}
+      installedAppsList={[]}
     />
   ))
   .add("no data", () => (
