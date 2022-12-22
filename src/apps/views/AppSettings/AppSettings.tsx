@@ -29,7 +29,7 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
 
   return (
     <AppPage
-      data={data?.app || null}
+      data={data?.app ?? null}
       url={data?.app?.configurationUrl ?? ""}
       aboutHref={appDetailsUrl(id)}
       refetch={refetch}

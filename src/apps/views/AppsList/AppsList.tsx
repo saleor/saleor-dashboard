@@ -22,6 +22,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState,
+  PageInfo,
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { findById } from "@saleor/misc";
@@ -92,7 +93,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   });
 
   const paginationValues = usePaginator({
-    pageInfo: data?.apps?.pageInfo as any,
+    pageInfo: data?.apps?.pageInfo as PageInfo,
     paginationState,
     queryString: params,
   });
@@ -114,13 +115,15 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     onCompleted: data => {
       if (!data?.appRetryInstall?.errors?.length) {
         const appInstallation = data.appRetryInstall?.appInstallation;
-        setActiveInstallations(installations => [
-          ...installations,
-          {
-            id: appInstallation?.id || "",
-            name: appInstallation?.appName || "",
-          },
-        ]);
+        if (appInstallation) {
+          setActiveInstallations(installations => [
+            ...installations,
+            {
+              id: appInstallation.id,
+              name: appInstallation.appName,
+            },
+          ]);
+        }
       }
     },
   });

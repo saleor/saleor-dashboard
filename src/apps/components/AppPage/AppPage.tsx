@@ -80,9 +80,9 @@ export const AppPage: React.FC<AppPageProps> = ({
         {url && (
           <AppFrame
             src={url}
-            appToken={data?.accessToken || ""}
+            appToken={data?.accessToken ?? ""}
             onError={onError}
-            appId={data?.id || ""}
+            appId={data?.id ?? ""}
             refetch={refetch}
           />
         )}

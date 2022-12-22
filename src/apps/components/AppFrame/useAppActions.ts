@@ -125,7 +125,7 @@ export const useAppActions = (
   };
 
   const postToExtension = (event: Events) => {
-    if (frameEl.current && frameEl.current.contentWindow) {
+    if (frameEl?.current?.contentWindow) {
       frameEl.current.contentWindow.postMessage(event, appOrigin);
     }
   };

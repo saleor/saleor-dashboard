@@ -104,7 +104,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                     <TableButtonWrapper>
                       <Switch
-                        checked={app?.isActive || false}
+                        checked={!!app.isActive}
                         onChange={getHandleToggle(app)}
                       />
                     </TableButtonWrapper>

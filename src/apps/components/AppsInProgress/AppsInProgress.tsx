@@ -51,14 +51,14 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
       />
       <ResponsiveTable>
         <TableBody>
-          {renderCollection(appsList, data => {
-            if (!data) {
-              return null;
-            }
-
-            const { status, appName, id, message } = data;
-
-            return (
+          {renderCollection(
+            appsList,
+            ({
+              status,
+              appName,
+              id,
+              message,
+            }: AppsInstallationsQuery["appsInstallations"][number]) => (
               <TableRowLink key={id} className={classes.tableRow}>
                 <TableCell className={classes.colName}>
                   <span data-tc="name">{appName}</span>
@@ -122,8 +122,8 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                   </TableCell>
                 )}
               </TableRowLink>
-            );
-          })}
+            ),
+          )}
         </TableBody>
       </ResponsiveTable>
     </Card>

@@ -99,7 +99,7 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
   },
 ];
 
-export const appDetails: AppQuery["app"] = {
+export const appDetails: NonNullable<AppQuery["app"]> = {
   __typename: "App",
   aboutApp: "Lorem ipsum",
   accessToken: "token",

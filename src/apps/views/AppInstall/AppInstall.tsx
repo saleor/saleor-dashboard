@@ -46,15 +46,17 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   });
   const [installApp] = useAppInstallMutation({
     onCompleted: data => {
+      const installationData = data?.appInstall?.appInstallation;
       if (data.appInstall?.errors.length === 0) {
-        const installationData = data?.appInstall?.appInstallation;
-        setActiveInstallations(activeInstallations => [
-          ...activeInstallations,
-          {
-            id: installationData?.id || "",
-            name: installationData?.appName || "",
-          },
-        ]);
+        if (installationData) {
+          setActiveInstallations(activeInstallations => [
+            ...activeInstallations,
+            {
+              id: installationData.id,
+              name: installationData.appName,
+            },
+          ]);
+        }
         navigateToAppsList();
       } else {
         (data?.appInstall?.errors ?? []).forEach(error => {
