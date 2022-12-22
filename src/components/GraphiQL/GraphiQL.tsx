@@ -23,6 +23,7 @@ import React, {
   PropsWithChildren,
   ReactNode,
 } from 'react';
+import { useTheme } from "@saleor/macaw-ui";
 
 export interface GraphiQLToolbarConfig {
   /**
@@ -227,8 +228,18 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   //     <code className="graphiql-key">Ctrl</code>
   //   );
 
+  const theme = useTheme()
+  const rootStyle = {
+    "--font-size-body": theme.typography.body2.fontSize,
+    "--font-size-h2": theme.typography.h3.fontSize,
+    "--font-size-h3": theme.typography.h3.fontSize,
+    "--font-size-h4": theme.typography.h4.fontSize,
+    "--font-size-hint": theme.typography.caption.fontSize,
+    "--font-size-inline-code": theme.typography.caption.fontSize,
+  } as React.CSSProperties;
+
   return (
-    <div data-testid="graphiql-container" className="graphiql-container">
+    <div data-testid="graphiql-container" className="graphiql-container" style={rootStyle}>
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
           {pluginContext?.plugins.map(plugin => {
