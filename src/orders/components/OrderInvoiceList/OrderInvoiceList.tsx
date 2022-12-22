@@ -6,13 +6,11 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
 import CardTitle from "@saleor/components/CardTitle";
 import Date from "@saleor/components/Date";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { InvoiceFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -59,7 +57,7 @@ export interface OrderInvoiceListProps {
 }
 
 const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
-  const { invoices, onInvoiceClick, onInvoiceSend } = props;
+  const { invoices, onInvoiceClick } = props;
 
   const classes = useStyles(props);
 
@@ -120,16 +118,6 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       <Date date={invoice.createdAt} plain />
                     </Typography>
                   </TableCell>
-                  {onInvoiceSend && (
-                    <TableCell
-                      className={classes.colAction}
-                      onClick={() => onInvoiceSend(invoice.id)}
-                    >
-                      <Button>
-                        <FormattedMessage {...buttonMessages.send} />
-                      </Button>
-                    </TableCell>
-                  )}
                 </TableRow>
               ))}
             </TableBody>
