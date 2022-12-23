@@ -32,6 +32,7 @@ export const SubmitCard = ({
           </Typography>
           <div className={classes.submitButtonWrapper}>
             <ConfirmButton
+              data-test-id="return-submit-button"
               transitionState={submitStatus}
               disabled={disabled}
               variant="primary"

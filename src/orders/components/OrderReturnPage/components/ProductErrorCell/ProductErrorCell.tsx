@@ -30,6 +30,7 @@ export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({
       ref={popperAnchorRef}
     >
       <div
+        data-test-id="product-error-message"
         className={classes.titleContainer}
         onMouseEnter={() => setShowErrorBox(true)}
         onMouseLeave={() => setShowErrorBox(false)}
@@ -41,6 +42,7 @@ export const ProductErrorCell: React.FC<ProductErrorCellProps> = ({
       </div>
       <Popper
         placement="bottom-end"
+        data-test-id="product-error-popup"
         open={showErrorBox}
         anchorEl={popperAnchorRef.current}
       >
