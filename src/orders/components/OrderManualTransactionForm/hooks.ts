@@ -3,13 +3,24 @@ import React from "react";
 
 interface ManualRefundHookProps {
   submitState: ConfirmButtonTransitionState;
+  initialData?: {
+    amount?: number;
+    description?: string;
+  };
 }
 
 export type ManualRefundData = ReturnType<typeof useManualRefund>;
 
-export const useManualRefund = ({ submitState }: ManualRefundHookProps) => {
-  const [amount, setAmount] = React.useState<number | undefined>();
-  const [description, setDescription] = React.useState("");
+export const useManualRefund = ({
+  submitState,
+  initialData,
+}: ManualRefundHookProps) => {
+  const [amount, setAmount] = React.useState<number | undefined>(
+    initialData?.amount,
+  );
+  const [description, setDescription] = React.useState(
+    initialData?.description ?? "",
+  );
 
   React.useEffect(() => {
     if (submitState === "success") {
