@@ -64,7 +64,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
     onChange,
     onCountryChange,
   } = props;
-  const { areas, isFieldAllowed } = useAddressValidation(data.country);
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
+    data.country,
+  );
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -200,7 +202,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
             disabled={disabled}
             autocomplete="new-password"
             data-test-id="address-edit-country-area-field"
-            displayValue={data.countryArea}
+            displayValue={getDisplayValue(data.countryArea)}
             error={!!formErrors.countryArea}
             helperText={getErrorMessage(formErrors.countryArea, intl)}
             label={intl.formatMessage({
