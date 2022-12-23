@@ -77,7 +77,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const { areas, isFieldAllowed } = useAddressValidation(data.country);
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
+    data.country,
+  );
 
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
@@ -269,7 +271,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               disabled={disabled}
               autocomplete="new-password"
               data-test-id="address-edit-country-area-field"
-              displayValue={data.countryArea}
+              displayValue={getDisplayValue(data.countryArea)}
               error={!!formErrors.countryArea}
               helperText={getErrorMessage(formErrors.countryArea, intl)}
               label={intl.formatMessage({

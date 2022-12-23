@@ -87,7 +87,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const navigate = useNavigator();
 
   const [displayCountry, setDisplayCountry] = useStateFromProps(
-    shop?.companyAddress?.country.code || "",
+    shop?.companyAddress?.country.country || "",
   );
 
   const {
