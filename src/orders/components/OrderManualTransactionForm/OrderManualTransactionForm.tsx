@@ -14,13 +14,15 @@ export interface OrderManualTransactionFormProps {
   currency: string;
   submitState: ConfirmButtonTransitionState;
   error: string | undefined;
+  initialData?: Partial<OrderManualTransactionSubmitVariables>;
 }
 
 export const OrderManualTransactionForm: React.FC<OrderManualTransactionFormProps> = ({
   children,
   ...props
 }) => {
-  const hookData = useManualRefund({ submitState: props.submitState });
+  const { submitState, initialData } = props;
+  const hookData = useManualRefund({ submitState, initialData });
 
   return (
     <ManualTransactionContext.Provider
