@@ -18,12 +18,12 @@ import {
   UseVariableEditorArgs,
   WriteableEditorProps,
 } from '@graphiql/react';
+import { useTheme } from "@saleor/macaw-ui";
 import React, {
   ComponentType,
   PropsWithChildren,
   ReactNode,
 } from 'react';
-import { useTheme } from "@saleor/macaw-ui";
 
 export interface GraphiQLToolbarConfig {
   /**

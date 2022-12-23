@@ -1,19 +1,19 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import Hr from "@dashboard/components/Hr";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
+import CardTitle from "@saleor/components/CardTitle";
+import Grid from "@saleor/components/Grid";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from "@dashboard/components/MultiAutocompleteSelectField";
+} from "@saleor/components/MultiAutocompleteSelectField";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices,
-} from "@dashboard/custom-apps/utils";
+} from "@saleor/custom-apps/utils";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { Card, CardContent, Typography } from "@material-ui/core";
+} from "@saleor/graphql";
+import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -43,52 +43,55 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     <Card>
       <CardTitle title={intl.formatMessage(messages.events)} />
       <CardContent>
-        <Typography variant="caption">
-          <FormattedMessage {...messages.synchronousEvents} />
-        </Typography>
-        <VerticalSpacer />
-        <Typography variant="body1">
-          <FormattedMessage
-            {...messages.assignPermissionsToSynchronousEvents}
-          />
-        </Typography>
-        <VerticalSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={mapSyncEventsToChoices(data.syncEvents)}
-          label={intl.formatMessage(messages.registeredEvents)}
-          choices={syncEventsChoices}
-          name="syncEvents"
-          value={data.syncEvents}
-          onChange={onSyncEventChange}
-          data-test-id="syncEvents"
-          testId="syncEvent"
-        />
-        <VerticalSpacer spacing={2} />
-        <Hr />
-        <VerticalSpacer spacing={2} />
-        <Typography variant="caption">
-          <FormattedMessage {...messages.asynchronousEvents} />
-        </Typography>
-        <VerticalSpacer />
-        <Typography variant="body1">
-          <FormattedMessage
-            {...messages.assignPermissionsToAsynchronousEvents}
-          />
-        </Typography>
-        <VerticalSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={mapAsyncEventsToChoices(
-            data.asyncEvents,
-            data.asyncEvents,
-          )}
-          label={intl.formatMessage(messages.registeredEvents)}
-          choices={asyncEventsChoices}
-          name="asyncEvents"
-          value={data.asyncEvents}
-          onChange={onAsyncEventChange}
-          data-test-id="asyncEvents"
-          testId="asyncEvent"
-        />
+        <Grid variant="uniform">
+          <div>
+            <Typography variant="caption">
+              <FormattedMessage {...messages.synchronousEvents} />
+            </Typography>
+            <VerticalSpacer />
+            <Typography variant="body1">
+              <FormattedMessage
+                {...messages.assignPermissionsToSynchronousEvents}
+              />
+            </Typography>
+            <VerticalSpacer />
+            <MultiAutocompleteSelectField
+              displayValues={mapSyncEventsToChoices(data.syncEvents)}
+              label={intl.formatMessage(messages.registeredEvents)}
+              choices={syncEventsChoices}
+              name="syncEvents"
+              value={data.syncEvents}
+              onChange={onSyncEventChange}
+              data-test-id="syncEvents"
+              testId="syncEvent"
+            />
+          </div>
+          <div>
+            <Typography variant="caption">
+              <FormattedMessage {...messages.asynchronousEvents} />
+            </Typography>
+            <VerticalSpacer />
+            <Typography variant="body1">
+              <FormattedMessage
+                {...messages.assignPermissionsToAsynchronousEvents}
+              />
+            </Typography>
+            <VerticalSpacer />
+            <MultiAutocompleteSelectField
+              displayValues={mapAsyncEventsToChoices(
+                data.asyncEvents,
+                data.asyncEvents,
+              )}
+              label={intl.formatMessage(messages.registeredEvents)}
+              choices={asyncEventsChoices}
+              name="asyncEvents"
+              value={data.asyncEvents}
+              onChange={onAsyncEventChange}
+              data-test-id="asyncEvents"
+              testId="asyncEvent"
+            />
+          </div>
+        </Grid>
       </CardContent>
     </Card>
   );

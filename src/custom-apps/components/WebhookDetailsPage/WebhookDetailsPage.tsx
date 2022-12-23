@@ -1,32 +1,32 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
-import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
-import Savebar from "@dashboard/components/Savebar";
-import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
-import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
-import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus";
+import { Backlink } from "@saleor/components/Backlink";
+import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
+import PageHeader from "@saleor/components/PageHeader";
+import Savebar from "@saleor/components/Savebar";
+import WebhookEvents from "@saleor/custom-apps/components/WebhookEvents";
+import WebhookInfo from "@saleor/custom-apps/components/WebhookInfo";
+import WebhookStatus from "@saleor/custom-apps/components/WebhookStatus";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
-} from "@dashboard/custom-apps/handlers";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+} from "@saleor/custom-apps/handlers";
+import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices,
-} from "@dashboard/custom-apps/utils";
+} from "@saleor/custom-apps/utils";
 import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
+} from "@saleor/graphql";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
+import { parse, print } from "graphql";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
@@ -64,6 +64,13 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
+  let prettified: string;
+  try {
+    prettified = print(parse(webhook?.subscriptionQuery));
+  } catch {
+    prettified = webhook?.subscriptionQuery || "";
+  }
+
   const initialForm: WebhookFormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
     asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
@@ -71,13 +78,23 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
-    subscriptionQuery: webhook?.subscriptionQuery || "",
+    subscriptionQuery: prettified || "",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
 
+  const [query, setQuery] = useState(prettified);
+
+  useEffect(() => {
+    setQuery(prettified);
+  }, [prettified]);
+
+  const handleSubmit = (data: WebhookFormData) => {
+    onSubmit({ ...data, ...{ subscriptionQuery: query } });
+  };
+
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
         const syncEventsChoices = disabled
           ? []
@@ -96,43 +113,36 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
           change,
           data.asyncEvents,
+          query,
+          setQuery,
         );
 
         return (
           <Container>
             <Backlink href={backUrl}>{appName}</Backlink>
-            <PageHeader title={getHeaderTitle(intl, webhook)} />
-            <Grid variant="uniform">
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <FormSpacer />
-                <WebhookEvents
-                  data={data}
-                  syncEventsChoices={syncEventsChoices}
-                  asyncEventsChoices={asyncEventsChoices}
-                  onSyncEventChange={handleSyncEventsSelect}
-                  onAsyncEventChange={handleAsyncEventsSelect}
-                />
-              </div>
-            </Grid>
-            <FormSpacer />
-            <WebhookSubscriptionQuery
+            <PageHeader title={getHeaderTitle(intl, webhook)}>
+              <WebhookStatus
+                data={data.isActive}
+                disabled={disabled}
+                onChange={change}
+              />
+            </PageHeader>
+            <WebhookInfo
               data={data}
-              onChange={change}
+              disabled={disabled}
               errors={errors}
+              onChange={change}
             />
+            <FormSpacer />
+            <WebhookEvents
+              data={data}
+              syncEventsChoices={syncEventsChoices}
+              asyncEventsChoices={asyncEventsChoices}
+              onSyncEventChange={handleSyncEventsSelect}
+              onAsyncEventChange={handleAsyncEventsSelect}
+            />
+            <FormSpacer />
+            <WebhookSubscriptionQuery query={query} setQuery={setQuery} />
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}

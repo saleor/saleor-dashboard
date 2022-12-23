@@ -2,3 +2,4 @@ types/
 schema.graphql
 *.generated.*
 src/graphql/extendedTypes.ts
+src/components/GraphiQL/GraphiQL.tsx

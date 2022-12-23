@@ -4,18 +4,13 @@ import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { WebhookErrorFragment } from "@saleor/graphql";
-import { parse, print} from "graphql";
-import React, { useRef, useState } from "react";
+import React from "react";
 
-// import GraphiQL from "graphiql";
 import GraphiQL from "../../../components/GraphiQL";
-import { WebhookFormData } from "../WebhookDetailsPage";
 
 interface WebhookSubscriptionQueryProps {
-  data: WebhookFormData;
-  errors: WebhookErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  query: any;
+  setQuery: React.Dispatch<any>;
 }
 
 export const fetcher = createGraphiQLFetcher({
@@ -24,18 +19,9 @@ export const fetcher = createGraphiQLFetcher({
 });
 
 const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
-  data,
-  onChange,
+  query,
+  setQuery,
 }) => {
-  let prettified = '';
-  try {
-    prettified = print(parse(data.subscriptionQuery));
-  } catch {
-    prettified = data.subscriptionQuery;
-  }
-  const [query, setQuery] = useState(prettified)
-  const ref = useRef(null);
-
   const explorerPlugin = useExplorerPlugin({
     query,
     onEdit: setQuery,
@@ -46,22 +32,12 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
       <CardTitle title="Payload Query" />
       <CardContent style={{ height: 500, padding: 0 }}>
         <GraphiQL
-          defaultEditorToolsVisibility={'headers'}
+          defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
-          onEditQuery={input => {
-            ref.current.dispatchEvent(new Event("input", { bubbles: true }));
-            setQuery(input);
-          }}
+          onEditQuery={setQuery}
           plugins={[explorerPlugin]}
           isHeadersEditorEnabled={false}
-        />
-        <input
-          name="subscriptionQuery"
-          style={{ display: "none" }}
-          value={query}
-          ref={ref}
-          onInput={onChange}
         />
       </CardContent>
     </Card>
