@@ -1,38 +1,48 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import NodeHttpAdapter from "@pollyjs/adapter-node-http";
-import { Polly } from "@pollyjs/core";
-import FSPersister from "@pollyjs/persister-fs";
 import { getApiUrl } from "@saleor/config";
 import { createFetch } from "@saleor/sdk";
+import { isCI } from "ci-info";
+import { get } from "env-var";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
-Polly.register(NodeHttpAdapter);
-Polly.register(FSPersister);
+const POLLY_MODES = ["replay", "record", "passthrough", "stopped"] as const;
+
+const POLLY_MODE = get("POLLY_MODE")
+  .default(POLLY_MODES[0])
+  .asEnum(POLLY_MODES);
+
+const POLLY_RECORD_IF_MISSING = get("POLLY_RECORD_IF_MISSING")
+  .default(isCI ? "false" : "true")
+  .asBoolStrict();
 
 function setupApi() {
   setupPolly({
-    adapters: ["node-http"],
+    adapters: [require("@pollyjs/adapter-node-http")],
+    persister: require("@pollyjs/persister-fs"),
+    persisterOptions: {
+      keepUnusedRequests: false,
+      fs: {
+        recordingsDir: path.resolve(__dirname, "../recordings"),
+      },
+    },
     matchRequestsBy: {
       headers: false,
       url: {
         hash: false,
-        hostname: false,
+        hostname: true,
         password: false,
-        pathname: false,
+        pathname: true,
         port: false,
         protocol: false,
         query: false,
         username: false,
       },
+      body: false,
     },
-    persister: "fs",
-    persisterOptions: {
-      fs: {
-        recordingsDir: path.resolve(__dirname, "../recordings"),
-      },
-    },
+    mode: POLLY_MODE,
+    recordIfMissing: POLLY_RECORD_IF_MISSING,
   });
   const cache = new InMemoryCache();
   const link = new BatchHttpLink({
