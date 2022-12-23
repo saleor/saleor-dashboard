@@ -110,6 +110,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
+                data-test-id="submit"
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
                 type="submit"

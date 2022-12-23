@@ -20,7 +20,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
           description: "header",
         })}
         toolbar={
-          <Button onClick={onChangePassword}>
+          <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
             <FormattedMessage
               id="N3Zot1"
               defaultMessage="Change your password"

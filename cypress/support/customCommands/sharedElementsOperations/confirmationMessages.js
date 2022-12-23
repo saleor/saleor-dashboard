@@ -10,3 +10,7 @@ Cypress.Commands.add("confirmationMessageShouldDisappear", () => {
 Cypress.Commands.add("confirmationMessageShouldAppear", () => {
   cy.get(SHARED_ELEMENTS.notificationSuccess).should("be.visible");
 });
+
+Cypress.Commands.add("confirmationErrorMessageShouldAppear", () => {
+  cy.get(SHARED_ELEMENTS.notificationFailure).should("be.visible");
+});
