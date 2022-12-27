@@ -53,6 +53,7 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
       return (
         <form onSubmit={handleFormSubmit}>
           <TextField
+            data-test-id="manifest-url-input"
             required
             type="url"
             name="manifest-url"
@@ -65,6 +66,7 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
             type="submit"
             className={styles.installButton}
             variant="primary"
+            data-test-id="install-app-from-manifest"
           >
             <FormattedMessage {...buttonMessages.install} />
           </Button>
