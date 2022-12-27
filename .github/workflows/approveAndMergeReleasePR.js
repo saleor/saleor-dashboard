@@ -91,6 +91,8 @@ program
         }
         requestBody += `\nIf this bugs won't be fixed in next patch release for this version mark them as known issues`;
       }
+    }else if(testsStatus === "ERRORED"){
+      requestBody = `Tests ERRORED! Check log at ${options.dashboard_url}`
     }
 
     const event = "COMMENT";
