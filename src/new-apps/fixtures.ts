@@ -107,34 +107,88 @@ export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
 
 export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
   name: {
-    en: "Test app",
+    en: "Test released app",
   },
   description: {
-    en: "Test app description",
+    en: "Test released app description",
   },
   logo: {
-    source: "https://www.example.com/logo",
+    source: "https://www.released-example.com/images/logo.png",
     color: "#000000",
   },
-  integrations: [],
-  manifestUrl: "https://www.example.com/manifest",
-  privacyUrl: "https://www.example.com/privacy",
-  supportUrl: "https://www.example.com/support",
-  repositoryUrl: "https://www.example.com/repository",
-  vercelDeploymentUrl: "https://www.example.com/deployment",
+  manifestUrl: "https://www.released-example.com/manifest",
+  privacyUrl: "https://www.released-example.com/privacy",
+  supportUrl: "https://www.released-example.com/support",
+  repositoryUrl: "https://www.released-example.com/repository",
+  vercelDeploymentUrl: "https://www.released-example.com/deployment",
+  integrations: [
+    {
+      name: "First released integration",
+      logo: {
+        light: {
+          source:
+            "https://www.released-example.com/images/first-integration-logo-light.png",
+        },
+        dark: {
+          source:
+            "https://www.released-example.com/images/first-integration-logo-dark.png",
+        },
+      },
+    },
+    {
+      name: "Second released integration",
+      logo: {
+        light: {
+          source:
+            "https://www.released-example.com/images/second-integration-logo-light.png",
+        },
+        dark: {
+          source:
+            "https://www.released-example.com/images/second-integration-logo-dark.png",
+        },
+      },
+    },
+  ],
 };
 
 export const comingSoonApp: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
   name: {
-    en: "Test app",
+    en: "Test coming soon app",
   },
   description: {
-    en: "Test app description",
+    en: "Test coming soon app description",
   },
   logo: {
-    source: "https://www.example.com/logo",
+    source: "https://www.coming-soon-example.com/images/logo.png",
     color: "#000000",
   },
-  integrations: [],
   releaseDate: "2019-12-16",
+  integrations: [
+    {
+      name: "First coming soon integration",
+      logo: {
+        light: {
+          source:
+            "https://www.coming-soon-example.com/images/first-integration-logo-light.png",
+        },
+        dark: {
+          source:
+            "https://www.coming-soon-example.com/images/first-integration-logo-dark.png",
+        },
+      },
+    },
+    {
+      name: "Second coming soon integration",
+      logo: {
+        light: {
+          source:
+            "https://www.coming-soon-example.com/images/second-integration-logo-light.png",
+        },
+        dark: {
+          source:
+            "https://www.coming-soon-example.com/images/second-integration-logo-dark.png",
+        },
+      },
+    },
+  ],
 };

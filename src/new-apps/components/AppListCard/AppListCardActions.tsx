@@ -30,12 +30,20 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
       <Hr />
       <CardActions className={classes.cardActions}>
         {vercelDeployHandler && (
-          <Button variant="secondary" onClick={vercelDeployHandler}>
+          <Button
+            variant="secondary"
+            onClick={vercelDeployHandler}
+            data-test-id="app-deploy-to-vercel-button"
+          >
             <FormattedMessage {...messages.deployToVercel} />
           </Button>
         )}
         {installHandler && (
-          <Button variant="primary" onClick={installHandler}>
+          <Button
+            variant="primary"
+            onClick={installHandler}
+            data-test-id="app-install-button"
+          >
             <FormattedMessage {...buttonMessages.install} />
           </Button>
         )}

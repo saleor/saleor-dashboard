@@ -21,10 +21,13 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
           style={{
             backgroundColor: app.logo.color,
           }}
+          data-test-id="app-logo"
         >
-          {app.logo.source && <img src={app.logo.source} />}
+          {app.logo.source && <img src={app.logo.source} alt="App logo" />}
           {!app.logo.source && (
-            <Typography variant="h2">{app.name.en[0] || ""}</Typography>
+            <Typography variant="h2" data-test-id="app-logo-placeholder">
+              {app.name.en[0] || ""}
+            </Typography>
           )}
         </div>
         <Typography className={classes.cardHeader} variant="h2">
