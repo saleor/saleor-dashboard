@@ -3,6 +3,7 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
+import { updateVariantWarehouse } from "../../../../support/api/requests/Product";
 import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 
@@ -14,6 +15,7 @@ export function variantsShouldBeVisible({ price }) {
 export function createVariant({
   sku,
   warehouseName,
+  warehouseId,
   attributeName,
   price,
   costPrice = price,
@@ -23,6 +25,7 @@ export function createVariant({
     attributeName,
     sku,
     warehouseName,
+    warehouseId,
     quantity,
     costPrice,
     price,
@@ -62,11 +65,21 @@ export function fillUpVariantDetails({
   attributeType = "DROPDOWN",
   sku,
   warehouseName,
+  warehouseId,
   quantity,
   costPrice,
   price,
 }) {
   selectAttributeWithType({ attributeType, attributeName });
+  cy.get(PRICE_LIST.priceInput)
+    .each(input => {
+      cy.wrap(input).type(price);
+    })
+    .get(PRICE_LIST.costPriceInput)
+    .each(input => {
+      cy.wrap(input).type(costPrice);
+    });
+
   if (sku) {
     cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
   }
@@ -79,17 +92,13 @@ export function fillUpVariantDetails({
       .get(VARIANTS_SELECTORS.stockInput)
       .type(quantity);
   }
-
-  cy.get(PRICE_LIST.priceInput)
-    .each(input => {
-      cy.wrap(input).type(price);
-    })
-    .get(PRICE_LIST.costPriceInput)
-    .each(input => {
-      cy.wrap(input).type(costPrice);
+  if (warehouseId) {
+    saveVariant().then(({ response }) => {
+      const variantId =
+        response.body.data.productVariantCreate.productVariant.id;
+      updateVariantWarehouse({ variantId, warehouseId, quantity });
     });
-
-  cy.get(VARIANTS_SELECTORS.saveButton).click();
+  }
 }
 
 export function fillUpVariantAttributeAndSku({ attributeName, sku }) {

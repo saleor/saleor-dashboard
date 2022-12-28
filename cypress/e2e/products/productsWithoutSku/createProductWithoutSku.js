@@ -5,10 +5,12 @@ import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList } from "../../../fixtures/urlList";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
+import { productVariantDetailUrl, urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { updateVariantWarehouse } from "../../../support/api/requests/Product";
+import * as productRequest from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import {
   deleteChannelsStartsWith,
@@ -17,8 +19,13 @@ import {
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import { enterVariantEditPage } from "../../../support/pages/catalog/products/productDetailsPage";
-import { selectChannelsForVariant } from "../../../support/pages/catalog/products/VariantsPage";
+import {
+  createVariant,
+  selectChannelsForVariant,
+} from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
@@ -39,6 +46,7 @@ describe("Creating variants", () => {
     shippingUtils.deleteShippingStartsWith(startsWith);
     productUtils.deleteProductsStartsWith(startsWith);
     deleteChannelsStartsWith(startsWith);
+    deleteWarehouseStartsWith(startsWith);
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
@@ -91,8 +99,60 @@ describe("Creating variants", () => {
     );
   });
 
-  xit(
-    "should create variant without sku",
+  it(
+    "should be able to add SKU to simple product TC: SALEOR_2802",
+    { tags: ["@products", "@allEnv"] },
+    () => {
+      const productName = `${startsWith}${faker.datatype.number()}`;
+      let product;
+      let variant;
+      const sku = `NewSku${faker.datatype.number()}`;
+
+      productUtils
+        .createProductInChannelWithoutVariants({
+          name: productName,
+          channelId: defaultChannel.id,
+          productTypeId: simpleProductType.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+        })
+        .then(productResp => {
+          product = productResp;
+          productRequest.createVariantForSimpleProduct({
+            productId: product.id,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 10,
+            trackInventory: false,
+          });
+        })
+        .then(variantResp => {
+          variant = variantResp;
+          productRequest.updateChannelPriceInVariant(
+            variant.id,
+            defaultChannel.id,
+          );
+          cy.visitAndWaitForProgressBarToDisappear(
+            productVariantDetailUrl(product.id, variant.id),
+          )
+            .get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist")
+            .get(VARIANTS_SELECTORS.skuInput)
+            .type(sku)
+            .addAliasToGraphRequest("VariantUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
+            .then(({ response }) => {
+              const responseSku =
+                response.body.data.productVariantUpdate.productVariant.sku;
+              expect(responseSku).to.equal(sku);
+            });
+        });
+    },
+  );
+
+  it(
+    "should create variant without sku TC: SALEOR_2807",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -112,12 +172,17 @@ describe("Creating variants", () => {
         .then(({ product: productResp }) => {
           createdProduct = productResp;
           cy.visit(`${urlList.products}${createdProduct.id}`);
-          createVariant({
-            warehouseName: warehouse.name,
-            attributeName: variants[1].name,
-            price: variants[1].price,
-            channelName: defaultChannel.name,
-          });
+          enterVariantEditPage();
+          cy.get(PRODUCT_DETAILS.addVariantButton)
+            .click()
+            .then(() => {
+              createVariant({
+                attributeName: variants[1].name,
+                price: variants[1].price,
+                channelName: defaultChannel.name,
+                warehouseId: warehouse.id,
+              });
+            });
         })
         .then(() => {
           getProductVariants(createdProduct.id, defaultChannel.slug);
@@ -170,8 +235,10 @@ describe("Creating variants", () => {
         .then(({ response }) => {
           const variantId =
             response.body.data.productVariantCreate.productVariant.id;
-
-          updateVariantWarehouse({ variantId, warehouseId: warehouse.id });
+          productRequest.updateVariantWarehouse({
+            variantId,
+            warehouseId: warehouse.id,
+          });
         });
       enterVariantEditPage();
       cy.addAliasToGraphRequest("ProductVariantDetails");

@@ -26,6 +26,7 @@ import {
   createShipping,
   deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
+import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 
 describe("Updating products without sku", () => {
   const startsWith = "UpdateProductsSku";
@@ -49,6 +50,7 @@ describe("Updating products without sku", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
+    deleteWarehouseStartsWith(startsWith);
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -111,7 +113,7 @@ describe("Updating products without sku", () => {
   });
 
   it(
-    "should add sku to variant",
+    "should add sku to variant TC: SALEOR_2803",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const sku = "NewSku";
@@ -146,7 +148,7 @@ describe("Updating products without sku", () => {
   );
 
   it(
-    "should remove sku from variant",
+    "should remove sku from variant TC: SALEOR_2805",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       let variant;
