@@ -82,6 +82,7 @@ describe("As an admin I want to update sales", () => {
         warehouseId: warehouse.id,
         price: productPrice,
       };
+      cy.checkIfDataAreNotNull({productData, defaultChannel, warehouse, address, sale, variants})
     });
   });
 

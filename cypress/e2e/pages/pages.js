@@ -40,7 +40,10 @@ describe("Tests for pages", () => {
         attribute = attributeResp;
         createPageType({ name, attributeId: attribute.id });
       })
-      .then(({ pageType: pageTypeResp }) => (pageType = pageTypeResp));
+      .then(({ pageType: pageTypeResp }) => {
+        pageType = pageTypeResp
+        cy.checkIfDataAreNotNull({attribute, pageType})
+      });
   });
 
   beforeEach(() => {

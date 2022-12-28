@@ -38,6 +38,7 @@ describe("Published products", () => {
       )
       .then(channel => {
         defaultChannel = channel;
+        cy.checkIfDataAreNotNull({productType,attribute,category,defaultChannel})
       });
   });
 

@@ -27,6 +27,7 @@ describe("Tests for customer", () => {
       address = usAddress;
       secondAddress = secondUsAddress;
     });
+    cy.checkIfDataAreNotNull({address,secondAddress})
   });
 
   beforeEach(() => {

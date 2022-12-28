@@ -22,6 +22,7 @@ describe("As an admin I want to manage attributes in product types", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
+    cy.checkIfDataAreNotNull(attribute)
   });
 
   beforeEach(() => {

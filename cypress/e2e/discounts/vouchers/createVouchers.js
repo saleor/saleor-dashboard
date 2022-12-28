@@ -53,6 +53,7 @@ describe("As an admin I want to create voucher", () => {
             auth: "token",
           };
         },
+        cy.checkIfDataAreNotNull({createdChannel, dataForCheckout, defaultChannel})
       );
   });
 

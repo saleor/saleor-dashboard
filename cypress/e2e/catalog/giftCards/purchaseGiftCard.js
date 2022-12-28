@@ -79,6 +79,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
       })
       .then(({ variantsList: variantsResp }) => {
         variants = variantsResp;
+        cy.checkIfDataAreNotNull({defaultChannel, productType, attribute, category, shippingMethod, variants, address})
       });
   });
 

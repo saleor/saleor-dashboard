@@ -37,6 +37,7 @@ describe("Products displayed in listings", () => {
       )
       .then(channel => {
         defaultChannel = channel;
+        cy.checkIfDataAreNotNull({productType,attribute,category,defaultChannel})
       });
   });
 

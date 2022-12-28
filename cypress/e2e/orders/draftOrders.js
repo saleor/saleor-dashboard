@@ -77,6 +77,7 @@ xdescribe("Draft orders", () => {
             categoryId: categoryResp.id,
           });
         },
+        cy.checkIfDataAreNotNull({defaultChannel, warehouse, address})
       );
   });
 

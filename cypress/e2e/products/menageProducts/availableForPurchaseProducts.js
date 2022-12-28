@@ -53,6 +53,7 @@ describe("Products available in listings", () => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
+          cy.checkIfDataAreNotNull({productType,attribute,category,defaultChannel,warehouse})
         },
       );
   });

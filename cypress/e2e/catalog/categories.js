@@ -66,7 +66,10 @@ describe("As an admin I want to manage categories", () => {
           });
         },
       )
-      .then(({ product: productResp }) => (product = productResp));
+      .then(({ product: productResp }) => {
+        product = productResp
+        cy.checkIfDataAreNotNull({attribute, category, productType, product, defaultChannel})
+      });
   });
 
   beforeEach(() => {

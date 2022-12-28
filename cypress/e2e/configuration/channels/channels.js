@@ -45,7 +45,10 @@ describe("Channels", () => {
         name: randomName,
         address: usAddress,
       });
-    });
+    })
+    .then(warehouse => {
+      cy.checkIfDataAreNotNull({shippingZone, usAddress, warehouse})
+    })
   });
 
   beforeEach(() => {

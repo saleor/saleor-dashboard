@@ -50,6 +50,7 @@ describe("As a user I should be able to update and delete shipping method", () =
           createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
             shippingZoneResp => {
               shippingZone = shippingZoneResp;
+              cy.checkIfDataAreNotNull({defaultChannel, shippingZone, shippingMethod, warehouse, usAddress})
             },
           );
         });
