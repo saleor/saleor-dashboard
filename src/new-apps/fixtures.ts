@@ -9,46 +9,50 @@ import {
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
 
+export const activeApp: AppListItemFragment = {
+  __typename: "App",
+  id: "QXBwOjE3Ng==",
+  isActive: true,
+  name: "First App",
+  type: AppTypeEnum.THIRDPARTY,
+  version: "1.0.0",
+  appUrl: "http://localhost:3000",
+  manifestUrl: "http://localhost:3000/api/manifest",
+  permissions: [
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_USERS,
+      name: "Manage customers.",
+    },
+  ],
+};
+
+export const inactiveApp: AppListItemFragment = {
+  __typename: "App",
+  id: "QXBwOj4TMb==",
+  isActive: false,
+  name: "Second App",
+  type: AppTypeEnum.THIRDPARTY,
+  version: "1.0.0",
+  appUrl: null,
+  manifestUrl: "http://localhost:3000/api/manifest",
+  permissions: [
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_ORDERS,
+      name: "Manage orders.",
+    },
+    {
+      __typename: "Permission",
+      code: PermissionEnum.MANAGE_USERS,
+      name: "Manage customers.",
+    },
+  ],
+};
+
 export const installedAppsList: AppListItemFragment[] = [
-  {
-    __typename: "App",
-    id: "QXBwOjE3Ng==",
-    isActive: true,
-    name: "app",
-    type: AppTypeEnum.THIRDPARTY,
-    version: "1.0.0",
-    appUrl: null,
-    manifestUrl: "http://localhost:3000/api/manifest",
-    permissions: [
-      {
-        __typename: "Permission",
-        code: PermissionEnum.MANAGE_USERS,
-        name: "Manage customers.",
-      },
-    ],
-  },
-  {
-    __typename: "App",
-    id: "QXBwOjE3Ng==",
-    isActive: false,
-    name: "app1",
-    type: AppTypeEnum.THIRDPARTY,
-    version: "1.0.0",
-    appUrl: "http://localhost:3000",
-    manifestUrl: "http://localhost:3000/api/manifest",
-    permissions: [
-      {
-        __typename: "Permission",
-        code: PermissionEnum.MANAGE_ORDERS,
-        name: "Manage orders.",
-      },
-      {
-        __typename: "Permission",
-        code: PermissionEnum.MANAGE_USERS,
-        name: "Manage customers.",
-      },
-    ],
-  },
+  activeApp,
+  inactiveApp,
 ];
 
 export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [

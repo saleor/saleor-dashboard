@@ -146,8 +146,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     () => ({
       activateApp: id => openModal("app-activate", { id }),
       deactivateApp: id => openModal("app-deactivate", { id }),
+      removeApp: id => openModal("remove-app", { id }),
     }),
-    [activateApp, deactivateApp],
+    [activateApp, deactivateApp, deleteApp],
   );
 
   const { data: marketplaceAppList, error } = useFetch<
@@ -197,11 +198,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           settings={settings}
           marketplaceError={error}
           onUpdateListSettings={updateListSettings}
-          onInstalledAppRemove={id =>
-            openModal("remove-app", {
-              id,
-            })
-          }
         />
       </PaginatorContext.Provider>
     </AppListContext.Provider>

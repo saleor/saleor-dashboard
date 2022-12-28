@@ -8,7 +8,6 @@ import AppListPage, { AppListPageProps } from "./AppListPage";
 const props: AppListPageProps = {
   disabled: false,
   installedApps: installedAppsList,
-  onInstalledAppRemove: () => undefined,
 };
 
 storiesOf("Views / New Apps / App List", module)

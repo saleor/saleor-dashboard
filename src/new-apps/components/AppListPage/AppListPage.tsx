@@ -24,7 +24,6 @@ import {
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
-  onInstalledAppRemove: (id: string) => void;
 }
 
 export const AppListPage: React.FC<AppListPageProps> = props => {
@@ -35,7 +34,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     disabled,
     settings,
     marketplaceError,
-    onInstalledAppRemove,
     onUpdateListSettings,
   } = props;
   const intl = useIntl();
@@ -84,7 +82,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               appList={verifiedInstalledApps}
               disabled={disabled}
               settings={settings}
-              onRemove={onInstalledAppRemove}
               onUpdateListSettings={onUpdateListSettings}
             />
           </>
