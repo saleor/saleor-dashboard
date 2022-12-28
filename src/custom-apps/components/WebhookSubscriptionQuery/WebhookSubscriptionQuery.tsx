@@ -13,8 +13,8 @@ interface WebhookSubscriptionQueryProps {
   setQuery: React.Dispatch<any>;
 }
 
-export const fetcher = createGraphiQLFetcher({
-  url: "https://zaiste.staging.saleor.cloud/graphql/", // TAKE FROM ENV
+const fetcher = createGraphiQLFetcher({
+  url: process.env.API_URI,
   fetch,
 });
 
