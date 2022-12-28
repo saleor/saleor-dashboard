@@ -170,7 +170,10 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   );
 
                   return (
-                    <TableRow key={maybe(() => attribute.id)}>
+                    <TableRow
+                      key={maybe(() => attribute.id)}
+                      data-test-id="assign-product-table-row"
+                    >
                       <TableCell
                         padding="checkbox"
                         className={classes.checkboxCell}
