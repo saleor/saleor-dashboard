@@ -5,7 +5,13 @@ import {
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { capitalize } from "@saleor/misc";
 import { toggle } from "@saleor/utils/lists";
-import { parse, print, visit } from "graphql";
+import {
+  InlineFragmentNode,
+  ObjectFieldNode,
+  parse,
+  print,
+  visit,
+} from "graphql";
 
 import { filterSelectedAsyncEvents } from "./utils";
 
@@ -62,36 +68,33 @@ const handleQuery = (
     const ast = parse(query);
 
     visit(ast, {
-      enter(node, key, parent) {
-        if (key === "selectionSet") {
-          // FIXME
-          if (parent.name?.value === "event") {
-            // FIXME
-            const queryEvents = node.selections.map(
-              selection => selection.typeCondition?.name?.value,
+      SelectionSet(node, _key, parent) {
+        if ((parent as ObjectFieldNode).name.value === "event") {
+          const queryEvents = node.selections.map(
+            selection =>
+              (selection as InlineFragmentNode).typeCondition.name.value,
+          );
+          const newEvents = events
+            .map(event =>
+              event
+                .toLowerCase()
+                .split("_")
+                .map(chunk => capitalize(chunk))
+                .join(""),
+            )
+            .filter(event => !queryEvents.includes(event));
+
+          if (newEvents.length > 0) {
+            // TODO modify AST
+
+            const inserted = query.replace(/\n/g, " ").replace(
+              "   } } ",
+              newEvents
+                .map(event => ` ... on ${event} { __typename }`)
+                .join("")
+                .concat("   } } "),
             );
-            const newEvents = events
-              .map(event =>
-                event
-                  .toLowerCase()
-                  .split("_")
-                  .map(chunk => capitalize(chunk))
-                  .join(""),
-              )
-              .filter(event => !queryEvents.includes(event));
-
-            if (newEvents.length > 0) {
-              // TODO modify AST
-
-              const inserted = query.replace(/\n/g, " ").replace(
-                "   } } ",
-                newEvents
-                  .map(event => ` ... on ${event} { __typename }`)
-                  .join("")
-                  .concat("   } } "),
-              );
-              setQuery(print(parse(inserted)));
-            }
+            setQuery(print(parse(inserted)));
           }
         }
 
