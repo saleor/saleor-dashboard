@@ -26,6 +26,9 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const missingName = ["", null].includes(name);
+  const isExternal = type === "EXTERNAL";
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
@@ -35,10 +38,12 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       title={intl.formatMessage(msgs.deleteAppTitle)}
       variant="delete"
     >
-      <DialogContentText>
-        {["", null].includes(name) ? (
+      <DialogContentText data-test-id="dialog-content">
+        {missingName && isExternal ? (
           <FormattedMessage {...msgs.deleteApp} />
-        ) : type === "EXTERNAL" ? (
+        ) : missingName ? (
+          <FormattedMessage {...msgs.deleteLocalApp} />
+        ) : isExternal ? (
           <FormattedMessage
             {...msgs.deleteNamedApp}
             values={{
@@ -52,7 +57,8 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
               name: <strong>{getStringOrPlaceholder(name)}</strong>,
             }}
           />
-        )}
+        )}{" "}
+        <FormattedMessage {...msgs.deleteAppQuestion} />
       </DialogContentText>
     </ActionDialog>
   );

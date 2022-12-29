@@ -27,6 +27,8 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const missingName = ["", null].includes(name);
+
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.deactivate)}
@@ -37,20 +39,22 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
       title={intl.formatMessage(msgs.deactivateAppTitle)}
       variant="delete"
     >
-      <DialogContentText>
-        {["", null].includes(name) ? (
-          <FormattedMessage
-            {...(thirdParty ? msgs.deactivateApp : msgs.deactivateLocalApp)}
-          />
+      <DialogContentText data-test-id="dialog-content">
+        {missingName ? (
+          <FormattedMessage {...msgs.deactivateApp} />
         ) : (
           <FormattedMessage
-            {...(thirdParty
-              ? msgs.deactivateNamedApp
-              : msgs.deactivateLocalNamedApp)}
+            {...msgs.deactivateNamedApp}
             values={{
               name: <strong>{getStringOrPlaceholder(name)}</strong>,
             }}
           />
+        )}
+        {thirdParty && (
+          <>
+            {" "}
+            <FormattedMessage {...msgs.deactivateAppBillingInfo} />
+          </>
         )}
       </DialogContentText>
     </ActionDialog>

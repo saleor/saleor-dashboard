@@ -25,6 +25,8 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const missingName = ["", null].includes(name);
+
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.activate)}
@@ -35,8 +37,8 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       title={intl.formatMessage(msgs.activateAppTitle)}
       variant="default"
     >
-      <DialogContentText>
-        {["", null].includes(name) ? (
+      <DialogContentText data-test-id="dialog-content">
+        {missingName ? (
           <FormattedMessage {...msgs.activateApp} />
         ) : (
           <FormattedMessage
