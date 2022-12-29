@@ -34,7 +34,7 @@ const isAppDeepUrlChange = (appId: string, from: string, to: string) => {
 };
 
 export const useAppActions = (
-  frameEl: React.MutableRefObject<HTMLIFrameElement>,
+  frameEl: React.MutableRefObject<HTMLIFrameElement | null>,
   appOrigin: string,
   appId: string,
 ) => {
@@ -125,7 +125,7 @@ export const useAppActions = (
   };
 
   const postToExtension = (event: Events) => {
-    if (frameEl.current) {
+    if (frameEl?.current?.contentWindow) {
       frameEl.current.contentWindow.postMessage(event, appOrigin);
     }
   };

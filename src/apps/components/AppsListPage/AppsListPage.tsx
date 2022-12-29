@@ -78,15 +78,19 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     [installedAppsList, fetchedSaleorApps],
   );
 
-  const saleorApps = useMemo(
+  const saleorApps = useMemo<AppListItemFragment[]>(
     () =>
-      fetchedSaleorApps
-        ?.map(app =>
-          installedAppsList?.find(installedApp =>
-            installedApp.manifestUrl?.includes(app.hostname),
-          ),
-        )
-        .filter(Boolean),
+      (fetchedSaleorApps || []).reduce<AppListItemFragment[]>((acc, app) => {
+        const foundedApp = installedAppsList?.find(installedApp =>
+          installedApp.manifestUrl?.includes(app.hostname),
+        );
+
+        if (foundedApp) {
+          acc.push(foundedApp);
+        }
+
+        return acc;
+      }, []),
     [installedAppsList, fetchedSaleorApps],
   );
 

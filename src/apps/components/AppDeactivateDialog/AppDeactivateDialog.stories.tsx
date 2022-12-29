@@ -17,4 +17,4 @@ const props: AppDeactivateDialogProps = {
 storiesOf("Views / Apps / Deactivate app", module)
   .addDecorator(Decorator)
   .add("default", () => <AppDeactivateDialog {...props} />)
-  .add("unnamed app", () => <AppDeactivateDialog {...props} name={null} />);
+  .add("unnamed app", () => <AppDeactivateDialog {...props} name="" />);

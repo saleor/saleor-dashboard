@@ -51,7 +51,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         refetch();
         closeModal();
       } else {
-        if (appExists) {
+        if (appExists && errors) {
           errors.forEach(error =>
             notify({
               status: "error",
@@ -65,7 +65,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
     onCompleted: data => {
       const errors = data?.appDeactivate?.errors;
-      if (errors.length === 0) {
+      if (errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(appMessages.appDeactivated),
@@ -73,7 +73,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         refetch();
         closeModal();
       } else {
-        if (appExists) {
+        if (appExists && errors) {
           errors.forEach(error =>
             notify({
               status: "error",
@@ -105,20 +105,20 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     <>
       <AppActivateDialog
         confirmButtonState={activateAppResult.status}
-        name={data?.app.name}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleActivateConfirm}
         open={params.action === "app-activate"}
       />
       <AppDeactivateDialog
         confirmButtonState={deactivateAppResult.status}
-        name={data?.app.name}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleDeactivateConfirm}
         open={params.action === "app-deactivate"}
       />
       <AppDetailsPage
-        data={data?.app}
+        data={data?.app || null}
         loading={loading}
         navigateToApp={() => navigate(appUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}

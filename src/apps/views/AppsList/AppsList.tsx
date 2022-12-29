@@ -22,6 +22,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState,
+  PageInfo,
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
 import { findById } from "@saleor/misc";
@@ -45,7 +46,7 @@ import { messages } from "./messages";
 const getAppInProgressName = (
   id: string,
   collection?: AppsInstallationsQuery["appsInstallations"],
-) => collection?.find(app => app.id === id)?.appName;
+) => collection?.find(app => app.id === id)?.appName || id;
 interface AppsListProps {
   params: AppListUrlQueryParams;
 }
@@ -92,7 +93,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   });
 
   const paginationValues = usePaginator({
-    pageInfo: data?.apps?.pageInfo,
+    pageInfo: data?.apps?.pageInfo as PageInfo,
     paginationState,
     queryString: params,
   });
@@ -113,11 +114,16 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const [retryInstallApp] = useAppRetryInstallMutation({
     onCompleted: data => {
       if (!data?.appRetryInstall?.errors?.length) {
-        const appInstallation = data.appRetryInstall.appInstallation;
-        setActiveInstallations(installations => [
-          ...installations,
-          { id: appInstallation.id, name: appInstallation.appName },
-        ]);
+        const appInstallation = data.appRetryInstall?.appInstallation;
+        if (appInstallation) {
+          setActiveInstallations(installations => [
+            ...installations,
+            {
+              id: appInstallation.id,
+              name: appInstallation.appName,
+            },
+          ]);
+        }
       }
     },
   });
@@ -226,14 +232,14 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const handleRemoveInProgressConfirm = () =>
     deleteInProgressApp({
       variables: {
-        id: params.id,
+        id: params?.id || "",
       },
     });
 
   const handleRemoveConfirm = () =>
     deleteApp({
       variables: {
-        id: params.id,
+        id: params?.id || "",
       },
     });
 
@@ -245,10 +251,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   };
 
   const handleActivateAppConfirm = () =>
-    activateApp({ variables: { id: params.id } });
+    activateApp({ variables: { id: params?.id || "" } });
 
   const handleDeactivateAppConfirm = () =>
-    deactivateApp({ variables: { id: params.id } });
+    deactivateApp({ variables: { id: params?.id || "" } });
 
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
@@ -261,8 +267,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     [activateApp, deactivateApp],
   );
 
-  const installedApps = mapEdgesToItems(data?.apps);
-  const currentAppName = findById(params.id, installedApps)?.name;
+  const installedApps = mapEdgesToItems(data?.apps || { edges: [] }) || [];
+  const currentAppName = findById(params?.id || "", installedApps)?.name || "";
 
   return (
     <AppListContext.Provider value={context}>
@@ -292,7 +298,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         <AppInProgressDeleteDialog
           confirmButtonState={deleteInProgressAppOpts.status}
           name={getAppInProgressName(
-            params.id,
+            params.id || "",
             appsInProgressData?.appsInstallations,
           )}
           onClose={closeModal}
