@@ -89,7 +89,7 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.menageAddressesButton)
+          .get(CUSTOMER_DETAILS.manageAddressesButton)
           .click()
           .get(CUSTOMER_DETAILS.addAddressButton)
           .click()
@@ -113,7 +113,7 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.menageAddressesButton)
+          .get(CUSTOMER_DETAILS.manageAddressesButton)
           .click()
           .waitForProgressBarToNotExist()
           .get(BUTTON_SELECTORS.showMoreButton)
@@ -148,7 +148,7 @@ describe("Tests for customer", () => {
         })
         .then(() => {
           cy.visit(customerDetailsUrl(user.id))
-            .get(CUSTOMER_DETAILS.menageAddressesButton)
+            .get(CUSTOMER_DETAILS.manageAddressesButton)
             .click()
             .waitForProgressBarToNotExist()
             .get(BUTTON_SELECTORS.showMoreButton)
@@ -186,7 +186,7 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.menageAddressesButton)
+          .get(CUSTOMER_DETAILS.manageAddressesButton)
           .click()
           .get(BUTTON_SELECTORS.showMoreButton)
           .should("be.enabled")
