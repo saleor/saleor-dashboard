@@ -10,10 +10,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { updateVariantWarehouse } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
-import {
-  deleteChannelsStartsWith,
-  getDefaultChannel,
-} from "../../../support/api/utils/channelsUtils";
+import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
@@ -55,25 +52,20 @@ describe("Creating variants", () => {
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        cy.fixture("addresses");
-      })
-      .then(fixtureAddresses => {
-        address = fixtureAddresses.usAddress;
-        shippingUtils.createShipping({
-          channelId: defaultChannel.id,
-          name,
-          address,
-        });
-      })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-        },
-      );
+
+    cy.fixture("addresses").then(fixtureAddresses => {
+      address = fixtureAddresses.plAddress;
+    });
+
+    shippingUtils
+      .createShippingWithDefaultChannelAndAddress(name)
+      .then(resp => {
+        category = resp.category;
+        defaultChannel = resp.defaultChannel;
+        warehouse = resp.warehouse;
+        shippingMethod = resp.shippingMethod;
+      });
+
     productUtils
       .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
       .then(
