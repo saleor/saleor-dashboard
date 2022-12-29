@@ -74,7 +74,7 @@ jobs:
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
           prefix: APPS_MARKETPLACE_API_URI=
-          pattern: (http|https)://[a-zA-Z0-9.-]+[\w/-]+/?
+          pattern: (http|https)://[a-zA-Z0-9.-]+[a-zA-Z0-9/-]+/?
         run: |
           echo "::set-output name=custom_apps_marketplace_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Run build
