@@ -46,6 +46,13 @@ const nonStaffUserCredentials = {
   password: "password",
 };
 
+jest.mock("flagsmith/react", () => ({
+  __esModule: true,
+  useFlagsmith: () => ({
+    identify: jest.fn(),
+  }),
+}));
+
 beforeEach(() => {
   localStorage.clear();
   sessionStorage.clear();
