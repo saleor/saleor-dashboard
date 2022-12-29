@@ -27,7 +27,7 @@ const props: VoucherDetailsPageProps = {
       voucherDetails.categoriesCount.totalCount,
     [VoucherDetailsPageTab.collections]:
       voucherDetails.collectionsCount.totalCount,
-    [VoucherDetailsPageTab.products]: voucherDetails.productsCount.totalCount,
+    [VoucherDetailsPageTab.products]: voucherDetails.productsCount.totalCount
   },
   allChannelsCount: channels.length,
   categoryListToolbar: null,

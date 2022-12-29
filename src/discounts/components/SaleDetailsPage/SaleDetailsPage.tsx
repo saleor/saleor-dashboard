@@ -222,7 +222,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         id: "saleDetailsPageCategoriesQuantity"
                       },
                       {
-                        quantity: tabItemsCount.categories?.toString() || "…",
+                        quantity: tabItemsCount.categories?.toString() || "…"
                       }
                     )}
                   </CategoriesTab>
@@ -238,7 +238,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         id: "saleDetailsPageCollectionsQuantity"
                       },
                       {
-                        quantity: tabItemsCount.collections?.toString() || "…",
+                        quantity: tabItemsCount.collections?.toString() || "…"
                       }
                     )}
                   </CollectionsTab>
@@ -254,7 +254,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         id: "saleDetailsPageProductsQuantity"
                       },
                       {
-                        quantity: tabItemsCount.products?.toString() || "…",
+                        quantity: tabItemsCount.products?.toString() || "…"
                       }
                     )}
                   </ProductsTab>
@@ -270,7 +270,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                         id: "saleDetailsPageVariantsQuantity"
                       },
                       {
-                        quantity: tabItemsCount.variants?.toString() || "…",
+                        quantity: tabItemsCount.variants?.toString() || "…"
                       }
                     )}
                   </VariantsTab>

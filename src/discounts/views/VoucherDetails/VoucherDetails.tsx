@@ -15,7 +15,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import DiscountCountrySelectDialog from "@saleor/discounts/components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
-  VoucherTabItemsCount,
+  VoucherTabItemsCount
 } from "@saleor/discounts/components/VoucherDetailsPage";
 import {
   voucherListUrl,
@@ -32,7 +32,7 @@ import {
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
-  VoucherDetailsQueryVariables,
+  VoucherDetailsQueryVariables
 } from "@saleor/graphql";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
@@ -120,7 +120,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   > = {
     includeCategories: activeTab === VoucherDetailsPageTab.categories,
     includeCollections: activeTab === VoucherDetailsPageTab.collections,
-    includeProducts: activeTab === VoucherDetailsPageTab.products,
+    includeProducts: activeTab === VoucherDetailsPageTab.products
   };
 
   const { data, loading } = useVoucherDetailsQuery({
@@ -128,8 +128,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     variables: {
       id,
       ...paginationState,
-      ...detailsQueryInclude,
-    },
+      ...detailsQueryInclude
+    }
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -299,7 +299,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const tabItemsCount: VoucherTabItemsCount = {
     categories: data?.voucher?.categoriesCount?.totalCount,
     collections: data?.voucher?.collectionsCount?.totalCount,
-    products: data?.voucher?.productsCount?.totalCount,
+    products: data?.voucher?.productsCount?.totalCount
   };
 
   return (

@@ -267,7 +267,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of categories"
                           },
                           {
-                            quantity: tabItemsCount.categories?.toString() || "…",
+                            quantity:
+                              tabItemsCount.categories?.toString() || "…"
                           }
                         )}
                       </CategoriesTab>
@@ -283,7 +284,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of collections"
                           },
                           {
-                            quantity: tabItemsCount.collections?.toString() || "…",
+                            quantity:
+                              tabItemsCount.collections?.toString() || "…"
                           }
                         )}
                       </CollectionsTab>
@@ -297,7 +299,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of products"
                           },
                           {
-                            quantity: tabItemsCount.products?.toString() || "…",
+                            quantity: tabItemsCount.products?.toString() || "…"
                           }
                         )}
                       </ProductsTab>

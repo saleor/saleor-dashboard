@@ -20,7 +20,7 @@ const props: SaleDetailsPageProps = {
     [SaleDetailsPageTab.categories]: sale.categoriesCount.totalCount,
     [SaleDetailsPageTab.collections]: sale.collectionsCount.totalCount,
     [SaleDetailsPageTab.products]: sale.productsCount.totalCount,
-    [SaleDetailsPageTab.variants]: sale.variantsCount.totalCount,
+    [SaleDetailsPageTab.variants]: sale.variantsCount.totalCount
   },
   allChannelsCount: channels.length,
   categoryListToolbar: null,

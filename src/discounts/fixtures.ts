@@ -213,19 +213,19 @@ export const sale: SaleDetailsFragment = {
   privateMetadata: [],
   categoriesCount: {
     __typename: "CategoryCountableConnection",
-    totalCount: 2,
+    totalCount: 2
   },
   collectionsCount: {
     __typename: "CollectionCountableConnection",
-    totalCount: 4,
+    totalCount: 4
   },
   productsCount: {
     __typename: "ProductCountableConnection",
-    totalCount: 4,
+    totalCount: 4
   },
   variantsCount: {
     __typename: "ProductVariantCountableConnection",
-    totalCount: 3,
+    totalCount: 3
   },
   categories: {
     __typename: "CategoryCountableConnection",
@@ -249,7 +249,7 @@ export const sale: SaleDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: null
-    },
+    }
   },
   channelListings: [
     {
@@ -287,7 +287,7 @@ export const sale: SaleDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: null
-    },
+    }
   },
   endDate: null,
   id: "U2FsZTo1",
@@ -434,7 +434,7 @@ export const sale: SaleDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
-    },
+    }
   },
   variants: {
     edges: [
@@ -574,7 +574,7 @@ export const sale: SaleDetailsFragment = {
       startCursor: "W251bGwsICIxMDQwNDk0NiJd",
       __typename: "PageInfo"
     },
-    __typename: "ProductVariantCountableConnection",
+    __typename: "ProductVariantCountableConnection"
   },
   startDate: "2019-01-03",
   type: "PERCENTAGE" as SaleType
@@ -589,15 +589,15 @@ export const voucherDetails: VoucherDetailsFragment = {
   onlyForStaff: false,
   categoriesCount: {
     __typename: "CategoryCountableConnection",
-    totalCount: 0,
+    totalCount: 0
   },
   collectionsCount: {
     __typename: "CollectionCountableConnection",
-    totalCount: 0,
+    totalCount: 0
   },
   productsCount: {
     __typename: "ProductCountableConnection",
-    totalCount: 0,
+    totalCount: 0
   },
   categories: {
     __typename: "CategoryCountableConnection",
@@ -608,7 +608,7 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
-    },
+    }
   },
   channelListings: [
     {
@@ -639,7 +639,7 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
-    },
+    }
   },
   countries: [
     {
@@ -661,7 +661,7 @@ export const voucherDetails: VoucherDetailsFragment = {
       hasNextPage: false,
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
-    },
+    }
   },
   startDate: "2018-11-27",
   type: VoucherTypeEnum.ENTIRE_ORDER,

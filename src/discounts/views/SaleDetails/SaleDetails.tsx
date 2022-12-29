@@ -17,7 +17,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import SaleDetailsPage, {
   SaleDetailsPageTab,
-  SaleTabItemsCount,
+  SaleTabItemsCount
 } from "@saleor/discounts/components/SaleDetailsPage";
 import {
   saleListUrl,
@@ -121,7 +121,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     includeCategories: activeTab === SaleDetailsPageTab.categories,
     includeCollections: activeTab === SaleDetailsPageTab.collections,
     includeProducts: activeTab === SaleDetailsPageTab.products,
-    includeVariants: activeTab === SaleDetailsPageTab.variants,
+    includeVariants: activeTab === SaleDetailsPageTab.variants
   };
 
   const { data, loading } = useSaleDetailsQuery({
@@ -129,8 +129,8 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     variables: {
       id,
       ...paginationState,
-      ...detailsQueryInclude,
-    },
+      ...detailsQueryInclude
+    }
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -283,7 +283,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     categories: data?.sale?.categoriesCount?.totalCount,
     collections: data?.sale?.collectionsCount?.totalCount,
     products: data?.sale?.productsCount?.totalCount,
-    variants: data?.sale?.variantsCount?.totalCount,
+    variants: data?.sale?.variantsCount?.totalCount
   };
 
   const handleUpdate = createUpdateHandler(

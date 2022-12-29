@@ -20,23 +20,23 @@ export const itemsQuantityMessages = defineMessages({
   categories: {
     id: "ppLwx3",
     defaultMessage: "Categories ({quantity})",
-    description: "number of categories",
+    description: "number of categories"
   },
   collections: {
     id: "QdGzUf",
     defaultMessage: "Collections ({quantity})",
-    description: "number of collections",
+    description: "number of collections"
   },
   products: {
     id: "bNw8PM",
     defaultMessage: "Products ({quantity})",
-    description: "number of products",
+    description: "number of products"
   },
   variants: {
     id: "HVlMK2",
     defaultMessage: "Variants ({quantity})",
-    description: "number of variants",
-  },
+    description: "number of variants"
+  }
 });
 
 export const translateVoucherTypes = (intl: IntlShape) => ({
