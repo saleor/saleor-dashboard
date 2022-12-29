@@ -85,7 +85,7 @@ xdescribe("Draft orders", () => {
   });
 
   it(
-    "should move draft order to orders",
+    "should move draft order to orders. TC: SALEOR_2103",
     { tags: ["@orders", "@allEnv"] },
     () => {
       cy.visit(urlList.orders);

@@ -65,7 +65,7 @@ describe("Products available in listings", () => {
   });
 
   it(
-    "should update product to available for purchase",
+    "should update product to available for purchase. TC: SALEOR_2501",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
@@ -96,7 +96,7 @@ describe("Products available in listings", () => {
   );
 
   it(
-    "should update product to not available for purchase",
+    "should update product to not available for purchase. TC: SALEOR_2502",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
