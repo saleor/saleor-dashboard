@@ -5,12 +5,10 @@ import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { productVariantDetailUrl, urlList } from "../../../fixtures/urlList";
+import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import * as productRequest from "../../../support/api/requests/Product";
+import { updateVariantWarehouse } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import {
   deleteChannelsStartsWith,
@@ -21,7 +19,14 @@ import * as productUtils from "../../../support/api/utils/products/productsUtils
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
-import { enterVariantEditPage } from "../../../support/pages/catalog/products/productDetailsPage";
+import {
+  fillUpPriceList,
+  priceInputLists,
+} from "../../../support/pages/catalog/products/priceListComponent";
+import {
+  enterVariantEditPage,
+  fillUpProductTypeDialog,
+} from "../../../support/pages/catalog/products/productDetailsPage";
 import {
   createVariant,
   selectChannelsForVariant,
@@ -100,58 +105,6 @@ describe("Creating variants", () => {
   });
 
   it(
-    "should be able to add SKU to simple product TC: SALEOR_2802",
-    { tags: ["@products", "@allEnv"] },
-    () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
-      let product;
-      let variant;
-      const sku = `NewSku${faker.datatype.number()}`;
-
-      productUtils
-        .createProductInChannelWithoutVariants({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: simpleProductType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-        })
-        .then(productResp => {
-          product = productResp;
-          productRequest.createVariantForSimpleProduct({
-            productId: product.id,
-            warehouseId: warehouse.id,
-            quantityInWarehouse: 10,
-            trackInventory: false,
-          });
-        })
-        .then(variantResp => {
-          variant = variantResp;
-          productRequest.updateChannelPriceInVariant(
-            variant.id,
-            defaultChannel.id,
-          );
-          cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id),
-          )
-            .get(SHARED_ELEMENTS.skeleton)
-            .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
-            .type(sku)
-            .addAliasToGraphRequest("VariantUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
-            .then(({ response }) => {
-              const responseSku =
-                response.body.data.productVariantUpdate.productVariant.sku;
-              expect(responseSku).to.equal(sku);
-            });
-        });
-    },
-  );
-
-  it(
     "should create variant without sku TC: SALEOR_2807",
     { tags: ["@products", "@allEnv"] },
     () => {
@@ -206,28 +159,25 @@ describe("Creating variants", () => {
   );
 
   it(
-    "should create simple product without sku SALEOR_2806",
+    "should create simple product without sku SALEOR_2808",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+      const prices = { sellingPrice: 10, costPrice: 6 };
 
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
+        .click();
+      fillUpProductTypeDialog({ productType: simpleProductType.name });
+      cy.get(BUTTON_SELECTORS.submit)
         .click()
-        .fillAutocompleteSelect(
-          PRODUCTS_LIST.dialogProductTypeInput,
-          simpleProductType.name,
-        );
-      cy.get(BUTTON_SELECTORS.submit).click();
-      cy.get(PRODUCT_DETAILS.productNameInput)
+        .get(PRODUCT_DETAILS.productNameInput)
         .type(name)
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
-      cy.get(PRODUCT_DETAILS.costPriceInput)
-        .type(10)
-        .get(PRODUCT_DETAILS.sellingPriceInput)
-        .type(10)
-        .addAliasToGraphRequest("VariantCreate")
+      fillUpPriceList(prices.sellingPrice);
+      fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
+      cy.addAliasToGraphRequest("VariantCreate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
@@ -235,20 +185,16 @@ describe("Creating variants", () => {
         .then(({ response }) => {
           const variantId =
             response.body.data.productVariantCreate.productVariant.id;
-          productRequest.updateVariantWarehouse({
+          updateVariantWarehouse({
             variantId,
             warehouseId: warehouse.id,
+            quantity: 10,
           });
         });
       enterVariantEditPage();
       cy.addAliasToGraphRequest("ProductVariantDetails");
       selectChannelsForVariant();
-      cy.get(PRODUCT_DETAILS.stockInput)
-        .parents()
-        .contains(warehouse.name)
-        .get(PRODUCT_DETAILS.stockInput)
-        .clearAndType(10)
-        .get(BUTTON_SELECTORS.confirm)
+      cy.get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
         .wait("@ProductVariantDetails")

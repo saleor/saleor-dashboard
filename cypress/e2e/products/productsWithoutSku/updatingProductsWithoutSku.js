@@ -9,7 +9,9 @@ import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { productVariantDetailUrl } from "../../../fixtures/urlList";
 import {
   createVariant,
+  createVariantForSimpleProduct,
   getVariant,
+  updateChannelPriceInVariant,
 } from "../../../support/api/requests/Product";
 import {
   createTypeProduct,
@@ -93,10 +95,6 @@ describe("Updating products without sku", () => {
       )
       .then(productTypeResp => {
         productTypeWithoutVariants = productTypeResp;
-        productAttributeAssignmentUpdate({
-          productTypeId: productTypeWithoutVariants.id,
-          attributeId: attribute.id,
-        });
         createProductInChannelWithoutVariants({
           name,
           channelId: defaultChannel.id,
@@ -111,6 +109,53 @@ describe("Updating products without sku", () => {
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
   });
+  it(
+    "should be able to add SKU to simple product TC: SALEOR_2802",
+    { tags: ["@products", "@allEnv"] },
+    () => {
+      const productName = `${startsWith}${faker.datatype.number()}`;
+      const sku = `Sku${faker.datatype.number()}`;
+      let product;
+      let variant;
+
+      createProductInChannelWithoutVariants({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productTypeWithoutVariants.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+      })
+        .then(productResp => {
+          product = productResp;
+          createVariantForSimpleProduct({
+            productId: product.id,
+            warehouseId: warehouse.id,
+            quantityInWarehouse: 10,
+            trackInventory: false,
+          });
+        })
+        .then(variantResp => {
+          variant = variantResp;
+          updateChannelPriceInVariant(variant.id, defaultChannel.id);
+          cy.visitAndWaitForProgressBarToDisappear(
+            productVariantDetailUrl(product.id, variant.id),
+          )
+            .get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist")
+            .get(VARIANTS_SELECTORS.skuInput)
+            .type(sku)
+            .addAliasToGraphRequest("VariantUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
+            .then(({ response }) => {
+              const responseSku =
+                response.body.data.productVariantUpdate.productVariant.sku;
+              expect(responseSku).to.equal(sku);
+            });
+        });
+    },
+  );
 
   it(
     "should add sku to variant TC: SALEOR_2803",
