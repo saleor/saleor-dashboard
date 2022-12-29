@@ -17,6 +17,4 @@ const props: AppInProgressDeleteDialogProps = {
 storiesOf("Views / Apps / Delete app failed installation", module)
   .addDecorator(Decorator)
   .add("default", () => <AppInProgressDeleteDialog {...props} />)
-  .add("unnamed app", () => (
-    <AppInProgressDeleteDialog {...props} name={null} />
-  ));
+  .add("unnamed app", () => <AppInProgressDeleteDialog {...props} name="" />);

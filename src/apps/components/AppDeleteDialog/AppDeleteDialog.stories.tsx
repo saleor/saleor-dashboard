@@ -16,4 +16,4 @@ const props: AppDeleteDialogProps = {
 storiesOf("Views / Apps / Delete app", module)
   .addDecorator(Decorator)
   .add("default", () => <AppDeleteDialog {...props} />)
-  .add("unnamed app", () => <AppDeleteDialog {...props} name={null} />);
+  .add("unnamed app", () => <AppDeleteDialog {...props} name="" />);

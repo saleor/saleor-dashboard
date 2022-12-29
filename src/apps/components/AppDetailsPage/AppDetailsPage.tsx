@@ -63,7 +63,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           <div className={classes.appHeaderLinks}>
             <ExternalLink
               className={classes.headerLinkContainer}
-              href={data.supportUrl}
+              href={data.supportUrl || ""}
               target="_blank"
             >
               <SVG src={supportIcon} />
@@ -109,7 +109,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           })}
         />
         <CardContent>
-          {!loading ? <ReactMarkdown source={data?.aboutApp} /> : <Skeleton />}
+          {!loading ? (
+            <ReactMarkdown source={data?.aboutApp ?? ""} />
+          ) : (
+            <Skeleton />
+          )}
         </CardContent>
       </Card>
       <CardSpacer />
@@ -146,7 +150,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       </Card>
       <CardSpacer />
 
-      {(loading || data?.dataPrivacyUrl) && (
+      {data?.dataPrivacyUrl && (
         <Card>
           <CardTitle
             title={intl.formatMessage({
@@ -159,7 +163,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             {!loading ? (
               <ExternalLink
                 className={classes.linkContainer}
-                href={data?.dataPrivacyUrl}
+                href={data.dataPrivacyUrl}
                 target="_blank"
               >
                 <FormattedMessage
