@@ -58,7 +58,7 @@ jobs:
           prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_api_uri::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Get MARKETPLACE_URL
         id: marketplace_url
         # Search for MARKETPLACE_URL in PR description
@@ -67,7 +67,7 @@ jobs:
           prefix: MARKETPLACE_URL=
           pattern: (http|https)://[a-zA-Z0-9.-]+/?
         run: |
-          echo "::set-output name=custom_marketplace_url::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_marketplace_url::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Get APPS_MARKETPLACE_API_URI
         id: apps_marketplace_api_uri
         # Search for APPS_MARKETPLACE_API_URI in PR description
@@ -76,7 +76,7 @@ jobs:
           prefix: APPS_MARKETPLACE_API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+[a-zA-Z0-9/-]+/?
         run: |
-          echo "::set-output name=custom_apps_marketplace_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+          echo "::set-output name=custom_apps_marketplace_api_uri::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
       - name: Run build
         env:
           # Use custom API_URI or the default one
@@ -203,7 +203,7 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+          echo "::set-output name=custom_api_uri::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
