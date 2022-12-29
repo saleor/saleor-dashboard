@@ -13,21 +13,10 @@ import {
   getVariant,
   updateChannelPriceInVariant,
 } from "../../../support/api/requests/Product";
-import {
-  createTypeProduct,
-  productAttributeAssignmentUpdate,
-} from "../../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductInChannelWithoutVariants,
-  createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
-} from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import * as productUtils from "../../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 
 describe("Updating products without sku", () => {
@@ -50,52 +39,33 @@ describe("Updating products without sku", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
+    productUtils.deleteProductsStartsWith(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
     deleteWarehouseStartsWith(startsWith);
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        cy.fixture("addresses");
-      })
-      .then(fixtureAddresses => {
-        address = fixtureAddresses.plAddress;
-        createShipping({
-          channelId: defaultChannel.id,
-          name,
-          address,
+
+    cy.fixture("addresses").then(fixtureAddresses => {
+      address = fixtureAddresses.plAddress;
+    });
+    productUtils
+      .createShippingProductTypeAttributeAndCategory(name, attributeValues)
+      .then(resp => {
+        cy.log(resp);
+        attribute = resp.attribute;
+        productTypeWithVariants = resp.productType;
+        category = resp.category;
+        defaultChannel = resp.defaultChannel;
+        warehouse = resp.warehouse;
+        shippingMethod = resp.shippingMethod;
+
+        createTypeProduct({
+          name: productTypeWithoutVariantsName,
+          attributeId: attribute.id,
+          hasVariants: false,
         });
       })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-          createTypeAttributeAndCategoryForProduct({ name, attributeValues });
-        },
-      )
-      .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
-          attribute = attributeResp;
-          productTypeWithVariants = productTypeResp;
-          category = categoryResp;
-          productAttributeAssignmentUpdate({
-            productTypeId: productTypeWithVariants.id,
-            attributeId: attribute.id,
-          });
-          createTypeProduct({
-            name: productTypeWithoutVariantsName,
-            attributeId: attribute.id,
-            hasVariants: false,
-          });
-        },
-      )
       .then(productTypeResp => {
         productTypeWithoutVariants = productTypeResp;
-        createProductInChannelWithoutVariants({
+        productUtils.createProductInChannelWithoutVariants({
           name,
           channelId: defaultChannel.id,
           attributeId: attribute.id,
@@ -118,13 +88,14 @@ describe("Updating products without sku", () => {
       let product;
       let variant;
 
-      createProductInChannelWithoutVariants({
-        name: productName,
-        channelId: defaultChannel.id,
-        productTypeId: productTypeWithoutVariants.id,
-        attributeId: attribute.id,
-        categoryId: category.id,
-      })
+      productUtils
+        .createProductInChannelWithoutVariants({
+          name: productName,
+          channelId: defaultChannel.id,
+          productTypeId: productTypeWithoutVariants.id,
+          attributeId: attribute.id,
+          categoryId: category.id,
+        })
         .then(productResp => {
           product = productResp;
           createVariantForSimpleProduct({
