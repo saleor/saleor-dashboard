@@ -3,7 +3,7 @@ import flagsmith from "flagsmith";
 import { FlagsmithProvider } from "flagsmith/react";
 import React from "react";
 
-import { useFlagsmishFlags } from "./useFlagsmishFlags";
+import { useFlagsmithFlags } from "./useFlagsmithFlags";
 
 const wrapper = ({ children }) => (
   <FlagsmithProvider
@@ -14,7 +14,7 @@ const wrapper = ({ children }) => (
   </FlagsmithProvider>
 );
 
-describe("useFlagsmishFlags hook", () => {
+describe("useFlagsmithFlags hook", () => {
   test("should return flags with values", () => {
     // Arrange && Act
     const features = {
@@ -26,7 +26,7 @@ describe("useFlagsmishFlags hook", () => {
     jest.spyOn(flagsmith, "getValue").mockImplementation(v => features[v]);
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
-    const { result } = renderHook(() => useFlagsmishFlags(["flag1", "flag2"]), {
+    const { result } = renderHook(() => useFlagsmithFlags(["flag1", "flag2"]), {
       wrapper,
     });
 
@@ -51,7 +51,7 @@ describe("useFlagsmishFlags hook", () => {
     jest.spyOn(flagsmith, "getValue").mockImplementation(v => features[v]);
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
-    const { result } = renderHook(() => useFlagsmishFlags(["flag1", "flag2"]), {
+    const { result } = renderHook(() => useFlagsmithFlags(["flag1", "flag2"]), {
       wrapper,
     });
 
@@ -70,7 +70,7 @@ describe("useFlagsmishFlags hook", () => {
 
   test("should return empty object when not flags provided", () => {
     // Arrange && Act
-    const { result } = renderHook(() => useFlagsmishFlags([]), {
+    const { result } = renderHook(() => useFlagsmithFlags([]), {
       wrapper,
     });
 

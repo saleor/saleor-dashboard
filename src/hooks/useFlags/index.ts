@@ -1,1 +1,1 @@
-export { useFlags } from "./useFlags";
+export { useFlags, useAllFlags } from "./useFlags";
