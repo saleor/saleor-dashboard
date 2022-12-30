@@ -34,7 +34,7 @@ export default defineConfig(({ command, mode }) => {
     SKIP_SOURCEMAPS,
     DEMO_MODE,
     FLAGS_ENABLED,
-    FLAGSMISH_ID,
+    FLAGSMITH_ID,
   } = env;
 
   const featureFlagsEnvs = Object.fromEntries(
@@ -129,7 +129,7 @@ export default defineConfig(({ command, mode }) => {
         ENVIRONMENT,
         DEMO_MODE,
         FLAGS_ENABLED,
-        FLAGSMISH_ID,
+        FLAGSMITH_ID,
         ...featureFlagsEnvs,
       },
     },

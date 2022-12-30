@@ -50,7 +50,7 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
-import { Provider as FlagsmithProvider } from "./hooks/useFlags/flagsmishProvider";
+import { Provider as FlagsmithProvider } from "./hooks/useFlags/flagsmithProvider";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";

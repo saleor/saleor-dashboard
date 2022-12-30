@@ -6,7 +6,7 @@ export const Provider = ({ children }: { children: React.ReactElement }) => (
   <FlagsmithProvider
     flagsmith={flagsmith}
     options={{
-      environmentID: process.env.FLAGSMISH_ID,
+      environmentID: process.env.FLAGSMITH_ID,
       cacheFlags: true,
     }}
   >

@@ -6,7 +6,7 @@ export const useEnvFlags = <T extends readonly string[]>(
   flags: readonly [...T],
 ): FlagsResults<T> =>
   flags.reduce((acc, flag) => {
-    const envFlag = process.env[prepareFlagName(flag)];
+    const envFlag = process.env[flagNameToEnvName(flag)];
 
     if (envFlag) {
       acc[flag] = {
@@ -23,15 +23,20 @@ export const useEnvFlags = <T extends readonly string[]>(
     return acc;
   }, {} as FlagsResults<T>);
 
-function prepareFlagName(flagName: string) {
-  return `${ENV_FLAG_PREFIX}${flagName.toLocaleUpperCase()}`;
-}
-
 export const useAllEnvFlags = (): FlagWithName[] =>
   Object.entries(process.env)
     .filter(([envKey]) => envKey.startsWith(ENV_FLAG_PREFIX))
     .map(([flagKey, flagValue]) => ({
-      name: flagKey,
+      name: envNameToFlagName(flagKey),
       enabled: flagValue !== "",
       value: flagValue || "",
     }));
+
+function flagNameToEnvName(flagName: string) {
+  return `${ENV_FLAG_PREFIX}${flagName.toUpperCase()}`;
+}
+
+function envNameToFlagName(envName: string) {
+  const name = envName.split(ENV_FLAG_PREFIX)[1];
+  return name.toLowerCase();
+}
