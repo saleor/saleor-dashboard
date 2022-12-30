@@ -68,7 +68,7 @@ export function useAuthProvider({
   useEffect(() => {
     if (authenticated) {
       permitCredentialsAPI.current = true;
-      flagsmish.identify(user.email, { email: user.email });
+      flagsmish.identify(user.id, { id: user.id });
     }
   }, [authenticated]);
 
@@ -151,12 +151,14 @@ export function useAuthProvider({
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
-        saveCredentials(result.data.tokenCreate.user, password);
+        const user = result.data.tokenCreate.user;
+
+        saveCredentials(user, password);
+        flagsmish.identify(user.id, { id: user.id });
       } else {
         setErrors(["loginError"]);
       }
 
-      flagsmish.identify(email, { email });
       await logoutNonStaffUser(result.data.tokenCreate);
 
       return result.data.tokenCreate;
@@ -199,10 +201,10 @@ export function useAuthProvider({
         setErrors(["externalLoginError"]);
       }
 
-      const email = result?.data?.externalObtainAccessTokens?.user?.email;
+      const user = result?.data?.externalObtainAccessTokens?.user;
 
-      if (email) {
-        flagsmish.identify(email, { email });
+      if (user) {
+        flagsmish.identify(user.id, { id: user.id });
       }
 
       await logoutNonStaffUser(result.data.externalObtainAccessTokens);
