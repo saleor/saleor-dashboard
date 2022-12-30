@@ -6,31 +6,31 @@ export const messages = defineMessages({
     defaultMessage: "Events",
     description: "section header",
   },
-  synchronousEvents: {
-    id: "dQdxLT",
-    defaultMessage: "Synchronous events",
-    description: "section subheader",
+  synchronous: {
+    id: "nvH3+P",
+    defaultMessage: "Synchronous",
+    description: "Synchronous",
   },
-  asynchronousEvents: {
-    id: "TjbB4Y",
-    defaultMessage: "Asynchronous events",
-    description: "section subheader",
+  asynchronous: {
+    id: "uRi0YY",
+    defaultMessage: "Asynchronous",
+    description: "Asynchronous",
   },
-  assignPermissionsToSynchronousEvents: {
-    id: "fHopox",
+  synchronousDescription: {
+    id: "16Dpgb",
     defaultMessage:
-      "Assign permissions to register synchronous events for this webhook.",
-    description: "section description",
+      "Synchronous webhook sends payload and waits for a response from the target URL to continue processing.",
+    description: "Synchronous events description",
   },
-  assignPermissionsToAsynchronousEvents: {
-    id: "QEvH8Q",
+  asynchronousDescription: {
+    id: "yJqbYv",
     defaultMessage:
-      "Assign permissions to register asynchronous events for this webhook.",
-    description: "section description",
+      "Asynchronous webhook sends payload and continues processing.",
+    description: "Asynchronous events description",
   },
-  registeredEvents: {
-    id: "9Yhddc",
-    defaultMessage: "Registered events",
-    description: "input label",
+  objects: {
+    defaultMessage: "Objects",
+    id: "6leQB5",
+    description: "Objects",
   },
 });

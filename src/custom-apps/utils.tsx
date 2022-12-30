@@ -35,6 +35,7 @@ const isAsyncWebhookInPreview = (webhook: WebhookEventType) =>
     WebhookEventTypeAsyncEnum.VOUCHER_METADATA_UPDATED,
   ] as WebhookEventType[]).includes(webhook);
 
+// TODO remove
 export function mapSyncEventsToChoices(
   events: WebhookEventTypeSyncEnum[],
 ): MultiAutocompleteChoiceType[] {
@@ -45,6 +46,7 @@ export function mapSyncEventsToChoices(
   }));
 }
 
+// TODO remove
 export function mapAsyncEventsToChoices(
   events: WebhookEventTypeAsyncEnum[],
   selectedEvents: WebhookEventTypeAsyncEnum[],

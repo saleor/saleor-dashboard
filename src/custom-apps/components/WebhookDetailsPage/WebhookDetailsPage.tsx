@@ -13,10 +13,6 @@ import {
 } from "@saleor/custom-apps/handlers";
 import { CustomAppUrls } from "@saleor/custom-apps/urls";
 import {
-  mapAsyncEventsToChoices,
-  mapSyncEventsToChoices,
-} from "@saleor/custom-apps/utils";
-import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
@@ -96,16 +92,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
-        const syncEventsChoices = disabled
-          ? []
-          : mapSyncEventsToChoices(Object.values(WebhookEventTypeSyncEnum));
-        const asyncEventsChoices = disabled
-          ? []
-          : mapAsyncEventsToChoices(
-              Object.values(WebhookEventTypeAsyncEnum),
-              data.asyncEvents,
-            );
-
         const handleSyncEventsSelect = createSyncEventsSelectHandler(
           change,
           data.syncEvents,
@@ -136,8 +122,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
             <FormSpacer />
             <WebhookEvents
               data={data}
-              syncEventsChoices={syncEventsChoices}
-              asyncEventsChoices={asyncEventsChoices}
               onSyncEventChange={handleSyncEventsSelect}
               onAsyncEventChange={handleAsyncEventsSelect}
             />
