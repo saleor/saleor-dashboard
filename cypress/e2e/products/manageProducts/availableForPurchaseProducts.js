@@ -1,26 +1,47 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
+
 import faker from "faker";
 
 import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { searchInShop } from "../../../support/api/requests/storeFront/Search";
+import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { isProductVisibleInSearchResult } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { isProductAvailableForPurchase } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { updateProductIsAvailableForPurchase } from "../../../support/pages/catalog/products/productDetailsPage";
 
-describe("Products displayed in listings", () => {
-  const startsWith = "CyVisibleInListings-";
+describe("Products available in listings", () => {
+  const startsWith = "CyAvailForPurchase-";
   const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
   let defaultChannel;
+  let warehouse;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    shippingUtils.deleteShippingStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
+
+    getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        cy.fixture("addresses");
+      })
+      .then(addressesFixture => {
+        shippingUtils.createShipping({
+          channelId: defaultChannel.id,
+          name,
+          address: addressesFixture.plAddress,
+        });
+      })
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+      });
+
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -32,12 +53,8 @@ describe("Products displayed in listings", () => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
-          getDefaultChannel();
         },
-      )
-      .then(channel => {
-        defaultChannel = channel;
-      });
+      );
   });
 
   beforeEach(() => {
@@ -48,75 +65,62 @@ describe("Products displayed in listings", () => {
   });
 
   it(
-    "should update product to visible in listings",
+    "should update product to available for purchase. TC: SALEOR_2501",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
+      let product;
 
       productsUtils
         .createProductInChannel({
           name: productName,
           channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          visibleInListings: false,
           isAvailableForPurchase: false,
         })
         .then(({ product: productResp }) => {
-          const product = productResp;
+          product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductVisibleInListings(productUrl);
-          searchInShop(productName);
+          updateProductIsAvailableForPurchase(productUrl, true);
+        })
+        .then(() => {
+          getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {
-          const isProductVisible = isProductVisibleInSearchResult(
-            resp,
-            productName,
-          );
-          expect(isProductVisible).to.be.eq(true);
+          expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
         });
     },
   );
 
   it(
-    "should update product to not visible in listings",
+    "should update product to not available for purchase. TC: SALEOR_2502",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
+      let product;
 
       productsUtils
         .createProductInChannel({
           name: productName,
           channelId: defaultChannel.id,
+          warehouseId: warehouse.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
-          visibleInListings: true,
         })
         .then(({ product: productResp }) => {
-          const product = productResp;
+          product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductVisibleInListings(productUrl);
-
-          searchInShop(productName).then(resp => {
-            const isProductVisible = isProductVisibleInSearchResult(
-              resp,
-              productName,
-            );
-            expect(isProductVisible).to.be.eq(false);
-          });
-          cy.loginInShop();
+          updateProductIsAvailableForPurchase(productUrl, false);
         })
         .then(() => {
-          searchInShop(productName);
+          getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {
-          const isProductVisible = isProductVisibleInSearchResult(
-            resp,
-            productName,
-          );
-          expect(isProductVisible).to.be.eq(true);
+          expect(isProductAvailableForPurchase(resp)).to.be.eq(false);
         });
     },
   );
