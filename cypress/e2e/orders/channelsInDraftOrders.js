@@ -41,7 +41,7 @@ xdescribe("Channels in draft orders", () => {
   });
 
   it(
-    "Draft order channel should be taken from global channel picker",
+    "Draft order channel should be taken from global channel picker. TC: SALEOR_2101",
     { tags: ["@orders", "@allEnv"] },
     () => {
       let channelName;
@@ -69,7 +69,7 @@ xdescribe("Channels in draft orders", () => {
   );
 
   it(
-    "Draft order channel should be taken from global channel picker when changed",
+    "Draft order channel should be taken from global channel picker when changed. TC: SALEOR_2102",
     { tags: ["@orders", "@allEnv"] },
     () => {
       cy.visit(urlList.homePage);

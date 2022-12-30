@@ -84,7 +84,7 @@ describe("As an admin I want to create content attribute", () => {
   attributeReferenceType.forEach(entityType => {
     it(
       `should be able to create reference to ${entityType.type} attribute. TC:${entityType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable"] },
       () => {
         const attributeType = "REFERENCE";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
@@ -110,7 +110,7 @@ describe("As an admin I want to create content attribute", () => {
   attributeNumericType.forEach(numericSystemType => {
     it(
       `should be able to create numeric ${numericSystemType.unitSystem} attribute. TC: ${numericSystemType.testCase}`,
-      { tags: ["@attribute", "@allEnv"] },
+      { tags: ["@attribute", "@allEnv", "@stable"] },
       () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
@@ -135,7 +135,7 @@ describe("As an admin I want to create content attribute", () => {
 
   it(
     "should be able to create attribute without require value TC:SALEOR_0522",
-    { tags: ["@attribute", "@allEnv"] },
+    { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeType = "BOOLEAN";
       const attributeName = `${startsWith}${faker.datatype.number()}`;

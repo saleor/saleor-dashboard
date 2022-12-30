@@ -135,7 +135,7 @@ export function selectChannelForVariantAndFillUpPrices({
     .get(BUTTON_SELECTORS.back)
     .click()
     .waitForProgressBarToNotBeVisible()
-    .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
+    .get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
     .should("be.visible");
 }
 

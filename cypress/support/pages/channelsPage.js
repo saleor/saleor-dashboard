@@ -87,7 +87,7 @@ export function selectChannelInHeader(channelName) {
 }
 
 export function selectChannelInDetailsPages(channelName) {
-  cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
+  cy.get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
     .click()
     .get(SELECT_CHANNELS_TO_ASSIGN.allChannelsCheckbox)
     .click();
@@ -107,7 +107,7 @@ export function selectChannelInDetailsPages(channelName) {
 }
 
 export function selectChannelVariantInDetailsPage(channelName, attributeName) {
-  cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton).click();
+  cy.get(AVAILABLE_CHANNELS_FORM.manageChannelsButton).click();
   const channelsNames = Array.isArray(channelName)
     ? channelName
     : [channelName];

@@ -17,7 +17,7 @@ describe("As an admin I should be able to manage products table", () => {
 
   it(
     "should be able go to the next page on product list. TC: SALEOR_2605",
-    { tags: ["@productsList", "@allEnv"] },
+    { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.expectSkeletonIsVisible()
         .get(PRODUCTS_LIST.emptyProductRow)
