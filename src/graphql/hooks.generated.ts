@@ -9584,6 +9584,53 @@ export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.Mutati
 export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+export const CreateManualTransactionCaptureDocument = gql`
+    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $amount2: Decimal!, $currency: String!, $description: String) {
+  transactionCreate(
+    id: $orderId
+    transaction: {type: "Manual capture", status: "Success", reference: $description, amountCharged: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, type: CHARGE, pspReference: $description, amount: $amount2}
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionCreateError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionCreateErrorFragmentDoc}`;
+export type CreateManualTransactionCaptureMutationFn = Apollo.MutationFunction<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
+
+/**
+ * __useCreateManualTransactionCaptureMutation__
+ *
+ * To run a mutation, you first call `useCreateManualTransactionCaptureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateManualTransactionCaptureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createManualTransactionCaptureMutation, { data, loading, error }] = useCreateManualTransactionCaptureMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      amount2: // value for 'amount2'
+ *      currency: // value for 'currency'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useCreateManualTransactionCaptureMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>(CreateManualTransactionCaptureDocument, options);
+      }
+export type CreateManualTransactionCaptureMutationHookResult = ReturnType<typeof useCreateManualTransactionCaptureMutation>;
+export type CreateManualTransactionCaptureMutationResult = Apollo.MutationResult<Types.CreateManualTransactionCaptureMutation>;
+export type CreateManualTransactionCaptureMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
 export const CreateManualTransactionRefundDocument = gql`
     mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $amount2: Decimal!, $currency: String!, $description: String) {
   transactionCreate(

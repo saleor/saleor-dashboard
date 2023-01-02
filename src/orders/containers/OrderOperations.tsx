@@ -1,4 +1,6 @@
 import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
   InvoiceEmailSendMutation,
   InvoiceEmailSendMutationVariables,
   InvoiceRequestMutation,
@@ -37,6 +39,7 @@ import {
   OrderUpdateMutationVariables,
   OrderVoidMutation,
   OrderVoidMutationVariables,
+  useCreateManualTransactionCaptureMutation,
   useInvoiceEmailSendMutation,
   useInvoiceRequestMutation,
   useOrderAddNoteMutation,
@@ -141,6 +144,10 @@ interface OrderOperationsProps {
       OrderTransactionRequestActionMutation,
       OrderTransactionRequestActionMutationVariables
     >;
+    orderAddManualTransaction: PartialMutationProviderOutput<
+      CreateManualTransactionCaptureMutation,
+      CreateManualTransactionCaptureMutationVariables
+    >;
   }) => React.ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
@@ -165,6 +172,9 @@ interface OrderOperationsProps {
   onTransactionActionSend: (
     data: OrderTransactionRequestActionMutation,
   ) => void;
+  onManualTransactionAdded: (
+    data: CreateManualTransactionCaptureMutation,
+  ) => void;
 }
 
 const OrderOperations: React.FC<OrderOperationsProps> = ({
@@ -188,6 +198,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onInvoiceRequest,
   onInvoiceSend,
   onTransactionActionSend,
+  onManualTransactionAdded,
 }) => {
   const orderVoid = useOrderVoidMutation({
     onCompleted: onOrderVoid,
@@ -247,6 +258,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   const transactionActionSend = useOrderTransactionRequestActionMutation({
     onCompleted: onTransactionActionSend,
   });
+  const addManualTransaction = useCreateManualTransactionCaptureMutation({
+    onCompleted: onManualTransactionAdded,
+  });
 
   return (
     <>
@@ -275,6 +289,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         orderVoid: getMutationProviderData(...orderVoid),
         orderTransactionAction: getMutationProviderData(
           ...transactionActionSend,
+        ),
+        orderAddManualTransaction: getMutationProviderData(
+          ...addManualTransaction,
         ),
       })}
     </>

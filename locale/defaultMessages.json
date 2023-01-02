@@ -1557,6 +1557,10 @@
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
   },
+  "AMlXrQ": {
+    "context": "submit button",
+    "string": "Create manual transaction"
+  },
   "AOI4LW": {
     "context": "navigator placeholder",
     "string": "Search in Catalog"
@@ -2304,6 +2308,10 @@
   },
   "FpIcp9": {
     "string": "No customers found"
+  },
+  "Ftz7VI": {
+    "context": "input label, transaction amount",
+    "string": "Transaction amount"
   },
   "FuAV5G": {
     "string": "This name is already taken. Please provide another."
@@ -4196,6 +4204,10 @@
   "TSJRiZ": {
     "context": "channel status title",
     "string": "Channel Status"
+  },
+  "TTVPyd": {
+    "context": "dialog subheading",
+    "string": "Create a manual transaction for non-integrated payments"
   },
   "TWVx7O": {
     "context": "delete product dialog title",
@@ -6446,6 +6458,10 @@
     "context": "option",
     "string": "Gift card product type"
   },
+  "kuo4fW": {
+    "context": "dialog title",
+    "string": "Capture manual transaction"
+  },
   "kvSYZh": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
@@ -7537,6 +7553,9 @@
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
+  },
+  "tmrBDK": {
+    "string": "Manual transaction ({amount}) was created"
   },
   "toDL5R": {
     "context": "order status",

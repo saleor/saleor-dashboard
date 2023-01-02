@@ -1,3 +1,5 @@
+/** @jest-environment setup-polly-jest/jest-environment-jsdom */
+
 import { getApiUrl } from "@saleor/config";
 import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";

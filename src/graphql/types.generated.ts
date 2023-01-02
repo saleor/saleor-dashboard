@@ -8092,6 +8092,17 @@ export type OrderSendRefundMutationVariables = Exact<{
 
 export type OrderSendRefundMutation = { __typename: 'Mutation', transactionRequestAction: { __typename: 'TransactionRequestAction', transaction: { __typename: 'TransactionItem', id: string, type: string, pspReference: string, actions: Array<TransactionActionEnum>, status: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, createdAt: any, status: TransactionEventStatus, type: TransactionEventActionTypeEnum | null, name: string | null, amount: { __typename: 'Money', amount: number, currency: string } }>, refundedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, authorizedAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode }> } | null };
 
+export type CreateManualTransactionCaptureMutationVariables = Exact<{
+  orderId: Scalars['ID'];
+  amount: Scalars['PositiveDecimal'];
+  amount2: Scalars['Decimal'];
+  currency: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CreateManualTransactionCaptureMutation = { __typename: 'Mutation', transactionCreate: { __typename: 'TransactionCreate', transaction: { __typename: 'TransactionItem', id: string, type: string, pspReference: string, actions: Array<TransactionActionEnum>, status: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, createdAt: any, status: TransactionEventStatus, type: TransactionEventActionTypeEnum | null, name: string | null, amount: { __typename: 'Money', amount: number, currency: string } }>, refundedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, authorizedAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode }> } | null };
+
 export type CreateManualTransactionRefundMutationVariables = Exact<{
   orderId: Scalars['ID'];
   amount: Scalars['PositiveDecimal'];

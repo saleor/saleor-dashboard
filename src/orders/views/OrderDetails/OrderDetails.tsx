@@ -1,8 +1,10 @@
+import { useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
+  OrderDetailsDocument,
   OrderStatus,
   useOrderConfirmMutation,
   useOrderDetailsQuery,
@@ -47,6 +49,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     updatePrivateMetadataOpts,
   ] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
+  const apolloClient = useApolloClient();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderUrlDialog,
@@ -146,6 +149,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
           onTransactionActionSend={orderMessages.handleTransactionAction}
+          onManualTransactionAdded={async data => {
+            await apolloClient.refetchQueries({
+              include: [OrderDetailsDocument],
+            });
+            orderMessages.handleAddManualTransaction(data);
+          }}
         >
           {({
             orderAddNote,
@@ -167,6 +176,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             orderInvoiceRequest,
             orderInvoiceSend,
             orderTransactionAction,
+            orderAddManualTransaction,
           }) => (
             <>
               {!isOrderDraft && !isOrderUnconfirmed && (
@@ -189,6 +199,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   }
                   orderInvoiceSend={orderInvoiceSend}
                   orderTransactionAction={orderTransactionAction}
+                  orderAddManualTransaction={orderAddManualTransaction}
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
@@ -239,6 +250,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   updateMetadataOpts={updateMetadataOpts}
                   updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   orderTransactionAction={orderTransactionAction}
+                  orderAddManualTransaction={orderAddManualTransaction}
                   openModal={openModal}
                   closeModal={closeModal}
                 />

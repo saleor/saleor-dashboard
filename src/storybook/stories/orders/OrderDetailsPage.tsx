@@ -46,6 +46,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
+  onAddManualTransaction: () => undefined,
   order,
   errors: [],
   shop: shopFixture,

@@ -1,5 +1,7 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsQueryResult,
@@ -18,6 +20,7 @@ import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/component
 import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderManualTransactionDialog } from "@saleor/orders/components/OrderManualTransactionDialog";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { OrderTransactionActionDialog } from "@saleor/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { transformFuflillmentLinesToStockFormsetData } from "@saleor/orders/utils/data";
@@ -81,6 +84,10 @@ interface OrderNormalDetailsProps {
     OrderTransactionRequestActionMutation,
     OrderTransactionRequestActionMutationVariables
   >;
+  orderAddManualTransaction: PartialMutationProviderOutput<
+    CreateManualTransactionCaptureMutation,
+    CreateManualTransactionCaptureMutationVariables
+  >;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
   openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
@@ -108,6 +115,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
   orderTransactionAction,
+  orderAddManualTransaction,
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
@@ -248,6 +256,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
         onPaymentPaid={() => openModal("mark-paid")}
         onProfileView={() => navigate(customerUrl(order.user.id))}
+        onAddManualTransaction={() => openModal("add-manual-transaction")}
         onInvoiceClick={id =>
           window.open(
             order.invoices.find(invoice => invoice.id === id)?.url,
@@ -414,6 +423,29 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
+      />
+      <OrderManualTransactionDialog
+        dialogProps={{
+          open: params.action === "add-manual-transaction",
+          onClose: closeModal,
+        }}
+        submitState={orderAddManualTransaction.opts.status}
+        error={
+          orderAddManualTransaction.opts?.error?.message ||
+          orderAddManualTransaction.opts?.data?.transactionCreate?.errors?.[0]
+            ?.message
+        }
+        currency={data?.order?.totalBalance?.currency}
+        onAddTransaction={({ amount, description }) =>
+          orderAddManualTransaction.mutate({
+            currency: data?.order?.totalBalance?.currency,
+            orderId: id,
+            amount,
+            // hack for GraphQL different types
+            amount2: amount,
+            description,
+          })
+        }
       />
       <OrderAddressFields
         action={params?.action}

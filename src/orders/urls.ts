@@ -124,7 +124,8 @@ export type OrderUrlDialog =
   | "mark-paid"
   | "void"
   | "transaction-action"
-  | "invoice-send";
+  | "invoice-send"
+  | "add-manual-transaction";
 
 export interface TransactionAction {
   action: "transaction-action";

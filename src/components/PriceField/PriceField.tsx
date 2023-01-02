@@ -29,7 +29,7 @@ const useStyles = makeStyles(
   { name: "PriceField" },
 );
 
-interface PriceFieldProps {
+export interface PriceFieldProps {
   className?: string;
   currencySymbol?: string;
   disabled?: boolean;

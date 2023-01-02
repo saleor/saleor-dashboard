@@ -90,6 +90,7 @@ export interface OrderDetailsPageProps {
   onInvoiceGenerate();
   onInvoiceSend(invoiceId: string);
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
+  onAddManualTransaction();
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
 
@@ -122,6 +123,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderLineRemove,
     onShippingMethodEdit,
     onTransactionAction,
+    onAddManualTransaction,
     onSubmit,
   } = props;
   const classes = useStyles(props);
@@ -323,7 +325,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   ))}
                 </div>
-                <OrderAddTransaction order={order} />
+                <OrderAddTransaction
+                  order={order}
+                  onAddTransaction={onAddManualTransaction}
+                />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
                   history={order?.events}

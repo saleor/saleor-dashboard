@@ -53,6 +53,10 @@ export const transactionCreateMessages = defineMessages({
     defaultMessage: "Transaction is not unique",
     id: "Vtjlpw",
   },
+  success: {
+    defaultMessage: "Manual transaction ({amount}) was created",
+    id: "tmrBDK",
+  },
 });
 
 export function getTransactionCreateErrorMessage(
