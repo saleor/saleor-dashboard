@@ -2,9 +2,9 @@ import Skeleton from "@saleor/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
-  TransactionEventStatus,
-  TransactionItemFragment,
+  TransactionEventTypeEnum,
 } from "@saleor/graphql";
+import { FakeTransaction, TransactionFakeEvent } from "@saleor/orders/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,37 +36,59 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
 
   const currency = usedInOrderEvents[0].balance.currentBalance.currency;
 
-  const fakeTransaction = {
+  const fakeEvents = usedInOrderEvents.map<TransactionFakeEvent>(event => ({
+    message: intl.formatMessage(transactionGiftCardMessages.usedInOrder),
+    id: event.id,
+    pspReference: event.id,
+    type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+    createdAt: event.date,
+    amount: {
+      amount:
+        event.balance.oldCurrentBalance.amount -
+        event.balance.currentBalance.amount,
+      currency: event.balance.currentBalance.currency,
+      __typename: "Money",
+    },
+    mappedResult: {
+      type: "CHARGE",
+      status: "SUCCESS",
+    },
+    createdBy: null,
+    externalUrl: null,
+    __typename: "TransactionFakeEvent",
+  }));
+
+  const fakeTransaction: FakeTransaction = {
     id: giftCard.id,
     type: intl.formatMessage(transactionGiftCardMessages.giftCard, {
       code: giftCard.last4CodeChars,
     }),
-    events: usedInOrderEvents.map(event => ({
-      name: intl.formatMessage(transactionGiftCardMessages.usedInOrder),
-      id: event.id,
-      status: TransactionEventStatus.SUCCESS,
-      createdAt: event.date,
-    })),
     actions: [],
     pspReference: giftCard.last4CodeChars,
+    status: "",
+    externalUrl: null,
     chargedAmount: {
       currency,
       amount,
+      __typename: "Money",
     },
     refundedAmount: {
       currency,
       amount: 0,
+      __typename: "Money",
     },
     authorizedAmount: {
       currency,
       amount: 0,
+      __typename: "Money",
     },
-    __typename: "TransactionItem",
-  } as TransactionItemFragment;
+    __typename: "FakeTransaction",
+  };
 
   return (
     <OrderTransaction
       transaction={fakeTransaction}
+      fakeEvents={fakeEvents}
       onTransactionAction={() => undefined}
     />
   );

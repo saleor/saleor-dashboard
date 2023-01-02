@@ -1,17 +1,13 @@
-import { TableCell, TableRow } from "@material-ui/core";
-import EventTime from "@saleor/components/EventTime";
-import Money from "@saleor/components/Money";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import clsx from "clsx";
+import { TransactionFakeEvent } from "@saleor/orders/types";
 import React, { useState } from "react";
 
-import { EventStatus, PspReference } from "./components";
-import { EventType } from "./components/EventType";
+import { EventItem } from "./components";
 
 export interface OrderTransactionEventsProps {
-  events: TransactionEventFragment[];
+  events: TransactionEventFragment[] | TransactionFakeEvent[];
 }
 
 const useStyles = makeStyles(
@@ -83,41 +79,16 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
       onMouseLeave={() => setHoveredPspReference(null)}
       flexBreakpoint="lg"
     >
-      {renderCollection(events, transactionEvent => (
-        <TableRow
-          onMouseOver={() =>
-            setHoveredPspReference(transactionEvent.pspReference || null)
-          }
-          className={clsx(
-            transactionEvent.pspReference === hoveredPspReference &&
-              classes.hover,
-          )}
-        >
-          <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
-            <EventStatus status={transactionEvent.status} />
-          </TableCell>
-          <TableCell>
-            <Money money={transactionEvent.amount} />
-          </TableCell>
-          <TableCell
-            className={classes.colSmall}
-            colSpan={!transactionEvent.pspReference && 2}
-          >
-            <EventType event={transactionEvent} />
-          </TableCell>
-          {transactionEvent.pspReference && (
-            <TableCell
-              className={clsx(classes.colSmall, classes.colPspReference)}
-            >
-              {/* TODO: Add url to psp reference */}
-              <PspReference reference={transactionEvent.pspReference} />
-            </TableCell>
-          )}
-          <TableCell className={classes.colLast}>
-            <EventTime date={transactionEvent.createdAt} />
-          </TableCell>
-        </TableRow>
-      ))}
+      {renderCollection<TransactionFakeEvent | TransactionEventFragment>(
+        events,
+        transactionEvent => (
+          <EventItem
+            event={transactionEvent}
+            onHover={setHoveredPspReference}
+            hoveredPspReference={hoveredPspReference}
+          />
+        ),
+      )}
     </ResponsiveTable>
   );
 };

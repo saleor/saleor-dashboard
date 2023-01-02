@@ -463,8 +463,6 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             currency: data?.order?.totalBalance?.currency,
             orderId: id,
             amount,
-            // hack for GraphQL different types
-            amount2: amount,
             description,
           })
         }

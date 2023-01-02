@@ -3,6 +3,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@saleor/graphql";
+import { FakeTransaction, TransactionFakeEvent } from "@saleor/orders/types";
 import React from "react";
 
 import { CardTitle } from "./components";
@@ -10,7 +11,8 @@ import { TransactionEvents } from "./components/TransactionEvents";
 import { useStyles } from "./styles";
 
 export interface OrderTransactionProps {
-  transaction: TransactionItemFragment;
+  transaction: TransactionItemFragment | FakeTransaction;
+  fakeEvents?: TransactionFakeEvent[];
   onTransactionAction: (
     transactionId: string,
     actionType: TransactionActionEnum,
@@ -19,13 +21,26 @@ export interface OrderTransactionProps {
   cardFooter?: React.ReactNode;
 }
 
+const getEvents = (
+  transaction: TransactionItemFragment | FakeTransaction,
+  fakeEvents: TransactionFakeEvent[] | undefined,
+) => {
+  if (transaction.__typename === "FakeTransaction") {
+    return fakeEvents;
+  }
+  return transaction.events;
+};
+
 const OrderTransaction: React.FC<OrderTransactionProps> = ({
   transaction,
+  fakeEvents,
   onTransactionAction,
   showActions,
   cardFooter,
 }) => {
   const classes = useStyles();
+
+  const events = getEvents(transaction, fakeEvents);
 
   return (
     <Card className={classes.card}>
@@ -40,7 +55,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
         onTransactionAction={onTransactionAction}
         showActions={showActions}
       />
-      <TransactionEvents events={transaction.events} />
+      <TransactionEvents events={events} />
       {cardFooter}
     </Card>
   );

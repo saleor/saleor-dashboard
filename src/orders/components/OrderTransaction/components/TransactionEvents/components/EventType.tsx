@@ -1,18 +1,18 @@
-import { TransactionEventFragment } from "@saleor/graphql";
 import { transactionEventTypeMap } from "@saleor/orders/messages";
+import { TransactionEventType } from "@saleor/orders/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface EventTypeProps {
-  event: TransactionEventFragment;
+  type: TransactionEventType;
 }
 
-export const EventType = ({ event }: EventTypeProps) => {
-  const mapEventToMessage = transactionEventTypeMap[event.type];
+export const EventType = ({ type }: EventTypeProps) => {
+  const mapEventToMessage = transactionEventTypeMap[type];
 
   if (mapEventToMessage) {
     return <FormattedMessage {...mapEventToMessage} />;
   }
 
-  return <>{event.name}</>;
+  return <>{type}</>;
 };

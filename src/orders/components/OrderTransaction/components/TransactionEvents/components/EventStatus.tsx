@@ -1,41 +1,43 @@
-import { TransactionEventStatus } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
+import { TransactionEventStatus } from "@saleor/orders/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { statusMessages } from "../messages";
 
 export interface EventStatusProps {
-  status: TransactionEventStatus;
+  status: TransactionEventStatus | null;
 }
 
 export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   const intl = useIntl();
   switch (status) {
-    case TransactionEventStatus.PENDING:
+    case "PENDING":
       return (
         <Pill
           color="warning"
           label={intl.formatMessage(statusMessages.pending)}
         />
       );
-    case TransactionEventStatus.SUCCESS:
+    case "SUCCESS":
       return (
         <Pill
           color="success"
           label={intl.formatMessage(statusMessages.success)}
         />
       );
-    case TransactionEventStatus.FAILURE:
+    case "FAILED":
       return (
         <Pill
           color="error"
           label={intl.formatMessage(statusMessages.failure)}
         />
       );
-    case TransactionEventStatus.REQUEST:
+    case "REQUEST":
       return (
         <Pill color="info" label={intl.formatMessage(statusMessages.request)} />
       );
+    default:
+      return null;
   }
 };

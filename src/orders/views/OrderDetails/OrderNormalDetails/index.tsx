@@ -439,8 +439,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             currency: data?.order?.totalBalance?.currency,
             orderId: id,
             amount,
-            // hack for GraphQL different types
-            amount2: amount,
             description,
           })
         }

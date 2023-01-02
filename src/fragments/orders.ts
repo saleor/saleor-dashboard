@@ -188,11 +188,18 @@ export const transactionEvent = gql`
     amount {
       ...Money
     }
-    createdAt
-    status
     type
-    name
-    # TODO: Add user and app fields when they're added
+    message
+    createdAt
+    createdBy {
+      ... on User {
+        ...StaffMemberAvatar
+      }
+      ... on App {
+        ...AppAvatar
+      }
+    }
+    externalUrl
   }
 `;
 
@@ -446,7 +453,7 @@ export const fragmentOrderDetails = gql`
     totalGrantedRefund {
       ...Money
     }
-    totalPendingRefund {
+    totalRefundPending {
       ...Money
     }
     totalRefunded {

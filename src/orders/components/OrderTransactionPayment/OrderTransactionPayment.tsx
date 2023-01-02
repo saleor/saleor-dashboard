@@ -2,9 +2,9 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
-  TransactionItemFragment,
 } from "@saleor/graphql";
 import { OrderTransactionProps } from "@saleor/orders/components/OrderTransaction/OrderTransaction";
+import { FakeTransaction } from "@saleor/orders/types";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";
@@ -36,14 +36,14 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const refunded = total - captured - authorized;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const events = React.useMemo(() => mapPaymentToTransactionEvents(payment), [
-    payment.transactions,
-  ]);
+  const fakeEvents = React.useMemo(
+    () => mapPaymentToTransactionEvents(payment),
+    [payment.transactions],
+  );
 
-  const transactionFromPayment: TransactionItemFragment = {
+  const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     type: findMethodName(payment.gateway, allPaymentMethods),
-    events,
     actions: mapOrderActionsToTransactionActions(payment.actions),
     pspReference: "",
     status: "",
@@ -58,7 +58,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
       amount: refunded > 0 ? refunded : 0,
       __typename: "Money",
     },
-    __typename: "TransactionItem",
+    __typename: "FakeTransaction",
   };
 
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (
@@ -76,6 +76,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
+      fakeEvents={fakeEvents}
       onTransactionAction={handleTransactionAction}
     />
   );
