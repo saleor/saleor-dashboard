@@ -1,6 +1,7 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import React from "react";
 
-export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
+export type SubmitFn = (event?: React.FormEvent) => SubmitPromise;
 
 export type FormId = symbol;
 
