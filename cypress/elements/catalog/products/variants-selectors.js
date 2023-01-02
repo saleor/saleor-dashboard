@@ -10,6 +10,6 @@ export const VARIANTS_SELECTORS = {
   stockInput: "[data-test-id='stock-input']",
   booleanAttributeCheckbox: "[name*='attribute'][type='checkbox']",
   selectOption: "[data-test-id='multi-autocomplete-select-option']",
-  manageChannels: "[data-testid='manage-channels-button']",
+  manageChannels: "[data-test-id='manage-channels-button']",
   allChannels: "[name='allChannels']",
 };

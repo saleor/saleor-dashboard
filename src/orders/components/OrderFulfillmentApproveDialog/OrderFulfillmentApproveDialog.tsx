@@ -73,7 +73,7 @@ const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> 
                 <FormattedMessage {...buttonMessages.cancel} />
               </Button>
               <ConfirmButton
-                data-test="submit"
+                data-test-id="submit"
                 transitionState={confirmButtonState}
                 onClick={submit}
               >
