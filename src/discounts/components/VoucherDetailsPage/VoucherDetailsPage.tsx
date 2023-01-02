@@ -30,7 +30,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, splitDateTime } from "../../../misc";
+import { splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
@@ -48,6 +48,10 @@ export enum VoucherDetailsPageTab {
   collections = "collections",
   products = "products"
 }
+
+export type VoucherTabItemsCount = Partial<
+  Record<VoucherDetailsPageTab, number>
+>;
 
 export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
@@ -76,6 +80,7 @@ export interface VoucherDetailsPageProps
     >,
     ChannelProps {
   activeTab: VoucherDetailsPageTab;
+  tabItemsCount: VoucherTabItemsCount;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   voucher: VoucherDetailsFragment;
@@ -107,6 +112,7 @@ const ProductsTab = Tab(VoucherDetailsPageTab.products);
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
+  tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -261,10 +267,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of categories"
                           },
                           {
-                            quantity: maybe(
-                              () => voucher.categories.totalCount.toString(),
-                              "…"
-                            )
+                            quantity:
+                              tabItemsCount.categories?.toString() || "…"
                           }
                         )}
                       </CategoriesTab>
@@ -280,10 +284,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of collections"
                           },
                           {
-                            quantity: maybe(
-                              () => voucher.collections.totalCount.toString(),
-                              "…"
-                            )
+                            quantity:
+                              tabItemsCount.collections?.toString() || "…"
                           }
                         )}
                       </CollectionsTab>
@@ -297,10 +299,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                             description: "number of products"
                           },
                           {
-                            quantity: maybe(
-                              () => voucher.products.totalCount.toString(),
-                              "…"
-                            )
+                            quantity: tabItemsCount.products?.toString() || "…"
                           }
                         )}
                       </ProductsTab>
@@ -360,7 +359,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <CardSpacer />
                 {data.discountType.toString() === "SHIPPING" ? (
                   <CountryList
-                    countries={maybe(() => voucher.countries)}
+                    countries={voucher?.countries}
                     disabled={disabled}
                     emptyText={intl.formatMessage({
                       defaultMessage: "Voucher applies to all countries"

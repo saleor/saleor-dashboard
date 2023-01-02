@@ -324,7 +324,19 @@ export const PageInfoFragmentDoc = gql`
 export const SaleDetailsFragmentDoc = gql`
     fragment SaleDetails on Sale {
   ...Sale
-  variants(after: $after, before: $before, first: $first, last: $last) {
+  variantsCount: variants {
+    totalCount
+  }
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  variants(after: $after, before: $before, first: $first, last: $last) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -348,9 +360,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  products(after: $after, before: $before, first: $first, last: $last) {
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -370,9 +381,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -385,9 +395,8 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -400,7 +409,6 @@ export const SaleDetailsFragmentDoc = gql`
     pageInfo {
       ...PageInfo
     }
-    totalCount
   }
 }
     ${SaleFragmentDoc}
@@ -446,7 +454,16 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerOrder
   applyOncePerCustomer
   onlyForStaff
-  products(after: $after, before: $before, first: $first, last: $last) {
+  productsCount: products {
+    totalCount
+  }
+  collectionsCount: collections {
+    totalCount
+  }
+  categoriesCount: categories {
+    totalCount
+  }
+  products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -463,12 +480,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  collections(after: $after, before: $before, first: $first, last: $last) {
+  collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -478,12 +494,11 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
   }
-  categories(after: $after, before: $before, first: $first, last: $last) {
+  categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -493,7 +508,6 @@ export const VoucherDetailsFragmentDoc = gql`
         }
       }
     }
-    totalCount
     pageInfo {
       ...PageInfo
     }
@@ -5652,7 +5666,7 @@ export type SaleUpdateMutationHookResult = ReturnType<typeof useSaleUpdateMutati
 export type SaleUpdateMutationResult = Apollo.MutationResult<Types.SaleUpdateMutation>;
 export type SaleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SaleUpdateMutation, Types.SaleUpdateMutationVariables>;
 export const SaleCataloguesAddDocument = gql`
-    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -5685,6 +5699,10 @@ export type SaleCataloguesAddMutationFn = Apollo.MutationFunction<Types.SaleCata
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -5696,7 +5714,7 @@ export type SaleCataloguesAddMutationHookResult = ReturnType<typeof useSaleCatal
 export type SaleCataloguesAddMutationResult = Apollo.MutationResult<Types.SaleCataloguesAddMutation>;
 export type SaleCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>;
 export const SaleCataloguesRemoveDocument = gql`
-    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -5729,6 +5747,10 @@ export type SaleCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.SaleC
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -5969,7 +5991,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6002,6 +6024,9 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6013,7 +6038,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -6046,6 +6071,9 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6280,7 +6308,7 @@ export type VoucherListQueryHookResult = ReturnType<typeof useVoucherListQuery>;
 export type VoucherListLazyQueryHookResult = ReturnType<typeof useVoucherListLazyQuery>;
 export type VoucherListQueryResult = Apollo.QueryResult<Types.VoucherListQuery, Types.VoucherListQueryVariables>;
 export const SaleDetailsDocument = gql`
-    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   sale(id: $id) {
     ...SaleDetails
   }
@@ -6304,6 +6332,10 @@ export const SaleDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */
@@ -6319,7 +6351,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
+    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -6343,6 +6375,9 @@ export const VoucherDetailsDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
  *   },
  * });
  */

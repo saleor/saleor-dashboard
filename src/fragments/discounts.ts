@@ -24,7 +24,20 @@ export const saleFragment = gql`
 export const saleDetailsFragment = gql`
   fragment SaleDetails on Sale {
     ...Sale
-    variants(after: $after, before: $before, first: $first, last: $last) {
+    variantsCount: variants {
+      totalCount
+    }
+    productsCount: products {
+      totalCount
+    }
+    collectionsCount: collections {
+      totalCount
+    }
+    categoriesCount: categories {
+      totalCount
+    }
+    variants(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeVariants) {
       edges {
         node {
           id
@@ -48,9 +61,9 @@ export const saleDetailsFragment = gql`
       pageInfo {
         ...PageInfo
       }
-      totalCount
     }
-    products(after: $after, before: $before, first: $first, last: $last) {
+    products(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -70,9 +83,9 @@ export const saleDetailsFragment = gql`
       pageInfo {
         ...PageInfo
       }
-      totalCount
     }
-    categories(after: $after, before: $before, first: $first, last: $last) {
+    categories(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -85,9 +98,9 @@ export const saleDetailsFragment = gql`
       pageInfo {
         ...PageInfo
       }
-      totalCount
     }
-    collections(after: $after, before: $before, first: $first, last: $last) {
+    collections(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -100,7 +113,6 @@ export const saleDetailsFragment = gql`
       pageInfo {
         ...PageInfo
       }
-      totalCount
     }
   }
 `;
@@ -146,7 +158,17 @@ export const voucherDetailsFragment = gql`
     applyOncePerOrder
     applyOncePerCustomer
     onlyForStaff
-    products(after: $after, before: $before, first: $first, last: $last) {
+    productsCount: products {
+      totalCount
+    }
+    collectionsCount: collections {
+      totalCount
+    }
+    categoriesCount: categories {
+      totalCount
+    }
+    products(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -163,12 +185,12 @@ export const voucherDetailsFragment = gql`
           }
         }
       }
-      totalCount
       pageInfo {
         ...PageInfo
       }
     }
-    collections(after: $after, before: $before, first: $first, last: $last) {
+    collections(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -178,12 +200,12 @@ export const voucherDetailsFragment = gql`
           }
         }
       }
-      totalCount
       pageInfo {
         ...PageInfo
       }
     }
-    categories(after: $after, before: $before, first: $first, last: $last) {
+    categories(after: $after, before: $before, first: $first, last: $last)
+      @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -193,7 +215,6 @@ export const voucherDetailsFragment = gql`
           }
         }
       }
-      totalCount
       pageInfo {
         ...PageInfo
       }

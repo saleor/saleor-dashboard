@@ -30,6 +30,10 @@ export const saleCataloguesAdd = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeVariants: Boolean!
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     saleCataloguesAdd(id: $id, input: $input) {
       errors {
@@ -50,6 +54,10 @@ export const saleCataloguesRemove = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeVariants: Boolean!
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     saleCataloguesRemove(id: $id, input: $input) {
       errors {
@@ -148,6 +156,9 @@ export const voucherCataloguesAdd = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     voucherCataloguesAdd(id: $id, input: $input) {
       errors {
@@ -168,6 +179,9 @@ export const voucherCataloguesRemove = gql`
     $before: String
     $first: Int
     $last: Int
+    $includeProducts: Boolean!
+    $includeCollections: Boolean!
+    $includeCategories: Boolean!
   ) {
     voucherCataloguesRemove(id: $id, input: $input) {
       errors {
