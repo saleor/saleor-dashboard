@@ -1,4 +1,5 @@
 import { WeightUnitsEnum } from "@saleor/graphql";
+import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -12,7 +13,6 @@ import ShippingZonesListPage, {
   ShippingZonesListPageProps,
 } from "../../../shipping/components/ShippingZonesListPage";
 import { shippingZones } from "../../../shipping/fixtures";
-import Decorator from "../../Decorator";
 
 const props: ShippingZonesListPageProps = {
   ...listActionsProps,

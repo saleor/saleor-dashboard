@@ -1,4 +1,5 @@
 import { ShopErrorCode } from "@saleor/graphql";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -6,7 +7,6 @@ import SiteSettingsPage, {
   SiteSettingsPageProps,
 } from "../../../siteSettings/components/SiteSettingsPage";
 import { shop } from "../../../siteSettings/fixtures";
-import Decorator from "../../Decorator";
 
 const props: Omit<SiteSettingsPageProps, "classes"> = {
   disabled: false,
@@ -16,7 +16,7 @@ const props: Omit<SiteSettingsPageProps, "classes"> = {
   shop,
 };
 
-storiesOf(" Site settings / Page", module)
+storiesOf("Site settings / Page", module)
   .addDecorator(Decorator)
   .add("default", () => <SiteSettingsPage {...props} />)
   .add("loading", () => (

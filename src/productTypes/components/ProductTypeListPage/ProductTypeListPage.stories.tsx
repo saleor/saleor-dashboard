@@ -1,5 +1,6 @@
 import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -16,7 +17,6 @@ import ProductTypeListPage, {
   ProductTypeListPageProps,
 } from "../../../productTypes/components/ProductTypeListPage";
 import { productTypes } from "../../../productTypes/fixtures";
-import Decorator from "../../Decorator";
 
 const props: ProductTypeListPageProps = {
   ...listActionsProps,

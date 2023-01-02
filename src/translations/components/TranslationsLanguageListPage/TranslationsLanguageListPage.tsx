@@ -24,6 +24,7 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
           defaultMessage: "Languages",
         })}
       >
+        {/* TODO: remove not needed button */}
         {/* <Button color="primary" variant="contained" onClick={onAdd}>
         <FormattedMessage
       id="crvD6X"
