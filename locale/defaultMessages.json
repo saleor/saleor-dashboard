@@ -47,10 +47,6 @@
     "context": "dialog header",
     "string": "Capture Payment"
   },
-  "+PclgM": {
-    "context": "tabel column header",
-    "string": "Total"
-  },
   "+RjQjs": {
     "context": "return button",
     "string": "Return / Replace order"
@@ -369,10 +365,6 @@
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
   },
-  "0krqBj": {
-    "context": "page header",
-    "string": "Order no. {orderNumber} - Refund"
-  },
   "0mhR+F": {
     "context": "Header row quantity label",
     "string": "Quantity"
@@ -383,10 +375,6 @@
   },
   "0nLsyM": {
     "string": "No product types found"
-  },
-  "0oo+BT": {
-    "context": "section header",
-    "string": "Refunded Amount"
   },
   "0opVvi": {
     "context": "number of ordered products",
@@ -1011,10 +999,6 @@
   "5ZvuVw": {
     "string": "No products matching given query"
   },
-  "5aiFbL": {
-    "context": "tabel column header",
-    "string": "Price"
-  },
   "5bJ26s": {
     "string": "Successfully created page type"
   },
@@ -1169,10 +1153,6 @@
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
-  "6u4K7e": {
-    "context": "page header",
-    "string": "Order"
-  },
   "6udlH+": {
     "string": "Order draft successfully created"
   },
@@ -1318,10 +1298,6 @@
   "8EGagh": {
     "context": "search box label",
     "string": "Filter Countries"
-  },
-  "8F2D1H": {
-    "context": "order refund amount, input button",
-    "string": "Refund {currency} {amount}"
   },
   "8GC/ah": {
     "context": "variants section name",
@@ -1553,10 +1529,6 @@
     "context": "gift card product message",
     "string": "gift card product"
   },
-  "AKv2BI": {
-    "context": "order refund subtitle",
-    "string": "Refunded items can't be fulfilled"
-  },
   "AMlXrQ": {
     "context": "submit button",
     "string": "Create manual transaction"
@@ -1654,10 +1626,6 @@
     "context": "notification",
     "string": "Published pages"
   },
-  "B/y6LC": {
-    "context": "section header",
-    "string": "Unfulfilled Products"
-  },
   "B06DG8": {
     "string": "Transaction wasn't found"
   },
@@ -1678,10 +1646,6 @@
   },
   "B9yrkK": {
     "string": "No Channels found"
-  },
-  "BBIQxQ": {
-    "context": "page header",
-    "string": "Order no. {orderNumber} - Replace/Return"
   },
   "BCPrmK": {
     "context": "order history message",
@@ -1808,10 +1772,6 @@
     "context": "button",
     "string": "Add products"
   },
-  "C6bb6x": {
-    "context": "order refund amount",
-    "string": "Refund total amount"
-  },
   "C7I2lg": {
     "context": "input label",
     "string": "Limit quantity per checkout (optional)"
@@ -1841,10 +1801,6 @@
   "CJpx4E": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
-  },
-  "CLB1k9": {
-    "context": "refund type",
-    "string": "Refund Products"
   },
   "CLYlsu": {
     "context": "section header",
@@ -2100,10 +2056,6 @@
     "context": "description",
     "string": "or login using"
   },
-  "EP+jcU": {
-    "context": "checkbox",
-    "string": "Refund shipment costs"
-  },
   "ER/yBq": {
     "context": "max price in channel",
     "string": "Max. value"
@@ -2132,6 +2084,10 @@
   "EbVf0Z": {
     "context": "transaction reference",
     "string": "Transaction reference"
+  },
+  "Edg9FT": {
+    "context": "button, submit form",
+    "string": "Replace products"
   },
   "Ediw6/": {
     "context": "button label",
@@ -2219,10 +2175,6 @@
   "FNAZoh": {
     "string": "Last login"
   },
-  "FNT4b+": {
-    "context": "tabel column header",
-    "string": "Product"
-  },
   "FNpv6K": {
     "context": "button",
     "string": "Filters"
@@ -2230,10 +2182,6 @@
   "FOa+Xd": {
     "context": "voucher value requirement",
     "string": "Min. Order Value"
-  },
-  "FOehC/": {
-    "context": "label",
-    "string": "Manual Amount"
   },
   "FPzzh7": {
     "context": "dialog content",
@@ -2652,10 +2600,6 @@
     "context": "swatch attribute image label",
     "string": "Image"
   },
-  "I7HyJZ": {
-    "context": "order refund amount",
-    "string": "Max Refund"
-  },
   "I8dAAe": {
     "context": "page internal name",
     "string": "Slug"
@@ -2686,10 +2630,6 @@
   "IHtOda": {
     "context": "input label",
     "string": "Selected columns"
-  },
-  "IKvOK+": {
-    "context": "Amount error message",
-    "string": "Amount must be bigger than 0"
   },
   "ILgbKN": {
     "context": "key-value field button add more key-value pairs",
@@ -2820,10 +2760,6 @@
   "JE0TAx": {
     "context": "section name",
     "string": "Values"
-  },
-  "JEIN47": {
-    "context": "label",
-    "string": "Automatic Amount"
   },
   "JFmOfi": {
     "context": "button",
@@ -3076,10 +3012,6 @@
     "context": "dialog header",
     "string": "Unassign Variant From Sale"
   },
-  "L/O4LQ": {
-    "context": "order refund amount",
-    "string": "Authorized Amount"
-  },
   "L5io1l": {
     "context": "returned products list title",
     "string": "Products returned"
@@ -3113,10 +3045,6 @@
   },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
-  },
-  "LKpQYh": {
-    "context": "refund type",
-    "string": "Miscellaneous Refund"
   },
   "LLrOK3": {
     "context": "paragraph, description in manual refund card",
@@ -3725,10 +3653,6 @@
     "context": "activate app",
     "string": "Are you sure you want to activate this app? Activating will start gathering events."
   },
-  "Q55cTG": {
-    "context": "order refund amount",
-    "string": "Previously refunded"
-  },
   "Q6VRrE": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
@@ -3851,10 +3775,6 @@
   "QjPJ78": {
     "context": "close full-screen",
     "string": "Close"
-  },
-  "QkFeOa": {
-    "context": "order refund amount button",
-    "string": "Refund"
   },
   "QooeI/": {
     "context": "button",
@@ -4237,10 +4157,6 @@
     "context": "section subheader",
     "string": "Asynchronous events"
   },
-  "Tl+7X4": {
-    "context": "tabel column header",
-    "string": "Refunded Qty"
-  },
   "TnTi/a": {
     "context": "pricing card title",
     "string": "Pricing"
@@ -4374,10 +4290,6 @@
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
-  },
-  "Uo5/Ov": {
-    "context": "order return subtitle",
-    "string": "Returned items can't be fulfilled"
   },
   "Uo5MoU": {
     "context": "product field",
@@ -4617,10 +4529,6 @@
   "WFG7Zk": {
     "context": "unassign attribute from page type, button",
     "string": "Unassign"
-  },
-  "WGp+Fw": {
-    "context": "order refund amount",
-    "string": "Shipment Cost"
   },
   "WIxSDm": {
     "context": "card header",
@@ -5029,6 +4937,10 @@
     "context": "card balance label",
     "string": "Card Balance"
   },
+  "Z3T6zR": {
+    "context": "card title",
+    "string": "Return & Replace"
+  },
   "Z6QAbw": {
     "string": "This variant does not have any digital content"
   },
@@ -5068,6 +4980,9 @@
   },
   "ZRz3hM": {
     "string": "Export Product Stock Quantity to CSV"
+  },
+  "ZTG+Dv": {
+    "string": "Draft order will be automatically created for replaced products"
   },
   "ZWIjvr": {
     "context": "dialog header",
@@ -5353,10 +5268,6 @@
     "context": "button, create new transaction with refund amount",
     "string": "Refund"
   },
-  "bgO+7G": {
-    "context": "order return amount button",
-    "string": "Return & Replace products"
-  },
   "bh+Keo": {
     "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
   },
@@ -5389,10 +5300,6 @@
   "bq1eEx": {
     "context": "header",
     "string": "Create Product Type"
-  },
-  "bqAJCT": {
-    "context": "section header",
-    "string": "Refund Order"
   },
   "bsP4f3": {
     "string": "No tokens found"
@@ -5775,10 +5682,6 @@
     "context": "table head",
     "string": "Category Name"
   },
-  "fbH51z": {
-    "context": "Amount error message",
-    "string": "Amount cannot be bigger than max refund"
-  },
   "fehqPs": {
     "context": "order history message",
     "string": "Products were deleted from an order"
@@ -6091,10 +5994,6 @@
     "context": "product attribute error",
     "string": "This variant already exists"
   },
-  "i56GGQ": {
-    "context": "order refund amount",
-    "string": "Replaced Products Value"
-  },
   "iAvKNf": {
     "context": "navigator help mode description",
     "string": "Display Help"
@@ -6133,10 +6032,6 @@
   "iQxjow": {
     "context": "section header",
     "string": "Content Attributes"
-  },
-  "iUIn50": {
-    "context": "section notice",
-    "string": "Unfulfilled products will be restocked"
   },
   "iUy2dx": {
     "context": "vouchers section name",
@@ -6430,10 +6325,6 @@
   "kZfIl/": {
     "string": "These are general information about this Content Type."
   },
-  "kak5vT": {
-    "context": "order refund amount",
-    "string": "Selected Products Value"
-  },
   "kbkjEc": {
     "context": "navigator catalog mode description",
     "string": "Search in Catalog"
@@ -6584,10 +6475,6 @@
   },
   "lqIzC8": {
     "string": "This field needs to be unique"
-  },
-  "lrq8O6": {
-    "context": "order refund amount, input label",
-    "string": "Amount"
   },
   "lw9WIk": {
     "context": "deleted multiple attributes",
@@ -7208,6 +7095,10 @@
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
     "string": "Gift Card with past expiration date cannot be created"
+  },
+  "rH4pi3": {
+    "context": "page header",
+    "string": "Return & replace products"
   },
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
@@ -7920,10 +7811,6 @@
     "context": "see error log label in notification",
     "string": "See error log"
   },
-  "wDUBLR": {
-    "context": "order refund amount",
-    "string": "Proposed refund amount"
-  },
   "wHdMAX": {
     "context": "sale value, header",
     "string": "Value"
@@ -8358,9 +8245,5 @@
   "zyceue": {
     "context": "placed order counter",
     "string": "{count}/{max} orders"
-  },
-  "zzfj8H": {
-    "context": "label",
-    "string": "No refund"
   }
 }
