@@ -88,43 +88,37 @@ describe("Updating products without sku", () => {
       let product;
       let variant;
 
-      productUtils
-        .createProductInChannelWithoutVariants({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productTypeWithoutVariants.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-        })
-        .then(productResp => {
-          product = productResp;
-          createVariantForSimpleProduct({
-            productId: product.id,
-            warehouseId: warehouse.id,
-            quantityInWarehouse: 10,
-            trackInventory: false,
+      const productData = {
+        name: productName,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        productTypeId: productTypeWithoutVariants.id,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        quantityInWarehouse: 10,
+        trackInventory: false,
+      };
+      createSimpleProductWithVariant(productData).then(resp => {
+        product = resp.product;
+        variant = resp.variant;
+
+        cy.visitAndWaitForProgressBarToDisappear(
+          productVariantDetailUrl(product.id, variant.id),
+        )
+          .get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(VARIANTS_SELECTORS.skuInput)
+          .type(sku)
+          .addAliasToGraphRequest("VariantUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
+          .then(({ response }) => {
+            const responseSku =
+              response.body.data.productVariantUpdate.productVariant.sku;
+            expect(responseSku).to.equal(sku);
           });
-        })
-        .then(variantResp => {
-          variant = variantResp;
-          updateChannelPriceInVariant(variant.id, defaultChannel.id);
-          cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id),
-          )
-            .get(SHARED_ELEMENTS.skeleton)
-            .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
-            .type(sku)
-            .addAliasToGraphRequest("VariantUpdate")
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
-            .then(({ response }) => {
-              const responseSku =
-                response.body.data.productVariantUpdate.productVariant.sku;
-              expect(responseSku).to.equal(sku);
-            });
-        });
+      });
     },
   );
 
@@ -209,5 +203,42 @@ describe("Updating products without sku", () => {
     }).then(({ order }) => {
       expect(order.id).to.be.ok;
     });
+  }
+
+  function createSimpleProductWithVariant({
+    name,
+    channelId,
+    warehouseId = null,
+    quantityInWarehouse = 10,
+    productTypeId,
+    attributeId,
+    categoryId,
+    trackInventory = true,
+  }) {
+    let product;
+    let variant;
+
+    return productUtils
+      .createProductInChannelWithoutVariants({
+        name,
+        channelId,
+        productTypeId,
+        attributeId,
+        categoryId,
+      })
+      .then(productResp => {
+        product = productResp;
+        createVariantForSimpleProduct({
+          productId: product.id,
+          warehouseId,
+          quantityInWarehouse,
+          trackInventory,
+        });
+      })
+      .then(variantResp => {
+        variant = variantResp;
+        updateChannelPriceInVariant(variant.id, defaultChannel.id);
+      })
+      .then(() => ({ product, variant }));
   }
 });

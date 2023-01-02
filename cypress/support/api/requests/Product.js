@@ -218,7 +218,6 @@ export function createVariantForSimpleProduct({
   quantityInWarehouse = 1,
   trackInventory = true,
   weight = 1,
-
   attributeId,
   attributeName = "value",
 }) {
