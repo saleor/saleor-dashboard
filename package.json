@@ -169,8 +169,8 @@
     "workbox-strategies": "^6.1.2"
   },
   "optionalDependencies": {
-    "@storybook/addon-storyshots": "^5.2.8",
-    "@storybook/react": "^5.1.9",
+    "@storybook/addon-storyshots": "^5.3.21",
+    "@storybook/react": "^6.5.15",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
