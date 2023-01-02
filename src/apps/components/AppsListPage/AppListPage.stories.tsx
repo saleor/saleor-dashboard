@@ -31,7 +31,7 @@ const props: AppsListPageProps = {
   onInstalledAppRemove: () => undefined,
 };
 
-storiesOf(" Apps / Apps list", module)
+storiesOf("Apps / Apps list", module)
   .addDecorator(Decorator)
   .addDecorator(story => (
     <AppListContext.Provider

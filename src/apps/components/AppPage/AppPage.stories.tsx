@@ -12,7 +12,7 @@ const props: AppPageProps = {
   onError: () => undefined,
 };
 
-storiesOf(" Apps / App", module)
+storiesOf("Apps / App", module)
   .addDecorator(Decorator)
   .add("default", () => <AppPage {...props} />)
   .add("settings", () => (
