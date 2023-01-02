@@ -40,7 +40,7 @@ const HomePage = props => {
   );
 };
 
-storiesOf("Views / HomePage", module)
+storiesOf(" HomePage", module)
   .addDecorator(Decorator)
   .add("default", () => <HomePage {...homePageProps} />)
   .add("loading", () => (

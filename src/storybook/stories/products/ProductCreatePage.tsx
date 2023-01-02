@@ -20,7 +20,7 @@ import Decorator from "../../Decorator";
 const product = productFixture("");
 const channels = createChannelsData(channelsList);
 
-storiesOf("Views / Products / Create product", module)
+storiesOf(" Products / Create product", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductCreatePage

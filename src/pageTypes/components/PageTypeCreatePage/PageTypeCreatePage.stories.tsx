@@ -12,7 +12,7 @@ const props: Omit<PageTypeCreatePageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Page types / Create page type", module)
+storiesOf(" Page types / Create page type", module)
   .addDecorator(Decorator)
   .add("default", () => <PageTypeCreatePage {...props} />)
   .add("loading", () => <PageTypeCreatePage {...props} disabled={true} />)

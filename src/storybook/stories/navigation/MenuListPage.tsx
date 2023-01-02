@@ -26,7 +26,7 @@ const props: MenuListPageProps = {
   },
 };
 
-storiesOf("Views / Navigation / Menu list", module)
+storiesOf(" Navigation / Menu list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <MenuListPage {...props} />)

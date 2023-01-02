@@ -26,7 +26,7 @@ const props: PermissionGroupListPageProps = {
   },
 };
 
-storiesOf("Views / Permission Groups / Permission Group List", module)
+storiesOf(" Permission Groups / Permission Group List", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PermissionGroupListPage {...props} />)

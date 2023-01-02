@@ -20,7 +20,7 @@ const props: MenuDetailsPageProps = {
   saveButtonState: "default",
 };
 
-storiesOf("Views / Navigation / Menu details", module)
+storiesOf(" Navigation / Menu details", module)
   .addDecorator(Decorator)
   .add("default", () => <MenuDetailsPage {...props} />)
   .add("loading", () => (

@@ -16,7 +16,7 @@ const props: Omit<SiteSettingsPageProps, "classes"> = {
   shop,
 };
 
-storiesOf("Views / Site settings / Page", module)
+storiesOf(" Site settings / Page", module)
   .addDecorator(Decorator)
   .add("default", () => <SiteSettingsPage {...props} />)
   .add("loading", () => (

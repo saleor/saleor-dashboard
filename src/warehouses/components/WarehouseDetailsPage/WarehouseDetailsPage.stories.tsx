@@ -23,7 +23,7 @@ const props: WarehouseDetailsPageProps = {
   saveButtonBarState: "default",
   warehouse,
 };
-storiesOf("Views / Warehouses / Warehouse details", module)
+storiesOf(" Warehouses / Warehouse details", module)
   .addDecorator(Decorator)
   .add("default", () => <WarehouseDetailsPage {...props} />)
   .add("loading", () => (

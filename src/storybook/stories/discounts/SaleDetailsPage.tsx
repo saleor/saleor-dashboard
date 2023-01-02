@@ -50,7 +50,7 @@ const props: SaleDetailsPageProps = {
   ...listActionsProps,
 };
 
-storiesOf("Views / Discounts / Sale details", module)
+storiesOf(" Discounts / Sale details", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <SaleDetailsPage {...props} />)

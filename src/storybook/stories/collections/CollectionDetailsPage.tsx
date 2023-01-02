@@ -39,7 +39,7 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   selectedChannelId: "123",
 };
 
-storiesOf("Views / Collections / Collection detailsCollection details", module)
+storiesOf(" Collections / Collection detailsCollection details", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CollectionDetailsPage {...props} />)

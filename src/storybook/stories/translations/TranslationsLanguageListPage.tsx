@@ -11,7 +11,7 @@ const props: TranslationsLanguageListPageProps = {
   languages,
 };
 
-storiesOf("Views / Translations / Language list", module)
+storiesOf(" Translations / Language list", module)
   .addDecorator(Decorator)
   .add("default", () => <TranslationsLanguageListPage {...props} />)
   .add("loading", () => (

@@ -23,7 +23,7 @@ const props: VoucherCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Discounts / Voucher create", module)
+storiesOf(" Discounts / Voucher create", module)
   .addDecorator(Decorator)
   .add("default", () => <VoucherCreatePage {...props} />)
   .add("form errors", () => (

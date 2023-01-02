@@ -32,7 +32,7 @@ const CustomerDetailsPage = props => (
   </MockedUserProvider>
 );
 
-storiesOf("Views / Customers / Customer details", module)
+storiesOf(" Customers / Customer details", module)
   .addDecorator(Decorator)
   .add("default", () => <CustomerDetailsPage {...props} />)
   .add("loading", () => (

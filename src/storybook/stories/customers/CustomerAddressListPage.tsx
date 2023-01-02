@@ -16,7 +16,7 @@ const props: CustomerAddressListPageProps = {
   onSetAsDefault: () => undefined,
 };
 
-storiesOf("Views / Customers / Address Book", module)
+storiesOf(" Customers / Address Book", module)
   .addDecorator(Decorator)
   .add("default", () => <CustomerAddressListPage {...props} />)
   .add("loading", () => (

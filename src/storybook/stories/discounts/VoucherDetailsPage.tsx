@@ -54,7 +54,7 @@ const props: VoucherDetailsPageProps = {
   voucher: voucherDetails,
 };
 
-storiesOf("Views / Discounts / Voucher details", module)
+storiesOf(" Discounts / Voucher details", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <VoucherDetailsPage {...props} />)

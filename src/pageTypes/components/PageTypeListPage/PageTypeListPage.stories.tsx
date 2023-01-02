@@ -27,7 +27,7 @@ const props: PageTypeListPageProps = {
   pageTypes,
 };
 
-storiesOf("Views / Page types / Page types list", module)
+storiesOf(" Page types / Page types list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PageTypeListPage {...props} />)

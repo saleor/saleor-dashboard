@@ -30,7 +30,7 @@ const categoryTableProps: CategoryTableProps = {
   },
 };
 
-storiesOf("Views / Categories / Category list", module)
+storiesOf(" Categories / Category list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CategoryListPage {...categoryTableProps} />)

@@ -27,7 +27,7 @@ const props: PageDetailsPageProps = {
   fetchMoreAttributeValues: fetchMoreProps,
 };
 
-storiesOf("Views / Pages / Page details", module)
+storiesOf(" Pages / Page details", module)
   .addDecorator(Decorator)
   .add("default", () => <PageDetailsPage {...props} />)
   .add("loading", () => (

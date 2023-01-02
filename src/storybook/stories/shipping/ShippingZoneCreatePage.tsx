@@ -45,7 +45,7 @@ const props: ShippingZoneCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Shipping / Create shipping zone", module)
+storiesOf(" Shipping / Create shipping zone", module)
   .addDecorator(Decorator)
   .add("default", () => <ShippingZoneCreatePage {...props} />)
   .add("loading", () => <ShippingZoneCreatePage {...props} disabled={true} />)

@@ -55,7 +55,7 @@ const CustomerListPage = props => (
   </MockedUserProvider>
 );
 
-storiesOf("Views / Customers / Customer list", module)
+storiesOf(" Customers / Customer list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CustomerListPage {...props} />)

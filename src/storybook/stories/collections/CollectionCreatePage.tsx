@@ -23,7 +23,7 @@ const props: Omit<CollectionCreatePageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Collections / Create collection", module)
+storiesOf(" Collections / Create collection", module)
   .addDecorator(Decorator)
   .add("default", () => <CollectionCreatePage {...props} />)
   .add("loading", () => <CollectionCreatePage {...props} disabled={true} />)

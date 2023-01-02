@@ -39,7 +39,7 @@ const Story: React.FC<{ user: UserFragment }> = ({ user }) => {
   );
 };
 
-storiesOf("Views / Configuration", module)
+storiesOf(" Configuration", module)
   .addDecorator(Decorator)
   .add("default", () => <Story user={user} />)
   .add("partial access", () => (

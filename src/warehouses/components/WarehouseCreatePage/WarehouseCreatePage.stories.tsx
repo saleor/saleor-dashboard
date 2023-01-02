@@ -20,7 +20,7 @@ const props: WarehouseCreatePageProps = {
   onSubmit: () => undefined,
   saveButtonBarState: "default",
 };
-storiesOf("Views / Warehouses / Create warehouse", module)
+storiesOf(" Warehouses / Create warehouse", module)
   .addDecorator(Decorator)
   .add("default", () => <WarehouseCreatePage {...props} />)
   .add("loading", () => <WarehouseCreatePage {...props} disabled={true} />)

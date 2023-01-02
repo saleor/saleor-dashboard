@@ -34,7 +34,7 @@ const props: ProductExportDialogProps = {
   warehouses: warehouseList,
 };
 
-storiesOf("Views / Products / Export / Export settings", module)
+storiesOf(" Products / Export / Export settings", module)
   .addDecorator(Decorator)
   .add("interactive", () => <ProductExportDialog {...props} />)
   .add("no products selected", () => (

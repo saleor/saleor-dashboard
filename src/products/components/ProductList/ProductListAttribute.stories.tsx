@@ -84,7 +84,7 @@ const attributes: ProductListAttributeFragment[] = [
   },
 ];
 
-storiesOf("Views / Products / Product list / Attribute display", module)
+storiesOf(" Products / Product list / Attribute display", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => (

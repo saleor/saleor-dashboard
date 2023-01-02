@@ -10,7 +10,7 @@ import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
 
-storiesOf("Views / Products / Create product variant", module)
+storiesOf(" Products / Create product variant", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductVariantCreatePage

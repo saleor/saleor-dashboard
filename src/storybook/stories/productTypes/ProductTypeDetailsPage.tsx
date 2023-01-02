@@ -33,7 +33,7 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   selectedVariantAttributes: [],
 };
 
-storiesOf("Views / Product types / Product type details", module)
+storiesOf(" Product types / Product type details", module)
   .addDecorator(Decorator)
   .add("default", () => <ProductTypeDetailsPage {...props} />)
   .add("loading", () => (

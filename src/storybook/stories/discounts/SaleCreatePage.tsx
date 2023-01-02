@@ -23,7 +23,7 @@ const props: SaleCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Discounts / Sale create", module)
+storiesOf(" Discounts / Sale create", module)
   .addDecorator(Decorator)
   .add("default", () => <SaleCreatePage {...props} />)
   .add("loading", () => <SaleCreatePage {...props} disabled={true} />)

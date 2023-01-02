@@ -35,7 +35,7 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   ...listActionsProps,
 };
 
-storiesOf("Views / Categories / Update category", module)
+storiesOf(" Categories / Update category", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CategoryUpdatePage {...updateProps} />)

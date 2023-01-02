@@ -12,7 +12,7 @@ import Decorator from "../../Decorator";
 const variant = variantFixture(placeholderImage);
 const channels = createVariantChannels(variant);
 
-storiesOf("Views / Products / Product variant details", module)
+storiesOf(" Products / Product variant details", module)
   .addDecorator(Decorator)
   .add("when loaded data", () => (
     <ProductVariantPage

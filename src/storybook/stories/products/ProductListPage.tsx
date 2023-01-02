@@ -56,7 +56,7 @@ const props: ProductListPageProps = {
   },
 };
 
-storiesOf("Views / Products / Product list", module)
+storiesOf(" Products / Product list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ProductListPage {...props} />)

@@ -32,7 +32,7 @@ const props: PageListPageProps = {
   },
 };
 
-storiesOf("Views / Pages / Page list", module)
+storiesOf(" Pages / Page list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PageListPage {...props} />)

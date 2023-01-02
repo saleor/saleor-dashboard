@@ -19,7 +19,7 @@ const props: Omit<CustomerCreatePageProps, "classes"> = {
   saveButtonBar: "default",
 };
 
-storiesOf("Views / Customers / Create customer", module)
+storiesOf(" Customers / Create customer", module)
   .addDecorator(Decorator)
   .add("default", () => <CustomerCreatePage {...props} />)
   .add("loading", () => <CustomerCreatePage {...props} disabled={true} />)

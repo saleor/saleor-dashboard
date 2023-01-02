@@ -24,6 +24,6 @@ const props: ProductTypePickerDialogProps = {
   open: true,
 };
 
-storiesOf("Views / Products / Product type dialog", module)
+storiesOf(" Products / Product type dialog", module)
   .addDecorator(Decorator)
   .add("default", () => <ProductTypePickerDialog {...props} />);

@@ -29,7 +29,7 @@ const props: Omit<ErrorPageProps, "classes"> = {
   onRefresh: () => undefined,
 };
 
-storiesOf("Views / Error page", module)
+storiesOf(" Error page", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <AppStateContext.Provider value={initialAppStateFixture}>

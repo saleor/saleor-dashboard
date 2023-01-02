@@ -13,7 +13,7 @@ const props: AppDetailsPageProps = {
   onAppDeactivateOpen: () => undefined,
 };
 
-storiesOf("Views / Apps / App details", module)
+storiesOf(" Apps / App details", module)
   .addDecorator(Decorator)
   .add("default", () => <AppDetailsPage {...props} />)
   .add("loading", () => <AppDetailsPage {...props} loading={true} />);

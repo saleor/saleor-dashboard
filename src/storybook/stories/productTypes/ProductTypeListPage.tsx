@@ -42,7 +42,7 @@ const props: ProductTypeListPageProps = {
   productTypes,
 };
 
-storiesOf("Views / Product types / Product types list", module)
+storiesOf(" Product types / Product types list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ProductTypeListPage {...props} />)

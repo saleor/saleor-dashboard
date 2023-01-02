@@ -51,7 +51,7 @@ const props: PluginsListPageProps = {
   },
 };
 
-storiesOf("Views / Plugins / Plugin list", module)
+storiesOf(" Plugins / Plugin list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PluginsListPage {...props} />)

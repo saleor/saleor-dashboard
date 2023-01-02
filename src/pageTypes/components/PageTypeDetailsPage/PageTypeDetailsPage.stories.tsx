@@ -21,7 +21,7 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Page types / Page type details", module)
+storiesOf(" Page types / Page type details", module)
   .addDecorator(Decorator)
   .add("default", () => <PageTypeDetailsPage {...props} />)
   .add("loading", () => (

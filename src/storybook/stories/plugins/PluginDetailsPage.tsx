@@ -20,7 +20,7 @@ const props: PluginsDetailsPageProps = {
   setSelectedChannelId: () => undefined,
 };
 
-storiesOf("Views / Plugins / Plugin details", module)
+storiesOf(" Plugins / Plugin details", module)
   .addDecorator(Decorator)
   .add("default", () => <PluginsDetailsPage {...props} />)
   .add("loading", () => (

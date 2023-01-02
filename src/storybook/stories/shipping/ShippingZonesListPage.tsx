@@ -24,7 +24,7 @@ const props: ShippingZonesListPageProps = {
   userPermissions: adminUserPermissions,
 };
 
-storiesOf("Views / Shipping / Shipping zones list", module)
+storiesOf(" Shipping / Shipping zones list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <ShippingZonesListPage {...props} />)

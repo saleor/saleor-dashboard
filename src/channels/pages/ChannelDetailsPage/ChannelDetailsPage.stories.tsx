@@ -69,7 +69,7 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   },
 };
 
-storiesOf("Views / Channels / Channel details", module)
+storiesOf(" Channels / Channel details", module)
   .addDecorator(Decorator)
   .add("default", () => <ChannelDetailsPage {...props} />)
   .add("disabled", () => <ChannelDetailsPage {...props} disabled={true} />)

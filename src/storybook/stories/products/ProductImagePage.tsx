@@ -16,7 +16,7 @@ const media = (Array(8) as any)
   .fill({ id: "img", url: placeholder, oembedData: "{}" })
   .map((image, imageIndex) => ({ ...image, id: image.id + imageIndex }));
 
-storiesOf("Views / Products / Product image details", module)
+storiesOf(" Products / Product image details", module)
   .addDecorator(Decorator)
   .add("when loaded data", () => (
     <ProductMediaPage

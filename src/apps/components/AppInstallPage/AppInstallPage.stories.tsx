@@ -12,7 +12,7 @@ const props: AppInstallPageProps = {
   onSubmit: () => Promise.resolve([]),
 };
 
-storiesOf("Views / Apps / Install App", module)
+storiesOf(" Apps / Install App", module)
   .addDecorator(Decorator)
   .add("default", () => <AppInstallPage {...props} />)
   .add("loading", () => <AppInstallPage {...props} loading={true} />);

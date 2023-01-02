@@ -31,7 +31,7 @@ const props: WarehouseListPageProps = {
   warehouses: warehouseList,
 };
 
-storiesOf("Views / Warehouses / Warehouse list", module)
+storiesOf(" Warehouses / Warehouse list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <WarehouseListPage {...props} />)

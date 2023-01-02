@@ -27,7 +27,7 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   staffMember: { ...staffMember, permissionGroups: userPermissionGroups },
 };
 
-storiesOf("Views / Staff / Staff member details", module)
+storiesOf(" Staff / Staff member details", module)
   .addDecorator(Decorator)
   .add("default", () => <StaffDetailsPage {...props} />)
   .add("loading", () => (

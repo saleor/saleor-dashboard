@@ -45,7 +45,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Orders / Order details", module)
+storiesOf(" Orders / Order details", module)
   .addDecorator(Decorator)
   .add("default", () => <OrderDetailsPage {...props} />)
   .add("loading", () => <OrderDetailsPage {...props} order={undefined} />)

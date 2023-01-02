@@ -67,7 +67,7 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-storiesOf("Views / Products / Product edit", module)
+storiesOf(" Products / Product edit", module)
   .addDecorator(Decorator)
   .add("when data is fully loaded", () => <ProductUpdatePage {...props} />)
   .add("when product has no images", () => (

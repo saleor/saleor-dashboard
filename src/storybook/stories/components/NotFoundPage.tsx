@@ -4,6 +4,6 @@ import React from "react";
 
 import Decorator from "../../Decorator";
 
-storiesOf("Views / Not found error page", module)
+storiesOf(" Not found error page", module)
   .addDecorator(Decorator)
   .add("default", () => <NotFoundPage onBack={() => undefined} />);

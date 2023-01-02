@@ -31,7 +31,7 @@ const props: ShippingZoneDetailsPageProps = {
   warehouses: warehouseList,
 };
 
-storiesOf("Views / Shipping / Shipping zone details", module)
+storiesOf(" Shipping / Shipping zone details", module)
   .addDecorator(Decorator)
   .add("default", () => <ShippingZoneDetailsPage {...props} />)
   .add("loading", () => (

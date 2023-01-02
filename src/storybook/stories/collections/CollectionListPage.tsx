@@ -34,7 +34,7 @@ const props: CollectionListPageProps = {
   filterOpts: collectionListFilterOpts,
 };
 
-storiesOf("Views / Collections / Collection list", module)
+storiesOf(" Collections / Collection list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <CollectionListPage {...props} />)
