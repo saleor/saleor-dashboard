@@ -8,6 +8,6 @@ export const ADDRESS_SELECTORS = {
   city: '[name="city"]',
   postalCode: '[name="postalCode"]',
   country: '[data-test-id="address-edit-country-select-field"]',
-  countryArea: '[name="countryArea"]',
-  saveButton: '[data-test-id="order-address-edit-dialog-confirm-button"]'
+  countryArea: '[data-test-id="address-edit-country-area-field"]',
+  saveButton: '[data-test-id="order-address-edit-dialog-confirm-button"]',
 };
