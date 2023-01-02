@@ -79,7 +79,6 @@ export interface OrderDetailsPageProps {
   onProductClick?(id: string);
   onPaymentCapture();
   onPaymentPaid();
-  onPaymentRefund();
   onPaymentVoid();
   onShippingAddressEdit();
   onOrderCancel();
@@ -110,7 +109,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderFulfill,
     onPaymentCapture,
     onPaymentPaid,
-    onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
@@ -278,7 +276,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       onTrackingCodeAdd={() =>
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
-                      onRefund={onPaymentRefund}
                       onOrderFulfillmentApprove={() =>
                         onFulfillmentApprove(fulfillment.id)
                       }
@@ -287,11 +284,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ))}
                 <div className={classes.cardGrid}>
                   <OrderSummaryCard order={order} />
-                  <OrderPayment
-                    order={order}
-                    onRefund={onPaymentRefund}
-                    onMarkAsPaid={onPaymentPaid}
-                  />
+                  <OrderPayment order={order} onMarkAsPaid={onPaymentPaid} />
                 </div>
                 <CardSpacer />
                 {order?.grantedRefunds?.length !== 0 ? (

@@ -1,10 +1,8 @@
 import {
-  OrderDetailsFragment,
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput,
 } from "@saleor/graphql";
-import { OrderRefundAmountCalculationMode } from "@saleor/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
   OrderReturnFormData,
@@ -12,11 +10,9 @@ import {
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 class ReturnFormDataParser {
-  private order: OrderDetailsFragment;
   private formData: OrderReturnFormData;
 
-  constructor(order: OrderDetailsFragment, formData: OrderReturnFormData) {
-    this.order = order;
+  constructor(formData: OrderReturnFormData) {
     this.formData = formData;
   }
 
@@ -42,19 +38,13 @@ class ReturnFormDataParser {
     );
 
     return {
-      amountToRefund: this.getAmountToRefund(),
       fulfillmentLines: fulfillmentLines.concat(waitingLines),
-      includeShippingCosts: refundShipmentCosts,
       orderLines,
-      refund: this.getShouldRefund(orderLines, fulfillmentLines),
+      amountToRefund: 0,
+      includeShippingCosts: refundShipmentCosts, // tood: remove once removed in API
+      refund: false, // todo: remove once removed in API
     };
   };
-
-  private getAmountToRefund = (): number | undefined =>
-    this.formData.amountCalculationMode ===
-    OrderRefundAmountCalculationMode.MANUAL
-      ? this.formData.amount
-      : undefined;
 
   private getParsedLineData = <
     T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
@@ -76,35 +66,6 @@ class ReturnFormDataParser {
         ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T,
       ];
     }, []);
-  };
-
-  private getShouldRefund = (
-    orderLines: OrderReturnLineInput[],
-    fulfillmentLines: OrderReturnFulfillmentLineInput[],
-  ) => {
-    if (
-      !this.order.totalCaptured?.amount ||
-      this.formData.amountCalculationMode ===
-        OrderRefundAmountCalculationMode.NONE
-    ) {
-      return false;
-    }
-
-    if (!!this.getAmountToRefund()) {
-      return true;
-    }
-
-    return (
-      orderLines.some(ReturnFormDataParser.isLineRefundable) ||
-      fulfillmentLines.some(ReturnFormDataParser.isLineRefundable)
-    );
-  };
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  private static isLineRefundable = function<
-    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
-  >({ replace }: T) {
-    return !replace;
   };
 }
 

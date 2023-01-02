@@ -17,81 +17,22 @@ import {
   OrderLineFragment,
 } from "@saleor/graphql";
 import { FormsetChange } from "@saleor/hooks/useFormset";
-import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
+import { ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import React, { CSSProperties } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import OrderCardTitle from "@saleor/orders/components/OrderCardTitle";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderCardTitle from "../../OrderCardTitle";
-import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { FormsetQuantityData, FormsetReplacementData } from "../../form";
 import {
   getById,
   getQuantityDataFromItems,
   getReplacementDataFromItems,
-} from "../utils";
-import MaximalButton from "./MaximalButton";
-import ProductErrorCell from "./ProductErrorCell";
-
-const useStyles = makeStyles(
-  theme => {
-    const inputPadding: CSSProperties = {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-    };
-
-    return {
-      cartContent: {
-        paddingBottom: 0,
-        paddingTop: 0,
-      },
-
-      notice: {
-        marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2),
-      },
-
-      quantityField: {
-        minWidth: "80px",
-      },
-      quantityInnerInput: {
-        ...inputPadding,
-      },
-      quantityInnerInputNoRemaining: {
-        paddingRight: 0,
-      },
-      remainingQuantity: {
-        ...inputPadding,
-        color: theme.palette.text.secondary,
-        whiteSpace: "nowrap",
-      },
-      setMaximalQuantityButton: {
-        marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2),
-        padding: 0,
-      },
-    };
-  },
-  { name: "ItemsCard" },
-);
-
-const messages = defineMessages({
-  improperValue: {
-    id: "xoyCZ/",
-    defaultMessage: "Improper value",
-    description: "error message",
-  },
-
-  titleFulfilled: {
-    id: "NxRsHQ",
-    defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header",
-  },
-  titleUnfulfilled: {
-    id: "BkFke9",
-    defaultMessage: "Unfulfilled Items",
-    description: "section header",
-  },
-});
+} from "../../utils";
+import { MaximalButton } from "../MaximalButton";
+import { ProductErrorCell } from "../ProductErrorCell";
+import { itemsCardMessages } from "./messages";
+import { useItemCardStyles } from "./styles";
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
@@ -106,7 +47,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity();
 }
 
-const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
+export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   lines,
   onSetMaxQuantity,
   onChangeQuantity,
@@ -116,7 +57,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   fulfilmentId,
   order,
 }) => {
-  const classes = useStyles({});
+  const classes = useItemCardStyles({});
   const intl = useIntl();
 
   const handleChangeQuantity = (id: string) => (
@@ -246,7 +187,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                         error={isValueError}
                         helperText={
                           isValueError &&
-                          intl.formatMessage(messages.improperValue)
+                          intl.formatMessage(itemsCardMessages.improperValue)
                         }
                       />
                     )}
@@ -275,5 +216,3 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
     </Card>
   );
 };
-
-export default ItemsCard;

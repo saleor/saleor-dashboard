@@ -22,7 +22,6 @@ interface OrderFulfilledProductsCardProps {
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
-  onRefund: () => void;
 }
 
 const statusesToMergeLines = [
@@ -44,7 +43,6 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
-    onRefund,
   } = props;
   const classes = useStyles(props);
 
@@ -93,12 +91,12 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           <ExtraInfoLines fulfillment={fulfillment} />
         </ResponsiveTable>
         <ActionButtons
+          orderId={order?.id}
           status={fulfillment?.status}
           trackingNumber={fulfillment?.trackingNumber}
           orderIsPaid={order?.isPaid}
           fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
           onTrackingCodeAdd={onTrackingCodeAdd}
-          onRefund={onRefund}
           onApprove={onOrderFulfillmentApprove}
         />
       </Card>

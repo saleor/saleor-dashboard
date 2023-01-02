@@ -11,28 +11,10 @@ import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { messages } from "./messages";
 import ReturnFormDataParser from "./utils";
-
-export const messages = defineMessages({
-  cannotRefundDescription: {
-    id: "XQBVEJ",
-    defaultMessage:
-      "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
-    description: "order return error description when cannot refund",
-  },
-  cannotRefundTitle: {
-    id: "l9Lwjh",
-    defaultMessage: "Couldn't refund products",
-    description: "order return error title when cannot refund",
-  },
-  successAlert: {
-    id: "/z9uo1",
-    defaultMessage: "Successfully returned products!",
-    description: "order returned success message",
-  },
-});
 
 interface OrderReturnProps {
   orderId: string;
@@ -43,7 +25,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
-  const { data, loading } = useOrderDetailsQuery({
+  const { data } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
@@ -95,7 +77,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       returnCreate({
         variables: {
           id: data.order.id,
-          input: new ReturnFormDataParser(data.order, formData).getParsedData(),
+          input: new ReturnFormDataParser(formData).getParsedData(),
         },
       }),
     );
@@ -105,8 +87,8 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     <OrderReturnPage
       errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
-      loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
+      submitStatus={returnCreateOpts.status}
     />
   );
 };
