@@ -24,6 +24,11 @@ const useStyles = makeStyles(
       paddingLeft: 0,
       paddingRight: 0,
     },
+    row: {
+      "&&:hover": {
+        backgroundColor: theme.palette.saleor.active[5],
+      },
+    },
     hover: {
       backgroundColor: theme.palette.saleor.active[5],
     },
@@ -74,6 +79,7 @@ export const EventItem: React.FC<EventItemProps> = ({
     <TableRow
       onMouseOver={() => onHover(event.pspReference)}
       className={clsx(
+        classes.row,
         event.pspReference === hoveredPspReference && classes.hover,
       )}
     >
