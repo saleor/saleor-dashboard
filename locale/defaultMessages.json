@@ -1981,6 +1981,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
   },
+  "DVgMit": {
+    "context": "transaction event type, transaction was chargeback by payment provider",
+    "string": "Chargeback"
+  },
   "DWs4ba": {
     "string": "No menus found"
   },
@@ -2002,6 +2006,10 @@
   "DzPVnj": {
     "context": "date time attribute type",
     "string": "Date Time"
+  },
+  "E1C9pp": {
+    "context": "transaction event type, authorization amount was changed",
+    "string": "Authorization amount adjusted"
   },
   "E22x4H": {
     "context": "no card defuned alert message",
@@ -6798,6 +6806,10 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
+  },
+  "of/+iV": {
+    "context": "transaction event type, refund was reversed, funds are back to store account",
+    "string": "Refund reversed"
   },
   "oiuwOl": {
     "context": "button",
