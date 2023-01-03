@@ -131,7 +131,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFormDataChange(e);
     onFormDataChange({
       target: {
