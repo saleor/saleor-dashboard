@@ -4,11 +4,9 @@ import React from "react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 
-import {
-  ExitFormDialogContext,
-  useExitFormDialogProvider,
-} from "./ExitFormDialogProvider";
+import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
+import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
 jest.mock("../../hooks/useNotifier", () => undefined);
 
