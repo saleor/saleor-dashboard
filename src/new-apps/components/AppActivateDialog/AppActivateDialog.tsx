@@ -4,7 +4,7 @@ import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import msgs from "./messages";
 
@@ -27,6 +27,15 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
 
   const missingName = name === null || name === "";
 
+  const getMainText = () => {
+    if (missingName) {
+      return intl.formatMessage(msgs.activateApp);
+    }
+    return intl.formatMessage(msgs.activateNamedApp, {
+      name: <strong>{getStringOrPlaceholder(name)}</strong>,
+    });
+  };
+
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.activate)}
@@ -38,16 +47,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       variant="default"
     >
       <DialogContentText data-test-id="dialog-content">
-        {missingName ? (
-          <FormattedMessage {...msgs.activateApp} />
-        ) : (
-          <FormattedMessage
-            {...msgs.activateNamedApp}
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
-            }}
-          />
-        )}
+        {getMainText()}
       </DialogContentText>
     </ActionDialog>
   );

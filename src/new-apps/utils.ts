@@ -2,7 +2,7 @@ import { getAppsConfig } from "@saleor/config";
 import { IntlShape } from "react-intl";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
-import { messages } from "./messages";
+import { appsMessages } from "./messages";
 import { AppLink } from "./types";
 
 const getInstallableMarketplaceApps = (
@@ -53,15 +53,15 @@ const prepareAppLinks = (
   app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
 ): AppLink[] => [
   {
-    name: intl.formatMessage(messages.repository),
+    name: intl.formatMessage(appsMessages.repository),
     url: app.repositoryUrl,
   },
   {
-    name: intl.formatMessage(messages.support),
+    name: intl.formatMessage(appsMessages.support),
     url: app.supportUrl,
   },
   {
-    name: intl.formatMessage(messages.dataPrivacy),
+    name: intl.formatMessage(appsMessages.dataPrivacy),
     url: app.privacyUrl,
   },
 ];

@@ -29,6 +29,15 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
 
   const missingName = name === null || name === "";
 
+  const getMainText = () => {
+    if (missingName) {
+      return intl.formatMessage(msgs.deactivateApp);
+    }
+    return intl.formatMessage(msgs.deactivateNamedApp, {
+      name: <strong>{getStringOrPlaceholder(name)}</strong>,
+    });
+  };
+
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.deactivate)}
@@ -40,16 +49,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
       variant="delete"
     >
       <DialogContentText data-test-id="dialog-content">
-        {missingName ? (
-          <FormattedMessage {...msgs.deactivateApp} />
-        ) : (
-          <FormattedMessage
-            {...msgs.deactivateNamedApp}
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
-            }}
-          />
-        )}
+        {getMainText()}
         {thirdParty && (
           <>
             {" "}

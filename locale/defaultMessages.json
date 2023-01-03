@@ -808,6 +808,10 @@
     "context": "order status",
     "string": "Returned"
   },
+  "4IgzXs": {
+    "context": "label",
+    "string": "App Manifest URL"
+  },
   "4JW9iJ": {
     "context": "home section name",
     "string": "Home"
@@ -2088,10 +2092,6 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
-  },
-  "EnAQ3D": {
-    "context": "label",
-    "string": "App manifest URL"
   },
   "Epm41J": {
     "context": "change warehouse dialog warehouse list label",

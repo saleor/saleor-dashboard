@@ -6,11 +6,6 @@ export const messages = defineMessages({
     defaultMessage: "Install external app",
     description: "button",
   },
-  appManifestUrl: {
-    id: "EnAQ3D",
-    defaultMessage: "App manifest URL",
-    description: "label",
-  },
   appManifestUrlHint: {
     id: "z2yYL3",
     defaultMessage: "Usually ends with /api/manifest",

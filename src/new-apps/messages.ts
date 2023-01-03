@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const messages = defineMessages({
+export const appsMessages = defineMessages({
   repository: {
     id: "f91E8b",
     defaultMessage: "Repository",
@@ -15,5 +15,10 @@ export const messages = defineMessages({
     id: "GKQGKG",
     defaultMessage: "Data privacy",
     description: "app data privacy",
+  },
+  appManifestUrl: {
+    id: "4IgzXs",
+    defaultMessage: "App Manifest URL",
+    description: "label",
   },
 });

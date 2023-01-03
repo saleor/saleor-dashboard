@@ -44,7 +44,7 @@ export const useAvatarImageStyles = makeStyles(
       background: "none",
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 2,
-      color: "#bdbdbd",
+      color: theme.palette.grey[500],
       display: "inline-flex",
       padding: theme.spacing(0.5),
     },

@@ -1,7 +1,9 @@
 import { Typography } from "@material-ui/core";
 import { CopyIcon, Tooltip } from "@saleor/macaw-ui";
+import { appsMessages } from "@saleor/new-apps/messages";
 import clsx from "clsx";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
@@ -15,10 +17,15 @@ export const AppManifestTableDisplay = ({
   manifestUrl,
 }: AppManifestTableDisplayProps) => {
   const styles = useStyles();
+  const intl = useIntl();
   const [copied, setCopied] = useState(false);
 
   return (
-    <Tooltip placement="top" title={manifestUrl} header="App Manifest URL">
+    <Tooltip
+      placement="top"
+      title={manifestUrl}
+      header={intl.formatMessage(appsMessages.appManifestUrl)}
+    >
       <Typography
         onMouseOut={() => setCopied(false)}
         className={styles.manifestText}
