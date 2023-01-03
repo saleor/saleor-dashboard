@@ -48,9 +48,10 @@ import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { encodeGraphQLStatement } from "@dashboard/utils/graphql";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { getChoices } from "../../utils/data";
 import ProductDetailsForm from "../ProductDetailsForm";
@@ -65,6 +66,16 @@ import {
   ProductUpdateHandlers,
   ProductUpdateSubmitData,
 } from "./types";
+
+// FIXME should be moved elsewhere eventually
+const DefaultTestQuery = `query ProductDetails($id: ID!) {
+  product(id: $id) {
+    id
+    name
+    slug
+    description
+  }
+}`;
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -320,7 +331,31 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <Backlink href={productListUrl()}>
                 {intl.formatMessage(sectionNames.products)}
               </Backlink>
-              <PageHeader title={header}>
+              <PageHeader
+                title={header}
+                cardMenu={
+                  <>
+                    <Button
+                      onClick={() => {
+                        const playgroundURL = new URL(process.env.API_URI);
+                        playgroundURL.hash = encodeGraphQLStatement({
+                          query: DefaultTestQuery,
+                          headers: "",
+                          operationName: "",
+                          variables: `{ "id": "${product.id}" }`,
+                        });
+                        window.open(playgroundURL, "_blank").focus();
+                      }}
+                    >
+                      <FormattedMessage
+                        id="DaIlPd"
+                        defaultMessage="Open this product in GraphiQL"
+                        description="link"
+                      />
+                    </Button>
+                  </>
+                }
+              >
                 {extensionMenuItems.length > 0 && (
                   <CardMenu
                     menuItems={extensionMenuItems}

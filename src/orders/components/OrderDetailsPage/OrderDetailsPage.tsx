@@ -25,12 +25,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { encodeGraphQLStatement } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
 import OrderCustomer from "../OrderCustomer";
@@ -46,6 +47,22 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
+
+// FIXME should be moved elsewhere eventually
+const DefaultTestQuery = `query OrderDetails($id: ID!) { 
+  order(id: $id) { 
+    id
+    number
+    status
+    isShippingRequired
+    canFinalize
+    created
+    customerNote
+    paymentStatus
+    userEmail
+    isPaid
+  } 
+}`;
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment;
@@ -211,9 +228,29 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
               cardMenu={
-                <CardMenu
-                  menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
-                />
+                <>
+                  <Button
+                    onClick={() => {
+                      const playgroundURL = new URL(process.env.API_URI);
+                      playgroundURL.hash = encodeGraphQLStatement({
+                        query: DefaultTestQuery,
+                        headers: "",
+                        operationName: "",
+                        variables: `{ "id": "${order.id}" }`,
+                      });
+                      window.open(playgroundURL, "_blank").focus();
+                    }}
+                  >
+                    <FormattedMessage
+                      id="s8bQaF"
+                      defaultMessage="Open this order in GraphiQL"
+                      description="link"
+                    />
+                  </Button>
+                  <CardMenu
+                    menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+                  />
+                </>
               }
             />
             <div className={classes.date}>
