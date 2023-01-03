@@ -6,8 +6,8 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ProductVariantPage from "../../../products/components/ProductVariantPage";
-import { variant as variantFixture } from "../../../products/fixtures";
+import { variant as variantFixture } from "../../fixtures";
+import ProductVariantPage from "./ProductVariantPage";
 
 const variant = variantFixture(placeholderImage);
 const channels = createVariantChannels(variant);

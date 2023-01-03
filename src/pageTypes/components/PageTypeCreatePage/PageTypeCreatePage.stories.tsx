@@ -1,9 +1,11 @@
 import { PageErrorCode } from "@saleor/graphql";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../../storybook/Decorator";
-import PageTypeCreatePage, { PageTypeCreatePageProps } from ".";
+import PageTypeCreatePage, {
+  PageTypeCreatePageProps,
+} from "./PageTypeCreatePage";
 
 const props: Omit<PageTypeCreatePageProps, "classes"> = {
   disabled: false,

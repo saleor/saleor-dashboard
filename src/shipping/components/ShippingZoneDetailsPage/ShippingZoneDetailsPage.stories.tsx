@@ -5,10 +5,10 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { shippingZone } from "../../fixtures";
 import ShippingZoneDetailsPage, {
   ShippingZoneDetailsPageProps,
-} from "../../../shipping/components/ShippingZoneDetailsPage";
-import { shippingZone } from "../../../shipping/fixtures";
+} from "./ShippingZoneDetailsPage";
 
 const props: ShippingZoneDetailsPageProps = {
   ...fetchMoreProps,

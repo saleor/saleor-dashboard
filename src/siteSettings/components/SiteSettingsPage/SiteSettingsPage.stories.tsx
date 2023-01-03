@@ -1,12 +1,10 @@
 import { ShopErrorCode } from "@saleor/graphql";
+import { shop } from "@saleor/siteSettings/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import SiteSettingsPage, {
-  SiteSettingsPageProps,
-} from "../../../siteSettings/components/SiteSettingsPage";
-import { shop } from "../../../siteSettings/fixtures";
+import SiteSettingsPage, { SiteSettingsPageProps } from "./SiteSettingsPage";
 
 const props: Omit<SiteSettingsPageProps, "classes"> = {
   disabled: false,

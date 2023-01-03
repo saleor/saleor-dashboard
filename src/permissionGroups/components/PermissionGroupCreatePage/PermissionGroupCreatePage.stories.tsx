@@ -1,11 +1,12 @@
 import { permissions } from "@saleor/fixtures";
-import PermissionGroupCreatePage, {
-  PermissionGroupCreatePageProps,
-} from "@saleor/permissionGroups/components/PermissionGroupCreatePage";
-import { errorsOfPermissionGroupCreate } from "@saleor/permissionGroups/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { errorsOfPermissionGroupCreate } from "../../fixtures";
+import PermissionGroupCreatePage, {
+  PermissionGroupCreatePageProps,
+} from "./PermissionGroupCreatePage";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,

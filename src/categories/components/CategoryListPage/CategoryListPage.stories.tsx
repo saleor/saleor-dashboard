@@ -1,6 +1,3 @@
-import CategoryListPage, {
-  CategoryTableProps,
-} from "@saleor/categories/components/CategoryListPage";
 import { categories } from "@saleor/categories/fixtures";
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import {
@@ -14,6 +11,8 @@ import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import CategoryListPage, { CategoryTableProps } from "./CategoryListPage";
 
 const categoryTableProps: CategoryTableProps = {
   categories,

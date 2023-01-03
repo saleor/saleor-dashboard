@@ -1,5 +1,14 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { defaultListSettings } from "@saleor/config";
+import {
+  fetchMoreProps,
+  filterPageProps,
+  limits,
+  limitsReached,
+  listActionsProps,
+  pageListProps,
+  sortPageProps,
+} from "@saleor/fixtures";
 import { products as productListFixture } from "@saleor/products/fixtures";
 import { ProductListUrlSortField } from "@saleor/products/urls";
 import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
@@ -10,18 +19,7 @@ import { ListViews } from "@saleor/types";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import {
-  fetchMoreProps,
-  filterPageProps,
-  limits,
-  limitsReached,
-  listActionsProps,
-  pageListProps,
-  sortPageProps,
-} from "../../../fixtures";
-import ProductListPage, {
-  ProductListPageProps,
-} from "../../../products/components/ProductListPage";
+import ProductListPage, { ProductListPageProps } from "./ProductListPage";
 
 const products = productListFixture(placeholderImage);
 

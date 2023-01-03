@@ -7,7 +7,7 @@ import React from "react";
 
 import CollectionCreatePage, {
   CollectionCreatePageProps,
-} from "../../../collections/components/CollectionCreatePage";
+} from "./CollectionCreatePage";
 
 const channels = createCollectionChannels(channelsList);
 

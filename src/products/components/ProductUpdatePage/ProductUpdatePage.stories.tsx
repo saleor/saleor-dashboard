@@ -3,16 +3,15 @@ import { channelsList } from "@saleor/channels/fixtures";
 import { collections } from "@saleor/collections/fixtures";
 import { fetchMoreProps, limits, limitsReached } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
-import ProductUpdatePage, {
-  ProductUpdatePageProps,
-} from "@saleor/products/components/ProductUpdatePage";
-import { ProductUpdateFormData } from "@saleor/products/components/ProductUpdatePage/types";
-import { product as productFixture } from "@saleor/products/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { product as productFixture } from "../../fixtures";
+import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
+import { ProductUpdateFormData } from "./types";
 
 const product = productFixture(placeholderImage);
 

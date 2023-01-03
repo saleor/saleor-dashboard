@@ -1,13 +1,3 @@
-import { CustomerListUrlSortField } from "@saleor/customers/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
-import CustomerListPageComponent, {
-  CustomerListPageProps,
-} from "../../../customers/components/CustomerListPage";
-import { customerList } from "../../../customers/fixtures";
 import {
   filterPageProps,
   listActionsProps,
@@ -15,8 +5,18 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "../../../fixtures";
-import { MockedUserProvider } from "../../MockedUserProvider";
+} from "@saleor/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import { customerList } from "../../fixtures";
+import { CustomerListUrlSortField } from "../../urls";
+import CustomerListPageComponent, {
+  CustomerListPageProps,
+} from "./CustomerListPage";
 
 const props: CustomerListPageProps = {
   ...filterPageProps,

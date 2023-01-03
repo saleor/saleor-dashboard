@@ -1,18 +1,16 @@
+import {
+  listActionsProps,
+  pageListProps,
+  sortPageProps,
+} from "@saleor/fixtures";
+import { pageList } from "@saleor/pages/fixtures";
 import { PageListUrlSortField } from "@saleor/pages/urls";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import {
-  listActionsProps,
-  pageListProps,
-  sortPageProps,
-} from "../../../fixtures";
-import PageListPage, {
-  PageListPageProps,
-} from "../../../pages/components/PageListPage";
-import { pageList } from "../../../pages/fixtures";
+import PageListPage, { PageListPageProps } from "./PageListPage";
 
 const props: PageListPageProps = {
   ...listActionsProps,

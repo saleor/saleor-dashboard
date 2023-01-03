@@ -1,10 +1,3 @@
-import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
   filterPageProps,
   listActionsProps,
@@ -12,11 +5,18 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "../../../fixtures";
+} from "@saleor/fixtures";
+import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
+import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import { productTypes } from "../../fixtures";
 import ProductTypeListPage, {
   ProductTypeListPageProps,
-} from "../../../productTypes/components/ProductTypeListPage";
-import { productTypes } from "../../../productTypes/fixtures";
+} from "./ProductTypeListPage";
 
 const props: ProductTypeListPageProps = {
   ...listActionsProps,

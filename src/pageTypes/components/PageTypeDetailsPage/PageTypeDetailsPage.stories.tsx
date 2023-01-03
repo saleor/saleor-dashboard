@@ -1,11 +1,13 @@
 import { listActionsProps } from "@saleor/fixtures";
 import { PageErrorCode } from "@saleor/graphql";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../../storybook/Decorator";
 import { pageType } from "../../fixtures";
-import PageTypeDetailsPage, { PageTypeDetailsPageProps } from ".";
+import PageTypeDetailsPage, {
+  PageTypeDetailsPageProps,
+} from "./PageTypeDetailsPage";
 
 const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   attributeList: listActionsProps,

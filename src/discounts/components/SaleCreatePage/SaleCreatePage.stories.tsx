@@ -5,9 +5,7 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import SaleCreatePage, {
-  SaleCreatePageProps,
-} from "../../../discounts/components/SaleCreatePage";
+import SaleCreatePage, { SaleCreatePageProps } from "./SaleCreatePage";
 
 const channels = createSaleChannels(channelsList);
 

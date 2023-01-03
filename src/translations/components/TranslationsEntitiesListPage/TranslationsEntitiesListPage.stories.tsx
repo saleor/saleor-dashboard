@@ -1,14 +1,14 @@
+import { pageListProps, searchPageProps } from "@saleor/fixtures";
 import { LanguageCodeEnum } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { pageListProps, searchPageProps } from "../../../fixtures";
-import TranslationsEntitiesList from "../../../translations/components/TranslationsEntitiesList";
+import TranslationsEntitiesList from "../TranslationsEntitiesList";
 import TranslationsEntitiesListPage, {
   TranslationsEntitiesListPageProps,
-} from "../../../translations/components/TranslationsEntitiesListPage";
+} from "./TranslationsEntitiesListPage";
 
 const props: TranslationsEntitiesListPageProps = {
   ...pageListProps.default,

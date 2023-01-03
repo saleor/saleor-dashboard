@@ -5,7 +5,7 @@ import React from "react";
 
 import CategoryCreatePage, {
   CategoryCreatePageProps,
-} from "../../../categories/components/CategoryCreatePage";
+} from "./CategoryCreatePage";
 
 const createProps: CategoryCreatePageProps = {
   backUrl: "",

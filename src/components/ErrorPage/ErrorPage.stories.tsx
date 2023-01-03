@@ -1,4 +1,3 @@
-import ErrorPage, { ErrorPageProps } from "@saleor/components/ErrorPage";
 import {
   AppStateContext,
   AppStateContextType,
@@ -7,6 +6,8 @@ import { initialAppState } from "@saleor/containers/AppState/state";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import ErrorPage, { ErrorPageProps } from "./ErrorPage";
 
 const initialAppStateFixture: AppStateContextType = [
   initialAppState,

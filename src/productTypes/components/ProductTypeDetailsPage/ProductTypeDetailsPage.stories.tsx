@@ -6,11 +6,11 @@ import { taxClasses } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { productType } from "../../fixtures";
 import ProductTypeDetailsPage, {
   ProductTypeDetailsPageProps,
   ProductTypeForm,
-} from "../../../productTypes/components/ProductTypeDetailsPage";
-import { productType } from "../../../productTypes/fixtures";
+} from "./ProductTypeDetailsPage";
 
 const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   defaultWeightUnit: "kg" as WeightUnitsEnum,

@@ -4,7 +4,7 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ProductMediaPage from "../../../products/components/ProductMediaPage";
+import ProductMediaPage from "./ProductMediaPage";
 
 const mediaObj = {
   alt: "Lorem ipsum",

@@ -2,20 +2,16 @@ import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsData } from "@saleor/channels/utils";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
+import { productTypes, productTypeSearch } from "@saleor/productTypes/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { taxClasses } from "@saleor/taxes/fixtures";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ProductCreatePage, {
-  ProductCreateFormData,
-} from "../../../products/components/ProductCreatePage";
-import { product as productFixture } from "../../../products/fixtures";
-import {
-  productTypes,
-  productTypeSearch,
-} from "../../../productTypes/fixtures";
+import { product as productFixture } from "../../fixtures";
+import { ProductCreateFormData } from "./form";
+import ProductCreatePage from "./ProductCreatePage";
 
 const product = productFixture("");
 const channels = createChannelsData(channelsList);

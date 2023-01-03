@@ -1,13 +1,13 @@
 import { AccountErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
+import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { customer } from "../../fixtures";
 import CustomerDetailsPageComponent, {
   CustomerDetailsPageProps,
-} from "../../../customers/components/CustomerDetailsPage";
-import { customer } from "../../../customers/fixtures";
-import { MockedUserProvider } from "../../MockedUserProvider";
+} from "./CustomerDetailsPage";
 
 const props: Omit<CustomerDetailsPageProps, "classes"> = {
   customerId: "123",

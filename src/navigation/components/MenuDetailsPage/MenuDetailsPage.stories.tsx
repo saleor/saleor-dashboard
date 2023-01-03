@@ -1,12 +1,10 @@
 import { MenuErrorCode } from "@saleor/graphql";
+import { menu } from "@saleor/navigation/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import MenuDetailsPage, {
-  MenuDetailsPageProps,
-} from "../../../navigation/components/MenuDetailsPage";
-import { menu } from "../../../navigation/fixtures";
+import MenuDetailsPage, { MenuDetailsPageProps } from "./MenuDetailsPage";
 
 const props: MenuDetailsPageProps = {
   disabled: false,

@@ -8,7 +8,7 @@ import React from "react";
 import VoucherCreatePage, {
   FormData,
   VoucherCreatePageProps,
-} from "../../../discounts/components/VoucherCreatePage";
+} from "./VoucherCreatePage";
 
 const channels = createVoucherChannels(channelsList);
 

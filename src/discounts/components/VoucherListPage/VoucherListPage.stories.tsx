@@ -1,14 +1,5 @@
+import { voucherList } from "@saleor/discounts/fixtures";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
-import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
-import VoucherListPage, {
-  VoucherListPageProps,
-} from "../../../discounts/components/VoucherListPage";
-import { voucherList } from "../../../discounts/fixtures";
 import {
   filterPageProps,
   listActionsProps,
@@ -16,7 +7,14 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "../../../fixtures";
+} from "@saleor/fixtures";
+import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
+import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import VoucherListPage, { VoucherListPageProps } from "./VoucherListPage";
 
 const props: VoucherListPageProps = {
   ...listActionsProps,

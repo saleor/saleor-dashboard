@@ -3,7 +3,6 @@ import { adminUserPermissions } from "@saleor/fixtures";
 import { UserFragment } from "@saleor/graphql";
 import * as React from "react";
 
-// TODO: move this to @saleor/storybook as new decorator
 export const MockedUserProvider: React.FC<{
   customPermissions?: UserFragment["userPermissions"];
 }> = ({ customPermissions, children }) => (

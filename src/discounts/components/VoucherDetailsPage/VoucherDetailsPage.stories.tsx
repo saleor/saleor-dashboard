@@ -1,18 +1,18 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createChannelsDataWithDiscountPrice } from "@saleor/channels/utils";
+import { listActionsProps, pageListProps } from "@saleor/fixtures";
 import { DiscountErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { voucherDetails } from "../../fixtures";
 import VoucherDetailsPage, {
   VoucherDetailsPageFormData,
   VoucherDetailsPageProps,
   VoucherDetailsPageTab,
-} from "../../../discounts/components/VoucherDetailsPage";
-import { voucherDetails } from "../../../discounts/fixtures";
-import { listActionsProps, pageListProps } from "../../../fixtures";
+} from "./VoucherDetailsPage";
 
 const channels = createChannelsDataWithDiscountPrice(
   voucherDetails,

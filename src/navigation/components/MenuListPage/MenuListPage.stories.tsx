@@ -1,18 +1,16 @@
+import {
+  listActionsProps,
+  pageListProps,
+  sortPageProps,
+} from "@saleor/fixtures";
+import { menuList } from "@saleor/navigation/fixtures";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import {
-  listActionsProps,
-  pageListProps,
-  sortPageProps,
-} from "../../../fixtures";
-import MenuListPage, {
-  MenuListPageProps,
-} from "../../../navigation/components/MenuListPage";
-import { menuList } from "../../../navigation/fixtures";
+import MenuListPage, { MenuListPageProps } from "./MenuListPage";
 
 const props: MenuListPageProps = {
   ...pageListProps.default,

@@ -2,11 +2,11 @@ import {
   orderSettings as orderSettingsFixture,
   shopOrderSettings as shopOrderSettingsFixture,
 } from "@saleor/orders/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../../storybook/Decorator";
-import OrderSettings, { OrderSettingsPageProps } from ".";
+import OrderSettings, { OrderSettingsPageProps } from "./OrderSettingsPage";
 
 const props: OrderSettingsPageProps = {
   orderSettings: orderSettingsFixture,

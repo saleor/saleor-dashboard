@@ -8,7 +8,7 @@ import React from "react";
 import ProductTypeCreatePage, {
   ProductTypeCreatePageProps,
   ProductTypeForm,
-} from "../../../productTypes/components/ProductTypeCreatePage";
+} from "./ProductTypeCreatePage";
 
 const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   defaultWeightUnit: "kg" as WeightUnitsEnum,

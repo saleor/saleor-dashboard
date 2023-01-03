@@ -1,19 +1,17 @@
+import {
+  filterPageProps,
+  pageListProps,
+  sortPageProps,
+} from "@saleor/fixtures";
 import { PluginConfigurationType } from "@saleor/graphql";
+import { pluginList } from "@saleor/plugins/fixtures";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import {
-  filterPageProps,
-  pageListProps,
-  sortPageProps,
-} from "../../../fixtures";
-import PluginsListPage, {
-  PluginsListPageProps,
-} from "../../../plugins/components/PluginsListPage";
-import { pluginList } from "../../../plugins/fixtures";
+import PluginsListPage, { PluginsListPageProps } from "./PluginsListPage";
 
 const props: PluginsListPageProps = {
   ...pageListProps.default,

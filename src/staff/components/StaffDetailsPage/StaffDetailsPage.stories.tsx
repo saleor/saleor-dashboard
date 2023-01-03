@@ -1,11 +1,10 @@
 import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
-import StaffDetailsPage, {
-  StaffDetailsPageProps,
-} from "@saleor/staff/components/StaffDetailsPage";
 import { staffMember } from "@saleor/staff/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import StaffDetailsPage, { StaffDetailsPageProps } from "./StaffDetailsPage";
 
 const props: Omit<StaffDetailsPageProps, "classes"> = {
   availablePermissionGroups: [],

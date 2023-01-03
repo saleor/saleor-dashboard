@@ -1,14 +1,3 @@
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
-import OrderListPage, {
-  OrderFilterGiftCard,
-  OrderListPageProps,
-} from "@saleor/orders/components/OrderListPage";
-import { OrderListUrlSortField } from "@saleor/orders/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
   filterPageProps,
   limits,
@@ -16,8 +5,17 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-} from "../../../fixtures";
-import { orders } from "../../../orders/fixtures";
+} from "@saleor/fixtures";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
+import { orders } from "@saleor/orders/fixtures";
+import { OrderListUrlSortField } from "@saleor/orders/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import { OrderFilterGiftCard } from "./filters";
+import OrderListPage, { OrderListPageProps } from "./OrderListPage";
 
 const props: OrderListPageProps = {
   ...listActionsProps,

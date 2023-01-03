@@ -6,7 +6,7 @@ import React from "react";
 
 import ShippingZoneCreatePage, {
   ShippingZoneCreatePageProps,
-} from "../../../shipping/components/ShippingZoneCreatePage";
+} from "./ShippingZoneCreatePage";
 
 const countries = [
   {

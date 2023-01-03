@@ -1,6 +1,8 @@
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { createCollectionChannelsData } from "@saleor/channels/utils";
+import { collection as collectionFixture } from "@saleor/collections/fixtures";
+import { listActionsProps, pageListProps } from "@saleor/fixtures";
 import { CollectionErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
@@ -9,9 +11,7 @@ import React from "react";
 
 import CollectionDetailsPage, {
   CollectionDetailsPageProps,
-} from "../../../collections/components/CollectionDetailsPage";
-import { collection as collectionFixture } from "../../../collections/fixtures";
-import { listActionsProps, pageListProps } from "../../../fixtures";
+} from "./CollectionDetailsPage";
 
 const collection = collectionFixture(
   placeholderCollectionImage,

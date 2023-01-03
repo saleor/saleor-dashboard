@@ -5,8 +5,8 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import ProductVariantCreatePage from "../../../products/components/ProductVariantCreatePage";
-import { product as productFixture } from "../../../products/fixtures";
+import { product as productFixture } from "../../fixtures";
+import ProductVariantCreatePage from "./ProductVariantCreatePage";
 
 const product = productFixture(placeholderImage);
 

@@ -1,4 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
+import { category as categoryFixture } from "@saleor/categories/fixtures";
+import { listActionsProps } from "@saleor/fixtures";
 import { ProductErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
@@ -9,9 +11,7 @@ import React from "react";
 import CategoryUpdatePage, {
   CategoryPageTab,
   CategoryUpdatePageProps,
-} from "../../../categories/components/CategoryUpdatePage";
-import { category as categoryFixture } from "../../../categories/fixtures";
-import { listActionsProps } from "../../../fixtures";
+} from "./CategoryUpdatePage";
 
 const category = categoryFixture(placeholderImage);
 

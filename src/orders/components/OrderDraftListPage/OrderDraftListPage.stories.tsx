@@ -1,9 +1,3 @@
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
   filterPageProps,
   limits,
@@ -13,11 +7,17 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "../../../fixtures";
+} from "@saleor/fixtures";
+import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import Decorator from "@saleor/storybook/Decorator";
+import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import { orders } from "../../fixtures";
 import OrderDraftListPage, {
   OrderDraftListPageProps,
-} from "../../../orders/components/OrderDraftListPage";
-import { orders } from "../../../orders/fixtures";
+} from "./OrderDraftListPage";
 
 const props: OrderDraftListPageProps = {
   ...listActionsProps,

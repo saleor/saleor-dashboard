@@ -1,14 +1,12 @@
 import { fetchMoreProps } from "@saleor/fixtures";
 import { PageErrorCode } from "@saleor/graphql";
 import { PageData } from "@saleor/pages/components/PageDetailsPage/form";
+import { page } from "@saleor/pages/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import PageDetailsPage, {
-  PageDetailsPageProps,
-} from "../../../pages/components/PageDetailsPage";
-import { page } from "../../../pages/fixtures";
+import PageDetailsPage, { PageDetailsPageProps } from "./PageDetailsPage";
 
 const props: PageDetailsPageProps = {
   errors: [],

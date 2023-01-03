@@ -3,11 +3,11 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { plugin } from "../../fixtures";
 import PluginsDetailsPage, {
   PluginDetailsPageFormData,
   PluginsDetailsPageProps,
-} from "../../../plugins/components/PluginsDetailsPage";
-import { plugin } from "../../../plugins/fixtures";
+} from "./PluginsDetailsPage";
 
 const props: PluginsDetailsPageProps = {
   disabled: false,

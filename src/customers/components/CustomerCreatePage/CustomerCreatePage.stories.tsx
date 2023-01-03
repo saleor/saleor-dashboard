@@ -6,7 +6,7 @@ import React from "react";
 import CustomerCreatePage, {
   CustomerCreatePageFormData,
   CustomerCreatePageProps,
-} from "../../../customers/components/CustomerCreatePage";
+} from "./CustomerCreatePage";
 
 const props: Omit<CustomerCreatePageProps, "classes"> = {
   countries: [

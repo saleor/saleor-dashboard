@@ -1,19 +1,17 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { fetchMoreProps } from "@saleor/fixtures";
 import { OrderErrorCode, OrderErrorFragment } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
-import { MockedUserProvider } from "../../../customers/MockedUserProvider";
-import OrderDraftPageComponent, {
-  OrderDraftPageProps,
-} from "../../../orders/components/OrderDraftPage";
 import {
   channelUsabilityData,
   clients,
   draftOrder,
-} from "../../../orders/fixtures";
+} from "@saleor/orders/fixtures";
+import Decorator from "@saleor/storybook/Decorator";
+import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import OrderDraftPageComponent, { OrderDraftPageProps } from "./OrderDraftPage";
 import { getDiscountsProvidersWrapper } from "./storybook.utils";
 
 const finalizeErrors: OrderErrorFragment[] = [

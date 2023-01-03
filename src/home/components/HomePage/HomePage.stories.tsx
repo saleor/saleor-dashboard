@@ -1,16 +1,14 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/graphql";
+import { shop as shopFixture } from "@saleor/home/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
+import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { MockedUserProvider } from "../../../customers/MockedUserProvider";
-import HomePageComponent, {
-  HomePageProps,
-} from "../../../home/components/HomePage";
-import { shop as shopFixture } from "../../../home/fixtures";
+import HomePageComponent, { HomePageProps } from "./HomePage";
 
 const shop = shopFixture(placeholderImage);
 

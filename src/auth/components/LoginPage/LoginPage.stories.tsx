@@ -3,7 +3,7 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import LoginPage, { LoginCardProps } from "../../../auth/components/LoginPage";
+import LoginPage, { LoginCardProps } from "./LoginPage";
 
 const props: Omit<LoginCardProps, "classes"> = {
   disabled: false,

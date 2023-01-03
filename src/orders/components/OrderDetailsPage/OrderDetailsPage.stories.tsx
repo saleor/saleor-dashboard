@@ -4,17 +4,15 @@ import {
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@saleor/graphql";
+import {
+  order as orderFixture,
+  shop as shopFixture,
+} from "@saleor/orders/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import OrderDetailsPage, {
-  OrderDetailsPageProps,
-} from "../../../orders/components/OrderDetailsPage";
-import {
-  order as orderFixture,
-  shop as shopFixture,
-} from "../../../orders/fixtures";
+import OrderDetailsPage, { OrderDetailsPageProps } from "./OrderDetailsPage";
 
 const order = orderFixture(placeholderImage);
 

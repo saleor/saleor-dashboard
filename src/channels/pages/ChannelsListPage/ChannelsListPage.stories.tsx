@@ -1,9 +1,9 @@
+import { channelsList } from "@saleor/channels/fixtures";
 import { limits, limitsReached } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { channelsList } from "../../fixtures";
 import ChannelsListPage, { ChannelsListPageProps } from "./ChannelsListPage";
 
 const props: ChannelsListPageProps = {

@@ -1,5 +1,7 @@
 import { channelsList } from "@saleor/channels/fixtures";
 import { createSaleChannels } from "@saleor/channels/utils";
+import { sale } from "@saleor/discounts/fixtures";
+import { listActionsProps } from "@saleor/fixtures";
 import { DiscountErrorCode } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
@@ -9,9 +11,7 @@ import React from "react";
 import SaleDetailsPage, {
   SaleDetailsPageProps,
   SaleDetailsPageTab,
-} from "../../../discounts/components/SaleDetailsPage";
-import { sale } from "../../../discounts/fixtures";
-import { listActionsProps } from "../../../fixtures";
+} from "./SaleDetailsPage";
 
 const channels = createSaleChannels(channelsList);
 

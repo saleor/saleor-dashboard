@@ -1,18 +1,18 @@
+import {
+  adminUserPermissions,
+  listActionsProps,
+  pageListProps,
+} from "@saleor/fixtures";
 import { WeightUnitsEnum } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
 import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import {
-  adminUserPermissions,
-  listActionsProps,
-  pageListProps,
-} from "../../../fixtures";
+import { shippingZones } from "../../fixtures";
 import ShippingZonesListPage, {
   ShippingZonesListPageProps,
-} from "../../../shipping/components/ShippingZonesListPage";
-import { shippingZones } from "../../../shipping/fixtures";
+} from "./ShippingZonesListPage";
 
 const props: ShippingZonesListPageProps = {
   ...listActionsProps,
