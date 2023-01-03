@@ -20,7 +20,7 @@ export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
       toolbar={
         <Button
           variant="tertiary"
-          data-testid="manage-channels-button"
+          data-test-id="manage-channels-button"
           disabled={false}
           onClick={onManageClick}
         >
