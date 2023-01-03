@@ -8,11 +8,7 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import AppPage from "../../components/AppPage";
-import {
-  appDetailsUrl,
-  appsListPath,
-  getAppCompleteUrlFromDashboardUrl,
-} from "../../urls";
+import { appsListPath, getAppCompleteUrlFromDashboardUrl } from "../../urls";
 
 interface AppProps {
   id: string;
@@ -45,7 +41,6 @@ export const App: React.FC<AppProps> = ({ id }) => {
     <AppPage
       data={data?.app || null}
       url={appCompleteUrl || ""}
-      aboutHref={appDetailsUrl(id)}
       refetch={refetch}
       onError={() =>
         notify({

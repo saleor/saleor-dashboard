@@ -8,7 +8,6 @@ import AppPage, { AppPageProps } from "./AppPage";
 const props: AppPageProps = {
   data: appDetails,
   url: appDetails.appUrl!,
-  aboutHref: "",
   onError: () => undefined,
 };
 
