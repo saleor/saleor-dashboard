@@ -1,3 +1,6 @@
+import camelCase from "lodash/camelCase";
+import snakeCase from "lodash/snakeCase";
+
 import { FlagsResults, FlagWithName } from "./types";
 
 export const ENV_FLAG_PREFIX = "FF_";
@@ -33,10 +36,10 @@ export const useAllEnvFlags = (): FlagWithName[] =>
     }));
 
 function flagNameToEnvName(flagName: string) {
-  return `${ENV_FLAG_PREFIX}${flagName.toUpperCase()}`;
+  return `${ENV_FLAG_PREFIX}${snakeCase(flagName).toUpperCase()}`;
 }
 
 function envNameToFlagName(envName: string) {
   const name = envName.split(ENV_FLAG_PREFIX)[1];
-  return name.toLowerCase();
+  return camelCase(name);
 }

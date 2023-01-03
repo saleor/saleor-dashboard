@@ -16,18 +16,18 @@ describe("useEnvFlags hook", () => {
 
   test("useEnvFlags should return results for given flags when exists in process.env", () => {
     // Arrange && Act
-    process.env.FF_FLAG1 = "1";
-    process.env.FF_FLAG2 = "2";
+    process.env.FF_FLAG_ONE = "1";
+    process.env.FF_FLAG_TWO = "2";
 
-    const { result } = renderHook(() => useEnvFlags(["flag1", "flag2"]));
+    const { result } = renderHook(() => useEnvFlags(["flagOne", "flag_two"]));
 
     // Assert
     expect(result.current).toEqual({
-      flag1: {
+      flagOne: {
         enabled: true,
         value: "1",
       },
-      flag2: {
+      flag_two: {
         enabled: true,
         value: "2",
       },
@@ -36,15 +36,15 @@ describe("useEnvFlags hook", () => {
 
   test("useEnvFlags should return results for given flags even when flag does not exist", () => {
     // Arrange && Act
-    const { result } = renderHook(() => useEnvFlags(["flag1", "flag2"]));
+    const { result } = renderHook(() => useEnvFlags(["flagOne", "flag_two"]));
 
     // Assert
     expect(result.current).toEqual({
-      flag1: {
+      flagOne: {
         enabled: false,
         value: "",
       },
-      flag2: {
+      flag_two: {
         enabled: false,
         value: "",
       },

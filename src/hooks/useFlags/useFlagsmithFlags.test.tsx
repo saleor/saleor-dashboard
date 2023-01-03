@@ -18,25 +18,28 @@ describe("useFlagsmithFlags hook", () => {
   test("should return flags with values", () => {
     // Arrange && Act
     const features = {
-      flag1: "1",
-      flag2: "2",
+      flag_one: "1",
+      flag_two: "2",
     };
 
     jest.spyOn(flagsmith, "hasFeature").mockImplementation(v => !!features[v]);
     jest.spyOn(flagsmith, "getValue").mockImplementation(v => features[v]);
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
-    const { result } = renderHook(() => useFlagsmithFlags(["flag1", "flag2"]), {
-      wrapper,
-    });
+    const { result } = renderHook(
+      () => useFlagsmithFlags(["flagOne", "flag_two"]),
+      {
+        wrapper,
+      },
+    );
 
     // Assert
     expect(result.current).toEqual({
-      flag1: {
+      flagOne: {
         enabled: true,
         value: "1",
       },
-      flag2: {
+      flag_two: {
         enabled: true,
         value: "2",
       },
@@ -51,17 +54,20 @@ describe("useFlagsmithFlags hook", () => {
     jest.spyOn(flagsmith, "getValue").mockImplementation(v => features[v]);
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
-    const { result } = renderHook(() => useFlagsmithFlags(["flag1", "flag2"]), {
-      wrapper,
-    });
+    const { result } = renderHook(
+      () => useFlagsmithFlags(["flagOne", "flagTwo"]),
+      {
+        wrapper,
+      },
+    );
 
     // Assert
     expect(result.current).toEqual({
-      flag1: {
+      flagOne: {
         enabled: false,
         value: "",
       },
-      flag2: {
+      flagTwo: {
         enabled: false,
         value: "",
       },
