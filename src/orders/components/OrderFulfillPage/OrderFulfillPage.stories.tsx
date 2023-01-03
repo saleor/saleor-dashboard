@@ -18,7 +18,7 @@ const props: OrderFulfillPageProps = {
   closeModal: () => undefined,
 };
 
-storiesOf(" Orders / Fulfill order", module)
+storiesOf("Orders / Fulfill order", module)
   .addDecorator(Decorator)
   .add("default", () => <OrderFulfillPage {...props} />)
   .add("loading", () => (

@@ -20,7 +20,7 @@ const props: Omit<LoginCardProps, "classes"> = {
   onSubmit: () => undefined,
 };
 
-storiesOf(" Authentication / Log in", module)
+storiesOf("Authentication / Log in", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <LoginPage {...props} />)

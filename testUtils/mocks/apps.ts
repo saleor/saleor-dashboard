@@ -1,8 +1,7 @@
 import { MockedResponse } from "@apollo/client/testing";
+import { extensionList } from "@saleor/apps/queries";
 
-import { extensionList } from "./queries";
-
-export const mocks: MockedResponse[] = [
+export const appsMocks: MockedResponse[] = [
   {
     request: {
       query: extensionList,

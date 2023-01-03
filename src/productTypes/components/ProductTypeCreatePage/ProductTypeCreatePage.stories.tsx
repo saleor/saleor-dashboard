@@ -1,6 +1,6 @@
 import { ProductTypeKindEnum, WeightUnitsEnum } from "@saleor/graphql";
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
+import { formError } from "@saleor/storybook/formError";
 import { taxClasses } from "@saleor/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
