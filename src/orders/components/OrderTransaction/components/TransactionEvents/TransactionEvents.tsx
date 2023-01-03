@@ -11,11 +11,7 @@ export interface OrderTransactionEventsProps {
 }
 
 const useStyles = makeStyles(
-  theme => ({
-    cardContent: {
-      paddingLeft: 0,
-      paddingRight: 0,
-    },
+  {
     table: {
       "&& td": {
         // Gap = 24px
@@ -27,41 +23,7 @@ const useStyles = makeStyles(
         },
       },
     },
-    hover: {
-      backgroundColor: theme.palette.saleor.active[5],
-    },
-    colSmall: {
-      [theme.breakpoints.down("md")]: {
-        // Take as little space as possible on mobile
-        width: "1%",
-        whiteSpace: "nowrap",
-      },
-    },
-    colStatus: {
-      [theme.breakpoints.up("md")]: {
-        // Max text with "Success"
-        width: "126px",
-      },
-    },
-    colPspReference: {
-      [theme.breakpoints.up("md")]: {
-        width: "250px",
-      },
-    },
-    colLast: {
-      // Align with card
-      [theme.breakpoints.up("md")]: {
-        "&&&": {
-          paddingRight: "32px",
-          width: "35%",
-          textAlign: "right",
-        },
-      },
-      [theme.breakpoints.down("md")]: {
-        whiteSpace: "nowrap",
-      },
-    },
-  }),
+  },
   {
     name: "OrderTransactionEvents",
   },

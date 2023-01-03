@@ -24,17 +24,6 @@ const useStyles = makeStyles(
       paddingLeft: 0,
       paddingRight: 0,
     },
-    table: {
-      "&& td": {
-        // Gap = 24px
-        paddingLeft: "12px",
-        paddingRight: "12px",
-        "&:first-child": {
-          // Override for Material first td
-          paddingRight: "12px",
-        },
-      },
-    },
     hover: {
       backgroundColor: theme.palette.saleor.active[5],
     },
@@ -70,7 +59,7 @@ const useStyles = makeStyles(
       },
     },
   }),
-  { name: "EventItem" },
+  { name: "OrderTransactionEvents-EventItem" },
 );
 
 export const EventItem: React.FC<EventItemProps> = ({
