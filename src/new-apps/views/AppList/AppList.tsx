@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
-import { AppsConfig } from "@saleor/config";
+import { getAppsConfig } from "@saleor/config";
 import {
   AppSortField,
   AppTypeEnum,
@@ -10,7 +10,6 @@ import {
   useAppDeleteMutation,
   useAppsListQuery,
 } from "@saleor/graphql";
-import useFetch from "@saleor/hooks/useFetch";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
@@ -24,7 +23,7 @@ import AppDeactivateDialog from "@saleor/new-apps/components/AppDeactivateDialog
 import AppDeleteDialog from "@saleor/new-apps/components/AppDeleteDialog";
 import AppListPage from "@saleor/new-apps/components/AppListPage/AppListPage";
 import { AppListContext, AppListContextValues } from "@saleor/new-apps/context";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
+import useMarketplaceApps from "@saleor/new-apps/hooks/useMarketplaceApps";
 import {
   AppListUrlDialog,
   AppListUrlQueryParams,
@@ -52,6 +51,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppListUrlDialog,
     AppListUrlQueryParams
   >(navigate, AppUrls.resolveAppListUrl, params);
+  const AppsConfig = getAppsConfig();
 
   const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
   const queryVariables = {
@@ -151,9 +151,9 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     [activateApp, deactivateApp, deleteApp],
   );
 
-  const { data: marketplaceAppList, error } = useFetch<
-    GetV2SaleorAppsResponse.SaleorApp[]
-  >(AppsConfig.marketplaceApiUri);
+  const { data: marketplaceAppList, error } = useMarketplaceApps(
+    AppsConfig.marketplaceApiUri,
+  );
 
   const {
     installableMarketplaceApps,

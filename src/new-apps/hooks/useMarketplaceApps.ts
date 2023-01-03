@@ -1,38 +1,48 @@
+import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import { useEffect, useReducer, useRef } from "react";
 
-interface State<T> {
-  data?: T;
+interface State {
+  data?: GetV2SaleorAppsResponse.SaleorApp[];
   error?: Error;
 }
 
-interface Cache<T> {
-  [url: string]: T;
+interface Cache {
+  [url: string]: GetV2SaleorAppsResponse.SaleorApp[];
 }
 
 // discriminated union type
-type Action<T> =
+type Action =
   | { type: "loading" }
-  | { type: "fetched"; payload: T }
+  | { type: "fetched"; payload: GetV2SaleorAppsResponse.SaleorApp[] }
   | { type: "error"; payload: Error };
 
-function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
-  const cache = useRef<Cache<T>>({});
+/**
+ * Hook used to fetch apps list available under given marketplace url.
+ * @param marketplaceUrl - url from which fetch data with apps list
+ * @returns state object containing data with apps list or fetch error
+ */
+function useMarketplaceApps(marketplaceUrl?: string): State {
+  const cache = useRef<Cache>({});
 
   // Used to prevent state update if the component is unmounted
   const cancelRequest = useRef<boolean>(false);
 
-  const initialState: State<T> = {
+  const initialState: State = {
     error: undefined,
     data: undefined,
   };
 
   // Keep state logic separated
-  const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+  const fetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
       case "loading":
         return { ...initialState };
       case "fetched":
-        return { ...initialState, data: action.payload };
+        return {
+          ...initialState,
+          data: action.payload,
+          error: undefined,
+        };
       case "error":
         return { ...initialState, error: action.payload };
       default:
@@ -44,7 +54,7 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
 
   useEffect(() => {
     // Do nothing if the url is not given
-    if (!url) {
+    if (!marketplaceUrl) {
       return;
     }
 
@@ -54,19 +64,19 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
       dispatch({ type: "loading" });
 
       // If a cache exists for this url, return it
-      if (cache.current[url]) {
-        dispatch({ type: "fetched", payload: cache.current[url] });
+      if (cache.current[marketplaceUrl]) {
+        dispatch({ type: "fetched", payload: cache.current[marketplaceUrl] });
         return;
       }
 
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(marketplaceUrl);
         if (!response.ok) {
           throw new Error(response.statusText);
         }
 
-        const data = (await response.json()) as T;
-        cache.current[url] = data;
+        const data = (await response.json()) as GetV2SaleorAppsResponse.SaleorApp[];
+        cache.current[marketplaceUrl] = data;
         if (cancelRequest.current) {
           return;
         }
@@ -89,9 +99,9 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
       cancelRequest.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [marketplaceUrl]);
 
   return state;
 }
 
-export default useFetch;
+export default useMarketplaceApps;

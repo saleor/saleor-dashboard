@@ -1,4 +1,4 @@
-import { AppsConfig } from "@saleor/config";
+import { getAppsConfig } from "@saleor/config";
 import { IntlShape } from "react-intl";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
@@ -43,7 +43,7 @@ export const getMarketplaceAppsLists = (
 
 export const isAppInTunnel = (manifestUrl: string) =>
   Boolean(
-    AppsConfig.tunnelUrlKeywords.find(keyword =>
+    getAppsConfig().tunnelUrlKeywords.find(keyword =>
       new URL(manifestUrl).host.includes(keyword),
     ),
   );

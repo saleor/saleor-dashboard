@@ -1,4 +1,4 @@
-import { AppsConfig } from "@saleor/config";
+import { getAppsConfig } from "@saleor/config";
 import { AppListContext, AppListContextValues } from "@saleor/new-apps/context";
 import { activeApp, inactiveApp } from "@saleor/new-apps/fixtures";
 import { InstalledApp } from "@saleor/new-apps/types";
@@ -90,6 +90,7 @@ describe("Apps InstalledAppListRow", () => {
     const activateApp = jest.fn();
     const deactivateApp = jest.fn();
     const removeApp = jest.fn();
+    const AppsConfig = getAppsConfig();
     render(
       <Component
         data={{
