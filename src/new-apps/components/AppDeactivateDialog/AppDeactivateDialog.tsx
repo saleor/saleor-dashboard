@@ -11,7 +11,7 @@ import msgs from "./messages";
 export interface AppDeactivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name: string;
+  name?: string | null;
   thirdParty?: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -27,7 +27,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const missingName = ["", null].includes(name);
+  const missingName = name === null || name === "";
 
   return (
     <ActionDialog

@@ -21,7 +21,7 @@ interface Connection<T> {
 }
 
 export function mapEdgesToItems<T>(
-  data: Connection<T> | undefined,
+  data?: Connection<T> | undefined | null,
 ): T[] | undefined {
   return data?.edges?.map(({ node }) => node);
 }

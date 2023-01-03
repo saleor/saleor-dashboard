@@ -117,7 +117,7 @@ describe("Apps AppListCard", () => {
 
     // Assert
     expect(logoPlaceholder).toBeTruthy();
-    expect(logoPlaceholder.textContent).toBe(app.name.en[0]);
+    expect(logoPlaceholder?.textContent).toBe(app.name.en[0]);
     expect(logoImage).toBeFalsy();
   });
 
@@ -141,7 +141,7 @@ describe("Apps AppListCard", () => {
 
     // Assert
     expect(logoPlaceholder).toBeTruthy();
-    expect(logoPlaceholder.textContent).toBe(app.name.en[0]);
+    expect(logoPlaceholder?.textContent).toBe(app.name.en[0]);
     expect(logoImage).toBeFalsy();
   });
 });

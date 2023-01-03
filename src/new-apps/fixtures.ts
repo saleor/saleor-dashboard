@@ -1,6 +1,6 @@
 import {
-  AppFetchMutation,
   AppListItemFragment,
+  AppManifestFragment,
   AppsInstallationsQuery,
   AppTypeEnum,
   JobStatusEnum,
@@ -82,7 +82,7 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
   },
 ];
 
-export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
+export const installApp: AppManifestFragment = {
   __typename: "Manifest",
   about: "Lorem ipsum",
   appUrl: null,

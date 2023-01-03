@@ -6,14 +6,14 @@ import { messages } from "./messages";
 import { AppLink } from "./types";
 
 const getInstallableMarketplaceApps = (
-  marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
 ) =>
   marketplaceAppList?.filter(
     app => "manifestUrl" in app || "vercelDeploymentUrl" in app,
   ) as GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined;
 
 const getComingSoonMarketplaceApps = (
-  marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
 ) =>
   marketplaceAppList?.filter(
     app =>
@@ -24,7 +24,7 @@ const getComingSoonMarketplaceApps = (
 
 export const getMarketplaceAppsLists = (
   isMarketplaceAvailable: boolean,
-  marketplaceAppList: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
 ) => {
   if (!isMarketplaceAvailable) {
     return {
@@ -70,7 +70,7 @@ export const getAppDetails = (
   intl: IntlShape,
   app: GetV2SaleorAppsResponse.SaleorApp,
   navigateToAppInstallPage?: (url: string) => void,
-  navigateToVercelDeploymentPage?: (url: string) => void,
+  navigateToVercelDeploymentPage?: (url?: string) => void,
 ) => {
   const isAppComingSoon =
     !("manifestUrl" in app) &&
@@ -85,9 +85,10 @@ export const getAppDetails = (
     installHandler: isAppInstallable
       ? () => navigateToAppInstallPage(app.manifestUrl)
       : undefined,
-    vercelDeployHandler: isAppVercelDeployable
-      ? () => navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
-      : undefined,
+    vercelDeployHandler:
+      isAppVercelDeployable && !!app.vercelDeploymentUrl
+        ? () => navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
+        : undefined,
     links: isAppComingSoon ? [] : prepareAppLinks(intl, app),
   };
 };

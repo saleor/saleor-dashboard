@@ -7,10 +7,12 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface AppPermissionsProps {
-  permissions: AppPermissionFragment[];
+  permissions?: AppPermissionFragment[] | null;
 }
 
-export const AppPermissions = ({ permissions }: AppPermissionsProps) => {
+export const AppPermissions: React.FC<AppPermissionsProps> = ({
+  permissions,
+}) => {
   const classes = useStyles();
 
   return (
@@ -18,7 +20,7 @@ export const AppPermissions = ({ permissions }: AppPermissionsProps) => {
       header={<FormattedMessage {...messages.appPermissions} />}
       title={
         <ul className={classes.list}>
-          {permissions.map(permission => (
+          {permissions?.map(permission => (
             <li key={permission.code}>{permission.name}</li>
           ))}
         </ul>

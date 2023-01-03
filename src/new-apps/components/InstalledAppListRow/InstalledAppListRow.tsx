@@ -35,7 +35,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = ({
   return (
     <TableRowLink className={classes.row} href={AppUrls.resolveAppUrl(app.id)}>
       <TableCellAvatar
-        initials={app.name[0]?.toUpperCase()}
+        initials={app.name?.[0]?.toUpperCase()}
         thumbnail={undefined}
         className={clsx(classes.col, classes.colLogo)}
       >
@@ -72,7 +72,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = ({
           ) : null}
           <TableButtonWrapper>
             <Switch
-              checked={app.isActive}
+              checked={!!app.isActive}
               onChange={handleToggleActive}
               data-test-id="app-active-switch"
             />

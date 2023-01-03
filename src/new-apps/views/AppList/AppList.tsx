@@ -77,7 +77,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     },
   });
   const { pageInfo, ...paginationValues } = paginate(
-    installedAppsData?.apps.pageInfo,
+    installedAppsData?.apps?.pageInfo,
     paginationState,
   );
 
@@ -90,7 +90,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const handleRemoveConfirm = () =>
     deleteApp({
       variables: {
-        id: params.id,
+        id: params.id || "",
       },
     });
 
@@ -102,10 +102,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   };
 
   const handleActivateAppConfirm = () =>
-    activateApp({ variables: { id: params.id } });
+    activateApp({ variables: { id: params.id || "" } });
 
   const handleDeactivateAppConfirm = () =>
-    deactivateApp({ variables: { id: params.id } });
+    deactivateApp({ variables: { id: params.id || "" } });
 
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
@@ -163,7 +163,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     marketplaceAppList,
   );
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
-  const currentAppName = findById(params.id, installedApps)?.name;
+  const currentAppName = params.id && findById(params.id, installedApps)?.name;
 
   return (
     <AppListContext.Provider value={context}>
@@ -174,21 +174,21 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           onClose={closeModal}
           onConfirm={handleRemoveConfirm}
           type="EXTERNAL"
-          open={params.action === "remove-app"}
+          open={params.action === "remove-app" && !!params.id}
         />
         <AppActivateDialog
           confirmButtonState={activateAppResult.status}
           name={currentAppName}
           onClose={closeModal}
           onConfirm={handleActivateAppConfirm}
-          open={params.action === "app-activate"}
+          open={params.action === "app-activate" && !!params.id}
         />
         <AppDeactivateDialog
           confirmButtonState={deactivateAppResult.status}
           name={currentAppName}
           onClose={closeModal}
           onConfirm={handleDeactivateAppConfirm}
-          open={params.action === "app-deactivate"}
+          open={params.action === "app-deactivate" && !!params.id}
         />
         <AppListPage
           installedApps={installedApps}

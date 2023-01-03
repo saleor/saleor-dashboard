@@ -45,10 +45,12 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
-    const name = screen.queryByText(activeApp.name);
-    const version = screen.queryByText(activeApp.version, { exact: false });
+    const name = screen.queryByText(activeApp.name as string);
+    const version = screen.queryByText(activeApp.version as string, {
+      exact: false,
+    });
     const manifestDomain = screen.queryByText(
-      new URL(activeApp.manifestUrl).host,
+      new URL(activeApp.manifestUrl as string).host,
     );
     const externalLabel = screen.queryByTestId("app-external-label");
     const tunnelLabel = screen.queryByTestId("app-tunnel-label");

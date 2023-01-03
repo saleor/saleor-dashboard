@@ -11,7 +11,7 @@ import msgs from "./messages";
 export interface AppActivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name: string;
+  name?: string | null;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -25,7 +25,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const missingName = ["", null].includes(name);
+  const missingName = name === null || name === "";
 
   return (
     <ActionDialog

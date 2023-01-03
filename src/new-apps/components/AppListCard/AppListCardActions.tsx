@@ -10,8 +10,8 @@ import { useActionsStyles } from "./styles";
 
 interface AppListCardActionsProps {
   releaseDate: string | undefined;
-  installHandler: () => void | undefined;
-  vercelDeployHandler: () => void | undefined;
+  installHandler?: () => void;
+  vercelDeployHandler?: () => void;
 }
 
 const AppListCardActions: React.FC<AppListCardActionsProps> = ({
