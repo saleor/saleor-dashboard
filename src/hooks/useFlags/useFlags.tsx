@@ -6,12 +6,12 @@ export const useFlags = <T extends readonly string[]>(
   flags: readonly [...T],
   traits?: string[],
 ): FlagsResults<T> => {
-  const flagsmishFlags = useFlagsmithFlags(flags, traits);
+  const flagsmithFlags = useFlagsmithFlags(flags, traits);
   const envFlags = useEnvFlags(flags);
   const isFeatureFlagsEnabled = process.env.FLAGS_ENABLED;
 
   if (isFeatureFlagsEnabled === "true") {
-    return flagsmishFlags;
+    return flagsmithFlags;
   }
 
   return envFlags;
@@ -19,12 +19,12 @@ export const useFlags = <T extends readonly string[]>(
 
 export const useAllFlags = (): FlagWithName[] => {
   const envFlags = useAllEnvFlags();
-  const flagsmishFlags = useAllFlagsmithFlags();
+  const flagsmithFlags = useAllFlagsmithFlags();
 
   const isFeatureFlagsEnabled = process.env.FLAGS_ENABLED;
 
   if (isFeatureFlagsEnabled === "true") {
-    return flagsmishFlags;
+    return flagsmithFlags;
   }
 
   return envFlags;

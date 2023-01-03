@@ -50,7 +50,7 @@ export function useAuthProvider({
     logout,
   } = useAuth();
   const navigate = useNavigator();
-  const flagsmish = useFlagsmith();
+  const flagsmith = useFlagsmith();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
     "requestedExternalPluginId",
@@ -68,7 +68,7 @@ export function useAuthProvider({
   useEffect(() => {
     if (authenticated) {
       permitCredentialsAPI.current = true;
-      flagsmish.identify(user.id, { id: user.id });
+      flagsmith.identify(user.id, { id: user.id });
     }
   }, [authenticated]);
 
@@ -154,7 +154,7 @@ export function useAuthProvider({
         const user = result.data.tokenCreate.user;
 
         saveCredentials(user, password);
-        flagsmish.identify(user.id, { id: user.id });
+        flagsmith.identify(user.id, { id: user.id });
       } else {
         setErrors(["loginError"]);
       }
@@ -204,7 +204,7 @@ export function useAuthProvider({
       const user = result?.data?.externalObtainAccessTokens?.user;
 
       if (user) {
-        flagsmish.identify(user.id, { id: user.id });
+        flagsmith.identify(user.id, { id: user.id });
       }
 
       await logoutNonStaffUser(result.data.externalObtainAccessTokens);

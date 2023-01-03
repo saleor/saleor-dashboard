@@ -6,13 +6,13 @@ export const useFlagsmithFlags = <T extends readonly string[]>(
   flags: readonly [...T],
   traits?: string[],
 ): FlagsResults<T> => {
-  const flagsmishFlags = useFlags(flags, traits);
+  const flagsmithFlags = useFlags(flags, traits);
 
   return flags.reduce((acc, flag) => {
-    if (flagsmishFlags[flag]) {
+    if (flagsmithFlags[flag]) {
       acc[flag] = {
-        enabled: flagsmishFlags[flag].enabled,
-        value: flagsmishFlags[flag].value || "",
+        enabled: flagsmithFlags[flag].enabled,
+        value: flagsmithFlags[flag].value || "",
       };
     }
 
