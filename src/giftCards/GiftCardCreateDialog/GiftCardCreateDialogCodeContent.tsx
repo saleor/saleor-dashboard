@@ -50,7 +50,7 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
           {intl.formatMessage(messages.copyCodeLabel)}
         </Button>
         <HorizontalSpacer spacing={2} />
-        <Button variant="primary" onClick={onClose} data-test="submit">
+        <Button variant="primary" onClick={onClose} data-test-id="submit">
           {intl.formatMessage(buttonMessages.ok)}
         </Button>
       </DialogActions>
