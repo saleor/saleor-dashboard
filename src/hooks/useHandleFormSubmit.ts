@@ -1,5 +1,4 @@
-import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { FormId, useExitFormDialog } from "@saleor/components/Form";
 import { MessageContext } from "@saleor/components/messages";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { useContext } from "react";

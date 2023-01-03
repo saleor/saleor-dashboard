@@ -3,7 +3,7 @@ import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
-import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
+import { WithFormId } from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
