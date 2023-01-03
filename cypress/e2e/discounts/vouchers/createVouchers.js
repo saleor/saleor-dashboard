@@ -13,6 +13,7 @@ import {
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   createVoucher,
   discountOptions,
@@ -52,6 +53,8 @@ describe("As an admin I want to create voucher", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+
+          updateTaxConfigurationForChannel({channelSlug: defaultChannel.slug})
         },
       );
   });
