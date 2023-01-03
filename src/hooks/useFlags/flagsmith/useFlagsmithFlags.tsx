@@ -1,8 +1,7 @@
-import { useFlags, useFlagsmith } from "flagsmith/react";
-import camelCase from "lodash/camelCase";
+import { useFlags } from "flagsmith/react";
 import snakeCase from "lodash/snakeCase";
 
-import { FlagsResults, FlagWithName } from "./types";
+import { FlagsResults } from "../types";
 
 export const useFlagsmithFlags = <T extends readonly string[]>(
   flags: readonly [...T],
@@ -21,17 +20,6 @@ export const useFlagsmithFlags = <T extends readonly string[]>(
 
     return acc;
   }, {} as FlagsResults<T>);
-};
-
-export const useAllFlagsmithFlags = (): FlagWithName[] => {
-  const flagsmith = useFlagsmith();
-  const flags = flagsmith.getAllFlags();
-
-  return Object.entries(flags).map(([name, { value, enabled }]) => ({
-    name: camelCase(name),
-    value: value || "",
-    enabled,
-  }));
 };
 
 function transformFlagsToSnakeCase(flags: readonly string[]): string[] {

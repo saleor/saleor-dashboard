@@ -1,6 +1,6 @@
 import { ExternalAppProvider } from "@saleor/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
-import { Provider as FlagsmithProvider } from "@saleor/hooks/useFlags/flagsmithProvider";
+import { Provider as FlagsmithProvider } from "@saleor/hooks/useFlags/flagsmith";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
