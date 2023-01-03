@@ -12,7 +12,7 @@ export const useFlagsmithFlags = <T extends readonly string[]>(
 
   return flags.reduce((acc, flag) => {
     const flagName = snakeCase(flag);
-    if (flagsmithFlags[snakeCase(flagName)]) {
+    if (flagsmithFlags[flagName]) {
       acc[flag] = {
         enabled: flagsmithFlags[flagName].enabled,
         value: flagsmithFlags[flagName].value || "",
