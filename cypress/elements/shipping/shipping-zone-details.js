@@ -11,7 +11,7 @@ export const SHIPPING_ZONE_DETAILS = {
   autocompleteContentDialog:
     "[data-test-id='multi-autocomplete-select-content']",
   option: "[data-test-id='multi-autocomplete-select-option']",
-  warehouseSelector: "[testId='warehouses']",
-  channelSelector: "[testId='channels']",
+  warehouseSelector: "[data-test-id='warehouses']",
+  channelSelector: "[data-test-id='channels']",
   removeWarehouseButton: "[data-test-id='warehouses-remove']"
 };

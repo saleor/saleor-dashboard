@@ -150,7 +150,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
 
   return (
     <>
-      <DebounceAutocomplete debounceFn={fetchChoices}>
+      <DebounceAutocomplete debounceFn={fetchChoices} data-test-id={testId}>
         {debounceFn => (
           <Downshift
             onInputValueChange={value => debounceFn(value)}
@@ -302,7 +302,7 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
   if (fetchChoices) {
     return (
       <MultiAutocompleteSelectFieldComponent
-        testId={testId}
+        data-test-id={testId}
         choices={choices}
         {...props}
         fetchChoices={fetchChoices}
@@ -312,6 +312,7 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
 
   return (
     <MultiAutocompleteSelectFieldComponent
+      data-test-id={testId}
       fetchChoices={q => setQuery(q || "")}
       choices={filter(choices, query, {
         key: "label"

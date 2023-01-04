@@ -48,6 +48,7 @@ const ChannelsSection: React.FC<ChannelsSectionProps> = ({
       <FormattedMessage {...messages.subtitle} />
       <CardSpacer />
       <MultiAutocompleteSelectField
+        testId="channels"
         choices={mapNodeToChoice(filteredChannels)}
         displayValues={channelsDisplayValues}
         fetchChoices={onQueryChange}
