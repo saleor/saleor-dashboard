@@ -8,5 +8,5 @@ export const useAllEnvFlags = (): FlagWithName[] =>
     .map(([flagKey, flagValue]) => ({
       name: envNameToFlagName(flagKey),
       enabled: flagValue !== "",
-      value: flagValue || "",
+      value: flagValue,
     }));

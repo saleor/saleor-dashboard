@@ -9,6 +9,6 @@ export const useFlagsmithFlag = (flagName: string, traits?: string[]): Flag => {
 
   return {
     enabled: flags[flagSnakeCase].enabled,
-    value: flags[flagSnakeCase].value || "",
+    value: flags[flagSnakeCase].value ?? "",
   };
 };

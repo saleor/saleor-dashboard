@@ -9,7 +9,7 @@ export const useAllFlagsmithFlags = (): FlagWithName[] => {
 
   return Object.entries(flags).map(([name, { value, enabled }]) => ({
     name: camelCase(name),
-    value: value || "",
+    value: value ?? "",
     enabled,
   }));
 };
