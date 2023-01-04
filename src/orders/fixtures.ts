@@ -1,4 +1,5 @@
 import {
+  AppAvatarFragment,
   ChannelUsabilityDataQuery,
   CountryWithCodeFragment,
   FulfillmentStatus,
@@ -2497,6 +2498,12 @@ export const channelUsabilityData: ChannelUsabilityDataQuery = {
   },
 };
 
+export const transactionApp: AppAvatarFragment = {
+  name: "Checkout App",
+  id: "1234",
+  __typename: "App",
+};
+
 export const transactions: Record<
   | "preauthorized"
   | "pendingCharge"
@@ -2524,7 +2531,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2567,7 +2574,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2582,7 +2589,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2625,7 +2632,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2640,7 +2647,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2655,7 +2662,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2698,7 +2705,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 10,
             currency: "USD",
@@ -2713,7 +2720,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 10,
             currency: "USD",
@@ -2728,7 +2735,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 10,
             currency: "USD",
@@ -2771,7 +2778,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_FAILURE,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 10,
             currency: "USD",
@@ -2786,7 +2793,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2801,7 +2808,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2859,7 +2866,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2874,7 +2881,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2889,7 +2896,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2932,7 +2939,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2947,7 +2954,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2962,7 +2969,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2977,7 +2984,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2992,7 +2999,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3035,7 +3042,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 10,
             currency: "USD",
@@ -3050,7 +3057,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 10,
             currency: "USD",
@@ -3065,7 +3072,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3080,7 +3087,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: staffMember,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3095,7 +3102,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          createdBy: null,
+          createdBy: transactionApp,
           amount: {
             amount: 58.98,
             currency: "USD",
