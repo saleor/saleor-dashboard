@@ -15,7 +15,7 @@ const createProps: CategoryCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Categories / Category create", module)
+storiesOf("Categories / Create category", module)
   .addDecorator(Decorator)
   .add("default", () => <CategoryCreatePage {...createProps} />)
   .add("When loading", () => (

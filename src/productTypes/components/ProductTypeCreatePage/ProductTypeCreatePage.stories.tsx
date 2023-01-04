@@ -23,7 +23,7 @@ const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   onChangeKind: () => undefined,
 };
 
-storiesOf(" Product types / Create product type", module)
+storiesOf("Product types / Create product type", module)
   .addDecorator(Decorator)
   .add("default", () => <ProductTypeCreatePage {...props} />)
   .add("loading", () => (
