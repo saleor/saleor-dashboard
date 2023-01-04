@@ -7,6 +7,7 @@ import clsx from "clsx";
 import React from "react";
 
 import { mapTransactionEvent } from "../../../utils";
+import { EventCreatedBy } from "./EventCreatedBy";
 import { EventStatus } from "./EventStatus";
 import { EventTime } from "./EventTime";
 import { EventType } from "./EventType";
@@ -16,6 +17,7 @@ interface EventItemProps {
   event: TransactionEventFragment | TransactionFakeEvent;
   onHover: (pspReference: string) => void;
   hoveredPspReference: string;
+  hasCreatedBy: boolean;
 }
 
 const useStyles = makeStyles(
@@ -50,17 +52,25 @@ const useStyles = makeStyles(
         width: "250px",
       },
     },
+    colDate: {
+      width: "25%",
+    },
+    colCreatedBy: {
+      width: "20%",
+    },
     colLast: {
       // Align with card
       [theme.breakpoints.up("md")]: {
         "&&&": {
           paddingRight: "32px",
-          width: "35%",
           textAlign: "right",
         },
       },
       [theme.breakpoints.down("md")]: {
         whiteSpace: "nowrap",
+      },
+      "&$colDate": {
+        width: "35%",
       },
     },
   }),
@@ -71,6 +81,7 @@ export const EventItem: React.FC<EventItemProps> = ({
   event,
   onHover,
   hoveredPspReference,
+  hasCreatedBy,
 }) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
@@ -103,9 +114,16 @@ export const EventItem: React.FC<EventItemProps> = ({
           />
         </TableCell>
       )}
-      <TableCell className={classes.colLast}>
+      <TableCell
+        className={clsx(classes.colDate, !hasCreatedBy && classes.colLast)}
+      >
         <EventTime date={event.createdAt} />
       </TableCell>
+      {hasCreatedBy && (
+        <TableCell className={clsx(classes.colCreatedBy, classes.colLast)}>
+          <EventCreatedBy createdBy={event.createdBy} />
+        </TableCell>
+      )}
     </TableRow>
   );
 };
