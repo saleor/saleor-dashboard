@@ -70,6 +70,10 @@
   "+a+2ug": {
     "string": "Members"
   },
+  "+b3KCV": {
+    "context": "button",
+    "string": "Activate"
+  },
   "+c/f61": {
     "context": "retry installation",
     "string": "Retry"
@@ -5702,6 +5706,10 @@
   },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
+  },
+  "gygOA1": {
+    "context": "button",
+    "string": "Deactivate"
   },
   "gz9v22": {
     "context": "PluginChannelConfigurationCell channel title",

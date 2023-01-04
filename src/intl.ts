@@ -233,6 +233,16 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Assign",
     description: "button",
   },
+  activate: {
+    id: "+b3KCV",
+    defaultMessage: "Activate",
+    description: "button",
+  },
+  deactivate: {
+    id: "gygOA1",
+    defaultMessage: "Deactivate",
+    description: "button",
+  },
   back: {
     id: "0OfZJA",
     defaultMessage: "Back",

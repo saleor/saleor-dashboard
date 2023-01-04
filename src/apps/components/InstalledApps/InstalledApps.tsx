@@ -1,13 +1,6 @@
-import {
-  Card,
-  Switch,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
 import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
-import { useAppListContext } from "@saleor/apps/context";
 import { appUrl, createAppInstallUrl } from "@saleor/apps/urls";
 import { isAppInTunnel } from "@saleor/apps/utils";
 import CardTitle from "@saleor/components/CardTitle";
@@ -16,7 +9,7 @@ import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableB
 import TableRowLink from "@saleor/components/TableRowLink";
 import { AppListItemFragment } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import { ResponsiveTable, SettingsIcon } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React, { useCallback } from "react";
@@ -28,20 +21,19 @@ import AppsSkeleton from "../AppsSkeleton";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppListItemFragment[];
-  onRemove: (id: string) => void;
+  onSettingsClick: (id: string) => void;
   displayQuickManifestButton?: boolean;
   title: string;
 }
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
-  onRemove,
+  onSettingsClick,
   title,
   displayQuickManifestButton = false,
   ...props
 }) => {
   const classes = useStyles(props);
-  const { activateApp, deactivateApp } = useAppListContext();
   const navigate = useNavigator();
 
   const navigateToAppInstallPage = useCallback(
@@ -50,14 +42,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
     },
     [navigate],
   );
-
-  const getHandleToggle = (app: AppListItemFragment) => () => {
-    if (app.isActive) {
-      deactivateApp(app.id);
-    } else {
-      activateApp(app.id);
-    }
-  };
 
   return (
     <Card className={classes.apps}>
@@ -102,20 +86,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     {app.manifestUrl && (
                       <AppManifestTableDisplay manifestUrl={app.manifestUrl} />
                     )}
-                    <TableButtonWrapper>
-                      <Switch
-                        checked={!!app.isActive}
-                        onChange={getHandleToggle(app)}
-                      />
-                    </TableButtonWrapper>
                     <AppPermissions permissions={app.permissions || []} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
                         color="primary"
-                        onClick={() => onRemove(app.id)}
+                        onClick={() => onSettingsClick(app.id)}
                       >
-                        <DeleteIcon />
+                        <SettingsIcon />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

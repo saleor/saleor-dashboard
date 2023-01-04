@@ -9,13 +9,14 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { AppQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+import { buttonMessages, sectionNames } from "@saleor/intl";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
+import deleteIcon from "../../../../assets/images/delete.svg";
 import supportIcon from "../../../../assets/images/support-icon.svg";
 import { useStyles } from "../../styles";
 import DeactivatedText from "../DeactivatedText";
@@ -26,6 +27,7 @@ export interface AppDetailsPageProps {
   navigateToApp: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
+  onAppDeleteOpen: () => void;
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
@@ -34,6 +36,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   navigateToApp,
   onAppActivateOpen,
   onAppDeactivateOpen,
+  onAppDeleteOpen,
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -80,18 +83,18 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             >
               <SVG src={activateIcon} />
               {data?.isActive ? (
-                <FormattedMessage
-                  id="whTEcF"
-                  defaultMessage="Deactivate"
-                  description="link"
-                />
+                <FormattedMessage {...buttonMessages.deactivate} />
               ) : (
-                <FormattedMessage
-                  id="P5twxk"
-                  defaultMessage="Activate"
-                  description="link"
-                />
+                <FormattedMessage {...buttonMessages.activate} />
               )}
+            </ButtonBase>
+            <ButtonBase
+              className={classes.headerLinkContainer}
+              disableRipple
+              onClick={onAppDeleteOpen}
+            >
+              <SVG src={deleteIcon} />
+              <FormattedMessage {...buttonMessages.delete} />
             </ButtonBase>
           </div>
         ) : (
