@@ -33,7 +33,13 @@ export default defineConfig(({ command, mode }) => {
     APP_TEMPLATE_GALLERY_PATH,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
+    FLAGS_ENABLED,
+    FLAGSMITH_ID,
   } = env;
+
+  const featureFlagsEnvs = Object.fromEntries(
+    Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
+  );
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
@@ -122,6 +128,9 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
+        FLAGS_ENABLED,
+        FLAGSMITH_ID,
+        ...featureFlagsEnvs,
       },
     },
     build: {

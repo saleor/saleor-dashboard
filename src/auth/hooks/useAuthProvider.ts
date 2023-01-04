@@ -17,6 +17,7 @@ import {
   saveCredentials,
 } from "@saleor/utils/credentialsManagement";
 import { getAppMountUriForRedirect } from "@saleor/utils/urls";
+import { useFlagsmith } from "flagsmith/react";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -49,6 +50,7 @@ export function useAuthProvider({
     logout,
   } = useAuth();
   const navigate = useNavigator();
+  const flagsmith = useFlagsmith();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
     "requestedExternalPluginId",
@@ -66,6 +68,7 @@ export function useAuthProvider({
   useEffect(() => {
     if (authenticated) {
       permitCredentialsAPI.current = true;
+      flagsmith.identify(user.id, { id: user.id });
     }
   }, [authenticated]);
 
@@ -148,7 +151,10 @@ export function useAuthProvider({
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
-        saveCredentials(result.data.tokenCreate.user, password);
+        const user = result.data.tokenCreate.user;
+
+        saveCredentials(user, password);
+        flagsmith.identify(user.id, { id: user.id });
       } else {
         setErrors(["loginError"]);
       }
@@ -193,6 +199,12 @@ export function useAuthProvider({
         }
       } else {
         setErrors(["externalLoginError"]);
+      }
+
+      const user = result?.data?.externalObtainAccessTokens?.user;
+
+      if (user) {
+        flagsmith.identify(user.id, { id: user.id });
       }
 
       await logoutNonStaffUser(result.data.externalObtainAccessTokens);
