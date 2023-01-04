@@ -19,7 +19,7 @@ const props: WarehouseDetailsPageProps = {
   disabled: false,
   errors: [],
   onDelete: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   saveButtonBarState: "default",
   warehouse,
 };
