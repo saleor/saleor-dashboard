@@ -137,10 +137,6 @@
   "+xTpT1": {
     "string": "Attributes"
   },
-  "//iaFx": {
-    "context": "WarehouseSettings title",
-    "string": "Settings"
-  },
   "//k1GX": {
     "context": "expired on label",
     "string": "Expired on {date}"
@@ -1440,6 +1436,10 @@
   "9hab/1": {
     "context": "bulk issue menu item",
     "string": "Bulk Issue"
+  },
+  "9kzIFd": {
+    "context": "WarehouseSettings stock title",
+    "string": "Stock settings"
   },
   "9mGA/Q": {
     "context": "button linking to dashboard",
