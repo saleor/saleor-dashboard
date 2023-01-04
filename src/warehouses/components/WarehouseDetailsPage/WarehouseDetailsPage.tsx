@@ -9,7 +9,6 @@ import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
-  CountryCode,
   CountryWithCodeFragment,
   WarehouseClickAndCollectOptionEnum,
   WarehouseDetailsFragment,
@@ -20,7 +19,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { sectionNames } from "@dashboard/intl";
-import { findValueInEnum } from "@dashboard/misc";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
@@ -69,21 +67,18 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
   const initialForm: WarehouseDetailsPageFormData = {
     city: warehouse?.address.city ?? "",
-    companyName: warehouse?.address.companyName,
-    country: findValueInEnum(
-      warehouse?.address.country.code ?? "",
-      CountryCode,
-    ),
+    companyName: warehouse?.address.companyName ?? "",
+    country: warehouse?.address.country.code ?? "",
     isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
       warehouse?.clickAndCollectOption ||
       WarehouseClickAndCollectOptionEnum.DISABLED,
-    countryArea: warehouse?.address.countryArea,
+    countryArea: warehouse?.address.countryArea ?? "",
     name: warehouse?.name ?? "",
     phone: warehouse?.address.phone ?? "",
     postalCode: warehouse?.address.postalCode ?? "",
     streetAddress1: warehouse?.address.streetAddress1 ?? "",
-    streetAddress2: warehouse?.address.streetAddress2,
+    streetAddress2: warehouse?.address.streetAddress2 ?? "",
   };
 
   return (
