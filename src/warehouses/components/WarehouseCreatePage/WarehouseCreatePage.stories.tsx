@@ -17,7 +17,7 @@ const props: WarehouseCreatePageProps = {
   })),
   disabled: false,
   errors: [],
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   saveButtonBarState: "default",
 };
 storiesOf("Warehouses / Create warehouse", module)
