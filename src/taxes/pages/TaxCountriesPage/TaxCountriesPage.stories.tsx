@@ -16,7 +16,7 @@ const props: TaxCountriesPageProps = {
   disabled: false,
 };
 
-storiesOf(" Taxes / Countries view", module)
+storiesOf("Taxes / Countries view", module)
   .addDecorator(Decorator)
   .add("loading", () => (
     <TaxCountriesPage {...props} countryTaxesData={undefined} />

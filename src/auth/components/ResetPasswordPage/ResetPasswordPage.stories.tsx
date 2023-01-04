@@ -11,7 +11,7 @@ const props: ResetPasswordPageProps = {
   error: undefined,
   onSubmit: () => undefined,
 };
-storiesOf(" Authentication / Reset password", module)
+storiesOf("Authentication / Reset password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <ResetPasswordPage {...props} />)

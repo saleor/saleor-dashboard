@@ -38,7 +38,7 @@ const props: StaffListPageProps = {
   staffMembers,
 };
 
-storiesOf(" Staff / Staff members", module)
+storiesOf("Staff / Staff members", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <StaffListPage {...props} />)

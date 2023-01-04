@@ -16,7 +16,7 @@ const props: PermissionGroupCreatePageProps = {
   saveButtonBarState: undefined,
 };
 
-storiesOf(" Permission Groups / Permission Group Create", module)
+storiesOf("Permission Groups / Permission Group Create", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupCreatePage {...props} />)
   .add("loading", () => (

@@ -17,7 +17,7 @@ const props = {
   onTaxClassDelete: () => undefined,
 };
 
-storiesOf(" Taxes / Tax classes view", module)
+storiesOf("Taxes / Tax classes view", module)
   .addDecorator(Decorator)
   .add("loading", () => <TaxClassesPage {...props} taxClasses={undefined} />)
   .add("default", () => <TaxClassesPage {...props} />);

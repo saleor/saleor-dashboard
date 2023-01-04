@@ -12,7 +12,7 @@ const props: ChannelsListPageProps = {
   onRemove: () => undefined,
 };
 
-storiesOf(" Channels / Channels list", module)
+storiesOf("Channels / Channels list", module)
   .addDecorator(Decorator)
   .add("default", () => <ChannelsListPage {...props} />)
   .add("empty", () => <ChannelsListPage {...props} channelsList={[]} />)

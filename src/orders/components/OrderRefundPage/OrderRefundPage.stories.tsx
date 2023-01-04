@@ -14,7 +14,7 @@ const props: OrderRefundPageProps = {
   order: orderToRefund(placeholderImage),
 };
 
-storiesOf(" Orders / Refund order", module)
+storiesOf("Orders / Refund order", module)
   .addDecorator(Decorator)
   .add("products", () => (
     <OrderRefundPage {...props} defaultType={OrderRefundType.PRODUCTS} />

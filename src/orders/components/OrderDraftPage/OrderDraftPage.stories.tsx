@@ -79,7 +79,7 @@ const OrderDraftPage = props => {
   );
 };
 
-storiesOf(" Orders / Order draft", module)
+storiesOf("Orders / Order draft", module)
   .addDecorator(Decorator)
   .addDecorator(DiscountsDecorator)
   .add("default", () => <OrderDraftPage {...props} />)

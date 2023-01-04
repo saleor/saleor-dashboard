@@ -33,7 +33,7 @@ const props: TranslationsEntitiesListPageProps = {
   },
 };
 
-storiesOf(" Translations / Entity list", module)
+storiesOf("Translations / Entity list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => (

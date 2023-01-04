@@ -80,7 +80,7 @@ const props: OrderListPageProps = {
   },
 };
 
-storiesOf(" Orders / Order list", module)
+storiesOf("Orders / Order list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <OrderListPage {...props} />)

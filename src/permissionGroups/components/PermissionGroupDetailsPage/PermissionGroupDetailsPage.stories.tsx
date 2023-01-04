@@ -28,7 +28,7 @@ const props: PermissionGroupDetailsPageProps = {
   toolbar: null,
 };
 
-storiesOf(" Permission Groups / Permission Group Details", module)
+storiesOf("Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupDetailsPage {...props} />)
   .add("no members", () => (

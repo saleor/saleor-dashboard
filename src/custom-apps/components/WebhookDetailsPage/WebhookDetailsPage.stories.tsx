@@ -17,7 +17,7 @@ const props: WebhookDetailsPageProps = {
   saveButtonBarState: "default",
   webhook,
 };
-storiesOf(" Apps / Webhooks / Webhook details", module)
+storiesOf("Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookDetailsPage {...props} />)
   .add("undefined", () => <WebhookDetailsPage {...props} webhook={undefined} />)
