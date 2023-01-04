@@ -78,7 +78,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   });
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
-      if (data.deleteWarehouse.errors.length === 0) {
+      if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -96,7 +96,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 
   const [, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: warehouseListUrl,
-    getFilterQueryParam: () => undefined,
+    getFilterQueryParam: async () => undefined,
     navigate,
     params,
   });
@@ -125,7 +125,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   };
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.warehouses.pageInfo),
+    pageInfo: data?.warehouses?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -155,19 +155,24 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
       />
-      <WarehouseDeleteDialog
-        confirmButtonState={deleteTransitionState}
-        name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name}
-        open={params.action === "delete"}
-        onClose={closeModal}
-        onConfirm={() =>
-          deleteWarehouse({
-            variables: {
-              id: params.id,
-            },
-          })
-        }
-      />
+      {!!params.id && (
+        <WarehouseDeleteDialog
+          confirmButtonState={deleteTransitionState}
+          name={
+            mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name ??
+            ""
+          }
+          open={params.action === "delete"}
+          onClose={closeModal}
+          onConfirm={() =>
+            deleteWarehouse({
+              variables: {
+                id: params.id!,
+              },
+            })
+          }
+        />
+      )}
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
