@@ -28,6 +28,10 @@ import {
   createShipping,
   deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
+import {
+  getDefaultTaxClass,
+  updateTaxConfigurationForChannel,
+} from "../../support/api/utils/taxesUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
@@ -41,6 +45,7 @@ describe("Orders", () => {
   let shippingMethod;
   let variantsList;
   let address;
+  let taxClass;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -52,6 +57,12 @@ describe("Orders", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+        updateTaxConfigurationForChannel({ channelSlug: defaultChannel.slug });
+        getDefaultTaxClass();
+      })
+      .then(resp => {
+        taxClass = resp;
+        cy.log(taxClass);
       })
       .then(() => {
         cy.fixture("addresses");
