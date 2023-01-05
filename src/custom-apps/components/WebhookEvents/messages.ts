@@ -2,19 +2,19 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   events: {
-    id: "GLewww",
+    id: "cZN5Jd",
     defaultMessage: "Events",
-    description: "section header",
+    description: "Webhook details events",
   },
   synchronous: {
-    id: "nvH3+P",
+    id: "yAFaVK",
     defaultMessage: "Synchronous",
-    description: "Synchronous",
+    description: "Webhook details synchronous events",
   },
   asynchronous: {
-    id: "uRi0YY",
+    id: "mSCZd4",
     defaultMessage: "Asynchronous",
-    description: "Asynchronous",
+    description: "Webhook details asynchronous events",
   },
   synchronousDescription: {
     id: "16Dpgb",
@@ -30,7 +30,7 @@ export const messages = defineMessages({
   },
   objects: {
     defaultMessage: "Objects",
-    id: "6leQB5",
-    description: "Objects",
+    id: "F6LHyk",
+    description: "Webhook details objects",
   },
 });
