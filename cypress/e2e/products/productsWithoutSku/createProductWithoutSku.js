@@ -10,15 +10,24 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { updateVariantWarehouse } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
-import {
-  deleteChannelsStartsWith,
-  getDefaultChannel,
-} from "../../../support/api/utils/channelsUtils";
+import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { enterVariantEditPage } from "../../../support/pages/catalog/products/productDetailsPage";
-import { selectChannelsForVariant } from "../../../support/pages/catalog/products/VariantsPage";
+import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
+import {
+  fillUpPriceList,
+  priceInputLists,
+} from "../../../support/pages/catalog/products/priceListComponent";
+import {
+  enterVariantEditPage,
+  fillUpProductTypeDialog,
+} from "../../../support/pages/catalog/products/productDetailsPage";
+import {
+  createVariant,
+  selectChannelsForVariant,
+} from "../../../support/pages/catalog/products/VariantsPage";
 import { selectChannelInDetailsPages } from "../../../support/pages/channelsPage";
 
 describe("Creating variants", () => {
@@ -39,28 +48,24 @@ describe("Creating variants", () => {
     shippingUtils.deleteShippingStartsWith(startsWith);
     productUtils.deleteProductsStartsWith(startsWith);
     deleteChannelsStartsWith(startsWith);
+    deleteWarehouseStartsWith(startsWith);
 
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        cy.fixture("addresses");
-      })
-      .then(fixtureAddresses => {
-        address = fixtureAddresses.usAddress;
-        shippingUtils.createShipping({
-          channelId: defaultChannel.id,
-          name,
-          address,
-        });
-      })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-        },
-      );
+
+    cy.fixture("addresses").then(fixtureAddresses => {
+      address = fixtureAddresses.plAddress;
+    });
+
+    shippingUtils
+      .createShippingWithDefaultChannelAndAddress(name)
+      .then(resp => {
+        category = resp.category;
+        defaultChannel = resp.defaultChannel;
+        warehouse = resp.warehouse;
+        shippingMethod = resp.shippingMethod;
+      });
+
     productUtils
       .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
       .then(
@@ -91,8 +96,8 @@ describe("Creating variants", () => {
     );
   });
 
-  xit(
-    "should create variant without sku",
+  it(
+    "should create variant without sku TC: SALEOR_2807",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -112,12 +117,17 @@ describe("Creating variants", () => {
         .then(({ product: productResp }) => {
           createdProduct = productResp;
           cy.visit(`${urlList.products}${createdProduct.id}`);
-          createVariant({
-            warehouseName: warehouse.name,
-            attributeName: variants[1].name,
-            price: variants[1].price,
-            channelName: defaultChannel.name,
-          });
+          enterVariantEditPage();
+          cy.get(PRODUCT_DETAILS.addVariantButton)
+            .click()
+            .then(() => {
+              createVariant({
+                attributeName: variants[1].name,
+                price: variants[1].price,
+                channelName: defaultChannel.name,
+                warehouseId: warehouse.id,
+              });
+            });
         })
         .then(() => {
           getProductVariants(createdProduct.id, defaultChannel.slug);
@@ -141,28 +151,25 @@ describe("Creating variants", () => {
   );
 
   it(
-    "should create simple product without sku SALEOR_2806",
+    "should create simple product without sku SALEOR_2808",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+      const prices = { sellingPrice: 10, costPrice: 6 };
 
       cy.visit(urlList.products)
         .get(PRODUCTS_LIST.createProductBtn)
+        .click();
+      fillUpProductTypeDialog({ productType: simpleProductType.name });
+      cy.get(BUTTON_SELECTORS.submit)
         .click()
-        .fillAutocompleteSelect(
-          PRODUCTS_LIST.dialogProductTypeInput,
-          simpleProductType.name,
-        );
-      cy.get(BUTTON_SELECTORS.submit).click();
-      cy.get(PRODUCT_DETAILS.productNameInput)
+        .get(PRODUCT_DETAILS.productNameInput)
         .type(name)
         .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput);
       selectChannelInDetailsPages(defaultChannel.name);
-      cy.get(PRODUCT_DETAILS.costPriceInput)
-        .type(10)
-        .get(PRODUCT_DETAILS.sellingPriceInput)
-        .type(10)
-        .addAliasToGraphRequest("VariantCreate")
+      fillUpPriceList(prices.sellingPrice);
+      fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
+      cy.addAliasToGraphRequest("VariantCreate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
@@ -170,18 +177,16 @@ describe("Creating variants", () => {
         .then(({ response }) => {
           const variantId =
             response.body.data.productVariantCreate.productVariant.id;
-
-          updateVariantWarehouse({ variantId, warehouseId: warehouse.id });
+          updateVariantWarehouse({
+            variantId,
+            warehouseId: warehouse.id,
+            quantity: 10,
+          });
         });
       enterVariantEditPage();
       cy.addAliasToGraphRequest("ProductVariantDetails");
       selectChannelsForVariant();
-      cy.get(PRODUCT_DETAILS.stockInput)
-        .parents()
-        .contains(warehouse.name)
-        .get(PRODUCT_DETAILS.stockInput)
-        .clearAndType(10)
-        .get(BUTTON_SELECTORS.confirm)
+      cy.get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
         .wait("@ProductVariantDetails")

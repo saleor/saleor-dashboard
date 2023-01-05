@@ -444,20 +444,29 @@ export function createShippingProductTypeAttributeAndCategory(
 ) {
   let warehouse;
   let defaultChannel;
+  let shippingMethod;
 
   return createShippingWithDefaultChannelAndAddress(name)
-    .then(({ warehouse: warehouseResp, defaultChannel: channel }) => {
-      warehouse = warehouseResp;
-      defaultChannel = channel;
+    .then(
+      ({
+        warehouse: warehouseResp,
+        defaultChannel: channel,
+        shippingMethod: shippingMethodResp,
+      }) => {
+        warehouse = warehouseResp;
+        defaultChannel = channel;
+        shippingMethod = shippingMethodResp;
 
-      createTypeAttributeAndCategoryForProduct({ name, attributeValues });
-    })
+        createTypeAttributeAndCategoryForProduct({ name, attributeValues });
+      },
+    )
     .then(({ attribute, productType, category }) => ({
       attribute,
       productType,
       category,
       warehouse,
       defaultChannel,
+      shippingMethod,
     }));
 }
 
