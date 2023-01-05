@@ -44,7 +44,7 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
       .first()
       .then(detachedOption => {
         cy.get(selectSelector).clear();
-        cy.get(selectSelector).type(option);
+        cy.get(selectSelector).type(option, { delay: 10 });
         cy.wrap(detachedOption).should(det => {
           Cypress.dom.isDetached(det);
         });
