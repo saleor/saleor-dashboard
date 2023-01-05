@@ -62,9 +62,6 @@ describe("Orders", () => {
       })
       .then(resp => {
         taxClass = resp;
-        cy.log(taxClass);
-      })
-      .then(() => {
         cy.fixture("addresses");
       })
       .then(addresses => {
@@ -77,6 +74,7 @@ describe("Orders", () => {
           channelId: defaultChannel.id,
           name: randomName,
           address,
+          taxClassId: taxClass.id,
         });
       })
       .then(
@@ -101,6 +99,7 @@ describe("Orders", () => {
             productTypeId: productTypeResp.id,
             attributeId: attributeResp.id,
             categoryId: categoryResp.id,
+            taxClassId: taxClass.id,
           });
         },
       )

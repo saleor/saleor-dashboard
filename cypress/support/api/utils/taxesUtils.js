@@ -26,15 +26,6 @@ export function getDefaultTaxClass() {
     const taxClass = taxClassArray.find(
       taxClassItem => taxClassItem.node.name === "No Taxes",
     );
-    return taxClass;
-  });
-}
-
-export function getDefaultChannel() {
-  return channels.getChannels().then(resp => {
-    const channelsArray = resp.body.data.channels;
-    return channelsArray.find(function(channelElement) {
-      return channelElement.slug === "default-channel";
-    });
+    return taxClass.node;
   });
 }

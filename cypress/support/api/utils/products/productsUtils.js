@@ -35,6 +35,7 @@ export function createProductInChannel({
   trackInventory = true,
   weight = 1,
   sku = name,
+  taxClassId,
 }) {
   let product;
   let variantsList;
@@ -49,6 +50,7 @@ export function createProductInChannel({
     visibleInListings,
     collectionId,
     description,
+    taxClassId,
   })
     .then(productResp => {
       product = productResp;
@@ -263,6 +265,7 @@ export function createProductInChannelWithoutVariants({
   visibleInListings = true,
   collectionId = null,
   description = null,
+  taxClassId,
 }) {
   let product;
   return productRequest
@@ -273,6 +276,7 @@ export function createProductInChannelWithoutVariants({
       categoryId,
       collectionId,
       description,
+      taxClassId,
     })
     .then(productResp => {
       product = productResp;
