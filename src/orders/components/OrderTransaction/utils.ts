@@ -27,6 +27,13 @@ export const mapActionToMessage: Record<
 export const mapTransactionEvent = (
   event: TransactionEventFragment | TransactionFakeEvent,
 ): TransactionMappingResult => {
+  if (!event) {
+    return {
+      type: null,
+      status: null,
+    };
+  }
+
   if (event.__typename === "TransactionFakeEvent") {
     return event.mappedResult;
   }
@@ -124,6 +131,12 @@ export const mapTransactionEvent = (
       return {
         type: "REFUND",
         status: "SUCCESS",
+      };
+    }
+    default: {
+      return {
+        type: null,
+        status: null,
       };
     }
   }
