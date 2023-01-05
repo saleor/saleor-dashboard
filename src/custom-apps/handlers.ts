@@ -18,8 +18,20 @@ import { filterSelectedAsyncEvents } from "./utils";
 export const createSyncEventsSelectHandler = (
   change: (event: ChangeEvent, cb?: () => void) => void,
   syncEvents: WebhookEventTypeSyncEnum[],
+  setQuery: React.Dispatch<React.SetStateAction<string>>,
 ) => (event: ChangeEvent) => {
   const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
+
+  // Clear query
+  setQuery("");
+
+  // Clear asyncEvents
+  change({
+    target: {
+      name: "asyncEvents",
+      value: [],
+    },
+  });
 
   change({
     target: {
@@ -37,6 +49,14 @@ export const createAsyncEventsSelectHandler = (
 ) => (event: ChangeEvent) => {
   const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
   const filteredEvents = filterSelectedAsyncEvents(events);
+
+  // Clear syncEvents
+  change({
+    target: {
+      name: "syncEvents",
+      value: [],
+    },
+  });
 
   change({
     target: {
@@ -69,7 +89,7 @@ const handleQuery = (
 
     visit(ast, {
       SelectionSet(node, _key, parent) {
-        if ((parent as ObjectFieldNode).name.value === "event") {
+        if ((parent as ObjectFieldNode).name?.value === "event") {
           const queryEvents = node.selections.map(
             selection =>
               (selection as InlineFragmentNode).typeCondition.name.value,

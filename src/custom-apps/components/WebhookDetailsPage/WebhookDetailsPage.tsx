@@ -95,6 +95,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         const handleSyncEventsSelect = createSyncEventsSelectHandler(
           change,
           data.syncEvents,
+          setQuery,
         );
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
           change,
@@ -126,7 +127,11 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
               onAsyncEventChange={handleAsyncEventsSelect}
             />
             <FormSpacer />
-            <WebhookSubscriptionQuery query={query} setQuery={setQuery} />
+            <WebhookSubscriptionQuery
+              query={query}
+              setQuery={setQuery}
+              data={data}
+            />
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
