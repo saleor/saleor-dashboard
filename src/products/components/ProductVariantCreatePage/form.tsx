@@ -68,7 +68,7 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   quantityLimitPerCustomer: number | null;
   preorderEndDateTime?: string;
-  name: string;
+  variantName: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -141,7 +141,7 @@ const initial: ProductVariantCreateFormData = {
   hasPreorderEndDate: false,
   preorderEndDateTime: "",
   quantityLimitPerCustomer: null,
-  name: "",
+  variantName: "",
 };
 
 function useProductVariantCreateForm(
