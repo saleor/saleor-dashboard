@@ -28,7 +28,7 @@ const props = {
   disabled: false,
 };
 
-storiesOf("Views / Taxes / Channels view", module)
+storiesOf("Taxes / Channels view", module)
   .addDecorator(Decorator)
   .add("loading", () => (
     <TaxChannelsPage {...props} taxConfigurations={undefined} />

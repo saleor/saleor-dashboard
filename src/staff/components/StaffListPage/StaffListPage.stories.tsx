@@ -15,7 +15,7 @@ import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDec
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import StaffListPage, { StaffListPageProps } from ".";
+import StaffListPage, { StaffListPageProps } from "./StaffListPage";
 
 const props: StaffListPageProps = {
   ...pageListProps.default,
@@ -38,7 +38,7 @@ const props: StaffListPageProps = {
   staffMembers,
 };
 
-storiesOf("Views / Staff / Staff members", module)
+storiesOf("Staff / Staff members", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <StaffListPage {...props} />)
