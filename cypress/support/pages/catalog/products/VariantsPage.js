@@ -99,6 +99,7 @@ export function fillUpVariantDetails({
       updateVariantWarehouse({ variantId, warehouseId, quantity });
     });
   }
+  cy.get(VARIANTS_SELECTORS.saveButton).click();
 }
 
 export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
