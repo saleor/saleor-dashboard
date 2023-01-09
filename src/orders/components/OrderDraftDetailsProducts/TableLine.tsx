@@ -73,13 +73,14 @@ const TableLine: React.FC<TableLineProps> = ({
   closeDialog,
   orderLineDiscountRemoveStatus,
   isDialogOpen,
+  totalDiscountedPrice,
   undiscountedPrice,
   discountedPrice,
   orderLineDiscountUpdateStatus,
 }) => {
   const classes = useStyles();
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
-  const { id, thumbnail, productName, productSku, quantity } = line;
+  const { id, thumbnail, productName, productSku } = line;
 
   const alerts = useLineAlerts({
     line,
@@ -146,8 +147,8 @@ const TableLine: React.FC<TableLineProps> = ({
       <TableCell className={classes.colTotal}>
         <Money
           money={{
-            amount: discountedPrice.amount * quantity,
-            currency: discountedPrice.currency,
+            amount: totalDiscountedPrice.amount,
+            currency: totalDiscountedPrice.currency,
           }}
         />
       </TableCell>
