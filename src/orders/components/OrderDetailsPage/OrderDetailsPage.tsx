@@ -230,6 +230,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               cardMenu={
                 <>
                   <Button
+                    data-test-id="graphiql-redirect"
                     onClick={() => {
                       const playgroundURL = new URL(process.env.API_URI);
                       playgroundURL.hash = encodeGraphQLStatement({

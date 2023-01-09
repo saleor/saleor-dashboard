@@ -336,6 +336,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 cardMenu={
                   <>
                     <Button
+                      data-test-id="graphiql-redirect"
                       onClick={() => {
                         const playgroundURL = new URL(process.env.API_URI);
                         playgroundURL.hash = encodeGraphQLStatement({
