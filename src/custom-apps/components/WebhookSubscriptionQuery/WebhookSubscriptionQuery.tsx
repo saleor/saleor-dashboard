@@ -69,6 +69,7 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent className={classes.cardContent}>
         <GraphiQL
+          data-test-id="graphiql-webhook"
           defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
