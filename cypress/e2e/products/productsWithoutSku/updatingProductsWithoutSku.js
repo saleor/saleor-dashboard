@@ -181,6 +181,8 @@ describe("Updating products without sku", () => {
             .get(VARIANTS_SELECTORS.skuInput)
             .clear()
             .addAliasToGraphRequest("VariantUpdate")
+            .get(VARIANTS_SELECTORS.variantNameInput)
+            .type(name)
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .waitForRequestAndCheckIfNoErrors("@VariantUpdate");
