@@ -28,8 +28,8 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
+import { getById } from "@saleor/misc";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { TaxClassesPageFormData } from "@saleor/taxes/types";
 import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";

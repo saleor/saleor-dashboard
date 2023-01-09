@@ -38,7 +38,7 @@ export const AppFrame: React.FC<Props> = ({
   refetch,
 }) => {
   const shop = useShop();
-  const frameRef = React.useRef<HTMLIFrameElement>();
+  const frameRef = React.useRef<HTMLIFrameElement>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);

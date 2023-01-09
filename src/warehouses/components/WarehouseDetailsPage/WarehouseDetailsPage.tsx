@@ -1,3 +1,4 @@
+import { createCountryHandler } from "@saleor/components/AddressEdit/createCountryHandler";
 import { Backlink } from "@saleor/components/Backlink";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
@@ -93,11 +94,12 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     >
       {({ change, data, isSaveDisabled, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
-        const handleCountryChange = createSingleAutocompleteSelectHandler(
+        const countrySelect = createSingleAutocompleteSelectHandler(
           change,
           setDisplayCountry,
           countryChoices,
         );
+        const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
           <Container>
@@ -126,7 +128,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                     description: "warehouse",
                   })}
                   onChange={change}
-                  onCountryChange={handleCountryChange}
+                  onCountryChange={handleCountrySelect}
                 />
               </div>
               <div>

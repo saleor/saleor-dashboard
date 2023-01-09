@@ -42,6 +42,8 @@ import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
+import CustomAppsSection from "./custom-apps";
+import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
@@ -280,6 +282,10 @@ const Routes: React.FC = () => {
                 exact
                 path="/configuration"
                 component={ConfigurationSection}
+              />
+              <SectionRoute
+                path={CustomAppSections.appsSection}
+                component={CustomAppsSection}
               />
               <Route component={NotFound} />
             </Switch>

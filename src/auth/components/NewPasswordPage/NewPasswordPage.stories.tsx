@@ -6,7 +6,7 @@ import React from "react";
 
 import NewPasswordPage from "./NewPasswordPage";
 
-storiesOf("Views / Authentication / Set up a new password", module)
+storiesOf("Authentication / Set up a new password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => (

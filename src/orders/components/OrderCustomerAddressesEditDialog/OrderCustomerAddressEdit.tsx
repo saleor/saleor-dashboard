@@ -12,10 +12,10 @@ import {
   OrderErrorFragment,
 } from "@saleor/graphql";
 import { FormChange } from "@saleor/hooks/useForm";
+import { getById } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getById } from "../OrderReturnPage/utils";
 import { AddressInputOptionEnum } from "./form";
 import { addressEditMessages } from "./messages";
 import { useStyles } from "./styles";

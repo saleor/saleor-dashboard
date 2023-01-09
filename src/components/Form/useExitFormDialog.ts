@@ -1,11 +1,7 @@
 import React, { useContext, useRef } from "react";
 
-import {
-  ExitFormDialogContext,
-  ExitFormDialogData,
-  SubmitFn,
-  WithFormId,
-} from "./ExitFormDialogProvider";
+import { ExitFormDialogContext } from "./ExitFormDialogProvider";
+import { ExitFormDialogData, SubmitFn, WithFormId } from "./types";
 
 export interface UseExitFormDialogResult
   extends Omit<ExitFormDialogData, "setIsDirty" | "setExitDialogSubmitRef">,

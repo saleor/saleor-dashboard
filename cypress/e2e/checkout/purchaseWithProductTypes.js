@@ -96,7 +96,7 @@ describe("As an unlogged customer I want to order physical and digital products"
 
   it(
     "should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404",
-    { tags: ["@checkout", "@allEnv"] },
+    { tags: ["@checkout", "@allEnv", "@stable"] },
     () => {
       let checkout;
 

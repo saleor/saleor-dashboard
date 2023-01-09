@@ -10,7 +10,7 @@ import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarn
 import { GiftCardsListConsumerProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { GiftCardDataFragment } from "@saleor/graphql";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getById } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

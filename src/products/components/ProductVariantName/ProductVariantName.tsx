@@ -33,7 +33,7 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({
       />
       <CardContent>
         <TextField
-          name="name"
+          name="variantName"
           value={value}
           label={intl.formatMessage(commonMessages.name)}
           onChange={onChange}

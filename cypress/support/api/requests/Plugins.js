@@ -25,7 +25,7 @@ export function activatePlugin({ id, channel, active = true }) {
 
   const mutation = `mutation{
     pluginUpdate(id: "${id}" ${channelLine} input:{
-      active:${active},configuration:
+      active:${active}
     }){
       errors{
         field

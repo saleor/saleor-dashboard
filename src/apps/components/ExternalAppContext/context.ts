@@ -16,4 +16,9 @@ export const ExternalAppContext = React.createContext<{
   appData: AppData | undefined;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAppData: React.Dispatch<React.SetStateAction<AppData | undefined>>;
-}>(undefined);
+}>({
+  open: false,
+  appData: undefined,
+  setOpen: () => null,
+  setAppData: () => null,
+});

@@ -485,10 +485,6 @@
   "1div9r": {
     "string": "Search Attribute"
   },
-  "1eEyJv": {
-    "context": "ExitFormPrompt continue editing button",
-    "string": "Continue editing"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1145,10 +1141,6 @@
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
   },
-  "6nSTuC": {
-    "context": "webhooks section name",
-    "string": "Webhooks"
-  },
   "6sjBvJ": {
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
@@ -1650,6 +1642,10 @@
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
+  },
+  "BFR6CF": {
+    "context": "webhooks and events section name",
+    "string": "Webhooks & Events"
   },
   "BHQrgz": {
     "context": "number of subcategories",
@@ -2199,10 +2195,6 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
-  "FWWliu": {
-    "context": "ExitFormPrompt title",
-    "string": "You have unsaved changes"
-  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
@@ -2328,9 +2320,6 @@
   "GD/bom": {
     "context": "label",
     "string": "Min Delivery Time"
-  },
-  "GDJHXl": {
-    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
   "GFJabu": {
     "context": "dialog header",
@@ -3012,6 +3001,13 @@
     "context": "dialog header",
     "string": "Unassign Variant From Sale"
   },
+  "L/O4LQ": {
+    "context": "order refund amount",
+    "string": "Authorized Amount"
+  },
+  "L/sNGY": {
+    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
+  },
   "L5io1l": {
     "context": "returned products list title",
     "string": "Products returned"
@@ -3144,10 +3140,6 @@
   "MNZY28": {
     "context": "table column header",
     "string": "Channel threshold"
-  },
-  "MPOj0I": {
-    "context": "ExitFormPrompt confirm button",
-    "string": "Save changes"
   },
   "MPfyne": {
     "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
@@ -4319,9 +4311,6 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
-  "UxTSw7": {
-    "string": "Webhooks & Events"
-  },
   "UxdBmI": {
     "context": "collection availability",
     "string": "Availability"
@@ -5028,6 +5017,9 @@
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
+  "Zz67wc": {
+    "string": "View and update your webhooks and events."
+  },
   "a+iRI1": {
     "context": "single gift card title",
     "string": "{selectedItemsCount,plural,one{Delete Gift Card} other{Delete Gift Cards}}"
@@ -5293,6 +5285,10 @@
     "context": "ProductTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this product type and assigned products"
   },
+  "blZJmA": {
+    "context": "ExitFormPrompt ignore changes button",
+    "string": "Ignore changes"
+  },
   "bp/i0x": {
     "context": "header",
     "string": "Quantity"
@@ -5324,6 +5320,10 @@
   },
   "c4gbXr": {
     "string": "Draft order successfully finalized"
+  },
+  "c5fFin": {
+    "context": "ExitFormPrompt title",
+    "string": "Leave without saving changes?"
   },
   "c5pMZ8": {
     "string": "API error"
@@ -7336,10 +7336,6 @@
     "context": "table header column",
     "string": "Show gross prices in storefront"
   },
-  "sn2awN": {
-    "context": "ExitFormPrompt cancel button",
-    "string": "Discard changes"
-  },
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
@@ -8064,6 +8060,10 @@
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "ySqncG": {
+    "context": "ExitFormPrompt keep editing button",
+    "string": "Keep editing"
   },
   "ySqrUU": {
     "context": "button",

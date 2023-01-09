@@ -7,14 +7,14 @@ import AppPage, { AppPageProps } from "./AppPage";
 
 const props: AppPageProps = {
   data: appDetails,
-  url: appDetails.appUrl,
+  url: appDetails.appUrl!,
   aboutHref: "",
   onError: () => undefined,
 };
 
-storiesOf("Views / Apps / App", module)
+storiesOf("Apps / App", module)
   .addDecorator(Decorator)
   .add("default", () => <AppPage {...props} />)
   .add("settings", () => (
-    <AppPage {...props} url={appDetails.configurationUrl} />
+    <AppPage {...props} url={appDetails.configurationUrl!} />
   ));

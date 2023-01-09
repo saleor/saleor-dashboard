@@ -16,27 +16,27 @@ export function updateProductIsAvailableForPurchase(
     ? valueTrue
     : valueFalse;
   const availableForPurchaseSelector = `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`;
-  updateProductMenageInChannel(productUrl, availableForPurchaseSelector);
+  updateProductManageInChannel(productUrl, availableForPurchaseSelector);
 }
 
 export function updateProductPublish(productUrl, isPublished) {
   const isPublishedSelector = isPublished ? valueTrue : valueFalse;
   const publishedSelector = `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${isPublishedSelector}`;
-  updateProductMenageInChannel(productUrl, publishedSelector);
+  updateProductManageInChannel(productUrl, publishedSelector);
 }
 
 export function updateProductVisibleInListings(productUrl) {
-  updateProductMenageInChannel(
+  updateProductManageInChannel(
     productUrl,
     AVAILABLE_CHANNELS_FORM.visibleInListingsButton,
   );
 }
 
-function updateProductMenageInChannel(productUrl, menageSelector) {
+function updateProductManageInChannel(productUrl, manageSelector) {
   cy.visit(productUrl)
     .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
     .click()
-    .get(menageSelector)
+    .get(manageSelector)
     .click()
     .waitForProgressBarToNotBeVisible()
     .addAliasToGraphRequest("ProductChannelListingUpdate")
@@ -154,8 +154,6 @@ export function enterVariantEditPage() {
   cy.get(PRODUCT_DETAILS.dataGridTable)
     .should("be.visible")
     .wait(1000)
-    .get(BUTTON_SELECTORS.showMoreButton)
-    .click()
     .get(PRODUCT_DETAILS.editVariant)
     .click();
 }

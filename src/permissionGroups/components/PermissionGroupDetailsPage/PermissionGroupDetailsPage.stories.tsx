@@ -1,15 +1,12 @@
 import { permissions } from "@saleor/fixtures";
-import PermissionGroupDetailsPage, {
-  PermissionGroupDetailsPageProps,
-} from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
-import {
-  emptyPermissionGroup,
-  permissionGroup,
-  users,
-} from "@saleor/permissionGroups/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
+import PermissionGroupDetailsPage, {
+  PermissionGroupDetailsPageProps,
+} from "./PermissionGroupDetailsPage";
 
 const props: PermissionGroupDetailsPageProps = {
   disabled: false,
@@ -31,7 +28,7 @@ const props: PermissionGroupDetailsPageProps = {
   toolbar: null,
 };
 
-storiesOf("Views / Permission Groups / Permission Group Details", module)
+storiesOf("Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupDetailsPage {...props} />)
   .add("no members", () => (

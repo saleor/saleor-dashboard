@@ -13,6 +13,7 @@ import FormSpacer from "../FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "../SingleAutocompleteSelectField";
+import { useAddressValidation } from "./useAddressValidation";
 
 const useStyles = makeStyles(
   theme => ({
@@ -46,6 +47,24 @@ function getErrorMessage(
   return getOrderErrorMessage(err, intl);
 }
 
+const PossibleFormFields = {
+  CITY: "city",
+  CITY_AREA: "cityArea",
+  COUNTRY: "country",
+  COUNTRY_AREA: "countryArea",
+  FIRST_NAME: "firstName",
+  LAST_NAME: "lastName",
+  COMPANY_NAME: "companyName",
+  PHONE: "phone",
+  POSTAL_CODE: "postalCode",
+  STREET_ADDRESS_1: "streetAddress1",
+  STREET_ADDRESS_2: "streetAddress2",
+} as const;
+
+const formFields: Array<keyof AddressTypeInput> = Object.values(
+  PossibleFormFields,
+);
+
 const AddressEdit: React.FC<AddressEditProps> = props => {
   const {
     countries,
@@ -56,23 +75,11 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     onChange,
     onCountryChange,
   } = props;
-
   const classes = useStyles(props);
   const intl = useIntl();
-
-  const formFields: Array<keyof AddressTypeInput> = [
-    "city",
-    "cityArea",
-    "country",
-    "countryArea",
-    "firstName",
-    "lastName",
-    "companyName",
-    "phone",
-    "postalCode",
-    "streetAddress1",
-    "streetAddress2",
-  ];
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
+    data.country,
+  );
 
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
@@ -219,7 +226,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           <TextField
             disabled={disabled}
             error={!!formErrors.postalCode}
-            helperText={getErrorMessage(formErrors.postalCode, intl)}
             label={intl.formatMessage({
               id: "oYGfnY",
               defaultMessage: "ZIP / Postal code",
@@ -241,6 +247,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <SingleAutocompleteSelectField
             disabled={disabled}
+            autocomplete="new-password"
             data-test-id="address-edit-country-select-field"
             displayValue={countryDisplayValue}
             error={!!formErrors.country}
@@ -259,23 +266,27 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
           />
         </div>
         <div>
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.countryArea}
-            helperText={getErrorMessage(formErrors.countryArea, intl)}
-            label={intl.formatMessage({
-              id: "AuwpCm",
-              defaultMessage: "Country area",
-            })}
-            name="countryArea"
-            onChange={onChange}
-            value={data.countryArea}
-            fullWidth
-            InputProps={{
-              autoComplete: "new-password",
-              spellCheck: false,
-            }}
-          />
+          {isFieldAllowed(PossibleFormFields.COUNTRY_AREA) && (
+            <SingleAutocompleteSelectField
+              disabled={disabled}
+              autocomplete="new-password"
+              data-test-id="address-edit-country-area-field"
+              displayValue={getDisplayValue(data.countryArea)}
+              error={!!formErrors.countryArea}
+              helperText={getErrorMessage(formErrors.countryArea, intl)}
+              label={intl.formatMessage({
+                id: "AuwpCm",
+                defaultMessage: "Country area",
+              })}
+              name="countryArea"
+              onChange={onChange}
+              value={data.countryArea}
+              choices={areas}
+              InputProps={{
+                spellCheck: false,
+              }}
+            />
+          )}
         </div>
       </div>
     </>

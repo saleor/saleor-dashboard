@@ -12,6 +12,7 @@ import {
   RefreshLimitsQuery,
   WarehouseFragment,
 } from "@saleor/graphql";
+import EditIcon from "@saleor/icons/Edit";
 import { buttonMessages } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
 import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
@@ -121,6 +122,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         {
           label: "Edit Variant",
           onSelect: () => onRowClick(variants[index].id),
+          Icon: <EditIcon />,
         },
       ]}
       rows={variants?.length ?? 0}

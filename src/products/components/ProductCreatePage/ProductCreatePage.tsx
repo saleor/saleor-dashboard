@@ -171,8 +171,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       value: taxClass.id,
     })) ?? [];
 
-  const canOpenAssignReferencesAttributeDialog =
-    !!assignReferencesAttributeId && !fetchMoreReferenceProducts.loading;
+  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -231,6 +230,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         const isSimpleProduct = data.productType?.hasVariants === false;
 
         const errors = [...apiErrors, ...validationErrors];
+
+        const entityType = getReferenceAttributeEntityTypeFromAttribute(
+          assignReferencesAttributeId,
+          data.attributes,
+        );
+
         return (
           <Container>
             <Backlink href={productListUrl()}>
@@ -387,12 +392,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               state={saveButtonBarState}
               disabled={isSaveDisabled}
             />
-            {canOpenAssignReferencesAttributeDialog && (
+            {canOpenAssignReferencesAttributeDialog && entityType && (
               <AssignAttributeValueDialog
-                entityType={getReferenceAttributeEntityTypeFromAttribute(
-                  assignReferencesAttributeId,
-                  data.attributes,
-                )}
+                entityType={entityType}
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}

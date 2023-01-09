@@ -51,65 +51,79 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
       />
       <ResponsiveTable>
         <TableBody>
-          {renderCollection(appsList, ({ status, appName, id, message }) => (
-            <TableRowLink key={id} className={classes.tableRow}>
-              <TableCell className={classes.colName}>
-                <span data-tc="name">{appName}</span>
-              </TableCell>
-              {status === JobStatusEnum.PENDING && (
-                <TableCell
-                  className={clsx(classes.colAction, classes.colInstallAction)}
-                >
-                  <Typography variant="body2" className={classes.text}>
-                    <FormattedMessage
-                      id="1qRwgQ"
-                      defaultMessage="Installing app..."
-                      description="app installation"
-                    />
-                  </Typography>
-                  <div className={classes.colSpinner}>
-                    <Progress size={20} />
-                  </div>
+          {renderCollection(
+            appsList,
+            ({
+              status,
+              appName,
+              id,
+              message,
+            }: AppsInstallationsQuery["appsInstallations"][number]) => (
+              <TableRowLink key={id} className={classes.tableRow}>
+                <TableCell className={classes.colName}>
+                  <span data-tc="name">{appName}</span>
                 </TableCell>
-              )}
-              {status === JobStatusEnum.FAILED && (
-                <TableCell
-                  className={clsx(classes.colAction, classes.colInstallAction)}
-                >
-                  <Typography variant="body2" className={classes.error}>
-                    <FormattedMessage
-                      id="Xl0o2y"
-                      defaultMessage="Problem occured during installation"
-                      description="app installation error"
-                    />
-                    <Tooltip title={message} variant="error">
-                      <TooltipMountWrapper>
-                        <Indicator icon="error" />
-                      </TooltipMountWrapper>
-                    </Tooltip>
-                  </Typography>
-                  <TableButtonWrapper>
-                    <Button onClick={() => onAppInstallRetry(id)}>
+                {status === JobStatusEnum.PENDING && (
+                  <TableCell
+                    className={clsx(
+                      classes.colAction,
+                      classes.colInstallAction,
+                    )}
+                  >
+                    <Typography variant="body2" className={classes.text}>
                       <FormattedMessage
-                        id="+c/f61"
-                        defaultMessage="Retry"
-                        description="retry installation"
+                        id="1qRwgQ"
+                        defaultMessage="Installing app..."
+                        description="app installation"
                       />
-                    </Button>
-                  </TableButtonWrapper>
-                  <TableButtonWrapper>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={() => onRemove(id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableButtonWrapper>
-                </TableCell>
-              )}
-            </TableRowLink>
-          ))}
+                    </Typography>
+                    <div className={classes.colSpinner}>
+                      <Progress size={20} />
+                    </div>
+                  </TableCell>
+                )}
+                {status === JobStatusEnum.FAILED && (
+                  <TableCell
+                    className={clsx(
+                      classes.colAction,
+                      classes.colInstallAction,
+                    )}
+                  >
+                    <Typography variant="body2" className={classes.error}>
+                      <FormattedMessage
+                        id="Xl0o2y"
+                        defaultMessage="Problem occured during installation"
+                        description="app installation error"
+                      />
+                      <Tooltip title={message} variant="error">
+                        <TooltipMountWrapper>
+                          <Indicator icon="error" />
+                        </TooltipMountWrapper>
+                      </Tooltip>
+                    </Typography>
+                    <TableButtonWrapper>
+                      <Button onClick={() => onAppInstallRetry(id)}>
+                        <FormattedMessage
+                          id="+c/f61"
+                          defaultMessage="Retry"
+                          description="retry installation"
+                        />
+                      </Button>
+                    </TableButtonWrapper>
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onRemove(id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
+                  </TableCell>
+                )}
+              </TableRowLink>
+            ),
+          )}
         </TableBody>
       </ResponsiveTable>
     </Card>

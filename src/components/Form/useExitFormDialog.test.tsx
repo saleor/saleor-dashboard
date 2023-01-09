@@ -4,11 +4,9 @@ import React from "react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 
-import {
-  ExitFormDialogContext,
-  useExitFormDialogProvider,
-} from "./ExitFormDialogProvider";
+import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
+import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
 jest.mock("../../hooks/useNotifier", () => undefined);
 
@@ -86,71 +84,6 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.pathname).toBe(targetPath);
   });
-
-  it("blocks navigation if an error occured", async () => {
-    // Given
-    const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }]),
-    );
-    const { result } = setup(submitFn);
-
-    // When
-    act(() => {
-      result.current.form.change({
-        target: { name: "field", value: "something" },
-      });
-      result.current.history.push(targetPath);
-    });
-    await act(() => result.current.exit.submit());
-
-    // Then
-    expect(result.current.history.location.pathname).toBe(initialPath);
-  });
-
-  it("allows navigation if an error occured, but confirmation is not needed", async () => {
-    // Given
-    const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }]),
-    );
-    const { result } = setup(submitFn, false);
-
-    // When
-    act(() => {
-      result.current.form.change({
-        target: { name: "field", value: "something" },
-      });
-      result.current.history.push(targetPath);
-    });
-    await act(() => result.current.exit.submit());
-
-    // Then
-    expect(result.current.history.location.pathname).toBe(targetPath);
-  });
-
-  it("blocks navigation if an error occured and user tries to leave anyway", async () => {
-    // Given
-    const submitFn = jest.fn(() =>
-      Promise.resolve([{ field: "field", code: "code" }]),
-    );
-    const { result } = setup(submitFn);
-
-    // When
-    act(() => {
-      result.current.form.change({
-        target: { name: "field", value: "something" },
-      });
-      result.current.history.push(targetPath);
-    });
-    await act(() => result.current.exit.submit());
-    act(() => {
-      result.current.history.push(targetPath);
-    });
-
-    // Then
-    expect(result.current.exit.shouldBlockNavigation()).toBe(true);
-    expect(result.current.history.location.pathname).toBe(initialPath);
-  });
-
   it("navigates to full url with querystring", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));

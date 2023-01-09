@@ -1,83 +1,74 @@
 import {
   AppFetchMutation,
+  AppListItemFragment,
   AppQuery,
   AppsInstallationsQuery,
-  AppsListQuery,
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
 } from "@saleor/graphql";
 
-export const appsList: AppsListQuery["apps"]["edges"] = [
+export const appsList: AppListItemFragment[] = [
   {
-    __typename: "AppCountableEdge",
-    node: {
-      __typename: "App",
-      id: "QXBwOjE3Ng==",
-      isActive: true,
-      name: "app",
-      type: AppTypeEnum.THIRDPARTY,
-      appUrl: null,
-      manifestUrl: "http://localhost:3000/api/manifest",
-      permissions: [
-        {
-          __typename: "Permission",
-          code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers.",
-        },
-      ],
-    },
+    __typename: "App",
+    id: "QXBwOjE3Ng==",
+    isActive: true,
+    name: "app",
+    type: AppTypeEnum.THIRDPARTY,
+    appUrl: null,
+    manifestUrl: "http://localhost:3000/api/manifest",
+    permissions: [
+      {
+        __typename: "Permission",
+        code: PermissionEnum.MANAGE_USERS,
+        name: "Manage customers.",
+      },
+    ],
   },
   {
-    __typename: "AppCountableEdge",
-    node: {
-      __typename: "App",
-      id: "QXBwOjE3Ng==",
-      isActive: false,
-      name: "app1",
-      type: AppTypeEnum.THIRDPARTY,
-      appUrl: "http://localhost:3000",
-      manifestUrl: "http://localhost:3000/api/manifest",
-      permissions: [
-        {
-          __typename: "Permission",
-          code: PermissionEnum.MANAGE_ORDERS,
-          name: "Manage orders.",
-        },
-        {
-          __typename: "Permission",
-          code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers.",
-        },
-      ],
-    },
+    __typename: "App",
+    id: "QXBwOjE3Ng==",
+    isActive: false,
+    name: "app1",
+    type: AppTypeEnum.THIRDPARTY,
+    appUrl: "http://localhost:3000",
+    manifestUrl: "http://localhost:3000/api/manifest",
+    permissions: [
+      {
+        __typename: "Permission",
+        code: PermissionEnum.MANAGE_ORDERS,
+        name: "Manage orders.",
+      },
+      {
+        __typename: "Permission",
+        code: PermissionEnum.MANAGE_USERS,
+        name: "Manage customers.",
+      },
+    ],
   },
 ];
 
-export const customAppsList: AppsListQuery["apps"]["edges"] = [
+export const customAppsList: AppListItemFragment[] = [
   {
-    __typename: "AppCountableEdge",
-    node: {
-      __typename: "App",
-      id: "QXBwOjE3Ng==",
-      isActive: true,
-      name: "app custom",
-      type: AppTypeEnum.LOCAL,
-      appUrl: null,
-      manifestUrl: null,
-      permissions: [
-        {
-          __typename: "Permission",
-          code: PermissionEnum.MANAGE_ORDERS,
-          name: "Manage orders.",
-        },
-        {
-          __typename: "Permission",
-          code: PermissionEnum.MANAGE_USERS,
-          name: "Manage customers.",
-        },
-      ],
-    },
+    __typename: "App",
+    id: "QXBwOjE3Ng==",
+    isActive: true,
+    name: "app custom",
+    type: AppTypeEnum.LOCAL,
+    appUrl: null,
+    manifestUrl: null,
+    permissions: [
+      {
+        __typename: "Permission",
+        code: PermissionEnum.MANAGE_ORDERS,
+        name: "Manage orders.",
+      },
+      {
+        __typename: "Permission",
+        code: PermissionEnum.MANAGE_USERS,
+        name: "Manage customers.",
+      },
+    ],
   },
 ];
 
@@ -108,7 +99,7 @@ export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
   },
 ];
 
-export const appDetails: AppQuery["app"] = {
+export const appDetails: NonNullable<AppQuery["app"]> = {
   __typename: "App",
   aboutApp: "Lorem ipsum",
   accessToken: "token",
@@ -143,7 +134,9 @@ export const appDetails: AppQuery["app"] = {
   webhooks: [],
 };
 
-export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
+export const installApp: NonNullable<
+  AppFetchMutation["appFetchManifest"]
+>["manifest"] = {
   __typename: "Manifest",
   about: "Lorem ipsum",
   appUrl: null,

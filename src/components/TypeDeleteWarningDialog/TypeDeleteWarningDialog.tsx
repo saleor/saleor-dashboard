@@ -1,7 +1,7 @@
 import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { getById } from "@saleor/misc";
 import ModalTitle from "@saleor/orders/components/OrderDiscountCommonModal/ModalTitle";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

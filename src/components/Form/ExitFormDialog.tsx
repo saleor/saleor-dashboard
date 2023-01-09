@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogContent, makeStyles } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
+import { DialogHeader } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -30,47 +30,37 @@ const useStyles = makeStyles(
 );
 
 interface ExitFormDialogProps {
-  onSubmit: () => void;
   onClose: () => void;
   onLeave: () => void;
   isOpen: boolean;
-  isSubmitDisabled: boolean;
 }
 
 const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
-  onSubmit,
   onLeave,
   onClose,
   isOpen,
-  isSubmitDisabled,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
 
   return (
     <Dialog className={classes.container} open={isOpen} onClose={onClose}>
-      <CardTitle
-        title={intl.formatMessage(
-          isSubmitDisabled ? messages.unableToSaveTitle : messages.title,
-        )}
-      />
+      <DialogHeader onClose={onClose}>
+        {intl.formatMessage(messages.unableToSaveTitle)}
+      </DialogHeader>
       <DialogContent className={classes.dialogContent}>
         <div className={classes.buttonsContainer}>
-          <Button onClick={onLeave} data-test-id="leave-without-saving">
-            {intl.formatMessage(messages.cancelButton)}
+          <Button onClick={onClose} data-test-id="keep-editing">
+            {intl.formatMessage(messages.keepEditing)}
           </Button>
           <HorizontalSpacer />
           <Button
             variant="contained"
             color="primary"
-            onClick={isSubmitDisabled ? onClose : onSubmit}
-            data-test-id="save-and-continue"
+            onClick={onLeave}
+            data-test-id="ignore-changes"
           >
-            {intl.formatMessage(
-              isSubmitDisabled
-                ? messages.continueEditingButton
-                : messages.confirmButton,
-            )}
+            {intl.formatMessage(messages.ignoreChanges)}
           </Button>
         </div>
       </DialogContent>

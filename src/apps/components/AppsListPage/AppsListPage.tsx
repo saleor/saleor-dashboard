@@ -4,7 +4,7 @@ import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { AppsInstallationsQuery, AppsListQuery } from "@saleor/graphql";
+import { AppListItemFragment, AppsInstallationsQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
@@ -14,16 +14,12 @@ import React, { useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
-import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
 
 export interface AppsListPageProps extends ListProps {
-  installedAppsList: AppsListQuery["apps"]["edges"];
-  customAppsList: AppsListQuery["apps"]["edges"];
+  installedAppsList: AppListItemFragment[];
   appsInProgressList?: AppsInstallationsQuery;
-  getCustomAppHref: (id: string) => string;
   onInstalledAppRemove: (id: string) => void;
-  onCustomAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
 }
@@ -45,11 +41,8 @@ const useStyles = makeStyles(
 
 const AppsListPage: React.FC<AppsListPageProps> = ({
   appsInProgressList,
-  customAppsList,
   installedAppsList,
-  getCustomAppHref,
   onInstalledAppRemove,
-  onCustomAppRemove,
   onAppInProgressRemove,
   onAppInstallRetry,
   ...listProps
@@ -79,21 +72,25 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       installedAppsList?.filter(
         app =>
           !(fetchedSaleorApps ?? []).find(fetchedApp =>
-            app.node.manifestUrl?.includes(fetchedApp.hostname),
+            app.manifestUrl?.includes(fetchedApp.hostname),
           ),
       ),
     [installedAppsList, fetchedSaleorApps],
   );
 
-  const saleorApps = useMemo(
+  const saleorApps = useMemo<AppListItemFragment[]>(
     () =>
-      fetchedSaleorApps
-        ?.map(app =>
-          installedAppsList?.find(installedApp =>
-            installedApp.node.manifestUrl?.includes(app.hostname),
-          ),
-        )
-        .filter(Boolean),
+      (fetchedSaleorApps || []).reduce<AppListItemFragment[]>((acc, app) => {
+        const foundedApp = installedAppsList?.find(installedApp =>
+          installedApp.manifestUrl?.includes(app.hostname),
+        );
+
+        if (foundedApp) {
+          acc.push(foundedApp);
+        }
+
+        return acc;
+      }, []),
     [installedAppsList, fetchedSaleorApps],
   );
 
@@ -132,24 +129,6 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             />
 
             <CardSpacer />
-          </>
-        );
-      }
-      case "webhooks-and-events": {
-        return (
-          <>
-            <p>
-              <FormattedMessage
-                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
-              connect apps and access Saleor API."
-                id="GDJHXl"
-              />
-            </p>
-            <CustomApps
-              appsList={customAppsList}
-              getCustomAppHref={getCustomAppHref}
-              onRemove={onCustomAppRemove}
-            />
           </>
         );
       }

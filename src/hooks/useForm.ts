@@ -1,9 +1,9 @@
-import { CheckIfSaveIsDisabledFnType } from "@saleor/components/Form";
-import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import {
+  CheckIfSaveIsDisabledFnType,
+  FormId,
   useExitFormDialog,
   UseExitFormDialogResult,
-} from "@saleor/components/Form/useExitFormDialog";
+} from "@saleor/components/Form";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";

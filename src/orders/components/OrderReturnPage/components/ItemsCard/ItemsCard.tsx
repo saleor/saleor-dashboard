@@ -18,14 +18,13 @@ import {
 } from "@saleor/graphql";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
+import { getById, renderCollection } from "@saleor/misc";
 import OrderCardTitle from "@saleor/orders/components/OrderCardTitle";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../../form";
 import {
-  getById,
   getQuantityDataFromItems,
   getReplacementDataFromItems,
 } from "../../utils";

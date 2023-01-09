@@ -3,11 +3,11 @@ import {
   OrderReturnLineInput,
   OrderReturnProductsInput,
 } from "@saleor/graphql";
+import { getById } from "@saleor/misc";
 import {
   FormsetQuantityData,
   OrderReturnFormData,
 } from "@saleor/orders/components/OrderReturnPage/form";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 class ReturnFormDataParser {
   private formData: OrderReturnFormData;

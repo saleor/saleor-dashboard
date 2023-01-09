@@ -124,7 +124,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           }),
           product: productId,
           sku: formData.sku,
-          name: formData.name,
+          name: formData.variantName,
           stocks: formData.stocks.map(stock => ({
             quantity: parseInt(stock.value, 10) || 0,
             warehouse: stock.id,

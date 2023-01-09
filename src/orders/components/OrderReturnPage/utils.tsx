@@ -1,4 +1,5 @@
 import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
+import { getById } from "@saleor/misc";
 import { Node } from "@saleor/types";
 
 import {
@@ -99,13 +100,6 @@ export const getParsedLines = (
     id,
     quantity,
   }));
-
-export const getById = (idToCompare: string) => (obj: Node) =>
-  obj.id === idToCompare;
-
-export const getByUnmatchingId = (idToCompare: string) => (obj: {
-  id: string;
-}) => obj.id !== idToCompare;
 
 const isIncludedInIds = function<T extends Node>(
   arrayToCompare: string[] | T[],
