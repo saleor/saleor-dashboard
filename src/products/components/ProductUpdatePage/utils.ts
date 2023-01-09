@@ -18,7 +18,7 @@ const getFractionDigits = (locale: Locale, currency: string) => {
   }
 };
 
-const parseCurrency = (
+export const parseCurrency = (
   value: string,
   locale: Locale,
   currency: string,
