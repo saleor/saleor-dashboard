@@ -5,8 +5,8 @@ import { useAppListContext } from "@dashboard/new-apps/context";
 import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
-import { Switch, TableCell, Typography } from "@material-ui/core";
-import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
+import { TableCell, Typography } from "@material-ui/core";
+import { IconButton, Pill, SettingsIcon } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -22,15 +22,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
-  const { activateApp, deactivateApp, removeApp } = useAppListContext();
-
-  const handleToggleActive = () => {
-    if (app.isActive) {
-      deactivateApp(app.id);
-    } else {
-      activateApp(app.id);
-    }
-  };
+  const { openAppSettings } = useAppListContext();
 
   return (
     <TableRowLink className={classes.row} href={AppUrls.resolveAppUrl(app.id)}>
@@ -70,22 +62,15 @@ export const InstalledAppListRow: React.FC<InstalledApp> = ({
               {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
             </Typography>
           ) : null}
-          <TableButtonWrapper>
-            <Switch
-              checked={!!app.isActive}
-              onChange={handleToggleActive}
-              data-test-id="app-active-switch"
-            />
-          </TableButtonWrapper>
           <AppPermissions permissions={app.permissions} />
           <TableButtonWrapper>
             <IconButton
               variant="secondary"
               color="primary"
-              onClick={() => removeApp(app.id)}
-              data-test-id="app-remove-button"
+              onClick={() => openAppSettings(app.id)}
+              data-test-id="app-settings-button"
             >
-              <DeleteIcon />
+              <SettingsIcon />
             </IconButton>
           </TableButtonWrapper>
         </div>

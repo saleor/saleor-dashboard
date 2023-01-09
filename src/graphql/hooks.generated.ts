@@ -67,6 +67,15 @@ export const AppFragmentDoc = gql`
   }
 }
     ${WebhookFragmentDoc}`;
+export const AppInstallationFragmentDoc = gql`
+    fragment AppInstallation on AppInstallation {
+  status
+  message
+  appName
+  manifestUrl
+  id
+}
+    `;
 export const AppPermissionFragmentDoc = gql`
     fragment AppPermission on Permission {
   name
@@ -3320,14 +3329,10 @@ export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.
 export const AppsInstallationsDocument = gql`
     query AppsInstallations {
   appsInstallations {
-    status
-    message
-    appName
-    manifestUrl
-    id
+    ...AppInstallation
   }
 }
-    `;
+    ${AppInstallationFragmentDoc}`;
 
 /**
  * __useAppsInstallationsQuery__

@@ -1,4 +1,5 @@
 import { getAppsConfig } from "@dashboard/config";
+import { AppInstallationFragment } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
@@ -92,3 +93,8 @@ export const getAppDetails = (
     links: isAppComingSoon ? [] : prepareAppLinks(intl, app),
   };
 };
+
+export const getAppInProgressName = (
+  id: string,
+  collection?: AppInstallationFragment[],
+) => collection?.find(app => app.id === id)?.appName || id;

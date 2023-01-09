@@ -4,23 +4,21 @@ import { getAppsConfig } from "@dashboard/config";
 import {
   AppSortField,
   AppTypeEnum,
+  JobStatusEnum,
   OrderDirection,
-  useAppActivateMutation,
-  useAppDeactivateMutation,
-  useAppDeleteMutation,
+  useAppDeleteFailedInstallationMutation,
+  useAppsInstallationsQuery,
   useAppsListQuery,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import { findById } from "@dashboard/misc";
-import AppActivateDialog from "@dashboard/new-apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@dashboard/new-apps/components/AppDeactivateDialog";
-import AppDeleteDialog from "@dashboard/new-apps/components/AppDeleteDialog";
+import AppInProgressDeleteDialog from "@dashboard/new-apps/components/AppInProgressDeleteDialog";
 import AppListPage from "@dashboard/new-apps/components/AppListPage/AppListPage";
 import {
   AppListContext,
@@ -32,11 +30,14 @@ import {
   AppListUrlQueryParams,
   AppUrls,
 } from "@dashboard/new-apps/urls";
-import { getMarketplaceAppsLists } from "@dashboard/new-apps/utils";
+import {
+  getAppInProgressName,
+  getMarketplaceAppsLists,
+} from "@dashboard/new-apps/utils";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -50,6 +51,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
   const client = useApolloClient();
+  const [activeInstallations, setActiveInstallations] = useLocalStorage<
+    Array<Record<"id" | "name", string>>
+  >("activeInstallations", []);
+  const intervalId = useRef<null | number>(null);
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
     AppListUrlQueryParams
@@ -84,18 +89,26 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     paginationState,
   );
 
+  const {
+    data: appsInProgressData,
+    refetch: appsInProgressRefetch,
+  } = useAppsInstallationsQuery({
+    displayLoader: false,
+  });
+
   const refetchExtensionList = () => {
     client.refetchQueries({
       include: [EXTENSION_LIST_QUERY],
     });
   };
 
-  const handleRemoveConfirm = () =>
-    deleteApp({
-      variables: {
-        id: params.id || "",
-      },
+  const installedAppNotify = (name: string) => {
+    notify({
+      status: "success",
+      text: intl.formatMessage(messages.appReadyToUse, { name }),
+      title: intl.formatMessage(messages.appInstalled),
     });
+  };
 
   const removeAppNotify = () => {
     notify({
@@ -104,54 +117,87 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const handleActivateAppConfirm = () =>
-    activateApp({ variables: { id: params.id || "" } });
+  const removeInstallation = (id: string) =>
+    setActiveInstallations(installations =>
+      installations.filter(item => item.id !== id),
+    );
 
-  const handleDeactivateAppConfirm = () =>
-    deactivateApp({ variables: { id: params.id || "" } });
-
-  const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
+  const [
+    deleteInProgressApp,
+    deleteInProgressAppOpts,
+  ] = useAppDeleteFailedInstallationMutation({
     onCompleted: data => {
-      if (!data?.appDelete?.errors?.length) {
-        refetch();
-        closeModal();
-        refetchExtensionList();
+      if (!data?.appDeleteFailedInstallation?.errors?.length) {
         removeAppNotify();
-      }
-    },
-  });
-  const [activateApp, activateAppResult] = useAppActivateMutation({
-    onCompleted: data => {
-      if (!data?.appActivate?.errors?.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.appActivated),
-        });
-        refetch();
+        appsInProgressRefetch();
         closeModal();
       }
     },
   });
-  const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
-    onCompleted: data => {
-      if (!data?.appDeactivate?.errors?.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.appDeactivated),
-        });
-        refetch();
-        closeModal();
+
+  const handleRemoveInProgressConfirm = () =>
+    deleteInProgressApp({
+      variables: {
+        id: params?.id || "",
+      },
+    });
+
+  useEffect(() => {
+    const appsInProgress = appsInProgressData?.appsInstallations || [];
+    if (activeInstallations.length && !!appsInProgressData) {
+      if (!intervalId.current) {
+        intervalId.current = window.setInterval(
+          () => appsInProgressRefetch(),
+          2000,
+        );
       }
-    },
-  });
+      let newAppInstalled = false;
+      activeInstallations.forEach(installation => {
+        const item = appsInProgress?.find(app => app.id === installation.id);
+        if (!item) {
+          removeInstallation(installation.id);
+          installedAppNotify(installation.name);
+          appsInProgressRefetch();
+          newAppInstalled = true;
+        } else if (item.status === JobStatusEnum.SUCCESS) {
+          removeInstallation(installation.id);
+          installedAppNotify(item.appName);
+          refetch();
+          newAppInstalled = true;
+        } else if (item.status === JobStatusEnum.FAILED) {
+          removeInstallation(installation.id);
+          notify({
+            status: "error",
+            text: item.message,
+            title: intl.formatMessage(messages.appCouldntInstall, {
+              name: item.appName,
+            }),
+          });
+        }
+      });
+      if (newAppInstalled) {
+        refetchExtensionList();
+      }
+    }
+    if (!activeInstallations.length && intervalId.current) {
+      clearInterval(intervalId.current);
+      intervalId.current = null;
+    }
+
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+        intervalId.current = null;
+      }
+    };
+  }, [activeInstallations.length, appsInProgressData]);
 
   const context: AppListContextValues = React.useMemo(
     () => ({
-      activateApp: id => openModal("app-activate", { id }),
-      deactivateApp: id => openModal("app-deactivate", { id }),
-      removeApp: id => openModal("remove-app", { id }),
+      removeAppInstallation: id => openModal("app-installation-remove", { id }),
+      openAppSettings: id => navigate(AppUrls.resolveAppDetailsUrl(id)),
     }),
-    [activateApp, deactivateApp, deleteApp],
+    [navigate, openModal],
   );
 
   const { data: marketplaceAppList, error } = useMarketplaceApps(
@@ -165,35 +211,24 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     !!AppsConfig.marketplaceApiUri,
     marketplaceAppList,
   );
+  const inProgressApps = appsInProgressData?.appsInstallations;
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
-  const currentAppName = params.id && findById(params.id, installedApps)?.name;
 
   return (
     <AppListContext.Provider value={context}>
       <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
-        <AppDeleteDialog
-          confirmButtonState={deleteAppOpts.status}
-          name={currentAppName}
+        <AppInProgressDeleteDialog
+          confirmButtonState={deleteInProgressAppOpts.status}
+          name={getAppInProgressName(
+            params.id || "",
+            appsInProgressData?.appsInstallations,
+          )}
           onClose={closeModal}
-          onConfirm={handleRemoveConfirm}
-          type="EXTERNAL"
-          open={params.action === "remove-app" && !!params.id}
-        />
-        <AppActivateDialog
-          confirmButtonState={activateAppResult.status}
-          name={currentAppName}
-          onClose={closeModal}
-          onConfirm={handleActivateAppConfirm}
-          open={params.action === "app-activate" && !!params.id}
-        />
-        <AppDeactivateDialog
-          confirmButtonState={deactivateAppResult.status}
-          name={currentAppName}
-          onClose={closeModal}
-          onConfirm={handleDeactivateAppConfirm}
-          open={params.action === "app-deactivate" && !!params.id}
+          onConfirm={handleRemoveInProgressConfirm}
+          open={params.action === "app-installation-remove"}
         />
         <AppListPage
+          inProgressApps={inProgressApps}
           installedApps={installedApps}
           installableMarketplaceApps={installableMarketplaceApps}
           comingSoonMarketplaceApps={comingSoonMarketplaceApps}
