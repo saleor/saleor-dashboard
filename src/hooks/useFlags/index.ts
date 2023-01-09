@@ -1,10 +1,6 @@
-import { useAllEnvFlags, useEnvFlag, useEnvFlags } from "./env";
-import {
-  useAllFlagsmithFlags,
-  useFlagsmithFlag,
-  useFlagsmithFlags,
-} from "./flagsmith";
-import { Flag, FlagsResults, FlagWithName } from "./types";
+import { useAllEnvFlags, useEnvFlags } from "./env";
+import { useAllFlagsmithFlags, useFlagsmithFlags } from "./flagsmith";
+import { FlagsResults, FlagWithName } from "./types";
 
 export const useFlags = <T extends readonly string[]>(
   flags: readonly [...T],
@@ -19,19 +15,6 @@ export const useFlags = <T extends readonly string[]>(
   }
 
   return envFlags;
-};
-
-export const useFlag = (flagName: string, traits?: string[]): Flag => {
-  const envFalg = useEnvFlag(flagName);
-  const flagsmithFlag = useFlagsmithFlag(flagName, traits);
-
-  const isFeatureFlagsEnabled = process.env.FLAGS_ENABLED;
-
-  if (isFeatureFlagsEnabled === "true") {
-    return flagsmithFlag;
-  }
-
-  return envFalg;
 };
 
 export const useAllFlags = (): FlagWithName[] => {
