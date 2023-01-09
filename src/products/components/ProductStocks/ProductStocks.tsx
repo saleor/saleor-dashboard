@@ -131,6 +131,16 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFormDataChange(e);
+    onFormDataChange({
+      target: {
+        name: "variantName",
+        value: e.target.value,
+      },
+    });
+  }
+
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
@@ -143,7 +153,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             helperText={getProductErrorMessage(formErrors.sku, intl)}
             label={intl.formatMessage(messages.sku)}
             name="sku"
-            onChange={onFormDataChange}
+            onChange={handleChange}
             value={data.sku}
           />
         </div>
