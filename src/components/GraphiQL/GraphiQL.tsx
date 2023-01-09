@@ -15,6 +15,7 @@ import {
   usePrettifyEditors,
   UseQueryEditorArgs,
   UseResponseEditorArgs,
+  useTheme as useGraphiqlTheme,
   UseVariableEditorArgs,
   WriteableEditorProps,
 } from '@graphiql/react';
@@ -23,6 +24,7 @@ import React, {
   ComponentType,
   PropsWithChildren,
   ReactNode,
+  useEffect,
 } from 'react';
 
 export interface GraphiQLToolbarConfig {
@@ -237,6 +239,13 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     "--font-size-hint": theme.typography.caption.fontSize,
     "--font-size-inline-code": theme.typography.caption.fontSize,
   } as React.CSSProperties;
+
+  const { theme: graphiqlTheme, setTheme: setGraphiqlTheme } = useGraphiqlTheme();
+  useEffect(() => {
+    if (theme.themeType !== graphiqlTheme) {
+      setGraphiqlTheme(theme.themeType)
+    }
+  })
 
   return (
     <div data-testid="graphiql-container" className="graphiql-container" style={rootStyle}>
