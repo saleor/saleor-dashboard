@@ -108,6 +108,7 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
     closeDialog: handleCloseDialog,
     openDialog: handleOpenDialog(orderLineId),
+    totalDiscountedPrice: getOrderLine(orderLineId).totalPrice.gross,
     discountedPrice: getOrderLine(orderLineId).unitPrice.gross,
     undiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross,
   });
