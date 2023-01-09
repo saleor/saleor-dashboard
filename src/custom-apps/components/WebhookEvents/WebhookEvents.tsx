@@ -60,7 +60,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           name="syncEvents"
           value={data.syncEvents}
           onChange={onSyncEventChange}
-          data-test="syncEvents"
+          data-test-id="syncEvents"
           testId="syncEvent"
         />
         <VerticalSpacer spacing={2} />
@@ -86,7 +86,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           name="asyncEvents"
           value={data.asyncEvents}
           onChange={onAsyncEventChange}
-          data-test="asyncEvents"
+          data-test-id="asyncEvents"
           testId="asyncEvent"
         />
       </CardContent>

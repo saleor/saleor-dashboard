@@ -109,7 +109,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             />
             <FormSpacer />
             <Button
-              data-test="button-bar-confirm"
+              data-test-id="button-bar-confirm"
               className={classes.submit}
               disabled={loading || data.password.length === 0 || passwordError}
               variant="primary"

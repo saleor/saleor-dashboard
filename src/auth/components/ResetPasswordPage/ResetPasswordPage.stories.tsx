@@ -1,6 +1,6 @@
 import CardDecorator from "@saleor/storybook/CardDecorator";
 import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/misc";
+import { formError } from "@saleor/storybook/formError";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -11,7 +11,7 @@ const props: ResetPasswordPageProps = {
   error: undefined,
   onSubmit: () => undefined,
 };
-storiesOf("Views / Authentication / Reset password", module)
+storiesOf("Authentication / Reset password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <ResetPasswordPage {...props} />)

@@ -37,14 +37,14 @@ export const App: React.FC<AppProps> = ({ id }) => {
 
   const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(
     location.pathname,
-    data?.app.appUrl,
+    data?.app?.appUrl || "",
     id,
   );
 
   return (
     <AppPage
-      data={data?.app}
-      url={appCompleteUrl}
+      data={data?.app || null}
+      url={appCompleteUrl || ""}
       aboutHref={appDetailsUrl(id)}
       refetch={refetch}
       onError={() =>

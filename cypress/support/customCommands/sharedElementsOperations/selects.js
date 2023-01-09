@@ -44,13 +44,13 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
       .first()
       .then(detachedOption => {
         cy.get(selectSelector).clear();
-        cy.get(selectSelector).type(option);
+        cy.get(selectSelector).type(option, { delay: 10 });
         cy.wrap(detachedOption).should(det => {
           Cypress.dom.isDetached(det);
         });
         cy.contains(BUTTON_SELECTORS.selectOption, option)
           .should("be.visible")
-          .click();
+          .click({ force: true });
         cy.wrap(option).as("option");
       });
   } else {

@@ -63,7 +63,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           shippingMethodName: resp.shippingMethod.name,
           variantsList: resp.variantsList,
         };
-        cy.checkIfDataAreNotNull(dataForCheckout)
+        cy.checkIfDataAreNotNull(dataForCheckout);
       });
   });
 
@@ -191,7 +191,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     },
   );
 
-  xit(
+  it(
     "should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012",
     { tags: ["@giftCard", "@allEnv"] },
     () => {

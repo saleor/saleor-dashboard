@@ -41,8 +41,8 @@ describe("Tests for pages", () => {
         createPageType({ name, attributeId: attribute.id });
       })
       .then(({ pageType: pageTypeResp }) => {
-        pageType = pageTypeResp
-        cy.checkIfDataAreNotNull({attribute, pageType})
+        pageType = pageTypeResp;
+        cy.checkIfDataAreNotNull({ attribute, pageType });
       });
   });
 
@@ -94,7 +94,7 @@ describe("Tests for pages", () => {
   Object.keys(attributesTypes).forEach(attributeType => {
     it(
       `should create page with ${attributeType} attribute`,
-      { tags: ["@pages", "@allEnv"] },
+      { tags: ["@pages", "@allEnv", "@stable"] },
       () => {
         const randomName = `${startsWith}${faker.datatype.number()}`;
         const attributeValues = [attributeValuesOnPage[attributeType]];

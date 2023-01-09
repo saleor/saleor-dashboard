@@ -48,7 +48,7 @@ describe("Tests on inactive channel", () => {
       currencyCode: currency,
     }).then(channel => {
       newChannel = channel;
-      cy.checkIfDataAreNotNull({address, defaultChannel, newChannel})
+      cy.checkIfDataAreNotNull({ address, defaultChannel, newChannel });
     });
   });
 
@@ -58,7 +58,7 @@ describe("Tests on inactive channel", () => {
 
   it(
     "should not be possible to add products to order with inactive channel. TC: SALEOR_0706",
-    { tags: ["@channel", "@allEnv"] },
+    { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)

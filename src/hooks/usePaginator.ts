@@ -47,7 +47,7 @@ function usePaginator({
   paginationState,
   pageInfo,
 }: UsePaginatorArgs) {
-  const newPageInfo = useMemo<PageInfo>(
+  const newPageInfo = useMemo<PageInfo | undefined>(
     () =>
       pageInfo
         ? {
