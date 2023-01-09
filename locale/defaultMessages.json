@@ -3009,10 +3009,6 @@
     "context": "dialog header",
     "string": "Unassign Variant From Sale"
   },
-  "L/O4LQ": {
-    "context": "order refund amount",
-    "string": "Authorized Amount"
-  },
   "L/sNGY": {
     "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
@@ -3170,6 +3166,10 @@
     "context": "exceeded permissions description",
     "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
   },
+  "MVqpEU": {
+    "context": "heading, sum of all granted refunds from transactions in order",
+    "string": "Waiting"
+  },
   "MWSacl": {
     "string": "Multichannel"
   },
@@ -3294,10 +3294,6 @@
   "NNT3Lp": {
     "context": "collections section name",
     "string": "Collections"
-  },
-  "NPIBGp": {
-    "context": "heading, sum of all granted refunds from transactions in order",
-    "string": "Granted"
   },
   "NPfmdK": {
     "context": "webhook input label",
@@ -4168,10 +4164,6 @@
   "TpPx7V": {
     "context": "navigator placeholder",
     "string": "Search Customer"
-  },
-  "TtZg/K": {
-    "context": "ExitFormPrompt title",
-    "string": "Would you like to save changes?"
   },
   "TxYWkD": {
     "context": "page header, edit view",
