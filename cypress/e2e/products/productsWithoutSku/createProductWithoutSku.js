@@ -186,8 +186,6 @@ describe("Creating variants", () => {
         });
       enterVariantEditPage();
       cy.addAliasToGraphRequest("ProductVariantDetails");
-      // .get(VARIANTS_SELECTORS.variantNameInput)
-      // .type(name);
       selectChannelsForVariant();
       cy.get(BUTTON_SELECTORS.confirm)
         .click()
