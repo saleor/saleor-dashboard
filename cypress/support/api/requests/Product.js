@@ -102,6 +102,7 @@ export function createProduct({
   categoryId,
   collectionId,
   description,
+  taxClassId,
 }) {
   const collection = getValueWithDefault(
     collectionId,
@@ -120,6 +121,11 @@ export function createProduct({
       ${attributeValuesLine}
     }]`,
   );
+  const selectedTaxClass = getValueWithDefault(
+    taxClassId,
+    `taxClass: "${taxClassId}"`,
+    `taxClass: ""`,
+  );
   const mutation = `mutation createProduct${descriptionData.mutationVariables}{
     productCreate(input:{
       ${attributes}
@@ -130,6 +136,7 @@ export function createProduct({
       ${category}
       ${collection}
       ${descriptionData.descriptionLine}
+      ${selectedTaxClass}
     }){
       product{
         id
