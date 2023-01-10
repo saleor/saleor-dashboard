@@ -41,11 +41,9 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
   const handleFileUpload = async (file: File) => {
     setProcessing(true);
 
-    const {
-      data: { fileUpload },
-    } = await uploadFile({ variables: { file } });
+    const { data } = await uploadFile({ variables: { file } });
 
-    if (fileUpload.errors?.length) {
+    if (data?.fileUpload?.errors?.length) {
       notify({
         status: "error",
         title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
@@ -53,8 +51,8 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
       });
     } else {
       set({
-        fileUrl: fileUpload.uploadedFile.url,
-        contentType: fileUpload.uploadedFile.contentType,
+        fileUrl: data?.fileUpload?.uploadedFile?.url,
+        contentType: data?.fileUpload?.uploadedFile?.contentType ?? "",
         value: undefined,
       });
     }
@@ -95,7 +93,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
           <FileUploadField
             disabled={processing}
             loading={processing}
-            file={{ label: null, value: null, file: null }}
+            file={{ label: "", value: "", file: undefined }}
             onFileUpload={handleFileUpload}
             onFileDelete={handleFileDelete}
             inputProps={{

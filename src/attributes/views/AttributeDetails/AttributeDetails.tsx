@@ -91,7 +91,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   const [attributeDelete, attributeDeleteOpts] = useAttributeDeleteMutation({
     onCompleted: data => {
-      if (data?.attributeDelete.errors.length === 0) {
+      if (data?.attributeDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -109,7 +109,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     attributeValueDeleteOpts,
   ] = useAttributeValueDeleteMutation({
     onCompleted: data => {
-      if (data?.attributeValueDelete.errors.length === 0) {
+      if (data?.attributeValueDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -128,7 +128,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     attributeValueUpdateOpts,
   ] = useAttributeValueUpdateMutation({
     onCompleted: data => {
-      if (data?.attributeValueUpdate.errors.length === 0) {
+      if (data?.attributeValueUpdate?.errors.length === 0) {
         notifySaved();
         closeModal();
       }
@@ -137,7 +137,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   const [attributeUpdate, attributeUpdateOpts] = useAttributeUpdateMutation({
     onCompleted: data => {
-      if (data?.attributeUpdate.errors.length === 0) {
+      if (data?.attributeUpdate?.errors.length === 0) {
         notifySaved();
       }
     },
@@ -148,7 +148,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     attributeValueCreateOpts,
   ] = useAttributeValueCreateMutation({
     onCompleted: data => {
-      if (data?.attributeValueCreate.errors.length === 0) {
+      if (data?.attributeValueCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -164,11 +164,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   const [attributeValueReorder] = useAttributeValueReorderMutation({
     onCompleted: data => {
-      if (data?.attributeReorderValues.errors.length !== 0) {
+      if (data?.attributeReorderValues?.errors.length !== 0) {
         notify({
           status: "error",
           text: getAttributeErrorMessage(
-            data?.attributeReorderValues.errors[0],
+            data?.attributeReorderValues?.errors[0],
             intl,
           ),
         });
@@ -189,12 +189,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             choices: {
               __typename: "AttributeValueCountableConnection",
               pageInfo: {
-                ...data?.attribute.choices.pageInfo,
+                ...data?.attribute?.choices?.pageInfo,
               },
               edges: move(
-                data?.attribute.choices.edges[oldIndex],
-                data?.attribute.choices.edges,
-                (a, b) => a.node.id === b.node.id,
+                data?.attribute?.choices?.edges[oldIndex],
+                data?.attribute?.choices?.edges ?? [],
+                (a, b) => a?.node.id === b?.node.id,
                 newIndex,
               ),
             },
@@ -205,7 +205,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       variables: {
         id,
         move: {
-          id: data?.attribute.choices.edges[oldIndex].node.id,
+          id: data?.attribute?.choices?.edges[oldIndex].node.id ?? "",
           sortOrder: newIndex - oldIndex,
         },
         firstValues: valuesPaginationState.first,
@@ -299,7 +299,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             onConfirm={() =>
               attributeValueDelete({
                 variables: {
-                  id: params.id,
+                  id: params?.id ?? "",
                   firstValues: valuesPaginationState.first,
                   lastValues: valuesPaginationState.last,
                   afterValues: valuesPaginationState.after,

@@ -41,7 +41,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetailsQuery["attribute"]["choices"];
+  values: NonNullable<AttributeDetailsQuery["attribute"]>["choices"];
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
@@ -60,11 +60,11 @@ export interface AttributePageProps {
 }
 
 export interface AttributePageFormData extends MetadataFormData {
-  type: AttributeTypeEnum;
+  type: AttributeTypeEnum | null;
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
-  entityType: AttributeEntityTypeEnum;
+  entityType: AttributeEntityTypeEnum | null;
   filterableInStorefront: boolean;
   name: string;
   slug: string;
@@ -141,13 +141,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
         };
 
   const handleSubmit = (data: AttributePageFormData) => {
-    const metadata =
-      !attribute || isMetadataModified ? data.metadata : undefined;
+    const metadata = !attribute || isMetadataModified ? data.metadata : [];
     const privateMetadata =
-      !attribute || isPrivateMetadataModified
-        ? data.privateMetadata
-        : undefined;
-    const type = attribute === null ? data.type : undefined;
+      !attribute || isPrivateMetadataModified ? data.privateMetadata : [];
+    const type = attribute === null ? data.type : null;
 
     return onSubmit({
       ...data,
@@ -215,7 +212,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                       <AttributeValues
                         inputType={data.inputType}
                         disabled={disabled}
-                        values={mapEdgesToItems(values)}
+                        values={mapEdgesToItems(values ?? undefined) ?? []}
                         onValueAdd={onValueAdd}
                         onValueDelete={onValueDelete}
                         onValueReorder={onValueReorder}
@@ -248,7 +245,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 </div>
               </Grid>
               <Savebar
-                disabled={isSaveDisabled}
+                disabled={!!isSaveDisabled}
                 state={saveButtonBarState}
                 onCancel={() => navigate(attributeListUrl())}
                 onSubmit={submit}

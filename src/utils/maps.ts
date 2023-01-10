@@ -40,7 +40,7 @@ export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
 }
 
 export function mapPagesToChoices(
-  pages: RelayToFlat<SearchPagesQuery["search"]>,
+  pages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
 ) {
   return pages.map(page => ({
     label: page.title,

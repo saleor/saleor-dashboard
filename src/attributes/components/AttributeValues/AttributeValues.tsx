@@ -71,9 +71,11 @@ const useStyles = makeStyles(
   { name: "AttributeValues" },
 );
 
-const getSwatchCellStyle = (value: AttributeValueFragment) => {
+const getSwatchCellStyle = (
+  value?: AttributeValueFragment | undefined,
+): Record<string, string | null> => {
   if (!value) {
-    return;
+    return {};
   }
   return value.file
     ? { backgroundImage: `url(${value.file.url})` }
@@ -198,7 +200,9 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                   <IconButton
                     variant="secondary"
                     disabled={disabled}
-                    onClick={stopPropagation(() => onValueDelete(value.id))}
+                    onClick={stopPropagation(() =>
+                      onValueDelete(value?.id ?? ""),
+                    )}
                   >
                     <DeleteIcon />
                   </IconButton>

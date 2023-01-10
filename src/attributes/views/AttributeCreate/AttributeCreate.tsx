@@ -84,7 +84,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
-      if (data.attributeCreate.errors.length === 0) {
+      if (data?.attributeCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -92,7 +92,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             defaultMessage: "Successfully created attribute",
           }),
         });
-        navigate(attributeUrl(data.attributeCreate.attribute.id));
+        navigate(attributeUrl(data?.attributeCreate?.attribute?.id ?? ""));
       }
     },
   });
@@ -111,7 +111,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
-    const newValues = remove(values[id], values, areValuesEqual);
+    const newValues = remove(values[id ?? ""], values, areValuesEqual);
     setValues(newValues);
     closeModal();
   };
@@ -120,7 +120,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
-      setValues(updateAtIndex(input, values, id));
+      setValues(updateAtIndex(input, values, id ?? 0));
       closeModal();
     }
   };
@@ -162,7 +162,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     });
 
     return {
-      id: result.data.attributeCreate?.attribute?.id || null,
+      id: result.data?.attributeCreate?.attribute?.id || null,
       errors: getMutationErrors(result),
     };
   };
@@ -177,8 +177,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     <AttributePage
       attribute={null}
       disabled={attributeCreateOpts.loading}
-      errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-      onDelete={undefined}
+      errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
+      onDelete={() => ""}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
@@ -249,16 +249,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           {values.length > 0 && (
             <>
               <AttributeValueDeleteDialog
-                attributeName={undefined}
+                attributeName=""
                 open={params.action === "remove-value"}
-                name={getStringOrPlaceholder(values[id]?.name)}
+                name={getStringOrPlaceholder(id ? values[id]?.name : "")}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}
-                attributeValue={values[id]}
+                attributeValue={values[id ?? ""]}
                 confirmButtonState="default"
                 disabled={false}
                 errors={valueErrors}

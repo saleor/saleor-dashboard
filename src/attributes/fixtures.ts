@@ -80,8 +80,10 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   visibleInStorefront: true,
 };
 
-export const attributes: Array<AttributeListQuery["attributes"]["edges"][0]["node"] &
-  ProductDetailsQuery["product"]["attributes"][0]["attribute"]> = [
+export const attributes: Array<NonNullable<
+  AttributeListQuery["attributes"]
+>["edges"][0]["node"] &
+  NonNullable<ProductDetailsQuery["product"]>["attributes"][0]["attribute"]> = [
   {
     __typename: "Attribute" as "Attribute",
     entityType: AttributeEntityTypeEnum.PRODUCT,

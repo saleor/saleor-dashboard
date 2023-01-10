@@ -197,7 +197,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               label={intl.formatMessage(messages.entityType)}
               name="entityType"
               onChange={onChange}
-              value={data.entityType}
+              value={data.entityType ?? undefined}
             />
           )}
         </div>

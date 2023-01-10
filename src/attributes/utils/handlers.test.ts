@@ -136,7 +136,7 @@ const createAttribute = ({
   value,
 }: CreateAttribute): AttributeInput => ({
   data: {
-    entityType: null,
+    entityType: undefined,
     inputType,
     isRequired: false,
     // those values don't matter
@@ -146,7 +146,7 @@ const createAttribute = ({
   },
   id: ATTR_ID,
   label: "MyAttribute",
-  value: value !== null ? [value] : [],
+  value: value ? [value] : [],
 });
 
 const createSelectAttribute = (value: string) =>
@@ -478,7 +478,7 @@ describe("Sending only changed attributes", () => {
   });
   describe("works with file attributes", () => {
     it("removes existing image (img -> null)", () => {
-      const attribute = createFileAttribute(null);
+      const attribute = createFileAttribute("");
       const prevAttribute = createNumericAttribute("bob.jpg");
 
       const result = prepareAttributesInput({
@@ -494,7 +494,7 @@ describe("Sending only changed attributes", () => {
     });
     it("adds new image (null -> img)", () => {
       const attribute = createFileAttribute("bob.jpg");
-      const prevAttribute = createNumericAttribute(null);
+      const prevAttribute = createNumericAttribute("");
 
       const uploadUrl = "http://some-url.com/media/file_upload/bob.jpg";
       const result = prepareAttributesInput({
