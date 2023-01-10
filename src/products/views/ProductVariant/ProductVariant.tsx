@@ -230,7 +230,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           : null,
         weight: weight(data.weight),
         firstValues: 10,
-        name: data.name,
+        name: data.variantName,
       },
     });
 

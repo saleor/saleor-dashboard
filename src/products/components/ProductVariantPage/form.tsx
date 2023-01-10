@@ -78,7 +78,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   quantityLimitPerCustomer: number | null;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
-  name: string;
+  variantName: string;
   media: string[];
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
@@ -193,7 +193,7 @@ function useProductVariantUpdateForm(
     preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
-    name: variant?.name ?? "",
+    variantName: variant?.name ?? "",
     media: variant?.media?.map(({ id }) => id) || [],
   };
 

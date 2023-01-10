@@ -1,5 +1,25 @@
 import { gql } from "@apollo/client";
 
+export const appManifestFragment = gql`
+  fragment AppManifest on Manifest {
+    identifier
+    version
+    about
+    name
+    appUrl
+    configurationUrl
+    tokenTargetUrl
+    dataPrivacy
+    dataPrivacyUrl
+    homepageUrl
+    supportUrl
+    permissions {
+      code
+      name
+    }
+  }
+`;
+
 export const appFragment = gql`
   fragment App on App {
     id
@@ -41,6 +61,7 @@ export const appListItemFragment = gql`
     type
     appUrl
     manifestUrl
+    version
     permissions {
       ...AppPermission
     }

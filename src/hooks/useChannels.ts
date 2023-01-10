@@ -1,7 +1,6 @@
 import { ChannelsAction } from "@saleor/channels/urls";
 import { Channel } from "@saleor/channels/utils";
-import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog, WithFormId } from "@saleor/components/Form";
 import useListActions from "@saleor/hooks/useListActions";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 

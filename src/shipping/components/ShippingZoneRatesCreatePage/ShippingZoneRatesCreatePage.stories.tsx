@@ -78,7 +78,7 @@ const props: ShippingZoneRatesCreatePageProps = {
   fetchMoreTaxClasses: undefined,
 };
 
-storiesOf("Shipping / ShippingZoneRatesCreatePage page", module)
+storiesOf("Shipping / ShippingZoneRatesCreatePage", module)
   .addDecorator(Decorator)
   .add("create price", () => <ShippingZoneRatesCreatePage {...props} />)
   .add("loading", () => (

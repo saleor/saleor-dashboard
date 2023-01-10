@@ -510,8 +510,8 @@ export const address = {
   companyName: "",
   country: {
     __typename: "CountryDisplay" as "CountryDisplay",
-    code: "SE",
-    country: "Szwecja",
+    code: "UA",
+    country: "United Arab Emirates",
   },
   countryArea: "",
   firstName: "Elizabeth",

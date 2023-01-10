@@ -5,6 +5,25 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as ApolloReactHooks from '@saleor/hooks/graphql';
 const defaultOptions = {} as const;
+export const AppManifestFragmentDoc = gql`
+    fragment AppManifest on Manifest {
+  identifier
+  version
+  about
+  name
+  appUrl
+  configurationUrl
+  tokenTargetUrl
+  dataPrivacy
+  dataPrivacyUrl
+  homepageUrl
+  supportUrl
+  permissions {
+    code
+    name
+  }
+}
+    `;
 export const WebhookFragmentDoc = gql`
     fragment Webhook on Webhook {
   id
@@ -62,6 +81,7 @@ export const AppListItemFragmentDoc = gql`
   type
   appUrl
   manifestUrl
+  version
   permissions {
     ...AppPermission
   }
@@ -2921,28 +2941,15 @@ export const AppFetchDocument = gql`
     mutation AppFetch($manifestUrl: String!) {
   appFetchManifest(manifestUrl: $manifestUrl) {
     manifest {
-      identifier
-      version
-      about
-      name
-      appUrl
-      configurationUrl
-      tokenTargetUrl
-      dataPrivacy
-      dataPrivacyUrl
-      homepageUrl
-      supportUrl
-      permissions {
-        code
-        name
-      }
+      ...AppManifest
     }
     errors {
       ...AppError
     }
   }
 }
-    ${AppErrorFragmentDoc}`;
+    ${AppManifestFragmentDoc}
+${AppErrorFragmentDoc}`;
 export type AppFetchMutationFn = Apollo.MutationFunction<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
 
 /**

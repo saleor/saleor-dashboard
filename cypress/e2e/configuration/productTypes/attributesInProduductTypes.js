@@ -85,7 +85,7 @@ describe("As an admin I want to manage attributes in product types", () => {
 
   it(
     "should be able to remove variant attribute from product type. TC: SALEOR_1506",
-    { tags: ["@productType", "@allEnv"] },
+    { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
@@ -118,7 +118,7 @@ describe("As an admin I want to manage attributes in product types", () => {
 
   it(
     "should be able to remove product attribute from product type. TC: SALEOR_1507",
-    { tags: ["@productType", "@allEnv"] },
+    { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;

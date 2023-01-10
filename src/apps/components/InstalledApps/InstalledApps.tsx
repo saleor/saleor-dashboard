@@ -104,11 +104,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                     <TableButtonWrapper>
                       <Switch
-                        checked={app.isActive}
+                        checked={!!app.isActive}
                         onChange={getHandleToggle(app)}
                       />
                     </TableButtonWrapper>
-                    <AppPermissions permissions={app.permissions} />
+                    <AppPermissions permissions={app.permissions || []} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"

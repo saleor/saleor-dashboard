@@ -23,6 +23,7 @@ jobs:
       # SALEOR_APPS_PAGE_PATH=saleor-apps
       # SALEOR_APPS_JSON_PATH=api/saleor-apps
       # APP_TEMPLATE_GALLERY_PATH=template-gallery
+      # APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2

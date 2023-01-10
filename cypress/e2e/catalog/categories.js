@@ -130,7 +130,7 @@ describe("As an admin I want to manage categories", () => {
 
   it(
     "should be able to remove product from category. TC: SALEOR_0204",
-    { tags: ["@category", "@allEnv"] },
+    { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
@@ -155,7 +155,7 @@ describe("As an admin I want to manage categories", () => {
 
   it(
     "should be able to enter category details page. TC: SALEOR_0205",
-    { tags: ["@category", "@allEnv"] },
+    { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.categories)
         .get(SHARED_ELEMENTS.searchInput)
@@ -214,7 +214,7 @@ describe("As an admin I want to manage categories", () => {
 
   it(
     "should be able to delete several categories on categories list page. TC: SALEOR_0209",
-    { tags: ["@category", "@allEnv"] },
+    { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const firstCategoryName = `${startsWith}${faker.datatype.number()}`;
       const secondCategoryName = `${startsWith}${faker.datatype.number()}`;

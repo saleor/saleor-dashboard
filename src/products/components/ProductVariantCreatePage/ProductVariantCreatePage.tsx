@@ -198,7 +198,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               </div>
               <div>
                 <ProductVariantName
-                  value={data.name}
+                  value={data.variantName}
                   onChange={change}
                   errors={errors}
                 />

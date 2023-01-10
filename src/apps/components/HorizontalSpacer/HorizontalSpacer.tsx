@@ -7,7 +7,7 @@ export interface HorizontalSpacerProps {
 
 const useStyles = makeStyles(
   theme => ({
-    container: ({ spacing }: HorizontalSpacerProps) => ({
+    container: ({ spacing }: Required<HorizontalSpacerProps>) => ({
       width: theme.spacing(spacing),
     }),
   }),

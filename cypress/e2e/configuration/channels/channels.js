@@ -92,7 +92,7 @@ describe("Channels", () => {
         .get(PRODUCTS_LIST.productsNames)
         .first()
         .click()
-        .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
+        .get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
         .click()
         .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
         .contains(randomChannel);
