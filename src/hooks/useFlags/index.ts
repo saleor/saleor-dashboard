@@ -8,9 +8,9 @@ export const useFlags = <T extends readonly string[]>(
 ): FlagsResults<T> => {
   const flagsmithFlags = useFlagsmithFlags(flags, traits);
   const envFlags = useEnvFlags(flags);
-  const isFeatureFlagsEnabled = process.env.FLAGS_ENABLED;
+  const isFeatureFlagsServiceEnabled = process.env.FLAGS_SERVICE_ENABLED;
 
-  if (isFeatureFlagsEnabled === "true") {
+  if (isFeatureFlagsServiceEnabled === "true") {
     return flagsmithFlags;
   }
 
@@ -21,11 +21,13 @@ export const useAllFlags = (): FlagWithName[] => {
   const envFlags = useAllEnvFlags();
   const flagsmithFlags = useAllFlagsmithFlags();
 
-  const isFeatureFlagsEnabled = process.env.FLAGS_ENABLED;
+  const isFeatureFlagsServiceEnabled = process.env.FLAGS_SERVICE_ENABLED;
 
-  if (isFeatureFlagsEnabled === "true") {
+  if (isFeatureFlagsServiceEnabled === "true") {
     return flagsmithFlags;
   }
 
   return envFlags;
 };
+
+export { FeatureFlagsProvider } from "./featureFlagsProvider";

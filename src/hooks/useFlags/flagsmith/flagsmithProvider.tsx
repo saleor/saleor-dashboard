@@ -1,15 +1,19 @@
 import flagsmith from "flagsmith";
-import { FlagsmithProvider } from "flagsmith/react";
+import { FlagsmithProvider as Provider } from "flagsmith/react";
 import React from "react";
 
-export const Provider = ({ children }: { children: React.ReactElement }) => (
-  <FlagsmithProvider
+export const FlagsmithProvider = ({
+  children,
+}: {
+  children: React.ReactElement;
+}) => (
+  <Provider
     flagsmith={flagsmith}
     options={{
-      environmentID: process.env.FLAGSMITH_ID,
+      environmentID: process.env.FLAGS_SERVICE_ENABLED,
       cacheFlags: true,
     }}
   >
     {children}
-  </FlagsmithProvider>
+  </Provider>
 );

@@ -1,6 +1,6 @@
 import { ExternalAppProvider } from "@saleor/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
-import { Provider as FlagsmithProvider } from "@saleor/hooks/useFlags/flagsmith";
+import { FeatureFlagsProvider } from "@saleor/hooks/useFlags";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
@@ -27,7 +27,7 @@ export const Decorator = storyFn => (
             <ThemeProvider overrides={themeOverrides}>
               <BrowserRouter basename={getAppMountUri()}>
                 <ExternalAppProvider>
-                  <FlagsmithProvider>
+                  <FeatureFlagsProvider>
                     <MessageManagerProvider>
                       <div
                         style={{
@@ -37,7 +37,7 @@ export const Decorator = storyFn => (
                         {storyFn()}
                       </div>
                     </MessageManagerProvider>
-                  </FlagsmithProvider>
+                  </FeatureFlagsProvider>
                 </ExternalAppProvider>
               </BrowserRouter>
             </ThemeProvider>
