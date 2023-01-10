@@ -20,9 +20,6 @@ export interface OrderDiscountConsumerCommonProps {
   openDialog: () => void;
   closeDialog: () => void;
   isDialogOpen: boolean;
-  totalDiscountedPrice: MoneyFragment;
-  undiscountedPrice: MoneyFragment;
-  discountedPrice: MoneyFragment;
 }
 
 export interface OrderLineDiscountConsumerProps {

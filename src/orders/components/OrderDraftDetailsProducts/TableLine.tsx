@@ -74,8 +74,8 @@ const TableLine: React.FC<TableLineProps> = ({
   orderLineDiscountRemoveStatus,
   isDialogOpen,
   totalDiscountedPrice,
-  undiscountedPrice,
-  discountedPrice,
+  unitUndiscountedPrice,
+  unitDiscountedPrice,
   orderLineDiscountUpdateStatus,
 }) => {
   const classes = useStyles();
@@ -88,14 +88,14 @@ const TableLine: React.FC<TableLineProps> = ({
   });
 
   const getUnitPriceLabel = () => {
-    const money = <Money money={undiscountedPrice} />;
+    const money = <Money money={unitUndiscountedPrice} />;
 
     if (!!orderLineDiscount) {
       return (
         <>
           <Typography className={classes.strike}>{money}</Typography>
           <Link onClick={openDialog}>
-            <Money money={discountedPrice} />
+            <Money money={unitDiscountedPrice} />
           </Link>
         </>
       );
@@ -135,7 +135,7 @@ const TableLine: React.FC<TableLineProps> = ({
           anchorRef={popperAnchorRef}
           onClose={closeDialog}
           modalType={ORDER_LINE_DISCOUNT}
-          maxPrice={undiscountedPrice}
+          maxPrice={unitUndiscountedPrice}
           onConfirm={addOrderLineDiscount}
           onRemove={removeOrderLineDiscount}
           existingDiscount={orderLineDiscount}
