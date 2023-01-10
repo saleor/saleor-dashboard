@@ -25,7 +25,7 @@ export interface MoneyProps {
 }
 
 export const Money: React.FC<MoneyProps> = props => {
-  const { money } = props;
+  const { money, ...rest } = props;
   const { locale } = useLocale();
   const classes = useStyles();
 
@@ -44,7 +44,7 @@ export const Money: React.FC<MoneyProps> = props => {
   });
 
   return (
-    <span className={classes.root} {...props}>
+    <span className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
       {amount}
     </span>
