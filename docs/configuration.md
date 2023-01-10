@@ -24,8 +24,8 @@ Create `.env` file in a root directory or set environment variables with the fol
 
 - `APPS_TUNNEL_URL_KEYWORDS` - Custom apps tunnel URL keywords.
 
-- `FLAGS_ENABLED` - Boolean flag determines whether we use Flagsmith.
-  If you set `FLAGS_ENABLED` to "true", we'll be using flags from Flagsmith.
-  If you set `FLAGS_ENABLED` to "false" or not set, we'll use fallback flags from environment variables.
+- `FLAGS_SERVICE_ENABLED` - Boolean flag determines whether we use external feature flags provider.
+  If you set `FLAGS_SERVICE_ENABLED` to "true", we'll be using external feature flag provider as source or flags.
+  If you set `FLAGS_SERVICE_ENABLED` to "false" or not set, we'll use fallback flags from environment variables.
 
-- `FLAGSMITH_ID` - Flagsmith environment id, required when FLAGS_ENABLED is true
+- `FLAGSMITH_ID` - Flagsmith environment id
