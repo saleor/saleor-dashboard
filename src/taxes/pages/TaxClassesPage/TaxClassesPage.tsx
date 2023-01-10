@@ -17,7 +17,6 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { TaxClassFragment } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import {
   ConfirmButtonTransitionState,
   List,
@@ -30,6 +29,7 @@ import {
 } from "@saleor/macaw-ui";
 import { getById } from "@saleor/misc";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxPageTitle from "@saleor/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { TaxClassesPageFormData } from "@saleor/taxes/types";
 import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
@@ -99,7 +99,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
 
         return (
           <Container>
-            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="tax-classes" onChange={handleTabChange}>
               <PageTab
                 label={intl.formatMessage(taxesMessages.channelsSection)}

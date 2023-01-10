@@ -20,7 +20,6 @@ import {
 } from "@saleor/graphql";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import {
   ConfirmButtonTransitionState,
   List,
@@ -32,6 +31,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxPageTitle from "@saleor/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
@@ -91,7 +91,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
 
         return (
           <Container>
-            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="countries" onChange={handleTabChange}>
               <PageTab
                 label={intl.formatMessage(taxesMessages.channelsSection)}
