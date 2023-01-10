@@ -150,6 +150,7 @@ const TableLine: React.FC<TableLineProps> = ({
             amount: totalDiscountedPrice.amount,
             currency: totalDiscountedPrice.currency,
           }}
+          data-test-id={`table-line-total-${line.id}`}
         />
       </TableCell>
       <TableCell className={classes.colAction}>
