@@ -265,7 +265,7 @@
     "build": "cross-env NODE_OPTIONS=--max_old_space_size=16384 vite build",
     "preview": "vite preview",
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook -c src/storybook/ -o build/storybook",
-    "build-types": "graphql-codegen",
+    "build-types": "node scripts/build-types.js",
     "prebuild": "npm run build-types",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types": "tsc --noEmit",
