@@ -102,8 +102,8 @@ export default usePaginator;
 export interface PaginatorContextValuesCommon {
   hasNextPage?: boolean;
   hasPreviousPage?: boolean;
-  endCursor?: string;
-  startCursor?: string;
+  endCursor?: string | null;
+  startCursor?: string | null;
 }
 
 export type PaginatorContextValues = PaginatorContextValuesCommon &

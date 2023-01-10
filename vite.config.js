@@ -31,6 +31,8 @@ export default defineConfig(({ command, mode }) => {
     SALEOR_APPS_PAGE_PATH,
     SALEOR_APPS_JSON_PATH,
     APP_TEMPLATE_GALLERY_PATH,
+    APPS_MARKETPLACE_API_URI,
+    APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
   } = env;
@@ -53,6 +55,8 @@ export default defineConfig(({ command, mode }) => {
           SALEOR_APPS_JSON_PATH,
           APP_TEMPLATE_GALLERY_PATH,
           MARKETPLACE_URL,
+          APPS_MARKETPLACE_API_URI,
+          APPS_TUNNEL_URL_KEYWORDS,
         },
       },
     }),
