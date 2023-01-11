@@ -213,6 +213,9 @@
   },
   "jest": {
     "resetMocks": false,
+    "globals": {
+      "FLAGS_SERVICE_ENABLED": false
+    },
     "setupFilesAfterEnv": [
       "jest-canvas-mock",
       "jest-localstorage-mock",
