@@ -14,14 +14,15 @@ const useStyles = makeStyles(
   { name: "TaxPageTitle" },
 );
 
-export const TaxPageTitle: React.FC = () => {
+export const TaxPageTitle = () => {
   const classes = useStyles();
+
   return (
-    <span className={classes.wrapper}>
+    <div className={classes.wrapper}>
       <FormattedMessage {...sectionNames.taxes} />
       <HorizontalSpacer />
       <PreviewPill />
-    </span>
+    </div>
   );
 };
 
