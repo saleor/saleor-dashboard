@@ -11,7 +11,8 @@ export function hasLimits(
   return limits.allowedUsage[key] !== null;
 }
 /**
- * Returns false when query is in the loading state.
+ * Returns whether or not limit has been reached.
+ * If limits are undefined, returns false.
  * */
 export function isLimitReached(
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined,
