@@ -352,6 +352,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Install",
     description: "button",
   },
+  retry: {
+    id: "KMxiiF",
+    defaultMessage: "Retry",
+    description: "button",
+  },
 });
 
 export const sectionNames = defineMessages({

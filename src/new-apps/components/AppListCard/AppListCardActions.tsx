@@ -1,7 +1,10 @@
 import { Button } from "@dashboard/components/Button";
 import Hr from "@dashboard/components/Hr";
+import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
+import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
 import { CardActions, Typography } from "@material-ui/core";
+import { Indicator, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -10,14 +13,22 @@ import { useActionsStyles } from "./styles";
 
 interface AppListCardActionsProps {
   releaseDate: string | undefined;
+  installationPending?: boolean;
+  appInstallation?: AppInstallationFragment;
   installHandler?: () => void;
   vercelDeployHandler?: () => void;
+  retryInstallHandler?: () => void;
+  removeInstallHandler?: () => void;
 }
 
 const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   releaseDate,
+  installationPending = false,
+  appInstallation,
   installHandler,
   vercelDeployHandler,
+  retryInstallHandler,
+  removeInstallHandler,
 }) => {
   const classes = useActionsStyles();
 
@@ -46,6 +57,40 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
           >
             <FormattedMessage {...buttonMessages.install} />
           </Button>
+        )}
+        {installationPending && (
+          <Typography className={classes.cardActionsText}>
+            <FormattedMessage {...appInstallationStatusMessages.pending} />
+          </Typography>
+        )}
+        {(retryInstallHandler || removeInstallHandler) && (
+          <>
+            <Typography className={classes.cardActionsIssueText}>
+              <FormattedMessage {...appInstallationStatusMessages.failed} />
+              <Tooltip title={appInstallation?.message} variant="error">
+                <TooltipMountWrapper>
+                  <Indicator icon="error" />
+                </TooltipMountWrapper>
+              </Tooltip>
+            </Typography>
+            <Typography className={classes.cardActionsIssueText}>
+              <FormattedMessage {...appInstallationStatusMessages.failed} />
+            </Typography>
+            <Button
+              variant="secondary"
+              onClick={retryInstallHandler}
+              data-test-id="app-retry-install-button"
+            >
+              <FormattedMessage {...buttonMessages.retry} />
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={removeInstallHandler}
+              data-test-id="app-remove-install-button"
+            >
+              <FormattedMessage {...buttonMessages.cancel} />
+            </Button>
+          </>
         )}
         {releaseDate && (
           <Typography className={classes.releaseDate}>

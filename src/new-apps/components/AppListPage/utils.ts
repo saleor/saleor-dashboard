@@ -5,11 +5,16 @@ import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppListPageSections } from "./types";
 
 export const resolveSectionsAvailability = ({
+  appsInstallations,
   installedApps,
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  installed: !installedApps || !!installedApps.length,
+  installed:
+    !installedApps ||
+    !!installedApps.length ||
+    !appsInstallations ||
+    !!appsInstallations.length,
   all: !installableMarketplaceApps || !!installableMarketplaceApps.length,
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });

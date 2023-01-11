@@ -22,3 +22,16 @@ export const appsMessages = defineMessages({
     description: "label",
   },
 });
+
+export const appInstallationStatusMessages = defineMessages({
+  pending: {
+    id: "F1VtFa",
+    defaultMessage: "Installation is pending...",
+    description: "information",
+  },
+  failed: {
+    id: "26VlBZ",
+    defaultMessage: "Problem occured during installation.",
+    description: "information",
+  },
+});

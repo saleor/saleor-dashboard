@@ -28,6 +28,7 @@ export interface AppListPageProps extends AppListPageSections, ListProps {
 
 export const AppListPage: React.FC<AppListPageProps> = props => {
   const {
+    appsInstallations,
     installedApps,
     installableMarketplaceApps,
     comingSoonMarketplaceApps,
@@ -80,6 +81,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader title={intl.formatMessage(messages.installedApps)} />
             <InstalledAppList
               appList={verifiedInstalledApps}
+              appInstallationList={appsInstallations}
               disabled={disabled}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
@@ -92,6 +94,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader title={intl.formatMessage(messages.allApps)} />
             <AllAppList
               appList={verifiedInstallableMarketplaceApps}
+              appInstallationList={appsInstallations}
               navigateToAppInstallPage={navigateToAppInstallPage}
               navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
             />
@@ -102,7 +105,10 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader
               title={intl.formatMessage(messages.comingSoonApps)}
             />
-            <AllAppList appList={comingSoonMarketplaceApps} />
+            <AllAppList
+              appList={comingSoonMarketplaceApps}
+              appInstallationList={appsInstallations}
+            />
           </>
         )}
       </div>

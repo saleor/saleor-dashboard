@@ -5,7 +5,7 @@ import {
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 
 export interface AppListPageSections {
-  inProgressApps?: AppInstallationFragment[];
+  appsInstallations?: AppInstallationFragment[];
   installedApps?: AppListItemFragment[];
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[];
   comingSoonMarketplaceApps?: GetV2SaleorAppsResponse.ComingSoonSaleorApp[];

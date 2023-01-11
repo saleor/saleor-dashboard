@@ -2,7 +2,8 @@
 import React from "react";
 
 export interface AppListContextValues {
-  removeAppInstallation: (appId: string) => void;
+  removeAppInstallation: (installationId: string) => void;
+  retryAppInstallation: (installationId: string) => void;
   openAppSettings: (appId: string) => void;
 }
 

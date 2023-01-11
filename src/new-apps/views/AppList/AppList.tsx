@@ -7,6 +7,7 @@ import {
   JobStatusEnum,
   OrderDirection,
   useAppDeleteFailedInstallationMutation,
+  useAppRetryInstallMutation,
   useAppsInstallationsQuery,
   useAppsListQuery,
 } from "@dashboard/graphql";
@@ -117,6 +118,26 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
+  const [retryInstallApp] = useAppRetryInstallMutation({
+    onCompleted: data => {
+      if (!data?.appRetryInstall?.errors?.length) {
+        const appInstallation = data.appRetryInstall?.appInstallation;
+        if (appInstallation) {
+          setActiveInstallations(installations => [
+            ...installations,
+            {
+              id: appInstallation.id,
+              name: appInstallation.appName,
+            },
+          ]);
+        }
+      }
+    },
+  });
+
+  const onAppInstallRetry = (id: string) =>
+    retryInstallApp({ variables: { id } });
+
   const removeInstallation = (id: string) =>
     setActiveInstallations(installations =>
       installations.filter(item => item.id !== id),
@@ -194,6 +215,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   const context: AppListContextValues = React.useMemo(
     () => ({
+      retryAppInstallation: onAppInstallRetry,
       removeAppInstallation: id => openModal("app-installation-remove", { id }),
       openAppSettings: id => navigate(AppUrls.resolveAppDetailsUrl(id)),
     }),
@@ -211,7 +233,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     !!AppsConfig.marketplaceApiUri,
     marketplaceAppList,
   );
-  const inProgressApps = appsInProgressData?.appsInstallations;
+  const appsInstallations = appsInProgressData?.appsInstallations;
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
 
   return (
@@ -228,7 +250,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
           open={params.action === "app-installation-remove"}
         />
         <AppListPage
-          inProgressApps={inProgressApps}
+          appsInstallations={appsInstallations}
           installedApps={installedApps}
           installableMarketplaceApps={installableMarketplaceApps}
           comingSoonMarketplaceApps={comingSoonMarketplaceApps}

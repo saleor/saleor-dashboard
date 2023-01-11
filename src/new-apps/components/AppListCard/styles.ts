@@ -103,6 +103,13 @@ export const useActionsStyles = makeStyles(
       padding: theme.spacing(2, 4),
       minHeight: theme.spacing(9),
     },
+    cardActionsText: {
+      width: "100%",
+    },
+    cardActionsIssueText: {
+      width: "100%",
+      color: theme.palette.error.main,
+    },
     releaseDate: {
       color: theme.palette.saleor.main[3],
     },
