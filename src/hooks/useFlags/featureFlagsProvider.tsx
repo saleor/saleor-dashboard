@@ -9,11 +9,9 @@ interface FeatureFlagsProviderProps {
 export const FeatureFlagsProvider = ({
   children,
 }: FeatureFlagsProviderProps) => {
-  const isFeatureFlagsEnabled = process.env.FLAGS_SERVICE_ENABLED === "true";
+  if (!FLAGS_SERVICE_ENABLED) {
+    return children;
+  }
 
-  return (
-    <FlagsmithProvider preventFetch={!isFeatureFlagsEnabled}>
-      {children}
-    </FlagsmithProvider>
-  );
+  return <FlagsmithProvider>{children}</FlagsmithProvider>;
 };

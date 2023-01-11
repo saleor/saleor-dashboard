@@ -4,18 +4,13 @@ import React from "react";
 
 interface FlagsmithProviderProps {
   children: React.ReactElement;
-  preventFetch: boolean;
 }
 
-export const FlagsmithProvider = ({
-  children,
-  preventFetch,
-}: FlagsmithProviderProps) => (
+export const FlagsmithProvider = ({ children }: FlagsmithProviderProps) => (
   <Provider
     flagsmith={flagsmith}
     options={{
-      preventFetch,
-      environmentID: process.env.FLAGSMITH_ID,
+      environmentID: FLAGSMITH_ID,
       cacheFlags: true,
     }}
   >
