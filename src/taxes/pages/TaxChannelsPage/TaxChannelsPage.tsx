@@ -17,7 +17,6 @@ import {
   TaxConfigurationUpdateInput,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
@@ -29,6 +28,7 @@ import {
   PageTabs,
 } from "@saleor/macaw-ui";
 import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
+import TaxPageTitle from "@saleor/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@saleor/taxes/messages";
 import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
@@ -161,7 +161,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         return (
           <Container>
-            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="channels" onChange={handleTabChange}>
               <PageTab
                 label={intl.formatMessage(taxesMessages.channelsSection)}
