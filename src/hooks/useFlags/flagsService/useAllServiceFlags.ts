@@ -3,7 +3,7 @@ import camelCase from "lodash/camelCase";
 
 import { FlagWithName } from "../types";
 
-export const useAllFlagsmithFlags = (): FlagWithName[] => {
+export const useAllServiceFlags = (): FlagWithName[] => {
   const flagsmith = useFlagsmith();
   const flags = flagsmith.getAllFlags();
 

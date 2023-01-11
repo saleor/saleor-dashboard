@@ -3,7 +3,7 @@ import flagsmith from "flagsmith";
 import { FlagsmithProvider } from "flagsmith/react";
 import React from "react";
 
-import { useFlagsmithFlags } from "./useFlagsmithFlags";
+import { useServicehFlags } from "./useServiceFlags";
 
 const wrapper = ({ children }) => (
   <FlagsmithProvider
@@ -14,7 +14,7 @@ const wrapper = ({ children }) => (
   </FlagsmithProvider>
 );
 
-describe("useFlagsmithFlags hook", () => {
+describe("useServicehFlags", () => {
   test("should return flags with values", () => {
     // Arrange && Act
     const features = {
@@ -27,7 +27,7 @@ describe("useFlagsmithFlags hook", () => {
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
     const { result } = renderHook(
-      () => useFlagsmithFlags(["flagOne", "flag_two"]),
+      () => useServicehFlags(["flagOne", "flag_two"]),
       {
         wrapper,
       },
@@ -55,7 +55,7 @@ describe("useFlagsmithFlags hook", () => {
     jest.spyOn(flagsmith, "getTrait").mockImplementation(() => "");
 
     const { result } = renderHook(
-      () => useFlagsmithFlags(["flagOne", "flagTwo"]),
+      () => useServicehFlags(["flagOne", "flagTwo"]),
       {
         wrapper,
       },
@@ -76,7 +76,7 @@ describe("useFlagsmithFlags hook", () => {
 
   test("should return empty object when not flags provided", () => {
     // Arrange && Act
-    const { result } = renderHook(() => useFlagsmithFlags([]), {
+    const { result } = renderHook(() => useServicehFlags([]), {
       wrapper,
     });
 

@@ -1,6 +1,6 @@
 import { ExternalAppProvider } from "@saleor/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
-import { FeatureFlagsProvider } from "@saleor/hooks/useFlags";
+import { FlagsServiceProvider } from "@saleor/hooks/useFlags/flagsService";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
@@ -27,7 +27,7 @@ export const Decorator = storyFn => (
             <ThemeProvider overrides={themeOverrides}>
               <BrowserRouter basename={getAppMountUri()}>
                 <ExternalAppProvider>
-                  <FeatureFlagsProvider>
+                  <FlagsServiceProvider>
                     <MessageManagerProvider>
                       <div
                         style={{
@@ -37,7 +37,7 @@ export const Decorator = storyFn => (
                         {storyFn()}
                       </div>
                     </MessageManagerProvider>
-                  </FeatureFlagsProvider>
+                  </FlagsServiceProvider>
                 </ExternalAppProvider>
               </BrowserRouter>
             </ThemeProvider>

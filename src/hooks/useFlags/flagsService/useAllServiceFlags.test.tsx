@@ -3,7 +3,7 @@ import flagsmith from "flagsmith";
 import { FlagsmithProvider } from "flagsmith/react";
 import React from "react";
 
-import { useAllFlagsmithFlags } from "./useAllFlagsmithFlags";
+import { useAllServiceFlags } from "./useAllServiceFlags";
 
 const wrapper = ({ children }) => (
   <FlagsmithProvider
@@ -14,7 +14,7 @@ const wrapper = ({ children }) => (
   </FlagsmithProvider>
 );
 
-describe("useAllFlagsmithFlags hook", () => {
+describe("useAllServiceFlags hook", () => {
   test("should return all flags from Flagsmith", () => {
     // Arrange && Act
     const features = {
@@ -30,7 +30,7 @@ describe("useAllFlagsmithFlags hook", () => {
 
     jest.spyOn(flagsmith, "getAllFlags").mockImplementation(() => features);
 
-    const { result } = renderHook(() => useAllFlagsmithFlags(), {
+    const { result } = renderHook(() => useAllServiceFlags(), {
       wrapper,
     });
 
@@ -55,7 +55,7 @@ describe("useAllFlagsmithFlags hook", () => {
 
     jest.spyOn(flagsmith, "getAllFlags").mockImplementation(() => features);
 
-    const { result } = renderHook(() => useAllFlagsmithFlags(), {
+    const { result } = renderHook(() => useAllServiceFlags(), {
       wrapper,
     });
 
