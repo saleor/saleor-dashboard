@@ -30,4 +30,8 @@ export const messages = defineMessages({
     description:
       "tooltip, Transaction reference received from payment provider",
   },
+  noEvents: {
+    defaultMessage: "This transaction doesn't have any events",
+    id: "dnbJKr",
+  },
 });

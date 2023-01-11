@@ -1,17 +1,20 @@
+import { TableCell, TableRow } from "@material-ui/core";
 import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { TransactionFakeEvent } from "@saleor/orders/types";
 import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { EventItem } from "./components";
+import { messages } from "./messages";
 
 export interface OrderTransactionEventsProps {
   events: TransactionEventFragment[] | TransactionFakeEvent[];
 }
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     table: {
       "&& td": {
         // Gap = 24px
@@ -23,7 +26,10 @@ const useStyles = makeStyles(
         },
       },
     },
-  },
+    noEvent: {
+      color: theme.palette.saleor.main[2],
+    },
+  }),
   {
     name: "OrderTransactionEvents",
   },
@@ -32,7 +38,7 @@ const useStyles = makeStyles(
 const isFakeEventsList = (
   events: TransactionEventFragment[] | TransactionFakeEvent[],
 ): events is TransactionFakeEvent[] =>
-  events[0].__typename === "TransactionFakeEvent";
+  events[0]?.__typename === "TransactionFakeEvent";
 
 export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
   events,
@@ -62,6 +68,13 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
             hoveredPspReference={hoveredPspReference}
             hasCreatedBy={hasCreatedBy}
           />
+        ),
+        () => (
+          <TableRow>
+            <TableCell className={classes.noEvent}>
+              <FormattedMessage {...messages.noEvents} />
+            </TableCell>
+          </TableRow>
         ),
       )}
     </ResponsiveTable>
