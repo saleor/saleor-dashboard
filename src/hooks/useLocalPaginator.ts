@@ -91,7 +91,14 @@ export function useSectionLocalPaginationState(
 function useLocalPaginator(
   setPaginationState: (paginationState: PaginationState) => void,
 ) {
-  function paginate(pageInfo: PageInfo, paginationState: PaginationState) {
+  function paginate(
+    pageInfo: PageInfo | undefined,
+    paginationState: PaginationState,
+  ) {
+    if (!pageInfo) {
+      return undefined;
+    }
+
     const loadNextPage = () =>
       setPaginationState({
         ...paginationState,

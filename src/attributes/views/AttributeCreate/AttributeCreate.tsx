@@ -162,7 +162,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     });
 
     return {
-      id: result.data?.attributeCreate?.attribute?.id || null,
+      id: result.data?.attributeCreate?.attribute?.id ?? undefined,
       errors: getMutationErrors(result),
     };
   };
@@ -210,7 +210,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             file: value?.fileUrl
               ? {
                   url: value.fileUrl,
-                  contentType: value.contentType,
+                  contentType: value.contentType ?? "",
                   __typename: "File",
                 }
               : null,

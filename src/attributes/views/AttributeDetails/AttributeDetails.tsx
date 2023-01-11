@@ -247,7 +247,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     <AttributePage
       attribute={data?.attribute}
       disabled={loading}
-      errors={attributeUpdateOpts.data?.attributeUpdate.errors || []}
+      errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       onDelete={() => openModal("remove")}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -291,7 +291,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             name={getStringOrPlaceholder(
               data?.attribute?.choices?.edges?.find(
                 value => params.id === value.node.id,
-              )?.node.name,
+              )?.node?.name ?? "",
             )}
             useName={true}
             confirmButtonState={attributeValueDeleteOpts.status}
@@ -314,7 +314,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             confirmButtonState={attributeValueCreateOpts.status}
             disabled={loading}
             errors={
-              attributeValueCreateOpts.data?.attributeValueCreate.errors || []
+              attributeValueCreateOpts.data?.attributeValueCreate?.errors || []
             }
             open={params.action === "add-value"}
             onClose={closeModal}
@@ -336,21 +336,22 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             attributeValue={attributeValueFragmentToFormData(
               data?.attribute?.choices?.edges?.find(
                 value => params.id === value.node.id,
-              )?.node,
+              )?.node ?? {},
             )}
             confirmButtonState={attributeValueUpdateOpts.status}
             disabled={loading}
             errors={
-              attributeValueUpdateOpts.data?.attributeValueUpdate.errors || []
+              attributeValueUpdateOpts.data?.attributeValueUpdate?.errors || []
             }
             open={params.action === "edit-value"}
             onClose={closeModal}
             onSubmit={input =>
               attributeValueUpdate({
                 variables: {
-                  id: data?.attribute.choices.edges.find(
-                    value => params.id === value.node.id,
-                  ).node.id,
+                  id:
+                    data?.attribute?.choices?.edges?.find(
+                      value => params.id === value.node.id,
+                    )?.node?.id || "",
                   input,
                   firstValues: valuesPaginationState.first,
                   lastValues: valuesPaginationState.last,
