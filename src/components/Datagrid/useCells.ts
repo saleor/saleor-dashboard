@@ -10,7 +10,7 @@ function useCells() {
   const { locale } = useLocale();
   const value = useMemo(
     () => [
-      moneyCellRenderer(locale),
+      moneyCellRenderer(),
       numberCellRenderer(locale),
       dropdownCellRenderer,
     ],
