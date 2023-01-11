@@ -32,10 +32,13 @@ export function createVariant({
     price,
     variantName,
   });
-  cy.get(VARIANTS_SELECTORS.saveButton)
+  cy.addAliasToGraphRequest("WarehouseList")
+    .get(VARIANTS_SELECTORS.saveButton)
     .click()
-    .get(VARIANTS_SELECTORS.skuInput)
-    .should("be.enabled")
+    .wait("@WarehouseList")
+    .get(VARIANTS_SELECTORS.skuTextField)
+    .find("input")
+    .and("be.enabled")
     .get(BUTTON_SELECTORS.back)
     .click()
     .get(PRODUCT_DETAILS.productNameInput)
@@ -87,7 +90,7 @@ export function fillUpVariantDetails({
     cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
   }
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuInput).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
   }
   if (warehouseName) {
     cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
@@ -115,7 +118,7 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
     .contains(attributeName)
     .click();
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuInput).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
   }
 }
 

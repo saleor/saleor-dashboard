@@ -155,6 +155,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             name="sku"
             onChange={handleChange}
             value={data.sku}
+            data-test-id="sku"
           />
         </div>
         <ControlledCheckbox
