@@ -84,12 +84,13 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             currency={currency}
             submitState={addManualRefundState}
             error={addManualRefundError}
-            onAddTransaction={({ amount, description }) => {
+            onAddTransaction={({ amount, description, pspReference }) => {
               onAddManualRefund({
                 currency,
                 description,
                 amount,
                 orderId: order?.id,
+                pspReference,
               });
             }}
           />

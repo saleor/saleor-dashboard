@@ -11,16 +11,55 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * The `Date` scalar type represents a Date
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   Date: any;
+  /**
+   * The `DateTime` scalar type represents a DateTime
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   DateTime: any;
+  /**
+   * Custom Decimal implementation.
+   *
+   * Returns Decimal as a float in the API,
+   * parses float to the Decimal on the way back.
+   */
   Decimal: any;
+  /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
   GenericScalar: any;
   JSONString: any;
+  /**
+   * Metadata is a map of key-value pairs, both keys and values are `String`.
+   *
+   * Example:
+   * ```
+   * {
+   *     "key1": "value1",
+   *     "key2": "value2"
+   * }
+   * ```
+   */
   Metadata: any;
+  /**
+   * Positive Decimal scalar implementation.
+   *
+   * Should be used in places where value must be positive.
+   */
   PositiveDecimal: any;
   UUID: any;
+  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
+  /** _Any value scalar as defined by Federation spec. */
   _Any: any;
 };
 
@@ -8144,6 +8183,7 @@ export type CreateManualTransactionCaptureMutationVariables = Exact<{
   amount: Scalars['PositiveDecimal'];
   currency: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
+  pspReference?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -8154,6 +8194,7 @@ export type CreateManualTransactionRefundMutationVariables = Exact<{
   amount: Scalars['PositiveDecimal'];
   currency: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
+  pspReference?: InputMaybe<Scalars['String']>;
 }>;
 
 

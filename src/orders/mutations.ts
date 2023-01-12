@@ -564,16 +564,21 @@ export const createManualTransactionCapture = gql`
     $amount: PositiveDecimal!
     $currency: String!
     $description: String
+    $pspReference: String
   ) {
     transactionCreate(
       id: $orderId
       transaction: {
         type: "Manual capture"
         status: "Success"
-        pspReference: $description
+        pspReference: $pspReference
         amountCharged: { amount: $amount, currency: $currency }
       }
-      transactionEvent: { status: SUCCESS, pspReference: $description }
+      transactionEvent: {
+        status: SUCCESS
+        pspReference: $pspReference
+        name: $description
+      }
     ) {
       transaction {
         ...TransactionItem
@@ -591,16 +596,21 @@ export const createManualTransactionRefund = gql`
     $amount: PositiveDecimal!
     $currency: String!
     $description: String
+    $pspReference: String
   ) {
     transactionCreate(
       id: $orderId
       transaction: {
         type: "Manual refund"
         status: "Success"
-        reference: $description
+        pspReference: $pspReference
         amountRefunded: { amount: $amount, currency: $currency }
       }
-      transactionEvent: { status: SUCCESS, pspReference: $description }
+      transactionEvent: {
+        status: SUCCESS
+        pspReference: $pspReference
+        name: $description
+      }
     ) {
       transaction {
         ...TransactionItem

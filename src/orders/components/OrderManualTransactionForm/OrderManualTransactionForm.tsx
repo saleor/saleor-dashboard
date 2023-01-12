@@ -7,6 +7,7 @@ import { useManualRefund } from "./hooks";
 interface OrderManualTransactionSubmitVariables {
   amount: number;
   description: string;
+  pspReference: string | undefined;
 }
 
 export interface OrderManualTransactionFormProps {

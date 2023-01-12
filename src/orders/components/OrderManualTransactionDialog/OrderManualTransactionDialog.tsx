@@ -63,6 +63,10 @@ export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialog
                 label={intl.formatMessage(commonMessages.description)}
                 fullWidth
               />
+              <OrderManualTransactionForm.PspReferenceField
+                label={intl.formatMessage(commonMessages.pspReferenceOptional)}
+                fullWidth
+              />
               <OrderManualTransactionForm.PriceInputField
                 label={intl.formatMessage(
                   manualTransactionMessages.transactionAmount,

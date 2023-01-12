@@ -6,6 +6,7 @@ interface ManualRefundHookProps {
   initialData?: {
     amount?: number;
     description?: string;
+    pspReference?: string;
   };
 }
 
@@ -21,12 +22,16 @@ export const useManualRefund = ({
   const [description, setDescription] = React.useState(
     initialData?.description ?? "",
   );
+  const [pspReference, setPspReference] = React.useState<string | undefined>(
+    initialData?.pspReference,
+  );
 
   React.useEffect(() => {
     if (submitState === "success") {
       // reset state after submit
       setAmount(undefined);
       setDescription("");
+      setPspReference(undefined);
     }
   }, [submitState]);
 
@@ -43,5 +48,16 @@ export const useManualRefund = ({
     }
   };
 
-  return { amount, description, handleChangeDescription, handleChangeAmount };
+  const handleChangePspReference: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setPspReference(e.target.value);
+  };
+
+  return {
+    amount,
+    description,
+    pspReference,
+    handleChangeDescription,
+    handleChangeAmount,
+    handleChangePspReference,
+  };
 };

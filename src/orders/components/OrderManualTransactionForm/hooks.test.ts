@@ -17,12 +17,17 @@ describe("useManualRefund hook", () => {
     const { result, rerender } = renderHook(() =>
       useManualRefund({
         submitState,
-        initialData: { amount: 12, description: "test" },
+        initialData: {
+          amount: 12,
+          description: "test",
+          pspReference: "test-1234",
+        },
       }),
     );
 
     expect(result.current.amount).toBe(12);
     expect(result.current.description).toBe("test");
+    expect(result.current.pspReference).toBe("test-1234");
 
     submitState = "loading";
     rerender();
@@ -32,6 +37,7 @@ describe("useManualRefund hook", () => {
 
     expect(result.current.amount).toBe(undefined);
     expect(result.current.description).toBe("");
+    expect(result.current.pspReference).toBe(undefined);
   });
 
   it("updates amount after user changes form input", () => {
@@ -73,5 +79,21 @@ describe("useManualRefund hook", () => {
     });
 
     expect(result.current.description).toBe("new-description");
+  });
+
+  it("updates psp reference after user changes form input", () => {
+    const { result } = renderHook(() =>
+      useManualRefund({
+        submitState: "default",
+      }),
+    );
+
+    expect(result.current.pspReference).toBe(undefined);
+
+    act(() => {
+      result.current.handleChangePspReference(fakeChangeEvent("test-1234"));
+    });
+
+    expect(result.current.pspReference).toBe("test-1234");
   });
 });

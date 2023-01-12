@@ -24,12 +24,6 @@ export const statusMessages = defineMessages({
 });
 
 export const messages = defineMessages({
-  pspReference: {
-    defaultMessage: "PSP reference",
-    id: "eVjgIx",
-    description:
-      "tooltip, Transaction reference received from payment provider",
-  },
   noEvents: {
     defaultMessage: "This transaction doesn't have any events",
     id: "dnbJKr",

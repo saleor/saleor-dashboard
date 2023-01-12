@@ -9783,11 +9783,11 @@ export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRe
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
 export const CreateManualTransactionCaptureDocument = gql`
-    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String) {
+    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual capture", status: "Success", pspReference: $description, amountCharged: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, pspReference: $description}
+    transaction: {type: "Manual capture", status: "Success", pspReference: $pspReference, amountCharged: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
   ) {
     transaction {
       ...TransactionItem
@@ -9818,6 +9818,7 @@ export type CreateManualTransactionCaptureMutationFn = Apollo.MutationFunction<T
  *      amount: // value for 'amount'
  *      currency: // value for 'currency'
  *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
  *   },
  * });
  */
@@ -9829,11 +9830,11 @@ export type CreateManualTransactionCaptureMutationHookResult = ReturnType<typeof
 export type CreateManualTransactionCaptureMutationResult = Apollo.MutationResult<Types.CreateManualTransactionCaptureMutation>;
 export type CreateManualTransactionCaptureMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
 export const CreateManualTransactionRefundDocument = gql`
-    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String) {
+    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual refund", status: "Success", reference: $description, amountRefunded: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, pspReference: $description}
+    transaction: {type: "Manual refund", status: "Success", pspReference: $pspReference, amountRefunded: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
   ) {
     transaction {
       ...TransactionItem
@@ -9864,6 +9865,7 @@ export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Ty
  *      amount: // value for 'amount'
  *      currency: // value for 'currency'
  *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
  *   },
  * });
  */
