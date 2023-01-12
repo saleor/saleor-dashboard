@@ -14,16 +14,14 @@ import {
 } from "@saleor/macaw-ui";
 import { useAppListContext } from "@saleor/new-apps/context";
 import { appInstallationStatusMessages } from "@saleor/new-apps/messages";
-import { isAppInTunnel } from "@saleor/new-apps/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppManifestTableDisplay from "../AppManifestTableDisplay";
-import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-interface NotInstalledAppListRowProps {
+export interface NotInstalledAppListRowProps {
   appInstallation: AppInstallationFragment;
 }
 
@@ -52,16 +50,6 @@ export const NotInstalledAppListRow: React.FC<NotInstalledAppListRowProps> = ({
       </TableCellAvatar>
       <TableCell className={clsx(classes.col, classes.colActions)}>
         <div className={classes.actions}>
-          {appInstallation.manifestUrl &&
-          isAppInTunnel(appInstallation.manifestUrl) ? (
-            <Typography
-              variant="caption"
-              className={classes.tunnel}
-              data-test-id="app-tunnel-label"
-            >
-              {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
-            </Typography>
-          ) : null}
           {appInstallation?.status === JobStatusEnum.PENDING && (
             <>
               <Typography
@@ -78,7 +66,11 @@ export const NotInstalledAppListRow: React.FC<NotInstalledAppListRowProps> = ({
           )}
           {appInstallation?.status === JobStatusEnum.FAILED && (
             <>
-              <Typography variant="body2" className={classes.failed}>
+              <Typography
+                variant="body2"
+                className={classes.failed}
+                data-test-id="app-failed-label"
+              >
                 <FormattedMessage {...appInstallationStatusMessages.failed} />
                 <Tooltip title={appInstallation.message} variant="error">
                   <TooltipMountWrapper>

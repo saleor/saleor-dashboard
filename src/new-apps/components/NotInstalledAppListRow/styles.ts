@@ -14,12 +14,16 @@ export const useStyles = makeStyles(
       color: theme.palette.saleor.main[3],
       whiteSpace: "nowrap",
     },
-    pending: {
-      color: theme.palette.saleor.main[3],
-      whiteSpace: "nowrap",
-    },
     failed: {
       color: theme.palette.error.main,
+      whiteSpace: "nowrap",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      gap: theme.spacing(1),
+    },
+    pending: {
+      color: theme.palette.saleor.main[3],
       whiteSpace: "nowrap",
     },
     colSpinner: {
@@ -28,6 +32,8 @@ export const useStyles = makeStyles(
       },
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(2),
+      display: "flex",
+      alignItems: "center",
     },
     actions: {
       alignItems: "center",

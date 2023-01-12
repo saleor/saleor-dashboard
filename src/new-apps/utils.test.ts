@@ -28,18 +28,24 @@ describe("App utils", () => {
     };
 
     // Act
-    const details = getAppDetails(
-      intlMock,
+    const details = getAppDetails({
+      intl: intlMock,
       app,
-      () => undefined,
-      () => undefined,
-    );
+      appInstallation: undefined,
+      navigateToAppInstallPage: () => undefined,
+      navigateToVercelDeploymentPage: () => undefined,
+      removeAppInstallation: () => undefined,
+      retryAppInstallation: () => undefined,
+    });
 
     // Assert
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
       installHandler: expect.any(Function),
       vercelDeployHandler: expect.any(Function),
+      installationPending: undefined,
+      removeInstallHandler: undefined,
+      retryInstallHandler: undefined,
       links: [
         {
           name: expect.any(String),
@@ -76,7 +82,15 @@ describe("App utils", () => {
     };
 
     // Act
-    const details = getAppDetails(intlMock, app);
+    const details = getAppDetails({
+      intl: intlMock,
+      app,
+      appInstallation: undefined,
+      navigateToAppInstallPage: () => undefined,
+      navigateToVercelDeploymentPage: () => undefined,
+      removeAppInstallation: () => undefined,
+      retryAppInstallation: () => undefined,
+    });
 
     // Assert
     const expectedDetails: AppDetails = {
@@ -84,6 +98,9 @@ describe("App utils", () => {
       installHandler: undefined,
       vercelDeployHandler: undefined,
       links: [],
+      installationPending: undefined,
+      removeInstallHandler: undefined,
+      retryInstallHandler: undefined,
     };
     expect(details).toEqual(expectedDetails);
   });

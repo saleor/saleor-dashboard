@@ -33,6 +33,8 @@ describe("Apps InstalledAppListRow", () => {
   it("displays app details when basic app data passed", () => {
     // Arrange
     const openAppSettings = jest.fn();
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
     render(
       <Component
         data={{
@@ -41,6 +43,8 @@ describe("Apps InstalledAppListRow", () => {
         }}
         context={{
           openAppSettings,
+          removeAppInstallation,
+          retryAppInstallation,
         }}
       />,
     );
@@ -65,6 +69,8 @@ describe("Apps InstalledAppListRow", () => {
   it("displays external label when app is external", () => {
     // Arrange
     const openAppSettings = jest.fn();
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
     render(
       <Component
         data={{
@@ -73,6 +79,8 @@ describe("Apps InstalledAppListRow", () => {
         }}
         context={{
           openAppSettings,
+          removeAppInstallation,
+          retryAppInstallation,
         }}
       />,
     );
@@ -85,6 +93,8 @@ describe("Apps InstalledAppListRow", () => {
   it("displays tunnnel label when app is served via tunnnel", () => {
     // Arrange
     const openAppSettings = jest.fn();
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
     const AppsConfig = getAppsConfig();
     render(
       <Component
@@ -98,6 +108,8 @@ describe("Apps InstalledAppListRow", () => {
         }}
         context={{
           openAppSettings,
+          removeAppInstallation,
+          retryAppInstallation,
         }}
       />,
     );
@@ -110,6 +122,8 @@ describe("Apps InstalledAppListRow", () => {
   it("calls handlers when app data passed and buttons clicked", async () => {
     // Arrange
     const openAppSettings = jest.fn();
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
     render(
       <Component
         data={{
@@ -118,6 +132,8 @@ describe("Apps InstalledAppListRow", () => {
         }}
         context={{
           openAppSettings,
+          removeAppInstallation,
+          retryAppInstallation,
         }}
       />,
     );
