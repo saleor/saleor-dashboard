@@ -27,7 +27,7 @@ interface OrderPaymementProps {
   onMarkAsPaid: () => void;
 }
 
-const OrderPayment: React.FC<OrderPaymementProps> = ({
+const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
   order,
   onMarkAsPaid,
 }) => {
@@ -130,4 +130,4 @@ const OrderPayment: React.FC<OrderPaymementProps> = ({
   );
 };
 
-export default OrderPayment;
+export default OrderPaymentSummaryCard;

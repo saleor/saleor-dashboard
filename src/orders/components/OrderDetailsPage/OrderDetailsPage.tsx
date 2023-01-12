@@ -43,7 +43,7 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPayment from "../OrderPayment";
+import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
@@ -284,7 +284,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ))}
                 <div className={classes.cardGrid}>
                   <OrderSummaryCard order={order} />
-                  <OrderPayment order={order} onMarkAsPaid={onPaymentPaid} />
+                  <OrderPaymentSummaryCard
+                    order={order}
+                    onMarkAsPaid={onPaymentPaid}
+                  />
                 </div>
                 <CardSpacer />
                 {order?.grantedRefunds?.length !== 0 ? (
