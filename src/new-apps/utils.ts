@@ -31,19 +31,6 @@ const getAppManifestUrl = (
   }
 };
 
-// export const resolveInstallationOfInstalledApp = (
-//   installedApp: AppListItemFragment,
-//   appInstallations?: AppInstallationFragment[],
-// ) => {
-//   const manifest = installedApp.manifestUrl;
-
-//   if (manifest) {
-//     return appInstallations?.find(
-//       appInstallation => appInstallation.manifestUrl === manifest,
-//     );
-//   }
-// };
-
 export const resolveInstallationOfMarketplaceApp = (
   marketplaceApp: GetV2SaleorAppsResponse.SaleorApp,
   appInstallations?: AppInstallationFragment[],
