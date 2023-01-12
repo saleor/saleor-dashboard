@@ -1,14 +1,14 @@
-import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+} from "@dashboard/attributes/utils/handlers";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY,
-} from "@saleor/config";
+} from "@dashboard/config";
 import {
   PageErrorWithAttributesFragment,
   useFileUploadMutation,
@@ -16,17 +16,17 @@ import {
   usePageTypeQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationErrors } from "@saleor/misc";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

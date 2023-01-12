@@ -1,9 +1,9 @@
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { ChannelFragment } from "@saleor/graphql";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { DialogProps } from "@saleor/types";
-import { arrayDiff } from "@saleor/utils/arrays";
-import { toggle } from "@saleor/utils/lists";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { ChannelFragment } from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { DialogProps } from "@dashboard/types";
+import { arrayDiff } from "@dashboard/utils/arrays";
+import { toggle } from "@dashboard/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 

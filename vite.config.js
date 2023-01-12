@@ -159,20 +159,20 @@ export default defineConfig(({ command, mode }) => {
     },
     resolve: {
       alias: {
-        /*
-          Aliases from tsconfig, we need to preserve them.
-          Since @saleor points to "src", we need to add aliases for macaw and sdk as first.
-        */
-        "@saleor/macaw-ui": path.resolve(
-          __dirname,
-          "node_modules/@saleor/macaw-ui",
-        ),
-        "@saleor/app-sdk": path.resolve(
-          __dirname,
-          "node_modules/@saleor/app-sdk",
-        ),
-        "@saleor/sdk": path.resolve(__dirname, "node_modules/@saleor/sdk"),
-        "@saleor": path.resolve(__dirname, "./src"),
+        // /*
+        //   Aliases from tsconfig, we need to preserve them.
+        //   Since @saleor points to "src", we need to add aliases for macaw and sdk as first.
+        // */
+        // "@saleor/macaw-ui": path.resolve(
+        //   __dirname,
+        //   "node_modules/@saleor/macaw-ui",
+        // ),
+        // "@saleor/app-sdk": path.resolve(
+        //   __dirname,
+        //   "node_modules/@saleor/app-sdk",
+        // ),
+        // "@saleor/sdk": path.resolve(__dirname, "node_modules/@saleor/sdk"),
+        "@dashboard": path.resolve(__dirname, "./src"),
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),
         src: path.resolve(__dirname, "./src"),

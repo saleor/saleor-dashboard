@@ -1,6 +1,6 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
 import { Divider, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import CardSpacer from "@saleor/components/CardSpacer";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 

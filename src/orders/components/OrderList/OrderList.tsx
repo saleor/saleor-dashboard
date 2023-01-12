@@ -1,3 +1,20 @@
+import { DateTime } from "@dashboard/components/Date";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderListQuery } from "@dashboard/graphql";
+import {
+  maybe,
+  renderCollection,
+  transformOrderStatus,
+  transformPaymentStatus,
+} from "@dashboard/misc";
+import { OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
+import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
 import {
   TableBody,
   TableCell,
@@ -5,24 +22,7 @@ import {
   TableHead,
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
-import { DateTime } from "@saleor/components/Date";
-import Money from "@saleor/components/Money";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderListQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
-import {
-  maybe,
-  renderCollection,
-  transformOrderStatus,
-  transformPaymentStatus,
-} from "@saleor/misc";
-import { OrderListUrlSortField, orderUrl } from "@saleor/orders/urls";
-import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

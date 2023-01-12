@@ -1,12 +1,12 @@
-import { InputAdornment } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,
   getSingleDisplayValue,
-} from "@saleor/components/Attributes/utils";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { getBySlug } from "@saleor/misc";
+} from "@dashboard/components/Attributes/utils";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { getBySlug } from "@dashboard/misc";
+import { InputAdornment } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

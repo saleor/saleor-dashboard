@@ -1,8 +1,8 @@
-import { TextField } from "@material-ui/core";
 import SingleSelectField, {
   Choices,
-} from "@saleor/components/SingleSelectField";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/components/SingleSelectField";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { TextField } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 

@@ -1,8 +1,8 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { CollectionFragment } from "@dashboard/graphql";
+import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { CollectionFragment } from "@saleor/graphql";
 import { Pill, PillColor } from "@saleor/macaw-ui";
-import ScrollableContent from "@saleor/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

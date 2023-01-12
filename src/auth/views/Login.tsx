@@ -1,7 +1,7 @@
-import { useAvailableExternalAuthenticationsQuery } from "@saleor/graphql";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { getAppMountUriForRedirect } from "@saleor/utils/urls";
+import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import React, { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";

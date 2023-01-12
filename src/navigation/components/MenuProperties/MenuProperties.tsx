@@ -1,9 +1,9 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { MenuErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { MenuErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
-import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import React from "react";
 import { useIntl } from "react-intl";
 

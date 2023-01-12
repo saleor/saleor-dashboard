@@ -1,12 +1,15 @@
-import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@saleor/components/Attributes";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import {
+  ChannelData,
+  createSortedChannelsData,
+} from "@dashboard/channels/utils";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY,
-} from "@saleor/config";
+} from "@dashboard/config";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -20,33 +23,33 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useChannels from "@saleor/hooks/useChannels";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { getMutationErrors } from "@saleor/misc";
+} from "@dashboard/graphql";
+import useChannels from "@dashboard/hooks/useChannels";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {
   ProductCreateData,
-} from "@saleor/products/components/ProductCreatePage";
+} from "@dashboard/products/components/ProductCreatePage";
 import {
   productAddUrl,
   ProductCreateUrlDialog,
   ProductCreateUrlQueryParams,
   productUrl,
-} from "@saleor/products/urls";
-import useCategorySearch from "@saleor/searches/useCategorySearch";
-import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
-import { getProductErrorMessage } from "@saleor/utils/errors";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { warehouseAddPath } from "@saleor/warehouses/urls";
+} from "@dashboard/products/urls";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

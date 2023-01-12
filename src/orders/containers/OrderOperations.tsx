@@ -53,7 +53,7 @@ import {
   useOrderShippingMethodUpdateMutation,
   useOrderUpdateMutation,
   useOrderVoidMutation,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import React from "react";
 
 import { getMutationProviderData } from "../../misc";

@@ -1,10 +1,10 @@
-import { FilterElement, IFilter } from "@saleor/components/Filter";
+import { FilterElement, IFilter } from "@dashboard/components/Filter";
 import {
   GiftCardFilterInput,
   SearchCustomersQuery,
   SearchProductsQuery,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -12,17 +12,17 @@ import {
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam,
-} from "@saleor/utils/filters";
+} from "@dashboard/utils/filters";
 import {
   createAutocompleteField,
   createNumberField,
   createOptionsField,
-} from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters/fields";
 import {
   mapNodeToChoice,
   mapPersonNodeToChoice,
   mapSingleValueNodeToChoice,
-} from "@saleor/utils/maps";
+} from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { GiftCardListUrlQueryParams } from "../types";

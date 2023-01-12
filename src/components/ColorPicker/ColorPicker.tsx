@@ -1,9 +1,9 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import { RequireOnlyOne } from "@dashboard/misc";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import { TextField } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { RequireOnlyOne } from "@saleor/misc";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import Hue from "@uiw/react-color-hue";
 import Saturation from "@uiw/react-color-saturation";
 import convert from "color-convert";

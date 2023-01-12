@@ -1,11 +1,11 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { CustomAppUrls } from "@saleor/custom-apps/urls";
-import { AppCreateMutation, useAppCreateMutation } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { AppCreateMutation, useAppCreateMutation } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

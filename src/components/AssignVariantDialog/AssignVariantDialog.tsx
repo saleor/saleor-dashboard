@@ -1,3 +1,13 @@
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchProductsQuery } from "@dashboard/graphql";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { maybe, renderCollection } from "@dashboard/misc";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -9,17 +19,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Money from "@saleor/components/Money";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { SearchProductsQuery } from "@saleor/graphql";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
-import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";

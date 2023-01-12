@@ -1,6 +1,6 @@
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { Typography } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

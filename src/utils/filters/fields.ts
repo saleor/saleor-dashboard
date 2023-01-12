@@ -1,11 +1,11 @@
-import { FieldType, FilterElementGeneric } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   FetchMoreProps,
   KeyValue,
   MinMax,
   SearchPageProps,
-} from "@saleor/types";
+} from "@dashboard/types";
 
 export function createPriceField<K extends string = string>(
   name: K,

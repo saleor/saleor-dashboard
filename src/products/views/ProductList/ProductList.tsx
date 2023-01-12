@@ -1,19 +1,18 @@
-import { DialogContentText } from "@material-ui/core";
-import { filterable } from "@saleor/attributes/utils/data";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import { filterable } from "@dashboard/attributes/utils/data";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
+  defaultListSettings,
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
-  defaultListSettings,
   ProductListColumns,
-} from "@saleor/config";
-import { Task } from "@saleor/containers/BackgroundTasks/types";
+} from "@dashboard/config";
+import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
   useGridAttributesQuery,
@@ -26,44 +25,45 @@ import {
   useProductExportMutation,
   useProductListQuery,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/graphql";
+import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
-} from "@saleor/products/components/ProductListPage/utils";
-import ProductTypePickerDialog from "@saleor/products/components/ProductTypePickerDialog";
+} from "@dashboard/products/components/ProductListPage/utils";
+import ProductTypePickerDialog from "@dashboard/products/components/ProductTypePickerDialog";
 import {
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
-} from "@saleor/products/urls";
-import useAttributeSearch from "@saleor/searches/useAttributeSearch";
-import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch from "@saleor/searches/useAvailableInGridAttributesSearch";
-import useCategorySearch from "@saleor/searches/useCategorySearch";
-import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
-import { getSortUrlVariables } from "@saleor/utils/sort";
+} from "@dashboard/products/urls";
+import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
+import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
+import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getSortUrlVariables } from "@dashboard/utils/sort";
+import { DialogContentText } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
 import {
   ProductErrorCode,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";

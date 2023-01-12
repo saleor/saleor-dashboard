@@ -1,6 +1,6 @@
-import { MenuErrorCode } from "@saleor/graphql";
-import { menu } from "@saleor/navigation/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { MenuErrorCode } from "@dashboard/graphql";
+import { menu } from "@dashboard/navigation/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -1,7 +1,7 @@
 import {
   PageErrorCode,
   PageErrorWithAttributesFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { PageData } from "../components/PageDetailsPage/form";
 

@@ -1,13 +1,13 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   TableBody,
   TableCell,
   TableFooter,
   TableHead,
 } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

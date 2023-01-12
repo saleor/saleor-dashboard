@@ -1,5 +1,5 @@
-import { ProductFragment } from "@saleor/graphql";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
+import { ProductFragment } from "@dashboard/graphql";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
 import { inferProductChannelsAfterUpdate } from "./utils";
 

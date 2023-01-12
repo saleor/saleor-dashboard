@@ -5,13 +5,13 @@ import {
   useTaxCountriesListQuery,
   useTaxCountryConfigurationDeleteMutation,
   useTaxCountryConfigurationUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

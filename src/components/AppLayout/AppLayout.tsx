@@ -1,6 +1,7 @@
+import { useUser } from "@dashboard/auth";
+import useAppState from "@dashboard/hooks/useAppState";
+import { isDarkTheme } from "@dashboard/misc";
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
-import useAppState from "@saleor/hooks/useAppState";
 import {
   SaleorTheme,
   Sidebar,
@@ -9,7 +10,6 @@ import {
   useBacklink,
   useTheme,
 } from "@saleor/macaw-ui";
-import { isDarkTheme } from "@saleor/misc";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";

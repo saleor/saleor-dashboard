@@ -1,30 +1,30 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { Button } from "@saleor/components/Button";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { Button } from "@dashboard/components/Button";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
   usePageListQuery,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
+} from "@dashboard/hooks/usePaginator";
+import { maybe } from "@dashboard/misc";
+import PageTypePickerDialog from "@dashboard/pages/components/PageTypePickerDialog";
+import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
+import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import PageTypePickerDialog from "@saleor/pages/components/PageTypePickerDialog";
-import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

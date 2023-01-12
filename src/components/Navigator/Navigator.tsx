@@ -1,7 +1,7 @@
+import { APP_VERSION } from "@dashboard/config";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";
-import { APP_VERSION } from "@saleor/config";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNotifier from "@saleor/hooks/useNotifier";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import hotkeys from "hotkeys-js";

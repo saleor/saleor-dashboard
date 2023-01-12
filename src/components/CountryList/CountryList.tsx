@@ -1,11 +1,11 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CountryFragment } from "@dashboard/graphql";
 import { Card, TableBody, TableCell } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CountryFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

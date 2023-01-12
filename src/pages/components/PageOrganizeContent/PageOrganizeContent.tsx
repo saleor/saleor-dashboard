@@ -1,14 +1,14 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
+import CardTitle from "@dashboard/components/CardTitle";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
-import { PageDetailsFragment, PageErrorFragment } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { FetchMoreProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
-import { getFormErrors } from "@saleor/utils/errors";
-import getPageErrorMessage from "@saleor/utils/errors/page";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

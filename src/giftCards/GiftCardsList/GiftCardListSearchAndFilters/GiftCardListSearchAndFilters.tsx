@@ -1,19 +1,19 @@
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import FilterBar from "@saleor/components/FilterBar";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import FilterBar from "@dashboard/components/FilterBar";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { giftCardListUrl } from "@saleor/giftCards/urls";
-import { useGiftCardCurrenciesQuery } from "@saleor/graphql";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { maybe } from "@saleor/misc";
-import useCustomerSearch from "@saleor/searches/useCustomerSearch";
-import useGiftCardTagsSearch from "@saleor/searches/useGiftCardTagsSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { giftCardListUrl } from "@dashboard/giftCards/urls";
+import { useGiftCardCurrenciesQuery } from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { maybe } from "@dashboard/misc";
+import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
+import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import compact from "lodash/compact";
 import React from "react";
 import { useIntl } from "react-intl";

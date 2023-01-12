@@ -1,4 +1,4 @@
-import { getAppsConfig } from "@saleor/config";
+import { getAppsConfig } from "@dashboard/config";
 import { IntlShape } from "react-intl";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";

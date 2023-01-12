@@ -1,16 +1,16 @@
+import { UserContextError } from "@dashboard/auth/types";
+import { passwordResetUrl } from "@dashboard/auth/urls";
+import { Button } from "@dashboard/components/Button";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
 import {
   CircularProgress,
   Divider,
   TextField,
   Typography,
 } from "@material-ui/core";
-import { UserContextError } from "@saleor/auth/types";
-import { passwordResetUrl } from "@saleor/auth/urls";
-import { Button } from "@saleor/components/Button";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import { AvailableExternalAuthenticationsQuery } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
 import { EyeIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

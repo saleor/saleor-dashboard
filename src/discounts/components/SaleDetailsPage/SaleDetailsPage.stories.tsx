@@ -1,10 +1,10 @@
-import { channelsList } from "@saleor/channels/fixtures";
-import { createSaleChannels } from "@saleor/channels/utils";
-import { sale } from "@saleor/discounts/fixtures";
-import { listActionsProps } from "@saleor/fixtures";
-import { DiscountErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createSaleChannels } from "@dashboard/channels/utils";
+import { sale } from "@dashboard/discounts/fixtures";
+import { listActionsProps } from "@dashboard/fixtures";
+import { DiscountErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -1,18 +1,18 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useCreateCustomerAddressMutation,
   useCustomerAddressesQuery,
   useRemoveCustomerAddressMutation,
   useSetCustomerDefaultAddressMutation,
   useUpdateCustomerAddressMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

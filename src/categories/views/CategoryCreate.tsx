@@ -1,15 +1,15 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CategoryCreateMutation,
   useCategoryCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationErrors } from "@saleor/misc";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

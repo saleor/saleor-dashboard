@@ -1,4 +1,4 @@
-import { Dialog } from "@saleor/types";
+import { Dialog } from "@dashboard/types";
 
 export enum GiftCardUpdatePageActionParamsEnum {
   SET_BALANCE = "set-balance",

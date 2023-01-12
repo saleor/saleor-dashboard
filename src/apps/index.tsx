@@ -1,5 +1,5 @@
-import WebhooksRoutes from "@saleor/custom-apps";
-import { sectionNames } from "@saleor/intl";
+import WebhooksRoutes from "@dashboard/custom-apps";
+import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";

@@ -1,4 +1,4 @@
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AttributeFragment,
   AttributeInputTypeEnum,
@@ -16,19 +16,19 @@ import {
   SearchProductTypesQuery,
   SearchProductTypesQueryVariables,
   StockAvailability,
-} from "@saleor/graphql";
-import { UseSearchResult } from "@saleor/hooks/makeSearch";
-import { findValueInEnum, maybe } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { UseSearchResult } from "@dashboard/hooks/makeSearch";
+import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductFilterKeys,
   ProductListFilterOpts,
-} from "@saleor/products/components/ProductListPage";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/products/components/ProductListPage";
+import { RelayToFlat } from "@dashboard/types";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
   mapSlugNodeToChoice,
-} from "@saleor/utils/maps";
+} from "@dashboard/utils/maps";
 
 import {
   FilterElement,

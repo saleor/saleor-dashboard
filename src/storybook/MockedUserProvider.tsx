@@ -1,6 +1,6 @@
-import { UserContext } from "@saleor/auth";
-import { adminUserPermissions } from "@saleor/fixtures";
-import { UserFragment } from "@saleor/graphql";
+import { UserContext } from "@dashboard/auth";
+import { adminUserPermissions } from "@dashboard/fixtures";
+import { UserFragment } from "@dashboard/graphql";
 import * as React from "react";
 
 export const MockedUserProvider: React.FC<{

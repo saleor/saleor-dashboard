@@ -1,19 +1,19 @@
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
-} from "@saleor/attributes/utils/data";
-import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
+} from "@dashboard/attributes/utils/data";
+import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
   VariantAttributeScope,
-} from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+} from "@dashboard/components/Attributes";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
@@ -21,13 +21,13 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
+import { productUrl } from "@dashboard/products/urls";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { ProductDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
-import { productUrl } from "@saleor/products/urls";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

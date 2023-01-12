@@ -1,5 +1,5 @@
-import { Pill } from "@saleor/components/ChannelsAvailabilityMenuContent";
-import { PluginConfigurationBaseFragment } from "@saleor/graphql";
+import { Pill } from "@dashboard/components/ChannelsAvailabilityMenuContent";
+import { PluginConfigurationBaseFragment } from "@dashboard/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 

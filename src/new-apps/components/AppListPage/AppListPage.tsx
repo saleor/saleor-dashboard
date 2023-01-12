@@ -1,10 +1,10 @@
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { AppUrls } from "@dashboard/new-apps/urls";
+import { ListProps } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
-import { AppUrls } from "@saleor/new-apps/urls";
-import { ListProps } from "@saleor/types";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

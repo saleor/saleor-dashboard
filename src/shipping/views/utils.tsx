@@ -1,5 +1,5 @@
-import { PostalCodeRuleInclusionTypeEnum } from "@saleor/graphql";
-import { MinMax } from "@saleor/types";
+import { PostalCodeRuleInclusionTypeEnum } from "@dashboard/graphql";
+import { MinMax } from "@dashboard/types";
 
 export const filterPostalCodes = (postalCodes, codeToFilterOut) =>
   postalCodes.filter(

@@ -1,7 +1,7 @@
-import { createConfigurationMenu } from "@saleor/configuration";
-import { UserFragment } from "@saleor/graphql";
-import { staffMember } from "@saleor/staff/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { createConfigurationMenu } from "@dashboard/configuration";
+import { UserFragment } from "@dashboard/graphql";
+import { staffMember } from "@dashboard/staff/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { useIntl } from "react-intl";

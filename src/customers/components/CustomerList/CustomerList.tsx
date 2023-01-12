@@ -1,21 +1,29 @@
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
-import Checkbox from "@saleor/components/Checkbox";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import Checkbox from "@dashboard/components/Checkbox";
 import RequirePermissions, {
   hasPermissions,
-} from "@saleor/components/RequirePermissions";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CustomerListUrlSortField, customerUrl } from "@saleor/customers/urls";
-import { ListCustomersQuery, PermissionEnum } from "@saleor/graphql";
+} from "@dashboard/components/RequirePermissions";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  CustomerListUrlSortField,
+  customerUrl,
+} from "@dashboard/customers/urls";
+import { ListCustomersQuery, PermissionEnum } from "@dashboard/graphql";
+import { getUserName, renderCollection } from "@dashboard/misc";
+import {
+  ListActions,
+  ListProps,
+  RelayToFlat,
+  SortPage,
+} from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getUserName, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

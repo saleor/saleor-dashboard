@@ -2,7 +2,7 @@ import {
   AddressValidationRulesQuery,
   CountryCode,
   useAddressValidationRulesQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { ChoiceValue } from "@saleor/sdk/dist/apollo/types";
 
 interface AreaChoices {

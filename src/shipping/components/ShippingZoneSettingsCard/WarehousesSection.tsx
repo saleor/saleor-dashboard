@@ -1,9 +1,9 @@
-import CardSpacer from "@saleor/components/CardSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from "@saleor/components/MultiAutocompleteSelectField";
-import { FormChange } from "@saleor/hooks/useForm";
-import { FetchMoreProps, SearchProps } from "@saleor/types";
+} from "@dashboard/components/MultiAutocompleteSelectField";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { FetchMoreProps, SearchProps } from "@dashboard/types";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

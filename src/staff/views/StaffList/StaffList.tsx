@@ -1,29 +1,32 @@
-import { newPasswordUrl } from "@saleor/auth/urls";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import { newPasswordUrl } from "@dashboard/auth/urls";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { useStaffListQuery, useStaffMemberAddMutation } from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import {
+  useStaffListQuery,
+  useStaffMemberAddMutation,
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
-import { getAppMountUriForRedirect } from "@saleor/utils/urls";
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";

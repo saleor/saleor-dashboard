@@ -1,10 +1,10 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { DateTime } from "@dashboard/components/Date";
+import { Hr } from "@dashboard/components/Hr";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Skeleton from "@dashboard/components/Skeleton";
+import { CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { DateTime } from "@saleor/components/Date";
-import { Hr } from "@saleor/components/Hr";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import Skeleton from "@saleor/components/Skeleton";
-import { CustomerDetailsQuery, PermissionEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

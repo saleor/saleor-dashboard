@@ -1,4 +1,4 @@
-import { AppPermissionFragment } from "@saleor/graphql";
+import { AppPermissionFragment } from "@dashboard/graphql";
 import { IconButton, PermissionsIcon, Tooltip } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

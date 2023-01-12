@@ -1,24 +1,24 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Grid from "@dashboard/components/Grid";
+import Hr from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
+import {
+  TranslationField,
+  TranslationFieldType,
+} from "@dashboard/translations/types";
+import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
-import CardTitle from "@saleor/components/CardTitle";
-import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
-import Skeleton from "@saleor/components/Skeleton";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
   IconButton,
   makeStyles,
 } from "@saleor/macaw-ui";
-import {
-  TranslationField,
-  TranslationFieldType,
-} from "@saleor/translations/types";
-import { ListProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

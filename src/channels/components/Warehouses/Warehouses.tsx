@@ -1,9 +1,9 @@
+import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import CardTitle from "@dashboard/components/CardTitle";
+import { SearchWarehousesQuery } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { ChannelWarehouses } from "@saleor/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@saleor/components/CardTitle";
-import { SearchWarehousesQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

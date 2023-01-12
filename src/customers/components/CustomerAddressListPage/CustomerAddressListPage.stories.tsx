@@ -1,9 +1,9 @@
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { customer } from "../../fixtures";
 import CustomerAddressListPage, { CustomerAddressListPageProps } from ".";
+import { customer } from "../../fixtures";
 
 const props: CustomerAddressListPageProps = {
   customer,

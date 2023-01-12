@@ -1,4 +1,4 @@
-import { Locale } from "@saleor/components/Locale";
+import { Locale } from "@dashboard/components/Locale";
 
 import { parseCurrency } from "./utils";
 

@@ -1,9 +1,9 @@
 import {
   DatagridChange,
   DatagridChangeOpts,
-} from "@saleor/components/Datagrid/useDatagridChange";
-import { Locale } from "@saleor/components/Locale";
-import { ProductFragment } from "@saleor/graphql";
+} from "@dashboard/components/Datagrid/useDatagridChange";
+import { Locale } from "@dashboard/components/Locale";
+import { ProductFragment } from "@dashboard/graphql";
 
 const getFractionDigits = (locale: Locale, currency: string) => {
   try {

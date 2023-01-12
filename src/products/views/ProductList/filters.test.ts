@@ -1,8 +1,8 @@
-import { AttributeInputTypeEnum, StockAvailability } from "@saleor/graphql";
-import { createFilterStructure } from "@saleor/products/components/ProductListPage";
-import { ProductListUrlFilters } from "@saleor/products/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import { createFilterStructure } from "@dashboard/products/components/ProductListPage";
+import { ProductListUrlFilters } from "@dashboard/products/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

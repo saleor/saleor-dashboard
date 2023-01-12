@@ -1,5 +1,5 @@
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,14 +1,14 @@
-import { FilterElement } from "@saleor/components/Filter";
+import { FilterElement } from "@dashboard/components/Filter";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum,
   ProductTypeFilterInput,
-} from "@saleor/graphql";
-import { findValueInEnum, maybe } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductTypeFilterKeys,
   ProductTypeListFilterOpts,
-} from "@saleor/productTypes/components/ProductTypeListPage";
+} from "@dashboard/productTypes/components/ProductTypeListPage";
 
 import {
   createFilterTabUtils,

@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import { getAppInProgressName } from "@saleor/apps/utils";
+import { getAppInProgressName } from "@dashboard/apps/utils";
 import {
   AppSortField,
   AppTypeEnum,
@@ -9,19 +9,19 @@ import {
   useAppRetryInstallMutation,
   useAppsInstallationsQuery,
   useAppsListQuery,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import usePaginator, {
   createPaginationState,
   PageInfo,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/hooks/usePaginator";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 

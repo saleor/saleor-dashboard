@@ -1,3 +1,21 @@
+import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import {
+  MenuErrorFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+} from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { RelayToFlat } from "@dashboard/types";
+import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
+import getMenuErrorMessage from "@dashboard/utils/errors/menu";
+import { getMenuItemByValue, IMenu } from "@dashboard/utils/menu";
 import {
   Dialog,
   DialogActions,
@@ -6,25 +24,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import AutocompleteSelectMenu from "@saleor/components/AutocompleteSelectMenu";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import FormSpacer from "@saleor/components/FormSpacer";
-import {
-  MenuErrorFragment,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-} from "@saleor/graphql";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { buttonMessages, sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { RelayToFlat } from "@saleor/types";
-import { getFieldError, getFormErrors } from "@saleor/utils/errors";
-import getMenuErrorMessage from "@saleor/utils/errors/menu";
-import { getMenuItemByValue, IMenu } from "@saleor/utils/menu";
 import isUrl from "is-url";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,6 +1,6 @@
+import { LanguageFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { OutputData } from "@editorjs/editorjs";
-import { LanguageFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 export enum TranslationInputFieldName {

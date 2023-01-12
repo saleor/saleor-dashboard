@@ -1,3 +1,21 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { StaffListQuery } from "@dashboard/graphql";
+import {
+  getUserInitials,
+  getUserName,
+  maybe,
+  renderCollection,
+} from "@dashboard/misc";
+import {
+  StaffListUrlSortField,
+  staffMemberDetailsUrl,
+} from "@dashboard/staff/urls";
+import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
 import {
   TableBody,
   TableCell,
@@ -5,25 +23,7 @@ import {
   TableHead,
   Typography,
 } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { StaffListQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import {
-  getUserInitials,
-  getUserName,
-  maybe,
-  renderCollection,
-} from "@saleor/misc";
-import {
-  StaffListUrlSortField,
-  staffMemberDetailsUrl,
-} from "@saleor/staff/urls";
-import { ListProps, RelayToFlat, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

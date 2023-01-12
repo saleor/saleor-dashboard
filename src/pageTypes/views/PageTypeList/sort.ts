@@ -1,6 +1,6 @@
-import { PageTypeSortField } from "@saleor/graphql";
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { PageTypeSortField } from "@dashboard/graphql";
+import { PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(
   sort: PageTypeListUrlSortField,

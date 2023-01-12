@@ -1,6 +1,6 @@
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { LanguageFragment } from "@saleor/graphql";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { LanguageFragment } from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 

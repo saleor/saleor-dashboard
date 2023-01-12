@@ -1,5 +1,5 @@
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { Skeleton } from "@material-ui/lab";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import React from "react";
 
 import AppListCard from "../AppListCard";
