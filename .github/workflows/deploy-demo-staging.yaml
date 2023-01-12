@@ -2,7 +2,7 @@ name: Deploy to staging demo
 on:
   push:
     tags:
-      - 3.8**
+      - 3.9**
   workflow_dispatch:
     inputs:
       git_ref:
@@ -54,7 +54,7 @@ jobs:
         run: |
           aws s3 sync build/dashboard s3://${{ secrets.AWS_DEMO_STAGING_DEPLOYMENT_BUCKET }}/dashboard/static/
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_DEMO_STAGING_DEPLOYMENT_BUCKET }}/dashboard/
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEMO_STAGING_CF_DIST_ID }} --paths "/dashboard*"
+          for i in {1..3}; do aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEMO_STAGING_CF_DIST_ID }} --paths "/dashboard*" && break || sleep 5; done
       - name: Prepare Demo release pull request
         run: |
           export GITHUB_TOKEN=$( \

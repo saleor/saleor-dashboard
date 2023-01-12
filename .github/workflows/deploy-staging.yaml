@@ -68,7 +68,7 @@ jobs:
         run: |
           aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/static/
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
+          for i in {1..3}; do aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*" && break || sleep 5; done
 
       - name: Prepare Sandbox release pull request
         run: |
