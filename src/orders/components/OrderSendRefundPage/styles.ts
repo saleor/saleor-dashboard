@@ -73,14 +73,29 @@ export const useManualRefundCardStyles = makeStyles(
       display: "flex",
       gap: theme.spacing(1),
       width: "100%",
-      justifyContent: "flex-end",
+      flexDirection: "column",
+      [theme.breakpoints.up("sm")]: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-end",
+      },
     },
     priceInput: {
-      maxWidth: "24rem",
+      [theme.breakpoints.up("sm")]: {
+        maxWidth: "24rem",
+      },
+    },
+    pspReferenceInput: {
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        maxWidth: "25rem",
+      },
     },
     descriptionInput: {
       width: "100%",
-      maxWidth: "30rem",
+      [theme.breakpoints.up("sm")]: {
+        maxWidth: "30rem",
+      },
     },
     submitButton: {
       flexShrink: 0,
