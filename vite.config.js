@@ -111,7 +111,7 @@ export default defineConfig(({ command, mode }) => {
     FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
     FLAGSMITH_ID: JSON.stringify(FLAGSMITH_ID),
     // Keep all feature flags from env in global variable
-    FLAGS: featureFlagsEnvs,
+    FLAGS: JSON.stringify(featureFlagsEnvs),
   };
 
   return {

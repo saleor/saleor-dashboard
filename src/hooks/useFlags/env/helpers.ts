@@ -15,7 +15,18 @@ export const flagNameToEnvName = (flagName: string) =>
  Referencing an virtual constant FLAGS, prepared by Vite. It populates env-based feature flags into client-side, under the virtual property FLAGS,
  Please do not use FLAGS constant directly anywhere.
 */
-export const readFlagFromEnv = (flagName: string): string | undefined =>
-  FLAGS[flagName];
+export const readFlagFromEnv = (flagName: string): string | undefined => {
+  if (FLAGS) {
+    return FLAGS[flagName];
+  }
 
-export const readAllFlagsFromEnv = (): Record<string, string> => FLAGS;
+  return undefined;
+};
+
+export const readAllFlagsFromEnv = (): Record<string, string> => {
+  if (FLAGS) {
+    return FLAGS;
+  }
+
+  return {};
+};
