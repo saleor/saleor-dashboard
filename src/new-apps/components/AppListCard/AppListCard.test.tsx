@@ -1,11 +1,26 @@
-import { comingSoonApp, releasedApp } from "@dashboard/new-apps/fixtures";
+import * as context from "@dashboard/new-apps/context";
+import {
+  comingSoonApp,
+  failedAppInProgress,
+  pendingAppInProgress,
+  releasedApp,
+} from "@dashboard/new-apps/fixtures";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import AppListCard from "./AppListCard";
+
+jest.mock("@dashboard/new-apps/context", () => ({
+  useAppListContext: jest.fn(() => ({
+    openAppSettings: jest.fn(),
+    removeAppInstallation: jest.fn(),
+    retryAppInstallation: jest.fn(),
+  })),
+}));
 
 describe("Apps AppListCard", () => {
   it("displays released app details when released app data passed", () => {
@@ -143,5 +158,67 @@ describe("Apps AppListCard", () => {
     expect(logoPlaceholder).toBeTruthy();
     expect(logoPlaceholder?.textContent).toBe(app.name.en[0]);
     expect(logoImage).toBeFalsy();
+  });
+
+  it("displays app installation details when failed installation data passed", () => {
+    // Arrange
+    render(
+      <Wrapper>
+        <AppListCard app={releasedApp} appInstallation={failedAppInProgress} />
+      </Wrapper>,
+    );
+    const status = screen.getByTestId("app-installation-failed");
+    const statusDetaails = within(status).queryByText(
+      appInstallationStatusMessages.failed.defaultMessage,
+    );
+
+    // Assert
+    expect(statusDetaails).toBeTruthy();
+  });
+
+  it("displays app installation details when pending installation data passed", () => {
+    // Arrange
+    render(
+      <Wrapper>
+        <AppListCard app={releasedApp} appInstallation={pendingAppInProgress} />
+      </Wrapper>,
+    );
+    const status = screen.getByTestId("app-installation-pending");
+    const statusText = within(status).queryByText(
+      appInstallationStatusMessages.pending.defaultMessage,
+    );
+
+    // Assert
+    expect(statusText).toBeTruthy();
+  });
+
+  it("calls handlers when failed installation data passed and buttons clicked", async () => {
+    // Arrange
+    const openAppSettings = jest.fn();
+    const removeAppInstallation = jest.fn();
+    const retryAppInstallation = jest.fn();
+    jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
+      openAppSettings,
+      removeAppInstallation,
+      retryAppInstallation,
+    }));
+    render(
+      <Wrapper>
+        <AppListCard app={releasedApp} appInstallation={failedAppInProgress} />
+      </Wrapper>,
+    );
+    const user = userEvent.setup();
+    const retryButton = screen.getByTestId("app-retry-install-button");
+    const removeButton = screen.getByTestId("app-remove-install-button");
+
+    // Act
+    await user.click(retryButton);
+    await user.click(removeButton);
+
+    // Assert
+    expect(retryAppInstallation).toHaveBeenCalledWith(failedAppInProgress.id);
+    expect(retryAppInstallation).toHaveBeenCalledTimes(1);
+    expect(removeAppInstallation).toHaveBeenCalledWith(failedAppInProgress.id);
+    expect(removeAppInstallation).toHaveBeenCalledTimes(1);
   });
 });

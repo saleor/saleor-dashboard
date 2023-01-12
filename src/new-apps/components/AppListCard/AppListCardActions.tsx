@@ -32,7 +32,14 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
 }) => {
   const classes = useActionsStyles();
 
-  if (!installHandler && !vercelDeployHandler && !releaseDate) {
+  if (
+    !installHandler &&
+    !vercelDeployHandler &&
+    !releaseDate &&
+    !retryInstallHandler &&
+    !removeInstallHandler &&
+    !installationPending
+  ) {
     return null;
   }
 
@@ -59,13 +66,19 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
           </Button>
         )}
         {installationPending && (
-          <Typography className={classes.cardActionsText}>
+          <Typography
+            className={classes.cardActionsText}
+            data-test-id="app-installation-pending"
+          >
             <FormattedMessage {...appInstallationStatusMessages.pending} />
           </Typography>
         )}
         {(retryInstallHandler || removeInstallHandler) && (
           <>
-            <Typography className={classes.cardActionsIssueText}>
+            <Typography
+              className={classes.cardActionsIssueText}
+              data-test-id="app-installation-failed"
+            >
               <FormattedMessage {...appInstallationStatusMessages.failed} />
               <Tooltip title={appInstallation?.message} variant="error">
                 <TooltipMountWrapper>
@@ -73,23 +86,24 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
                 </TooltipMountWrapper>
               </Tooltip>
             </Typography>
-            <Typography className={classes.cardActionsIssueText}>
-              <FormattedMessage {...appInstallationStatusMessages.failed} />
-            </Typography>
-            <Button
-              variant="secondary"
-              onClick={retryInstallHandler}
-              data-test-id="app-retry-install-button"
-            >
-              <FormattedMessage {...buttonMessages.retry} />
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={removeInstallHandler}
-              data-test-id="app-remove-install-button"
-            >
-              <FormattedMessage {...buttonMessages.cancel} />
-            </Button>
+            {retryInstallHandler && (
+              <Button
+                variant="secondary"
+                onClick={retryInstallHandler}
+                data-test-id="app-retry-install-button"
+              >
+                <FormattedMessage {...buttonMessages.retry} />
+              </Button>
+            )}
+            {removeInstallHandler && (
+              <Button
+                variant="secondary"
+                onClick={removeInstallHandler}
+                data-test-id="app-remove-install-button"
+              >
+                <FormattedMessage {...buttonMessages.cancel} />
+              </Button>
+            )}
           </>
         )}
         {releaseDate && (

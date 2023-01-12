@@ -1,8 +1,8 @@
-import * as context from "@saleor/new-apps/context";
+import * as context from "@dashboard/new-apps/context";
 import {
   failedAppInProgress,
   pendingAppInProgress,
-} from "@saleor/new-apps/fixtures";
+} from "@dashboard/new-apps/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -10,7 +10,7 @@ import React from "react";
 
 import NotInstalledAppListRow from "./NotInstalledAppListRow";
 
-jest.mock("@saleor/new-apps/context", () => ({
+jest.mock("@dashboard/new-apps/context", () => ({
   useAppListContext: jest.fn(() => ({
     openAppSettings: jest.fn(),
     removeAppInstallation: jest.fn(),
