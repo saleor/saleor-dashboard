@@ -24,6 +24,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { encodeGraphQLStatement } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -47,22 +48,6 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
-
-// FIXME should be moved elsewhere eventually
-const DefaultTestQuery = `query OrderDetails($id: ID!) { 
-  order(id: $id) { 
-    id
-    number
-    status
-    isShippingRequired
-    canFinalize
-    created
-    customerNote
-    paymentStatus
-    userEmail
-    isPaid
-  } 
-}`;
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment;
@@ -234,7 +219,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     onClick={() => {
                       const playgroundURL = new URL(process.env.API_URI);
                       playgroundURL.hash = encodeGraphQLStatement({
-                        query: DefaultTestQuery,
+                        query: defaultGraphiQLQuery,
                         headers: "",
                         operationName: "",
                         variables: `{ "id": "${order.id}" }`,

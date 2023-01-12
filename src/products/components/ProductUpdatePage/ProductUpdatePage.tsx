@@ -44,6 +44,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
@@ -66,16 +67,6 @@ import {
   ProductUpdateHandlers,
   ProductUpdateSubmitData,
 } from "./types";
-
-// FIXME should be moved elsewhere eventually
-const DefaultTestQuery = `query ProductDetails($id: ID!) {
-  product(id: $id) {
-    id
-    name
-    slug
-    description
-  }
-}`;
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -340,7 +331,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       onClick={() => {
                         const playgroundURL = new URL(process.env.API_URI);
                         playgroundURL.hash = encodeGraphQLStatement({
-                          query: DefaultTestQuery,
+                          query: defaultGraphiQLQuery,
                           headers: "",
                           operationName: "",
                           variables: `{ "id": "${product.id}" }`,
