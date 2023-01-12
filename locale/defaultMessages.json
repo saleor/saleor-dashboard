@@ -1994,6 +1994,10 @@
   "DWs4ba": {
     "string": "No menus found"
   },
+  "DaIlPd": {
+    "context": "link",
+    "string": "Open this product in GraphiQL"
+  },
   "Dgp38J": {
     "context": "checkbox label",
     "string": "Restrict order value"
@@ -7160,6 +7164,10 @@
   "s8FlDW": {
     "context": "hide error log label in notification",
     "string": "Hide log"
+  },
+  "s8bQaF": {
+    "context": "link",
+    "string": "Open this order in GraphiQL"
   },
   "s97tLq": {
     "string": "Search Collections"
