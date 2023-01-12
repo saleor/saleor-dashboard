@@ -97,8 +97,8 @@ const TableLine: React.FC<TableLineProps> = ({
       <TableCell className={classes.colTotal} align="right">
         <Money
           money={{
-            amount: line.quantity * line.orderLine.unitPrice.gross.amount,
-            currency: line.orderLine.unitPrice.gross.currency,
+            amount: line.orderLine.totalPrice.gross.amount,
+            currency: line.orderLine.totalPrice.gross.currency,
           }}
         />
       </TableCell>

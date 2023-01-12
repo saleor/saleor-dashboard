@@ -1,4 +1,5 @@
 import {
+  MoneyFragment,
   OrderDetailsFragment,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
@@ -30,6 +31,9 @@ export interface OrderLineDiscountContextConsumerProps
   orderLineDiscount?: OrderLineDiscountData;
   orderLineDiscountUpdateStatus: ConfirmButtonTransitionState;
   orderLineDiscountRemoveStatus: ConfirmButtonTransitionState;
+  totalDiscountedPrice: MoneyFragment;
+  unitUndiscountedPrice: MoneyFragment;
+  unitDiscountedPrice: MoneyFragment;
 }
 
 interface DiscountProviderProps {
@@ -108,8 +112,10 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
     closeDialog: handleCloseDialog,
     openDialog: handleOpenDialog(orderLineId),
-    discountedPrice: getOrderLine(orderLineId).unitPrice.gross,
-    undiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross,
+    totalDiscountedPrice: getOrderLine(orderLineId).totalPrice.gross,
+    unitDiscountedPrice: getOrderLine(orderLineId).unitPrice.gross,
+    unitUndiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice
+      .gross,
   });
 
   return (
