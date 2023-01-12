@@ -1,0 +1,353 @@
+{
+    "data": {
+        "apps": {
+            "pageInfo": {
+                "hasNextPage": false,
+                "hasPreviousPage": false,
+                "startCursor": "WyIyMDIyLTA2LTA5IDA2OjUzOjUxLjU2MjI1NyswMDowMCIsICJDaGVja291dCIsICI1NiJd",
+                "endCursor": "WyIyMDIyLTA0LTI4IDExOjI3OjA4LjI0ODM4NCswMDowMCIsICJzYWxlb3ItbWFya2V0cGxhY2UiLCAiMTEiXQ==",
+                "__typename": "PageInfo"
+            },
+            "totalCount": 11,
+            "edges": [
+                {
+                    "node": {
+                        "id": "QXBwOjU2",
+                        "name": "Checkout",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://saleor-checkout-lrzayxtgi-szczecha.vercel.app/channels",
+                        "manifestUrl": null,
+                        "version": "0.0.0",
+                        "permissions": [
+                            {
+                                "name": "Handle checkouts",
+                                "code": "HANDLE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle payments",
+                                "code": "HANDLE_PAYMENTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle taxes",
+                                "code": "HANDLE_TAXES",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage checkouts",
+                                "code": "MANAGE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage taxes",
+                                "code": "MANAGE_TAXES",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjU0",
+                        "name": "saleor-app-mocked",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": null,
+                        "manifestUrl": null,
+                        "version": "0.1.0",
+                        "permissions": [
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage customers.",
+                                "code": "MANAGE_USERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjUz",
+                        "name": "saleor-app-mocked",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://ecbe-82-180-151-240.ngrok.io/configuration",
+                        "manifestUrl": null,
+                        "version": "0.1.0",
+                        "permissions": [
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage customers.",
+                                "code": "MANAGE_USERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjUy",
+                        "name": "saleor-app-mocked",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": null,
+                        "manifestUrl": null,
+                        "version": "0.1.0",
+                        "permissions": [
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage customers.",
+                                "code": "MANAGE_USERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjUw",
+                        "name": "saleor-app-template",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://f31bfde3b365.ngrok.io",
+                        "manifestUrl": null,
+                        "version": "0.1.0",
+                        "permissions": [
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjQ5",
+                        "name": "Checkout",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://checkout-app-ilsdiygg-kuba.saleor.live/channels",
+                        "manifestUrl": null,
+                        "version": "0.0.0",
+                        "permissions": [
+                            {
+                                "name": "Handle checkouts",
+                                "code": "HANDLE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle payments",
+                                "code": "HANDLE_PAYMENTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle taxes",
+                                "code": "HANDLE_TAXES",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage checkouts",
+                                "code": "MANAGE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage taxes",
+                                "code": "MANAGE_TAXES",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjQ3",
+                        "name": "Checkout",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://saleor-checkout-app.vercel.app/channels",
+                        "manifestUrl": null,
+                        "version": "0.0.0",
+                        "permissions": [
+                            {
+                                "name": "Handle checkouts",
+                                "code": "HANDLE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle payments",
+                                "code": "HANDLE_PAYMENTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle taxes",
+                                "code": "HANDLE_TAXES",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage checkouts",
+                                "code": "MANAGE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage taxes",
+                                "code": "MANAGE_TAXES",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjQw",
+                        "name": "Checkout",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://saleor-checkout-app-git-checkout-preview-test-saleorcommerce.vercel.app/channels",
+                        "manifestUrl": null,
+                        "version": "0.0.0",
+                        "permissions": [
+                            {
+                                "name": "Handle checkouts",
+                                "code": "HANDLE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle payments",
+                                "code": "HANDLE_PAYMENTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjM0",
+                        "name": "Checkout",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://f31bfde3b365.ngrok.io/channels",
+                        "manifestUrl": null,
+                        "version": "0.0.0",
+                        "permissions": [
+                            {
+                                "name": "Handle checkouts",
+                                "code": "HANDLE_CHECKOUTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Handle payments",
+                                "code": "HANDLE_PAYMENTS",
+                                "__typename": "Permission"
+                            },
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjEy",
+                        "name": "best-app",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": null,
+                        "manifestUrl": null,
+                        "version": "1.0.0",
+                        "permissions": [
+                            {
+                                "name": "Manage orders.",
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwOjEx",
+                        "name": "saleor-marketplace",
+                        "isActive": true,
+                        "type": "THIRDPARTY",
+                        "appUrl": "https://marketplace-gray.vercel.app",
+                        "manifestUrl": null,
+                        "version": "0.1.0",
+                        "permissions": [
+                            {
+                                "name": "Manage apps",
+                                "code": "MANAGE_APPS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "__typename": "App"
+                    },
+                    "__typename": "AppCountableEdge"
+                }
+            ],
+            "__typename": "AppCountableConnection"
+        }
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 100,
+            "maximumAvailable": 50000
+        }
+    }
+}
