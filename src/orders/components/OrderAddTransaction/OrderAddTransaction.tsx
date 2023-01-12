@@ -1,5 +1,5 @@
 import Skeleton from "@saleor/components/Skeleton";
-import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@saleor/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -35,12 +35,6 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
         <Skeleton />
       </div>
     );
-  }
-
-  const canMarkAsPaid = order.actions.includes(OrderAction.MARK_AS_PAID);
-
-  if (canMarkAsPaid) {
-    return null;
   }
 
   return (
