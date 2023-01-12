@@ -102,14 +102,16 @@ export default defineConfig(({ command, mode }) => {
     );
   }
 
-  /*
-   "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
-   Issue presents only on development mode.
-  */
   const globals = {
+    /*
+      "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
+      Issue presents only on development mode.
+    */
     ...(isDev ? { global: {} } : {}),
     FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
     FLAGSMITH_ID: JSON.stringify(FLAGSMITH_ID),
+    // Keep all feature flags from env in global variable
+    FLAGS: featureFlagsEnvs,
   };
 
   return {
@@ -136,7 +138,6 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
-        ...featureFlagsEnvs,
       },
     },
     build: {

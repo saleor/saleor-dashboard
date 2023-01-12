@@ -1,11 +1,11 @@
 import { FlagsResults } from "../types";
-import { flagNameToEnvName } from "./helpers";
+import { flagNameToEnvName, readFlagFromEnv } from "./helpers";
 
 export const useEnvFlags = <T extends readonly string[]>(
   flags: readonly [...T],
 ): FlagsResults<T> =>
   flags.reduce((acc, flag) => {
-    const envFlag = process.env[flagNameToEnvName(flag)];
+    const envFlag = readFlagFromEnv(flagNameToEnvName(flag));
 
     if (envFlag) {
       acc[flag] = {

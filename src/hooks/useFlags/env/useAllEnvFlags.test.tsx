@@ -3,21 +3,12 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useAllEnvFlags } from "./useAllEnvFlags";
 
 describe("useAllEnvFlags hook", () => {
-  const oldEnv = process.env;
-
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...oldEnv };
-  });
-
-  afterAll(() => {
-    process.env = oldEnv;
-  });
-
   test("should return all environment flags", () => {
     // Arrange && Act
-    process.env.FF_FLAG_ONE = "1";
-    process.env.FF_FLAG_TWO = "2";
+    global.FLAGS = {
+      FF_FLAG_ONE: "1",
+      FF_FLAG_TWO: "2",
+    };
 
     const { result } = renderHook(() => useAllEnvFlags());
 
@@ -38,6 +29,8 @@ describe("useAllEnvFlags hook", () => {
 
   test("should return empty array when there is no flags", () => {
     // Arrange && Act
+    global.FLAGS = {};
+
     const { result } = renderHook(() => useAllEnvFlags());
 
     // Assert

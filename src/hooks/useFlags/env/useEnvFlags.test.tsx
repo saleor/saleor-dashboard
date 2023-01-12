@@ -3,21 +3,12 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useEnvFlags } from "./useEnvFlags";
 
 describe("useEnvFlags hook", () => {
-  const oldEnv = process.env;
-
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...oldEnv };
-  });
-
-  afterAll(() => {
-    process.env = oldEnv;
-  });
-
   test("should return results for given flags when exists in process.env", () => {
     // Arrange && Act
-    process.env.FF_FLAG_ONE = "1";
-    process.env.FF_FLAG_TWO = "2";
+    global.FLAGS = {
+      FF_FLAG_ONE: "1",
+      FF_FLAG_TWO: "2",
+    };
 
     const { result } = renderHook(() => useEnvFlags(["flagOne", "flag_two"]));
 
@@ -36,6 +27,8 @@ describe("useEnvFlags hook", () => {
 
   test("should return results for given flags even when flag does not exist", () => {
     // Arrange && Act
+    global.FLAGS = {};
+
     const { result } = renderHook(() => useEnvFlags(["flagOne", "flag_two"]));
 
     // Assert
@@ -53,6 +46,8 @@ describe("useEnvFlags hook", () => {
 
   test("should return empty object when not flags provided", () => {
     // Arrange && Act
+    global.FLAGS = {};
+
     const { result } = renderHook(() => useEnvFlags([]));
 
     // Assert
