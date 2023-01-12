@@ -24,6 +24,5 @@
     },
     "resolveJsonModule": true
   },
-  "include": ["./vite-env.d.ts"],
   "exclude": ["node_modules", "cypress"]
 }

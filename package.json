@@ -214,7 +214,8 @@
   "jest": {
     "resetMocks": false,
     "globals": {
-      "FLAGS_SERVICE_ENABLED": false
+      "FLAGS_SERVICE_ENABLED": false,
+      "FLAGS": {}
     },
     "setupFilesAfterEnv": [
       "jest-canvas-mock",

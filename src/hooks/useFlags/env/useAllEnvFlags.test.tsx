@@ -3,12 +3,15 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useAllEnvFlags } from "./useAllEnvFlags";
 
 describe("useAllEnvFlags hook", () => {
+  afterEach(() => {
+    delete FLAGS.FF_FLAG_ONE;
+    delete FLAGS.FF_FLAG_TWO;
+  });
+
   test("should return all environment flags", () => {
     // Arrange && Act
-    global.FLAGS = {
-      FF_FLAG_ONE: "1",
-      FF_FLAG_TWO: "2",
-    };
+    FLAGS.FF_FLAG_ONE = "1";
+    FLAGS.FF_FLAG_TWO = "2";
 
     const { result } = renderHook(() => useAllEnvFlags());
 
@@ -29,8 +32,6 @@ describe("useAllEnvFlags hook", () => {
 
   test("should return empty array when there is no flags", () => {
     // Arrange && Act
-    global.FLAGS = {};
-
     const { result } = renderHook(() => useAllEnvFlags());
 
     // Assert
