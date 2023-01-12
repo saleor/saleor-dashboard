@@ -1715,16 +1715,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       currency: "USD",
     },
   },
-  totalAuthorized: {
-    __typename: "Money",
-    amount: 234.93,
-    currency: "USD",
-  },
-  totalCaptured: {
-    __typename: "Money",
-    amount: 0,
-    currency: "USD",
-  },
+  totalAuthorized: prepareMoney(234.93),
+  totalAuthorizePending: prepareMoney(0),
+  totalCaptured: prepareMoney(0),
+  totalChargePending: prepareMoney(0),
+  totalCancelPending: prepareMoney(0),
   totalRemainingGrant: prepareMoney(0),
   totalBalance: {
     __typename: "Money",
@@ -2044,6 +2039,9 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   },
   totalAuthorized: null,
   totalCaptured: null,
+  totalChargePending: null,
+  totalCancelPending: null,
+  totalAuthorizePending: null,
   totalBalance: {
     __typename: "Money" as "Money",
     amount: 168.3,

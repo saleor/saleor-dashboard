@@ -21,6 +21,16 @@ export const orderPaymentMessages = defineMessages({
     defaultMessage: "Captured",
     description: "all captured amount from transactions in order",
   },
+  cancelled: {
+    defaultMessage: "Cancelled",
+    id: "lrdAIY",
+    description: "amount of all cancelled transactions in order",
+  },
+  pending: {
+    defaultMessage: "Pending",
+    id: "flnL3R",
+    description: "sum of pending amount (any status) in order's transactions",
+  },
   grantedRefund: {
     defaultMessage: "Waiting",
     id: "MVqpEU",

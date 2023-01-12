@@ -1,5 +1,6 @@
 import { CardContent } from "@material-ui/core";
 import { OrderDetailsFragment } from "@saleor/graphql";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -18,6 +19,7 @@ enum PaymentState {
   PARTIAL_CAPTURE,
   PARTIAL_AUTHORIZED,
   FULLY_SETTLED,
+  IS_PENDING,
 }
 
 export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
@@ -26,18 +28,40 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
       state: PaymentState.NO_DATA,
       authorized: false,
       captured: false,
+      pending: false,
     };
   }
 
   const authorized = order.totalAuthorized?.amount ?? 0;
+  const authorizePending = order.totalAuthorizePending?.amount ?? 0;
+
   const captured = order.totalCaptured?.amount ?? 0;
+  const capturePending = order.totalChargePending?.amount ?? 0;
+
+  const cancelled = 0; // TODO: Add cancelled value
+  const cancelPending = order.totalCancelPending?.amount ?? 0;
+
   const total = order.total.gross?.amount ?? 0;
+  const anyPending =
+    authorizePending > 0 || capturePending > 0 || cancelPending > 0;
+
+  if (anyPending) {
+    return {
+      state: PaymentState.IS_PENDING,
+      authorized: authorized || authorizePending,
+      captured: true,
+      cancelled: true,
+      pending: true,
+    };
+  }
 
   if (authorized && captured) {
     return {
       state: PaymentState.AMOUNTS_MISMATCH,
       authorized: true,
       captured: true,
+      cancelled: !!cancelled,
+      pending: false,
     };
   }
 
@@ -46,6 +70,8 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
       state: PaymentState.PARTIAL_CAPTURE,
       authorized: false,
       captured: true,
+      cancelled: !!cancelled,
+      pending: false,
     };
   }
 
@@ -54,6 +80,18 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
       state: PaymentState.PARTIAL_AUTHORIZED,
       authorized: true,
       captured: false,
+      cancelled: !!cancelled,
+      pending: false,
+    };
+  }
+
+  if (cancelled) {
+    return {
+      state: PaymentState.AMOUNTS_MISMATCH,
+      authorized: false,
+      captured: false,
+      cancelled: true,
+      pending: false,
     };
   }
 
@@ -61,6 +99,8 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
     state: PaymentState.FULLY_SETTLED,
     captured: false,
     authorized: false,
+    cancelled: false,
+    pending: false,
   };
 };
 
@@ -94,7 +134,41 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
             money={order.totalCaptured}
           />
         )}
+
+        {shouldDisplay.cancelled && (
+          <SummaryLine
+            vertical
+            text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
+            money={{
+              // TODO: Add cancelled amount
+              amount: 0,
+              currency: order.totalCancelPending.currency,
+            }}
+          />
+        )}
       </SummaryList>
+      {shouldDisplay.pending && (
+        <SummaryList className={clsx(classes.amountGrid, classes.pendingGrid)}>
+          <SummaryLine
+            vertical
+            hideEmpty
+            text={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalAuthorizePending}
+          />
+          <SummaryLine
+            vertical
+            hideEmpty
+            text={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalChargePending}
+          />
+          <SummaryLine
+            vertical
+            hideEmpty
+            text={<FormattedMessage {...orderPaymentMessages.pending} />}
+            money={order.totalCancelPending}
+          />
+        </SummaryList>
+      )}
     </CardContent>
   );
 };

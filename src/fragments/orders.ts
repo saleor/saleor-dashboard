@@ -460,10 +460,19 @@ export const fragmentOrderDetails = gql`
       ...Money
     }
     actions
+    totalAuthorizePending {
+      ...Money
+    }
     totalAuthorized {
       ...Money
     }
     totalCaptured {
+      ...Money
+    }
+    totalChargePending {
+      ...Money
+    }
+    totalCancelPending {
       ...Money
     }
     totalBalance {
