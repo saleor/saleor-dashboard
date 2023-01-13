@@ -1,12 +1,13 @@
 import { AppInstallationFragment, JobStatusEnum } from "@saleor/graphql";
 import { intlMock } from "@test/intl";
 
+import { appsInProgress, releasedApp } from "./fixtures";
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
-import { getAppDetails } from "./utils";
+import { getAppDetails, resolveInstallationOfMarketplaceApp } from "./utils";
 
 type AppDetails = ReturnType<typeof getAppDetails>;
 
-describe("App utils", () => {
+describe("App utils app details", () => {
   it("should return app details when required released app data passed", () => {
     // Arrange
     const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
@@ -236,5 +237,32 @@ describe("App utils", () => {
       retryInstallHandler: expect.any(Function),
     };
     expect(details).toEqual(expectedDetails);
+  });
+
+  describe("App utils resolve apps installations", () => {
+    it("should return app installation that has manifest related to passed app details when app installation list and app details are passed", () => {
+      // Arrange
+      const releasedAppInstallation: AppInstallationFragment = {
+        __typename: "AppInstallation",
+        id: "test-installation-id",
+        appName: releasedApp.name.en,
+        status: JobStatusEnum.PENDING,
+        message: "Test message",
+        manifestUrl: releasedApp.manifestUrl,
+      };
+      const appInstallationList: AppInstallationFragment[] = [
+        releasedAppInstallation,
+        ...appsInProgress,
+      ];
+
+      // Act
+      const installation = resolveInstallationOfMarketplaceApp(
+        releasedApp,
+        appInstallationList,
+      );
+
+      // Assert
+      expect(installation).toEqual(releasedAppInstallation);
+    });
   });
 });
