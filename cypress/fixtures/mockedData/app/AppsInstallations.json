@@ -1,0 +1,20 @@
+{
+    "data": {
+        "appsInstallations": [
+            {
+                "status": "FAILED",
+                "message": null,
+                "appName": "abandoned-checkouts",
+                "manifestUrl": "https://test-vercel-8-czerwca-q0mwaqgsw-kjaroszew.vercel.app/api/manifest",
+                "id": "QXBwSW5zdGFsbGF0aW9uOjM2",
+                "__typename": "AppInstallation"
+            }
+        ]
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 1,
+            "maximumAvailable": 50000
+        }
+    }
+}

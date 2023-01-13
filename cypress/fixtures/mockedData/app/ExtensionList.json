@@ -1,0 +1,61 @@
+{
+    "data": {
+        "appExtensions": {
+            "edges": [
+                {
+                    "node": {
+                        "id": "QXBwRXh0ZW5zaW9uOjE=",
+                        "label": "Marketplace",
+                        "url": "/",
+                        "mount": "NAVIGATION_PAGES",
+                        "target": "APP_PAGE",
+                        "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2NzM1OTk2NjMsIm93bmVyIjoic2FsZW9yIiwiaXNzIjoiaHR0cHM6Ly9hdXRvbWF0aW9uLWRhc2hib2FyZC5zdGFnaW5nLnNhbGVvci5jbG91ZC9ncmFwaHFsLyIsImV4cCI6MTY3MzY4NjA2MywidG9rZW4iOiJNMmlyRm16VkFTUjMiLCJlbWFpbCI6InRlc3RlcnMrZGFzaGJvYXJkQHNhbGVvci5pbyIsInR5cGUiOiJ0aGlyZHBhcnR5IiwidXNlcl9pZCI6IlZYTmxjam94TURNeiIsImlzX3N0YWZmIjp0cnVlLCJhcHBfZXh0ZW5zaW9uIjoiUVhCd1JYaDBaVzV6YVc5dU9qRT0iLCJwZXJtaXNzaW9ucyI6WyJNQU5BR0VfQVBQUyJdLCJ1c2VyX3Blcm1pc3Npb25zIjpbIkhBTkRMRV9QQVlNRU5UUyIsIk1BTkFHRV9DSEVDS09VVFMiLCJIQU5ETEVfVEFYRVMiLCJNQU5BR0VfQVBQUyIsIk1BTkFHRV9QUk9EVUNUX1RZUEVTX0FORF9BVFRSSUJVVEVTIiwiTUFOQUdFX1RSQU5TTEFUSU9OUyIsIk1BTkFHRV9QQUdFX1RZUEVTX0FORF9BVFRSSUJVVEVTIiwiTUFOQUdFX1BMVUdJTlMiLCJNQU5BR0VfU1RBRkYiLCJNQU5BR0VfQ0hBTk5FTFMiLCJNQU5BR0VfR0lGVF9DQVJEIiwiTUFOQUdFX1BBR0VTIiwiTUFOQUdFX1VTRVJTIiwiTUFOQUdFX1NFVFRJTkdTIiwiTUFOQUdFX01FTlVTIiwiSU1QRVJTT05BVEVfVVNFUiIsIk1BTkFHRV9UQVhFUyIsIk1BTkFHRV9PUkRFUlMiLCJNQU5BR0VfRElTQ09VTlRTIiwiTUFOQUdFX09CU0VSVkFCSUxJVFkiLCJNQU5BR0VfU0hJUFBJTkciLCJNQU5BR0VfUFJPRFVDVFMiLCJIQU5ETEVfQ0hFQ0tPVVRTIl19.RGIXGAFH4tbFWL6Gz06hGKvhvZe1srz-ZXoMzi_PyJxN-ZAJILVNfGOJk-3eyPsYM7YENikAC9riwjTXBARd5I0KfKxQpeH4woNQuEegFje71cT7G8Xwp_VfxeB-cJeSRrUQYRfWO1bhdLV5vwK5shpMiJ6eG3csAYpXnr7ctN3dVK9COt-aeOXlb6y3ZU7Xcg1GCcnlX86R6ISwZCGSm4azWZ4vC_D7KKXiL-BBgGoQlH9kgRSSed8TVVJkRqK0Sl667fmfbs9h7HNhTUsQhSy-ML_oRzYt2buniRvDJVCsfH0joFhi4PKUDTzQowDM-KooSvfMKH0gJS9VbWt7dQ",
+                        "permissions": [
+                            {
+                                "code": "MANAGE_APPS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "app": {
+                            "id": "QXBwOjEx",
+                            "appUrl": "https://marketplace-gray.vercel.app",
+                            "__typename": "App"
+                        },
+                        "__typename": "AppExtension"
+                    },
+                    "__typename": "AppExtensionCountableEdge"
+                },
+                {
+                    "node": {
+                        "id": "QXBwRXh0ZW5zaW9uOjM5",
+                        "label": "Orders in an app",
+                        "url": "/orders",
+                        "mount": "NAVIGATION_ORDERS",
+                        "target": "APP_PAGE",
+                        "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2NzM1OTk2NjMsIm93bmVyIjoic2FsZW9yIiwiaXNzIjoiaHR0cHM6Ly9hdXRvbWF0aW9uLWRhc2hib2FyZC5zdGFnaW5nLnNhbGVvci5jbG91ZC9ncmFwaHFsLyIsImV4cCI6MTY3MzY4NjA2MywidG9rZW4iOiJNMmlyRm16VkFTUjMiLCJlbWFpbCI6InRlc3RlcnMrZGFzaGJvYXJkQHNhbGVvci5pbyIsInR5cGUiOiJ0aGlyZHBhcnR5IiwidXNlcl9pZCI6IlZYTmxjam94TURNeiIsImlzX3N0YWZmIjp0cnVlLCJhcHBfZXh0ZW5zaW9uIjoiUVhCd1JYaDBaVzV6YVc5dU9qTTUiLCJwZXJtaXNzaW9ucyI6WyJNQU5BR0VfT1JERVJTIl0sInVzZXJfcGVybWlzc2lvbnMiOlsiSEFORExFX1BBWU1FTlRTIiwiTUFOQUdFX0NIRUNLT1VUUyIsIkhBTkRMRV9UQVhFUyIsIk1BTkFHRV9BUFBTIiwiTUFOQUdFX1BST0RVQ1RfVFlQRVNfQU5EX0FUVFJJQlVURVMiLCJNQU5BR0VfVFJBTlNMQVRJT05TIiwiTUFOQUdFX1BBR0VfVFlQRVNfQU5EX0FUVFJJQlVURVMiLCJNQU5BR0VfUExVR0lOUyIsIk1BTkFHRV9TVEFGRiIsIk1BTkFHRV9DSEFOTkVMUyIsIk1BTkFHRV9HSUZUX0NBUkQiLCJNQU5BR0VfUEFHRVMiLCJNQU5BR0VfVVNFUlMiLCJNQU5BR0VfU0VUVElOR1MiLCJNQU5BR0VfTUVOVVMiLCJJTVBFUlNPTkFURV9VU0VSIiwiTUFOQUdFX1RBWEVTIiwiTUFOQUdFX09SREVSUyIsIk1BTkFHRV9ESVNDT1VOVFMiLCJNQU5BR0VfT0JTRVJWQUJJTElUWSIsIk1BTkFHRV9TSElQUElORyIsIk1BTkFHRV9QUk9EVUNUUyIsIkhBTkRMRV9DSEVDS09VVFMiXX0.z3mu4fcRnKVlfjpDzfiNYXoYuIudXYaUNkLb2DqS4HOHpICYjZEHb_PTVUPvsWX7R02a5Tby1Q2-SK3EJPqPwqn-YXX5H-7X9gYOtlIwqWmVXzOXWgvgzISWYZUynYVvTI-oChjCfTEBbxVmLHyfGtbH9PLZa_5wTC5MtQ25iXIWDbii7x1KapnfHvJ7_G8eon-d1n5GA0-QsOxx8doYAhbcLg8E-OW8I56YZ-MCVA1_MG0U3p0kWmWmYzatuDsglr01IS99l8MmZIBnpShuImdkogtb5c_B3hpSsBiytcB5YUQVFLk3NLKL_Vku8hCdnGBkczsOtwob9v8EPpAwCQ",
+                        "permissions": [
+                            {
+                                "code": "MANAGE_ORDERS",
+                                "__typename": "Permission"
+                            }
+                        ],
+                        "app": {
+                            "id": "QXBwOjUw",
+                            "appUrl": "https://f31bfde3b365.ngrok.io",
+                            "__typename": "App"
+                        },
+                        "__typename": "AppExtension"
+                    },
+                    "__typename": "AppExtensionCountableEdge"
+                }
+            ],
+            "__typename": "AppExtensionCountableConnection"
+        }
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 100,
+            "maximumAvailable": 50000
+        }
+    }
+}

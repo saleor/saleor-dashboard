@@ -129,5 +129,11 @@
             },
             "__typename": "User"
         }
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 3,
+            "maximumAvailable": 50000
+        }
     }
 }

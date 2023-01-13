@@ -1,0 +1,318 @@
+{
+    "data": {
+        "channels": [
+            {
+                "id": "Q2hhbm5lbDoyMjQ0",
+                "isActive": true,
+                "name": "Channel-PLN",
+                "slug": "channel-pln",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "US",
+                    "country": "United States of America",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_HIGH_STOCK",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzg3",
+                "isActive": true,
+                "name": "ChannelShippingMethod94517",
+                "slug": "channelshippingmethod94517",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzky",
+                "isActive": false,
+                "name": "CyChannels 50679",
+                "slug": "cychannels-50679",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzkw",
+                "isActive": false,
+                "name": "CyChannels 55859",
+                "slug": "cychannels-55859",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzkx",
+                "isActive": false,
+                "name": "CyChannels 85239",
+                "slug": "cychannels-85239",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzg4",
+                "isActive": true,
+                "name": "CyCollections-71241",
+                "slug": "cycollections-71241",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk5",
+                "isActive": true,
+                "name": "CyCreateVariants-15735",
+                "slug": "cycreatevariants-15735",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzg2",
+                "isActive": true,
+                "name": "CyCreateVariants-31466",
+                "slug": "cycreatevariants-31466",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzc4",
+                "isActive": true,
+                "name": "CyCreateVariants-88437",
+                "slug": "cycreatevariants-88437",
+                "currencyCode": "USD",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_HIGH_STOCK",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk1",
+                "isActive": true,
+                "name": "CyHomeAnalytics92701",
+                "slug": "cyhomeanalytics92701",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzg5",
+                "isActive": true,
+                "name": "CyVou-29872",
+                "slug": "cyvou-29872",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMjQz",
+                "isActive": true,
+                "name": "Channel-USD",
+                "slug": "default-channel",
+                "currencyCode": "USD",
+                "defaultCountry": {
+                    "code": "US",
+                    "country": "United States of America",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_HIGH_STOCK",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk3",
+                "isActive": true,
+                "name": "InactiveChannel2099",
+                "slug": "inactivechannel2099",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk2",
+                "isActive": false,
+                "name": "InactiveChannel35628",
+                "slug": "inactivechannel35628",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk0",
+                "isActive": true,
+                "name": "SalesProd-93108",
+                "slug": "salesprod-93108",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzY1",
+                "isActive": false,
+                "name": "test11",
+                "slug": "test1",
+                "currencyCode": "AMD",
+                "defaultCountry": {
+                    "code": "AX",
+                    "country": "Åland Islands",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_HIGH_STOCK",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzY0",
+                "isActive": false,
+                "name": "test2",
+                "slug": "test12",
+                "currencyCode": "USN",
+                "defaultCountry": {
+                    "code": "EC",
+                    "country": "Ecuador",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_HIGH_STOCK",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            },
+            {
+                "id": "Q2hhbm5lbDoyMzk4",
+                "isActive": true,
+                "name": "WithoutShipmentCheckout-42148",
+                "slug": "withoutshipmentcheckout-42148",
+                "currencyCode": "PLN",
+                "defaultCountry": {
+                    "code": "PL",
+                    "country": "Poland",
+                    "__typename": "CountryDisplay"
+                },
+                "stockSettings": {
+                    "allocationStrategy": "PRIORITIZE_SORTING_ORDER",
+                    "__typename": "StockSettings"
+                },
+                "__typename": "Channel"
+            }
+        ]
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 1,
+            "maximumAvailable": 50000
+        }
+    }
+}
