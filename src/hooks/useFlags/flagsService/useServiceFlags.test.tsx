@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 
-import { useServicehFlags } from "./useServiceFlags";
+import { useServiceFlags } from "./useServiceFlags";
 
 jest.mock("flagsmith/react", () => ({
   __esModule: true,
@@ -20,11 +20,11 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
-describe("useServicehFlags", () => {
+describe("useServiceFlags", () => {
   test("should return flags with values", () => {
     // Arrange && Ac
     const { result } = renderHook(() =>
-      useServicehFlags(["flagOne", "flag_two"]),
+      useServiceFlags(["flagOne", "flag_two"]),
     );
 
     // Assert
@@ -42,7 +42,7 @@ describe("useServicehFlags", () => {
 
   test("should return empty object when not flags provided", () => {
     // Arrange && Act
-    const { result } = renderHook(() => useServicehFlags([]));
+    const { result } = renderHook(() => useServiceFlags([]));
 
     // Assert
     expect(result.current).toEqual({});

@@ -3,7 +3,7 @@ import snakeCase from "lodash/snakeCase";
 
 import { FlagsResults } from "../types";
 
-export const useServicehFlags = <T extends readonly string[]>(
+export const useServiceFlags = <T extends readonly string[]>(
   flags: readonly [...T],
   traits?: string[],
 ): FlagsResults<T> => {
