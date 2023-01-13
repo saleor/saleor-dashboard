@@ -1,5 +1,6 @@
 import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
+import PreviewPill from "@dashboard/components/PreviewPill";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { AppUrls } from "@dashboard/new-apps/urls";
@@ -91,7 +92,14 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         <MarketplaceAlert error={marketplaceError} />
         {sectionsAvailability.all && !marketplaceError && (
           <>
-            <SectionHeader title={intl.formatMessage(messages.allApps)} />
+            <SectionHeader
+              title={
+                <>
+                  <FormattedMessage {...messages.allApps} />
+                  <PreviewPill className={classes.previewLabel} />
+                </>
+              }
+            />
             <AllAppList
               appList={verifiedInstallableMarketplaceApps}
               appInstallationList={appsInstallations}
