@@ -19,12 +19,12 @@ export const resolveSectionsAvailability = ({
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
 
-const isAppExternal = (
+const isAppFromMarketplace = (
   manifestUrl: string | null,
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
 ) =>
   !!manifestUrl &&
-  !!installableMarketplaceApps?.every(app => app.manifestUrl !== manifestUrl);
+  !!installableMarketplaceApps?.some(app => app.manifestUrl === manifestUrl);
 
 export const getVerifiedInstalledApps = (
   installedApps?: AppListItemFragment[],
@@ -32,7 +32,10 @@ export const getVerifiedInstalledApps = (
 ): InstalledApp[] | undefined =>
   installedApps?.map(app => ({
     app,
-    isExternal: isAppExternal(app.manifestUrl, installableMarketplaceApps),
+    isExternal: !isAppFromMarketplace(
+      app.manifestUrl,
+      installableMarketplaceApps,
+    ),
   }));
 
 /*
