@@ -14,5 +14,7 @@ declare interface Window {
     SALEOR_APPS_PAGE_PATH: string;
     SALEOR_APPS_JSON_PATH: string;
     APP_TEMPLATE_GALLERY_PATH: string;
+    APPS_MARKETPLACE_API_URI?: string;
+    APPS_TUNNEL_URL_KEYWORDS?: string;
   };
 }

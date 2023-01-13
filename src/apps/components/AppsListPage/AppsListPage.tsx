@@ -19,7 +19,7 @@ import InstalledApps from "../InstalledApps/InstalledApps";
 export interface AppsListPageProps extends ListProps {
   installedAppsList: AppListItemFragment[];
   appsInProgressList?: AppsInstallationsQuery;
-  onInstalledAppRemove: (id: string) => void;
+  onSettingsAppOpen: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
 }
@@ -42,7 +42,7 @@ const useStyles = makeStyles(
 const AppsListPage: React.FC<AppsListPageProps> = ({
   appsInProgressList,
   installedAppsList,
-  onInstalledAppRemove,
+  onSettingsAppOpen,
   onAppInProgressRemove,
   onAppInstallRetry,
   ...listProps
@@ -123,7 +123,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
                 description: "section header",
               })}
               appsList={thirdPartyApps}
-              onRemove={onInstalledAppRemove}
+              onSettingsClick={onSettingsAppOpen}
               displayQuickManifestButton
               {...listProps}
             />
@@ -149,7 +149,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
                 description: "section header",
               })}
               appsList={saleorApps}
-              onRemove={onInstalledAppRemove}
+              onSettingsClick={onSettingsAppOpen}
               {...listProps}
             />
             <div className={styles.browseMarketplaceContainer}>

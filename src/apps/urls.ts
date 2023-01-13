@@ -6,13 +6,12 @@ import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
 
 export const MANIFEST_ATTR = "manifestUrl";
 
-export type AppListUrlDialog =
-  | "remove"
-  | "remove-app"
-  | "app-activate"
-  | "app-deactivate";
+export type AppListUrlDialog = "app-installation-remove";
 
-export type AppDetailsUrlDialog = "app-activate" | "app-deactivate";
+export type AppDetailsUrlDialog =
+  | "app-activate"
+  | "app-deactivate"
+  | "app-delete";
 
 export type AppListUrlQueryParams = ActiveTab &
   Dialog<AppListUrlDialog> &

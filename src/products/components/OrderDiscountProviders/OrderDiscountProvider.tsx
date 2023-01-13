@@ -1,4 +1,5 @@
 import {
+  MoneyFragment,
   OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
@@ -25,6 +26,8 @@ export interface OrderDiscountContextConsumerProps
   orderDiscount?: OrderDiscountData;
   addOrderDiscount: (data: OrderDiscountCommonInput) => void;
   removeOrderDiscount: () => void;
+  discountedPrice: MoneyFragment;
+  undiscountedPrice: MoneyFragment;
 }
 
 interface OrderDiscountProviderProps {

@@ -1,17 +1,11 @@
 import { useApolloClient } from "@apollo/client";
-import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
-import { AppListContext, AppListContextValues } from "@saleor/apps/context";
+import { getAppInProgressName } from "@saleor/apps/utils";
 import {
-  AppsInstallationsQuery,
   AppSortField,
   AppTypeEnum,
   JobStatusEnum,
   OrderDirection,
-  useAppActivateMutation,
-  useAppDeactivateMutation,
   useAppDeleteFailedInstallationMutation,
-  useAppDeleteMutation,
   useAppRetryInstallMutation,
   useAppsInstallationsQuery,
   useAppsListQuery,
@@ -25,28 +19,23 @@ import usePaginator, {
   PageInfo,
   PaginatorContext,
 } from "@saleor/hooks/usePaginator";
-import { findById } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import AppDeleteDialog from "../../components/AppDeleteDialog";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
 import { EXTENSION_LIST_QUERY } from "../../queries";
 import {
+  appDetailsUrl,
   AppListUrlDialog,
   AppListUrlQueryParams,
   appsListUrl,
 } from "../../urls";
 import { messages } from "./messages";
 
-const getAppInProgressName = (
-  id: string,
-  collection?: AppsInstallationsQuery["appsInstallations"],
-) => collection?.find(app => app.id === id)?.appName || id;
 interface AppsListProps {
   params: AppListUrlQueryParams;
 }
@@ -127,45 +116,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       }
     },
   });
-  const [activateApp, activateAppResult] = useAppActivateMutation({
-    onCompleted: data => {
-      if (!data?.appActivate?.errors?.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.appActivated),
-        });
-        refetch();
-        closeModal();
-      }
-    },
-  });
-  const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
-    onCompleted: data => {
-      if (!data?.appDeactivate?.errors?.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.appDeactivated),
-        });
-        refetch();
-        closeModal();
-      }
-    },
-  });
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
     AppListUrlQueryParams
   >(navigate, appsListUrl, params);
 
-  const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
-    onCompleted: data => {
-      if (!data?.appDelete?.errors?.length) {
-        refetch();
-        closeModal();
-        refetchExtensionList();
-        removeAppNotify();
-      }
-    },
-  });
   const [
     deleteInProgressApp,
     deleteInProgressAppOpts,
@@ -236,13 +191,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       },
     });
 
-  const handleRemoveConfirm = () =>
-    deleteApp({
-      variables: {
-        id: params?.id || "",
-      },
-    });
-
   const removeAppNotify = () => {
     notify({
       status: "success",
@@ -250,81 +198,38 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const handleActivateAppConfirm = () =>
-    activateApp({ variables: { id: params?.id || "" } });
-
-  const handleDeactivateAppConfirm = () =>
-    deactivateApp({ variables: { id: params?.id || "" } });
-
   const onAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
-  const context: AppListContextValues = React.useMemo(
-    () => ({
-      activateApp: id => openModal("app-activate", { id }),
-      deactivateApp: id => openModal("app-deactivate", { id }),
-    }),
-    [activateApp, deactivateApp],
-  );
-
   const installedApps = mapEdgesToItems(data?.apps || { edges: [] }) || [];
-  const currentAppName = findById(params?.id || "", installedApps)?.name || "";
 
   return (
-    <AppListContext.Provider value={context}>
-      <PaginatorContext.Provider value={paginationValues}>
-        <AppDeleteDialog
-          confirmButtonState={deleteAppOpts.status}
-          name={currentAppName}
-          onClose={closeModal}
-          onConfirm={handleRemoveConfirm}
-          type="EXTERNAL"
-          open={action === "remove-app"}
-        />
-        <AppActivateDialog
-          confirmButtonState={activateAppResult.status}
-          name={currentAppName}
-          onClose={closeModal}
-          onConfirm={handleActivateAppConfirm}
-          open={params.action === "app-activate"}
-        />
-        <AppDeactivateDialog
-          confirmButtonState={deactivateAppResult.status}
-          name={currentAppName}
-          onClose={closeModal}
-          onConfirm={handleDeactivateAppConfirm}
-          open={params.action === "app-deactivate"}
-        />
-        <AppInProgressDeleteDialog
-          confirmButtonState={deleteInProgressAppOpts.status}
-          name={getAppInProgressName(
-            params.id || "",
-            appsInProgressData?.appsInstallations,
-          )}
-          onClose={closeModal}
-          onConfirm={handleRemoveInProgressConfirm}
-          open={action === "remove"}
-        />
-        <AppsListPage
-          installedAppsList={installedApps}
-          appsInProgressList={appsInProgressData}
-          disabled={loading}
-          settings={settings}
-          onUpdateListSettings={updateListSettings}
-          onAppInstallRetry={onAppInstallRetry}
-          onInstalledAppRemove={id =>
-            openModal("remove-app", {
-              id,
-            })
-          }
-          onAppInProgressRemove={id =>
-            openModal("remove", {
-              id,
-            })
-          }
-        />
-      </PaginatorContext.Provider>
-    </AppListContext.Provider>
+    <PaginatorContext.Provider value={paginationValues}>
+      <AppInProgressDeleteDialog
+        confirmButtonState={deleteInProgressAppOpts.status}
+        name={getAppInProgressName(
+          params.id || "",
+          appsInProgressData?.appsInstallations,
+        )}
+        onClose={closeModal}
+        onConfirm={handleRemoveInProgressConfirm}
+        open={action === "app-installation-remove"}
+      />
+      <AppsListPage
+        installedAppsList={installedApps}
+        appsInProgressList={appsInProgressData}
+        disabled={loading}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
+        onAppInstallRetry={onAppInstallRetry}
+        onSettingsAppOpen={id => navigate(appDetailsUrl(id))}
+        onAppInProgressRemove={id =>
+          openModal("app-installation-remove", {
+            id,
+          })
+        }
+      />
+    </PaginatorContext.Provider>
   );
 };
 

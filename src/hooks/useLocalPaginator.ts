@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 export interface PageInfo {
-  endCursor: string;
+  endCursor: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  startCursor: string;
+  startCursor: string | null;
 }
 
 export interface PaginationState {
@@ -95,14 +95,10 @@ function useLocalPaginator(
     pageInfo: PageInfo | undefined,
     paginationState: PaginationState,
   ) {
-    if (!pageInfo) {
-      return undefined;
-    }
-
     const loadNextPage = () =>
       setPaginationState({
         ...paginationState,
-        after: pageInfo.endCursor,
+        after: pageInfo?.endCursor,
         before: undefined,
       });
 
@@ -110,7 +106,7 @@ function useLocalPaginator(
       setPaginationState({
         ...paginationState,
         after: undefined,
-        before: pageInfo.startCursor,
+        before: pageInfo?.startCursor,
       });
 
     const newPageInfo = pageInfo

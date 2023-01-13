@@ -1,8 +1,12 @@
+import { useApolloClient } from "@apollo/client";
+import AppDeleteDialog from "@saleor/apps/components/AppDeleteDialog";
 import { appMessages } from "@saleor/apps/messages";
+import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import {
   useAppActivateMutation,
   useAppDeactivateMutation,
+  useAppDeleteMutation,
   useAppQuery,
 } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -22,6 +26,7 @@ import {
   appsListPath,
   appUrl,
 } from "../../urls";
+import { messages } from "./messages";
 
 interface AppDetailsProps {
   id: string;
@@ -29,6 +34,7 @@ interface AppDetailsProps {
 }
 
 export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
+  const client = useApolloClient();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id },
@@ -85,17 +91,38 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     },
   });
 
+  const refetchExtensionList = () => {
+    client.refetchQueries({
+      include: [EXTENSION_LIST_QUERY],
+    });
+  };
+
+  const removeAppNotify = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage(messages.appRemoved),
+    });
+  };
+
+  const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
+    onCompleted: data => {
+      if (!data?.appDelete?.errors?.length) {
+        refetch();
+        closeModal();
+        refetchExtensionList();
+        removeAppNotify();
+      }
+    },
+  });
+
   const [openModal, closeModal] = createDialogActionHandlers<
     AppDetailsUrlDialog,
     AppDetailsUrlQueryParams
   >(navigate, params => appDetailsUrl(id, params), params);
 
-  const handleActivateConfirm = () => {
-    activateApp(mutationOpts);
-  };
-  const handleDeactivateConfirm = () => {
-    deactivateApp(mutationOpts);
-  };
+  const handleActivateConfirm = () => activateApp(mutationOpts);
+  const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
+  const handleRemoveConfirm = () => deleteApp(mutationOpts);
 
   if (!appExists) {
     return <NotFoundPage backHref={appsListPath} />;
@@ -117,12 +144,21 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         onConfirm={handleDeactivateConfirm}
         open={params.action === "app-deactivate"}
       />
+      <AppDeleteDialog
+        confirmButtonState={deleteAppOpts.status}
+        name={data?.app?.name || ""}
+        onClose={closeModal}
+        onConfirm={handleRemoveConfirm}
+        type="EXTERNAL"
+        open={params.action === "app-delete"}
+      />
       <AppDetailsPage
         data={data?.app || null}
         loading={loading}
         navigateToApp={() => navigate(appUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
+        onAppDeleteOpen={() => openModal("app-delete")}
       />
     </>
   );

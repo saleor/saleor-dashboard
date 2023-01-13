@@ -23,6 +23,7 @@ import { ProductFragment } from "@saleor/graphql";
 import useForm from "@saleor/hooks/useForm";
 import useFormset from "@saleor/hooks/useFormset";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import useLocale from "@saleor/hooks/useLocale";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -46,6 +47,7 @@ import {
   UseProductUpdateFormOpts,
   UseProductUpdateFormOutput,
 } from "./types";
+import { prepareVariantChangeData } from "./utils";
 
 function useProductUpdateForm(
   product: ProductFragment,
@@ -71,6 +73,7 @@ function useProductUpdateForm(
     data: formData,
     setIsSubmitDisabled,
   } = form;
+  const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
   const variants = useRef<DatagridChangeOpts>({
@@ -78,10 +81,14 @@ function useProductUpdateForm(
     removed: [],
     updates: [],
   });
-  const handleVariantChange = React.useCallback((data: DatagridChangeOpts) => {
-    variants.current = data;
-    triggerChange();
-  }, []);
+
+  const handleVariantChange = React.useCallback(
+    (data: DatagridChangeOpts) => {
+      variants.current = prepareVariantChangeData(data, locale, product);
+      triggerChange();
+    },
+    [locale, product, triggerChange],
+  );
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const {
