@@ -2,18 +2,32 @@
 /// <reference types="../support"/>
 
 // import { urlList } from "../fixtures/urlList";
-import { aliasMutation } from "../support/api/utils/graphqlMockUtils.ts";
+import {
+  aliasMutation,
+  hasOperationName,
+} from "../support/api/utils/graphqlMockUtils.ts";
 
-describe("Should display mocked list", () => {
+describe("should display mocked list", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     cy.intercept("POST", "/graphql/", req => {
-      aliasMutation(req, "UpdateUserMuation");
+      aliasMutation(req, "AppsList");
     });
     cy.visit("/");
   });
 
   it("should delete first item from list", () => {
+    cy.intercept("POST", "/graphql/", req => {
+      aliasMutation(req, "AppsList");
+
+      if (hasOperationName(req, "AppsList")) {
+        req.alias = "AppsListMutation";
+
+        req.reply({
+          fixture: "../fixtures/mockedData/app/AppsList.json",
+        });
+      }
+    });
     cy.visit("/apps");
   });
 });
