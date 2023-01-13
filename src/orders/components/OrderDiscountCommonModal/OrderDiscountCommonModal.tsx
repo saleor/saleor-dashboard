@@ -26,9 +26,9 @@ import { defineMessages, useIntl } from "react-intl";
 
 import ModalTitle from "./ModalTitle";
 import {
+  ORDER_LINE_DISCOUNT,
   OrderDiscountCommonInput,
   OrderDiscountType,
-  ORDER_LINE_DISCOUNT,
 } from "./types";
 
 const fullNumbersRegex = /^[0-9]*$/;
