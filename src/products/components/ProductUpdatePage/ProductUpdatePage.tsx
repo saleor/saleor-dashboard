@@ -38,6 +38,7 @@ import {
   TaxClassBaseFragment,
   WarehouseFragment,
 } from "@saleor/graphql";
+import { useFlags } from "@saleor/hooks/useFlags";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -173,6 +174,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
+  // TODO: to be removed after QA phase
+  const { showTaxes } = useFlags(["showTaxes"]);
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || "",
@@ -426,14 +429,16 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     channels={listings}
                   />
                   <CardSpacer />
-                  <ProductTaxes
-                    value={data.taxClassId}
-                    disabled={disabled}
-                    onChange={handlers.selectTaxClass}
-                    taxClassDisplayName={selectedTaxClass}
-                    taxClasses={taxClasses}
-                    onFetchMore={fetchMoreTaxClasses}
-                  />
+                  {showTaxes.enabled && (
+                    <ProductTaxes
+                      value={data.taxClassId}
+                      disabled={disabled}
+                      onChange={handlers.selectTaxClass}
+                      taxClassDisplayName={selectedTaxClass}
+                      taxClasses={taxClasses}
+                      onFetchMore={fetchMoreTaxClasses}
+                    />
+                  )}
                 </div>
               </Grid>
               <Savebar
