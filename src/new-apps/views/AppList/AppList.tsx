@@ -1,13 +1,9 @@
-import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import { getAppsConfig } from "@dashboard/config";
 import {
+  AppInstallationFragment,
   AppSortField,
   AppTypeEnum,
-  JobStatusEnum,
   OrderDirection,
-  useAppDeleteFailedInstallationMutation,
-  useAppRetryInstallMutation,
   useAppsInstallationsQuery,
   useAppsListQuery,
 } from "@dashboard/graphql";
@@ -15,7 +11,6 @@ import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
@@ -25,6 +20,7 @@ import {
   AppListContext,
   AppListContextValues,
 } from "@dashboard/new-apps/context";
+import useActiveAppsInstallations from "@dashboard/new-apps/hooks/useActiveAppsInstallations";
 import useMarketplaceApps from "@dashboard/new-apps/hooks/useMarketplaceApps";
 import {
   AppListUrlDialog,
@@ -38,7 +34,7 @@ import {
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -51,11 +47,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const client = useApolloClient();
-  const [activeInstallations, setActiveInstallations] = useLocalStorage<
-    Array<Record<"id" | "name", string>>
-  >("activeInstallations", []);
-  const intervalId = useRef<null | number>(null);
+
   const [openModal, closeModal] = createDialogActionHandlers<
     AppListUrlDialog,
     AppListUrlQueryParams
@@ -97,12 +89,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     displayLoader: false,
   });
 
-  const refetchExtensionList = () => {
-    client.refetchQueries({
-      include: [EXTENSION_LIST_QUERY],
-    });
-  };
-
   const installedAppNotify = (name: string) => {
     notify({
       status: "success",
@@ -111,111 +97,40 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     });
   };
 
-  const removeAppNotify = () => {
+  const removeInProgressAppNotify = () => {
     notify({
       status: "success",
       text: intl.formatMessage(messages.appRemoved),
     });
   };
 
-  const [retryInstallApp] = useAppRetryInstallMutation({
-    onCompleted: data => {
-      if (!data?.appRetryInstall?.errors?.length) {
-        const appInstallation = data.appRetryInstall?.appInstallation;
-        if (appInstallation) {
-          setActiveInstallations(installations => [
-            ...installations,
-            {
-              id: appInstallation.id,
-              name: appInstallation.appName,
-            },
-          ]);
-        }
-      }
-    },
-  });
-
-  const onAppInstallRetry = (id: string) =>
-    retryInstallApp({ variables: { id } });
-
-  const removeInstallation = (id: string) =>
-    setActiveInstallations(installations =>
-      installations.filter(item => item.id !== id),
-    );
-
-  const [
-    deleteInProgressApp,
-    deleteInProgressAppOpts,
-  ] = useAppDeleteFailedInstallationMutation({
-    onCompleted: data => {
-      if (!data?.appDeleteFailedInstallation?.errors?.length) {
-        removeAppNotify();
-        appsInProgressRefetch();
-        closeModal();
-      }
-    },
-  });
-
-  const handleRemoveInProgressConfirm = () =>
-    deleteInProgressApp({
-      variables: {
-        id: params?.id || "",
-      },
+  const onAppInstallError = (item: AppInstallationFragment) => {
+    notify({
+      status: "error",
+      text: item.message,
+      title: intl.formatMessage(messages.appCouldntInstall, {
+        name: item.appName,
+      }),
     });
+  };
 
-  useEffect(() => {
-    const appsInProgress = appsInProgressData?.appsInstallations || [];
-    if (activeInstallations.length && !!appsInProgressData) {
-      if (!intervalId.current) {
-        intervalId.current = window.setInterval(
-          () => appsInProgressRefetch(),
-          2000,
-        );
-      }
-      let newAppInstalled = false;
-      activeInstallations.forEach(installation => {
-        const item = appsInProgress?.find(app => app.id === installation.id);
-        if (!item) {
-          removeInstallation(installation.id);
-          installedAppNotify(installation.name);
-          appsInProgressRefetch();
-          newAppInstalled = true;
-        } else if (item.status === JobStatusEnum.SUCCESS) {
-          removeInstallation(installation.id);
-          installedAppNotify(item.appName);
-          refetch();
-          newAppInstalled = true;
-        } else if (item.status === JobStatusEnum.FAILED) {
-          removeInstallation(installation.id);
-          notify({
-            status: "error",
-            text: item.message,
-            title: intl.formatMessage(messages.appCouldntInstall, {
-              name: item.appName,
-            }),
-          });
-        }
-      });
-      if (newAppInstalled) {
-        refetchExtensionList();
-      }
-    }
-    if (!activeInstallations.length && intervalId.current) {
-      clearInterval(intervalId.current);
-      intervalId.current = null;
-    }
-
-    return () => {
-      if (intervalId.current) {
-        clearInterval(intervalId.current);
-        intervalId.current = null;
-      }
-    };
-  }, [activeInstallations.length, appsInProgressData]);
+  const {
+    handleAppInstallRetry,
+    handleRemoveInProgress,
+    deleteInProgressAppOpts,
+  } = useActiveAppsInstallations({
+    appsInProgressData,
+    appsInProgressRefetch,
+    installedAppNotify,
+    removeInProgressAppNotify,
+    onInstallSuccess: refetch,
+    onInstallError: onAppInstallError,
+    onRemoveInProgressAppSuccess: closeModal,
+  });
 
   const context: AppListContextValues = React.useMemo(
     () => ({
-      retryAppInstallation: onAppInstallRetry,
+      retryAppInstallation: handleAppInstallRetry,
       removeAppInstallation: id => openModal("app-installation-remove", { id }),
       openAppSettings: id => navigate(AppUrls.resolveAppDetailsUrl(id)),
     }),
@@ -246,7 +161,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             appsInProgressData?.appsInstallations,
           )}
           onClose={closeModal}
-          onConfirm={handleRemoveInProgressConfirm}
+          onConfirm={() => handleRemoveInProgress(params?.id || "")}
           open={params.action === "app-installation-remove"}
         />
         <AppListPage
