@@ -1,0 +1,173 @@
+{
+    "data": {
+        "tokenRefresh": {
+            "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2NzM1MjQwMTMsIm93bmVyIjoic2FsZW9yIiwiaXNzIjoiaHR0cHM6Ly9hdXRvbWF0aW9uLWRhc2hib2FyZC5zdGFnaW5nLnNhbGVvci5jbG91ZC9ncmFwaHFsLyIsImV4cCI6MTY3MzUyNDMxMywidG9rZW4iOiJNMmlyRm16VkFTUjMiLCJlbWFpbCI6InRlc3RlcnMrZGFzaGJvYXJkQHNhbGVvci5pbyIsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2lkIjoiVlhObGNqb3hNRE16IiwiaXNfc3RhZmYiOnRydWV9.BvIbiYEdcveq7xAX-gGu7LE3RrSPBPq8n8hi33hmwr1Ml2KtYNUpcWN5TrCI92GnDqIBobU8pxL8N9e_LM-1_NABQquWA9CeLgt9ij8VdLfdoogliMrmHBPmlW3nCJrl2H4DJRqCNLAVLY009cpElxqlI7hSmy0scRtqgZPqIrCjVmrS_8oA3w9dT3Bb7c1sj1VKSyF_NRuKtu-JHxwDfhBc7ThlW1OugbR_DIlFF8xSiaEmS-hItitnLKXhgh9uPEVDPoxn5aVAnncD7RMi4FKHKlo8xYAnrtMOQoAsSC2A3oYhb6Q_g8R_f4KjzQWCPHae5HSXGd3tHlk02sQ4YA",
+            "user": {
+                "id": "VXNlcjoxMDMz",
+                "email": "testers+dashboard@saleor.io",
+                "firstName": "Test",
+                "lastName": "Test",
+                "isStaff": true,
+                "__typename": "User",
+                "metadata": [],
+                "defaultShippingAddress": {
+                    "id": "QWRkcmVzczo5MDA0",
+                    "firstName": "MArcinek",
+                    "lastName": "M",
+                    "companyName": "",
+                    "streetAddress1": "Smolna",
+                    "streetAddress2": "13/1",
+                    "city": "WROCŁAW",
+                    "cityArea": "",
+                    "postalCode": "53-346",
+                    "country": {
+                        "code": "PL",
+                        "country": "Poland",
+                        "__typename": "CountryDisplay"
+                    },
+                    "countryArea": "",
+                    "phone": "+48123456787",
+                    "isDefaultBillingAddress": null,
+                    "isDefaultShippingAddress": null,
+                    "__typename": "Address"
+                },
+                "defaultBillingAddress": {
+                    "id": "QWRkcmVzczo5MDA0",
+                    "firstName": "MArcinek",
+                    "lastName": "M",
+                    "companyName": "",
+                    "streetAddress1": "Smolna",
+                    "streetAddress2": "13/1",
+                    "city": "WROCŁAW",
+                    "cityArea": "",
+                    "postalCode": "53-346",
+                    "country": {
+                        "code": "PL",
+                        "country": "Poland",
+                        "__typename": "CountryDisplay"
+                    },
+                    "countryArea": "",
+                    "phone": "+48123456787",
+                    "isDefaultBillingAddress": null,
+                    "isDefaultShippingAddress": null,
+                    "__typename": "Address"
+                },
+                "addresses": [
+                    {
+                        "id": "QWRkcmVzczo5MDA0",
+                        "firstName": "MArcinek",
+                        "lastName": "M",
+                        "companyName": "",
+                        "streetAddress1": "Smolna",
+                        "streetAddress2": "13/1",
+                        "city": "WROCŁAW",
+                        "cityArea": "",
+                        "postalCode": "53-346",
+                        "country": {
+                            "code": "PL",
+                            "country": "Poland",
+                            "__typename": "CountryDisplay"
+                        },
+                        "countryArea": "",
+                        "phone": "+48123456787",
+                        "isDefaultBillingAddress": true,
+                        "isDefaultShippingAddress": true,
+                        "__typename": "Address"
+                    },
+                    {
+                        "id": "QWRkcmVzczo5MTEz",
+                        "firstName": "MAdzikkk",
+                        "lastName": "M",
+                        "companyName": "",
+                        "streetAddress1": "Rock Quarry Rd",
+                        "streetAddress2": "345",
+                        "city": "AFTOO",
+                        "cityArea": "",
+                        "postalCode": "37745",
+                        "country": {
+                            "code": "US",
+                            "country": "United States of America",
+                            "__typename": "CountryDisplay"
+                        },
+                        "countryArea": "TN",
+                        "phone": "+12025550169",
+                        "isDefaultBillingAddress": false,
+                        "isDefaultShippingAddress": false,
+                        "__typename": "Address"
+                    },
+                    {
+                        "id": "QWRkcmVzczoxMTA0Nw==",
+                        "firstName": "",
+                        "lastName": "",
+                        "companyName": "",
+                        "streetAddress1": "Antonio Ridge",
+                        "streetAddress2": "34930",
+                        "city": "NORTH PATRICKFORT",
+                        "cityArea": "",
+                        "postalCode": "70957",
+                        "country": {
+                            "code": "US",
+                            "country": "United States of America",
+                            "__typename": "CountryDisplay"
+                        },
+                        "countryArea": "LA",
+                        "phone": "+12025550189",
+                        "isDefaultBillingAddress": false,
+                        "isDefaultShippingAddress": false,
+                        "__typename": "Address"
+                    },
+                    {
+                        "id": "QWRkcmVzczoxMTM5MQ==",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "companyName": "Saleor Commerce",
+                        "streetAddress1": "1600 Pennsylvania Avenue NW",
+                        "streetAddress2": "",
+                        "city": "WASHINGTON",
+                        "cityArea": "",
+                        "postalCode": "20500",
+                        "country": {
+                            "code": "US",
+                            "country": "United States of America",
+                            "__typename": "CountryDisplay"
+                        },
+                        "countryArea": "DC",
+                        "phone": "+48123123123",
+                        "isDefaultBillingAddress": false,
+                        "isDefaultShippingAddress": false,
+                        "__typename": "Address"
+                    },
+                    {
+                        "id": "QWRkcmVzczoxMTYzMg==",
+                        "firstName": "",
+                        "lastName": "",
+                        "companyName": "",
+                        "streetAddress1": "Smolna",
+                        "streetAddress2": "13/1",
+                        "city": "WROCŁAW",
+                        "cityArea": "",
+                        "postalCode": "53-346",
+                        "country": {
+                            "code": "PL",
+                            "country": "Poland",
+                            "__typename": "CountryDisplay"
+                        },
+                        "countryArea": "",
+                        "phone": "+48123456787",
+                        "isDefaultBillingAddress": false,
+                        "isDefaultShippingAddress": false,
+                        "__typename": "Address"
+                    }
+                ]
+            },
+            "errors": [],
+            "__typename": "RefreshToken"
+        }
+    },
+    "extensions": {
+        "cost": {
+            "requestedQueryCost": 0,
+            "maximumAvailable": 50000
+        }
+    }
+}

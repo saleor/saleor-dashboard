@@ -1,0 +1,133 @@
+{
+    "data": {
+        "me": {
+            "id": "VXNlcjoxMDMz",
+            "email": "testers+dashboard@saleor.io",
+            "firstName": "Test",
+            "lastName": "Test",
+            "isStaff": true,
+            "userPermissions": [
+                {
+                    "code": "HANDLE_CHECKOUTS",
+                    "name": "Handle checkouts",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "HANDLE_PAYMENTS",
+                    "name": "Handle payments",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "HANDLE_TAXES",
+                    "name": "Handle taxes",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "IMPERSONATE_USER",
+                    "name": "Impersonate user.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_APPS",
+                    "name": "Manage apps",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_CHANNELS",
+                    "name": "Manage channels.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_CHECKOUTS",
+                    "name": "Manage checkouts",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_DISCOUNTS",
+                    "name": "Manage sales and vouchers.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_GIFT_CARD",
+                    "name": "Manage gift cards.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_MENUS",
+                    "name": "Manage navigation.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_OBSERVABILITY",
+                    "name": "Manage observability",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_ORDERS",
+                    "name": "Manage orders.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_PAGES",
+                    "name": "Manage pages.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
+                    "name": "Manage page types and attributes.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_PLUGINS",
+                    "name": "Manage plugins",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_PRODUCTS",
+                    "name": "Manage products.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
+                    "name": "Manage product types and attributes.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_SETTINGS",
+                    "name": "Manage settings.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_SHIPPING",
+                    "name": "Manage shipping.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_STAFF",
+                    "name": "Manage staff.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_TAXES",
+                    "name": "Manage taxes",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_TRANSLATIONS",
+                    "name": "Manage translations.",
+                    "__typename": "UserPermission"
+                },
+                {
+                    "code": "MANAGE_USERS",
+                    "name": "Manage customers.",
+                    "__typename": "UserPermission"
+                }
+            ],
+            "avatar": {
+                "url": "https://automation-dashboard.staging.saleor.cloud/media/user-avatars/bg_bggenerator_com_7bb7c2d3.png",
+                "__typename": "Image"
+            },
+            "__typename": "User"
+        }
+    }
+}

@@ -1,33 +1,15 @@
 /// <reference types="cypress"/>
 /// <reference types="../support"/>
 
-// import { urlList } from "../fixtures/urlList";
-import {
-  aliasMutation,
-  hasOperationName,
-} from "../support/api/utils/graphqlMockUtils.ts";
-
 describe("should display mocked list", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    cy.intercept("POST", "/graphql/", req => {
-      aliasMutation(req, "AppsList");
-    });
+    cy.mockMutation("POST", "AppsList", "AppsListMutation");
+
     cy.visit("/");
   });
 
-  it("should delete first item from list", () => {
-    cy.intercept("POST", "/graphql/", req => {
-      aliasMutation(req, "AppsList");
-
-      if (hasOperationName(req, "AppsList")) {
-        req.alias = "AppsListMutation";
-
-        req.reply({
-          fixture: "../fixtures/mockedData/app/AppsList.json",
-        });
-      }
-    });
+  it("should show list of mocked apps", () => {
     cy.visit("/apps");
   });
 });
