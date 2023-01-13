@@ -7,7 +7,6 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import Orders from "../../../icons/Orders";
@@ -77,7 +76,6 @@ const HomePage: React.FC<HomePageProps> = props => {
 
   return (
     <Container>
-      <Box>SOme box</Box>
       <HomeHeader userName={userName} />
       <CardSpacer />
       <Grid>
