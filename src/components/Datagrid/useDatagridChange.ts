@@ -127,11 +127,18 @@ function useDatagridChange(
     [added, removed, notify],
   );
 
-  const onRowAdded = useCallback(() => {
-    const newAdded = [...added, rows - removed.length + added.length];
-    setAdded(newAdded);
-    notify(changes.current, newAdded, removed);
-  }, [added, notify, removed, rows]);
+  const onRowAdded = useCallback(
+    (rowAmount: number = 1) => {
+      const arr = Array(rowAmount)
+        .fill(0)
+        .map((_, idx) => idx + 1);
+      const last = rows - removed.length + added.length;
+      const newAdded = [...added, ...arr.map(count => last + count)];
+      setAdded(newAdded);
+      notify(changes.current, newAdded, removed);
+    },
+    [added, notify, removed, rows],
+  );
 
   return {
     added,

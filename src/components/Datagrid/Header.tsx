@@ -1,7 +1,14 @@
+import {
+  ClickAwayListener,
+  MenuItem,
+  Paper,
+  Popper,
+  Typography,
+} from "@material-ui/core";
 import FullScreenIcon from "@saleor/icons/FullScreenIcon";
 import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren, useRef, useState } from "react";
 
 import CardTitle from "../CardTitle";
 
@@ -21,6 +28,10 @@ const useStyles = makeStyles(
     },
     fullScreenIconClose: {
       transform: "rotate(180deg)",
+    },
+    popover: {
+      width: 150,
+      zIndex: 3,
     },
   }),
   { name: "Datagrid" },
@@ -56,7 +67,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
 };
 
 interface ButtonAddRowProps {
-  onAddRow: React.MouseEventHandler<HTMLButtonElement>;
+  onAddRow: (amount: number) => void;
 }
 
 const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
@@ -64,17 +75,49 @@ const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
   children,
 }) => {
   const classes = useStyles();
+  const anchor = useRef<HTMLDivElement>();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Button
-      data-test-id="button-add-variant"
-      className={classes.headerBtn}
-      variant="tertiary"
-      onClick={onAddRow}
-    >
-      <PlusSmallIcon />
-      {children}
-    </Button>
+    <div ref={anchor}>
+      <Button
+        data-test-id="button-add-variant"
+        className={classes.headerBtn}
+        variant="tertiary"
+        onClick={() => setIsOpen(true)}
+      >
+        <PlusSmallIcon />
+        {children}
+      </Button>
+      <Popper
+        anchorEl={anchor as any}
+        open={isOpen}
+        className={classes.popover}
+        disablePortal
+        placement="bottom-start"
+      >
+        <ClickAwayListener onClickAway={() => setIsOpen(false)}>
+          <Paper elevation={20}>
+            <div>
+              <Typography color="textSecondary" variant="caption">
+                How many varaints ?
+              </Typography>
+            </div>
+            {[1, 5, 10, 15, 20].map((count, idx) => (
+              <MenuItem
+                key={idx}
+                onClick={() => {
+                  setIsOpen(false);
+                  onAddRow(count);
+                }}
+              >
+                {count}
+              </MenuItem>
+            ))}
+          </Paper>
+        </ClickAwayListener>
+      </Popper>
+    </div>
   );
 };
 
