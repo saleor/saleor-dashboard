@@ -1,23 +1,23 @@
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
   PluginsDetailsFragment,
-} from "@saleor/graphql";
-import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { ChangeEvent, SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { pluginListUrl } from "@dashboard/plugins/urls";
+import { isSecretField } from "@dashboard/plugins/utils";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { pluginListUrl } from "@saleor/plugins/urls";
-import { isSecretField } from "@saleor/plugins/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

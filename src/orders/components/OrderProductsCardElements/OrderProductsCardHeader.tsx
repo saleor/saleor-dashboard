@@ -1,5 +1,5 @@
+import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell, TableHead } from "@material-ui/core";
-import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

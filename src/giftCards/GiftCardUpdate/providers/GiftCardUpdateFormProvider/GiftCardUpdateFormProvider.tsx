@@ -1,22 +1,22 @@
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { giftCardUpdateFormMessages } from "@saleor/giftCards/GiftCardsList/messages";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
 import {
   GiftCardErrorFragment,
   GiftCardUpdateMutation,
   useGiftCardUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
-import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import { getFormErrors } from "@saleor/utils/errors";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import getMetadata from "@saleor/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+} from "@dashboard/graphql";
+import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
+import useForm, { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
+import { getFormErrors } from "@dashboard/utils/errors";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";

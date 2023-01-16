@@ -1,10 +1,10 @@
+import { Button } from "@dashboard/components/Button";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import { SetPasswordData } from "@saleor/sdk";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -109,7 +109,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             />
             <FormSpacer />
             <Button
-              data-test="button-bar-confirm"
+              data-test-id="button-bar-confirm"
               className={classes.submit}
               disabled={loading || data.password.length === 0 || passwordError}
               variant="primary"

@@ -49,6 +49,7 @@ describe("As an admin I want to create voucher", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+          cy.checkIfDataAreNotNull({ dataForCheckout, defaultChannel });
           cy.clearSessionData();
         },
       );

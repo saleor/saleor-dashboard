@@ -1,10 +1,10 @@
-import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
+import CardTitle from "@dashboard/components/CardTitle";
 import RadioGroupField, {
   RadioGroupFieldChoice,
-} from "@saleor/components/RadioGroupField";
-import { SaleType as SaleTypeEnum } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/components/RadioGroupField";
+import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";

@@ -1,5 +1,5 @@
-import { SW_INTERVAL } from "@saleor/config";
-import useNotifier from "@saleor/hooks/useNotifier";
+import { SW_INTERVAL } from "@dashboard/config";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useServiceWorker } from "src/hooks/useServiceWorker";

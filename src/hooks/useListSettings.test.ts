@@ -1,5 +1,5 @@
-import { defaultListSettings } from "@saleor/config";
-import { ListViews } from "@saleor/types";
+import { defaultListSettings } from "@dashboard/config";
+import { ListViews } from "@dashboard/types";
 import { renderHook } from "@testing-library/react-hooks";
 
 import useListSettings, { listSettingsStorageKey } from "./useListSettings";

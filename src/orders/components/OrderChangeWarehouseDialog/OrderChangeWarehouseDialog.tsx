@@ -1,3 +1,15 @@
+import Debounce from "@dashboard/components/Debounce";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  OrderFulfillLineFragment,
+  WarehouseFragment,
+} from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { getById } from "@dashboard/misc";
+import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import {
   Dialog,
   DialogActions,
@@ -10,11 +22,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import Debounce from "@saleor/components/Debounce";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderFulfillLineFragment, WarehouseFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   DialogHeader,
@@ -25,10 +32,6 @@ import {
   SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
-import { getById } from "@saleor/misc";
-import { getLineAvailableQuantityInWarehouse } from "@saleor/orders/utils/data";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

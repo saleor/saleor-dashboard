@@ -4,9 +4,9 @@ import {
   TaxClassCreateInput,
   TaxClassFragment,
   TaxClassUpdateInput,
-} from "@saleor/graphql";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 
 import { TaxClassesPageFormData } from "../types";
 

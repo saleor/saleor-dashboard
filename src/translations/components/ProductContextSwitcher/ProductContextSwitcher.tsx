@@ -1,3 +1,10 @@
+import { useProductVariantListQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import {
+  languageEntityUrl,
+  productVariantUrl,
+  TranslatableEntities,
+} from "@dashboard/translations/urls";
 import {
   Card,
   ClickAwayListener,
@@ -9,14 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
-import { useProductVariantListQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/macaw-ui";
-import {
-  languageEntityUrl,
-  productVariantUrl,
-  TranslatableEntities,
-} from "@saleor/translations/urls";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

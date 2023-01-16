@@ -1,10 +1,10 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import { DiscountErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
-import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,8 +1,7 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   CountryCode,
   ShippingMethodTypeEnum,
@@ -15,29 +14,30 @@ import {
   useUpdatePrivateMetadataMutation,
   useUpdateShippingZoneMutation,
   useWarehouseCreateMutation,
-} from "@saleor/graphql";
-import { useLocalPaginationState } from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
   getById,
   getStringOrPlaceholder,
-} from "@saleor/misc";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
-import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
-import ShippingZoneAddWarehouseDialog from "@saleor/shipping/components/ShippingZoneAddWarehouseDialog";
-import ShippingZoneCountriesAssignDialog from "@saleor/shipping/components/ShippingZoneCountriesAssignDialog";
-import { arrayDiff } from "@saleor/utils/arrays";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+} from "@dashboard/misc";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
+import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
+import ShippingZoneAddWarehouseDialog from "@dashboard/shipping/components/ShippingZoneAddWarehouseDialog";
+import ShippingZoneCountriesAssignDialog from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
+import { arrayDiff } from "@dashboard/utils/arrays";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import {
   mapCountriesToCountriesCodes,
   mapEdgesToItems,
-} from "@saleor/utils/maps";
+} from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
 import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

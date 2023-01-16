@@ -1,0 +1,83 @@
+import { voucherList } from "@dashboard/discounts/fixtures";
+import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import {
+  filterPageProps,
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  sortPageProps,
+  tabPageProps,
+} from "@dashboard/fixtures";
+import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
+import VoucherListPage, { VoucherListPageProps } from "./VoucherListPage";
+
+const props: VoucherListPageProps = {
+  ...listActionsProps,
+  ...pageListProps.default,
+  ...searchPageProps,
+  ...sortPageProps,
+  ...tabPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    channel: {
+      active: false,
+      value: "default-channel",
+      choices: [
+        {
+          value: "default-channel",
+          label: "Default channel",
+        },
+      ],
+    },
+    saleType: {
+      active: false,
+      value: [VoucherDiscountType.FIXED, VoucherDiscountType.PERCENTAGE],
+    },
+    started: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined,
+      },
+    },
+    status: {
+      active: false,
+      value: [DiscountStatusEnum.ACTIVE],
+    },
+    timesUsed: {
+      active: false,
+      value: {
+        max: undefined,
+        min: undefined,
+      },
+    },
+  },
+  selectedChannelId: "123",
+  sort: {
+    ...sortPageProps.sort,
+    sort: VoucherListUrlSortField.code,
+  },
+  vouchers: voucherList,
+};
+
+storiesOf("Discounts / Voucher list", module)
+  .addDecorator(Decorator)
+  .addDecorator(PaginatorContextDecorator)
+  .add("default", () => <VoucherListPage {...props} />)
+  .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
+  .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
+  .add("no channels", () => (
+    <VoucherListPage
+      {...props}
+      selectedChannelId=""
+      vouchers={voucherList.map(voucher => ({
+        ...voucher,
+        channelListings: [],
+      }))}
+    />
+  ));

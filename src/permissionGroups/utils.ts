@@ -2,7 +2,7 @@ import {
   PermissionFragment,
   PermissionGroupDetailsFragment,
   UserFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";

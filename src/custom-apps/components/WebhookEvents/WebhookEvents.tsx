@@ -1,19 +1,19 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from "@saleor/components/MultiAutocompleteSelectField";
+} from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   mapAsyncEventsToChoices,
   mapSyncEventsToChoices,
-} from "@saleor/custom-apps/utils";
+} from "@dashboard/custom-apps/utils";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -60,7 +60,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           name="syncEvents"
           value={data.syncEvents}
           onChange={onSyncEventChange}
-          data-test="syncEvents"
+          data-test-id="syncEvents"
           testId="syncEvent"
         />
         <VerticalSpacer spacing={2} />
@@ -86,7 +86,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           name="asyncEvents"
           value={data.asyncEvents}
           onChange={onAsyncEventChange}
-          data-test="asyncEvents"
+          data-test-id="asyncEvents"
           testId="asyncEvent"
         />
       </CardContent>

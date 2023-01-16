@@ -1,10 +1,10 @@
+import { Button } from "@dashboard/components/Button";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { OrderLineFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
 import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderLineFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { commonMessages } from "@saleor/intl";
+import { commonMessages } from "@dashboard/intl";
 import { defineMessages, IntlShape } from "react-intl";
 
 const commonErrorMessages = defineMessages({

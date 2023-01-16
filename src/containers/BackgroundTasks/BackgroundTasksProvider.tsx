@@ -1,6 +1,6 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { IMessageContext } from "@saleor/components/messages";
-import useNotifier from "@saleor/hooks/useNotifier";
+import { IMessageContext } from "@dashboard/components/messages";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

@@ -51,6 +51,7 @@ describe("As an admin I want to update vouchers", () => {
             auth: "token",
           };
         },
+        cy.checkIfDataAreNotNull({ dataForCheckout, defaultChannel, product }),
       );
   });
 

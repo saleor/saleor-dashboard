@@ -1,3 +1,4 @@
+import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import {
   Card,
   ClickAwayListener,
@@ -9,7 +10,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
-import { LanguageCodeEnum, LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

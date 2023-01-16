@@ -108,7 +108,7 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
-          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
+          echo "::set-output name=custom_api_uri::$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1 | { read custom_uri; if [ -z "$custom_uri" ]; then echo "$fallback_uri"; else echo "$custom_uri"; fi })"
       - name: Checkout
         uses: actions/checkout@v2
 

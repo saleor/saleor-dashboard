@@ -1,6 +1,6 @@
-import { SaleListUrlSortField } from "@saleor/discounts/urls";
-import { SaleSortField } from "@saleor/graphql";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { SaleListUrlSortField } from "@dashboard/discounts/urls";
+import { SaleSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
 

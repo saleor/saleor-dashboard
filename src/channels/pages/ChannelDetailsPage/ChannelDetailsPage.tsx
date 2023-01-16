@@ -1,14 +1,14 @@
-import ChannelAllocationStrategy from "@saleor/channels/components/ChannelAllocationStrategy";
-import ShippingZones from "@saleor/channels/components/ShippingZones";
-import Warehouses from "@saleor/channels/components/Warehouses";
-import { channelsListUrl } from "@saleor/channels/urls";
-import { validateChannelFormData } from "@saleor/channels/validation";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import Savebar from "@saleor/components/Savebar";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
+import ShippingZones from "@dashboard/channels/components/ShippingZones";
+import Warehouses from "@dashboard/channels/components/Warehouses";
+import { channelsListUrl } from "@dashboard/channels/urls";
+import { validateChannelFormData } from "@dashboard/channels/validation";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Savebar from "@dashboard/components/Savebar";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
@@ -19,16 +19,16 @@ import {
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
   StockSettingsInput,
-} from "@saleor/graphql";
-import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
-import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+} from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";

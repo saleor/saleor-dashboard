@@ -1,12 +1,12 @@
 import { MutationFunction } from "@apollo/client";
-import { categoryAddUrl } from "@saleor/categories/urls";
-import { collectionAddUrl } from "@saleor/collections/urls";
-import { customerAddUrl } from "@saleor/customers/urls";
-import { voucherAddUrl } from "@saleor/discounts/urls";
-import { OrderDraftCreateMutation } from "@saleor/graphql";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { permissionGroupAddUrl } from "@saleor/permissionGroups/urls";
-import { productAddUrl } from "@saleor/products/urls";
+import { categoryAddUrl } from "@dashboard/categories/urls";
+import { collectionAddUrl } from "@dashboard/collections/urls";
+import { customerAddUrl } from "@dashboard/customers/urls";
+import { voucherAddUrl } from "@dashboard/discounts/urls";
+import { OrderDraftCreateMutation } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { permissionGroupAddUrl } from "@dashboard/permissionGroups/urls";
+import { productAddUrl } from "@dashboard/products/urls";
 import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 

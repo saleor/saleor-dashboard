@@ -1,6 +1,6 @@
-import { appDeepUrl } from "@saleor/apps/urls";
-import { AppExtensionTargetEnum } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
+import { appDeepUrl } from "@dashboard/apps/urls";
+import { AppExtensionTargetEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";

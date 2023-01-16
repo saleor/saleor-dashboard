@@ -1,5 +1,5 @@
-import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 
 import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 

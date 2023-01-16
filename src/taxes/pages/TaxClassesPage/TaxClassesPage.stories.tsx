@@ -1,5 +1,5 @@
-import Decorator from "@saleor/storybook/Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -17,7 +17,7 @@ const props = {
   onTaxClassDelete: () => undefined,
 };
 
-storiesOf("Views / Taxes / Tax classes view", module)
+storiesOf("Taxes / Tax classes view", module)
   .addDecorator(Decorator)
   .add("loading", () => <TaxClassesPage {...props} taxClasses={undefined} />)
   .add("default", () => <TaxClassesPage {...props} />);

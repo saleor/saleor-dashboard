@@ -1,6 +1,6 @@
-import { Node, useProductVariantSetDefaultMutation } from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getProductErrorMessage } from "@saleor/utils/errors";
+import { Node, useProductVariantSetDefaultMutation } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
 import { useIntl } from "react-intl";
 
 function useOnSetDefaultVariant(productId: string, variant: Node) {

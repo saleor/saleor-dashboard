@@ -2,7 +2,7 @@ import { FetchResult } from "@apollo/client";
 import {
   AttributeInput,
   AttributeInputData,
-} from "@saleor/components/Attributes";
+} from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -14,14 +14,14 @@ import {
   PageSelectedAttributeFragment,
   ProductFragment,
   ProductVariantDetailsQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import { move, toggle } from "@saleor/utils/lists";
+} from "@dashboard/hooks/useFormset";
+import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";

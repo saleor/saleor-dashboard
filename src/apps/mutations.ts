@@ -47,21 +47,7 @@ export const appFetchMutation = gql`
   mutation AppFetch($manifestUrl: String!) {
     appFetchManifest(manifestUrl: $manifestUrl) {
       manifest {
-        identifier
-        version
-        about
-        name
-        appUrl
-        configurationUrl
-        tokenTargetUrl
-        dataPrivacy
-        dataPrivacyUrl
-        homepageUrl
-        supportUrl
-        permissions {
-          code
-          name
-        }
+        ...AppManifest
       }
       errors {
         ...AppError

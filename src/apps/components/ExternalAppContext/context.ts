@@ -1,5 +1,5 @@
-import { AppDetailsUrlMountQueryParams } from "@saleor/apps/urls";
-import { AppExtensionTargetEnum } from "@saleor/graphql";
+import { AppDetailsUrlMountQueryParams } from "@dashboard/apps/urls";
+import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import React from "react";
 
 export interface AppData {
@@ -16,4 +16,9 @@ export const ExternalAppContext = React.createContext<{
   appData: AppData | undefined;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAppData: React.Dispatch<React.SetStateAction<AppData | undefined>>;
-}>(undefined);
+}>({
+  open: false,
+  appData: undefined,
+  setOpen: () => null,
+  setAppData: () => null,
+});

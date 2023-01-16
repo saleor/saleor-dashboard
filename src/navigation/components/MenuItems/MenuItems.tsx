@@ -1,8 +1,9 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { buttonMessages } from "@dashboard/intl";
+import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import CardTitle from "@saleor/components/CardTitle";
-import Skeleton from "@saleor/components/Skeleton";
-import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   DeleteIcon,
@@ -10,7 +11,6 @@ import {
   makeStyles,
   useTheme,
 } from "@saleor/macaw-ui";
-import { RecursiveMenuItem } from "@saleor/navigation/types";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,8 +1,8 @@
+import { Button } from "@dashboard/components/Button";
+import Link from "@dashboard/components/Link";
+import useClipboard from "@dashboard/hooks/useClipboard";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { Button } from "@saleor/components/Button";
-import Link from "@saleor/components/Link";
-import useClipboard from "@saleor/hooks/useClipboard";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

@@ -1,4 +1,4 @@
-import { AppPermissionFragment } from "@saleor/graphql";
+import { AppPermissionFragment } from "@dashboard/graphql";
 import {
   IconButton,
   makeStyles,

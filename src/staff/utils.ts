@@ -1,4 +1,4 @@
-import { StaffMemberDetailsFragment, UserFragment } from "@saleor/graphql";
+import { StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
 import difference from "lodash/difference";
 
 import { StaffDetailsFormData } from "./components/StaffDetailsPage";

@@ -1,6 +1,6 @@
+import { ReorderAction, ReorderEvent } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ReorderAction, ReorderEvent } from "@saleor/types";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 

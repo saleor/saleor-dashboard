@@ -1,10 +1,10 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { PermissionGroupErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
+import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { PermissionGroupErrorFragment } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
-import { getFieldError, getFormErrors } from "@saleor/utils/errors";
-import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import React from "react";
 
 interface PageSectionHeaderProps {

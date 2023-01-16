@@ -1,3 +1,12 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import Grid from "@dashboard/components/Grid";
+import SingleSelectField, {
+  Choice,
+} from "@dashboard/components/SingleSelectField";
+import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { taxesMessages } from "@dashboard/taxes/messages";
 import {
   Card,
   CardContent,
@@ -7,15 +16,6 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import Grid from "@saleor/components/Grid";
-import SingleSelectField, {
-  Choice,
-} from "@saleor/components/SingleSelectField";
-import { TaxConfigurationUpdateInput } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

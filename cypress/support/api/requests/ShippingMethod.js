@@ -6,6 +6,7 @@ export function createShippingRate({
   type = "PRICE",
   maxWeight,
   minWeight,
+  taxClassId,
 }) {
   const maxOrderWeight = getValueWithDefault(
     maxWeight,
@@ -16,6 +17,12 @@ export function createShippingRate({
     `minimumOrderWeight: ${minWeight}`,
   );
 
+  const selectedTaxClass = getValueWithDefault(
+    taxClassId,
+    `taxClass: "${taxClassId}"`,
+    `taxClass: ""`,
+  );
+
   const mutation = `mutation{
     shippingPriceCreate(input:{
       name: "${name}"
@@ -23,6 +30,7 @@ export function createShippingRate({
       type: ${type}
       ${minOrderWeight}
       ${maxOrderWeight}
+      ${selectedTaxClass}
     }){
       shippingMethod{
         id

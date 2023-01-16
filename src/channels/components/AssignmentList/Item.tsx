@@ -1,5 +1,5 @@
+import DeletableItem from "@dashboard/components/DeletableItem";
 import { Divider, Typography } from "@material-ui/core";
-import DeletableItem from "@saleor/components/DeletableItem";
 import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 

@@ -1,5 +1,5 @@
+import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { TextField } from "@material-ui/core";
-import SingleSelectField from "@saleor/components/SingleSelectField";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 

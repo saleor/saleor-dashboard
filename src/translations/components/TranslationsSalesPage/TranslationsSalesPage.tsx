@@ -1,16 +1,16 @@
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import LanguageSwitch from "@saleor/components/LanguageSwitch";
-import PageHeader from "@saleor/components/PageHeader";
-import { LanguageCodeEnum, SaleTranslationFragment } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import PageHeader from "@dashboard/components/PageHeader";
+import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
-} from "@saleor/translations/urls";
+} from "@dashboard/translations/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,16 +1,16 @@
+import ActionDialog, {
+  ActionDialogProps,
+} from "@dashboard/components/ActionDialog";
+import DeleteWarningDialogConsentContent from "@dashboard/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
+import { GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { GiftCardDataFragment } from "@dashboard/graphql";
+import { getById } from "@dashboard/misc";
 import {
   CircularProgress,
   DialogContentText,
   Typography,
 } from "@material-ui/core";
-import ActionDialog, {
-  ActionDialogProps,
-} from "@saleor/components/ActionDialog";
-import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
-import { GiftCardsListConsumerProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDataFragment } from "@saleor/graphql";
-import { getById } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

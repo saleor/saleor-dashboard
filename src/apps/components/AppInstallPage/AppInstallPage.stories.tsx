@@ -1,4 +1,4 @@
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -9,10 +9,10 @@ const props: AppInstallPageProps = {
   data: installApp,
   loading: false,
   navigateToAppsList: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: () => Promise.resolve([]),
 };
 
-storiesOf("Views / Apps / Install App", module)
+storiesOf("Apps / Install App", module)
   .addDecorator(Decorator)
   .add("default", () => <AppInstallPage {...props} />)
   .add("loading", () => <AppInstallPage {...props} loading={true} />);

@@ -39,13 +39,17 @@ describe("Channels", () => {
         shippingZone = shippingZoneResp;
       },
     );
-    cy.fixture("addresses").then(addresses => {
-      usAddress = addresses.usAddress;
-      createWarehouseViaApi({
-        name: randomName,
-        address: usAddress,
+    cy.fixture("addresses")
+      .then(addresses => {
+        usAddress = addresses.usAddress;
+        createWarehouseViaApi({
+          name: randomName,
+          address: usAddress,
+        });
+      })
+      .then(warehouse => {
+        cy.checkIfDataAreNotNull({ shippingZone, usAddress, warehouse });
       });
-    });
   });
 
   beforeEach(() => {
@@ -92,7 +96,7 @@ describe("Channels", () => {
         .get(PRODUCTS_LIST.productsNames)
         .first()
         .click()
-        .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
+        .get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
         .click()
         .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
         .contains(randomChannel);

@@ -1,7 +1,8 @@
-import { ExternalAppProvider } from "@saleor/apps/components/ExternalAppContext";
-import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
+import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
+import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
+import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
+import themeOverrides from "@dashboard/themeOverrides";
 import { ThemeProvider } from "@saleor/macaw-ui";
-import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
@@ -26,15 +27,17 @@ export const Decorator = storyFn => (
             <ThemeProvider overrides={themeOverrides}>
               <BrowserRouter basename={getAppMountUri()}>
                 <ExternalAppProvider>
-                  <MessageManagerProvider>
-                    <div
-                      style={{
-                        padding: 24,
-                      }}
-                    >
-                      {storyFn()}
-                    </div>
-                  </MessageManagerProvider>
+                  <FlagsServiceProvider>
+                    <MessageManagerProvider>
+                      <div
+                        style={{
+                          padding: 24,
+                        }}
+                      >
+                        {storyFn()}
+                      </div>
+                    </MessageManagerProvider>
+                  </FlagsServiceProvider>
                 </ExternalAppProvider>
               </BrowserRouter>
             </ThemeProvider>

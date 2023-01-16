@@ -17,6 +17,7 @@ describe("Tests for site settings", () => {
     cy.fixture("addresses").then(({ usAddress, plAddress }) => {
       address = usAddress;
       updateShopAddress(plAddress);
+      cy.checkIfDataAreNotNull(address);
     });
   });
 

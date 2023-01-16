@@ -1,5 +1,5 @@
 import { ApolloError } from "@apollo/client";
-import { findValueInEnum } from "@saleor/misc";
+import { findValueInEnum } from "@dashboard/misc";
 import { GraphQLError } from "graphql";
 
 import { UserContextError } from "./types";

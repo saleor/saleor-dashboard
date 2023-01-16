@@ -1,12 +1,12 @@
-import { TextField } from "@material-ui/core";
-import { TextFieldProps } from "@material-ui/core/TextField";
-import { getErrorMessage } from "@saleor/components/Attributes/utils";
+import { getErrorMessage } from "@dashboard/components/Attributes/utils";
 import {
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { joinDateTime, splitDateTime } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { joinDateTime, splitDateTime } from "@dashboard/misc";
+import { TextField } from "@material-ui/core";
+import { TextFieldProps } from "@material-ui/core/TextField";
 import React from "react";
 import { useIntl } from "react-intl";
 

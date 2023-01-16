@@ -1,7 +1,7 @@
+import { Button } from "@dashboard/components/Button";
+import { FulfillmentStatus } from "@dashboard/graphql";
+import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { CardActions, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import { FulfillmentStatus } from "@saleor/graphql";
-import { buttonMessages, commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

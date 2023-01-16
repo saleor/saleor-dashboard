@@ -1,4 +1,4 @@
-import { HomeQuery, OrderEventsEnum } from "@saleor/graphql";
+import { HomeQuery, OrderEventsEnum } from "@dashboard/graphql";
 
 export const shop: (placeholderImage: string) => HomeQuery = (
   placeholderImage: string,

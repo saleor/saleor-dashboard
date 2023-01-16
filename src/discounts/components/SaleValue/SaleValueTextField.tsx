@@ -1,5 +1,5 @@
+import { SaleType } from "@dashboard/graphql";
 import { TextField } from "@material-ui/core";
-import { SaleType } from "@saleor/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 

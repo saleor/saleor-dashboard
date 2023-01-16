@@ -1,6 +1,6 @@
-import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
-import { getById } from "@saleor/misc";
-import { Node } from "@saleor/types";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { getById } from "@dashboard/misc";
+import { Node } from "@dashboard/types";
 
 import {
   FormsetQuantityData,

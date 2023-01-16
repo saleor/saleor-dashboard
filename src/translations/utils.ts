@@ -1,15 +1,15 @@
-import { OutputData } from "@editorjs/editorjs";
 import {
   AttributeTranslationDetailsFragment,
   AttributeValueTranslatableFragment,
   AttributeValueTranslationInput,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   TranslationField,
   TranslationFieldType,
-} from "@saleor/translations/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/translations/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { OutputData } from "@editorjs/editorjs";
 import { IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";

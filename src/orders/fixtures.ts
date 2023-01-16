@@ -19,9 +19,12 @@ import {
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   WeightUnitsEnum,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
-import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
+import {
+  warehouseForPickup,
+  warehouseList,
+} from "@dashboard/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
@@ -1093,6 +1096,19 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               __typename: "Image" as "Image",
               url: placeholder,
             },
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+            },
             undiscountedUnitPrice: {
               __typename: "TaxedMoney",
               currency: "USD",
@@ -1206,6 +1222,19 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             thumbnail: {
               __typename: "Image" as "Image",
               url: placeholder,
+            },
+            totalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
             },
             undiscountedUnitPrice: {
               __typename: "TaxedMoney",
@@ -1329,6 +1358,19 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "Image" as "Image",
         url: placeholder,
       },
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 55.53,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 55.53,
+          currency: "USD",
+        },
+      },
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",
         currency: "USD",
@@ -1428,7 +1470,19 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "Image" as "Image",
         url: placeholder,
       },
-
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+      },
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",
         currency: "USD",
@@ -1672,6 +1726,19 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         __typename: "Image" as "Image",
         url: placeholder,
       },
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+      },
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",
         currency: "USD",
@@ -1770,6 +1837,19 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder,
+      },
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
       },
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",

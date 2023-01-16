@@ -1,11 +1,11 @@
+import { AddressTypeInput } from "@dashboard/customers/types";
+import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
-import { AddressTypeInput } from "@saleor/customers/types";
-import { AccountErrorFragment, OrderErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -77,7 +77,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const { areas, isFieldAllowed } = useAddressValidation(data.country);
+  const { areas, isFieldAllowed, getDisplayValue } = useAddressValidation(
+    data.country,
+  );
 
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
@@ -269,7 +271,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               disabled={disabled}
               autocomplete="new-password"
               data-test-id="address-edit-country-area-field"
-              displayValue={data.countryArea}
+              displayValue={getDisplayValue(data.countryArea)}
               error={!!formErrors.countryArea}
               helperText={getErrorMessage(formErrors.countryArea, intl)}
               label={intl.formatMessage({

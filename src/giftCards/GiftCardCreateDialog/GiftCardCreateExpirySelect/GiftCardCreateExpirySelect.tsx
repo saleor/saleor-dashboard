@@ -1,17 +1,17 @@
-import { TextField, Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,
   GiftCardCreateCommonFormData,
-} from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
-import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
-import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
-import useCurrentDate from "@saleor/hooks/useCurrentDate";
-import { FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/giftCards/GiftCardBulkCreateDialog/types";
+import { GiftCardExpiryType } from "@dashboard/giftCards/GiftCardCreateDialog/types";
+import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCreateDialog/utils";
+import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
+import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

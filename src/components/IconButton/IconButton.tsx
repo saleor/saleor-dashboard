@@ -1,8 +1,8 @@
+import { isExternalURL } from "@dashboard/utils/urls";
 import {
   IconButton as MacawIconButton,
   IconButtonProps,
 } from "@saleor/macaw-ui";
-import { isExternalURL } from "@saleor/utils/urls";
 import React from "react";
 import { Link } from "react-router-dom";
 

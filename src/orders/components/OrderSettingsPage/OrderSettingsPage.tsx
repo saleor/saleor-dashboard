@@ -1,18 +1,18 @@
-import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   OrderSettingsFragment,
   ShopOrderSettingsFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { orderListUrl } from "@dashboard/orders/urls";
+import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { orderListUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

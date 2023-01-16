@@ -6,9 +6,11 @@ import faker from "faker";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
+import { TEST_ADMIN_USER } from "../fixtures/users";
 import { activatePlugin, updatePlugin } from "../support/api/requests/Plugins";
 import {
   deleteStaffMembersStartsWith,
@@ -22,8 +24,9 @@ import {
 import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
 import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
+  fillUpOnlyUserDetails,
   fillUpSetPassword,
-  fillUpUserDetails,
+  fillUpUserDetailsAndAddFirstPermission,
   updateUserActiveFlag,
 } from "../support/pages/userPage";
 
@@ -32,6 +35,7 @@ describe("Staff members", () => {
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;
+
   let user;
 
   before(() => {
@@ -48,6 +52,7 @@ describe("Staff members", () => {
         cy.clearSessionData().visit(urlLink);
         fillUpSetPassword(password);
         cy.clearSessionData();
+        cy.checkIfDataAreNotNull({ user });
       });
   });
 
@@ -55,25 +60,29 @@ describe("Staff members", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should invite user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
-    const firstName = faker.name.firstName();
-    const emailInvite = `${startsWith}${firstName}@example.com`;
+  it(
+    "should be able to invite staff user. TC: SALEOR_3501",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      const firstName = faker.name.firstName();
+      const emailInvite = `${startsWith}${firstName}@example.com`;
 
-    cy.visit(urlList.staffMembers)
-      .expectSkeletonIsVisible()
-      .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
-      .click();
-    fillUpUserDetails(firstName, lastName, emailInvite);
-    getMailActivationLinkForUser(emailInvite).then(urlLink => {
-      cy.clearSessionData().visit(urlLink);
-      fillUpSetPassword(password);
-      expectWelcomeMessageIncludes(`${firstName} ${lastName}`);
-    });
-  });
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .click({ force: true });
+      fillUpUserDetailsAndAddFirstPermission(firstName, lastName, emailInvite);
+      getMailActivationLinkForUser(emailInvite).then(urlLink => {
+        cy.clearSessionData().visit(urlLink);
+        fillUpSetPassword(password);
+        expectWelcomeMessageIncludes(`${firstName} ${lastName}`);
+      });
+    },
+  );
 
   it(
-    "should deactivate user",
-    { tags: ["@staffMembers", "@stagedOnly"] },
+    "should deactivate user. TC: SALEOR_3502",
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
       updateUserActiveFlag(user.id);
@@ -90,20 +99,24 @@ describe("Staff members", () => {
     },
   );
 
-  it("should activate user", { tags: ["@staffMembers", "@stagedOnly"] }, () => {
-    const serverStoredEmail = email.toLowerCase();
+  it(
+    "should activate user. TC: SALEOR_3503",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      const serverStoredEmail = email.toLowerCase();
 
-    updateStaffMember({ userId: user.id, isActive: false });
-    updateUserActiveFlag(user.id);
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", { email, password })
-      .visit(urlList.homePage);
-    expectWelcomeMessageIncludes(serverStoredEmail);
-  });
+      updateStaffMember({ userId: user.id, isActive: false });
+      updateUserActiveFlag(user.id);
+      cy.clearSessionData()
+        .loginUserViaRequest("auth", { email, password })
+        .visit(urlList.homePage);
+      expectWelcomeMessageIncludes(serverStoredEmail);
+    },
+  );
 
   it(
-    "should remove user permissions",
-    { tags: ["@staffMembers", "@stagedOnly"] },
+    "should remove user permissions. TC: SALEOR_3504",
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
 
@@ -129,8 +142,8 @@ describe("Staff members", () => {
   );
 
   it(
-    "should reset password",
-    { tags: ["@staffMembers", "@stagedOnly"] },
+    "should reset password. TC: SALEOR_3505",
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const newPassword = faker.random.alphaNumeric(8);
       updatePlugin(
@@ -161,6 +174,147 @@ describe("Staff members", () => {
             .should("be.visible")
             .loginUserViaRequest({ email, password: newPassword });
         });
+    },
+  );
+
+  it(
+    "should not be able to create staff member with not unique email. TC: SALEOR_3508",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      const firstName = faker.name.firstName();
+      const emailInvite = TEST_ADMIN_USER.email;
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .click({ force: true });
+      fillUpOnlyUserDetails(firstName, lastName, emailInvite);
+      cy.confirmationErrorMessageShouldAppear();
+    },
+  );
+
+  it(
+    "should not be able to update staff member with not unique email. TC: SALEOR_3509",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      cy.visit(urlList.staffMembers)
+        .expectSkeletonIsVisible()
+        .get(SHARED_ELEMENTS.searchInput)
+        .type(`${email} {enter}`);
+      cy.waitForProgressBarToNotExist();
+      cy.get(STAFF_MEMBERS_LIST.staffAvatar)
+        .first()
+        .should("be.visible");
+      cy.waitForProgressBarToNotExist()
+        .get(STAFF_MEMBERS_LIST.staffStatusText)
+        .first()
+        .should("be.visible")
+        .click();
+      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
+        .click()
+        .clear()
+        .type(`${TEST_ADMIN_USER.email} {enter}`)
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationErrorMessageShouldAppear();
+    },
+  );
+
+  // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
+  it.skip(
+    "should update staff member name and email. TC: SALEOR_3507",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      const newLastName = faker.name.lastName();
+      const newEmail = `${startsWith}${newLastName}@example.com`;
+      const changedName = faker.name.lastName();
+      const changedEmail = `${startsWith}${changedName}@example.com`;
+
+      inviteStaffMemberWithFirstPermission({ email: newEmail })
+        .then(({ user: userResp }) => {
+          user = userResp;
+          getMailActivationLinkForUser(newEmail);
+        })
+        .then(urlLink => {
+          cy.clearSessionData().visit(urlLink);
+          fillUpSetPassword(password);
+          cy.clearSessionData();
+        });
+
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: Cypress.env("USER_PASSWORD"),
+      });
+
+      cy.visit(urlList.staffMembers)
+        .get(LOGIN_SELECTORS.userMenu)
+        .click();
+      cy.get(LOGIN_SELECTORS.accountSettings).click();
+      cy.get(STAFF_MEMBER_DETAILS.staffFirstName)
+        .clear()
+        .type("สมชาย");
+      cy.get(STAFF_MEMBER_DETAILS.staffLastName)
+        .clear()
+        .type(newLastName);
+      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
+        .clear()
+        .type(changedEmail);
+
+      // Test blocked from this point by https://github.com/saleor/saleor-dashboard/issues/2847
+      cy.get(BUTTON_SELECTORS.confirm).confirmationMessageShouldAppear();
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: changedEmail,
+        password: Cypress.env("USER_PASSWORD"),
+      });
+
+      cy.visit(urlList.staffMembers);
+      expectWelcomeMessageIncludes(`${changedName}`);
+    },
+  );
+
+  it(
+    "should create new user and successfully change password. TC: SALEOR_3510",
+    { tags: ["@staffMembers", "@allEnv"] },
+    () => {
+      const newPass = "newTestPass";
+      const newLastName = faker.name.lastName();
+      const newEmail = `${startsWith}${newLastName}@example.com`;
+
+      inviteStaffMemberWithFirstPermission({ email: newEmail })
+        .then(({ user: userResp }) => {
+          user = userResp;
+          getMailActivationLinkForUser(newEmail);
+        })
+        .then(urlLink => {
+          cy.clearSessionData().visit(urlLink);
+          fillUpSetPassword(password);
+          cy.clearSessionData();
+        });
+
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: Cypress.env("USER_PASSWORD"),
+      });
+
+      cy.visit(urlList.staffMembers)
+        .get(LOGIN_SELECTORS.userMenu)
+        .click();
+      cy.get(LOGIN_SELECTORS.accountSettings).click();
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordBtn).click();
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
+        Cypress.env("USER_PASSWORD"),
+      );
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(
+        newPass,
+      );
+      cy.get(BUTTON_SELECTORS.submit)
+        .click()
+        .confirmationMessageShouldAppear();
+
+      cy.clearSessionData().loginUserViaRequest("auth", {
+        email: newEmail,
+        password: newPass,
+      });
+      cy.visit(urlList.staffMembers).expectSkeletonIsVisible();
     },
   );
 });

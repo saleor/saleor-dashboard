@@ -1,4 +1,4 @@
-import { stringifyQs } from "@saleor/utils/urls";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { createContext, useContext, useMemo } from "react";
 
 import { Pagination } from "../types";
@@ -47,7 +47,7 @@ function usePaginator({
   paginationState,
   pageInfo,
 }: UsePaginatorArgs) {
-  const newPageInfo = useMemo<PageInfo>(
+  const newPageInfo = useMemo<PageInfo | undefined>(
     () =>
       pageInfo
         ? {
@@ -102,8 +102,8 @@ export default usePaginator;
 export interface PaginatorContextValuesCommon {
   hasNextPage?: boolean;
   hasPreviousPage?: boolean;
-  endCursor?: string;
-  startCursor?: string;
+  endCursor?: string | null;
+  startCursor?: string | null;
 }
 
 export type PaginatorContextValues = PaginatorContextValuesCommon &

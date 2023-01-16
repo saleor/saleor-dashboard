@@ -1,6 +1,6 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,7 +20,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
           description: "header",
         })}
         toolbar={
-          <Button onClick={onChangePassword}>
+          <Button onClick={onChangePassword} data-test-id="changePasswordBtn">
             <FormattedMessage
               id="N3Zot1"
               defaultMessage="Change your password"

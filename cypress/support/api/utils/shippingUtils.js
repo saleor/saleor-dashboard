@@ -9,6 +9,7 @@ export function createShipping({
   address,
   price = 1,
   minProductPrice = 0,
+  taxClassId,
 }) {
   let shippingMethod;
   let shippingZone;
@@ -31,6 +32,7 @@ export function createShipping({
           shippingMethodRequest.createShippingRate({
             name,
             shippingZone: shippingZone.id,
+            taxClassId,
           });
         });
     })

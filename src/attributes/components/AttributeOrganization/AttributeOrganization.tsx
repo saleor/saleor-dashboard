@@ -1,7 +1,7 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { AttributeTypeEnum } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import { AttributeTypeEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

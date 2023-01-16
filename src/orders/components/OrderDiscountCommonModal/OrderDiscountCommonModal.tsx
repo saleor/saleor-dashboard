@@ -1,3 +1,11 @@
+import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import PriceField from "@dashboard/components/PriceField";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
+import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Card,
   CardContent,
@@ -6,14 +14,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { PopperPlacementType } from "@material-ui/core/Popper";
-import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import PriceField from "@saleor/components/PriceField";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import { DiscountValueTypeEnum, MoneyFragment } from "@saleor/graphql";
-import { useUpdateEffect } from "@saleor/hooks/useUpdateEffect";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React, {
   ChangeEvent,

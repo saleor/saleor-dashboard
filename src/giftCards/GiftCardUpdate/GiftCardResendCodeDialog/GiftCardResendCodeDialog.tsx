@@ -1,17 +1,20 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { IMessage } from "@dashboard/components/messages";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import {
+  useChannelsQuery,
+  useGiftCardResendMutation,
+} from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getBySlug } from "@dashboard/misc";
+import { DialogProps } from "@dashboard/types";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import { CircularProgress, TextField, Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { IMessage } from "@saleor/components/messages";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { useChannelsQuery, useGiftCardResendMutation } from "@saleor/graphql";
-import useForm from "@saleor/hooks/useForm";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getBySlug } from "@saleor/misc";
-import { DialogProps } from "@saleor/types";
-import commonErrorMessages from "@saleor/utils/errors/common";
-import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { attributeValueFragmentToFormData } from "@saleor/attributes/utils/data";
+import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
 import {
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
@@ -9,20 +9,20 @@ import {
   useAttributeValueUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
-import { ListViews, ReorderEvent } from "@saleor/types";
-import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { move } from "@saleor/utils/lists";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import { ListViews, ReorderEvent } from "@dashboard/types";
+import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";

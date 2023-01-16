@@ -1,13 +1,13 @@
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
+import { Button } from "@dashboard/components/Button";
 import {
   CollectionErrorFragment,
   PageErrorFragment,
   ProductErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
-import getPageErrorMessage from "@saleor/utils/errors/page";
 import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

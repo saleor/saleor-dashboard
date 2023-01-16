@@ -7,7 +7,7 @@ export interface VerticalSpacerProps {
 
 const useStyles = makeStyles(
   theme => ({
-    container: ({ spacing }: VerticalSpacerProps) => ({
+    container: ({ spacing }: Required<VerticalSpacerProps>) => ({
       height: theme.spacing(spacing),
     }),
   }),

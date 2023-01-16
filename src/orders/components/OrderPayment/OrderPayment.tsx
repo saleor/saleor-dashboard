@@ -1,16 +1,16 @@
-import { Card, CardContent } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import { Hr } from "@saleor/components/Hr";
-import Money from "@saleor/components/Money";
-import Skeleton from "@saleor/components/Skeleton";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Hr } from "@dashboard/components/Hr";
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderAction,
   OrderDetailsFragment,
   OrderDiscountType,
   OrderStatus,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Card, CardContent } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

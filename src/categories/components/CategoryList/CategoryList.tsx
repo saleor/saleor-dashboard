@@ -1,17 +1,20 @@
+import {
+  CategoryListUrlSortField,
+  categoryUrl,
+} from "@dashboard/categories/urls";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CategoryFragment } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { ListActions, ListProps, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { CategoryListUrlSortField, categoryUrl } from "@saleor/categories/urls";
-import Checkbox from "@saleor/components/Checkbox";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CategoryFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
-import { ListActions, ListProps, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

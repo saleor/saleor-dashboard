@@ -80,6 +80,14 @@ describe("As an admin I should be able to filter products", () => {
       })
       .then(({ product: product }) => {
         updateProduct(product.id, { collections: [collection.id] });
+        cy.checkIfDataAreNotNull({
+          attribute,
+          productType,
+          category,
+          warehouse,
+          channel,
+          collection,
+        });
       });
   });
 
@@ -97,7 +105,7 @@ describe("As an admin I should be able to filter products", () => {
   filterProductsBy.forEach(filterBy => {
     it(
       `should filter products by ${filterBy.type}. TC: ${filterBy.testCase}`,
-      { tags: ["@productsList", "@allEnv"] },
+      { tags: ["@productsList", "@allEnv", "@stable"] },
       () => {
         cy.expectSkeletonIsVisible().waitForProgressBarToNotExist();
         selectFilterOption(filterBy.type, name);
@@ -110,7 +118,7 @@ describe("As an admin I should be able to filter products", () => {
 
   it(
     "should filter products out of stock. TC: SALEOR_2604",
-    { tags: ["@productsList", "@allEnv"] },
+    { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.expectSkeletonIsVisible();
       const productOutOfStock = `${startsWith}${faker.datatype.number()}`;

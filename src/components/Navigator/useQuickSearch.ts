@@ -1,12 +1,12 @@
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { useOrderDraftCreateMutation } from "@saleor/graphql";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { maybe } from "@saleor/misc";
-import { orderUrl } from "@saleor/orders/urls";
-import useCustomerSearch from "@saleor/searches/useCustomerSearch";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { useOrderDraftCreateMutation } from "@dashboard/graphql";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { maybe } from "@dashboard/misc";
+import { orderUrl } from "@dashboard/orders/urls";
+import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RefObject, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,25 +1,25 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import AddressFormatter from "@saleor/components/AddressFormatter";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import ExternalLink from "@saleor/components/ExternalLink";
-import Form from "@saleor/components/Form";
-import Hr from "@saleor/components/Hr";
-import Link from "@saleor/components/Link";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ExternalLink from "@dashboard/components/ExternalLink";
+import Form from "@dashboard/components/Form";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderErrorCode,
   OrderErrorFragment,
   PermissionEnum,
   SearchCustomersQuery,
-} from "@saleor/graphql";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { buttonMessages } from "@saleor/intl";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+} from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

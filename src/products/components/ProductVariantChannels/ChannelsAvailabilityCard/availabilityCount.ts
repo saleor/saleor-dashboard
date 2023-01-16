@@ -1,7 +1,7 @@
 import {
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const getAvailabilityCountForVariant = (
   item: ProductVariantFragment,

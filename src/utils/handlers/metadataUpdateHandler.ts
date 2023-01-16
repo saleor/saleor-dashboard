@@ -1,5 +1,5 @@
 import { FetchResult } from "@apollo/client";
-import { MetadataFormData } from "@saleor/components/Metadata/types";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   MetadataErrorFragment,
   MetadataInput,
@@ -7,9 +7,9 @@ import {
   UpdateMetadataMutationVariables,
   UpdatePrivateMetadataMutation,
   UpdatePrivateMetadataMutationVariables,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { arrayDiff } from "@saleor/utils/arrays";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { arrayDiff } from "@dashboard/utils/arrays";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";

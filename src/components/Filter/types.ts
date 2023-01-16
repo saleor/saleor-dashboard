@@ -1,5 +1,5 @@
-import { PermissionEnum } from "@saleor/graphql";
-import { FetchMoreProps, KeyValue, SearchPageProps } from "@saleor/types";
+import { PermissionEnum } from "@dashboard/graphql";
+import { FetchMoreProps, KeyValue, SearchPageProps } from "@dashboard/types";
 import { MessageDescriptor } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
