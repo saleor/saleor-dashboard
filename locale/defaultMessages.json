@@ -2337,6 +2337,9 @@
     "context": "order history message",
     "string": "Order was placed"
   },
+  "GJwcSd": {
+    "string": "PSP Reference (optional)"
+  },
   "GLX9II": {
     "context": "billing address",
     "string": "Same as shipping address"
@@ -5526,6 +5529,9 @@
     "context": "product status",
     "string": "Available"
   },
+  "dnbJKr": {
+    "string": "This transaction doesn't have any events"
+  },
   "dpY94C": {
     "context": "collection publication date",
     "string": "Published on {date}"
@@ -5594,10 +5600,6 @@
   },
   "eUjFjW": {
     "string": "Permission group created"
-  },
-  "eVjgIx": {
-    "context": "tooltip, Transaction reference received from payment provider",
-    "string": "PSP reference"
   },
   "eWV760": {
     "string": "Attribute with this slug already exists"
@@ -5708,6 +5710,10 @@
   "flP8Hj": {
     "context": "card description",
     "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "flnL3R": {
+    "context": "sum of pending amount (any status) in order's transactions",
+    "string": "Pending"
   },
   "fo7nfa": {
     "context": "fixed amount",
@@ -6285,6 +6291,9 @@
     "context": "grant refund, refund card calculated refund value",
     "string": "Selected refund value:"
   },
+  "kMziE/": {
+    "string": "PSP Reference"
+  },
   "kN6SLs": {
     "string": "Min Value"
   },
@@ -6475,6 +6484,10 @@
   },
   "lqIzC8": {
     "string": "This field needs to be unique"
+  },
+  "lrdAIY": {
+    "context": "amount of all cancelled transactions in order",
+    "string": "Cancelled"
   },
   "lw9WIk": {
     "context": "deleted multiple attributes",
