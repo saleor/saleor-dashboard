@@ -19,7 +19,7 @@ import { FormattedMessage } from "react-intl";
 import { CardMenuItem } from "../CardMenu";
 import ColumnPicker from "../ColumnPicker";
 import { FullScreenContainer } from "./FullScreenContainer";
-import { Header } from "./Header";
+import { Header, HeaderButtonAddRow, HeaderButtonFullScreen } from "./Header";
 import { RowActions } from "./RowActions";
 import useStyles, { useDatagridTheme, useFullScreenStyles } from "./styles";
 import { AvailableColumn } from "./types";
@@ -212,7 +212,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     >
       <Card className={classes.root}>
         <Header title={headerTitle}>
-          <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
+          <HeaderButtonFullScreen isOpen={isOpen} onToggle={toggle}>
             {isOpen ? (
               <FormattedMessage
                 id="QjPJ78"
@@ -226,10 +226,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 description="open full-screen"
               />
             )}
-          </Header.ButtonFullScreen>
-          <Header.ButtonAddRow onAddRow={onRowAdded}>
+          </HeaderButtonFullScreen>
+          <HeaderButtonAddRow onAddRow={onRowAdded}>
             {addButtonLabel}
-          </Header.ButtonAddRow>
+          </HeaderButtonAddRow>
         </Header>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 ? (
