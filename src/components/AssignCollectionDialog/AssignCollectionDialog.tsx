@@ -1,5 +1,5 @@
-import { SearchCollectionsQuery } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+import { SearchCollectionsQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

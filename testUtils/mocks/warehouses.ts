@@ -1,5 +1,5 @@
 import { MockedResponse } from "@apollo/client/testing";
-import { SearchWarehousesDocument } from "@saleor/graphql";
+import { SearchWarehousesDocument } from "@dashboard/graphql";
 
 export const warehousesMocks: MockedResponse[] = [
   {

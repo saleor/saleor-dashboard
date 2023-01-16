@@ -1,4 +1,4 @@
-import { ProductMediaType } from "@saleor/graphql";
+import { ProductMediaType } from "@dashboard/graphql";
 
 import { handleAssignMedia } from "./handlers";
 

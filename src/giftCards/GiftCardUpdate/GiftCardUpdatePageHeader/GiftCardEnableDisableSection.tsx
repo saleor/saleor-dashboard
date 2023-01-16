@@ -1,4 +1,4 @@
-import { commonMessages } from "@saleor/intl";
+import { commonMessages } from "@dashboard/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

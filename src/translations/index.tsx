@@ -1,5 +1,5 @@
-import { LanguageCodeEnum } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+import { LanguageCodeEnum } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";

@@ -1,3 +1,14 @@
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  OrderDetailsFragment,
+  OrderErrorFragment,
+  OrderLineFragment,
+} from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { getById, renderCollection } from "@dashboard/misc";
 import {
   Card,
   CardContent,
@@ -7,18 +18,7 @@ import {
   TableHead,
   TextField,
 } from "@material-ui/core";
-import Money from "@saleor/components/Money";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import {
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderLineFragment,
-} from "@saleor/graphql";
-import { FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { getById, renderCollection } from "@saleor/misc";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

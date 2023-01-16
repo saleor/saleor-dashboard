@@ -1,27 +1,27 @@
-import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   SortableTableBody,
   SortableTableRow,
-} from "@saleor/components/SortableTable";
-import TablePagination from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
+} from "@dashboard/components/SortableTable";
+import TablePagination from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   AttributeInputTypeEnum,
   AttributeValueFragment,
   AttributeValueListFragment,
-} from "@saleor/graphql";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { renderCollection, stopPropagation } from "@dashboard/misc";
 import {
   ListProps,
   PaginateListProps,
   RelayToFlat,
   ReorderAction,
-} from "@saleor/types";
+} from "@dashboard/types";
+import { Card, TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

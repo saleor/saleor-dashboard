@@ -1,7 +1,7 @@
+import { Button } from "@dashboard/components/Button";
+import { buttonMessages } from "@dashboard/intl";
+import { appsMessages } from "@dashboard/new-apps/messages";
 import { TextField } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import { buttonMessages } from "@saleor/intl";
-import { appsMessages } from "@saleor/new-apps/messages";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

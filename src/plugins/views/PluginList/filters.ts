@@ -1,12 +1,15 @@
-import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
-import { PluginConfigurationType, PluginFilterInput } from "@saleor/graphql";
-import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
-import { maybe, parseBoolean } from "@saleor/misc";
+import {
+  FilterElement,
+  FilterElementRegular,
+} from "@dashboard/components/Filter";
+import { PluginConfigurationType, PluginFilterInput } from "@dashboard/graphql";
+import { ChannelsWithLoadMoreProps } from "@dashboard/hooks/useChannelsSearch";
+import { maybe, parseBoolean } from "@dashboard/misc";
 import {
   PluginFilterKeys,
   PluginListFilterOpts,
-} from "@saleor/plugins/components/PluginsListPage";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+} from "@dashboard/plugins/components/PluginsListPage";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 
 import {
   createFilterTabUtils,

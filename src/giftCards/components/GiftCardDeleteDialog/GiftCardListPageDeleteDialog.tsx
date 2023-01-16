@@ -1,8 +1,8 @@
-import { ActionDialogProps } from "@saleor/components/ActionDialog";
-import { useGiftCardListDialogs } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/queries";
-import { DialogProps } from "@saleor/types";
+import { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { useGiftCardListDialogs } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
+import { DialogProps } from "@dashboard/types";
 import React from "react";
 
 import GiftCardDeleteDialogContent, {

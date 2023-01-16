@@ -1,5 +1,5 @@
-import { ChannelsAction } from "@saleor/channels/urls";
-import { stringifyQs } from "@saleor/utils/urls";
+import { ChannelsAction } from "@dashboard/channels/urls";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {

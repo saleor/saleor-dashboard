@@ -2,25 +2,25 @@ import {
   extensionMountPoints,
   mapToMenuItemsForProductDetails,
   useExtensions,
-} from "@saleor/apps/useExtensions";
+} from "@dashboard/apps/useExtensions";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
-} from "@saleor/attributes/utils/data";
-import { ChannelData } from "@saleor/channels/utils";
-import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
-import CardMenu from "@saleor/components/CardMenu";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import SeoForm from "@saleor/components/SeoForm";
-import { Choice } from "@saleor/components/SingleSelectField";
+} from "@dashboard/attributes/utils/data";
+import { ChannelData } from "@dashboard/channels/utils";
+import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardMenu from "@dashboard/components/CardMenu";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import SeoForm from "@dashboard/components/SeoForm";
+import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ChannelFragment,
   PermissionEnum,
@@ -37,18 +37,18 @@ import {
   SearchProductsQuery,
   TaxClassBaseFragment,
   WarehouseFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { sectionNames } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { productImageUrl, productListUrl } from "@dashboard/products/urls";
+import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
-import { productImageUrl, productListUrl } from "@saleor/products/urls";
-import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
-import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

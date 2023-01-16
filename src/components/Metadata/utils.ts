@@ -1,4 +1,4 @@
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { nameSeparator } from "./MetadataCard";
 import { EventData, EventDataAction, EventDataField } from "./types";

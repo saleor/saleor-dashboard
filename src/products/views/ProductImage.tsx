@@ -1,14 +1,14 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
   useProductMediaByIdQuery,
   useProductMediaDeleteMutation,
   useProductMediaUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

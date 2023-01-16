@@ -1,9 +1,9 @@
+import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import CardTitle from "@dashboard/components/CardTitle";
+import { SearchShippingZonesQuery } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@saleor/components/CardTitle";
-import { SearchShippingZonesQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

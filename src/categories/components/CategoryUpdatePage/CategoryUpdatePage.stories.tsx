@@ -1,10 +1,10 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { category as categoryFixture } from "@saleor/categories/fixtures";
-import { listActionsProps } from "@saleor/fixtures";
-import { ProductErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { category as categoryFixture } from "@dashboard/categories/fixtures";
+import { listActionsProps } from "@dashboard/fixtures";
+import { ProductErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

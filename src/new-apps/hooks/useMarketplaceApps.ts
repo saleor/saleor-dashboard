@@ -1,4 +1,4 @@
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { useEffect, useReducer, useRef } from "react";
 
 interface State {

@@ -1,9 +1,9 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { PermissionEnum } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import { PermissionEnum } from "@saleor/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 

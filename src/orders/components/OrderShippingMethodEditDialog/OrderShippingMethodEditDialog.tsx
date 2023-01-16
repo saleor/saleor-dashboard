@@ -1,3 +1,14 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Money from "@dashboard/components/Money";
+import { SingleSelectField } from "@dashboard/components/SingleSelectField";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import {
   Dialog,
   DialogActions,
@@ -6,18 +17,7 @@ import {
   DialogTitle,
   Typography,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Money from "@saleor/components/Money";
-import { SingleSelectField } from "@saleor/components/SingleSelectField";
-import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,9 +1,9 @@
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import CardMenu from "@dashboard/components/CardMenu";
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
-import AddressFormatter from "@saleor/components/AddressFormatter";
-import CardMenu from "@saleor/components/CardMenu";
-import CardTitle from "@saleor/components/CardTitle";
-import Skeleton from "@saleor/components/Skeleton";
-import { AddressFragment, AddressTypeEnum } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

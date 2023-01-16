@@ -1,8 +1,8 @@
-import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
+import CardTitle from "@dashboard/components/CardTitle";
 import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
-} from "@saleor/giftCards/components/GiftCardSettingsExpirySelect";
+} from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
+import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
-import { appMessages } from "@saleor/apps/messages";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { useAppQuery } from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
+import { appMessages } from "@dashboard/apps/messages";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useAppQuery } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 

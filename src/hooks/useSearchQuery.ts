@@ -1,4 +1,4 @@
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import React from "react";
 
 export type UseSearchQuery = [string, (event: ChangeEvent) => void, () => void];

@@ -1,6 +1,6 @@
-import { WarehouseSortField } from "@saleor/graphql";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+import { WarehouseSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
+import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 
 export function getSortQueryField(
   sort: WarehouseListUrlSortField,

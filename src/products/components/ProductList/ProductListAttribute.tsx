@@ -1,6 +1,6 @@
-import Date, { DateTime } from "@saleor/components/Date";
-import Skeleton from "@saleor/components/Skeleton";
-import { ProductListAttributeFragment } from "@saleor/graphql";
+import Date, { DateTime } from "@dashboard/components/Date";
+import Skeleton from "@dashboard/components/Skeleton";
+import { ProductListAttributeFragment } from "@dashboard/graphql";
 import React from "react";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";

@@ -1,5 +1,5 @@
-import { voucherList } from "@saleor/discounts/fixtures";
-import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { voucherList } from "@dashboard/discounts/fixtures";
+import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
   filterPageProps,
   listActionsProps,
@@ -7,10 +7,10 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

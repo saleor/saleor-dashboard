@@ -46,7 +46,7 @@ generates:
       typesPath: ./types.generated
     config:
       withHooks: true
-      apolloReactHooksImportFrom: "@saleor/hooks/graphql"
+      apolloReactHooksImportFrom: "@dashboard/hooks/graphql"
     plugins:
       - add:
           content: /* eslint-disable */

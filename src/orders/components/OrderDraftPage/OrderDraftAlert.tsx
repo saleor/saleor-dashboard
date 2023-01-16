@@ -1,7 +1,7 @@
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";

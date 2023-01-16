@@ -1,11 +1,11 @@
 import { ApolloQueryResult } from "@apollo/client";
-import { IMessageContext } from "@saleor/components/messages";
+import { IMessageContext } from "@dashboard/components/messages";
 import {
   CheckExportFileStatusQuery,
   CheckOrderInvoicesStatusQuery,
   JobStatusEnum,
-} from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";

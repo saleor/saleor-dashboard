@@ -1,4 +1,4 @@
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import React from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 

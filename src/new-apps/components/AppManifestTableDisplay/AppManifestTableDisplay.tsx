@@ -1,6 +1,6 @@
+import { appsMessages } from "@dashboard/new-apps/messages";
 import { Typography } from "@material-ui/core";
 import { CopyIcon, Tooltip } from "@saleor/macaw-ui";
-import { appsMessages } from "@saleor/new-apps/messages";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";

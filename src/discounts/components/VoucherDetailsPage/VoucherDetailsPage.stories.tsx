@@ -1,9 +1,9 @@
-import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsDataWithDiscountPrice } from "@saleor/channels/utils";
-import { listActionsProps, pageListProps } from "@saleor/fixtures";
-import { DiscountErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createChannelsDataWithDiscountPrice } from "@dashboard/channels/utils";
+import { listActionsProps, pageListProps } from "@dashboard/fixtures";
+import { DiscountErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

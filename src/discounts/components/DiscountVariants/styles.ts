@@ -1,4 +1,4 @@
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(

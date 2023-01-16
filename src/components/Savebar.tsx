@@ -1,4 +1,4 @@
-import { buttonMessages, commonMessages } from "@saleor/intl";
+import { buttonMessages, commonMessages } from "@dashboard/intl";
 import {
   Savebar as MacawSavebar,
   SavebarLabels,

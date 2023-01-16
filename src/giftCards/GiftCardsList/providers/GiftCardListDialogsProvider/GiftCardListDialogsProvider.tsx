@@ -1,11 +1,11 @@
+import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
+import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
+import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
+import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDialogContent";
+import { giftCardListUrl } from "@dashboard/giftCards/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Dialog } from "@material-ui/core";
-import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
-import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog";
-import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog";
-import GiftCardExportDialogContent from "@saleor/giftCards/GiftCardExportDialogContent";
-import { giftCardListUrl } from "@saleor/giftCards/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { createContext, useContext } from "react";
 
 import { GIFT_CARD_LIST_QUERY } from "../../queries";

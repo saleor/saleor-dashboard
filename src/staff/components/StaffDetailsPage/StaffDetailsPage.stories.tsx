@@ -1,6 +1,6 @@
-import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
-import { staffMember } from "@saleor/staff/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { userPermissionGroups } from "@dashboard/permissionGroups/fixtures";
+import { staffMember } from "@dashboard/staff/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

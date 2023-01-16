@@ -2,12 +2,12 @@ import { FetchResult } from "@apollo/client";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeFileUploadErrors,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
-import { ChannelData } from "@saleor/channels/utils";
+} from "@dashboard/attributes/utils/handlers";
+import { ChannelData } from "@dashboard/channels/utils";
 import {
   AttributeErrorFragment,
   FileUploadMutation,
@@ -26,11 +26,11 @@ import {
   UploadErrorFragment,
   VariantCreateMutation,
   VariantCreateMutationVariables,
-} from "@saleor/graphql";
-import { weight } from "@saleor/misc";
-import { ProductCreateData } from "@saleor/products/components/ProductCreatePage/form";
-import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import { weight } from "@dashboard/misc";
+import { ProductCreateData } from "@dashboard/products/components/ProductCreatePage/form";
+import { getAvailabilityVariables } from "@dashboard/products/utils/handlers";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {

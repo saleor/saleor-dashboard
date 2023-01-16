@@ -1,10 +1,10 @@
 import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
-} from "@saleor/attributes/utils/data";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { PageDetailsFragment } from "@saleor/graphql";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/attributes/utils/data";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { PageDetailsFragment } from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export function getAttributeInputFromPage(
   page: PageDetailsFragment,

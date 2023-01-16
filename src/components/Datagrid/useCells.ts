@@ -1,5 +1,5 @@
+import useLocale from "@dashboard/hooks/useLocale";
 import { useCustomCells } from "@glideapps/glide-data-grid";
-import useLocale from "@saleor/hooks/useLocale";
 import { useMemo } from "react";
 
 import { dropdownCellRenderer } from "./DropdownCell";

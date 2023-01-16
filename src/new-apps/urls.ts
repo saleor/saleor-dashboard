@@ -1,5 +1,5 @@
-import { AppDetailsUrlQueryParams } from "@saleor/apps/urls";
-import { stringifyQs } from "@saleor/utils/urls";
+import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import { Dialog, SingleAction } from "../types";

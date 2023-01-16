@@ -1,30 +1,30 @@
-import ChannelPickerDialog from "@saleor/channels/components/ChannelPickerDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   useOrderDraftCreateMutation,
   useOrderListQuery,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { useSortRedirects } from "@saleor/hooks/useSortRedirects";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
+} from "@dashboard/hooks/usePaginator";
+import { useSortRedirects } from "@dashboard/hooks/useSortRedirects";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 

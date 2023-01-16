@@ -1,4 +1,4 @@
-import { useBaseChannelsQuery } from "@saleor/graphql";
+import { useBaseChannelsQuery } from "@dashboard/graphql";
 import chunk from "lodash/chunk";
 import compact from "lodash/compact";
 import concat from "lodash/concat";

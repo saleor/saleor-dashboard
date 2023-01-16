@@ -19,9 +19,12 @@ import {
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   WeightUnitsEnum,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
-import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
+import {
+  warehouseForPickup,
+  warehouseList,
+} from "@dashboard/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";

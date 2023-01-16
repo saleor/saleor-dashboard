@@ -3,9 +3,9 @@ import {
   SearchAttributeValuesDocument,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
-} from "@saleor/graphql";
-import makeSearch from "@saleor/hooks/makeSearch";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import makeSearch from "@dashboard/hooks/makeSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const searchAttributeValues = gql`
   query SearchAttributeValues(

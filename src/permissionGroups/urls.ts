@@ -5,8 +5,8 @@ import {
   SingleAction,
   Sort,
   TabActionDialog,
-} from "@saleor/types";
-import { stringifyQs } from "@saleor/utils/urls";
+} from "@dashboard/types";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 const permissionGroupSection = "/permission-groups/";

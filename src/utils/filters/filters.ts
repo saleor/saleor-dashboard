@@ -3,9 +3,9 @@ import {
   FilterElementKeyValue,
   FilterElementRegular,
   IFilter,
-} from "@saleor/components/Filter";
-import { findValueInEnum } from "@saleor/misc";
-import { ActiveTab } from "@saleor/types";
+} from "@dashboard/components/Filter";
+import { findValueInEnum } from "@dashboard/misc";
+import { ActiveTab } from "@dashboard/types";
 import isArray from "lodash/isArray";
 
 function createFilterUtils<

@@ -1,4 +1,4 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 
 export const getMultiChoices = (
   values: string[],

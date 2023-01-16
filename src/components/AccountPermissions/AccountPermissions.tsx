@@ -1,3 +1,7 @@
+import { useUser } from "@dashboard/auth";
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import {
   Card,
   CardContent,
@@ -8,11 +12,7 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
-import CardTitle from "@saleor/components/CardTitle";
-import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { CommonError, CommonErrorCode } from "@saleor/utils/errors/common";
+import { CommonError, CommonErrorCode } from "@dashboard/utils/errors/common";
 
 import { TaxClassesPageFormData } from "../types";
 

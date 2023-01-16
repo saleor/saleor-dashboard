@@ -1,6 +1,6 @@
+import { Button } from "@dashboard/components/Button";
+import Grid from "@dashboard/components/Grid";
 import { Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Grid from "@saleor/components/Grid";
 import React from "react";
 
 import { useExtendedAttributeStyles } from "./styles";

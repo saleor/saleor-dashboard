@@ -1,14 +1,14 @@
-import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
+import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   ChannelDeleteMutation,
   useChannelDeleteMutation,
   useChannelsQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import getChannelsErrorMessage from "@saleor/utils/errors/channels";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

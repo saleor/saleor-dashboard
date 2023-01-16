@@ -1,16 +1,16 @@
-import { Typography } from "@material-ui/core";
-import Form from "@saleor/components/Form";
-import Hr from "@saleor/components/Hr";
-import Skeleton from "@saleor/components/Skeleton";
+import Form from "@dashboard/components/Form";
+import Hr from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   Timeline,
   TimelineAddNote,
   TimelineEvent,
   TimelineEventProps,
   TimelineNote,
-} from "@saleor/components/Timeline";
-import { OrderEventFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
+} from "@dashboard/components/Timeline";
+import { OrderEventFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

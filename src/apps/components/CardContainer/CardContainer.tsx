@@ -1,5 +1,5 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { Card, CardContent } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import React from "react";
 
 import { useStyles } from "../../styles";

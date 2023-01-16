@@ -1,3 +1,10 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { UserError } from "@dashboard/types";
+import { getFieldError } from "@dashboard/utils/errors";
 import {
   Card,
   CardContent,
@@ -5,14 +12,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import PreviewPill from "@saleor/components/PreviewPill";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import { ProductTypeKindEnum } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

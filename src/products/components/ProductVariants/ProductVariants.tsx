@@ -1,22 +1,22 @@
-import { Item } from "@glideapps/glide-data-grid";
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData } from "@dashboard/channels/utils";
 import Datagrid, {
   GetCellContentOpts,
-} from "@saleor/components/Datagrid/Datagrid";
-import { DatagridChangeOpts } from "@saleor/components/Datagrid/useDatagridChange";
-import { Choice } from "@saleor/components/SingleSelectField";
+} from "@dashboard/components/Datagrid/Datagrid";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
   WarehouseFragment,
-} from "@saleor/graphql";
-import EditIcon from "@saleor/icons/Edit";
-import { buttonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import EditIcon from "@dashboard/icons/Edit";
+import { buttonMessages } from "@dashboard/intl";
+import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
-// import { isLimitReached } from "@saleor/utils/limits";
+// import { isLimitReached } from "@dashboard/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

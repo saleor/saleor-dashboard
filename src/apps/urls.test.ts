@@ -1,5 +1,5 @@
-import { resolveAppIframeUrl } from "@saleor/apps/urls";
-import * as config from "@saleor/config";
+import { resolveAppIframeUrl } from "@dashboard/apps/urls";
+import * as config from "@dashboard/config";
 
 describe("resolveAppIframeUrl", () => {
   afterAll(() => {

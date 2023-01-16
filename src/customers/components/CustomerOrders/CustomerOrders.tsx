@@ -1,15 +1,15 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { DateTime } from "@dashboard/components/Date";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CustomerDetailsQuery } from "@dashboard/graphql";
+import { orderUrl } from "@dashboard/orders/urls";
+import { RelayToFlat } from "@dashboard/types";
 import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import { DateTime } from "@saleor/components/Date";
-import Money from "@saleor/components/Money";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CustomerDetailsQuery } from "@saleor/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
-import { orderUrl } from "@saleor/orders/urls";
-import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

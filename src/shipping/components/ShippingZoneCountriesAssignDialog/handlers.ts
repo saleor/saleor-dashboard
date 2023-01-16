@@ -1,4 +1,4 @@
-import { FormChange } from "@saleor/hooks/useForm";
+import { FormChange } from "@dashboard/hooks/useForm";
 
 export function createCountryChangeHandler(
   selectedCountries: string[],

@@ -1,4 +1,4 @@
-import useNavigator from "@saleor/hooks/useNavigator";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { SetPasswordData, useAuth } from "@saleor/sdk";
 import { parse as parseQs } from "qs";
 import React, { useState } from "react";

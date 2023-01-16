@@ -2,7 +2,7 @@ import {
   OrderEventFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {

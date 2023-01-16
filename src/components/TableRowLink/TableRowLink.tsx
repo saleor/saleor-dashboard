@@ -1,6 +1,6 @@
+import { isExternalURL } from "@dashboard/utils/urls";
 import { TableRow, TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { isExternalURL } from "@saleor/utils/urls";
 import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";

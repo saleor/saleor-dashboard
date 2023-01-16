@@ -1,14 +1,14 @@
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderDetailsFragment, OrderErrorFragment } from "@saleor/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

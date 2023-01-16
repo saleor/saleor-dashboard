@@ -5,11 +5,11 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
-import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+import { ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

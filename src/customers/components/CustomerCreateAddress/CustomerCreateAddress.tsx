@@ -1,9 +1,9 @@
+import AddressEdit from "@dashboard/components/AddressEdit";
+import CardTitle from "@dashboard/components/CardTitle";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { AccountErrorFragment } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import AddressEdit from "@saleor/components/AddressEdit";
-import CardTitle from "@saleor/components/CardTitle";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { AccountErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

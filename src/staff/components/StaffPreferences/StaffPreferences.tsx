@@ -1,9 +1,9 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { Locale, localeNames } from "@dashboard/components/Locale";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { capitalize } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { Locale, localeNames } from "@saleor/components/Locale";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { capitalize } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

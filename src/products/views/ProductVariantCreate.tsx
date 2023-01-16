@@ -1,12 +1,12 @@
-import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
-import { AttributeInput } from "@saleor/components/Attributes";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+} from "@dashboard/attributes/utils/handlers";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useFileUploadMutation,
   useProductVariantChannelListingUpdateMutation,
@@ -16,16 +16,16 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { warehouseAddPath } from "@saleor/warehouses/urls";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

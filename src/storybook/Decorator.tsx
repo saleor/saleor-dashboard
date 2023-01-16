@@ -1,7 +1,7 @@
-import { ExternalAppProvider } from "@saleor/apps/components/ExternalAppContext";
-import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
+import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
+import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
+import themeOverrides from "@dashboard/themeOverrides";
 import { ThemeProvider } from "@saleor/macaw-ui";
-import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";

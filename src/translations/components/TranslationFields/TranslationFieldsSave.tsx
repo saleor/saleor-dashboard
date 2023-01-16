@@ -1,5 +1,5 @@
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { buttonMessages } from "@saleor/intl";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Button,
   ConfirmButtonTransitionState,

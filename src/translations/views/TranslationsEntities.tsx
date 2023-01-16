@@ -1,7 +1,7 @@
-import useNavigator from "@saleor/hooks/useNavigator";
-import { createPaginationState } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
-import { stringifyQs } from "@saleor/utils/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { createPaginationState } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { stringifyQs } from "@dashboard/utils/urls";
 import React from "react";
 
 import { PAGINATE_BY } from "../../config";

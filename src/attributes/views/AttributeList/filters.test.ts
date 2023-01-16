@@ -1,7 +1,7 @@
-import { createFilterStructure } from "@saleor/attributes/components/AttributeListPage";
-import { AttributeListUrlFilters } from "@saleor/attributes/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { createFilterStructure } from "@dashboard/attributes/components/AttributeListPage";
+import { AttributeListUrlFilters } from "@dashboard/attributes/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

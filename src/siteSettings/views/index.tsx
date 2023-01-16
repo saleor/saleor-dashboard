@@ -1,11 +1,11 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages, sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages, sectionNames } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
