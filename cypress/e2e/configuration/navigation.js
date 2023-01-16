@@ -25,7 +25,10 @@ describe("Tests for menu navigation", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteMenusStartsWith(startsWith);
     createMenuViaApi(randomName).then(
-      ({ menu: menuResp }) => (menu = menuResp),
+      ({ menu: menuResp }) => {
+        menu = menuResp
+        cy.checkIfDataAreNotNull(menu)
+      },
     );
   });
 

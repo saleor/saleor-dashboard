@@ -86,6 +86,16 @@ describe("Creating variants", () => {
       )
       .then(type => {
         simpleProductType = type;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          warehouse,
+          attribute,
+          productType,
+          simpleProductType,
+          category,
+          shippingMethod,
+          address,
+        });
       });
   });
 

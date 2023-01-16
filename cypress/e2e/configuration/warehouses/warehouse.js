@@ -35,6 +35,7 @@ describe("As an admin I want to manage warehouses", () => {
     cy.fixture("addresses").then(addresses => {
       usAddress = addresses.usAddress;
       secondUsAddress = addresses.secondUsAddress;
+      cy.checkIfDataAreNotNull({usAddress,secondUsAddress})
     });
   });
 

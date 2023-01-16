@@ -83,6 +83,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
       })
       .then(({ variantsList: variantsListResp }) => {
         variantsList = variantsListResp;
+        cy.checkIfDataAreNotNull({defaultChannel,usAddress,secondUsAddress,shippingZone,warehouse,variantsList})
       });
   });
 

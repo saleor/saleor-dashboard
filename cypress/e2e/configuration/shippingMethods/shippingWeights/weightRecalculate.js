@@ -51,6 +51,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
       })
       .then(shippingZoneResp => {
         shippingZone = shippingZoneResp;
+        cy.checkIfDataAreNotNull({defaultChannel,usAddress,shippingZone,warehouse})
       });
   });
 
