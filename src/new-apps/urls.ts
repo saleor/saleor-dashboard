@@ -8,12 +8,13 @@ export type AppListUrlDialog = "remove-app" | "app-activate" | "app-deactivate";
 export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
 
 export const AppSections = {
-  appsSection: "/new-apps/",
+  appsSection: "/apps/",
 };
 
 export const AppPaths = {
   appListPath: AppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(AppSections.appsSection, id, "app"),
+  resolveAppDetailsPath: (id: string) => urlJoin(AppSections.appsSection, id),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
 };
 
