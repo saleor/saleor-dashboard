@@ -1,9 +1,11 @@
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { useAppListContext } from "@dashboard/new-apps/context";
+import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
 import { CircularProgress, TableCell, Typography } from "@material-ui/core";
-import TableButtonWrapper from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { AppInstallationFragment, JobStatusEnum } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   DeleteIcon,
@@ -12,8 +14,6 @@ import {
   Tooltip,
   TooltipMountWrapper,
 } from "@saleor/macaw-ui";
-import { useAppListContext } from "@saleor/new-apps/context";
-import { appInstallationStatusMessages } from "@saleor/new-apps/messages";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

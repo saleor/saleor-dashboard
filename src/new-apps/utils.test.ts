@@ -1,4 +1,4 @@
-import { AppInstallationFragment, JobStatusEnum } from "@saleor/graphql";
+import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { intlMock } from "@test/intl";
 
 import { appsInProgress, releasedApp } from "./fixtures";
