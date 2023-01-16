@@ -112,7 +112,10 @@ export const useAppActions = (
       case "updateRouting": {
         const { newRoute, actionId } = action.payload;
 
-        const appCompletePath = appPath(encodeURIComponent(appId));
+        const appCompletePath = new URL(
+          appPath(encodeURIComponent(appId)),
+          getAppMountUri(),
+        ).href;
 
         window.history.pushState(null, "", appCompletePath + newRoute);
 
