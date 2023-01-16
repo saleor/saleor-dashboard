@@ -39,6 +39,19 @@ describe("useDatagridChange", () => {
     expect(result.current.added[0]).toBe(10);
   });
 
+  it("properly adds multiple row", () => {
+    const { result } = setupHook();
+
+    act(() => result.current.onRowAdded(5));
+
+    expect(result.current.added).toHaveLength(5);
+    expect(result.current.added[0]).toBe(10);
+    expect(result.current.added[1]).toBe(11);
+    expect(result.current.added[2]).toBe(12);
+    expect(result.current.added[3]).toBe(13);
+    expect(result.current.added[4]).toBe(14);
+  });
+
   it("properly removes rows", () => {
     const { result } = setupHook();
 
