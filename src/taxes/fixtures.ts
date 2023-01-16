@@ -3,7 +3,7 @@ import {
   TaxClassFragment,
   TaxConfigurationFragment,
   TaxCountryConfigurationFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const taxConfigurations: TaxConfigurationFragment[] = [
   {

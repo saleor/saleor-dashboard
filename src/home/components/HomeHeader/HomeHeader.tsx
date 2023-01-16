@@ -1,5 +1,5 @@
+import Skeleton from "@dashboard/components/Skeleton";
 import { Typography } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

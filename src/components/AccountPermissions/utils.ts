@@ -2,7 +2,7 @@ import {
   PermissionGroupDetailsQuery,
   ShopInfoQuery,
   UserDetailsQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const getLastSourcesOfPermission = (
   groupId: string,

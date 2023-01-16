@@ -1,12 +1,12 @@
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
-import { hasPermissions } from "@saleor/components/RequirePermissions";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   PermissionEnum,
   useChannelShippingZonesQuery,
   useShippingZonesCountQuery,
-} from "@saleor/graphql";
-import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+} from "@dashboard/graphql";
+import useShippingZonesSearch from "@dashboard/searches/useShippingZonesSearch";
 
 export const useShippingZones = (channelId?: string) => {
   const userPermissions = useUserPermissions();

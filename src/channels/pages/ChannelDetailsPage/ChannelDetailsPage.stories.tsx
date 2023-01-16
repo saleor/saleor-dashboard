@@ -1,7 +1,7 @@
-import { channel, channelCreateErrors } from "@saleor/channels/fixtures";
-import { countries } from "@saleor/fixtures";
-import { ChannelErrorFragment } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { channel, channelCreateErrors } from "@dashboard/channels/fixtures";
+import { countries } from "@dashboard/fixtures";
+import { ChannelErrorFragment } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

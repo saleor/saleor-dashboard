@@ -1,14 +1,14 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PluginBaseFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { renderCollection } from "@dashboard/misc";
+import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
+import { ListProps, SortPage } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { PluginBaseFragment } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { PluginListUrlSortField, pluginUrl } from "@saleor/plugins/urls";
-import { ListProps, SortPage } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,10 +1,10 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import PreviewPill from "@saleor/components/PreviewPill";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import PreviewPill from "@dashboard/components/PreviewPill";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
   WebhookFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import React from "react";
 
 export function isUnnamed(webhook: WebhookFragment | undefined): boolean {

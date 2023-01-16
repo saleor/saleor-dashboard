@@ -1,10 +1,10 @@
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   TableCell,
   TableHead as MuiTableHead,
   Typography,
 } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
-import TableRowLink from "@saleor/components/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

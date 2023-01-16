@@ -1,11 +1,11 @@
-import { Typography } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   Choices,
   SingleSelectField,
-} from "@saleor/components/SingleSelectField";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { buttonMessages } from "@saleor/intl";
+} from "@dashboard/components/SingleSelectField";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

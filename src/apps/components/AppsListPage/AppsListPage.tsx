@@ -1,15 +1,18 @@
-import { AppPageTabs } from "@saleor/apps/components/AppPageTabs/AppPageTabs";
-import { useAppsPageNavigation } from "@saleor/apps/hooks/useAppsPageNavigation";
-import { useSaleorApps } from "@saleor/apps/hooks/useSaleorApps";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { AppListItemFragment, AppsInstallationsQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+import { AppPageTabs } from "@dashboard/apps/components/AppPageTabs/AppPageTabs";
+import { useAppsPageNavigation } from "@dashboard/apps/hooks/useAppsPageNavigation";
+import { useSaleorApps } from "@dashboard/apps/hooks/useSaleorApps";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import {
+  AppListItemFragment,
+  AppsInstallationsQuery,
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { ListProps } from "@dashboard/types";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
-import { ListProps } from "@saleor/types";
 import React, { useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

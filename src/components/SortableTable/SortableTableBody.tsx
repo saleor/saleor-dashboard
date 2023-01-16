@@ -1,7 +1,7 @@
+import { ReorderAction } from "@dashboard/types";
 import { TableBody } from "@material-ui/core";
 import { TableBodyProps } from "@material-ui/core/TableBody";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
 

@@ -1,5 +1,5 @@
-import { WebhookErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { WebhookErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

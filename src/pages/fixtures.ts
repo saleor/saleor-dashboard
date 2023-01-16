@@ -2,7 +2,7 @@ import {
   AttributeInputTypeEnum,
   PageDetailsFragment,
   PageFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { PageType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";

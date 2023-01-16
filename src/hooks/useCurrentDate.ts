@@ -1,4 +1,4 @@
-import { DateContext } from "@saleor/components/Date/DateContext";
+import { DateContext } from "@dashboard/components/Date/DateContext";
 import { useContext } from "react";
 
 function useCurrentDate(): number {

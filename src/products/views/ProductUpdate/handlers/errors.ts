@@ -10,8 +10,8 @@ import {
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutation,
   VariantDatagridUpdateMutationVariables,
-} from "@saleor/graphql";
-import { hasMutationErrors } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { hasMutationErrors } from "@dashboard/misc";
 
 export type ProductVariantListError =
   | {

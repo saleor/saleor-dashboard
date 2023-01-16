@@ -1,14 +1,14 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { OrderRefundDataQuery } from "@saleor/graphql";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { OrderRefundDataQuery } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
+} from "@dashboard/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+} from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React, { useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";

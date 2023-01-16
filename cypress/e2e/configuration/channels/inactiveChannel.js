@@ -48,6 +48,7 @@ describe("Tests on inactive channel", () => {
       currencyCode: currency,
     }).then(channel => {
       newChannel = channel;
+      cy.checkIfDataAreNotNull({ address, defaultChannel, newChannel });
     });
   });
 

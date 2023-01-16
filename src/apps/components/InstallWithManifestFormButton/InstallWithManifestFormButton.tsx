@@ -1,5 +1,5 @@
+import { Button } from "@dashboard/components/Button";
 import { TextField } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

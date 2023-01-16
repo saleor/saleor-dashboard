@@ -5,8 +5,8 @@ import {
   ShippingZoneFragment,
   ShippingZoneQuery,
   WeightUnitsEnum,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {

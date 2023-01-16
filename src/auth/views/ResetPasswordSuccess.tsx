@@ -1,5 +1,5 @@
-import { getAppMountUri } from "@saleor/config";
-import useNavigator from "@saleor/hooks/useNavigator";
+import { getAppMountUri } from "@dashboard/config";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
 
 import ResetPasswordSuccessPage from "../components/ResetPasswordSuccessPage";

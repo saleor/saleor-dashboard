@@ -1,8 +1,8 @@
-import { getDashboardUrFromAppCompleteUrl } from "@saleor/apps/urls";
-import { Extension } from "@saleor/apps/useExtensions";
-import { AppExtensionMountEnum } from "@saleor/graphql";
+import { getDashboardUrFromAppCompleteUrl } from "@dashboard/apps/urls";
+import { Extension } from "@dashboard/apps/useExtensions";
+import { AppExtensionMountEnum } from "@dashboard/graphql";
+import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
-import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { matchPath } from "react-router";
 
 import { FilterableMenuItem } from "./menuStructure";

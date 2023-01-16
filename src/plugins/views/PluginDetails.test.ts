@@ -2,7 +2,7 @@ import {
   ConfigurationItemFragment,
   ConfigurationItemInput,
   ConfigurationTypeFieldEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { getConfigurationInput } from "./PluginsDetails";
 

@@ -10,16 +10,16 @@ import translationIcon from "@assets/images/menu-translation-icon.svg";
 import {
   extensionMountPoints,
   useExtensions,
-} from "@saleor/apps/useExtensions";
-import { MARKETPLACE_URL } from "@saleor/config";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
-import { giftCardListUrl } from "@saleor/giftCards/urls";
-import { PermissionEnum, UserFragment } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
+} from "@dashboard/apps/useExtensions";
+import { MARKETPLACE_URL } from "@dashboard/config";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
+import { giftCardListUrl } from "@dashboard/giftCards/urls";
+import { PermissionEnum, UserFragment } from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { pageListPath } from "@dashboard/pages/urls";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
-import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
-import { pageListPath } from "@saleor/pages/urls";
 import { IntlShape } from "react-intl";
 
 import { appsListPath } from "../../apps/urls";

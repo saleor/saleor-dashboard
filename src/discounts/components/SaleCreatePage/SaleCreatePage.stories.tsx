@@ -1,7 +1,7 @@
-import { channelsList } from "@saleor/channels/fixtures";
-import { createSaleChannels } from "@saleor/channels/utils";
-import { DiscountErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createSaleChannels } from "@dashboard/channels/utils";
+import { DiscountErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -1,9 +1,9 @@
 import {
   AppStateContext,
   AppStateContextType,
-} from "@saleor/containers/AppState";
-import { initialAppState } from "@saleor/containers/AppState/state";
-import Decorator from "@saleor/storybook/Decorator";
+} from "@dashboard/containers/AppState";
+import { initialAppState } from "@dashboard/containers/AppState/state";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

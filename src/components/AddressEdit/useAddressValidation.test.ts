@@ -1,10 +1,10 @@
-import { useAddressValidationRulesQuery } from "@saleor/graphql";
+import { useAddressValidationRulesQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useAddressValidation } from "./useAddressValidation";
 
-jest.mock("@saleor/graphql", () => ({
-  CountryCode: jest.requireActual("@saleor/graphql").CountryCode,
+jest.mock("@dashboard/graphql", () => ({
+  CountryCode: jest.requireActual("@dashboard/graphql").CountryCode,
   useAddressValidationRulesQuery: jest.fn(),
 }));
 

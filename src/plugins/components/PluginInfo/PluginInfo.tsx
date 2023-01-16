@@ -1,12 +1,12 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import { PluginErrorCode, PluginErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import getPluginErrorMessage from "@saleor/utils/errors/plugins";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

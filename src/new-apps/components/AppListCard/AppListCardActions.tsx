@@ -1,7 +1,7 @@
+import { Button } from "@dashboard/components/Button";
+import Hr from "@dashboard/components/Hr";
+import { buttonMessages } from "@dashboard/intl";
 import { CardActions, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Hr from "@saleor/components/Hr";
-import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

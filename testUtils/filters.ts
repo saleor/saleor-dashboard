@@ -1,4 +1,4 @@
-import { IFilter } from "@saleor/components/Filter";
+import { IFilter } from "@dashboard/components/Filter";
 import clone from "lodash/clone";
 
 export function getExistingKeys(o: {}): string[] {
@@ -7,7 +7,7 @@ export function getExistingKeys(o: {}): string[] {
 
 export function setFilterOptsStatus<T extends string>(
   opts: IFilter<T>,
-  status: boolean
+  status: boolean,
 ): IFilter<T> {
   const newOpts = clone(opts);
   for (const optName in opts) {

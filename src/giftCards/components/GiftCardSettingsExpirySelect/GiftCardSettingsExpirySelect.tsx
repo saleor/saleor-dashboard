@@ -1,12 +1,12 @@
-import { Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { getGiftCardSettingsErrorMessage } from "@saleor/giftCards/GiftCardSettings/messages";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
 import {
   GiftCardSettingsErrorFragment,
   TimePeriodTypeEnum,
-} from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

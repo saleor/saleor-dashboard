@@ -1,16 +1,16 @@
-import { TableCell } from "@material-ui/core";
-import DeleteIconButton from "@saleor/components/DeleteIconButton";
+import DeleteIconButton from "@dashboard/components/DeleteIconButton";
 import TableCellHeader, {
   TableCellHeaderArrowDirection,
   TableCellHeaderProps,
-} from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
-import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
+} from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import TooltipTableCellHeader from "@dashboard/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import Label, {
   LabelSizes,
-} from "@saleor/orders/components/OrderHistory/Label";
-import { getArrowDirection } from "@saleor/utils/sort";
+} from "@dashboard/orders/components/OrderHistory/Label";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableCell } from "@material-ui/core";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

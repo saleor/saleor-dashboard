@@ -1,6 +1,6 @@
-import { IMessage } from "@saleor/components/messages";
-import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@saleor/graphql";
-import commonErrorMessages from "@saleor/utils/errors/common";
+import { IMessage } from "@dashboard/components/messages";
+import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 

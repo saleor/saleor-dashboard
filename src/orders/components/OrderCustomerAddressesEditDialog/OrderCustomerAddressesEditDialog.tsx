@@ -1,3 +1,22 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { AddressTypeInput } from "@dashboard/customers/types";
+import {
+  AddressFragment,
+  AddressInput,
+  AddressTypeEnum,
+  CountryWithCodeFragment,
+  Node,
+  OrderErrorFragment,
+} from "@dashboard/graphql";
+import useAddressValidation from "@dashboard/hooks/useAddressValidation";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import { getById, transformAddressToAddressInput } from "@dashboard/misc";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import {
   Dialog,
   DialogActions,
@@ -6,26 +25,7 @@ import {
   FormControlLabel,
   Typography,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { AddressTypeInput } from "@saleor/customers/types";
-import {
-  AddressFragment,
-  AddressInput,
-  AddressTypeEnum,
-  CountryWithCodeFragment,
-  Node,
-  OrderErrorFragment,
-} from "@saleor/graphql";
-import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
-import { getById, transformAddressToAddressInput } from "@saleor/misc";
-import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

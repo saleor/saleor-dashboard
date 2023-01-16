@@ -1,5 +1,5 @@
+import { updateAtIndex } from "@dashboard/utils/lists";
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
-import { updateAtIndex } from "@saleor/utils/lists";
 import { map } from "lodash-es";
 import {
   createContext,

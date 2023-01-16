@@ -1,23 +1,23 @@
-import { handleNestedMutationErrors } from "@saleor/auth";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { handleNestedMutationErrors } from "@dashboard/auth";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useFulfillOrderMutation,
   useOrderFulfillDataQuery,
   useOrderFulfillSettingsQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationErrors } from "@saleor/misc";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
 import OrderFulfillPage, {
   OrderFulfillSubmitData,
-} from "@saleor/orders/components/OrderFulfillPage";
+} from "@dashboard/orders/components/OrderFulfillPage";
 import {
   orderFulfillUrl,
   OrderFulfillUrlDialog,
   OrderFulfillUrlQueryParams,
   orderUrl,
-} from "@saleor/orders/urls";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/orders/urls";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

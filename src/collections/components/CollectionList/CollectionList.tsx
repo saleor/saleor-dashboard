@@ -1,34 +1,34 @@
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import {
   CollectionListUrlSortField,
   collectionUrl,
-} from "@saleor/collections/urls";
-import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
-import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
+} from "@dashboard/collections/urls";
+import { canBeSorted } from "@dashboard/collections/views/CollectionList/sort";
+import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,
   getChannelAvailabilityLabel,
-} from "@saleor/components/ChannelsAvailabilityDropdown/utils";
-import Checkbox from "@saleor/components/Checkbox";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
-import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
-import { CollectionListQuery } from "@saleor/graphql";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
+} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import TooltipTableCellHeader from "@dashboard/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
+import { CollectionListQuery } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
 import {
   ChannelProps,
   ListActions,
   ListProps,
   RelayToFlat,
   SortPage,
-} from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
+} from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

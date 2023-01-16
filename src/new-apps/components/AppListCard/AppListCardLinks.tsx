@@ -1,6 +1,6 @@
+import Link from "@dashboard/components/Link";
+import { AppLink } from "@dashboard/new-apps/types";
 import { Typography } from "@material-ui/core";
-import Link from "@saleor/components/Link";
-import { AppLink } from "@saleor/new-apps/types";
 import React from "react";
 
 import { useLinksStyles } from "./styles";

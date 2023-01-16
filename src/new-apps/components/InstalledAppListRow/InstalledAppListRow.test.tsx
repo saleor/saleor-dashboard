@@ -1,7 +1,10 @@
-import { getAppsConfig } from "@saleor/config";
-import { AppListContext, AppListContextValues } from "@saleor/new-apps/context";
-import { activeApp, inactiveApp } from "@saleor/new-apps/fixtures";
-import { InstalledApp } from "@saleor/new-apps/types";
+import { getAppsConfig } from "@dashboard/config";
+import {
+  AppListContext,
+  AppListContextValues,
+} from "@dashboard/new-apps/context";
+import { activeApp, inactiveApp } from "@dashboard/new-apps/fixtures";
+import { InstalledApp } from "@dashboard/new-apps/types";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

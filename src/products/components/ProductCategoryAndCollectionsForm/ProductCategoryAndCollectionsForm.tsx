@@ -1,8 +1,8 @@
+import FormSpacer from "@dashboard/components/FormSpacer";
+import MultiSelectField from "@dashboard/components/MultiSelectField";
+import PageHeader from "@dashboard/components/PageHeader";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { Card, CardContent } from "@material-ui/core";
-import FormSpacer from "@saleor/components/FormSpacer";
-import MultiSelectField from "@saleor/components/MultiSelectField";
-import PageHeader from "@saleor/components/PageHeader";
-import SingleSelectField from "@saleor/components/SingleSelectField";
 import React from "react";
 import { useIntl } from "react-intl";
 

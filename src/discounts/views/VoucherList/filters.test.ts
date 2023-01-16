@@ -1,9 +1,9 @@
-import { createFilterStructure } from "@saleor/discounts/components/VoucherListPage";
-import { VoucherListUrlFilters } from "@saleor/discounts/urls";
-import { date } from "@saleor/fixtures";
-import { DiscountStatusEnum, VoucherDiscountType } from "@saleor/graphql";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { createFilterStructure } from "@dashboard/discounts/components/VoucherListPage";
+import { VoucherListUrlFilters } from "@dashboard/discounts/urls";
+import { date } from "@dashboard/fixtures";
+import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

@@ -80,6 +80,14 @@ describe("As an admin I should be able to filter products", () => {
       })
       .then(({ product: product }) => {
         updateProduct(product.id, { collections: [collection.id] });
+        cy.checkIfDataAreNotNull({
+          attribute,
+          productType,
+          category,
+          warehouse,
+          channel,
+          collection,
+        });
       });
   });
 

@@ -1,5 +1,5 @@
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { Typography } from "@material-ui/core";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
 import React from "react";
 
 import { useDescriptionStyles } from "./styles";

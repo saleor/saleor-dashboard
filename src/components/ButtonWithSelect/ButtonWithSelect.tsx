@@ -1,3 +1,4 @@
+import { Button } from "@dashboard/components/Button";
 import {
   ButtonGroup,
   ButtonGroupProps,
@@ -10,7 +11,6 @@ import {
   Popper,
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
-import { Button } from "@saleor/components/Button";
 import React from "react";
 
 import { useStyles } from "./styles";

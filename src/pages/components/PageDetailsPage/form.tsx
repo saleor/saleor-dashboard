@@ -1,11 +1,10 @@
-import { OutputData } from "@editorjs/editorjs";
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
   RichTextProps,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -14,41 +13,42 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from "@saleor/attributes/utils/handlers";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
+} from "@dashboard/attributes/utils/handlers";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
+} from "@dashboard/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+} from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
   getAttributeInputFromPage,
   getAttributeInputFromPageType,
-} from "@saleor/pages/utils/data";
-import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
-import { validatePageCreateData } from "@saleor/pages/utils/validation";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
-import getPublicationData from "@saleor/utils/data/getPublicationData";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import getMetadata from "@saleor/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { RichTextContext } from "@saleor/utils/richText/context";
-import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import useRichText from "@saleor/utils/richText/useRichText";
+} from "@dashboard/pages/utils/data";
+import { createPageTypeSelectHandler } from "@dashboard/pages/utils/handlers";
+import { validatePageCreateData } from "@dashboard/pages/utils/validation";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import getPublicationData from "@dashboard/utils/data/getPublicationData";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@dashboard/utils/richText/context";
+import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {

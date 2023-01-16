@@ -1,7 +1,6 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CategoryBulkDeleteMutation,
   CategoryDeleteMutation,
@@ -14,20 +13,21 @@ import {
   useProductBulkDeleteMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import { commonMessages, errorMessages } from "@saleor/intl";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

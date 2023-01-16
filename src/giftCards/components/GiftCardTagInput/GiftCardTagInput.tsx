@@ -1,12 +1,15 @@
-import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteSelectFieldProps } from "@saleor/components/SingleAutocompleteSelectField";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { GiftCardBulkCreateFormError } from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
-import { FormChange } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
-import useGiftCardTagsSearch from "@saleor/searches/useGiftCardTagsSearch";
-import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@saleor/utils/maps";
+import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteSelectFieldProps } from "@dashboard/components/SingleAutocompleteSelectField";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { GiftCardBulkCreateFormError } from "@dashboard/giftCards/GiftCardBulkCreateDialog/types";
+import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
+import {
+  mapEdgesToItems,
+  mapMultiValueNodeToChoice,
+} from "@dashboard/utils/maps";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
 import React from "react";

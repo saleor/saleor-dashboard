@@ -1,32 +1,32 @@
-import AccountPermissions from "@saleor/components/AccountPermissions";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import AccountPermissions from "@dashboard/components/AccountPermissions";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
   PermissionGroupDetailsFragment,
   PermissionGroupErrorFragment,
   UserPermissionFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
 import {
   MembersListUrlSortField,
   permissionGroupListUrl,
-} from "@saleor/permissionGroups/urls";
+} from "@dashboard/permissionGroups/urls";
 import {
   extractPermissionCodes,
   isGroupFullAccess,
-} from "@saleor/permissionGroups/utils";
-import { ListActions, SortPage } from "@saleor/types";
-import { getFormErrors } from "@saleor/utils/errors";
-import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
+} from "@dashboard/permissionGroups/utils";
+import { ListActions, SortPage } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

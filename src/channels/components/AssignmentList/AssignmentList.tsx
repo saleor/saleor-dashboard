@@ -1,6 +1,6 @@
+import Skeleton from "@dashboard/components/Skeleton";
+import { ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Typography } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
-import { ReorderEvent } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

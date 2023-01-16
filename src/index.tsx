@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@saleor/components/DemoBanner";
-import { PermissionEnum } from "@saleor/graphql";
-import useAppState from "@saleor/hooks/useAppState";
+import DemoBanner from "@dashboard/components/DemoBanner";
+import { PermissionEnum } from "@dashboard/graphql";
+import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";

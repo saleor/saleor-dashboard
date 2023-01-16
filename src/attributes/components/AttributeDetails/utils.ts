@@ -1,5 +1,5 @@
-import { Choice } from "@saleor/components/SingleSelectField";
-import { MeasurementUnitsEnum } from "@saleor/graphql";
+import { Choice } from "@dashboard/components/SingleSelectField";
+import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 

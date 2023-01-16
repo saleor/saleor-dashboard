@@ -1,4 +1,4 @@
-import { getAppDefaultUri, getAppMountUri } from "@saleor/config";
+import { getAppDefaultUri, getAppMountUri } from "@dashboard/config";
 import isArray from "lodash/isArray";
 import { stringify } from "qs";
 

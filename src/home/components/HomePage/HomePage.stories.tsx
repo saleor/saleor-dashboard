@@ -1,10 +1,10 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { adminUserPermissions } from "@saleor/fixtures";
-import { PermissionEnum } from "@saleor/graphql";
-import { shop as shopFixture } from "@saleor/home/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { adminUserPermissions } from "@dashboard/fixtures";
+import { PermissionEnum } from "@dashboard/graphql";
+import { shop as shopFixture } from "@dashboard/home/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

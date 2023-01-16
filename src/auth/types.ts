@@ -1,4 +1,4 @@
-import { UserFragment } from "@saleor/graphql";
+import { UserFragment } from "@dashboard/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,

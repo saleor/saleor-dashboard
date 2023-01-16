@@ -10,7 +10,7 @@ import {
   useProductTypeAttributeReorderMutation,
   useProductTypeDeleteMutation,
   useUnassignProductAttributeMutation,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { getMutationProviderData } from "../../misc";
 

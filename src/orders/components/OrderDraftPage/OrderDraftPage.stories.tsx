@@ -1,13 +1,13 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { fetchMoreProps } from "@saleor/fixtures";
-import { OrderErrorCode, OrderErrorFragment } from "@saleor/graphql";
+import { fetchMoreProps } from "@dashboard/fixtures";
+import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
 import {
   channelUsabilityData,
   clients,
   draftOrder,
-} from "@saleor/orders/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
+} from "@dashboard/orders/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

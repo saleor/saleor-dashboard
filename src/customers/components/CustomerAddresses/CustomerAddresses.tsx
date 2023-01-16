@@ -1,10 +1,10 @@
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Hr } from "@dashboard/components/Hr";
+import { CustomerDetailsFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import AddressFormatter from "@saleor/components/AddressFormatter";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import { Hr } from "@saleor/components/Hr";
-import { CustomerDetailsFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,8 +1,8 @@
-import { fetchMoreProps } from "@saleor/fixtures";
-import { PageErrorCode } from "@saleor/graphql";
-import { PageData } from "@saleor/pages/components/PageDetailsPage/form";
-import { page } from "@saleor/pages/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { fetchMoreProps } from "@dashboard/fixtures";
+import { PageErrorCode } from "@dashboard/graphql";
+import { PageData } from "@dashboard/pages/components/PageDetailsPage/form";
+import { page } from "@dashboard/pages/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

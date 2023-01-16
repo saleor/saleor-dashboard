@@ -1,8 +1,8 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { CardContent } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import useNavigator from "@saleor/hooks/useNavigator";
 import React, { useState } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

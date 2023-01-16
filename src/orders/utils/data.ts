@@ -1,4 +1,4 @@
-import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { IMoney, subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
   AddressInput,
@@ -12,9 +12,9 @@ import {
   OrderRefundDataQuery,
   StockFragment,
   WarehouseFragment,
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import { findInEnum, getById } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
+import { findInEnum, getById } from "@dashboard/misc";
 
 import {
   LineItemData,
