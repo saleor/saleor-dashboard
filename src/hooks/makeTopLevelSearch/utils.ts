@@ -1,5 +1,5 @@
-import { FetchMoreProps } from "@saleor/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { FetchMoreProps } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { ResultSearchData } from "./makeTopLevelSearch";
 import { CommonSearchOpts } from "./types";

@@ -3,9 +3,9 @@ import {
   FormId,
   useExitFormDialog,
   UseExitFormDialogResult,
-} from "@saleor/components/Form";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { toggle } from "@saleor/utils/lists";
+} from "@dashboard/components/Form";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import React, { useEffect, useState } from "react";

@@ -1,14 +1,14 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ProductMediaFragment } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { ProductMediaFragment } from "@saleor/graphql";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import { buttonMessages } from "@saleor/intl";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";

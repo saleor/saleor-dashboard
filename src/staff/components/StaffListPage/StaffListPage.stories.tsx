@@ -6,12 +6,12 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import { StaffMemberStatus } from "@saleor/graphql";
-import { staffMembers } from "@saleor/staff/fixtures";
-import { StaffListUrlSortField } from "@saleor/staff/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { StaffMemberStatus } from "@dashboard/graphql";
+import { staffMembers } from "@dashboard/staff/fixtures";
+import { StaffListUrlSortField } from "@dashboard/staff/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

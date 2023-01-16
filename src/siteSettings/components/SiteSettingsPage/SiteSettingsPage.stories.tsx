@@ -1,6 +1,6 @@
-import { ShopErrorCode } from "@saleor/graphql";
-import { shop } from "@saleor/siteSettings/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { ShopErrorCode } from "@dashboard/graphql";
+import { shop } from "@dashboard/siteSettings/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

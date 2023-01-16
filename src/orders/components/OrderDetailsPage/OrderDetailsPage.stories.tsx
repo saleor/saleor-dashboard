@@ -3,12 +3,12 @@ import {
   FulfillmentStatus,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   order as orderFixture,
   shop as shopFixture,
-} from "@saleor/orders/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+} from "@dashboard/orders/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

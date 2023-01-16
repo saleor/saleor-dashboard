@@ -1,11 +1,11 @@
-import { attributes } from "@saleor/attributes/fixtures";
-import { categories } from "@saleor/categories/fixtures";
-import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
-import { StockAvailability } from "@saleor/graphql";
-import { ProductListFilterOpts } from "@saleor/products/components/ProductListPage";
-import { productTypes } from "@saleor/productTypes/fixtures";
-import { mapEdgesToItems, mapSlugNodeToChoice } from "@saleor/utils/maps";
+import { attributes } from "@dashboard/attributes/fixtures";
+import { categories } from "@dashboard/categories/fixtures";
+import { collections } from "@dashboard/collections/fixtures";
+import { fetchMoreProps, searchPageProps } from "@dashboard/fixtures";
+import { StockAvailability } from "@dashboard/graphql";
+import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage";
+import { productTypes } from "@dashboard/productTypes/fixtures";
+import { mapEdgesToItems, mapSlugNodeToChoice } from "@dashboard/utils/maps";
 
 export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({

@@ -1,7 +1,7 @@
-import { useUser } from "@saleor/auth";
-import { ChannelFragment, useBaseChannelsQuery } from "@saleor/graphql";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import { getById } from "@saleor/misc";
+import { useUser } from "@dashboard/auth";
+import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { getById } from "@dashboard/misc";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 

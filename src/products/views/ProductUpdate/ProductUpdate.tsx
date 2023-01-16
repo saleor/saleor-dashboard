@@ -1,15 +1,14 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@saleor/components/Attributes";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY,
-} from "@saleor/config";
+} from "@dashboard/config";
 import {
   ProductMediaCreateMutationVariables,
   useProductDeleteMutation,
@@ -18,21 +17,22 @@ import {
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@saleor/intl";
-import { useSearchAttributeValuesSuggestions } from "@saleor/searches/useAttributeValueSearch";
-import useCategorySearch from "@saleor/searches/useCategorySearch";
-import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
-import { getProductErrorMessage } from "@saleor/utils/errors";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

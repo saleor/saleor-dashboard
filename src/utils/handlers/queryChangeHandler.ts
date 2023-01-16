@@ -1,4 +1,4 @@
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 
 export function onQueryChange(
   event: ChangeEvent,

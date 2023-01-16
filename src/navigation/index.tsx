@@ -1,4 +1,4 @@
-import { asSortParams } from "@saleor/utils/sort";
+import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";

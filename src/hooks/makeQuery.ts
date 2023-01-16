@@ -7,13 +7,13 @@ import {
   QueryResult,
   useQuery as useBaseQuery,
 } from "@apollo/client";
-import { handleQueryAuthError, useUser } from "@saleor/auth";
-import { PrefixedPermissions } from "@saleor/graphql/extendedTypes";
+import { handleQueryAuthError, useUser } from "@dashboard/auth";
+import { PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
 import {
   PermissionEnum,
   UserPermissionFragment,
-} from "@saleor/graphql/types.generated";
-import { RequireAtLeastOne } from "@saleor/misc";
+} from "@dashboard/graphql/types.generated";
+import { RequireAtLeastOne } from "@dashboard/misc";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";

@@ -1,4 +1,4 @@
-import { WebhookDetailsFragment } from "@saleor/graphql";
+import { WebhookDetailsFragment } from "@dashboard/graphql";
 
 export const webhook: WebhookDetailsFragment = {
   __typename: "Webhook",

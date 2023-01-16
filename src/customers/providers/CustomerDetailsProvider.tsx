@@ -1,4 +1,7 @@
-import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@saleor/graphql";
+import {
+  CustomerDetailsQuery,
+  useCustomerDetailsQuery,
+} from "@dashboard/graphql";
 import React, { createContext } from "react";
 
 export interface CustomerDetailsProviderProps {

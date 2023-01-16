@@ -1,19 +1,19 @@
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { NumericUnits } from "@saleor/attributes/components/AttributeDetails/NumericUnits";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import FormSpacer from "@saleor/components/FormSpacer";
-import SingleSelectField from "@saleor/components/SingleSelectField";
+import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
   AttributeInputTypeEnum,
-} from "@saleor/graphql";
-import { UseFormResult } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
+import { Card, CardContent, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";

@@ -2,12 +2,12 @@ import {
   AppListItemFragment,
   AppTypeEnum,
   PermissionEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   comingSoonApp,
   installedAppsList,
   releasedApp,
-} from "@saleor/new-apps/fixtures";
+} from "@dashboard/new-apps/fixtures";
 
 import { AppListPageSections } from "./types";
 import {

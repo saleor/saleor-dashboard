@@ -1,8 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ListItemLink from "@dashboard/components/ListItemLink";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TaxCountryConfigurationFragment } from "@dashboard/graphql";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { taxCountriesListUrl } from "@dashboard/taxes/urls";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ListItemLink from "@saleor/components/ListItemLink";
-import Skeleton from "@saleor/components/Skeleton";
-import { TaxCountryConfigurationFragment } from "@saleor/graphql";
 import {
   Button,
   DeleteIcon,
@@ -12,9 +15,6 @@ import {
   ListItem,
   ListItemCell,
 } from "@saleor/macaw-ui";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { taxCountriesListUrl } from "@saleor/taxes/urls";
-import { isLastElement } from "@saleor/taxes/utils/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

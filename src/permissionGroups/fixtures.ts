@@ -7,8 +7,8 @@ import {
   PermissionGroupFragment,
   SearchStaffMembersQuery,
   StaffMemberDetailsFragment,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 
 export const permissionGroups: PermissionGroupFragment[] = [
   {

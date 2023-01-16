@@ -1,7 +1,7 @@
-import { GiftCardErrorCode, GiftCardErrorFragment } from "@saleor/graphql";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage,
-} from "@saleor/utils/errors/common";
+} from "@dashboard/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const giftCardUpdateDetailsCardMessages = defineMessages({

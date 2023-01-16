@@ -1,3 +1,18 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { maybe, renderCollection, stopPropagation } from "@dashboard/misc";
+import { ListProps, SortPage } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import {
+  WarehouseListUrlSortField,
+  warehouseUrl,
+} from "@dashboard/warehouses/urls";
 import {
   TableBody,
   TableCell,
@@ -5,22 +20,7 @@ import {
   TableHead,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { WarehouseWithShippingFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { ListProps, SortPage } from "@saleor/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getArrowDirection } from "@saleor/utils/sort";
-import {
-  WarehouseListUrlSortField,
-  warehouseUrl,
-} from "@saleor/warehouses/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

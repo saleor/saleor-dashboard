@@ -1,8 +1,8 @@
-import { MetadataFormData } from "@saleor/components/Metadata/types";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   UpdateMetadataMutationFn,
   UpdatePrivateMetadataMutationFn,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 

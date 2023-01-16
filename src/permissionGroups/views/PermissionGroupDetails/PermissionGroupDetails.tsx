@@ -1,28 +1,28 @@
-import { useUser } from "@saleor/auth";
-import { Button } from "@saleor/components/Button";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useUser } from "@dashboard/auth";
+import { Button } from "@dashboard/components/Button";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   usePermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
   permissionsDiff,
   usersDiff,
-} from "@saleor/permissionGroups/utils";
-import useStaffMemberSearch from "@saleor/searches/useStaffMemberSearch";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
+} from "@dashboard/permissionGroups/utils";
+import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 

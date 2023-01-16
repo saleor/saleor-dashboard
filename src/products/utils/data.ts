@@ -2,12 +2,12 @@ import {
   getDefaultAttributeValues,
   getSelectedAttributeValues,
   mergeChoicesWithValues,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   AttributeInput,
   VariantAttributeScope,
-} from "@saleor/components/Attributes";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+} from "@dashboard/components/Attributes";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
@@ -18,10 +18,10 @@ import {
   SelectedVariantAttributeFragment,
   StockInput,
   VariantAttributeFragment,
-} from "@saleor/graphql";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { maybe } from "@saleor/misc";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { maybe } from "@dashboard/misc";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";

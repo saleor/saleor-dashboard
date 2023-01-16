@@ -1,3 +1,10 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { IconButton } from "@dashboard/components/IconButton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AppsInstallationsQuery, JobStatusEnum } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
 import {
   Card,
   CircularProgress as Progress,
@@ -5,12 +12,6 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import { IconButton } from "@saleor/components/IconButton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { AppsInstallationsQuery, JobStatusEnum } from "@saleor/graphql";
 import {
   DeleteIcon,
   Indicator,
@@ -18,7 +19,6 @@ import {
   Tooltip,
   TooltipMountWrapper,
 } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

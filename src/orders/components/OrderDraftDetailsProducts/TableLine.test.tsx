@@ -1,4 +1,4 @@
-import { order } from "@saleor/orders/fixtures";
+import { order } from "@dashboard/orders/fixtures";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 

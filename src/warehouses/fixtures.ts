@@ -1,9 +1,9 @@
-import { address } from "@saleor/fixtures";
+import { address } from "@dashboard/fixtures";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseDetailsFragment,
   WarehouseWithShippingFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { shippingZones } from "../shipping/fixtures";
 

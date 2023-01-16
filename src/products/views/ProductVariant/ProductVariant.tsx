@@ -3,17 +3,17 @@ import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
-import { createVariantChannels } from "@saleor/channels/utils";
-import { AttributeInput } from "@saleor/components/Attributes";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+} from "@dashboard/attributes/utils/handlers";
+import { createVariantChannels } from "@dashboard/channels/utils";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   ProductErrorWithAttributesFragment,
   useAttributeValueDeleteMutation,
@@ -28,22 +28,22 @@ import {
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { weight } from "@saleor/misc";
-import { getAttributeInputFromVariant } from "@saleor/products/utils/data";
-import { handleAssignMedia } from "@saleor/products/utils/handlers";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { warehouseAddPath } from "@saleor/warehouses/urls";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { weight } from "@dashboard/misc";
+import { getAttributeInputFromVariant } from "@dashboard/products/utils/data";
+import { handleAssignMedia } from "@dashboard/products/utils/handlers";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

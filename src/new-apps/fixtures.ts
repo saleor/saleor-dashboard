@@ -5,7 +5,7 @@ import {
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
 

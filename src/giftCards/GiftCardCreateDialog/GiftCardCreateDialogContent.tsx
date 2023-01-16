@@ -1,12 +1,12 @@
-import { DialogTitle } from "@material-ui/core";
 import {
   GiftCardCreateInput,
   useChannelCurrenciesQuery,
   useGiftCardCreateMutation,
-} from "@saleor/graphql";
-import useCurrentDate from "@saleor/hooks/useCurrentDate";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { DialogProps } from "@saleor/types";
+} from "@dashboard/graphql";
+import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { DialogProps } from "@dashboard/types";
+import { DialogTitle } from "@material-ui/core";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 

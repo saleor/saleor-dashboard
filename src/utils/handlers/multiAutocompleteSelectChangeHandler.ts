@@ -1,7 +1,7 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import { combinedMultiAutocompleteChoices } from "@saleor/misc";
-import { toggle } from "@saleor/utils/lists";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { combinedMultiAutocompleteChoices } from "@dashboard/misc";
+import { toggle } from "@dashboard/utils/lists";
 
 /**
  * @param change Use toggleValue callback delivered by form

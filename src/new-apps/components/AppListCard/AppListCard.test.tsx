@@ -1,5 +1,5 @@
-import { comingSoonApp, releasedApp } from "@saleor/new-apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
+import { comingSoonApp, releasedApp } from "@dashboard/new-apps/fixtures";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

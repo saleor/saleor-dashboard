@@ -4,9 +4,9 @@ import {
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
   ProductVariantReorderMutationFn,
-} from "@saleor/graphql";
-import { ReorderEvent } from "@saleor/types";
-import { move } from "@saleor/utils/lists";
+} from "@dashboard/graphql";
+import { ReorderEvent } from "@dashboard/types";
+import { move } from "@dashboard/utils/lists";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createImageUploadHandler(

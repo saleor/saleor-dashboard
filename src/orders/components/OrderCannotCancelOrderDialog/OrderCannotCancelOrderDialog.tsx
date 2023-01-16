@@ -1,3 +1,6 @@
+import { Button } from "@dashboard/components/Button";
+import { buttonMessages } from "@dashboard/intl";
+import { DialogProps } from "@dashboard/types";
 import {
   Dialog,
   DialogActions,
@@ -5,10 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

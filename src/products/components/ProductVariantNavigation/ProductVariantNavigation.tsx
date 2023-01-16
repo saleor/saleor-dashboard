@@ -1,24 +1,24 @@
-import { Card, TableCell } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   SortableTableBody,
   SortableTableRow,
-} from "@saleor/components/SortableTable";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
+} from "@dashboard/components/SortableTable";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   ProductVariantCreateDataQuery,
   ProductVariantDetailsQuery,
-} from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   productVariantAddUrl,
   productVariantEditUrl,
-} from "@saleor/products/urls";
-import { ReorderAction } from "@saleor/types";
+} from "@dashboard/products/urls";
+import { ReorderAction } from "@dashboard/types";
+import { Card, TableCell } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

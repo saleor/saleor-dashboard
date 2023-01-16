@@ -1,7 +1,7 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Money from "@dashboard/components/Money";
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Money from "@saleor/components/Money";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";

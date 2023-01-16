@@ -1,8 +1,8 @@
+import { commonMessages } from "@dashboard/intl";
+import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DateTime, joinDateTime, splitDateTime } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

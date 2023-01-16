@@ -1,23 +1,23 @@
-import { Card } from "@material-ui/core";
 import {
   categoryAddUrl,
   categoryListUrl,
   categoryUrl,
-} from "@saleor/categories/urls";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import { CardSpacer } from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import SeoForm from "@saleor/components/SeoForm";
-import { Tab, TabContainer } from "@saleor/components/Tab";
-import { CategoryDetailsQuery, ProductErrorFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/categories/urls";
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import SeoForm from "@dashboard/components/SeoForm";
+import { Tab, TabContainer } from "@dashboard/components/Tab";
+import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { Card } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

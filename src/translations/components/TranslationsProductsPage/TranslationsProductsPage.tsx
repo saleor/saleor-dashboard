@@ -1,21 +1,24 @@
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import LanguageSwitch from "@saleor/components/LanguageSwitch";
-import PageHeader from "@saleor/components/PageHeader";
-import { LanguageCodeEnum, ProductTranslationFragment } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import PageHeader from "@dashboard/components/PageHeader";
+import {
+  LanguageCodeEnum,
+  ProductTranslationFragment,
+} from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps,
-} from "@saleor/translations/types";
+} from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
-} from "@saleor/translations/urls";
-import { mapAttributeValuesToTranslationFields } from "@saleor/translations/utils";
+} from "@dashboard/translations/urls";
+import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

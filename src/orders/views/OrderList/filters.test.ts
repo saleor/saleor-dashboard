@@ -1,12 +1,12 @@
-import { date } from "@saleor/fixtures";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
+import { date } from "@dashboard/fixtures";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import {
   createFilterStructure,
   OrderFilterGiftCard,
-} from "@saleor/orders/components/OrderListPage";
-import { OrderListUrlFilters } from "@saleor/orders/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+} from "@dashboard/orders/components/OrderListPage";
+import { OrderListUrlFilters } from "@dashboard/orders/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

@@ -1,21 +1,21 @@
-import { TextField } from "@material-ui/core";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Grid from "@saleor/components/Grid";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Grid from "@dashboard/components/Grid";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
-import { AddressTypeInput } from "@saleor/customers/types";
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorFragment,
   ShopErrorFragment,
   WarehouseErrorFragment,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
+import getShopErrorMessage from "@dashboard/utils/errors/shop";
+import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
-import getShopErrorMessage from "@saleor/utils/errors/shop";
-import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

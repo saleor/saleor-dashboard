@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { OrderDetailsQuery } from "@saleor/graphql";
+import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import {
   OrderLineDiscountContext,
   OrderLineDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 
 export const getDiscountsProvidersWrapper = (

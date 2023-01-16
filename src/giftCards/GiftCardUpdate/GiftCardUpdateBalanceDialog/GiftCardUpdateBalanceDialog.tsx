@@ -1,12 +1,12 @@
+import ActionDialog from "@dashboard/components/ActionDialog";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { IMessage } from "@dashboard/components/messages";
+import { useGiftCardUpdateMutation } from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { DialogProps } from "@dashboard/types";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import { TextField, Typography } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import CardSpacer from "@saleor/components/CardSpacer";
-import { IMessage } from "@saleor/components/messages";
-import { useGiftCardUpdateMutation } from "@saleor/graphql";
-import useForm from "@saleor/hooks/useForm";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { DialogProps } from "@saleor/types";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import React from "react";
 import { useIntl } from "react-intl";
 

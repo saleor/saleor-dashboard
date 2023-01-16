@@ -1,8 +1,8 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { ShopErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { ShopErrorFragment } from "@saleor/graphql";
-import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

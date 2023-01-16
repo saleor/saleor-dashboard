@@ -1,5 +1,5 @@
-import { getApiUrl } from "@saleor/config";
-import { stringifyQs } from "@saleor/utils/urls";
+import { getApiUrl } from "@dashboard/config";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";

@@ -1,12 +1,12 @@
 import {
   OrderSettingsFragment,
   ShopOrderSettingsFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResult,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+} from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderSettingsFormData {

@@ -1,4 +1,4 @@
-import useShop from "@saleor/hooks/useShop";
+import useShop from "@dashboard/hooks/useShop";
 import React from "react";
 
 import { maybe } from "../../misc";

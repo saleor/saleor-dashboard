@@ -1,14 +1,14 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
 import {
   ConfigurationItemFragment,
   ConfigurationTypeFieldEnum,
-} from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { isSecretField } from "@dashboard/plugins/utils";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { isSecretField } from "@saleor/plugins/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

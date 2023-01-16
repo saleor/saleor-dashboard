@@ -1,21 +1,21 @@
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
-} from "@saleor/attributes/utils/data";
-import { ChannelPriceData } from "@saleor/channels/utils";
-import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
+} from "@dashboard/attributes/utils/data";
+import { ChannelPriceData } from "@dashboard/channels/utils";
+import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
   VariantAttributeScope,
-} from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+} from "@dashboard/components/Attributes";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -24,13 +24,13 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   WarehouseFragment,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
+import { productUrl } from "@dashboard/products/urls";
+import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { VariantDetailsChannelsAvailabilityCard } from "@saleor/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
-import { productUrl } from "@saleor/products/urls";
-import { getSelectedMedia } from "@saleor/products/utils/data";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

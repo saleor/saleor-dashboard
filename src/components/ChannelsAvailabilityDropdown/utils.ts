@@ -1,4 +1,4 @@
-import { CollectionFragment } from "@saleor/graphql";
+import { CollectionFragment } from "@dashboard/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 

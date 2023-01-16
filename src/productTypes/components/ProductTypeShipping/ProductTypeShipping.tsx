@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,3 +1,18 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableHead from "@dashboard/components/TableHead";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import TextFieldWithChoice from "@dashboard/components/TextFieldWithChoice";
+import { ChannelInput } from "@dashboard/discounts/handlers";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import {
   Card,
   CardContent,
@@ -5,21 +20,6 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableHead from "@saleor/components/TableHead";
-import TableRowLink from "@saleor/components/TableRowLink";
-import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
-import { ChannelInput } from "@saleor/discounts/handlers";
-import { DiscountTypeEnum } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/graphql";
-import { renderCollection } from "@saleor/misc";
-import { getFormErrors } from "@saleor/utils/errors";
-import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

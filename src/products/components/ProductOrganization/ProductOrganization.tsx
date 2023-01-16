@@ -1,27 +1,27 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import Link from "@saleor/components/Link";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from "@saleor/components/MultiAutocompleteSelectField";
+} from "@dashboard/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
+} from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
   ProductErrorFragment,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
+import { FetchMoreProps } from "@dashboard/types";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { productTypeUrl } from "@saleor/productTypes/urls";
-import { FetchMoreProps } from "@saleor/types";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

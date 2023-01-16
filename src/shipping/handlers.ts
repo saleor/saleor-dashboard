@@ -1,4 +1,4 @@
-import { ChannelShippingData } from "@saleor/channels/utils";
+import { ChannelShippingData } from "@dashboard/channels/utils";
 import {
   CountryFragment,
   CreateShippingRateMutationVariables,
@@ -11,12 +11,12 @@ import {
   useCreateShippingRateMutation,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors, getMutationState } from "@saleor/misc";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, getMutationState } from "@dashboard/misc";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import differenceBy from "lodash/differenceBy";
 import { useIntl } from "react-intl";
 

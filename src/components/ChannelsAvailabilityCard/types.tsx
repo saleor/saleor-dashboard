@@ -1,7 +1,7 @@
 import {
   CollectionChannelListingErrorFragment,
   ProductChannelListingErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export interface ChannelOpts {
   availableForPurchase?: string;

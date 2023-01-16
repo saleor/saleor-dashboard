@@ -1,11 +1,11 @@
-import CardSpacer from "@saleor/components/CardSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from "@saleor/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@saleor/graphql";
-import { useChannelsSearch } from "@saleor/hooks/useChannelsSearch";
-import { FormChange } from "@saleor/hooks/useForm";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+} from "@dashboard/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@dashboard/graphql";
+import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

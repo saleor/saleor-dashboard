@@ -1,11 +1,11 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { channelsList } from "@saleor/channels/fixtures";
-import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, limits } from "@saleor/fixtures";
-import * as _useNavigator from "@saleor/hooks/useNavigator";
-import { product as productFixture } from "@saleor/products/fixtures";
-import { taxClasses } from "@saleor/taxes/fixtures";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { collections } from "@dashboard/collections/fixtures";
+import { fetchMoreProps, limits } from "@dashboard/fixtures";
+import * as _useNavigator from "@dashboard/hooks/useNavigator";
+import { product as productFixture } from "@dashboard/products/fixtures";
+import { taxClasses } from "@dashboard/taxes/fixtures";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,8 +18,8 @@ const product = productFixture(placeholderImage);
 
 const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
-jest.mock("@saleor/components/RichTextEditor/RichTextEditor");
-jest.mock("@saleor/utils/richText/useRichText");
+jest.mock("@dashboard/components/RichTextEditor/RichTextEditor");
+jest.mock("@dashboard/utils/richText/useRichText");
 /**
  * Mocking glide library. We do want to test only if page renders, grid itself has dedicated tests.
  */
