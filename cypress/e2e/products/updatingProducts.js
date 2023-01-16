@@ -58,6 +58,12 @@ describe("Update products", () => {
       })
       .then(({ product: productResp }) => {
         product = productResp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          collection,
+          product,
+          attribute,
+        });
       });
   });
 

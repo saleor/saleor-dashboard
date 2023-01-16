@@ -1,7 +1,7 @@
 import {
   ExtendedGiftCard,
   GiftCardBase,
-} from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+} from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

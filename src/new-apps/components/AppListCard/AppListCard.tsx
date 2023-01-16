@@ -1,6 +1,6 @@
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { getAppDetails } from "@dashboard/new-apps/utils";
 import { Card, CardContent } from "@material-ui/core";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
-import { getAppDetails } from "@saleor/new-apps/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

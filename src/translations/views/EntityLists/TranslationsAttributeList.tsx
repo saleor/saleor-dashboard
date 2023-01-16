@@ -1,11 +1,11 @@
-import { useAttributeTranslationsQuery } from "@saleor/graphql";
-import usePaginator, { PaginatorContext } from "@saleor/hooks/usePaginator";
-import TranslationsEntitiesList from "@saleor/translations/components/TranslationsEntitiesList";
+import { useAttributeTranslationsQuery } from "@dashboard/graphql";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
 import {
   languageEntityUrl,
   TranslatableEntities,
-} from "@saleor/translations/urls";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/translations/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
 import { TranslationsEntityListProps } from "./types";

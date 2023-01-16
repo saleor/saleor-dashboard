@@ -1,12 +1,12 @@
-import { FieldType } from "@saleor/components/Filter";
-import { PluginConfigurationType } from "@saleor/graphql";
+import { FieldType } from "@dashboard/components/Filter";
+import { PluginConfigurationType } from "@dashboard/graphql";
 import {
   createFilterStructure,
   PluginFilterKeys,
-} from "@saleor/plugins/components/PluginsListPage";
-import { PluginListUrlFilters } from "@saleor/plugins/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+} from "@dashboard/plugins/components/PluginsListPage";
+import { PluginListUrlFilters } from "@dashboard/plugins/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

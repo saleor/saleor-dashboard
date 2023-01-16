@@ -86,6 +86,16 @@ describe("Creating variants", () => {
       )
       .then(type => {
         simpleProductType = type;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          warehouse,
+          attribute,
+          productType,
+          simpleProductType,
+          category,
+          shippingMethod,
+          address,
+        });
       });
   });
 
@@ -126,6 +136,7 @@ describe("Creating variants", () => {
                 price: variants[1].price,
                 channelName: defaultChannel.name,
                 warehouseId: warehouse.id,
+                variantName: name,
               });
             });
         })
@@ -134,7 +145,7 @@ describe("Creating variants", () => {
         })
         .then(([firstVariant, secondVariant]) => {
           expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(secondVariant).to.have.property("name", variants[1].name);
+          expect(secondVariant).to.have.property("name", name);
           expect(secondVariant).to.have.property("price", variants[1].price);
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,

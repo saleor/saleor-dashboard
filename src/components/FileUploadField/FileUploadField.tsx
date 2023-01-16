@@ -1,7 +1,7 @@
+import { Button } from "@dashboard/components/Button";
+import { FileFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import { FileFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

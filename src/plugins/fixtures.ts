@@ -2,7 +2,7 @@ import {
   ConfigurationTypeFieldEnum,
   PluginBaseFragment,
   PluginsDetailsFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const pluginList: PluginBaseFragment[] = [
   {

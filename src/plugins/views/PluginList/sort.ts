@@ -1,6 +1,6 @@
-import { PluginSortField } from "@saleor/graphql";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { PluginSortField } from "@dashboard/graphql";
+import { PluginListUrlSortField } from "@dashboard/plugins/urls";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(
   sort: PluginListUrlSortField,

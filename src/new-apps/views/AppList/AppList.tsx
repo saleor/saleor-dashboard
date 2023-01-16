@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
-import { getAppsConfig } from "@saleor/config";
+import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import { getAppsConfig } from "@dashboard/config";
 import {
   AppSortField,
   AppTypeEnum,
@@ -9,30 +9,33 @@ import {
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppsListQuery,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import { findById } from "@saleor/misc";
-import AppActivateDialog from "@saleor/new-apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@saleor/new-apps/components/AppDeactivateDialog";
-import AppDeleteDialog from "@saleor/new-apps/components/AppDeleteDialog";
-import AppListPage from "@saleor/new-apps/components/AppListPage/AppListPage";
-import { AppListContext, AppListContextValues } from "@saleor/new-apps/context";
-import useMarketplaceApps from "@saleor/new-apps/hooks/useMarketplaceApps";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { findById } from "@dashboard/misc";
+import AppActivateDialog from "@dashboard/new-apps/components/AppActivateDialog";
+import AppDeactivateDialog from "@dashboard/new-apps/components/AppDeactivateDialog";
+import AppDeleteDialog from "@dashboard/new-apps/components/AppDeleteDialog";
+import AppListPage from "@dashboard/new-apps/components/AppListPage/AppListPage";
+import {
+  AppListContext,
+  AppListContextValues,
+} from "@dashboard/new-apps/context";
+import useMarketplaceApps from "@dashboard/new-apps/hooks/useMarketplaceApps";
 import {
   AppListUrlDialog,
   AppListUrlQueryParams,
   AppUrls,
-} from "@saleor/new-apps/urls";
-import { getMarketplaceAppsLists } from "@saleor/new-apps/utils";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/new-apps/urls";
+import { getMarketplaceAppsLists } from "@dashboard/new-apps/utils";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

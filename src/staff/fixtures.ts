@@ -1,7 +1,7 @@
 import avatarImage from "@assets/images/avatars/avatar1.png";
-import { permissions } from "@saleor/fixtures";
-import { StaffListQuery, StaffMemberDetailsFragment } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+import { permissions } from "@dashboard/fixtures";
+import { StaffListQuery, StaffMemberDetailsFragment } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 
 export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   {

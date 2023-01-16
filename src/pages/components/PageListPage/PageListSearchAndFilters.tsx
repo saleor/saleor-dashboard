@@ -1,16 +1,16 @@
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
-import FilterBar from "@saleor/components/FilterBar";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import FilterBar from "@dashboard/components/FilterBar";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { pageListUrl, PageListUrlQueryParams } from "@saleor/pages/urls";
-import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { pageListUrl, PageListUrlQueryParams } from "@dashboard/pages/urls";
+import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

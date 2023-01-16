@@ -1,5 +1,5 @@
-import { installedAppsList } from "@saleor/new-apps/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { installedAppsList } from "@dashboard/new-apps/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -25,7 +25,6 @@ describe("As an admin I want to use attributes in variant selection", () => {
   ];
   let channel;
   let category;
-  let product;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -33,6 +32,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
     getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
     createCategory({ name: startsWith }).then(
       categoryResp => (category = categoryResp),
+      cy.checkIfDataAreNotNull({ channel, category }),
     );
   });
 
@@ -51,6 +51,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
         const inputType = attributeType.key;
         const attributeValues = ["1", "2"];
         let productType;
+        let product;
 
         createProductTypeWithNewVariantSelectionAttribute({
           name,

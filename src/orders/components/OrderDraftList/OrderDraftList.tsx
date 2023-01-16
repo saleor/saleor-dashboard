@@ -1,24 +1,29 @@
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import Checkbox from "@saleor/components/Checkbox";
-import { DateTime } from "@saleor/components/Date";
-import Money from "@saleor/components/Money";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderDraftListQuery } from "@saleor/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
+import Checkbox from "@dashboard/components/Checkbox";
+import { DateTime } from "@dashboard/components/Date";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderDraftListQuery } from "@dashboard/graphql";
 import {
   maybe,
   renderCollection,
   transformOrderStatus,
   transformPaymentStatus,
-} from "@saleor/misc";
-import { OrderDraftListUrlSortField, orderUrl } from "@saleor/orders/urls";
-import { ListActions, ListProps, RelayToFlat, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
+} from "@dashboard/misc";
+import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
+import {
+  ListActions,
+  ListProps,
+  RelayToFlat,
+  SortPage,
+} from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

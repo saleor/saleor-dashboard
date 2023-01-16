@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { sectionNames } from "@dashboard/intl";
 import { Card } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 

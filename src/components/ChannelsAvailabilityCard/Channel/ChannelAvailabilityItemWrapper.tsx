@@ -1,7 +1,7 @@
+import { ChannelData } from "@dashboard/channels/utils";
+import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Typography } from "@material-ui/core";
-import { ChannelData } from "@saleor/channels/utils";
 import { Accordion, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
-import Label from "@saleor/orders/components/OrderHistory/Label";
 import React from "react";
 
 import { Messages } from "../types";

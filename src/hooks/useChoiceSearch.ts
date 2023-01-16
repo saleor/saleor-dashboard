@@ -1,4 +1,4 @@
-import { Choice } from "@saleor/components/SingleSelectField";
+import { Choice } from "@dashboard/components/SingleSelectField";
 import { filter } from "fuzzaldrin";
 import { useMemo, useState } from "react";
 

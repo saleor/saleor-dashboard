@@ -1,4 +1,4 @@
-import { AccountErrorCode } from "@saleor/graphql";
+import { AccountErrorCode } from "@dashboard/graphql";
 import { SetPasswordData } from "@saleor/sdk";
 import { defineMessages, IntlShape } from "react-intl";
 

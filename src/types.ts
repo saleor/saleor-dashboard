@@ -1,5 +1,5 @@
 import { FetchResult, MutationResult } from "@apollo/client";
-import { UserPermissionFragment } from "@saleor/graphql";
+import { UserPermissionFragment } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 import { FilterElement, IFilter } from "./components/Filter";

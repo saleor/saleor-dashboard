@@ -1,7 +1,7 @@
 import notFoundImage from "@assets/images/what.svg";
+import useAppState from "@dashboard/hooks/useAppState";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { Typography } from "@material-ui/core";
-import useAppState from "@saleor/hooks/useAppState";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";

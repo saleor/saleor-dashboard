@@ -1,6 +1,6 @@
 import placeholder from "@assets/images/placeholder1080x1080.png";
-import { ProductMediaType } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { ProductMediaType } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

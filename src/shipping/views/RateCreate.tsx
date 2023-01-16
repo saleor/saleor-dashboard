@@ -1,31 +1,31 @@
-import { createSortedShippingChannels } from "@saleor/channels/utils";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { createSortedShippingChannels } from "@dashboard/channels/utils";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   PostalCodeRuleInclusionTypeEnum,
   useShippingZoneChannelsQuery,
-} from "@saleor/graphql";
-import useChannels from "@saleor/hooks/useChannels";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
-import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesCreatePage from "@saleor/shipping/components/ShippingZoneRatesCreatePage";
-import { useShippingRateCreator } from "@saleor/shipping/handlers";
+} from "@dashboard/graphql";
+import useChannels from "@dashboard/hooks/useChannels";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
+import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/ShippingZoneRatesCreatePage";
+import { useShippingRateCreator } from "@dashboard/shipping/handlers";
 import {
   shippingRateCreateUrl,
   ShippingRateCreateUrlDialog,
   ShippingRateCreateUrlQueryParams,
   shippingZoneUrl,
-} from "@saleor/shipping/urls";
-import postalCodesReducer from "@saleor/shipping/views/reducer";
+} from "@dashboard/shipping/urls";
+import postalCodesReducer from "@dashboard/shipping/views/reducer";
 import {
   filterPostalCodes,
   getPostalCodeRuleByMinMax,
   getRuleObject,
-} from "@saleor/shipping/views/utils";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/shipping/views/utils";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { MinMax } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

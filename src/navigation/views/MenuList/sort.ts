@@ -1,6 +1,6 @@
-import { MenuSortField } from "@saleor/graphql";
-import { MenuListUrlSortField } from "@saleor/navigation/urls";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { MenuSortField } from "@dashboard/graphql";
+import { MenuListUrlSortField } from "@dashboard/navigation/urls";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {
   switch (sort) {

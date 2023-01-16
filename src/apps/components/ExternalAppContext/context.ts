@@ -1,5 +1,5 @@
-import { AppDetailsUrlMountQueryParams } from "@saleor/apps/urls";
-import { AppExtensionTargetEnum } from "@saleor/graphql";
+import { AppDetailsUrlMountQueryParams } from "@dashboard/apps/urls";
+import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import React from "react";
 
 export interface AppData {

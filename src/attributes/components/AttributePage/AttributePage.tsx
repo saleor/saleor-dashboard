@@ -1,15 +1,15 @@
-import { attributeListUrl } from "@saleor/attributes/urls";
-import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import { MetadataFormData } from "@saleor/components/Metadata/types";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import { ListSettingsUpdate } from "@saleor/components/TablePagination";
+import { attributeListUrl } from "@dashboard/attributes/urls";
+import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeDetailsFragment,
   AttributeDetailsQuery,
@@ -18,15 +18,15 @@ import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { ListSettings, ReorderAction } from "@dashboard/types";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { ListSettings, ReorderAction } from "@saleor/types";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";

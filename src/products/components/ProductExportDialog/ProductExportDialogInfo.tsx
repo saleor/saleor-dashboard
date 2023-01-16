@@ -1,3 +1,21 @@
+import Accordion, { AccordionProps } from "@dashboard/components/Accordion";
+import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
+import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper";
+import Checkbox from "@dashboard/components/Checkbox";
+import Chip from "@dashboard/components/Chip";
+import Hr from "@dashboard/components/Hr";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import {
+  ChannelFragment,
+  ExportProductsInput,
+  ProductFieldEnum,
+} from "@dashboard/graphql";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { sectionNames } from "@dashboard/intl";
+import { FetchMoreProps } from "@dashboard/types";
+import { toggle } from "@dashboard/utils/lists";
 import {
   Button,
   CircularProgress,
@@ -5,25 +23,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import Accordion, { AccordionProps } from "@saleor/components/Accordion";
-import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
-import ChannelsAvailabilityDialogChannelsList from "@saleor/components/ChannelsAvailabilityDialogChannelsList";
-import ChannelsAvailabilityDialogContentWrapper from "@saleor/components/ChannelsAvailabilityDialogWrapper";
-import Checkbox from "@saleor/components/Checkbox";
-import Chip from "@saleor/components/Chip";
-import Hr from "@saleor/components/Hr";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import {
-  ChannelFragment,
-  ExportProductsInput,
-  ProductFieldEnum,
-} from "@saleor/graphql";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
-import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

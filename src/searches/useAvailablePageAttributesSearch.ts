@@ -3,8 +3,8 @@ import {
   SearchAvailablePageAttributesDocument,
   SearchAvailablePageAttributesQuery,
   SearchAvailablePageAttributesQueryVariables,
-} from "@saleor/graphql";
-import makeSearch from "@saleor/hooks/makeSearch";
+} from "@dashboard/graphql";
+import makeSearch from "@dashboard/hooks/makeSearch";
 
 export const searchPageAttributes = gql`
   query SearchAvailablePageAttributes(

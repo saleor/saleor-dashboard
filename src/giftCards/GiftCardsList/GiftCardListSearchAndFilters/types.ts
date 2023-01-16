@@ -7,7 +7,7 @@ import {
   MinMax,
   Search,
   SearchProps,
-} from "@saleor/types";
+} from "@dashboard/types";
 
 export enum GiftCardListUrlFiltersEnum {
   currency = "currency",

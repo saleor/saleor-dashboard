@@ -1,7 +1,7 @@
-import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
-import { ShippingErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { fetchMoreProps, searchPageProps } from "@dashboard/fixtures";
+import { ShippingErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

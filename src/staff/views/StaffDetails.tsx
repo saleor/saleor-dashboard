@@ -1,10 +1,9 @@
-import { DialogContentText } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
-import ActionDialog from "@saleor/components/ActionDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { hasPermissions } from "@saleor/components/RequirePermissions";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useUser } from "@dashboard/auth";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   PermissionEnum,
   useChangeStaffPasswordMutation,
@@ -13,17 +12,18 @@ import {
   useStaffMemberDeleteMutation,
   useStaffMemberDetailsQuery,
   useStaffMemberUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   getStringOrPlaceholder,
   maybe,
-} from "@saleor/misc";
-import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/misc";
+import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

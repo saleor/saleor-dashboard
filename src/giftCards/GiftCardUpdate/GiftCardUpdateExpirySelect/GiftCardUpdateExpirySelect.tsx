@@ -1,9 +1,9 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
+import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { TextField, Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
-import useGiftCardUpdateForm from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 

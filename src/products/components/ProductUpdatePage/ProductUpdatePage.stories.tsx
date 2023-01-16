@@ -1,11 +1,11 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { channelsList } from "@saleor/channels/fixtures";
-import { collections } from "@saleor/collections/fixtures";
-import { fetchMoreProps, limits, limitsReached } from "@saleor/fixtures";
-import { ProductErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { collections } from "@dashboard/collections/fixtures";
+import { fetchMoreProps, limits, limitsReached } from "@dashboard/fixtures";
+import { ProductErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

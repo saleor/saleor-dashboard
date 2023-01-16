@@ -2,32 +2,35 @@ import {
   extensionMountPoints,
   mapToMenuItemsForCustomerDetails,
   useExtensions,
-} from "@saleor/apps/useExtensions";
-import { Backlink } from "@saleor/components/Backlink";
-import CardMenu from "@saleor/components/CardMenu/CardMenu";
-import { CardSpacer } from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import { MetadataFormData } from "@saleor/components/Metadata/types";
-import PageHeader from "@saleor/components/PageHeader";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import Savebar from "@saleor/components/Savebar";
-import { customerAddressesUrl, customerListUrl } from "@saleor/customers/urls";
-import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
+} from "@dashboard/apps/useExtensions";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardMenu from "@dashboard/components/CardMenu/CardMenu";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
+import PageHeader from "@dashboard/components/PageHeader";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Savebar from "@dashboard/components/Savebar";
+import {
+  customerAddressesUrl,
+  customerListUrl,
+} from "@dashboard/customers/urls";
+import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   AccountErrorFragment,
   CustomerDetailsQuery,
   PermissionEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { orderListUrl } from "@dashboard/orders/urls";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { orderListUrl } from "@saleor/orders/urls";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 

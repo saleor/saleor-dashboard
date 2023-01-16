@@ -1,5 +1,5 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { maybe } from "@saleor/misc";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { maybe } from "@dashboard/misc";
 
 import useListActions from "./useListActions";
 

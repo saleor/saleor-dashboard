@@ -1,4 +1,4 @@
-import { useGiftCardProductsCountQuery } from "@saleor/graphql";
+import { useGiftCardProductsCountQuery } from "@dashboard/graphql";
 import { Alert } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

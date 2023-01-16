@@ -1,5 +1,5 @@
-import useNavigator from "@saleor/hooks/useNavigator";
-import { Sort } from "@saleor/types";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { Sort } from "@dashboard/types";
 import { useEffect } from "react";
 
 export type SortByRankUrlQueryParams<T extends string> = Sort<T> & {

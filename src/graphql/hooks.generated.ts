@@ -3,7 +3,7 @@ import * as Types from './types.generated';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import * as ApolloReactHooks from '@saleor/hooks/graphql';
+import * as ApolloReactHooks from '@dashboard/hooks/graphql';
 const defaultOptions = {} as const;
 export const AppManifestFragmentDoc = gql`
     fragment AppManifest on Manifest {
@@ -1302,6 +1302,16 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1333,6 +1343,9 @@ export const OrderLineFragmentDoc = gql`
   quantity
   quantityFulfilled
   quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
   unitDiscount {
     amount
     currency
@@ -1365,7 +1378,8 @@ export const OrderLineFragmentDoc = gql`
     url
   }
 }
-    ${StockFragmentDoc}`;
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   id
@@ -2404,16 +2418,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
 export const CountryFragmentDoc = gql`
     fragment Country on CountryDisplay {
   country

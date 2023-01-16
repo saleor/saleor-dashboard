@@ -1,7 +1,7 @@
-import GiftCardUpdatePageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
-import { giftCardsListPath, giftCardUrl } from "@saleor/giftCards/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
+import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React, { createContext } from "react";
 
 import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";

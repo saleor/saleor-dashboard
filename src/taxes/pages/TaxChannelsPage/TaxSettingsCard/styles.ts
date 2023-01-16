@@ -18,6 +18,9 @@ export const useStyles = makeStyles(
       display: "flex",
       alignItems: "center",
       gap: theme.spacing(2),
+      "&>:first-child": {
+        paddingTop: "2rem",
+      },
     },
     singleSelectField: {
       width: "275px",

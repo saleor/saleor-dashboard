@@ -1,27 +1,27 @@
-import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
-import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
-import { configurationMenuUrl } from "@saleor/configuration";
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
+import PageHeader from "@dashboard/components/PageHeader";
+import SearchBar from "@dashboard/components/SearchBar";
+import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   RefreshLimitsQuery,
   WarehouseWithShippingFragment,
-} from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   PageListProps,
   SearchPageProps,
   SortPage,
   TabPageProps,
-} from "@saleor/types";
-import { hasLimits, isLimitReached } from "@saleor/utils/limits";
+} from "@dashboard/types";
+import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import {
   warehouseAddUrl,
   WarehouseListUrlSortField,
-} from "@saleor/warehouses/urls";
+} from "@dashboard/warehouses/urls";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

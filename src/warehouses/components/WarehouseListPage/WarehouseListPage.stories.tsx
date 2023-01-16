@@ -5,10 +5,10 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
+} from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

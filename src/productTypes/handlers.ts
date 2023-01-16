@@ -1,5 +1,5 @@
-import { ProductTypeKindEnum, TaxClassBaseFragment } from "@saleor/graphql";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { ProductTypeKindEnum, TaxClassBaseFragment } from "@dashboard/graphql";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 
 export const makeProductTypeKindChangeHandler = (
   onChange: FormChange,

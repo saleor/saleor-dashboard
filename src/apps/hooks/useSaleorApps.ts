@@ -1,4 +1,4 @@
-import { marketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
 import { useCallback, useState } from "react";
 
 export interface SaleorApp {

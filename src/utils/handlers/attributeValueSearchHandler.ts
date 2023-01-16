@@ -1,9 +1,9 @@
 import {
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
-} from "@saleor/graphql";
-import { UseSearchResult } from "@saleor/hooks/makeSearch";
-import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
+} from "@dashboard/graphql";
+import { UseSearchResult } from "@dashboard/hooks/makeSearch";
+import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
 import { useEffect, useState } from "react";
 
 interface AttributeValueSearchHandlerState {

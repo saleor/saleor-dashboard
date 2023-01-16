@@ -1,4 +1,8 @@
 import chevronDown from "@assets/images/ChevronDown.svg";
+import useElementScroll, {
+  isScrolledToBottom,
+} from "@dashboard/hooks/useElementScroll";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   CircularProgress,
   MenuItem,
@@ -6,11 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@saleor/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import { GetItemPropsOptions } from "downshift";
 import React, { ReactElement } from "react";

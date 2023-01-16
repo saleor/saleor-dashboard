@@ -4,7 +4,7 @@ import {
   ChannelErrorCode,
   ChannelErrorFragment,
   ProductFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { Money } from "@saleor/sdk/dist/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [

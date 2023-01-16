@@ -1,16 +1,19 @@
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { CardSpacer } from "@saleor/components/CardSpacer";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  FulfillmentFragment,
+  OrderFulfillLineFragment,
+} from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
-} from "@saleor/orders/utils/data";
+} from "@dashboard/orders/utils/data";
+import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

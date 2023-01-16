@@ -1,3 +1,6 @@
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
   DialogActions,
@@ -8,9 +11,6 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

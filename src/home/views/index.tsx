@@ -1,12 +1,12 @@
-import { useUser } from "@saleor/auth";
-import { channelsListUrl } from "@saleor/channels/urls";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
+import { useUser } from "@dashboard/auth";
+import { channelsListUrl } from "@dashboard/channels/urls";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import {
   OrderStatusFilter,
   StockAvailability,
   useHomeQuery,
-} from "@saleor/graphql";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 
 import { getDatePeriod, getUserName } from "../../misc";

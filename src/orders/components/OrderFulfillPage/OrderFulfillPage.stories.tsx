@@ -1,6 +1,6 @@
-import { OrderErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { OrderErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

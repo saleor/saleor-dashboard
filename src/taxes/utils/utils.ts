@@ -3,7 +3,7 @@ import {
   TaxClassFragment,
   TaxCountriesListQuery,
   TaxCountryConfigurationFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import uniqBy from "lodash/uniqBy";
 
 export const encodeURIComponentOptional = (

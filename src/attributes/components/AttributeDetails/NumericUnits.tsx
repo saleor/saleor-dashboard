@@ -1,9 +1,9 @@
-import { AttributePageFormData } from "@saleor/attributes/components/AttributePage";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import SingleSelectField from "@saleor/components/SingleSelectField";
-import { MeasurementUnitsEnum } from "@saleor/graphql";
-import { UseFormResult } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
+import { AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { MeasurementUnitsEnum } from "@dashboard/graphql";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

@@ -1,12 +1,12 @@
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
   PermissionEnum,
   useExtensionListQuery,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useExternalApp } from "./components/ExternalAppContext/";
 import { AppData } from "./components/ExternalAppContext/context";

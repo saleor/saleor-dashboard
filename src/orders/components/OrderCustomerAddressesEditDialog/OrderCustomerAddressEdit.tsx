@@ -1,18 +1,18 @@
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import AddressEdit from "@saleor/components/AddressEdit";
-import CardSpacer from "@saleor/components/CardSpacer";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
-import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
-import { AddressTypeInput } from "@saleor/customers/types";
+import AddressEdit from "@dashboard/components/AddressEdit";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
+import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
+import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorFragment,
   AddressFragment,
   OrderErrorFragment,
-} from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { getById } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { getById } from "@dashboard/misc";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

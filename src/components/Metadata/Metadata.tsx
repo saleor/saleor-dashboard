@@ -1,6 +1,6 @@
-import { MetadataInput } from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import { removeAtIndex, updateAtIndex } from "@saleor/utils/lists";
+import { MetadataInput } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import React from "react";
 
 import CardSpacer from "../CardSpacer";

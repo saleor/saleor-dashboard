@@ -1,11 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Grid from "@dashboard/components/Grid";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import Grid from "@saleor/components/Grid";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import { DiscountTypeEnum } from "@saleor/discounts/types";
-import { DiscountErrorFragment } from "@saleor/graphql";
-import { getFormErrors } from "@saleor/utils/errors";
-import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 

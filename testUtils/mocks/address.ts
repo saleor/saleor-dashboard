@@ -1,5 +1,5 @@
 import { MockedResponse } from "@apollo/client/testing";
-import { addressValidationQuery } from "@saleor/components/AddressEdit/queries";
+import { addressValidationQuery } from "@dashboard/components/AddressEdit/queries";
 
 export const addressMocks: MockedResponse[] = [
   {

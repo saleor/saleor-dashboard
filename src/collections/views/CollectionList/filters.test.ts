@@ -1,8 +1,8 @@
-import { createFilterStructure } from "@saleor/collections/components/CollectionListPage";
-import { CollectionListUrlFilters } from "@saleor/collections/urls";
-import { CollectionPublished } from "@saleor/graphql";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
+import { CollectionListUrlFilters } from "@dashboard/collections/urls";
+import { CollectionPublished } from "@dashboard/graphql";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

@@ -1,6 +1,6 @@
-import { IFilter } from "@saleor/components/Filter";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { ActiveTab, Pagination, Search, Sort } from "@saleor/types";
+import { IFilter } from "@dashboard/components/Filter";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
 import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
