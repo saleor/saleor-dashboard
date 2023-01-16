@@ -20,7 +20,7 @@ const useStyles = makeStyles(
   { name: "DatagridHeaderButtonAddRow" },
 );
 
-const ADD_ROWS_OPTIONS = [1, 2, 3, 4, 5, 10, 15, 20];
+const ADD_ROWS_OPTIONS = [1, 10, 15, 20, 30];
 
 export const HeaderButtonAddRow = ({
   onAddRow,
@@ -61,7 +61,7 @@ export const HeaderButtonAddRow = ({
           <Paper elevation={20}>
             {ADD_ROWS_OPTIONS.map(count => (
               <MenuItem key={count} onClick={() => handleSelectMenuItem(count)}>
-                {count} {count > 1 ? "varaints" : "varaint"}
+                {count}
               </MenuItem>
             ))}
           </Paper>
