@@ -17,8 +17,6 @@ export const getDiscountsProvidersWrapper = (
     openDialog: () => {},
     closeDialog: () => {},
     isDialogOpen: false,
-    undiscountedPrice: order.total.gross,
-    discountedPrice: order.total.gross,
   };
 
   const MockOrderDiscountProvider = ({ children }) => {
@@ -29,6 +27,8 @@ export const getDiscountsProvidersWrapper = (
       orderDiscount: null,
       addOrderDiscount: () => {},
       removeOrderDiscount: () => {},
+      discountedPrice: order.total.gross,
+      undiscountedPrice: order.undiscountedTotal.gross,
     };
 
     return (
@@ -46,6 +46,9 @@ export const getDiscountsProvidersWrapper = (
       orderLineDiscount: null,
       orderLineDiscountUpdateStatus: "default",
       orderLineDiscountRemoveStatus: "default",
+      totalDiscountedPrice: order.lines[0].totalPrice.gross,
+      unitUndiscountedPrice: order.lines[0].undiscountedUnitPrice.gross,
+      unitDiscountedPrice: order.lines[0].unitPrice.gross,
     });
 
     return (

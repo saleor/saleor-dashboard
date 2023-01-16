@@ -20,6 +20,7 @@ export function createVariant({
   price,
   costPrice = price,
   quantity = 10,
+  variantName,
 }) {
   fillUpVariantDetails({
     attributeName,
@@ -29,11 +30,15 @@ export function createVariant({
     quantity,
     costPrice,
     price,
+    variantName,
   });
-  cy.get(VARIANTS_SELECTORS.saveButton)
+  cy.addAliasToGraphRequest("WarehouseList")
+    .get(VARIANTS_SELECTORS.saveButton)
     .click()
-    .get(VARIANTS_SELECTORS.skuInput)
-    .should("be.enabled")
+    .wait("@WarehouseList")
+    .get(VARIANTS_SELECTORS.skuTextField)
+    .find("input")
+    .and("be.enabled")
     .get(BUTTON_SELECTORS.back)
     .click()
     .get(PRODUCT_DETAILS.productNameInput)
@@ -69,6 +74,7 @@ export function fillUpVariantDetails({
   quantity,
   costPrice,
   price,
+  variantName,
 }) {
   selectAttributeWithType({ attributeType, attributeName });
   cy.get(PRICE_LIST.priceInput)
@@ -80,8 +86,11 @@ export function fillUpVariantDetails({
       cy.wrap(input).type(costPrice);
     });
 
+  if (variantName) {
+    cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
+  }
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
   }
   if (warehouseName) {
     cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
@@ -109,7 +118,7 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
     .contains(attributeName)
     .click();
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
   }
 }
 

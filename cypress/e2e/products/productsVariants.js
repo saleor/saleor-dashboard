@@ -98,13 +98,13 @@ describe("As an admin I should be able to create variant", () => {
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
         .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("name", name);
           expect(variant).to.have.property("price", price);
           expect(variant).to.have.property("currency", "USD");
           getProductVariants(createdProduct.id, newChannel.slug);
         })
         .then(([variant]) => {
-          expect(variant).to.have.property("name", attributeValues[0]);
+          expect(variant).to.have.property("name", name);
           expect(variant).to.have.property("price", price);
           expect(variant).to.have.property("currency", "PLN");
         });
@@ -150,7 +150,7 @@ describe("As an admin I should be able to create variant", () => {
               expect(firstVariant).to.have.property("price", variants[0].price);
               expect(firstVariant).to.have.property("name", "value");
               expect(firstVariant).to.have.property("currency", "USD");
-              expect(secondVariant).to.have.property("name", "value2");
+              expect(secondVariant).to.have.property("name", secondVariantSku);
               expect(secondVariant).to.have.property(
                 "price",
                 variants[1].price,

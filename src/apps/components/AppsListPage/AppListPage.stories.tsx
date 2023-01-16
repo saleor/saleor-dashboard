@@ -1,4 +1,3 @@
-import { AppListContext } from "@saleor/apps/context";
 import {
   listActionsProps,
   pageListProps,
@@ -28,18 +27,11 @@ const props: AppsListPageProps = {
   installedAppsList: appsList,
   onAppInProgressRemove: () => undefined,
   onAppInstallRetry: () => undefined,
-  onInstalledAppRemove: () => undefined,
+  onSettingsAppOpen: () => undefined,
 };
 
 storiesOf("Apps / Apps list", module)
   .addDecorator(Decorator)
-  .addDecorator(story => (
-    <AppListContext.Provider
-      value={{ activateApp: () => undefined, deactivateApp: () => undefined }}
-    >
-      {story()}
-    </AppListContext.Provider>
-  ))
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <AppsListPage {...props} />)
   .add("loading", () => (
