@@ -50,6 +50,7 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
+import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
@@ -92,17 +93,19 @@ const App: React.FC = () => (
                 <ServiceWorker />
                 <BackgroundTasksProvider>
                   <AppStateProvider>
-                    <AuthProvider>
-                      <ShopProvider>
-                        <AppChannelProvider>
-                          <ExternalAppProvider>
-                            <ExitFormDialogProvider>
-                              <Routes />
-                            </ExitFormDialogProvider>
-                          </ExternalAppProvider>
-                        </AppChannelProvider>
-                      </ShopProvider>
-                    </AuthProvider>
+                    <FlagsServiceProvider>
+                      <AuthProvider>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExternalAppProvider>
+                              <ExitFormDialogProvider>
+                                <Routes />
+                              </ExitFormDialogProvider>
+                            </ExternalAppProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </AuthProvider>
+                    </FlagsServiceProvider>
                   </AppStateProvider>
                 </BackgroundTasksProvider>
               </MessageManagerProvider>
