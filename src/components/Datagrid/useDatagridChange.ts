@@ -131,9 +131,10 @@ function useDatagridChange(
   const onRowAdded = useCallback(
     (rowAmount: number = 1) => {
       const getArrayByRowAmount = (rowAmount: number) =>
-        Array.from({ length: rowAmount }, (_, i) => i + 1);
+        Array.from({ length: rowAmount }, (_, i) => i);
 
       const lastAddedIndex = rows - removed.length + added.length;
+
       const newAdded = [
         ...added,
         ...map(getArrayByRowAmount(rowAmount), count => lastAddedIndex + count),
