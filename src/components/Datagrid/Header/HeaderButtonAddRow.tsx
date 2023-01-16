@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(2),
     },
     popover: {
-      width: 150,
+      width: 140,
       zIndex: 3,
     },
   }),
@@ -61,7 +61,7 @@ export const HeaderButtonAddRow = ({
           <Paper elevation={20}>
             {ADD_ROWS_OPTIONS.map(count => (
               <MenuItem key={count} onClick={() => handleSelectMenuItem(count)}>
-                {count}
+                {count} {count > 1 ? "varaints" : "varaint"}
               </MenuItem>
             ))}
           </Paper>
