@@ -4,7 +4,7 @@ import { CyHttpMessages } from "cypress/types/net-stubbing";
 export const hasOperationName = (
   req: CyHttpMessages.IncomingHttpRequest,
   operationName: string,
-) => req.body?.operationName && req.body?.operationName === operationName;
+) => req.body?.operationName === operationName
 
 // Alias query if operationName matches
 export const aliasQuery = (
