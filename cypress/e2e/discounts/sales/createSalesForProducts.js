@@ -69,7 +69,13 @@ describe("As an admin I want to create sale for products", () => {
       })
       .then(({ warehouse: warehouseResp }) => {
         warehouse = warehouseResp;
-        cy.checkIfDataAreNotNull({productType,attribute,category,defaultChannel,warehouse})
+        cy.checkIfDataAreNotNull({
+          productType,
+          attribute,
+          category,
+          defaultChannel,
+          warehouse,
+        });
       });
   });
 

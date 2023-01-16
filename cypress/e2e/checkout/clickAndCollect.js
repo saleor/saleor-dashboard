@@ -83,7 +83,14 @@ describe("Warehouses in checkout", () => {
       })
       .then(({ variantsList }) => {
         variantsInOtherWarehouse = variantsList;
-        cy.checkIfDataAreNotNull({defaultChannel, usAddress, secondUsAddress, productData, checkoutData, variantsInOtherWarehouse})
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          usAddress,
+          secondUsAddress,
+          productData,
+          checkoutData,
+          variantsInOtherWarehouse,
+        });
       });
   });
 

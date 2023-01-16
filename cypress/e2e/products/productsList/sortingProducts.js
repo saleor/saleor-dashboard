@@ -27,7 +27,7 @@ describe("As an admin I should be able to sort products", () => {
     cy.clearSessionData().loginUserViaRequest();
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
-      cy.checkIfDataAreNotNull({defaultChannel})
+      cy.checkIfDataAreNotNull({ defaultChannel });
     });
   });
 

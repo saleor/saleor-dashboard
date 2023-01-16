@@ -85,8 +85,16 @@ describe("As a staff user I want to manage apps", () => {
         });
       })
       .then(({ variantsList: variants }) => {
-        variantsList = variants
-        cy.checkIfDataAreNotNull({createdApp,defaultChannel,address,warehouse,shippingMethod,variantsList,checkout})
+        variantsList = variants;
+        cy.checkIfDataAreNotNull({
+          createdApp,
+          defaultChannel,
+          address,
+          warehouse,
+          shippingMethod,
+          variantsList,
+          checkout,
+        });
       });
   });
 

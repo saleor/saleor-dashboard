@@ -74,7 +74,13 @@ describe("As a staff user I want to manage shipping weights", () => {
       })
       .then(({ variantsList: variantsListResp }) => {
         variantsList = variantsListResp;
-        cy.checkIfDataAreNotNull({defaultChannel,usAddress,shippingZone,warehouse,variantsList})
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          usAddress,
+          shippingZone,
+          warehouse,
+          variantsList,
+        });
       });
   });
 

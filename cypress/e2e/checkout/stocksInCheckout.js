@@ -56,7 +56,14 @@ describe("Manage products stocks in checkout", () => {
       lastVariantInStock = resp.createdVariants.find(
         variant => variant.name === "lastVariantInStock",
       );
-      cy.checkIfDataAreNotNull({defaultChannel, address,shippingMethod, variantsWithLowStock, variantsWithoutTrackInventory, lastVariantInStock})
+      cy.checkIfDataAreNotNull({
+        defaultChannel,
+        address,
+        shippingMethod,
+        variantsWithLowStock,
+        variantsWithoutTrackInventory,
+        lastVariantInStock,
+      });
     });
   });
 

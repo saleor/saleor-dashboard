@@ -40,13 +40,17 @@ describe("As a user I should be able to update and delete shipping zone", () => 
           warehouse = warehouseResp;
 
           updateChannelWarehouses(defaultChannel.id, warehouse.id);
-          cy.checkIfDataAreNotNull({defaultChannel, shippingZone, plAddress, warehouse})
+          cy.checkIfDataAreNotNull({
+            defaultChannel,
+            shippingZone,
+            plAddress,
+            warehouse,
+          });
         });
       });
   });
 
   beforeEach(() => {
-
     cy.clearSessionData().loginUserViaRequest();
     createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
       shippingZoneResp => {
