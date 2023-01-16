@@ -131,7 +131,7 @@ describe("Adyen payments", () => {
 
   it(
     "should purchase products with simple card",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const simpleCard = cardData;
       simpleCard.encryptedCardNumber =
@@ -149,7 +149,7 @@ describe("Adyen payments", () => {
 
   it(
     "should purchase product with 3D secure 2 Auth",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const threeDSecureCard = cardData;
       threeDSecureCard.encryptedCardNumber =
@@ -167,7 +167,7 @@ describe("Adyen payments", () => {
 
   it(
     "should purchase product with 3D secure 1 Auth",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const threeDSecureCardOneAuth = cardData;
       threeDSecureCardOneAuth.encryptedCardNumber =
@@ -186,7 +186,7 @@ describe("Adyen payments", () => {
 
   it(
     "should fail with unknown security number",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const simpleCard = cardData;
       simpleCard.encryptedCardNumber =
@@ -202,7 +202,7 @@ describe("Adyen payments", () => {
 
   it(
     "should fail with timeout in 3D authorization",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const errorCard = cardData;
       errorCard.encryptedCardNumber =
@@ -216,7 +216,7 @@ describe("Adyen payments", () => {
 
   it(
     "should fail with closed account",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const closeAccount = cardData;
       closeAccount.encryptedCardNumber =
