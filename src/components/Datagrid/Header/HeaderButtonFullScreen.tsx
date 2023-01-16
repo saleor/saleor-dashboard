@@ -1,4 +1,4 @@
-import FullScreenIcon from "@saleor/icons/FullScreenIcon";
+import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { ReactNode } from "react";

@@ -1,4 +1,4 @@
-import CardTitle from "@saleor/components/CardTitle";
+import CardTitle from "@dashboard/components/CardTitle";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { ReactNode } from "react";
 
