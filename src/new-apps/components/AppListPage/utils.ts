@@ -1,6 +1,6 @@
-import { AppListItemFragment } from "@saleor/graphql";
-import { GetV2SaleorAppsResponse } from "@saleor/new-apps/marketplace.types";
-import { InstalledApp } from "@saleor/new-apps/types";
+import { AppListItemFragment } from "@dashboard/graphql";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { InstalledApp } from "@dashboard/new-apps/types";
 
 import { AppListPageSections } from "./types";
 

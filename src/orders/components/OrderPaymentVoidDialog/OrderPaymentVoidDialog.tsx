@@ -1,3 +1,9 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import {
   Dialog,
   DialogActions,
@@ -5,13 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

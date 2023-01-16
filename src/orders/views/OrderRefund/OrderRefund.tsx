@@ -2,17 +2,17 @@ import {
   useOrderFulfillmentRefundProductsMutation,
   useOrderRefundDataQuery,
   useOrderRefundMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { extractMutationErrors } from "@saleor/misc";
-import OrderRefundPage from "@saleor/orders/components/OrderRefundPage";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { extractMutationErrors } from "@dashboard/misc";
+import OrderRefundPage from "@dashboard/orders/components/OrderRefundPage";
 import {
   OrderRefundAmountCalculationMode,
   OrderRefundSubmitData,
   OrderRefundType,
-} from "@saleor/orders/components/OrderRefundPage/form";
-import { orderUrl } from "@saleor/orders/urls";
+} from "@dashboard/orders/components/OrderRefundPage/form";
+import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

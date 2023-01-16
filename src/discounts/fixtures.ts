@@ -7,7 +7,7 @@ import {
   VoucherDetailsFragment,
   VoucherFragment,
   VoucherTypeEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const saleList: SaleFragment[] = [
   {

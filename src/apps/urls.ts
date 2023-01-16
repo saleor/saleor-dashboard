@@ -1,6 +1,6 @@
-import { getApiUrl } from "@saleor/config";
-import { FlagWithName } from "@saleor/hooks/useFlags/types";
-import { stringifyQs } from "@saleor/utils/urls";
+import { getApiUrl } from "@dashboard/config";
+import { FlagWithName } from "@dashboard/hooks/useFlags/types";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";

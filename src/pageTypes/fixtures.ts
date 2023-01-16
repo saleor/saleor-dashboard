@@ -3,7 +3,7 @@ import {
   AttributeTypeEnum,
   PageTypeDetailsFragment,
   PageTypeFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const pageTypes: PageTypeFragment[] = [
   {

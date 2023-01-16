@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import PreviewPill from "@saleor/components/PreviewPill";
-import { sectionNames } from "@saleor/intl";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { sectionNames } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

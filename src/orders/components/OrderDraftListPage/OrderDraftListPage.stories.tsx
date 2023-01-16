@@ -7,10 +7,10 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -3,10 +3,10 @@ import {
   getAppDeepPathFromDashboardUrl,
   prepareFeatureFlagsList,
   resolveAppIframeUrl,
-} from "@saleor/apps/urls";
-import { useAllFlags } from "@saleor/hooks/useFlags";
-import useLocale from "@saleor/hooks/useLocale";
-import useShop from "@saleor/hooks/useShop";
+} from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/hooks/useFlags";
+import useLocale from "@dashboard/hooks/useLocale";
+import useShop from "@dashboard/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect } from "react";

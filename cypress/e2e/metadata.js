@@ -41,6 +41,7 @@ describe("Test for metadata", () => {
       })
       .then(({ product: productResp }) => {
         product = productResp;
+        cy.checkIfDataAreNotNull({ channel, product });
       });
   });
 

@@ -5,8 +5,8 @@ import {
   OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
 import {

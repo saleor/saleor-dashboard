@@ -1,16 +1,16 @@
-import { TableCell, Typography } from "@material-ui/core";
-import Link from "@saleor/components/Link";
-import Money from "@saleor/components/Money";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import TableRowLink from "@saleor/components/TableRowLink";
+import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   OrderErrorFragment,
   OrderLineFragment,
   OrderLineInput,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { OrderLineDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import clsx from "clsx";
 import React, { useRef } from "react";
 

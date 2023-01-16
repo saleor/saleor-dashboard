@@ -1,8 +1,8 @@
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { InstalledApp } from "@dashboard/new-apps/types";
+import { ListProps } from "@dashboard/types";
 import { Table, TableBody, TableFooter, TableRow } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import { InstalledApp } from "@saleor/new-apps/types";
-import { ListProps } from "@saleor/types";
 import React from "react";
 
 import InstalledAppListRow from "../InstalledAppListRow";

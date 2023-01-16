@@ -1,4 +1,4 @@
-import { AppPagePathSegment } from "@saleor/apps/hooks/useAppsPageNavigation";
+import { AppPagePathSegment } from "@dashboard/apps/hooks/useAppsPageNavigation";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import React, { ComponentProps } from "react";
 import { useIntl } from "react-intl";

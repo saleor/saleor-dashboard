@@ -29,6 +29,7 @@ describe("As an admin I want to delete and update content attribute", () => {
     }).then(attributeResp => {
       attribute = attributeResp;
     });
+    cy.checkIfDataAreNotNull(attribute);
   });
 
   it(

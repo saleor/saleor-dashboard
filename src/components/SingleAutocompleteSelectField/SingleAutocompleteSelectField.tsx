@@ -1,3 +1,5 @@
+import { ExtendedFormHelperTextProps } from "@dashboard/channels/components/ChannelForm/types";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   InputBase,
   OutlinedInputProps,
@@ -6,9 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
-import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { ChevronIcon } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import Downshift from "downshift";
 import Fuse from "fuse.js";
@@ -37,7 +37,7 @@ export interface SingleAutocompleteSelectFieldProps
   helperText?: string;
   label?: string;
   InputProps?: InputProps;
-  autocomplete?: string,
+  autocomplete?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;

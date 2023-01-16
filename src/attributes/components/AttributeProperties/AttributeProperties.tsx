@@ -1,13 +1,13 @@
+import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@dashboard/attributes/utils/data";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { AttributeErrorFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@saleor/attributes/utils/data";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { AttributeErrorFragment, AttributeTypeEnum } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

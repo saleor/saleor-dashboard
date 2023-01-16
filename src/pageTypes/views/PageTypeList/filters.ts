@@ -1,4 +1,4 @@
-import { PageTypeFilterInput } from "@saleor/graphql";
+import { PageTypeFilterInput } from "@dashboard/graphql";
 
 import {
   createFilterTabUtils,

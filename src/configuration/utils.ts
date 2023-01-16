@@ -1,5 +1,5 @@
-import { hasAnyPermissions } from "@saleor/auth/misc";
-import { PermissionEnum, UserFragment } from "@saleor/graphql";
+import { hasAnyPermissions } from "@dashboard/auth/misc";
+import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 import { createConfigurationMenu } from ".";

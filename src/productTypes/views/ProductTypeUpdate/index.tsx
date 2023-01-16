@@ -1,11 +1,11 @@
-import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
-import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
-import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
-import { Button } from "@saleor/components/Button";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
+import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
+import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { Button } from "@dashboard/components/Button";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   AssignProductAttributeMutation,
   ProductAttributeType,
@@ -17,19 +17,19 @@ import {
   useProductTypeUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
-import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
-import useProductTypeOperations from "@saleor/productTypes/hooks/useProductTypeOperations";
-import useAvailableProductAttributeSearch from "@saleor/searches/useAvailableProductAttributeSearch";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
-import { ReorderEvent } from "@saleor/types";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
+import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
+import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
+import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { ReorderEvent } from "@dashboard/types";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

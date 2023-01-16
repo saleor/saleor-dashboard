@@ -1,14 +1,14 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Grid from "@dashboard/components/Grid";
+import { ProductErrorFragment } from "@dashboard/graphql";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import {
   Card,
   CardContent,
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import Grid from "@saleor/components/Grid";
-import { ProductErrorFragment } from "@saleor/graphql";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 

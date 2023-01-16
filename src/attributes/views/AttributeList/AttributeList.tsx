@@ -6,27 +6,27 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from "@saleor/attributes/views/AttributeList/filters";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+} from "@dashboard/attributes/views/AttributeList/filters";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
+} from "@dashboard/components/SaveFilterTabDialog";
 import {
   useAttributeBulkDeleteMutation,
   useAttributeListQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
+} from "@dashboard/hooks/usePaginator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 

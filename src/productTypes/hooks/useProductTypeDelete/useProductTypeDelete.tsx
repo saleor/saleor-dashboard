@@ -1,16 +1,16 @@
 import {
   ProductCountQueryVariables,
   useProductCountQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   UseTypeDeleteData,
   UseTypeDeleteProps,
-} from "@saleor/pageTypes/hooks/usePageTypeDelete/types";
-import { productListUrl } from "@saleor/products/urls";
+} from "@dashboard/pageTypes/hooks/usePageTypeDelete/types";
+import { productListUrl } from "@dashboard/products/urls";
 import {
   ProductTypeListUrlQueryParams,
   ProductTypeUrlQueryParams,
-} from "@saleor/productTypes/urls";
+} from "@dashboard/productTypes/urls";
 import React from "react";
 
 import * as messages from "./messages";

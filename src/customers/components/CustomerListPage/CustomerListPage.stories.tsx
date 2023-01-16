@@ -5,10 +5,10 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

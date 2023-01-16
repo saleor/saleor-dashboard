@@ -1,7 +1,6 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { AttributeReference } from "@saleor/attributes/utils/data";
-import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
+import { AttributeReference } from "@dashboard/attributes/utils/data";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -10,11 +9,12 @@ import {
   MeasurementUnitsEnum,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
-import { FormsetAtomicData } from "@saleor/hooks/useFormset";
+} from "@dashboard/graphql";
+import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { FetchMoreProps } from "@dashboard/types";
+import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
-import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
 import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

@@ -1,8 +1,8 @@
+import { UserFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { UserFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

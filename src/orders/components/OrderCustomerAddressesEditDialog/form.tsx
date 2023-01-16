@@ -1,18 +1,18 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { AddressTypeInput } from "@saleor/customers/types";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AddressFragment,
   CountryWithCodeFragment,
   Node,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+} from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {

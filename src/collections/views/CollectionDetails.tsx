@@ -1,16 +1,15 @@
-import { DialogContentText } from "@material-ui/core";
 import {
   createCollectionChannels,
   createCollectionChannelsData,
-} from "@saleor/channels/utils";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import AssignProductDialog from "@saleor/components/AssignProductDialog";
-import { Button } from "@saleor/components/Button";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
+} from "@dashboard/channels/utils";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import AssignProductDialog from "@dashboard/components/AssignProductDialog";
+import { Button } from "@dashboard/components/Button";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   CollectionInput,
   CollectionUpdateMutation,
@@ -22,23 +21,24 @@ import {
   useUnassignCollectionProductMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannels from "@saleor/hooks/useChannels";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useChannels from "@dashboard/hooks/useChannels";
 import useLocalPaginator, {
   useLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import { commonMessages, errorMessages } from "@saleor/intl";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import { arrayDiff } from "@saleor/utils/arrays";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/hooks/useLocalPaginator";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import { arrayDiff } from "@dashboard/utils/arrays";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

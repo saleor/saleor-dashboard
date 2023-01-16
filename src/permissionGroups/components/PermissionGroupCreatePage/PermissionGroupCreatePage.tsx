@@ -1,17 +1,20 @@
-import AccountPermissions from "@saleor/components/AccountPermissions";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Savebar from "@saleor/components/Savebar";
-import { PermissionEnum, PermissionGroupErrorFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+import AccountPermissions from "@dashboard/components/AccountPermissions";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Savebar from "@dashboard/components/Savebar";
+import {
+  PermissionEnum,
+  PermissionGroupErrorFragment,
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
-import { getFormErrors } from "@saleor/utils/errors";
-import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";
 import { useIntl } from "react-intl";
 

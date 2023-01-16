@@ -1,4 +1,4 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   FulfillmentFragment,
   FulfillmentStatus,
@@ -9,22 +9,22 @@ import {
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   extractMutationErrors,
   getById,
   getMutationState,
   getStringOrPlaceholder,
-} from "@saleor/misc";
-import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
-import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
-import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
-import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
-import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
-import { transformFuflillmentLinesToStockFormsetData } from "@saleor/orders/utils/data";
-import { PartialMutationProviderOutput } from "@saleor/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/misc";
+import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
+import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
+import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
+import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
+import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import { transformFuflillmentLinesToStockFormsetData } from "@dashboard/orders/utils/data";
+import { PartialMutationProviderOutput } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

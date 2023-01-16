@@ -1,3 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
+import { WebhookErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
 import {
   Card,
   CardContent,
@@ -5,15 +13,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import Link from "@saleor/components/Link";
-import { WebhookErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { Pill } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

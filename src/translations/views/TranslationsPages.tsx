@@ -1,16 +1,16 @@
-import { OutputData } from "@editorjs/editorjs";
 import {
   LanguageCodeEnum,
   usePageTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdatePageTranslationsMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import { stringifyQs } from "@saleor/utils/urls";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import { stringifyQs } from "@dashboard/utils/urls";
+import { OutputData } from "@editorjs/editorjs";
 import React from "react";
 import { useIntl } from "react-intl";
 

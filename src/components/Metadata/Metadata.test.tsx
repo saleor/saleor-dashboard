@@ -1,4 +1,4 @@
-import useForm from "@saleor/hooks/useForm";
+import useForm from "@dashboard/hooks/useForm";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

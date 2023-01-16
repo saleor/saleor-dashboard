@@ -1,5 +1,5 @@
-import { UserError } from "@saleor/types";
-import { FormErrors, getFormErrors } from "@saleor/utils/errors";
+import { UserError } from "@dashboard/types";
+import { FormErrors, getFormErrors } from "@dashboard/utils/errors";
 import { useEffect, useState } from "react";
 
 export function useDialogFormReset<

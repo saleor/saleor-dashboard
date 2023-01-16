@@ -1,21 +1,21 @@
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderFulfillLineFragment } from "@dashboard/graphql";
+import { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import {
+  getAttributesCaption,
+  getOrderLineAvailableQuantity,
+  getWarehouseStock,
+  OrderFulfillLineFormData,
+} from "@dashboard/orders/utils/data";
 import { TableCell, TextField, Typography } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderFulfillLineFragment } from "@saleor/graphql";
-import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import {
   ChevronIcon,
   IconButton,
   Tooltip,
   WarningIcon,
 } from "@saleor/macaw-ui";
-import {
-  getAttributesCaption,
-  getOrderLineAvailableQuantity,
-  getWarehouseStock,
-  OrderFulfillLineFormData,
-} from "@saleor/orders/utils/data";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";

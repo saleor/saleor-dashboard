@@ -1,10 +1,10 @@
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
+import { LanguageFragment } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
-import { LanguageFragment } from "@saleor/graphql";
-import { maybe } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

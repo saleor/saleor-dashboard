@@ -1,11 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { TaxClassBaseFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { FetchMoreProps } from "@dashboard/types";
 import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { TaxClassBaseFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

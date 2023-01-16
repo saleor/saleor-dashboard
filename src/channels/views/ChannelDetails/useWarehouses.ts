@@ -1,8 +1,8 @@
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
-import { hasOneOfPermissions } from "@saleor/components/RequirePermissions";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { PermissionEnum, useWarehousesCountQuery } from "@saleor/graphql";
-import useWarehouseSearch from "@saleor/searches/useWarehouseSearch";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { PermissionEnum, useWarehousesCountQuery } from "@dashboard/graphql";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 
 export const useWarehouses = () => {
   const userPermissions = useUserPermissions();

@@ -1,5 +1,5 @@
 import { MockedResponse } from "@apollo/client/testing";
-import { SearchPageTypesDocument } from "@saleor/graphql";
+import { SearchPageTypesDocument } from "@dashboard/graphql";
 
 export const pageTypesMocks: MockedResponse[] = [
   {

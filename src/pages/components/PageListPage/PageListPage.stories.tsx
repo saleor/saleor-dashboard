@@ -2,11 +2,11 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-} from "@saleor/fixtures";
-import { pageList } from "@saleor/pages/fixtures";
-import { PageListUrlSortField } from "@saleor/pages/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { pageList } from "@dashboard/pages/fixtures";
+import { PageListUrlSortField } from "@dashboard/pages/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -1,13 +1,13 @@
 import {
   useCreateShippingZoneMutation,
   useShopCountriesQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import { mapCountriesToCountriesCodes } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

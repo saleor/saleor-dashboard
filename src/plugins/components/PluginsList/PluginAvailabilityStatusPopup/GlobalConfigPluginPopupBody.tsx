@@ -1,6 +1,6 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { PluginBaseFragment } from "@dashboard/graphql";
 import { CardContent, Typography } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import { PluginBaseFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

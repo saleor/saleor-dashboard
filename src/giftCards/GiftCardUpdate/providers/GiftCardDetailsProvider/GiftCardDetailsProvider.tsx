@@ -1,4 +1,7 @@
-import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@saleor/graphql";
+import {
+  GiftCardDetailsQuery,
+  useGiftCardDetailsQuery,
+} from "@dashboard/graphql";
 import React, { createContext } from "react";
 
 import { ExtendedGiftCard } from "./types";

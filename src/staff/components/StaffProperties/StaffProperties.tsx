@@ -1,15 +1,15 @@
 import photoIcon from "@assets/images/photo-icon.svg";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
+import CardTitle from "@dashboard/components/CardTitle";
 import {
   StaffErrorFragment,
   StaffMemberDetailsFragment,
   UserFragment,
-} from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getStaffErrorMessage from "@dashboard/utils/errors/staff";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getStaffErrorMessage from "@saleor/utils/errors/staff";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";

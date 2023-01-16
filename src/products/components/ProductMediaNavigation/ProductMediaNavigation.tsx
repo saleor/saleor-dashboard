@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
 import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

@@ -1,18 +1,18 @@
 import { useApolloClient } from "@apollo/client";
-import AppDeleteDialog from "@saleor/apps/components/AppDeleteDialog";
-import { appMessages } from "@saleor/apps/messages";
-import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
-import NotFoundPage from "@saleor/components/NotFoundPage";
+import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
+import { appMessages } from "@dashboard/apps/messages";
+import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
   useAppActivateMutation,
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import getAppErrorMessage from "@saleor/utils/errors/app";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

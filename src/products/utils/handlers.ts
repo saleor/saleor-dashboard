@@ -4,7 +4,7 @@ import {
   ChannelPriceAndPreorderData,
   ChannelPriceArgs,
   ChannelPriceData,
-} from "@saleor/channels/utils";
+} from "@dashboard/channels/utils";
 import {
   ProductChannelListingAddInput,
   ProductVariantFragment,
@@ -12,8 +12,8 @@ import {
   VariantMediaAssignMutationVariables,
   VariantMediaUnassignMutation,
   VariantMediaUnassignMutationVariables,
-} from "@saleor/graphql";
-import { FormChange, UseFormResult } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { diff } from "fast-array-diff";
 import moment from "moment";
 

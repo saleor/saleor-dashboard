@@ -1,10 +1,10 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { LanguageFragment } from "@dashboard/graphql";
+import { languageEntitiesUrl } from "@dashboard/translations/urls";
 import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { LanguageFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { languageEntitiesUrl } from "@saleor/translations/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,36 +1,36 @@
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata/Metadata";
-import { MetadataFormData } from "@saleor/components/Metadata/types";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ProductAttributeType,
   ProductTypeDetailsQuery,
   ProductTypeKindEnum,
   TaxClassBaseFragment,
   WeightUnitsEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { handleTaxClassChange } from "@saleor/productTypes/handlers";
-import { productTypeListUrl } from "@saleor/productTypes/urls";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { sectionNames } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
+import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import {
   FetchMoreProps,
   ListActions,
   ReorderEvent,
   UserError,
-} from "@saleor/types";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+} from "@dashboard/types";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,17 +1,17 @@
 import { FetchResult } from "@apollo/client";
-import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
-import { prepareAttributesInput } from "@saleor/attributes/utils/handlers";
-import { VALUES_PAGINATE_BY } from "@saleor/config";
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
+import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
+import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
-} from "@saleor/graphql";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
-import { getColumnChannelAvailability } from "@saleor/products/components/ProductVariants/datagrid/columnData";
-import { getAttributeInputFromProduct } from "@saleor/products/utils/data";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { getColumnChannelAvailability } from "@dashboard/products/components/ProductVariants/datagrid/columnData";
+import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
 

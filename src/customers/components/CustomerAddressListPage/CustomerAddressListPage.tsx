@@ -1,12 +1,12 @@
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { customerUrl } from "@dashboard/customers/urls";
+import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
+import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { customerUrl } from "@saleor/customers/urls";
-import { AddressTypeEnum, CustomerAddressesFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

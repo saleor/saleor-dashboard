@@ -1,6 +1,6 @@
+import { KeyValue } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { KeyValue } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

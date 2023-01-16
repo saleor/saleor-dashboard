@@ -95,6 +95,14 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       })
       .then(variantsListResp => {
         secondVariantsList = variantsListResp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          address,
+          warehouse,
+          variantsList,
+          secondVariantsList,
+          attribute,
+        });
       });
   });
 

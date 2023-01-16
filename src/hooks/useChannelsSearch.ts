@@ -1,5 +1,5 @@
-import { ChannelDetailsFragment } from "@saleor/graphql";
-import { FetchMoreProps, Search, SearchProps } from "@saleor/types";
+import { ChannelDetailsFragment } from "@dashboard/graphql";
+import { FetchMoreProps, Search, SearchProps } from "@dashboard/types";
 import { filter } from "fuzzaldrin";
 import React from "react";
 

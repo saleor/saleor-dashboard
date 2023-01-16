@@ -1,8 +1,8 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { createVariantChannels } from "@saleor/channels/utils";
-import { ProductErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { createVariantChannels } from "@dashboard/channels/utils";
+import { ProductErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

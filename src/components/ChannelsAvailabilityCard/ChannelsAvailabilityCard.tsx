@@ -1,9 +1,9 @@
+import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
+import Hr from "@dashboard/components/Hr";
+import { PermissionEnum } from "@dashboard/graphql";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { RequireOnlyOne } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
-import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
-import Hr from "@saleor/components/Hr";
-import { PermissionEnum } from "@saleor/graphql";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { RequireOnlyOne } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

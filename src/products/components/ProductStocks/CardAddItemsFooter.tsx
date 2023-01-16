@@ -1,5 +1,5 @@
+import Link from "@dashboard/components/Link";
 import AddIcon from "@material-ui/icons/Add";
-import Link from "@saleor/components/Link";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import React, { MutableRefObject } from "react";
 

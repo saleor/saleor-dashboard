@@ -1,3 +1,4 @@
+import useForm from "@dashboard/hooks/useForm";
 import {
   Card,
   CardContent,
@@ -6,7 +7,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
-import useForm from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

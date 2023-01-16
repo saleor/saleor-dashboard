@@ -83,9 +83,17 @@ describe("Products without shipment option", () => {
             name: nameProdWithoutShipping,
             productTypeId: productTypeResp.id,
             warehouseId: warehouse.id,
-          }).then(
-            ({ variantsList }) => (productWithoutShipping = variantsList),
-          );
+          }).then(({ variantsList }) => {
+            productWithoutShipping = variantsList;
+            cy.checkIfDataAreNotNull({
+              channel,
+              address,
+              warehouse,
+              shippingMethod,
+              productWithShipping,
+              productWithoutShipping,
+            });
+          });
         },
       );
   });

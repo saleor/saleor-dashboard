@@ -1,6 +1,6 @@
+import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

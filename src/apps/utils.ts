@@ -1,4 +1,4 @@
-import { AppsInstallationsQuery } from "@saleor/graphql";
+import { AppsInstallationsQuery } from "@dashboard/graphql";
 
 const tunnelKeywords = [".ngrok.io", ".saleor.live"];
 

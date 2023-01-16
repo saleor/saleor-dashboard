@@ -39,13 +39,17 @@ describe("Channels", () => {
         shippingZone = shippingZoneResp;
       },
     );
-    cy.fixture("addresses").then(addresses => {
-      usAddress = addresses.usAddress;
-      createWarehouseViaApi({
-        name: randomName,
-        address: usAddress,
+    cy.fixture("addresses")
+      .then(addresses => {
+        usAddress = addresses.usAddress;
+        createWarehouseViaApi({
+          name: randomName,
+          address: usAddress,
+        });
+      })
+      .then(warehouse => {
+        cy.checkIfDataAreNotNull({ shippingZone, usAddress, warehouse });
       });
-    });
   });
 
   beforeEach(() => {

@@ -1,15 +1,18 @@
-import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import {
+  FilterElement,
+  FilterElementRegular,
+} from "@dashboard/components/Filter";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   SaleFilterKeys,
   SaleListFilterOpts,
-} from "@saleor/discounts/components/SaleListPage";
+} from "@dashboard/discounts/components/SaleListPage";
 import {
   DiscountStatusEnum,
   DiscountValueTypeEnum,
   SaleFilterInput,
-} from "@saleor/graphql";
-import { findValueInEnum, joinDateTime, maybe } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,

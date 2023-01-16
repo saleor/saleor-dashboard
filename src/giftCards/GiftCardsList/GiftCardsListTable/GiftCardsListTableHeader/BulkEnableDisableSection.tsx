@@ -1,11 +1,11 @@
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { IMessage } from "@saleor/components/messages";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { IMessage } from "@dashboard/components/messages";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getByIds } from "@saleor/orders/components/OrderReturnPage/utils";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

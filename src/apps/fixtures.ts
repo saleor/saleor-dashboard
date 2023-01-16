@@ -6,7 +6,7 @@ import {
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const appsList: AppListItemFragment[] = [
   {

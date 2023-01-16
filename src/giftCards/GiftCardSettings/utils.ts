@@ -1,7 +1,7 @@
 import {
   GiftCardSettingsExpiryTypeEnum,
   GiftCardSettingsUpdateInput,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { GiftCardSettingsFormData } from "./types";
 

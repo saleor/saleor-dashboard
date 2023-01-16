@@ -1,7 +1,7 @@
 import {
   DatagridChange,
   DatagridChangeOpts,
-} from "@saleor/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/useDatagridChange";
 
 import { getColumnChannel, getColumnChannelAvailability } from "./columnData";
 

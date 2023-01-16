@@ -1,20 +1,19 @@
-import { GridCell } from "@glideapps/glide-data-grid";
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData } from "@dashboard/channels/utils";
 import {
   booleanCell,
   dropdownCell,
   moneyCell,
   numberCell,
   textCell,
-} from "@saleor/components/Datagrid/cells";
-import { emptyDropdownCellValue } from "@saleor/components/Datagrid/DropdownCell";
-import { numberCellEmptyValue } from "@saleor/components/Datagrid/NumberCell";
-import { AvailableColumn } from "@saleor/components/Datagrid/types";
+} from "@dashboard/components/Datagrid/cells";
+import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/DropdownCell";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
+import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
   DatagridChange,
   DatagridChangeOpts,
-} from "@saleor/components/Datagrid/useDatagridChange";
-import { Choice } from "@saleor/components/SingleSelectField";
+} from "@dashboard/components/Datagrid/useDatagridChange";
+import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
@@ -22,9 +21,10 @@ import {
   VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
-} from "@saleor/graphql";
-import { ProductVariantListError } from "@saleor/products/views/ProductUpdate/handlers/errors";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
+import { GridCell } from "@glideapps/glide-data-grid";
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 

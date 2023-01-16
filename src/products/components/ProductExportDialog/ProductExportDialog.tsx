@@ -1,3 +1,23 @@
+import { Button } from "@dashboard/components/Button";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import {
+  ChannelFragment,
+  ExportErrorFragment,
+  ExportProductsInput,
+  SearchAttributesQuery,
+  WarehouseFragment,
+} from "@dashboard/graphql";
+import useForm, { FormChange } from "@dashboard/hooks/useForm";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useWizard from "@dashboard/hooks/useWizard";
+import { buttonMessages } from "@dashboard/intl";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import getExportErrorMessage from "@dashboard/utils/errors/export";
+import { toggle } from "@dashboard/utils/lists";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import {
   Dialog,
   DialogActions,
@@ -5,27 +25,7 @@ import {
   DialogTitle,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import makeCreatorSteps, { Step } from "@saleor/components/CreatorSteps";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import {
-  ChannelFragment,
-  ExportErrorFragment,
-  ExportProductsInput,
-  SearchAttributesQuery,
-  WarehouseFragment,
-} from "@saleor/graphql";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useWizard from "@saleor/hooks/useWizard";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@saleor/types";
-import getExportErrorMessage from "@saleor/utils/errors/export";
-import { toggle } from "@saleor/utils/lists";
-import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

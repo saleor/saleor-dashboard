@@ -1,7 +1,7 @@
-import { pageListProps, searchPageProps } from "@saleor/fixtures";
-import { LanguageCodeEnum } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { pageListProps, searchPageProps } from "@dashboard/fixtures";
+import { LanguageCodeEnum } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

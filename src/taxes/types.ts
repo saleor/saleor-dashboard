@@ -1,6 +1,6 @@
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { TaxClassRateInput } from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { TaxClassRateInput } from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 
 export interface TaxClassesPageFormData extends MetadataFormData {
   id: string;

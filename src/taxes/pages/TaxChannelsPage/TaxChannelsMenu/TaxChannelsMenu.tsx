@@ -1,11 +1,11 @@
+import ListItemLink from "@dashboard/components/ListItemLink";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TaxConfigurationFragment } from "@dashboard/graphql";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, Divider } from "@material-ui/core";
-import ListItemLink from "@saleor/components/ListItemLink";
-import Skeleton from "@saleor/components/Skeleton";
-import { TaxConfigurationFragment } from "@saleor/graphql";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { taxConfigurationListUrl } from "@saleor/taxes/urls";
-import { isLastElement } from "@saleor/taxes/utils/utils";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

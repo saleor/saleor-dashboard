@@ -1,5 +1,5 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   OrderDetailsQuery,
   OrderDraftCancelMutation,
@@ -13,22 +13,22 @@ import {
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
-import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/types";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { CustomerEditData } from "@dashboard/orders/components/OrderCustomer";
+import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import {
   CustomerChangeActionEnum,
   OrderCustomerChangeData,
-} from "@saleor/orders/components/OrderCustomerChangeDialog/form";
-import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
-import { getVariantSearchAddress } from "@saleor/orders/utils/data";
-import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import useCustomerSearch from "@saleor/searches/useCustomerSearch";
-import { useOrderVariantSearch } from "@saleor/searches/useOrderVariantSearch";
-import { PartialMutationProviderOutput } from "@saleor/types";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
+import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { getVariantSearchAddress } from "@dashboard/orders/utils/data";
+import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
+import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
+import { PartialMutationProviderOutput } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
