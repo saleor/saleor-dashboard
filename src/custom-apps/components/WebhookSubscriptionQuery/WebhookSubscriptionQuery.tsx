@@ -1,9 +1,9 @@
 import "graphiql/graphiql.min.css";
 
+import CardTitle from "@dashboard/components/CardTitle";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

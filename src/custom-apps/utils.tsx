@@ -14,28 +14,31 @@ export function isUnnamed(webhook: WebhookFragment | undefined): boolean {
 type WebhookEventType = WebhookEventTypeSyncEnum | WebhookEventTypeAsyncEnum;
 
 const isWebhookInPreview = (webhook: WebhookEventType) =>
-  ([
-    WebhookEventTypeSyncEnum.CHECKOUT_CALCULATE_TAXES,
-    WebhookEventTypeSyncEnum.ORDER_CALCULATE_TAXES,
-  ] as WebhookEventType[]).includes(webhook);
+  (
+    [
+      WebhookEventTypeSyncEnum.CHECKOUT_CALCULATE_TAXES,
+      WebhookEventTypeSyncEnum.ORDER_CALCULATE_TAXES,
+    ] as WebhookEventType[]
+  ).includes(webhook);
 
 const isAsyncWebhookInPreview = (webhook: WebhookEventType) =>
-  ([
-    WebhookEventTypeAsyncEnum.GIFT_CARD_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.ORDER_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.CUSTOMER_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.COLLECTION_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.PRODUCT_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.CHECKOUT_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.FULFILLMENT_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.SHIPPING_ZONE_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.TRANSACTION_ITEM_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.WAREHOUSE_METADATA_UPDATED,
-    WebhookEventTypeAsyncEnum.VOUCHER_METADATA_UPDATED,
-  ] as WebhookEventType[]).includes(webhook);
+  (
+    [
+      WebhookEventTypeAsyncEnum.GIFT_CARD_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.ORDER_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.CUSTOMER_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.COLLECTION_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.PRODUCT_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.CHECKOUT_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.FULFILLMENT_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.SHIPPING_ZONE_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.TRANSACTION_ITEM_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.WAREHOUSE_METADATA_UPDATED,
+      WebhookEventTypeAsyncEnum.VOUCHER_METADATA_UPDATED,
+    ] as WebhookEventType[]
+  ).includes(webhook);
 
-// TODO remove
 export function mapSyncEventsToChoices(
   events: WebhookEventTypeSyncEnum[],
 ): MultiAutocompleteChoiceType[] {
@@ -46,7 +49,6 @@ export function mapSyncEventsToChoices(
   }));
 }
 
-// TODO remove
 export function mapAsyncEventsToChoices(
   events: WebhookEventTypeAsyncEnum[],
   selectedEvents: WebhookEventTypeAsyncEnum[],

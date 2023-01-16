@@ -18,14 +18,14 @@ import {
   useTheme as useGraphiqlTheme,
   UseVariableEditorArgs,
   WriteableEditorProps,
-} from '@graphiql/react';
+} from "@graphiql/react";
 import { useTheme } from "@saleor/macaw-ui";
 import React, {
   ComponentType,
   PropsWithChildren,
   ReactNode,
   useEffect,
-} from 'react';
+} from "react";
 
 export interface GraphiQLToolbarConfig {
   /**
@@ -36,7 +36,7 @@ export interface GraphiQLToolbarConfig {
   additionalContent?: React.ReactNode;
 }
 
-export type GraphiQLProps = Omit<GraphiQLProviderProps, 'children'> &
+export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> &
   GraphiQLInterfaceProps;
 
 export function GraphiQL({
@@ -70,9 +70,9 @@ export function GraphiQL({
   ...props
 }: GraphiQLProps) {
   // Ensure props are correct
-  if (typeof fetcher !== 'function') {
+  if (typeof fetcher !== "function") {
     throw new TypeError(
-      'The `GraphiQL` component requires a `fetcher` function to be passed as prop.',
+      "The `GraphiQL` component requires a `fetcher` function to be passed as prop.",
     );
   }
 
@@ -114,35 +114,19 @@ export function GraphiQL({
 GraphiQL.Toolbar = GraphiQLToolbar;
 
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
+  // @ts-ignore
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
 
 export type GraphiQLInterfaceProps = WriteableEditorProps &
-  AddSuffix<Pick<UseQueryEditorArgs, 'onEdit'>, 'Query'> &
-  Pick<UseQueryEditorArgs, 'onCopyQuery'> &
-  AddSuffix<Pick<UseVariableEditorArgs, 'onEdit'>, 'Variables'> &
-  AddSuffix<Pick<UseHeaderEditorArgs, 'onEdit'>, 'Headers'> &
-  Pick<UseResponseEditorArgs, 'responseTooltip'> & {
+  AddSuffix<Pick<UseQueryEditorArgs, "onEdit">, "Query"> &
+  Pick<UseQueryEditorArgs, "onCopyQuery"> &
+  AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
+  AddSuffix<Pick<UseHeaderEditorArgs, "onEdit">, "Headers"> &
+  Pick<UseResponseEditorArgs, "responseTooltip"> & {
     children?: ReactNode;
-    /**
-     * Set the default state for the editor tools.
-     * - `false` hides the editor tools
-     * - `true` shows the editor tools
-     * - `'variables'` specifically shows the variables editor
-     * - `'headers'` specifically shows the headers editor
-     * By default the editor tools are initially shown when at least one of the
-     * editors has contents.
-     */
-    defaultEditorToolsVisibility?: boolean | 'variables' | 'headers';
-    /**
-     * Toggle if the headers editor should be shown inside the editor tools.
-     * @default true
-     */
+    defaultEditorToolsVisibility?: boolean | "variables" | "headers";
     isHeadersEditorEnabled?: boolean;
-    /**
-     * An object that allows configuration of the toolbar next to the query
-     * editor.
-     */
     toolbar?: GraphiQLToolbarConfig;
   };
 
@@ -157,46 +141,21 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
 
   const pluginResize = useDragResize({
     defaultSizeRelation: 1 / 3,
-    direction: 'horizontal',
-    initiallyHidden: pluginContext?.visiblePlugin ? undefined : 'first',
-    onHiddenElementChange: resizableElement => {
-      if (resizableElement === 'first') {
-        // pluginContext?.setVisiblePlugin(null);
-      }
-    },
+    direction: "horizontal",
+    initiallyHidden: pluginContext?.visiblePlugin ? undefined : "first",
     sizeThresholdSecond: 200,
-    storageKey: 'docExplorerFlex',
+    storageKey: "docExplorerFlex",
   });
   const editorResize = useDragResize({
-    direction: 'horizontal',
-    storageKey: 'editorFlex',
+    direction: "horizontal",
+    storageKey: "editorFlex",
   });
   const editorToolsResize = useDragResize({
     defaultSizeRelation: 3,
-    direction: 'vertical',
-    // initiallyHidden: (() => {
-    //   if (
-    //     props.defaultEditorToolsVisibility === 'variables' ||
-    //     props.defaultEditorToolsVisibility === 'headers'
-    //   ) {
-    //     return undefined;
-    //   }
-
-    //   if (typeof props.defaultEditorToolsVisibility === 'boolean') {
-    //     return props.defaultEditorToolsVisibility ? undefined : 'second';
-    //   }
-
-    //   return editorContext.initialVariables || editorContext.initialHeaders
-    //     ? undefined
-    //     : 'second';
-    // })(),
+    direction: "vertical",
     sizeThresholdSecond: 60,
-    storageKey: 'secondaryEditorFlex',
+    storageKey: "secondaryEditorFlex",
   });
-
-  // const [showDialog, setShowDialog] = useState<
-  //   'settings' | 'short-keys' | null
-  // >(null);
 
   const children = React.Children.toArray(props.children);
 
@@ -218,19 +177,12 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   );
 
   const onClickReference = () => {
-    if (pluginResize.hiddenElement === 'first') {
+    if (pluginResize.hiddenElement === "first") {
       pluginResize.setHiddenElement(null);
     }
   };
 
-  // const modifier =
-  //   window.navigator.platform.toLowerCase().indexOf('mac') === 0 ? (
-  //     <code className="graphiql-key">Cmd</code>
-  //   ) : (
-  //     <code className="graphiql-key">Ctrl</code>
-  //   );
-
-  const theme = useTheme()
+  const theme = useTheme();
   const rootStyle = {
     "--font-size-body": theme.typography.body2.fontSize,
     "--font-size-h2": theme.typography.h3.fontSize,
@@ -240,30 +192,35 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     "--font-size-inline-code": theme.typography.caption.fontSize,
   } as React.CSSProperties;
 
-  const { theme: graphiqlTheme, setTheme: setGraphiqlTheme } = useGraphiqlTheme();
+  const { theme: graphiqlTheme, setTheme: setGraphiqlTheme } =
+    useGraphiqlTheme();
   useEffect(() => {
     if (theme.themeType !== graphiqlTheme) {
-      setGraphiqlTheme(theme.themeType)
+      setGraphiqlTheme(theme.themeType);
     }
-  })
+  });
 
   return (
-    <div data-testid="graphiql-container" className="graphiql-container" style={rootStyle}>
+    <div
+      data-test-id="graphiql-container"
+      className="graphiql-container"
+      style={rootStyle}
+    >
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
           {pluginContext?.plugins.map(plugin => {
             const isVisible = plugin === pluginContext.visiblePlugin;
-            const label = `${isVisible ? 'Hide' : 'Show'} ${plugin.title}`;
+            const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
             const Icon = plugin.icon;
             return (
               <Tooltip key={plugin.title} label={label}>
                 <UnStyledButton
                   type="button"
-                  className={isVisible ? 'active' : ''}
+                  className={isVisible ? "active" : ""}
                   onClick={() => {
                     if (isVisible) {
                       pluginContext.setVisiblePlugin(null);
-                      pluginResize.setHiddenElement('first');
+                      pluginResize.setHiddenElement("first");
                     } else {
                       pluginContext.setVisiblePlugin(plugin);
                       pluginResize.setHiddenElement(null);
@@ -295,7 +252,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           style={{
             // Make sure the container shrinks when containing long
             // non-breaking texts
-            minWidth: '200px',
+            minWidth: "200px",
           }}
         >
           <div className="graphiql-plugin">
@@ -313,21 +270,24 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
               role="tabpanel"
               id="graphiql-session"
               className="graphiql-session"
-              style={{padding: '2rem 0 0 0'}}
+              style={{ padding: "2rem 0 0 0" }}
               aria-labelledby={`graphiql-session-tab-${editorContext.activeTabIndex}`}
             >
               <div ref={editorResize.firstRef}>
                 <div
                   className="graphiql-editors full-height"
-                  style={{boxShadow: "none"}}
+                  style={{ boxShadow: "none" }}
                 >
                   <div ref={editorToolsResize.firstRef}>
                     <section
                       className="graphiql-query-editor"
                       aria-label="Query Editor"
-                      style={{borderBottom: 0}}
+                      style={{ borderBottom: 0 }}
                     >
-                      <div className="graphiql-query-editor-wrapper" style={{fontSize: '1.6rem'}}>
+                      <div
+                        className="graphiql-query-editor-wrapper"
+                        style={{ fontSize: "1.6rem" }}
+                      >
                         <QueryEditor
                           editorTheme={props.editorTheme}
                           keyMap={props.keyMap}
@@ -352,105 +312,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
-      {/* <Dialog
-        isOpen={showDialog === 'short-keys'}
-        onDismiss={() => setShowDialog(null)}
-      >
-        <div className="graphiql-dialog-header">
-          <div className="graphiql-dialog-title">Short Keys</div>
-          <Dialog.Close onClick={() => setShowDialog(null)} />
-        </div>
-        <div className="graphiql-dialog-section">
-          <div>
-            <table className="graphiql-table">
-              <thead>
-                <tr>
-                  <th>Short key</th>
-                  <th>Function</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {modifier}
-                    {' + '}
-                    <code className="graphiql-key">F</code>
-                  </td>
-                  <td>Search in editor</td>
-                </tr>
-                <tr>
-                  <td>
-                    {modifier}
-                    {' + '}
-                    <code className="graphiql-key">K</code>
-                  </td>
-                  <td>Search in documentation</td>
-                </tr>
-                <tr>
-                  <td>
-                    {modifier}
-                    {' + '}
-                    <code className="graphiql-key">Enter</code>
-                  </td>
-                  <td>Execute query</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {' + '}
-                    <code className="graphiql-key">Shift</code>
-                    {' + '}
-                    <code className="graphiql-key">P</code>
-                  </td>
-                  <td>Prettify editors</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {' + '}
-                    <code className="graphiql-key">Shift</code>
-                    {' + '}
-                    <code className="graphiql-key">M</code>
-                  </td>
-                  <td>Merge fragments definitions into operation definition</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {' + '}
-                    <code className="graphiql-key">Shift</code>
-                    {' + '}
-                    <code className="graphiql-key">C</code>
-                  </td>
-                  <td>Copy query</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {' + '}
-                    <code className="graphiql-key">Shift</code>
-                    {' + '}
-                    <code className="graphiql-key">R</code>
-                  </td>
-                  <td>Re-fetch schema using introspection</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              The editors use{' '}
-              <a
-                href="https://codemirror.net/5/doc/manual.html#keymaps"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CodeMirror Key Maps
-              </a>{' '}
-              that add more short keys. This instance of Graph<em>i</em>QL uses{' '}
-              <code>{props.keyMap || 'sublime'}</code>.
-            </p>
-          </div>
-        </div>
-      </Dialog> */}
     </div>
   );
 }
@@ -460,7 +321,7 @@ function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
   return <>{props.children}</>;
 }
 
-GraphiQLToolbar.displayName = 'GraphiQLToolbar';
+GraphiQLToolbar.displayName = "GraphiQLToolbar";
 
 // Determines if the React child is of the same type of the provided React component
 function isChildComponentType<T extends ComponentType>(

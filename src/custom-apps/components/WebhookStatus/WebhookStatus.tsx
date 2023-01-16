@@ -1,5 +1,5 @@
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 

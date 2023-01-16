@@ -1,10 +1,10 @@
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import { capitalize } from "@saleor/misc";
-import { toggle } from "@saleor/utils/lists";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { capitalize } from "@dashboard/misc";
+import { toggle } from "@dashboard/utils/lists";
 import {
   InlineFragmentNode,
   ObjectFieldNode,
@@ -15,58 +15,62 @@ import {
 
 import { filterSelectedAsyncEvents } from "./utils";
 
-export const createSyncEventsSelectHandler = (
-  change: (event: ChangeEvent, cb?: () => void) => void,
-  syncEvents: WebhookEventTypeSyncEnum[],
-  setQuery: React.Dispatch<React.SetStateAction<string>>,
-) => (event: ChangeEvent) => {
-  const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
+export const createSyncEventsSelectHandler =
+  (
+    change: (event: ChangeEvent, cb?: () => void) => void,
+    syncEvents: WebhookEventTypeSyncEnum[],
+    setQuery: React.Dispatch<React.SetStateAction<string>>,
+  ) =>
+  (event: ChangeEvent) => {
+    const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
 
-  // Clear query
-  setQuery("");
+    // Clear query
+    setQuery("");
 
-  // Clear asyncEvents
-  change({
-    target: {
-      name: "asyncEvents",
-      value: [],
-    },
-  });
+    // Clear asyncEvents
+    change({
+      target: {
+        name: "asyncEvents",
+        value: [],
+      },
+    });
 
-  change({
-    target: {
-      name: "syncEvents",
-      value: events,
-    },
-  });
-};
+    change({
+      target: {
+        name: "syncEvents",
+        value: events,
+      },
+    });
+  };
 
-export const createAsyncEventsSelectHandler = (
-  change: (event: ChangeEvent, cb?: () => void) => void,
-  asyncEvents: WebhookEventTypeAsyncEnum[],
-  query: string,
-  setQuery: React.Dispatch<React.SetStateAction<string>>,
-) => (event: ChangeEvent) => {
-  const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
-  const filteredEvents = filterSelectedAsyncEvents(events);
+export const createAsyncEventsSelectHandler =
+  (
+    change: (event: ChangeEvent, cb?: () => void) => void,
+    asyncEvents: WebhookEventTypeAsyncEnum[],
+    query: string,
+    setQuery: React.Dispatch<React.SetStateAction<string>>,
+  ) =>
+  (event: ChangeEvent) => {
+    const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
+    const filteredEvents = filterSelectedAsyncEvents(events);
 
-  // Clear syncEvents
-  change({
-    target: {
-      name: "syncEvents",
-      value: [],
-    },
-  });
+    // Clear syncEvents
+    change({
+      target: {
+        name: "syncEvents",
+        value: [],
+      },
+    });
 
-  change({
-    target: {
-      name: "asyncEvents",
-      value: filteredEvents,
-    },
-  });
+    change({
+      target: {
+        name: "asyncEvents",
+        value: filteredEvents,
+      },
+    });
 
-  handleQuery(filteredEvents, query, setQuery);
-};
+    handleQuery(filteredEvents, query, setQuery);
+  };
 
 const handleQuery = (
   events: WebhookEventTypeAsyncEnum[],

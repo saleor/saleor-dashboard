@@ -211,7 +211,7 @@
     "mochawesome": "^7.0.1",
     "mochawesome-merge": "^4.2.1",
     "mochawesome-report-generator": "^6.0.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.8.3",
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5",
     "jest-environment-jsdom": "^27.5.1"

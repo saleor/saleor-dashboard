@@ -1,11 +1,12 @@
-import { Card, CardContent, Checkbox, Typography } from "@material-ui/core";
-import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
+import Grid from "@dashboard/components/Grid";
+import Hr from "@dashboard/components/Hr";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { capitalize } from "@dashboard/misc";
+import { Card, CardContent, Checkbox, Typography } from "@material-ui/core";
 import {
   List,
   ListHeader,
@@ -18,7 +19,6 @@ import {
   Pill,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { capitalize } from "@saleor/misc";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -78,7 +78,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   const { checkbox } = useListWidths();
 
   const [tab, setTab] = useState("async");
-  const [object, setObject] = useState(null);
+  const [object, setObject] = useState<string | null>(null);
 
   const handleEventChange = event => {
     if (tab === "sync") {
