@@ -87,7 +87,7 @@ describe("Stripe payments", () => {
 
   it(
     "should purchase products with simple card",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const simpleCard = cardData;
       simpleCard.cardNumber = paymentCards.simpleCardNumber;
@@ -110,7 +110,7 @@ describe("Stripe payments", () => {
 
   it(
     "should not purchase products with card with insufficient funds",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const simpleCard = cardData;
       simpleCard.cardNumber = paymentCards.insufficientFundsCard;
@@ -126,7 +126,7 @@ describe("Stripe payments", () => {
 
   it(
     "should purchase products with 3D secure card",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const threeDSecureCard = cardData;
       threeDSecureCard.cardNumber = paymentCards.threeDSecureAuthCard;
@@ -152,7 +152,7 @@ describe("Stripe payments", () => {
 
   it(
     "should not purchase product when 3D secure not pass",
-    { tags: ["@payments", "@stagedOnly"] },
+    { tags: ["@payments", "@allEnv"] },
     () => {
       const threeDSecureCard = cardData;
       threeDSecureCard.cardNumber = paymentCards.threeDSecureAuthCard;
