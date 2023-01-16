@@ -1,7 +1,7 @@
+import DiscountedPrice from "@dashboard/components/DiscountedPrice/DiscountedPrice";
+import Money from "@dashboard/components/Money";
+import { SearchOrderVariantQuery } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";
-import DiscountedPrice from "@saleor/components/DiscountedPrice/DiscountedPrice";
-import Money from "@saleor/components/Money";
-import { SearchOrderVariantQuery } from "@saleor/graphql";
 import * as React from "react";
 
 import { useStyles } from "./styles";

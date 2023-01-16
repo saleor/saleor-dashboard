@@ -1,8 +1,8 @@
-import TextWithSelectField from "@saleor/components/TextWithSelectField";
-import { useChannelCurrenciesQuery } from "@saleor/graphql";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
+import TextWithSelectField from "@dashboard/components/TextWithSelectField";
+import { useChannelCurrenciesQuery } from "@dashboard/graphql";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 import * as React from "react";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";

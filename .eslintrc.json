@@ -21,7 +21,7 @@
   ],
   "overrides": [
     {
-      "files": ["src/**/*.test.*"],
+      "files": ["src/**/*.test.*", "src/**/*.stories.*"],
       "rules": {
         "react-refresh/only-export-components": "off"
       }

@@ -1,11 +1,11 @@
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { PermissionGroupFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { PermissionGroupFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

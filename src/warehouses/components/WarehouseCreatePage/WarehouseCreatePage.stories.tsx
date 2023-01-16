@@ -1,6 +1,6 @@
-import { countries } from "@saleor/fixtures";
-import { WarehouseErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { countries } from "@dashboard/fixtures";
+import { WarehouseErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -20,7 +20,7 @@ const props: WarehouseCreatePageProps = {
   onSubmit: () => undefined,
   saveButtonBarState: "default",
 };
-storiesOf("Views / Warehouses / Create warehouse", module)
+storiesOf("Warehouses / Create warehouse", module)
   .addDecorator(Decorator)
   .add("default", () => <WarehouseCreatePage {...props} />)
   .add("loading", () => <WarehouseCreatePage {...props} disabled={true} />)

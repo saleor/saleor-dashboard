@@ -33,6 +33,7 @@ xdescribe("Channels in draft orders", () => {
       })
       .then(channelResp => {
         otherChannel = channelResp;
+        cy.checkIfDataAreNotNull({ defaultChannel, otherChannel });
       });
   });
 

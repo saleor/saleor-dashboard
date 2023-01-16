@@ -1,16 +1,16 @@
-import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
-import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { ProductTypeFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import FilterBar from "@dashboard/components/FilterBar";
+import PageHeader from "@dashboard/components/PageHeader";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { ProductTypeFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   productTypeAddUrl,
   ProductTypeListUrlSortField,
-} from "@saleor/productTypes/urls";
+} from "@dashboard/productTypes/urls";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

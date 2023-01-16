@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@saleor/components/DemoBanner";
-import { PermissionEnum } from "@saleor/graphql";
-import useAppState from "@saleor/hooks/useAppState";
+import DemoBanner from "@dashboard/components/DemoBanner";
+import { PermissionEnum } from "@dashboard/graphql";
+import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
@@ -55,6 +55,8 @@ import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
+import NewAppsSection from "./new-apps";
+import { AppSections } from "./new-apps/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -260,6 +262,10 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={appsSection}
                 component={AppsSection}
+              />
+              <SectionRoute
+                path={AppSections.appsSection}
+                component={NewAppsSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}

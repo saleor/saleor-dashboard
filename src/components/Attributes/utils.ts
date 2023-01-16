@@ -1,16 +1,16 @@
-import { OutputData } from "@editorjs/editorjs";
-import { AttributeInput } from "@saleor/components/Attributes/Attributes";
-import { FileChoiceType } from "@saleor/components/FileUploadField";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { SortableChipsFieldValueType } from "@saleor/components/SortableChipsField";
+import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { FileChoiceType } from "@dashboard/components/FileUploadField";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import {
   AttributeValueFragment,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
-import { getProductErrorMessage } from "@saleor/utils/errors";
-import getPageErrorMessage from "@saleor/utils/errors/page";
+} from "@dashboard/graphql";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { OutputData } from "@editorjs/editorjs";
 import { IntlShape } from "react-intl";
 
 export function getSingleChoices(

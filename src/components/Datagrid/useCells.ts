@@ -1,5 +1,5 @@
+import useLocale from "@dashboard/hooks/useLocale";
 import { useCustomCells } from "@glideapps/glide-data-grid";
-import useLocale from "@saleor/hooks/useLocale";
 import { useMemo } from "react";
 
 import { dropdownCellRenderer } from "./DropdownCell";
@@ -10,7 +10,7 @@ function useCells() {
   const { locale } = useLocale();
   const value = useMemo(
     () => [
-      moneyCellRenderer(locale),
+      moneyCellRenderer(),
       numberCellRenderer(locale),
       dropdownCellRenderer,
     ],

@@ -1,19 +1,19 @@
-import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { ChannelShippingData } from "@saleor/channels/utils";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import PriceField from "@saleor/components/PriceField";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableHead from "@saleor/components/TableHead";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { ShippingChannelsErrorFragment } from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { ChannelShippingData } from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import PriceField from "@dashboard/components/PriceField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableHead from "@dashboard/components/TableHead";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import {
   getFormChannelError,
   getFormChannelErrors,
-} from "@saleor/utils/errors";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
+} from "@dashboard/utils/errors";
+import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

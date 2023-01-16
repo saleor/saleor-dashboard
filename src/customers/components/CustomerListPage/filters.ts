@@ -1,11 +1,11 @@
-import { IFilter } from "@saleor/components/Filter";
-import { hasPermissions } from "@saleor/components/RequirePermissions";
-import { PermissionEnum, UserFragment } from "@saleor/graphql";
-import { FilterOpts, MinMax } from "@saleor/types";
+import { IFilter } from "@dashboard/components/Filter";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { PermissionEnum, UserFragment } from "@dashboard/graphql";
+import { FilterOpts, MinMax } from "@dashboard/types";
 import {
   createDateField,
   createNumberField,
-} from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum CustomerFilterKeys {

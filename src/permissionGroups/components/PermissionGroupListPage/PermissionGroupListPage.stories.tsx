@@ -2,16 +2,17 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-} from "@saleor/fixtures";
-import PermissionGroupListPage, {
-  PermissionGroupListPageProps,
-} from "@saleor/permissionGroups/components/PermissionGroupListPage";
-import { permissionGroups } from "@saleor/permissionGroups/fixtures";
-import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { permissionGroups } from "../../fixtures";
+import { PermissionGroupListUrlSortField } from "../../urls";
+import PermissionGroupListPage, {
+  PermissionGroupListPageProps,
+} from "./PermissionGroupListPage";
 
 const props: PermissionGroupListPageProps = {
   permissionGroups,
@@ -26,7 +27,7 @@ const props: PermissionGroupListPageProps = {
   },
 };
 
-storiesOf("Views / Permission Groups / Permission Group List", module)
+storiesOf("Permission Groups / Permission Group List", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PermissionGroupListPage {...props} />)

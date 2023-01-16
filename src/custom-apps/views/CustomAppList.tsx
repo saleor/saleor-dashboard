@@ -1,20 +1,20 @@
 import { useApolloClient } from "@apollo/client";
-import AppDeleteDialog from "@saleor/apps/components/AppDeleteDialog";
-import { EXTENSION_LIST_QUERY } from "@saleor/apps/queries";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
+import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   AppSortField,
   AppTypeEnum,
   OrderDirection,
   useAppDeleteMutation,
   useAppsListQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { sectionNames } from "@saleor/intl";
-import { findById } from "@saleor/misc";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { sectionNames } from "@dashboard/intl";
+import { findById } from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

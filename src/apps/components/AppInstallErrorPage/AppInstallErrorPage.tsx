@@ -1,7 +1,7 @@
 import errorImg from "@assets/images/app-install-error.svg";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
 import { Grid, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

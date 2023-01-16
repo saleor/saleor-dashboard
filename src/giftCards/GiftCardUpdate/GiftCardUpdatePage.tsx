@@ -1,9 +1,9 @@
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata";
-import Savebar from "@saleor/components/Savebar";
-import useNavigator from "@saleor/hooks/useNavigator";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata";
+import Savebar from "@dashboard/components/Savebar";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import React from "react";
 
 import { giftCardsListPath } from "../urls";

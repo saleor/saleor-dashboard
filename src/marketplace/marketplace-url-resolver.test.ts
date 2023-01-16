@@ -1,4 +1,4 @@
-import { MarketplaceUrlResolver } from "@saleor/marketplace/marketplace-url-resolver";
+import { MarketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
 
 describe("MarketplaceUrlResolver", function() {
   it("Resolves deep marketplace url from full path", () => {

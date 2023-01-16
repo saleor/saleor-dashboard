@@ -1,17 +1,17 @@
-import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import Link from "@saleor/components/Link";
-import Money from "@saleor/components/Money";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
 import {
   DiscountValueTypeEnum,
   OrderDetailsFragment,
   OrderErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
-import { getFormErrors } from "@saleor/utils/errors";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 

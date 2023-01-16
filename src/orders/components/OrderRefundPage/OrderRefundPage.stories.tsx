@@ -1,5 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -14,7 +14,7 @@ const props: OrderRefundPageProps = {
   order: orderToRefund(placeholderImage),
 };
 
-storiesOf("Views / Orders / Refund order", module)
+storiesOf("Orders / Refund order", module)
   .addDecorator(Decorator)
   .add("products", () => (
     <OrderRefundPage {...props} defaultType={OrderRefundType.PRODUCTS} />

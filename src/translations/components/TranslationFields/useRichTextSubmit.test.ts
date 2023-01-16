@@ -1,9 +1,9 @@
-import useRichText from "@saleor/utils/richText/useRichText";
+import useRichText from "@dashboard/utils/richText/useRichText";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useRichTextSubmit } from "./useRichTextSubmit";
 
-jest.mock("@saleor/utils/richText/useRichText", () => jest.fn());
+jest.mock("@dashboard/utils/richText/useRichText", () => jest.fn());
 
 describe("useRichTextSubmit", () => {
   it("submits value from editor succesfully", async () => {

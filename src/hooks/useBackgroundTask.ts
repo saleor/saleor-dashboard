@@ -1,4 +1,4 @@
-import BackgroundTasksContext from "@saleor/containers/BackgroundTasks/context";
+import BackgroundTasksContext from "@dashboard/containers/BackgroundTasks/context";
 import { useContext } from "react";
 
 function useBackgroundTask() {

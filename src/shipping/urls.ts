@@ -1,6 +1,6 @@
-import { ChannelsAction } from "@saleor/channels/urls";
-import { ShippingMethodTypeEnum } from "@saleor/graphql";
-import { stringifyQs } from "@saleor/utils/urls";
+import { ChannelsAction } from "@dashboard/channels/urls";
+import { ShippingMethodTypeEnum } from "@dashboard/graphql";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import { BulkAction, Dialog, Pagination, SingleAction } from "../types";

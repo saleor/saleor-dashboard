@@ -1,3 +1,7 @@
+import { Button } from "@dashboard/components/Button";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   Card,
   CardActions,
@@ -6,9 +10,6 @@ import {
   MenuItem,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import { FormChange } from "@saleor/hooks/useForm";
-import { buttonMessages } from "@saleor/intl";
 import {
   Choice,
   CloseIcon,
@@ -16,7 +17,6 @@ import {
   makeStyles,
   MultipleValueAutocomplete,
 } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

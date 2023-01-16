@@ -1,29 +1,28 @@
-import { DialogContentText } from "@material-ui/core";
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
   createSortedChannelsDataFromVoucher,
-} from "@saleor/channels/utils";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
-import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
-import AssignProductDialog from "@saleor/components/AssignProductDialog";
-import { Button } from "@saleor/components/Button";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
-import DiscountCountrySelectDialog from "@saleor/discounts/components/DiscountCountrySelectDialog";
+} from "@dashboard/channels/utils";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog";
+import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
+import AssignProductDialog from "@dashboard/components/AssignProductDialog";
+import { Button } from "@dashboard/components/Button";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
+import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   VoucherTabItemsCount,
-} from "@saleor/discounts/components/VoucherDetailsPage";
+} from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   voucherListUrl,
   voucherUrl,
   VoucherUrlDialog,
   VoucherUrlQueryParams,
-} from "@saleor/discounts/urls";
+} from "@dashboard/discounts/urls";
 import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -34,23 +33,24 @@ import {
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
   VoucherDetailsQueryVariables,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannels from "@saleor/hooks/useChannels";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useChannels from "@dashboard/hooks/useChannels";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import useCategorySearch from "@saleor/searches/useCategorySearch";
-import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,23 +1,23 @@
-import { ChannelsAction } from "@saleor/channels/urls";
-import { createCollectionChannels } from "@saleor/channels/utils";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { ChannelsAction } from "@dashboard/channels/urls";
+import { createCollectionChannels } from "@dashboard/channels/utils";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CollectionCreateInput,
   useCollectionChannelListingUpdateMutation,
   useCreateCollectionMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useChannels from "@saleor/hooks/useChannels";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { getMutationErrors } from "@saleor/misc";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import useChannels from "@dashboard/hooks/useChannels";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors } from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

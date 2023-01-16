@@ -1,5 +1,5 @@
-import { OrderDirection } from "@saleor/graphql";
-import { findValueInEnum, parseBoolean } from "@saleor/misc";
+import { OrderDirection } from "@dashboard/graphql";
+import { findValueInEnum, parseBoolean } from "@dashboard/misc";
 
 import { TableCellHeaderArrowDirection } from "../components/TableCellHeader";
 import { Sort } from "../types";

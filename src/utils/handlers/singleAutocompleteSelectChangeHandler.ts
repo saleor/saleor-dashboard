@@ -1,5 +1,5 @@
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { FormChange } from "@saleor/hooks/useForm";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { FormChange } from "@dashboard/hooks/useForm";
 
 export interface SingleAutocompleteSelectedChangeHandlerProps {
   change: FormChange;

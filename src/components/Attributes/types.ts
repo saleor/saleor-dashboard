@@ -2,10 +2,10 @@ import {
   AttributeValueFragment,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
-import { FormsetChange } from "@saleor/hooks/useFormset";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import { RichTextGetters } from "@saleor/utils/richText/useMultipleRichText";
+} from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributeInput } from "./Attributes";
 

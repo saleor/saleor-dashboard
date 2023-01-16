@@ -1,7 +1,7 @@
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/graphql";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { useIntl } from "react-intl";
 

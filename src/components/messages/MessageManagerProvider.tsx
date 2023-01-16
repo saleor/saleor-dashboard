@@ -1,5 +1,5 @@
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
-import { commonMessages } from "@saleor/intl";
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import { commonMessages } from "@dashboard/intl";
 import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";

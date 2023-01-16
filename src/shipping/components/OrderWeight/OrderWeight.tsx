@@ -1,3 +1,11 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { ShippingErrorFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import useShop from "@dashboard/hooks/useShop";
+import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
+import { getFormErrors } from "@dashboard/utils/errors";
 import {
   Card,
   CardContent,
@@ -5,14 +13,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { ShippingErrorFragment } from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
-import useShop from "@saleor/hooks/useShop";
-import { getShippingWeightRateErrorMessage } from "@saleor/shipping/errors";
-import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { removeAtIndex } from "@saleor/utils/lists";
+import { removeAtIndex } from "@dashboard/utils/lists";
 
 import useStateFromProps from "./useStateFromProps";
 

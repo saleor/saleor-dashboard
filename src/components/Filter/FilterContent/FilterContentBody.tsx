@@ -1,11 +1,11 @@
+import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/FilterDateTimeField";
+import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
+import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
+import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
-import { FilterDateTimeField } from "@saleor/components/Filter/FilterContent/FilterDateTimeField";
-import { FilterNumericField } from "@saleor/components/Filter/FilterContent/FilterNumericField";
-import { FilterSingleSelectField } from "@saleor/components/Filter/FilterContent/FilterSingleSelectField";
-import { useCommonStyles } from "@saleor/components/Filter/FilterContent/utils";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

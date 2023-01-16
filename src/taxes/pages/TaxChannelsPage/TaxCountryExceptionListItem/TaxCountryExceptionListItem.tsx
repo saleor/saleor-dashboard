@@ -1,13 +1,13 @@
-import { Divider } from "@material-ui/core";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import SingleSelectField, {
   Choice,
-} from "@saleor/components/SingleSelectField";
+} from "@dashboard/components/SingleSelectField";
 import {
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
-} from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Divider } from "@material-ui/core";
 import {
   DeleteIcon,
   IconButton,

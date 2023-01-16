@@ -1,11 +1,11 @@
-import { IFilter } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { DiscountStatusEnum, DiscountValueTypeEnum } from "@saleor/graphql";
-import { FilterOpts, MinMax } from "@saleor/types";
+import { IFilter } from "@dashboard/components/Filter";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
+import { FilterOpts, MinMax } from "@dashboard/types";
 import {
   createDateField,
   createOptionsField,
-} from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum SaleFilterKeys {

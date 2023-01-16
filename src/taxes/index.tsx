@@ -1,4 +1,4 @@
-import { sectionNames } from "@saleor/intl";
+import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";

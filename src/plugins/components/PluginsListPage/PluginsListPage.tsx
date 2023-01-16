@@ -1,18 +1,18 @@
-import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
-import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { PluginBaseFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import FilterBar from "@dashboard/components/FilterBar";
+import PageHeader from "@dashboard/components/PageHeader";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import {
   FilterPageProps,
   PageListProps,
   SortPage,
   TabPageProps,
-} from "@saleor/types";
+} from "@dashboard/types";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

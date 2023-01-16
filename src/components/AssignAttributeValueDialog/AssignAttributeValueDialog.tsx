@@ -1,5 +1,5 @@
-import { AttributeEntityTypeEnum, SearchPagesQuery } from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

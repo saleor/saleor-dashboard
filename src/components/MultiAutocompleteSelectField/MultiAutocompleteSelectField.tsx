@@ -1,3 +1,5 @@
+import Debounce, { DebounceProps } from "@dashboard/components/Debounce";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   Popper,
   PopperPlacementType,
@@ -5,9 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";

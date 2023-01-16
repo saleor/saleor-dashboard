@@ -2,11 +2,11 @@ import { FetchResult } from "@apollo/client";
 import {
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
-} from "@saleor/attributes/utils/handlers";
+} from "@dashboard/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
   BulkProductErrorFragment,
@@ -27,20 +27,20 @@ import {
   useVariantDatagridChannelListingUpdateMutation,
   useVariantDatagridStockUpdateMutation,
   useVariantDatagridUpdateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { ProductUpdateSubmitData } from "@saleor/products/components/ProductUpdatePage/types";
-import { getVariantChannelsInputs } from "@saleor/products/components/ProductVariants/datagrid/getVariantChannelsInputs";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { getVariantChannelsInputs } from "@dashboard/products/components/ProductVariants/datagrid/getVariantChannelsInputs";
 import {
   getStockInputs,
   getStocks,
   getVariantChannels,
   getVariantInput,
   getVariantInputs,
-} from "@saleor/products/components/ProductVariants/utils";
-import { getProductErrorMessage } from "@saleor/utils/errors";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+} from "@dashboard/products/components/ProductVariants/utils";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,18 +1,14 @@
-import { appMessages } from "@saleor/apps/messages";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { useAppQuery } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
+import { appMessages } from "@dashboard/apps/messages";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useAppQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import AppPage from "../../components/AppPage";
-import {
-  appDetailsUrl,
-  appsListPath,
-  getAppCompleteUrlFromDashboardUrl,
-} from "../../urls";
+import { appsListPath, getAppCompleteUrlFromDashboardUrl } from "../../urls";
 
 interface AppProps {
   id: string;
@@ -45,7 +41,6 @@ export const App: React.FC<AppProps> = ({ id }) => {
     <AppPage
       data={data?.app || null}
       url={appCompleteUrl || ""}
-      aboutHref={appDetailsUrl(id)}
       refetch={refetch}
       onError={() =>
         notify({

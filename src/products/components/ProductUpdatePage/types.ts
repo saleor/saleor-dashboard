@@ -1,14 +1,13 @@
-import { OutputData } from "@editorjs/editorjs";
-import { RichTextProps } from "@saleor/attributes/utils/data";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { ChannelOpts } from "@saleor/components/ChannelsAvailabilityCard/types";
+import { RichTextProps } from "@dashboard/attributes/utils/data";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import {
   DatagridChangeOpts,
   UseDatagridChangeState,
-} from "@saleor/components/Datagrid/useDatagridChange";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+} from "@dashboard/components/Datagrid/useDatagridChange";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
@@ -16,20 +15,21 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
+} from "@dashboard/hooks/useForm";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import { UseProductUpdateHandlerError } from "@saleor/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
+} from "@dashboard/hooks/useFormset";
+import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { OutputData } from "@editorjs/editorjs";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 

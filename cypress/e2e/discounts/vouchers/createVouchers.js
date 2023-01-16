@@ -54,7 +54,14 @@ describe("As an admin I want to create voucher", () => {
             auth: "token",
           };
 
-          updateTaxConfigurationForChannel({channelSlug: defaultChannel.slug})
+          updateTaxConfigurationForChannel({
+            channelSlug: defaultChannel.slug,
+          });
+          cy.checkIfDataAreNotNull({
+            createdChannel,
+            dataForCheckout,
+            defaultChannel,
+          });
         },
       );
   });

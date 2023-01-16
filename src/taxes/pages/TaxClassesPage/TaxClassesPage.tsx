@@ -1,3 +1,24 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { TaxClassFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { getById } from "@dashboard/misc";
+import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { TaxClassesPageFormData } from "@dashboard/taxes/types";
+import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
 import {
   Card,
   CardContent,
@@ -5,19 +26,6 @@ import {
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { TaxClassFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
 import {
   ConfirmButtonTransitionState,
   List,
@@ -28,14 +36,6 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import { getById } from "@saleor/misc";
-import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { TaxClassesPageFormData } from "@saleor/taxes/types";
-import { useAutofocus } from "@saleor/taxes/utils/useAutofocus";
-import { isLastElement } from "@saleor/taxes/utils/utils";
-import { getFormErrors } from "@saleor/utils/errors";
-import getTaxesErrorMessage from "@saleor/utils/errors/taxes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -99,7 +99,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
 
         return (
           <Container>
-            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="tax-classes" onChange={handleTabChange}>
               <PageTab
                 label={intl.formatMessage(taxesMessages.channelsSection)}

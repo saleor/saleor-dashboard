@@ -1,36 +1,39 @@
-import { Typography } from "@material-ui/core";
-import { ChannelVoucherData } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import Container from "@saleor/components/Container";
-import CountryList from "@saleor/components/CountryList";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import { Tab, TabContainer } from "@saleor/components/Tab";
+import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import Container from "@dashboard/components/Container";
+import CountryList from "@dashboard/components/CountryList";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
   createVoucherUpdateHandler,
-} from "@saleor/discounts/handlers";
-import { itemsQuantityMessages } from "@saleor/discounts/translations";
-import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
-import { voucherListUrl } from "@saleor/discounts/urls";
+} from "@dashboard/discounts/handlers";
+import { itemsQuantityMessages } from "@dashboard/discounts/translations";
+import {
+  DiscountTypeEnum,
+  RequirementsPicker,
+} from "@dashboard/discounts/types";
+import { voucherListUrl } from "@dashboard/discounts/urls";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
   VoucherDetailsFragment,
   VoucherTypeEnum,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

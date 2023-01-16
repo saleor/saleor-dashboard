@@ -1,3 +1,8 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
+import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -8,12 +13,7 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableRowLink from "@saleor/components/TableRowLink";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 

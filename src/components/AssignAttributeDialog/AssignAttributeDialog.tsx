@@ -1,3 +1,16 @@
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AvailableAttributeFragment } from "@dashboard/graphql";
+import useElementScroll, {
+  isScrolledToBottom,
+} from "@dashboard/hooks/useElementScroll";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -10,20 +23,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { AvailableAttributeFragment } from "@saleor/graphql";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@saleor/hooks/useElementScroll";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
-import { FetchMoreProps } from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";

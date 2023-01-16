@@ -1,16 +1,16 @@
-import { Card, CardContent } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

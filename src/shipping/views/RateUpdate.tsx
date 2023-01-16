@@ -1,11 +1,11 @@
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels,
-} from "@saleor/channels/utils";
-import { Button } from "@saleor/components/Button";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
+} from "@dashboard/channels/utils";
+import { Button } from "@dashboard/components/Button";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum,
@@ -17,46 +17,46 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useUpdateShippingRateMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useChannels from "@saleor/hooks/useChannels";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useChannels from "@dashboard/hooks/useChannels";
 import useLocalPaginator, {
   useLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { getById, getByUnmatchingId } from "@saleor/misc";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
-import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
-import { ShippingZoneRateUpdateFormData } from "@saleor/shipping/components/ShippingZoneRatesPage/types";
-import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { getById, getByUnmatchingId } from "@dashboard/misc";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
+import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
+import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
+import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
+import { ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
+import UnassignDialog from "@dashboard/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables,
   getUpdateShippingWeightRateVariables,
-} from "@saleor/shipping/handlers";
+} from "@dashboard/shipping/handlers";
 import {
   shippingRateEditUrl,
   ShippingRateUrlDialog,
   ShippingRateUrlQueryParams,
   shippingZoneUrl,
-} from "@saleor/shipping/urls";
-import postalCodesReducer from "@saleor/shipping/views/reducer";
+} from "@dashboard/shipping/urls";
+import postalCodesReducer from "@dashboard/shipping/views/reducer";
 import {
   filterPostalCodes,
   getPostalCodeRuleByMinMax,
   getRuleObject,
-} from "@saleor/shipping/views/utils";
-import { useTaxClassFetchMore } from "@saleor/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/shipping/views/utils";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { MinMax } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

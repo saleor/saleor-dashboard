@@ -1,4 +1,4 @@
-import CardMenu from "@saleor/components/CardMenu";
+import CardMenu from "@dashboard/components/CardMenu";
 import React from "react";
 import { useIntl } from "react-intl";
 

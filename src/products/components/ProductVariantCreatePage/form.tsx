@@ -4,7 +4,7 @@ import {
   getRichTextDataFromAttributes,
   mergeAttributes,
   RichTextProps,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
@@ -12,42 +12,42 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from "@saleor/attributes/utils/handlers";
+} from "@dashboard/attributes/utils/handlers";
 import {
   ChannelPriceAndPreorderData,
   IChannelPriceAndPreorderArgs,
-} from "@saleor/channels/utils";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
+} from "@dashboard/channels/utils";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
+} from "@dashboard/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { errorMessages } from "@saleor/intl";
-import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+} from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { errorMessages } from "@dashboard/intl";
+import { getVariantAttributeInputFromProduct } from "@dashboard/products/utils/data";
 import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
-} from "@saleor/products/utils/handlers";
-import { validateVariantData } from "@saleor/products/utils/validation";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@saleor/types";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
+} from "@dashboard/products/utils/handlers";
+import { validateVariantData } from "@dashboard/products/utils/validation";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -68,7 +68,7 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   quantityLimitPerCustomer: number | null;
   preorderEndDateTime?: string;
-  name: string;
+  variantName: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -141,7 +141,7 @@ const initial: ProductVariantCreateFormData = {
   hasPreorderEndDate: false,
   preorderEndDateTime: "",
   quantityLimitPerCustomer: null,
-  name: "",
+  variantName: "",
 };
 
 function useProductVariantCreateForm(

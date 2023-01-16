@@ -1,4 +1,18 @@
 import { FetchResult } from "@apollo/client";
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  SearchProductsQuery,
+  ShippingPriceExcludeProductMutation,
+} from "@dashboard/graphql";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { renderCollection } from "@dashboard/misc";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -9,21 +23,7 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import {
-  SearchProductsQuery,
-  ShippingPriceExcludeProductMutation,
-} from "@saleor/graphql";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";

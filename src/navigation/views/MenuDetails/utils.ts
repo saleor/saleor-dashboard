@@ -3,7 +3,7 @@ import {
   MenuItemFragment,
   MenuItemInput,
   MenuItemMoveInput,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
