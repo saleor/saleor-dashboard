@@ -11,10 +11,10 @@ const useStyles = makeStyles(
   theme => ({
     headerBtn: {
       marginBottom: theme.spacing(2),
-    },
-    chervonIcon: {
-      marginRight: 0,
-      marginLeft: theme.spacing(1),
+      "& svg": {
+        marginRight: 0,
+        marginLeft: theme.spacing(1),
+      },
     },
     popover: {
       width: 140,
@@ -56,7 +56,7 @@ export const HeaderButtonAddRow = ({
         ref={anchor}
       >
         {children}
-        <ChevronIcon className={classes.chervonIcon} />
+        <ChevronIcon />
       </Button>
       <Popper
         anchorEl={anchor.current}
