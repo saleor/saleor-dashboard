@@ -1,5 +1,5 @@
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
-import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
+import { Button, ChevronIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { ReactNode, useRef, useState } from "react";
 
 interface HeaderButtonAddRowProps {
@@ -12,9 +12,17 @@ const useStyles = makeStyles(
     headerBtn: {
       marginBottom: theme.spacing(2),
     },
+    chervonIcon: {
+      marginRight: 0,
+      marginLeft: theme.spacing(1),
+    },
     popover: {
       width: 140,
       zIndex: 3,
+      borderStyle: "solid",
+      borderWidth: "1px",
+      borderColor: theme.palette.saleor.main[5],
+      borderTopWidth: 0,
     },
   }),
   { name: "DatagridHeaderButtonAddRow" },
@@ -47,8 +55,8 @@ export const HeaderButtonAddRow = ({
         onClick={handleOpenMenu}
         ref={anchor}
       >
-        <PlusSmallIcon />
         {children}
+        <ChevronIcon className={classes.chervonIcon} />
       </Button>
       <Popper
         anchorEl={anchor.current}
@@ -61,7 +69,7 @@ export const HeaderButtonAddRow = ({
           <Paper elevation={20}>
             {ADD_ROWS_OPTIONS.map(count => (
               <MenuItem key={count} onClick={() => handleSelectMenuItem(count)}>
-                {count}
+                +{count}
               </MenuItem>
             ))}
           </Paper>
