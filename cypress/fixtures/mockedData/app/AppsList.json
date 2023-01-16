@@ -64,7 +64,7 @@
                     "node": {
                         "id": "QXBwOjUy",
                         "name": "saleor-mocked-app-03",
-                        "isActive": true,
+                        "isActive": false,
                         "type": "THIRDPARTY",
                         "appUrl": null,
                         "manifestUrl": null,
