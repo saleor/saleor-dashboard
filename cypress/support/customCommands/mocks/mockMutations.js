@@ -9,8 +9,6 @@ Cypress.Commands.add("mockMutation", (method, mutationName, fixtureUrl) =>
       aliasMutation(req, mutationName);
 
       if (hasOperationName(req, mutationName)) {
-        // req.alias = `mocked${mutationName}`;
-
         req.reply({
           fixture: `../fixtures/mockedData/${fixtureUrl}`,
         });

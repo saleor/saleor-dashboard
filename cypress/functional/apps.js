@@ -18,6 +18,7 @@ describe("should display mocked list", () => {
     cy.mockMutation("POST", "AppsInstallations", "app/AppsInstallations.json");
     cy.mockMutation("POST", "ExtensionList", "app/ExtensionList.json");
     cy.mockMutation("POST", "AppsList", "app/AppsList.json");
+    // Below url is temporary, the functionality will replace /apps/
     cy.visit("/new-apps");
   });
 
