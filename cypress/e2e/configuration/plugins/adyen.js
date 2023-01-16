@@ -91,7 +91,10 @@ describe("Adyen payments", () => {
           categoryId: category.id,
         });
       })
-      .then(({ variantsList: variants }) => (variantsList = variants));
+      .then(({ variantsList: variants }) => {
+        variantsList = variants
+        cy.checkIfDataAreNotNull({address,defaultChannel,warehouse,shippingMethod,variantsList,checkout,paymentCards,cardData})
+      });
   });
 
   beforeEach(() => {

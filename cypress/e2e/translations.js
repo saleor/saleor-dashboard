@@ -21,7 +21,10 @@ describe("As an admin I want to manage translations", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteCategoriesStartsWith(startsWith);
     createCategory({ name: startsWith }).then(
-      categoryResp => (category = categoryResp),
+      categoryResp => {
+        category = categoryResp
+        cy.checkIfDataAreNotNull({category})
+      },
     );
   });
 

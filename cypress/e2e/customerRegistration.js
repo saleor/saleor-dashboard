@@ -25,6 +25,7 @@ describe("Tests for customer registration", () => {
     deleteCustomersStartsWith(startsWith);
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
+      cy.checkIfDataAreNotNull({defaultChannel})
     });
   });
 

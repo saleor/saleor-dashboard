@@ -17,3 +17,17 @@ Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
     return resp;
   });
 });
+
+Cypress.Commands.add("checkIfDataAreNotNull", (data) => {
+  expect(data, "Created data should not be null").to.be.not.null;
+  if(typeof data === "object"){
+    Object.keys(data).forEach(key => {
+        cy.checkIfDataAreNotNull(data[key])
+    })
+  }else if(Array.isArray(data)){
+    expect(data).not.to.be.empty;
+    data.forEach(singleData => {
+      cy.checkIfDataAreNotNull(singleData)
+    })
+  }
+})

@@ -73,7 +73,20 @@ describe("Updating products without sku", () => {
           categoryId: category.id,
         });
       })
-      .then(productResp => (product = productResp));
+      .then(productResp => {
+        product = productResp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          address,
+          warehouse,
+          shippingMethod,
+          attribute,
+          category,
+          productTypeWithVariants,
+          productTypeWithoutVariants,
+          product,
+        });
+      });
   });
 
   beforeEach(() => {

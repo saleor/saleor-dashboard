@@ -67,6 +67,7 @@ describe("As an admin I want to manage stock reservation", () => {
               productType = productTypeResp;
             },
           );
+          cy.checkIfDataAreNotNull({defaultChannel,address,warehouse,attribute,category,productType,dataForCheckout})
         });
       });
     });
