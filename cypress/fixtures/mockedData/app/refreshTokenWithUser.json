@@ -1,7 +1,7 @@
 {
     "data": {
         "tokenRefresh": {
-            "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2NzM1OTk2NjEsIm93bmVyIjoic2FsZW9yIiwiaXNzIjoiaHR0cHM6Ly9hdXRvbWF0aW9uLWRhc2hib2FyZC5zdGFnaW5nLnNhbGVvci5jbG91ZC9ncmFwaHFsLyIsImV4cCI6MTY3MzU5OTk2MSwidG9rZW4iOiJNMmlyRm16VkFTUjMiLCJlbWFpbCI6InRlc3RlcnMrZGFzaGJvYXJkQHNhbGVvci5pbyIsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2lkIjoiVlhObGNqb3hNRE16IiwiaXNfc3RhZmYiOnRydWV9.z6rBZwbfSlynswGuojC_8pB5sgtgj80yGrDhBNu0WkmSjzKajU7hOXdhd8YGvB-WRu62qph1ofrX8DTUaeIZvk6V0gTwTY_FrUcSOo4NjHonN0NpjZiT1e_BXHiRKZXZVJp11hEQIS8J8pUMXLXNvfHksm9E4z4038LHiJqhUK2NCeRq0pjr1W7Vg-DgED826SdrCAyTqSb0kyafaP_bpPs3ja4MhU6i1OglOYJvmsNkyoIMmmDi6Zt6kXYXU_NlAk4qljNmHb1Wg8s-0yXUS-faOUFdkqiTTlRLxRytdpt4UXZ2rLZH23_RclyfZFOSekmQyO7Sf1fUmCE5DKGmcw",
+            "token": "#token#",
             "user": {
                 "id": "VXNlcjoxMDMz",
                 "email": "testers+dashboard@saleor.io",
@@ -162,12 +162,6 @@
             },
             "errors": [],
             "__typename": "RefreshToken"
-        }
-    },
-    "extensions": {
-        "cost": {
-            "requestedQueryCost": 0,
-            "maximumAvailable": 50000
         }
     }
 }
