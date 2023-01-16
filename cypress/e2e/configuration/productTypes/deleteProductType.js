@@ -30,8 +30,8 @@ describe("As an admin I want to manage product types", () => {
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     createCategory({ name: startsWith }).then(resp => (category = resp));
     getDefaultChannel().then(resp => {
-      channel = resp 
-      cy.checkIfDataAreNotNull({attribute, channel, category})
+      channel = resp;
+      cy.checkIfDataAreNotNull({ attribute, channel, category });
     });
   });
 

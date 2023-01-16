@@ -55,7 +55,7 @@ describe("As an admin I should be able to create product", () => {
     cy.clearSessionData().loginUserViaRequest();
     createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
-      cy.checkIfDataAreNotNull({attribute})
+      cy.checkIfDataAreNotNull({ attribute });
     });
   });
   beforeEach(() => {

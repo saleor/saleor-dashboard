@@ -52,7 +52,7 @@ describe("Staff members", () => {
         cy.clearSessionData().visit(urlLink);
         fillUpSetPassword(password);
         cy.clearSessionData();
-        cy.checkIfDataAreNotNull({user})
+        cy.checkIfDataAreNotNull({ user });
       });
   });
 

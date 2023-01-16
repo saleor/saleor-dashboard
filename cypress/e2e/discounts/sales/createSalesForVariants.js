@@ -71,7 +71,12 @@ describe("Sales discounts for variant", () => {
           warehouseId: warehouse.id,
           price: productPrice,
         };
-        cy.checkIfDataAreNotNull({productData, defaultChannel, warehouse, address})
+        cy.checkIfDataAreNotNull({
+          productData,
+          defaultChannel,
+          warehouse,
+          address,
+        });
       });
   });
 

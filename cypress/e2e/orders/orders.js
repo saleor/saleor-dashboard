@@ -105,7 +105,14 @@ describe("Orders", () => {
       )
       .then(({ variantsList: variantsResp }) => {
         variantsList = variantsResp;
-        cy.checkIfDataAreNotNull({customer,defaultChannel,warehouse,shippingMethod,variantsList,address})
+        cy.checkIfDataAreNotNull({
+          customer,
+          defaultChannel,
+          warehouse,
+          shippingMethod,
+          variantsList,
+          address,
+        });
       });
   });
 

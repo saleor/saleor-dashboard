@@ -23,3 +23,9 @@ Create `.env` file in a root directory or set environment variables with the fol
 - `APPS_MARKETPLACE_API_URI` - URI of Marketplace API to fetch list of Apps in JSON.
 
 - `APPS_TUNNEL_URL_KEYWORDS` - Custom apps tunnel URL keywords.
+
+- `FLAGS_SERVICE_ENABLED` - Boolean flag determines whether we use external feature flags provider.
+  If you set `FLAGS_SERVICE_ENABLED` to "true", we'll be using external feature flag provider as source or flags.
+  If you set `FLAGS_SERVICE_ENABLED` to "false" or not set, we'll use fallback flags from environment variables.
+
+- `FLAGSMITH_ID` - Flagsmith environment id

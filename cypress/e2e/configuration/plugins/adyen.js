@@ -92,8 +92,17 @@ describe("Adyen payments", () => {
         });
       })
       .then(({ variantsList: variants }) => {
-        variantsList = variants
-        cy.checkIfDataAreNotNull({address,defaultChannel,warehouse,shippingMethod,variantsList,checkout,paymentCards,cardData})
+        variantsList = variants;
+        cy.checkIfDataAreNotNull({
+          address,
+          defaultChannel,
+          warehouse,
+          shippingMethod,
+          variantsList,
+          checkout,
+          paymentCards,
+          cardData,
+        });
       });
   });
 

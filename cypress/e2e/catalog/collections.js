@@ -71,8 +71,14 @@ describe("As an admin I want to manage collections.", () => {
         },
       )
       .then(({ product: productResp }) => {
-        product = productResp
-      cy.checkIfDataAreNotNull({attribute, category, productType, product, defaultChannel})
+        product = productResp;
+        cy.checkIfDataAreNotNull({
+          attribute,
+          category,
+          productType,
+          product,
+          defaultChannel,
+        });
       });
   });
 

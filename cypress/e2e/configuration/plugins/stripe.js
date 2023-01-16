@@ -50,7 +50,15 @@ describe("Stripe payments", () => {
       defaultChannel = values.defaultChannel;
       shippingMethod = values.shippingMethod;
       variantsList = values.variantsList;
-      cy.checkIfDataAreNotNull({address,defaultChannel,shippingMethod,variantsList,checkout,paymentCards,cardData})
+      cy.checkIfDataAreNotNull({
+        address,
+        defaultChannel,
+        shippingMethod,
+        variantsList,
+        checkout,
+        paymentCards,
+        cardData,
+      });
     });
   });
 

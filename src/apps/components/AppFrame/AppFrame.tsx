@@ -1,8 +1,10 @@
 import {
   AppDetailsUrlQueryParams,
   getAppDeepPathFromDashboardUrl,
+  prepareFeatureFlagsList,
   resolveAppIframeUrl,
 } from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/hooks/useFlags";
 import useLocale from "@dashboard/hooks/useLocale";
 import useShop from "@dashboard/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
@@ -42,6 +44,7 @@ export const AppFrame: React.FC<Props> = ({
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
+  const flags = useAllFlags();
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
   const { locale } = useLocale();
@@ -102,7 +105,10 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, params)}
+      src={resolveAppIframeUrl(appId, src, {
+        ...params,
+        featureFlags: prepareFeatureFlagsList(flags),
+      })}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}

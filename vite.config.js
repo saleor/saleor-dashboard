@@ -35,7 +35,13 @@ export default defineConfig(({ command, mode }) => {
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
+    FLAGS_SERVICE_ENABLED,
+    FLAGSMITH_ID,
   } = env;
+
+  const featureFlagsEnvs = Object.fromEntries(
+    Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
+  );
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
@@ -96,11 +102,17 @@ export default defineConfig(({ command, mode }) => {
     );
   }
 
-  /*
-   "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
-   Issue presents only on development mode.
-  */
-  const globals = isDev ? { global: {} } : {};
+  const globals = {
+    /*
+      "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
+      Issue presents only on development mode.
+    */
+    ...(isDev ? { global: {} } : {}),
+    FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
+    FLAGSMITH_ID: JSON.stringify(FLAGSMITH_ID),
+    // Keep all feature flags from env in global variable
+    FLAGS: JSON.stringify(featureFlagsEnvs),
+  };
 
   return {
     root: "src",
