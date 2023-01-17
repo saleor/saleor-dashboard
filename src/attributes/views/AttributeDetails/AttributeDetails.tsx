@@ -336,7 +336,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             attributeValue={attributeValueFragmentToFormData(
               data?.attribute?.choices?.edges?.find(
                 value => params.id === value.node.id,
-              )?.node ?? {},
+              )?.node ?? null,
             )}
             confirmButtonState={attributeValueUpdateOpts.status}
             disabled={loading}
