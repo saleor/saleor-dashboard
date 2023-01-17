@@ -1,6 +1,5 @@
 import { updateAtIndex } from "@dashboard/utils/lists";
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
-import { map } from "lodash-es";
 import {
   createContext,
   Dispatch,
@@ -131,13 +130,13 @@ function useDatagridChange(
   const onRowAdded = useCallback(
     (rowAmount: number = 1) => {
       const getArrayByRowAmount = (rowAmount: number) =>
-        Array.from({ length: rowAmount }, (_, i) => i);
+        Array.from(Array(rowAmount).keys());
 
       const lastAddedIndex = rows - removed.length + added.length;
 
       const newAdded = [
         ...added,
-        ...map(getArrayByRowAmount(rowAmount), count => lastAddedIndex + count),
+        ...getArrayByRowAmount(rowAmount).map(count => lastAddedIndex + count),
       ];
 
       setAdded(newAdded);
