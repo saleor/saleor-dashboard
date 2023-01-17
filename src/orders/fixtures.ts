@@ -22,6 +22,7 @@ import {
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   TransactionActionEnum,
+  TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
   TransactionKind,
@@ -2500,6 +2501,24 @@ export const transactionApp: AppAvatarFragment = {
   name: "Checkout App",
   id: "1234",
   __typename: "App",
+};
+
+export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
+  createdBy: AppAvatarFragment;
+} = {
+  id: "VHJhbnNhY3Rpb25FdmVudDox",
+  pspReference: "XCFDROVCDF232332DFGS",
+  createdAt: "2022-08-12T14:40:22.226875+00:00",
+  type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+  message: null,
+  externalUrl: null,
+  createdBy: transactionApp,
+  amount: {
+    amount: 58.98,
+    currency: "USD",
+    __typename: "Money",
+  },
+  __typename: "TransactionEvent",
 };
 
 export const transactions: Record<

@@ -86,13 +86,13 @@ export const EventItem: React.FC<EventItemProps> = ({
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
 
+  const isHovered = event.pspReference === hoveredPspReference;
+
   return (
     <TableRow
       onMouseOver={() => onHover(event.pspReference)}
-      className={clsx(
-        classes.row,
-        event.pspReference === hoveredPspReference && classes.hover,
-      )}
+      className={clsx(classes.row, isHovered && classes.hover)}
+      data-ishovered={isHovered}
     >
       <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
         <EventStatus status={status} />
