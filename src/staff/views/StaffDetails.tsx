@@ -1,9 +1,11 @@
 import { useUser } from "@dashboard/auth";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  PermissionEnum,
   useChangeStaffPasswordMutation,
   useStaffAvatarDeleteMutation,
   useStaffAvatarUpdateMutation,
@@ -64,6 +66,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   });
 
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
+  const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const [changePassword, changePasswordOpts] = useChangeStaffPasswordMutation({
     onCompleted: data => {
@@ -83,6 +88,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     result: searchPermissionGroupsOpts,
   } = usePermissionGroupSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+    skip: !hasManageStaffPermission,
   });
 
   const [
@@ -156,7 +162,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             firstName: formData.firstName,
             isActive: formData.isActive,
             lastName: formData.lastName,
-            ...groupsDiff(data?.user, formData),
+            ...(hasManageStaffPermission
+              ? groupsDiff(data?.user, formData)
+              : {}),
           },
         },
       }),
@@ -208,7 +216,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         staffMember={staffMember}
         saveButtonBarState={updateStaffMemberOpts.status}
         fetchMorePermissionGroups={{
-          hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
+          hasMore:
+            searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
           loading: searchPermissionGroupsOpts.loading,
           onFetchMore: loadMorePermissionGroups,
         }}
