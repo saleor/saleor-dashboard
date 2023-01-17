@@ -2,12 +2,23 @@ import { OrderDetailsFragment } from "@saleor/graphql";
 
 import { PaymentState } from "./types";
 
-export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
+interface ShouldDisplayResult {
+  state: PaymentState;
+  authorized: boolean;
+  captured: boolean;
+  cancelled: boolean;
+  pending: boolean;
+}
+
+export const getShouldDisplayAmounts = (
+  order: OrderDetailsFragment,
+): ShouldDisplayResult => {
   if (!order) {
     return {
       state: PaymentState.NO_DATA,
       authorized: false,
       captured: false,
+      cancelled: false,
       pending: false,
     };
   }
@@ -28,7 +39,7 @@ export const getShouldDisplayAmounts = (order: OrderDetailsFragment) => {
   if (anyPending) {
     return {
       state: PaymentState.IS_PENDING,
-      authorized: authorized || authorizePending,
+      authorized: !!authorized || !!authorizePending,
       captured: true,
       cancelled: true,
       pending: true,
