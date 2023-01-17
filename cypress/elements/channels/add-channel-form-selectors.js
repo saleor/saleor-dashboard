@@ -11,8 +11,9 @@ export const ADD_CHANNEL_FORM_SELECTORS = {
     "[data-test-id='single-autocomplete-select-option'][data-test-type='custom']",
   addShippingZoneButton: '[data-test-id="shipping-add-button"]',
   addWarehouseButton: '[data-test-id="warehouse-add-button"]',
-  shippingAutocompleteSelect: "[data-test-id='shipping-auto-complete-select']",
+  shippingAutocompleteSelect:
+    "[data-test-id='shipping-auto-complete-select'] input",
   warehouseAutocompleteSelect:
-    "[data-test-id='warehouse-auto-complete-select']",
+    "[data-test-id='warehouse-auto-complete-select'] input",
   countryAutocompleteInput: '[data-test-id="country-select-input"] input',
 };

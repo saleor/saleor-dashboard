@@ -35,7 +35,7 @@ export function createPage({
 }
 
 export function addSelectAttributeValue(attributeValue) {
-  cy.fillAutocompleteSelect(PAGE_DETAILS.attributeValues, attributeValue);
+  cy.fillAutocompleteSelect(PAGE_DETAILS.attributeValuesInput, attributeValue);
 }
 
 export function addRichTextAttributeValue(attributeValue) {
