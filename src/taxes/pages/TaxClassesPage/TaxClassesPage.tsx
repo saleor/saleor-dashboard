@@ -8,7 +8,7 @@ import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { TaxClassFragment } from "@dashboard/graphql";
-import { useClientPagination } from "@dashboard/hooks/useClientPagination";
+import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getById } from "@dashboard/misc";
@@ -266,6 +266,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                               1
                             }
                             hasPrevPage={currentPage > 1}
+                            currentPage={currentPage}
                             setCurrentPage={changeCurrentPage}
                           />
                         </List>

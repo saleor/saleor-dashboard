@@ -1,14 +1,15 @@
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles, Pagination } from "@saleor/macaw-ui";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 interface TaxPaginationProps {
   rowNumber: number;
-  setRowNumber: Dispatch<SetStateAction<number>>;
+  currentPage: number;
+  setRowNumber: (rowNumber: number) => void;
   hasNextPage: boolean;
   hasPrevPage: boolean;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  setCurrentPage: (currentPage: number) => void;
 }
 
 const useStyles = makeStyles(
@@ -26,16 +27,17 @@ export const TaxPagination = ({
   setCurrentPage,
   hasNextPage,
   hasPrevPage,
+  currentPage,
 }: TaxPaginationProps) => {
   const classes = useStyles();
   const intl = useIntl();
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage => (currentPage += 1));
+    setCurrentPage(currentPage + 1);
   };
 
   const handlePrevPage = () => {
-    setCurrentPage(currentPage => (currentPage -= 1));
+    setCurrentPage(currentPage - 1);
   };
 
   return (
