@@ -1,31 +1,29 @@
-import { LoginData } from "@saleor/sdk";
+import { UserFragment } from "@dashboard/graphql";
 
-export const isSupported = !!(
-  navigator?.credentials?.preventSilentAccess && window.PasswordCredential
-);
+export const isSupported = !!window.PasswordCredential;
 
 export async function login<T>(
   loginFn: (id: string, password: string) => Promise<T>,
 ): Promise<T | null> {
-  let result: T;
+  let result: T | null;
 
   try {
     const credential = await navigator.credentials.get({ password: true });
     if (credential instanceof PasswordCredential) {
-      result = await loginFn(credential.id, credential.password);
+      result = await loginFn(credential.id, credential.password ?? "");
     }
   } catch {
     result = null;
   }
 
-  return result;
+  return result!;
 }
 
 export function saveCredentials(
-  user: LoginData["user"],
+  user: UserFragment,
   password: string,
-): Promise<CredentialType | null> {
-  let result: Promise<CredentialType | null>;
+): Promise<CredentialType> | null {
+  let result: Promise<CredentialType> | null;
 
   if (isSupported) {
     const cred = new PasswordCredential({
