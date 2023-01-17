@@ -20,12 +20,15 @@ import {
   WriteableEditorProps,
 } from "@graphiql/react";
 import { useTheme } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React, {
   ComponentType,
   PropsWithChildren,
   ReactNode,
   useEffect,
 } from "react";
+
+import { useStyles } from "./styles";
 
 export interface GraphiQLToolbarConfig {
   /**
@@ -133,6 +136,8 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
 export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const editorContext = useEditorContext({ nonNull: true });
   const pluginContext = usePluginContext();
+
+  const classes = useStyles({});
 
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
   const prettify = usePrettifyEditors();
@@ -255,7 +260,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             minWidth: "200px",
           }}
         >
-          <div className="graphiql-plugin">
+          <div className={clsx("graphiql-plugin", classes.scrollable)}>
             {PluginContent ? <PluginContent /> : null}
           </div>
         </div>
