@@ -7,7 +7,7 @@ export const ADDRESS_SELECTORS = {
   streetAddress2: '[name="streetAddress2"]',
   city: '[name="city"]',
   postalCode: '[name="postalCode"]',
-  country: '[data-test-id="address-edit-country-select-field"]',
-  countryArea: '[data-test-id="address-edit-country-area-field"]',
+  country: '[data-test-id="address-edit-country-select-field"] input',
+  countryArea: '[data-test-id="address-edit-country-area-field"] input',
   saveButton: '[data-test-id="order-address-edit-dialog-confirm-button"]',
 };

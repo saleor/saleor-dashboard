@@ -58,8 +58,8 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
       .wait(1000)
       .first()
       .invoke("text")
-      .as("option")
-      .get(BUTTON_SELECTORS.selectOption)
+      .as("option");
+    cy.get(BUTTON_SELECTORS.selectOption)
       .first()
       .click();
   }
