@@ -14,7 +14,7 @@ const messages = defineMessages({
 function getShopErrorMessage(
   err: Omit<ShopErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case ShopErrorCode.ALREADY_EXISTS:

@@ -6,7 +6,7 @@ import getAccountErrorMessage from "./account";
 function getStaffErrorMessage(
   err: StaffErrorFragment,
   intl: IntlShape,
-): string {
+): string | undefined {
   return getAccountErrorMessage(err, intl);
 }
 

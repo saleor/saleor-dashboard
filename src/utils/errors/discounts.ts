@@ -14,7 +14,7 @@ const messages = defineMessages({
 function getDiscountErrorMessage(
   err: Omit<DiscountErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case DiscountErrorCode.ALREADY_EXISTS:
