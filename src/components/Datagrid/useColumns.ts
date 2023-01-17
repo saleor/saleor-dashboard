@@ -1,6 +1,6 @@
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { addAtIndex, removeAtIndex } from "@saleor/utils/lists";
 import { useCallback, useMemo, useState } from "react";
 
 import { AvailableColumn } from "./types";

@@ -1,10 +1,10 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useAppFetchMutation, useAppInstallMutation } from "@saleor/graphql";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { extractMutationErrors } from "@saleor/misc";
-import getAppErrorMessage from "@saleor/utils/errors/app";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { extractMutationErrors } from "@dashboard/misc";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";

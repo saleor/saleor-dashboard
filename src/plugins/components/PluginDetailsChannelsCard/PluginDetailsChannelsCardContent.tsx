@@ -1,9 +1,9 @@
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import Skeleton from "@dashboard/components/Skeleton";
+import { PluginsDetailsFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { CardContent, Typography } from "@material-ui/core";
-import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
-import Skeleton from "@saleor/components/Skeleton";
-import { PluginsDetailsFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

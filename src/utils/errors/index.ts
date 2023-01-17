@@ -1,4 +1,4 @@
-import { UserError } from "@saleor/types";
+import { UserError } from "@dashboard/types";
 
 export function getFieldError<T extends UserError>(
   errors: T[],

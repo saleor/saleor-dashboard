@@ -1,11 +1,11 @@
 import {
   useOrderSettingsQuery,
   useOrderSettingsUpdateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors, getMutationState } from "@saleor/misc";
-import OrderSettingsPage from "@saleor/orders/components/OrderSettingsPage";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, getMutationState } from "@dashboard/misc";
+import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 

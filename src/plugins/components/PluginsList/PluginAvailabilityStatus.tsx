@@ -1,6 +1,6 @@
-import { PluginBaseFragment } from "@saleor/graphql";
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { Pill } from "@saleor/macaw-ui";
-import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 

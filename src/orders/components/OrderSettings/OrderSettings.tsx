@@ -1,7 +1,7 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

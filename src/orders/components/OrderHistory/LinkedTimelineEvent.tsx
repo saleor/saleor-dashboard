@@ -1,7 +1,7 @@
-import { TimelineEvent } from "@saleor/components/Timeline";
-import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
-import { OrderEventFragment, OrderEventsEnum } from "@saleor/graphql";
-import { orderUrl } from "@saleor/orders/urls";
+import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

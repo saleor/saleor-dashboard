@@ -3,7 +3,7 @@ import * as Types from './types.generated';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import * as ApolloReactHooks from '@saleor/hooks/graphql';
+import * as ApolloReactHooks from '@dashboard/hooks/graphql';
 const defaultOptions = {} as const;
 export const AppManifestFragmentDoc = gql`
     fragment AppManifest on Manifest {

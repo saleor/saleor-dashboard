@@ -1,3 +1,15 @@
+import { ChannelShippingData } from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import PriceField from "@dashboard/components/PriceField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableHead from "@dashboard/components/TableHead";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
+import {
+  getFormChannelError,
+  getFormChannelErrors,
+} from "@dashboard/utils/errors";
+import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import {
   Card,
   CardContent,
@@ -5,18 +17,6 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import { ChannelShippingData } from "@saleor/channels/utils";
-import CardTitle from "@saleor/components/CardTitle";
-import PriceField from "@saleor/components/PriceField";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableHead from "@saleor/components/TableHead";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { ShippingChannelsErrorFragment } from "@saleor/graphql";
-import {
-  getFormChannelError,
-  getFormChannelErrors,
-} from "@saleor/utils/errors";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

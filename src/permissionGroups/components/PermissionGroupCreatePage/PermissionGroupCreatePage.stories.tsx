@@ -1,5 +1,5 @@
-import { permissions } from "@saleor/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { permissions } from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

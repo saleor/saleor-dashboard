@@ -1,22 +1,22 @@
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import LanguageSwitch from "@saleor/components/LanguageSwitch";
-import PageHeader from "@saleor/components/PageHeader";
-import { ListSettingsUpdate } from "@saleor/components/TablePagination";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import PageHeader from "@dashboard/components/PageHeader";
+import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeTranslationDetailsFragment,
   LanguageCodeEnum,
-} from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+} from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
-} from "@saleor/translations/urls";
-import { ListSettings } from "@saleor/types";
+} from "@dashboard/translations/urls";
+import { ListSettings } from "@dashboard/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

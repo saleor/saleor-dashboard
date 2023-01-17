@@ -1,11 +1,11 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Form from "@dashboard/components/Form";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { WeightUnitsEnum } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { Card, CardActions, CardContent } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Form from "@saleor/components/Form";
-import SingleSelectField from "@saleor/components/SingleSelectField";
-import { WeightUnitsEnum } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { buttonMessages, sectionNames } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

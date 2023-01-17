@@ -1,3 +1,12 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderRefundDataQuery } from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { renderCollection } from "@dashboard/misc";
 import {
   Card,
   CardContent,
@@ -8,16 +17,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Money from "@saleor/components/Money";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderRefundDataQuery } from "@saleor/graphql";
-import { FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

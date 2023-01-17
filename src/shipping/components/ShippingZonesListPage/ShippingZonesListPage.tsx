@@ -1,17 +1,21 @@
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import { configurationMenuUrl } from "@saleor/configuration";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   PermissionEnum,
   ShippingZoneFragment,
   WeightUnitsEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import { sectionNames } from "@saleor/intl";
-import { ListActions, PageListProps, UserPermissionProps } from "@saleor/types";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { sectionNames } from "@dashboard/intl";
+import {
+  ListActions,
+  PageListProps,
+  UserPermissionProps,
+} from "@dashboard/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

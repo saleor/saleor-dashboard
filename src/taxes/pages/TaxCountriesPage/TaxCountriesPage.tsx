@@ -1,3 +1,22 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import {
+  CountryCode,
+  TaxClassRateInput,
+  TaxCountryConfigurationFragment,
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
 import {
   Card,
   CardContent,
@@ -5,21 +24,6 @@ import {
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
-import { configurationMenuUrl } from "@saleor/configuration";
-import {
-  CountryCode,
-  TaxClassRateInput,
-  TaxCountryConfigurationFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
 import {
   ConfirmButtonTransitionState,
   List,
@@ -30,10 +34,6 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import { parseQuery } from "@saleor/orders/components/OrderCustomerAddressesEditDialog/utils";
-import TaxPageTitle from "@saleor/taxes/components/TaxPageTitle";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,3 +1,9 @@
+import BackButton from "@dashboard/components/BackButton";
+import { Button } from "@dashboard/components/Button";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { ProductFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
 import {
   Dialog,
   DialogActions,
@@ -6,12 +12,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import { Button } from "@saleor/components/Button";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { ProductFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

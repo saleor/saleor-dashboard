@@ -1,6 +1,6 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { sectionNames } from "@saleor/intl";
-import { asSortParams } from "@saleor/utils/sort";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { sectionNames } from "@dashboard/intl";
+import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";

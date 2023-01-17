@@ -1,5 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

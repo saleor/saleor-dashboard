@@ -1,31 +1,31 @@
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
   useWarehouseUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
   getMutationStatus,
   getStringOrPlaceholder,
-} from "@saleor/misc";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
+} from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
-} from "@saleor/warehouses/components/WarehouseDetailsPage";
+} from "@dashboard/warehouses/components/WarehouseDetailsPage";
 import {
   warehouseListUrl,
   warehouseUrl,
   WarehouseUrlQueryParams,
-} from "@saleor/warehouses/urls";
+} from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

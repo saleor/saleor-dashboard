@@ -1,9 +1,9 @@
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { Button } from "@saleor/components/Button";
-import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
-import PageHeader from "@saleor/components/PageHeader";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { Button } from "@dashboard/components/Button";
+import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
+import PageHeader from "@dashboard/components/PageHeader";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 

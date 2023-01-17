@@ -1,11 +1,11 @@
 import {
   ChannelPriceAndPreorderData,
   IChannelPriceAndPreorderArgs,
-} from "@saleor/channels/utils";
-import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import { toggle } from "@saleor/utils/lists";
+} from "@dashboard/channels/utils";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { FormsetData } from "@dashboard/hooks/useFormset";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { toggle } from "@dashboard/utils/lists";
 import React, { useState } from "react";
 
 import { ProductChannelListing } from "../types";

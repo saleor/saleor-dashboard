@@ -1,9 +1,9 @@
-import { PageCountQueryVariables, usePageCountQuery } from "@saleor/graphql";
-import { pageListUrl } from "@saleor/pages/urls";
+import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
+import { pageListUrl } from "@dashboard/pages/urls";
 import {
   PageTypeListUrlQueryParams,
   PageTypeUrlQueryParams,
-} from "@saleor/pageTypes/urls";
+} from "@dashboard/pageTypes/urls";
 import React from "react";
 
 import * as messages from "./messages";

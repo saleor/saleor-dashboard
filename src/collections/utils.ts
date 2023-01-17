@@ -1,5 +1,8 @@
-import { ChannelCollectionData } from "@saleor/channels/utils";
-import { CollectionDetailsQuery, SearchProductsQuery } from "@saleor/graphql";
+import { ChannelCollectionData } from "@dashboard/channels/utils";
+import {
+  CollectionDetailsQuery,
+  SearchProductsQuery,
+} from "@dashboard/graphql";
 
 export const createChannelsChangeHandler = (
   channelListings: ChannelCollectionData[],

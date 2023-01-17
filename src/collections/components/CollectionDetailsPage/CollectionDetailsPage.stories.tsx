@@ -1,11 +1,11 @@
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
-import { createCollectionChannelsData } from "@saleor/channels/utils";
-import { collection as collectionFixture } from "@saleor/collections/fixtures";
-import { listActionsProps, pageListProps } from "@saleor/fixtures";
-import { CollectionErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+import { createCollectionChannelsData } from "@dashboard/channels/utils";
+import { collection as collectionFixture } from "@dashboard/collections/fixtures";
+import { listActionsProps, pageListProps } from "@dashboard/fixtures";
+import { CollectionErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

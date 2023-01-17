@@ -2,9 +2,9 @@ import {
   ProductVariantFragment,
   useProductChannelListingUpdateMutation,
   useProductVariantChannelListingUpdateMutation,
-} from "@saleor/graphql";
-import { extractMutationErrors } from "@saleor/misc";
-import { ProductVariantUpdateSubmitData } from "@saleor/products/components/ProductVariantPage/form";
+} from "@dashboard/graphql";
+import { extractMutationErrors } from "@dashboard/misc";
+import { ProductVariantUpdateSubmitData } from "@dashboard/products/components/ProductVariantPage/form";
 
 type Product = ProductVariantUpdateSubmitData;
 type Variant = ProductVariantFragment;

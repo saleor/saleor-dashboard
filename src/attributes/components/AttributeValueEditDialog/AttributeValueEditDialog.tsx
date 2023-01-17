@@ -1,3 +1,14 @@
+import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import {
+  AttributeErrorFragment,
+  AttributeInputTypeEnum,
+} from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
 import {
   Dialog,
   DialogActions,
@@ -5,18 +16,7 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import {
-  AttributeErrorFragment,
-  AttributeInputTypeEnum,
-} from "@saleor/graphql";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

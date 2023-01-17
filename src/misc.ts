@@ -5,9 +5,9 @@ import {
   DateRangeInput,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Node, SlugNode } from "@dashboard/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
-import { Node, SlugNode } from "@saleor/types";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";

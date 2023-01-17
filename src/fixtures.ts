@@ -3,7 +3,7 @@ import {
   ShopInfoQuery,
   ShopLimitFragment,
   UserDetailsQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { PaginatorContextValues } from "./hooks/usePaginator";
 import {

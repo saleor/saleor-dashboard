@@ -1,10 +1,10 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Button } from "@dashboard/components/Button";
+import useClipboard from "@dashboard/hooks/useClipboard";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
 import { DialogActions, DialogContent, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { Button } from "@saleor/components/Button";
-import useClipboard from "@saleor/hooks/useClipboard";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 

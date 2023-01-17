@@ -1,10 +1,10 @@
 import {
   AttributeFilterKeys,
   AttributeListFilterOpts,
-} from "@saleor/attributes/components/AttributeListPage";
-import { FilterElement } from "@saleor/components/Filter";
-import { AttributeFilterInput } from "@saleor/graphql";
-import { parseBoolean } from "@saleor/misc";
+} from "@dashboard/attributes/components/AttributeListPage";
+import { FilterElement } from "@dashboard/components/Filter";
+import { AttributeFilterInput } from "@dashboard/graphql";
+import { parseBoolean } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,

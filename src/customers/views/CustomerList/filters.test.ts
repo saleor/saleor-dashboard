@@ -1,9 +1,9 @@
-import { createFilterStructure } from "@saleor/customers/components/CustomerListPage";
-import { CustomerListUrlFilters } from "@saleor/customers/urls";
-import { date } from "@saleor/fixtures";
-import { PermissionEnum } from "@saleor/graphql";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { createFilterStructure } from "@dashboard/customers/components/CustomerListPage";
+import { CustomerListUrlFilters } from "@dashboard/customers/urls";
+import { date } from "@dashboard/fixtures";
+import { PermissionEnum } from "@dashboard/graphql";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

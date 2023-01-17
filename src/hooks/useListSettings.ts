@@ -1,4 +1,4 @@
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import merge from "lodash/merge";
 
 import { AppListViewSettings, defaultListSettings } from "./../config";

@@ -3,8 +3,8 @@ import {
   SearchWarehousesDocument,
   SearchWarehousesQuery,
   SearchWarehousesQueryVariables,
-} from "@saleor/graphql";
-import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
+} from "@dashboard/graphql";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchWarehouses = gql`
   query SearchWarehouses($after: String, $first: Int!, $query: String!) {

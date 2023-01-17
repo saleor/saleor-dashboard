@@ -1,24 +1,24 @@
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PermissionGroupFragment } from "@dashboard/graphql";
+import { maybe, renderCollection, stopPropagation } from "@dashboard/misc";
+import {
+  permissionGroupDetailsUrl,
+  PermissionGroupListUrlSortField,
+} from "@dashboard/permissionGroups/urls";
+import { ListProps, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
 import {
   TableBody,
   TableCell,
   TableFooter,
   TableHead,
 } from "@material-ui/core";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { PermissionGroupFragment } from "@saleor/graphql";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import {
-  permissionGroupDetailsUrl,
-  PermissionGroupListUrlSortField,
-} from "@saleor/permissionGroups/urls";
-import { ListProps, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

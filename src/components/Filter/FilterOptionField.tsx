@@ -1,6 +1,6 @@
+import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, Radio } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { toggle } from "@saleor/utils/lists";
 import clsx from "clsx";
 import React from "react";
 

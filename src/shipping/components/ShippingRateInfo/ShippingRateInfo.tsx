@@ -1,15 +1,15 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import { ShippingErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
+import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import RichTextEditor from "@saleor/components/RichTextEditor";
-import { RichTextEditorLoading } from "@saleor/components/RichTextEditor/RichTextEditorLoading";
-import { ShippingErrorFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getShippingErrorMessage from "@saleor/utils/errors/shipping";
-import { useRichTextContext } from "@saleor/utils/richText/context";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

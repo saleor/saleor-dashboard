@@ -1,13 +1,13 @@
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
-import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data";
-import { ColorPicker } from "@saleor/components/ColorPicker";
-import FileUploadField from "@saleor/components/FileUploadField";
-import { RadioGroupField } from "@saleor/components/RadioGroupField";
-import { useFileUploadMutation } from "@saleor/graphql";
-import { UseFormResult } from "@saleor/hooks/useForm";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { errorMessages } from "@saleor/intl";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
+import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
+import { ColorPicker } from "@dashboard/components/ColorPicker";
+import FileUploadField from "@dashboard/components/FileUploadField";
+import { RadioGroupField } from "@dashboard/components/RadioGroupField";
+import { useFileUploadMutation } from "@dashboard/graphql";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { errorMessages } from "@dashboard/intl";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

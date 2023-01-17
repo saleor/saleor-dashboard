@@ -1,6 +1,6 @@
-import CardDecorator from "@saleor/storybook/CardDecorator";
-import Decorator from "@saleor/storybook/Decorator";
-import { formError } from "@saleor/storybook/formError";
+import CardDecorator from "@dashboard/storybook/CardDecorator";
+import Decorator from "@dashboard/storybook/Decorator";
+import { formError } from "@dashboard/storybook/formError";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

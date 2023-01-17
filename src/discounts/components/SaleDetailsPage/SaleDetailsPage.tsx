@@ -1,33 +1,33 @@
-import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import { Tab, TabContainer } from "@saleor/components/Tab";
+import { ChannelSaleData, validateSalePrice } from "@dashboard/channels/utils";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
   createSaleChannelsChangeHandler,
   createSaleUpdateHandler,
-} from "@saleor/discounts/handlers";
-import { itemsQuantityMessages } from "@saleor/discounts/translations";
-import { saleListUrl } from "@saleor/discounts/urls";
-import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
+} from "@dashboard/discounts/handlers";
+import { itemsQuantityMessages } from "@dashboard/discounts/translations";
+import { saleListUrl } from "@dashboard/discounts/urls";
+import { SALE_UPDATE_FORM_ID } from "@dashboard/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
   PermissionEnum,
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 

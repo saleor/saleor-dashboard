@@ -1,9 +1,9 @@
 import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
-} from "@saleor/discounts/components/SaleDetailsPage";
-import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
-import { RequirementsPicker } from "@saleor/discounts/types";
+} from "@dashboard/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { RequirementsPicker } from "@dashboard/discounts/types";
 import {
   ChannelDetailsFragment,
   ChannelFragment,
@@ -15,10 +15,10 @@ import {
   SaleType,
   ShippingZoneQuery,
   VoucherDetailsFragment,
-} from "@saleor/graphql";
-import { RequireOnlyOne } from "@saleor/misc";
-import { validatePrice } from "@saleor/products/utils/validation";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { RequireOnlyOne } from "@dashboard/misc";
+import { validatePrice } from "@dashboard/products/utils/validation";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import uniqBy from "lodash/uniqBy";
 
 export interface Channel {

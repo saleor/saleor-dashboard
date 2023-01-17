@@ -1,4 +1,4 @@
-import useLocale from "@saleor/hooks/useLocale";
+import useLocale from "@dashboard/hooks/useLocale";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 

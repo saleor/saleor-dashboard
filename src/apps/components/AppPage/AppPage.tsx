@@ -1,5 +1,5 @@
-import Container from "@saleor/components/Container";
-import { AppQuery } from "@saleor/graphql";
+import Container from "@dashboard/components/Container";
+import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
 import { AppFrame } from "../AppFrame";

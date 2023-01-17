@@ -1,18 +1,18 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Grid from "@saleor/components/Grid";
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Grid from "@dashboard/components/Grid";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantFragment,
-} from "@saleor/graphql";
-import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { commonMessages } from "@saleor/intl";
-import { getProductVariantAttributeErrorMessage } from "@saleor/utils/errors/product";
+} from "@dashboard/graphql";
+import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
+import { commonMessages } from "@dashboard/intl";
+import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

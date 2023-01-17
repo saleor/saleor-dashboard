@@ -1,4 +1,4 @@
-import { stringifyQs } from "@saleor/utils/urls";
+import { stringifyQs } from "@dashboard/utils/urls";
 
 import { Dialog } from "../types";
 

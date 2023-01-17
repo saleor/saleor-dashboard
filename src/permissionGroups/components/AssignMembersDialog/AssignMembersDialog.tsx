@@ -1,3 +1,26 @@
+import BackButton from "@dashboard/components/BackButton";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchStaffMembersQuery } from "@dashboard/graphql";
+import useElementScroll, {
+  isScrolledToBottom,
+} from "@dashboard/hooks/useElementScroll";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { buttonMessages } from "@dashboard/intl";
+import {
+  getUserInitials,
+  getUserName,
+  renderCollection,
+} from "@dashboard/misc";
+import {
+  DialogProps,
+  FetchMoreProps,
+  RelayToFlat,
+  SearchPageProps,
+} from "@dashboard/types";
 import {
   Checkbox,
   CircularProgress,
@@ -10,26 +33,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { SearchStaffMembersQuery } from "@saleor/graphql";
-import useElementScroll, {
-  isScrolledToBottom,
-} from "@saleor/hooks/useElementScroll";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { getUserInitials, getUserName, renderCollection } from "@saleor/misc";
-import {
-  DialogProps,
-  FetchMoreProps,
-  RelayToFlat,
-  SearchPageProps,
-} from "@saleor/types";
 import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";

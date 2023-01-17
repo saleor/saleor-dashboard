@@ -1,23 +1,23 @@
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductTypeFragment } from "@dashboard/graphql";
+import {
+  ProductTypeListUrlSortField,
+  productTypeUrl,
+} from "@dashboard/productTypes/urls";
+import { getArrowDirection } from "@dashboard/utils/sort";
 import {
   TableBody,
   TableCell,
   TableFooter,
   Typography,
 } from "@material-ui/core";
-import Checkbox from "@saleor/components/Checkbox";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
-import { TablePaginationWithContext } from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { ProductTypeFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import {
-  ProductTypeListUrlSortField,
-  productTypeUrl,
-} from "@saleor/productTypes/urls";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

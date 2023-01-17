@@ -1,10 +1,9 @@
-import { InputAdornment, TextField } from "@material-ui/core";
-import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
-import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
-import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
-import ExtendedAttributeRow from "@saleor/components/Attributes/ExtendedAttributeRow";
-import { attributeRowMessages } from "@saleor/components/Attributes/messages";
-import { SwatchRow } from "@saleor/components/Attributes/SwatchRow";
+import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
+import { getMeasurementUnitMessage } from "@dashboard/attributes/components/AttributeDetails/utils";
+import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
+import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttributeRow";
+import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
+import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
   getErrorMessage,
   getFileChoice,
@@ -13,16 +12,17 @@ import {
   getReferenceDisplayValue,
   getSingleChoices,
   getSingleDisplayValue,
-} from "@saleor/components/Attributes/utils";
-import Checkbox from "@saleor/components/Checkbox";
-import { DateTimeField } from "@saleor/components/DateTimeField";
-import FileUploadField from "@saleor/components/FileUploadField";
-import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
-import RichTextEditor from "@saleor/components/RichTextEditor";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import SortableChipsField from "@saleor/components/SortableChipsField";
-import { AttributeInputTypeEnum } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/components/Attributes/utils";
+import Checkbox from "@dashboard/components/Checkbox";
+import { DateTimeField } from "@dashboard/components/DateTimeField";
+import FileUploadField from "@dashboard/components/FileUploadField";
+import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
+import RichTextEditor from "@dashboard/components/RichTextEditor";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import SortableChipsField from "@dashboard/components/SortableChipsField";
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { InputAdornment, TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

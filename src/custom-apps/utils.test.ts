@@ -1,5 +1,5 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { WebhookEventTypeAsyncEnum } from "@saleor/graphql";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 
 import { filterSelectedAsyncEvents, mapAsyncEventsToChoices } from "./utils";
 

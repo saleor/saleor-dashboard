@@ -1,9 +1,9 @@
-import { Typography } from "@material-ui/core";
-import FormSpacer from "@saleor/components/FormSpacer";
+import FormSpacer from "@dashboard/components/FormSpacer";
 import {
   OrderDetailsFragment,
   WarehouseClickAndCollectOptionEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

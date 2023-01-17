@@ -1,7 +1,7 @@
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TableCell, Typography } from "@material-ui/core";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
-import { getStringOrPlaceholder } from "@saleor/misc";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

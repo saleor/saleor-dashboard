@@ -1,21 +1,20 @@
-import { DialogContentText } from "@material-ui/core";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { AttributeInput } from "@saleor/components/Attributes";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+} from "@dashboard/attributes/utils/handlers";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
   VALUES_PAGINATE_BY,
-} from "@saleor/config";
+} from "@dashboard/config";
 import {
   AttributeErrorFragment,
   AttributeValueInput,
@@ -30,16 +29,17 @@ import {
   usePageUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import useProductSearch from "@saleor/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

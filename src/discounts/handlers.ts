@@ -2,22 +2,26 @@ import {
   ChannelVoucherData,
   validateSalePrice,
   validateVoucherPrice,
-} from "@saleor/channels/utils";
+} from "@dashboard/channels/utils";
 import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
-} from "@saleor/discounts/components/SaleDetailsPage";
-import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum } from "@saleor/discounts/types";
+} from "@dashboard/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import {
   DiscountErrorCode,
   DiscountErrorFragment,
   SaleType,
   VoucherTypeEnum,
-} from "@saleor/graphql";
-import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import { RequireOnlyOne } from "@saleor/misc";
-import { arrayDiff } from "@saleor/utils/arrays";
+} from "@dashboard/graphql";
+import {
+  ChangeEvent,
+  FormChange,
+  SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import { RequireOnlyOne } from "@dashboard/misc";
+import { arrayDiff } from "@dashboard/utils/arrays";
 
 import { getAddedChannelsInputFromFormData } from "./data";
 

@@ -1,23 +1,23 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
+import Money from "@dashboard/components/Money";
+import MoneyRange from "@dashboard/components/MoneyRange";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import WeightRange from "@dashboard/components/WeightRange";
+import { ShippingZoneDetailsFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { ChannelProps } from "@dashboard/types";
 import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import CardTitle from "@saleor/components/CardTitle";
-import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
-import Money from "@saleor/components/Money";
-import MoneyRange from "@saleor/components/MoneyRange";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableRowLink from "@saleor/components/TableRowLink";
-import WeightRange from "@saleor/components/WeightRange";
-import { ShippingZoneDetailsFragment } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
 import {
   Button,
   DeleteIcon,
   ICONBUTTON_SIZE,
   makeStyles,
 } from "@saleor/macaw-ui";
-import { ChannelProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

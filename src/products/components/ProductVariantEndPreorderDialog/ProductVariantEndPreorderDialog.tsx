@@ -1,5 +1,5 @@
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

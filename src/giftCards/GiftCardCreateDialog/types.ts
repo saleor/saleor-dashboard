@@ -1,5 +1,5 @@
-import { GiftCardErrorFragment } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
+import { GiftCardErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 
 import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 

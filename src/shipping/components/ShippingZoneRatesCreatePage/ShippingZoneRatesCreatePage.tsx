@@ -1,12 +1,12 @@
-import { ChannelShippingData } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import Container from "@saleor/components/Container";
-import { WithFormId } from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import { ChannelShippingData } from "@dashboard/channels/utils";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import Container from "@dashboard/components/Container";
+import { WithFormId } from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
@@ -15,21 +15,21 @@ import {
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
   TaxClassBaseFragment,
-} from "@saleor/graphql";
-import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import useNavigator from "@saleor/hooks/useNavigator";
+} from "@dashboard/graphql";
+import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { validatePrice } from "@dashboard/products/utils/validation";
+import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
+import OrderValue from "@dashboard/shipping/components/OrderValue";
+import OrderWeight from "@dashboard/shipping/components/OrderWeight";
+import PricingCard from "@dashboard/shipping/components/PricingCard";
+import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
+import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
+import { FetchMoreProps } from "@dashboard/types";
+import { RichTextContext } from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { validatePrice } from "@saleor/products/utils/validation";
-import { handleTaxClassChange } from "@saleor/productTypes/handlers";
-import OrderValue from "@saleor/shipping/components/OrderValue";
-import OrderWeight from "@saleor/shipping/components/OrderWeight";
-import PricingCard from "@saleor/shipping/components/PricingCard";
-import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
-import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
-import { FetchMoreProps } from "@saleor/types";
-import { RichTextContext } from "@saleor/utils/richText/context";
-import useRichText from "@saleor/utils/richText/useRichText";
 import React, { FormEventHandler } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

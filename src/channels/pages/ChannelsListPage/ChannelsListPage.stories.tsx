@@ -1,6 +1,6 @@
-import { channelsList } from "@saleor/channels/fixtures";
-import { limits, limitsReached } from "@saleor/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { limits, limitsReached } from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

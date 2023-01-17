@@ -2,7 +2,7 @@ import { FetchResult } from "@apollo/client";
 import {
   AttributeInput,
   AttributeInputData,
-} from "@saleor/components/Attributes";
+} from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
@@ -20,19 +20,19 @@ import {
   SelectedVariantAttributeFragment,
   UploadErrorFragment,
   VariantAttributeFragment,
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
+import { RelayToFlat } from "@dashboard/types";
 import {
   mapEdgesToItems,
   mapNodeToChoice,
   mapPagesToChoices,
-} from "@saleor/utils/maps";
-import { RichTextContextValues } from "@saleor/utils/richText/context";
+} from "@dashboard/utils/maps";
+import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import {
   GetRichTextValues,
   RichTextGetters,
-} from "@saleor/utils/richText/useMultipleRichText";
+} from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
 

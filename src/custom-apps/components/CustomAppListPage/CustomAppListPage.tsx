@@ -1,15 +1,15 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { AppListItemFragment } from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
 import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CustomAppUrls } from "@saleor/custom-apps/urls";
-import { AppListItemFragment } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

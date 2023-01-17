@@ -1,8 +1,8 @@
-import { ShippingMethodTypeEnum } from "@saleor/graphql";
-import { shippingZone } from "@saleor/shipping/fixtures";
-import Decorator from "@saleor/storybook//Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
+import { ShippingMethodTypeEnum } from "@dashboard/graphql";
+import { shippingZone } from "@dashboard/shipping/fixtures";
+import Decorator from "@dashboard/storybook//Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

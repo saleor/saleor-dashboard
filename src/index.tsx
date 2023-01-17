@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@saleor/components/DemoBanner";
-import { PermissionEnum } from "@saleor/graphql";
-import useAppState from "@saleor/hooks/useAppState";
+import DemoBanner from "@dashboard/components/DemoBanner";
+import { PermissionEnum } from "@dashboard/graphql";
+import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
@@ -50,6 +50,7 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
+import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
@@ -92,17 +93,19 @@ const App: React.FC = () => (
                 <ServiceWorker />
                 <BackgroundTasksProvider>
                   <AppStateProvider>
-                    <AuthProvider>
-                      <ShopProvider>
-                        <AppChannelProvider>
-                          <ExternalAppProvider>
-                            <ExitFormDialogProvider>
-                              <Routes />
-                            </ExitFormDialogProvider>
-                          </ExternalAppProvider>
-                        </AppChannelProvider>
-                      </ShopProvider>
-                    </AuthProvider>
+                    <FlagsServiceProvider>
+                      <AuthProvider>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExternalAppProvider>
+                              <ExitFormDialogProvider>
+                                <Routes />
+                              </ExitFormDialogProvider>
+                            </ExternalAppProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </AuthProvider>
+                    </FlagsServiceProvider>
                   </AppStateProvider>
                 </BackgroundTasksProvider>
               </MessageManagerProvider>
@@ -218,11 +221,7 @@ const Routes: React.FC = () => {
                 path="/product-types"
                 component={ProductTypesSection}
               />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_STAFF]}
-                path="/staff"
-                component={StaffSection}
-              />
+              <SectionRoute path="/staff" component={StaffSection} />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_STAFF]}
                 path="/permission-groups"

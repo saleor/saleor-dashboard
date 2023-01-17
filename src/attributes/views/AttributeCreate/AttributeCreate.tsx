@@ -4,22 +4,24 @@ import {
   useAttributeCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
-import { ListViews, ReorderEvent } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalPageInfo, {
+  getMaxPage,
+} from "@dashboard/hooks/useLocalPageInfo";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import { ListViews, ReorderEvent } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import {
   add,
   isSelected,
   move,
   remove,
   updateAtIndex,
-} from "@saleor/utils/lists";
+} from "@dashboard/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";

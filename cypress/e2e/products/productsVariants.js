@@ -48,7 +48,17 @@ describe("As an admin I should be able to create variant", () => {
 
         createChannel({ isActive: true, name, currencyCode: "PLN" });
       })
-      .then(resp => (newChannel = resp));
+      .then(resp => {
+        newChannel = resp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          warehouse,
+          attribute,
+          productType,
+          category,
+          newChannel,
+        });
+      });
   });
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { CollectionListUrlSortField } from "@saleor/collections/urls";
-import { CollectionSortField } from "@saleor/graphql";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { CollectionListUrlSortField } from "@dashboard/collections/urls";
+import { CollectionSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = CollectionListUrlSortField.name;
 

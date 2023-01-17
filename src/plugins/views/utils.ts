@@ -1,4 +1,4 @@
-import { PluginConfigurationBaseFragment } from "@saleor/graphql";
+import { PluginConfigurationBaseFragment } from "@dashboard/graphql";
 
 export const isPluginGlobal = (
   globalConfiguration: PluginConfigurationBaseFragment,

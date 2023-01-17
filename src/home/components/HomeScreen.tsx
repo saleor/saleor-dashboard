@@ -1,7 +1,7 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

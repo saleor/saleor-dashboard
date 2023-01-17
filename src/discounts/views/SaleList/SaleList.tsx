@@ -1,30 +1,33 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useSaleBulkDeleteMutation, useSaleListQuery } from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import {
+  useSaleBulkDeleteMutation,
+  useSaleListQuery,
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@saleor/intl";
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
+import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

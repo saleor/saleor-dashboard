@@ -1,8 +1,8 @@
+import { UserFragment } from "@dashboard/graphql";
+import { getUserInitials, getUserName } from "@dashboard/misc";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { FormControlLabel, Switch } from "@material-ui/core";
-import { UserFragment } from "@saleor/graphql";
 import { UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
-import { getUserInitials, getUserName } from "@saleor/misc";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { AppListItemFragment } from "@saleor/graphql";
+import { AppListItemFragment } from "@dashboard/graphql";
 
 export interface InstalledApp {
   app: AppListItemFragment;

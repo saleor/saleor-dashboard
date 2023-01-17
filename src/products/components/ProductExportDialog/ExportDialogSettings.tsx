@@ -1,17 +1,17 @@
-import Hr from "@saleor/components/Hr";
+import Hr from "@dashboard/components/Hr";
 import RadioGroupField, {
   RadioGroupFieldChoice,
-} from "@saleor/components/RadioGroupField";
+} from "@dashboard/components/RadioGroupField";
 import {
   ExportErrorFragment,
   ExportProductsInput,
   ExportScope,
   FileTypesEnum,
-} from "@saleor/graphql";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { makeStyles } from "@saleor/macaw-ui";
-import { getFormErrors } from "@saleor/utils/errors";
-import getExportErrorMessage from "@saleor/utils/errors/export";
 import React from "react";
 import { useIntl } from "react-intl";
 

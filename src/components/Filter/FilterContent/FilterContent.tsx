@@ -1,7 +1,7 @@
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import Hr from "@dashboard/components/Hr";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper, Typography } from "@material-ui/core";
-import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
-import Hr from "@saleor/components/Hr";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 

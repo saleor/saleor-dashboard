@@ -3,7 +3,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-} from "@saleor/attributes/utils/data";
+} from "@dashboard/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -12,30 +12,30 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from "@saleor/attributes/utils/handlers";
+} from "@dashboard/attributes/utils/handlers";
 import {
   DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
-} from "@saleor/components/Datagrid/useDatagridChange";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { ProductFragment } from "@saleor/graphql";
-import useForm from "@saleor/hooks/useForm";
-import useFormset from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import useLocale from "@saleor/hooks/useLocale";
+} from "@dashboard/components/Datagrid/useDatagridChange";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { ProductFragment } from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import useFormset from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useLocale from "@dashboard/hooks/useLocale";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-} from "@saleor/products/utils/data";
-import { PRODUCT_UPDATE_FORM_ID } from "@saleor/products/views/ProductUpdate/consts";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import getMetadata from "@saleor/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { RichTextContext } from "@saleor/utils/richText/context";
-import { useMultipleRichText } from "@saleor/utils/richText/useMultipleRichText";
-import useRichText from "@saleor/utils/richText/useRichText";
+} from "@dashboard/products/utils/data";
+import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
+import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@dashboard/utils/richText/context";
+import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
+import useRichText from "@dashboard/utils/richText/useRichText";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";

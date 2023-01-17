@@ -1,18 +1,18 @@
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
-} from "@saleor/attributes/utils/data";
-import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@saleor/components/Attributes";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import SeoForm from "@saleor/components/SeoForm";
-import VisibilityCard from "@saleor/components/VisibilityCard";
+} from "@dashboard/attributes/utils/data";
+import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import SeoForm from "@dashboard/components/SeoForm";
+import VisibilityCard from "@dashboard/components/VisibilityCard";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
@@ -20,15 +20,15 @@ import {
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
-} from "@saleor/graphql";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { pageListUrl } from "@dashboard/pages/urls";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { pageListUrl } from "@saleor/pages/urls";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
