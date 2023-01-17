@@ -22,13 +22,7 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      # Disable preview when new Marketplace features are in progress.
-      # If marketplace is done till next release this can be easily enabled
-      # MARKETPLACE_URL: "https://apps.saleor.io/"
-      # SALEOR_APPS_PAGE_PATH=saleor-apps
-      # SALEOR_APPS_JSON_PATH=api/saleor-apps
-      # APP_TEMPLATE_GALLERY_PATH=template-gallery
-      # APPS_MARKETPLACE_API_URI: "https://marketplace-gray.vercel.app/api/v2/saleor-apps"
+      APPS_MARKETPLACE_API_URI: "https://marketplace-gray.vercel.app/api/v2/saleor-apps"
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
     steps:
