@@ -394,10 +394,6 @@
     "context": "delete custom app",
     "string": "Deleting this app, you will delete all the data and webhooks regarding this app."
   },
-  "1+M/52": {
-    "context": "section header",
-    "string": "Webhook Status"
-  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
