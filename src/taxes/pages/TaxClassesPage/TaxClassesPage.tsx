@@ -36,10 +36,11 @@ import {
   PageTabs,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
+import { TaxPagination } from "../../components/TaxPagination";
 import TaxClassesForm from "./form";
 import { useStyles } from "./styles";
 import TaxClassesMenu from "./TaxClassesMenu";
@@ -72,9 +73,14 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const navigate = useNavigator();
   const classes = useStyles();
 
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = useState("");
+  const [rowNumber, setRowNumber] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const currentTaxClass = React.useMemo(
+  const indexOfLastTaxClasses = currentPage * rowNumber;
+  const indexOfFirstTaxClasses = indexOfLastTaxClasses - rowNumber;
+
+  const currentTaxClass = useMemo(
     () => taxClasses?.find(getById(selectedTaxClassId)),
     [selectedTaxClassId, taxClasses],
   );
@@ -82,6 +88,10 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const nameInputRef = useAutofocus(currentTaxClass?.id === "new", [
     currentTaxClass?.id,
   ]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query, rowNumber]);
 
   return (
     <TaxClassesForm
@@ -94,6 +104,12 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         const filteredRates = data.updateTaxClassRates.filter(
           rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
+
+        const paginatedRates = filteredRates.slice(
+          indexOfFirstTaxClasses,
+          indexOfLastTaxClasses,
+        );
+        const hasNext = filteredRates.length / (rowNumber * currentPage) > 1;
 
         const formErrors = getFormErrors(["name"], validationErrors);
 
@@ -204,7 +220,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                             </ListItem>
                           </ListHeader>
                           <Divider />
-                          {filteredRates?.map(
+                          {paginatedRates?.map(
                             (countryRate, countryRateIndex) => (
                               <React.Fragment key={countryRate.id}>
                                 <ListItem
@@ -238,6 +254,14 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                               <VerticalSpacer />
                             </>
                           )}
+
+                          <TaxPagination
+                            rowNumber={rowNumber}
+                            setRowNumber={setRowNumber}
+                            hasNextPage={hasNext}
+                            hasPrevPage={currentPage > 1}
+                            setCurrentPage={setCurrentPage}
+                          />
                         </List>
                       </>
                     )}
