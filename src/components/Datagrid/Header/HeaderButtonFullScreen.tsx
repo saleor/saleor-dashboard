@@ -16,7 +16,7 @@ const useStyles = makeStyles(
     },
 
     fullScreenIcon: {
-      fontSize: 14,
+      fontSize: theme.typography.body1.fontSize,
     },
     fullScreenIconClose: {
       transform: "rotate(180deg)",
