@@ -8,6 +8,7 @@ import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { TaxClassFragment } from "@dashboard/graphql";
+import { useClientPagination } from "@dashboard/hooks/useClientPagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getById } from "@dashboard/misc";
@@ -74,11 +75,15 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const classes = useStyles();
 
   const [query, setQuery] = useState("");
-  const [rowNumber, setRowNumber] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastTaxClasses = currentPage * rowNumber;
-  const indexOfFirstTaxClasses = indexOfLastTaxClasses - rowNumber;
+  const {
+    rowNumber,
+    currentPage,
+    indexOfFirstElement,
+    indexOfLastElement,
+    restartPagination,
+    changeCurrentPage,
+    changeRowNumber,
+  } = useClientPagination();
 
   const currentTaxClass = useMemo(
     () => taxClasses?.find(getById(selectedTaxClassId)),
@@ -90,8 +95,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   ]);
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [query, rowNumber]);
+    restartPagination();
+  }, [query, restartPagination]);
 
   return (
     <TaxClassesForm
@@ -106,11 +111,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         );
 
         const paginatedRates = filteredRates.slice(
-          indexOfFirstTaxClasses,
-          indexOfLastTaxClasses,
+          indexOfFirstElement,
+          indexOfLastElement,
         );
-        const hasNext = filteredRates.length / (rowNumber * currentPage) > 1;
-
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
@@ -257,10 +260,13 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
 
                           <TaxPagination
                             rowNumber={rowNumber}
-                            setRowNumber={setRowNumber}
-                            hasNextPage={hasNext}
+                            setRowNumber={changeRowNumber}
+                            hasNextPage={
+                              filteredRates.length / (rowNumber * currentPage) >
+                              1
+                            }
                             hasPrevPage={currentPage > 1}
-                            setCurrentPage={setCurrentPage}
+                            setCurrentPage={changeCurrentPage}
                           />
                         </List>
                       </>

@@ -1,5 +1,7 @@
+import { commonMessages } from "@dashboard/intl";
 import { makeStyles, Pagination } from "@saleor/macaw-ui";
 import React, { Dispatch, SetStateAction } from "react";
+import { useIntl } from "react-intl";
 
 interface TaxPaginationProps {
   rowNumber: number;
@@ -26,6 +28,15 @@ export const TaxPagination = ({
   hasPrevPage,
 }: TaxPaginationProps) => {
   const classes = useStyles();
+  const intl = useIntl();
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage => (currentPage += 1));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage => (currentPage -= 1));
+  };
 
   return (
     <div className={classes.container}>
@@ -33,16 +44,12 @@ export const TaxPagination = ({
         hasNextPage={hasNextPage}
         hasPreviousPage={hasPrevPage}
         labels={{
-          noOfRows: "No rows",
+          noOfRows: intl.formatMessage(commonMessages.noOfRows),
         }}
         rowNumber={rowNumber}
         onRowNumberUpdate={setRowNumber}
-        onNextPage={() => {
-          setCurrentPage(currentPage => (currentPage += 1));
-        }}
-        onPreviousPage={() => {
-          setCurrentPage(currentPage => (currentPage -= 1));
-        }}
+        onNextPage={handleNextPage}
+        onPreviousPage={handlePrevPage}
       />
     </div>
   );
