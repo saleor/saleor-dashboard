@@ -1,6 +1,5 @@
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { AppInstallationFragment } from "@dashboard/graphql";
-import { InstalledApp } from "@dashboard/new-apps/types";
+import { AppInstallation, InstalledApp } from "@dashboard/new-apps/types";
 import { ListProps } from "@dashboard/types";
 import { Table, TableBody, TableFooter, TableRow } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
@@ -12,7 +11,7 @@ import { useStyles } from "./styles";
 
 interface InstalledAppListProps extends ListProps {
   appList?: InstalledApp[];
-  appInstallationList?: AppInstallationFragment[];
+  appInstallationList?: AppInstallation[];
 }
 
 const InstalledAppList: React.FC<InstalledAppListProps> = ({
@@ -31,14 +30,21 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
   return (
     <Table className={classes.table}>
       <TableBody>
-        {appInstallationList?.map(appInstallation => (
+        {appInstallationList?.map(({ appInstallation, logo, isExternal }) => (
           <NotInstalledAppListRow
             key={appInstallation.id}
             appInstallation={appInstallation}
+            isExternal={isExternal}
+            logo={logo}
           />
         ))}
-        {appList.map(({ app, isExternal }) => (
-          <InstalledAppListRow key={app.id} app={app} isExternal={isExternal} />
+        {appList.map(({ app, isExternal, logo }) => (
+          <InstalledAppListRow
+            key={app.id}
+            app={app}
+            isExternal={isExternal}
+            logo={logo}
+          />
         ))}
       </TableBody>
       <TableFooter>

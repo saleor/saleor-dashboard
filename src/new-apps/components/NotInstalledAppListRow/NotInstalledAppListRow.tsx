@@ -1,16 +1,21 @@
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
+import { JobStatusEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useAppListContext } from "@dashboard/new-apps/context";
-import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
+import {
+  appInstallationStatusMessages,
+  appsMessages,
+} from "@dashboard/new-apps/messages";
+import { AppInstallation } from "@dashboard/new-apps/types";
 import { CircularProgress, TableCell, Typography } from "@material-ui/core";
 import {
   Button,
   DeleteIcon,
   IconButton,
   Indicator,
+  Pill,
   Tooltip,
   TooltipMountWrapper,
 } from "@saleor/macaw-ui";
@@ -21,28 +26,32 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AppManifestTableDisplay from "../AppManifestTableDisplay";
 import { useStyles } from "./styles";
 
-export interface NotInstalledAppListRowProps {
-  appInstallation: AppInstallationFragment;
-}
-
-export const NotInstalledAppListRow: React.FC<NotInstalledAppListRowProps> = ({
-  appInstallation,
-}) => {
+export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
+  const { appInstallation, isExternal, logo } = props;
   const intl = useIntl();
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
   return (
     <TableRowLink>
       <TableCellAvatar
         initials={appInstallation.appName?.[0]?.toUpperCase()}
-        thumbnail={undefined}
+        thumbnail={logo?.source || undefined}
+        avatarProps={classes.logo}
         className={clsx(classes.col, classes.colLogo)}
       >
         <div className={classes.mainContent}>
           <Typography variant="body1" className={classes.name}>
             {appInstallation.appName}
           </Typography>
+          {isExternal && (
+            <Pill
+              color="warning"
+              className={classes.externalAppLabel}
+              label={intl.formatMessage(appsMessages.externalApp)}
+              data-test-id="app-external-label"
+            />
+          )}
         </div>
         {appInstallation.manifestUrl && (
           <AppManifestTableDisplay manifestUrl={appInstallation.manifestUrl} />

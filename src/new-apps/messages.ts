@@ -21,6 +21,11 @@ export const appsMessages = defineMessages({
     defaultMessage: "App Manifest URL",
     description: "label",
   },
+  externalApp: {
+    id: "nA2g2e",
+    defaultMessage: "External app",
+    description: "label",
+  },
 });
 
 export const appInstallationStatusMessages = defineMessages({

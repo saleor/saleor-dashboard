@@ -23,7 +23,10 @@ describe("Apps NotInstalledAppListRow", () => {
     // Arrange
     render(
       <Wrapper>
-        <NotInstalledAppListRow appInstallation={failedAppInProgress} />
+        <NotInstalledAppListRow
+          appInstallation={failedAppInProgress}
+          isExternal={false}
+        />
       </Wrapper>,
     );
     const name = screen.queryByText(failedAppInProgress.appName);
@@ -44,7 +47,10 @@ describe("Apps NotInstalledAppListRow", () => {
     // Arrange
     render(
       <Wrapper>
-        <NotInstalledAppListRow appInstallation={pendingAppInProgress} />
+        <NotInstalledAppListRow
+          appInstallation={pendingAppInProgress}
+          isExternal={false}
+        />
       </Wrapper>,
     );
     const name = screen.queryByText(pendingAppInProgress.appName);
@@ -73,7 +79,10 @@ describe("Apps NotInstalledAppListRow", () => {
     }));
     render(
       <Wrapper>
-        <NotInstalledAppListRow appInstallation={failedAppInProgress} />
+        <NotInstalledAppListRow
+          appInstallation={failedAppInProgress}
+          isExternal={false}
+        />
       </Wrapper>,
     );
     const user = userEvent.setup();

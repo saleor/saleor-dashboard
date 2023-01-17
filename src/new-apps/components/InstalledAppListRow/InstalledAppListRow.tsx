@@ -2,6 +2,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { useAppListContext } from "@dashboard/new-apps/context";
+import { appsMessages } from "@dashboard/new-apps/messages";
 import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
@@ -16,19 +17,18 @@ import { AppPermissions } from "../AppPermissions";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export const InstalledAppListRow: React.FC<InstalledApp> = ({
-  app,
-  isExternal,
-}) => {
+export const InstalledAppListRow: React.FC<InstalledApp> = props => {
+  const { app, isExternal, logo } = props;
   const intl = useIntl();
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { openAppSettings } = useAppListContext();
 
   return (
     <TableRowLink className={classes.row} href={AppUrls.resolveAppUrl(app.id)}>
       <TableCellAvatar
         initials={app.name?.[0]?.toUpperCase()}
-        thumbnail={undefined}
+        thumbnail={logo?.source || undefined}
+        avatarProps={classes.logo}
         className={clsx(classes.col, classes.colLogo)}
       >
         <div className={classes.mainContent}>
@@ -42,7 +42,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = ({
             <Pill
               color="warning"
               className={classes.externalAppLabel}
-              label={intl.formatMessage(messages.externalApp)}
+              label={intl.formatMessage(appsMessages.externalApp)}
               data-test-id="app-external-label"
             />
           )}

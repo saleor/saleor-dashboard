@@ -242,10 +242,15 @@ describe("App List verified installed apps util", () => {
       {
         app: installedApps[0],
         isExternal: false,
+        logo: {
+          source: "https://www.example.com/logo",
+          color: "#000000",
+        },
       },
       {
         app: installedApps[1],
         isExternal: true,
+        logo: undefined,
       },
     ];
     expect(verifiedInstalledApps).toEqual(expectedVerifiedInstalledApps);

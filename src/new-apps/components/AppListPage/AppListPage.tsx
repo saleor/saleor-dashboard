@@ -18,6 +18,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
+  getVerifiedAppsInstallations,
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
@@ -42,6 +43,10 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   const classes = useStyles();
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
+    installableMarketplaceApps,
+  );
+  const verifiedAppsIntallations = getVerifiedAppsInstallations(
+    appsInstallations,
     installableMarketplaceApps,
   );
   const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
@@ -82,7 +87,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader title={intl.formatMessage(messages.installedApps)} />
             <InstalledAppList
               appList={verifiedInstalledApps}
-              appInstallationList={appsInstallations}
+              appInstallationList={verifiedAppsIntallations}
               disabled={disabled}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}

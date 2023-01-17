@@ -168,12 +168,12 @@ describe("Apps AppListCard", () => {
       </Wrapper>,
     );
     const status = screen.getByTestId("app-installation-failed");
-    const statusDetaails = within(status).queryByText(
+    const statusDetails = within(status).queryByText(
       appInstallationStatusMessages.failed.defaultMessage,
     );
 
     // Assert
-    expect(statusDetaails).toBeTruthy();
+    expect(statusDetails).toBeTruthy();
   });
 
   it("displays app installation details when pending installation data passed", () => {

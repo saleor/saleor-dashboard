@@ -24,10 +24,10 @@ const AppInProgressDeleteDialog: React.FC<AppInProgressDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const missingName = name === null || name === "";
+  const isNameMissing = name === null || name === "";
 
   const getMainText = () => {
-    if (missingName) {
+    if (isNameMissing) {
       return intl.formatMessage(msgs.deleteApp);
     }
     return intl.formatMessage(msgs.deleteNamedApp, {

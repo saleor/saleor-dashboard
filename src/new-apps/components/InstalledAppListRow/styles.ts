@@ -1,12 +1,17 @@
+import { InstalledApp } from "@dashboard/new-apps/types";
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useStyles = makeStyles(
+export const useStyles = makeStyles<InstalledApp>(
   theme => ({
     mainContent: {
       display: "flex",
       alignItems: "center",
       gap: theme.spacing(2),
     },
+    logo: props => ({
+      backgroundColor: props.logo?.color,
+      padding: theme.spacing(1.2),
+    }),
     name: {
       fontWeight: 600,
     },
