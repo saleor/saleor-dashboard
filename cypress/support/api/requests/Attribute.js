@@ -88,7 +88,7 @@ export function getAttribute(attributeId) {
       visibleInStorefront
       availableInGrid
       unit
-      choices{
+      choices(first:100){
         edges{
           node{
             file{
