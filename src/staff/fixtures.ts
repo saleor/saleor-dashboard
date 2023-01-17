@@ -1,6 +1,10 @@
 import avatarImage from "@assets/images/avatars/avatar1.png";
 import { permissions } from "@saleor/fixtures";
-import { StaffListQuery, StaffMemberDetailsFragment } from "@saleor/graphql";
+import {
+  StaffListQuery,
+  StaffMemberAvatarFragment,
+  StaffMemberDetailsFragment,
+} from "@saleor/graphql";
 import { RelayToFlat } from "@saleor/types";
 
 export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
@@ -150,4 +154,14 @@ export const staffMember: StaffMemberDetailsFragment = {
     ...p,
     __typename: "UserPermission",
   })),
+};
+
+export const staffMemberAvatar: StaffMemberAvatarFragment = {
+  avatar: { __typename: "Image" as "Image", url: avatarImage },
+  email: "admin@example.com",
+  firstName: "Jacob",
+  id: "VXNlcjoyMQ==",
+  isActive: true,
+  lastName: "Smith",
+  __typename: "User",
 };

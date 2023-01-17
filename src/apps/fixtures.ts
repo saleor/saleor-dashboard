@@ -1,4 +1,5 @@
 import {
+  AppAvatarFragment,
   AppFetchMutation,
   AppListItemFragment,
   AppQuery,
@@ -161,4 +162,10 @@ export const installApp: NonNullable<
   supportUrl: null,
   tokenTargetUrl: null,
   version: "1.0",
+};
+
+export const appAvatar: AppAvatarFragment = {
+  id: "QXBwOjE3Ng==",
+  name: "app",
+  __typename: "App",
 };
