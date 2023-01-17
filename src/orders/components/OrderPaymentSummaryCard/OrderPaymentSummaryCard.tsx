@@ -12,10 +12,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { RefundsSummary } from "./components";
-import {
-  getShouldDisplayAmounts,
-  PaymentsSummary,
-} from "./components/PaymentsSummary";
+import { PaymentsSummary } from "./components/PaymentsSummary";
+import { getShouldDisplayAmounts } from "./components/PaymentsSummary/utils";
 import {
   orderPaymentActionButtonMessages,
   orderPaymentMessages,
