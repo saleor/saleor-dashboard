@@ -43,11 +43,11 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
   }[Keys];
 
 export function renderCollection<T>(
-  collection: T[],
+  collection: T[] | undefined,
   renderItem: (
     item: T | undefined,
     index: number | undefined,
-    collection: T[],
+    collection: T[] | undefined,
   ) => any,
   renderEmpty?: (collection: T[]) => any,
 ) {
