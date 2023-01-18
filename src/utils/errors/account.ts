@@ -56,7 +56,7 @@ interface ErrorFragment {
 }
 
 function getAccountErrorMessage(
-  err: ErrorFragment | AccountError,
+  err: ErrorFragment | Omit<AccountError, "addressType">,
   intl: IntlShape,
 ): string | undefined {
   if (err) {
