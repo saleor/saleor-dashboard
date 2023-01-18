@@ -1,6 +1,6 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
-import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, ApolloLink, from, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
@@ -18,13 +18,23 @@ const attachVariablesLink = new ApolloLink((operation, forward) =>
   })),
 );
 
-export const link = attachVariablesLink.concat(
+const storeQueryMiddleware = new ApolloLink((operation, forward) => {
+  const { query } = operation;
+  // TODO store query
+  localStorage.setItem("query", JSON.stringify(query));
+
+  return forward(operation);
+});
+
+export const link = from([
+  attachVariablesLink,
+  storeQueryMiddleware,
   createUploadLink({
     credentials: "include",
     uri: getApiUrl(),
     fetch: createFetch(),
   }),
-);
+]);
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
