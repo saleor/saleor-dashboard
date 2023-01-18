@@ -7,22 +7,33 @@ interface HeaderButtonAddRowProps {
   children: ReactNode;
 }
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ isOpen: boolean }>(
   theme => ({
     headerBtn: {
       marginBottom: theme.spacing(2),
+      zIndex: 4,
+      transition: "borderRadius .2s ease-in-out",
+      borderBottomLeftRadius: ({ isOpen }) => (isOpen ? 0 : 4),
+      borderBottomRightRadius: ({ isOpen }) => (isOpen ? 0 : 4),
       "& svg": {
         marginRight: 0,
         marginLeft: theme.spacing(1),
       },
     },
     popover: {
-      width: 140,
+      width: "100%",
       zIndex: 3,
-      borderStyle: "solid",
-      borderWidth: "1px",
-      borderColor: theme.palette.saleor.main[5],
+      border: `1px solid ${theme.palette.saleor.main[5]}`,
       borderTopWidth: 0,
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4,
+    },
+    chervonIcon: {
+      transition: "transform .2s ease-in-out",
+      transform: ({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0)"),
+    },
+    container: {
+      position: "relative",
     },
   }),
   { name: "DatagridHeaderButtonAddRow" },
@@ -34,9 +45,9 @@ export const HeaderButtonAddRow = ({
   onAddRow,
   children,
 }: HeaderButtonAddRowProps) => {
-  const classes = useStyles();
   const anchor = useRef<HTMLButtonElement>();
   const [isOpen, setIsOpen] = useState(false);
+  const classes = useStyles({ isOpen });
 
   const handleOpenMenu = () => setIsOpen(true);
   const handleCloseMenu = () => setIsOpen(false);
@@ -47,7 +58,7 @@ export const HeaderButtonAddRow = ({
   };
 
   return (
-    <>
+    <div className={classes.container}>
       <Button
         data-test-id="button-add-variant"
         className={classes.headerBtn}
@@ -56,7 +67,7 @@ export const HeaderButtonAddRow = ({
         ref={anchor}
       >
         {children}
-        <ChevronIcon />
+        <ChevronIcon className={classes.chervonIcon} />
       </Button>
       <Popper
         anchorEl={anchor.current}
@@ -75,6 +86,6 @@ export const HeaderButtonAddRow = ({
           </Paper>
         </ClickAwayListener>
       </Popper>
-    </>
+    </div>
   );
 };
