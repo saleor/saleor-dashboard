@@ -78,8 +78,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const {
     rowNumber,
     currentPage,
-    indexOfFirstElement,
-    indexOfLastElement,
+    paginate,
     restartPagination,
     changeCurrentPage,
     changeRowNumber,
@@ -110,10 +109,10 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
           rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
 
-        const paginatedRates = filteredRates.slice(
-          indexOfFirstElement,
-          indexOfLastElement,
+        const { data: paginatedRates, hasNextPage, hasPreviousPage } = paginate(
+          filteredRates,
         );
+
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
@@ -261,11 +260,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                           <TaxPagination
                             rowNumber={rowNumber}
                             setRowNumber={changeRowNumber}
-                            hasNextPage={
-                              filteredRates.length / (rowNumber * currentPage) >
-                              1
-                            }
-                            hasPrevPage={currentPage > 1}
+                            hasNextPage={hasNextPage}
+                            hasPrevPage={hasPreviousPage}
                             currentPage={currentPage}
                             setCurrentPage={changeCurrentPage}
                           />

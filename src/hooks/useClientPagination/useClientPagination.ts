@@ -27,13 +27,21 @@ export const useClientPagination = () => {
     setCurrentPage(page);
   }, []);
 
+  const paginate = useCallback(
+    <T>(data: T[]) => ({
+      data: data.slice(indexOfFirstElement, indexOfLastElement),
+      hasNextPage: data.length / (rowNumber * currentPage) > 1,
+      hasPreviousPage: currentPage > 1,
+    }),
+    [currentPage, indexOfFirstElement, indexOfLastElement, rowNumber],
+  );
+
   return {
     rowNumber,
     changeRowNumber,
     changeCurrentPage,
     currentPage,
     restartPagination,
-    indexOfLastElement,
-    indexOfFirstElement,
+    paginate,
   };
 };
