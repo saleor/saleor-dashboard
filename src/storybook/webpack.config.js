@@ -2,6 +2,7 @@
 const path = require("path");
 const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = ({ config }) => {
   config.module.rules.push({
@@ -34,6 +35,10 @@ module.exports = ({ config }) => {
   config.plugins.push(
     new CheckerPlugin({
       eslint: true,
+    }),
+    new webpack.DefinePlugin({
+      FLAGS_SERVICE_ENABLED: false,
+      FLAGS: {},
     }),
   );
   return config;
