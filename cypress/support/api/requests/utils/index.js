@@ -26,11 +26,12 @@ Cypress.Commands.add(
       method: "POST",
       url: urlList.apiUri,
       log: true,
-    }).then(response => {
-      const respInSting = JSON.stringify(response.body);
-      if (respInSting.includes(`"errors":[{`)) {
-        cy.log(query).log(JSON.stringify(response.body));
-      }
     });
+    // .then(response => {
+    // const respInSting = JSON.stringify(response.body);
+    // if (respInSting.includes(`"errors":[{`)) {
+    //   cy.log(query).log(JSON.stringify(response.body));
+    // }
+    // });
   },
 );
