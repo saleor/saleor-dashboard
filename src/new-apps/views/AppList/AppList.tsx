@@ -67,7 +67,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   );
   const paginate = useLocalPaginator(setPaginationState);
 
-  const { data: installedAppsData, loading, refetch } = useAppsListQuery({
+  const {
+    data: installedAppsData,
+    loading,
+    refetch: appsRefetch,
+  } = useAppsListQuery({
     displayLoader: true,
     variables: {
       ...paginationState,
@@ -121,9 +125,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   } = useActiveAppsInstallations({
     appsInProgressData,
     appsInProgressRefetch,
+    appsRefetch,
     installedAppNotify,
     removeInProgressAppNotify,
-    onInstallSuccess: refetch,
+    onInstallSuccess: () => {
+      appsRefetch();
+      appsInProgressRefetch();
+    },
     onInstallError: onAppInstallError,
     onRemoveInProgressAppSuccess: closeModal,
   });

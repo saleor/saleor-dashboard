@@ -13,6 +13,7 @@ import { useEffect, useRef } from "react";
 interface UseActiveAppsInstallations {
   appsInProgressData: AppsInstallationsQuery | undefined;
   appsInProgressRefetch: () => void;
+  appsRefetch: () => void;
   removeInProgressAppNotify: () => void;
   installedAppNotify: (name: string) => void;
   onInstallSuccess: () => void;
@@ -23,6 +24,7 @@ interface UseActiveAppsInstallations {
 function useActiveAppsInstallations({
   appsInProgressData,
   appsInProgressRefetch,
+  appsRefetch,
   installedAppNotify,
   removeInProgressAppNotify,
   onInstallSuccess,
@@ -87,15 +89,39 @@ function useActiveAppsInstallations({
     });
 
   /**
-   * Check for active installations to make its status in localStorage up to date.
+   * Check if there has occured by any reason untracked installation with status PENDING and add it to activeInstallations.
+   */
+  useEffect(
+    () =>
+      appsInProgressData?.appsInstallations?.forEach(app => {
+        if (app.status === JobStatusEnum.PENDING) {
+          const item = activeInstallations.find(
+            installation => installation.id === app.id,
+          );
+          if (!item) {
+            setActiveInstallations(installations => [
+              ...installations,
+              {
+                id: app.id,
+                name: app.appName,
+              },
+            ]);
+          }
+        }
+      }),
+    [appsInProgressData],
+  );
+
+  /**
+   * Fetch active installations to make its status in localStorage up to date.
    */
   useEffect(() => {
     if (activeInstallations.length && !!appsInProgressData) {
       if (!intervalId.current) {
-        intervalId.current = window.setInterval(
-          () => appsInProgressRefetch(),
-          2000,
-        );
+        intervalId.current = window.setInterval(() => {
+          appsInProgressRefetch();
+          appsRefetch();
+        }, 2000);
       }
     }
     if (!activeInstallations.length && intervalId.current) {
@@ -111,6 +137,9 @@ function useActiveAppsInstallations({
     };
   }, [activeInstallations.length, appsInProgressData]);
 
+  /**
+   * Do what is needed and call chaange handlers when installation status changes.
+   */
   useEffect(() => {
     const appsInProgress = appsInProgressData?.appsInstallations || [];
     if (activeInstallations.length && !!appsInProgressData) {
@@ -121,6 +150,7 @@ function useActiveAppsInstallations({
           removeInstallation(installation.id);
           installedAppNotify(installation.name);
           appsInProgressRefetch();
+          appsRefetch();
           newAppInstalled = true;
         } else if (item.status === JobStatusEnum.SUCCESS) {
           removeInstallation(installation.id);
