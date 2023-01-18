@@ -60,7 +60,7 @@ export interface AttributePageProps {
 }
 
 export interface AttributePageFormData extends MetadataFormData {
-  type: AttributeTypeEnum | null;
+  type: AttributeTypeEnum;
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
@@ -151,7 +151,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
       metadata,
       privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
-      type,
+      type: type!,
     });
   };
 

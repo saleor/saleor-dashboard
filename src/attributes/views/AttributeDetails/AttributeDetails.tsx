@@ -185,14 +185,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         attributeReorderValues: {
           __typename: "AttributeReorderValues",
           attribute: {
-            ...data?.attribute,
+            ...data?.attribute!,
             choices: {
               __typename: "AttributeValueCountableConnection",
               pageInfo: {
-                ...data?.attribute?.choices?.pageInfo,
+                ...data?.attribute?.choices?.pageInfo!,
               },
               edges: move(
-                data?.attribute?.choices?.edges[oldIndex],
+                data?.attribute?.choices?.edges[oldIndex]!,
                 data?.attribute?.choices?.edges ?? [],
                 (a, b) => a?.node.id === b?.node.id,
                 newIndex,
@@ -237,7 +237,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     );
 
   const handleSubmit = createMetadataUpdateHandler(
-    data?.attribute,
+    data?.attribute!,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -245,7 +245,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   return (
     <AttributePage
-      attribute={data?.attribute}
+      attribute={data?.attribute!}
       disabled={loading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       onDelete={() => openModal("remove")}
@@ -263,10 +263,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         })
       }
       saveButtonBarState={attributeUpdateOpts.status}
-      values={data?.attribute?.choices}
+      values={data?.attribute?.choices!}
       settings={settings}
       onUpdateListSettings={updateListSettings}
-      pageInfo={pageInfo}
+      pageInfo={pageInfo!}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
     >
