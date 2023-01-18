@@ -185,8 +185,66 @@ type AccountUpdate {
 }
 
 """Represents user address data."""
-type Address implements Node {
+type Address implements Node & ObjectWithMetadata {
   id: ID!
+
+  """
+  List of private metadata items. Requires staff permissions to access.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """
+  List of public metadata items. Can be accessed without permissions.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafields(keys: [String!]): Metadata
   firstName: String!
   lastName: String!
   companyName: String!
@@ -1221,6 +1279,13 @@ type Attribute implements Node & ObjectWithMetadata {
     """Return the last n elements from the list."""
     last: Int
   ): ProductTypeCountableConnection!
+
+  """
+  External ID of this attribute. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1319,6 +1384,13 @@ input AttributeCreateInput {
 
   """Whether the attribute can be displayed in the admin product list."""
   availableInGrid: Boolean
+
+  """
+  External ID of this attribute.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1609,6 +1681,13 @@ input AttributeUpdateInput {
 
   """Whether the attribute can be displayed in the admin product list."""
   availableInGrid: Boolean
+
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1685,6 +1764,13 @@ type AttributeValue implements Node {
 
   """Represents the date/time value of the attribute value."""
   dateTime: DateTime
+
+  """
+  External ID of this attribute value. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1756,6 +1842,13 @@ input AttributeValueCreateInput {
 
   """File content type."""
   contentType: String
+
+  """
+  External ID of this attribute value.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Name of a value displayed in the interface."""
   name: String!
@@ -2011,6 +2104,13 @@ input AttributeValueUpdateInput {
 
   """File content type."""
   contentType: String
+
+  """
+  External ID of this attribute value.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Name of a value displayed in the interface."""
   name: String
@@ -4885,6 +4985,13 @@ input CustomerInput {
 
   """User language code."""
   languageCode: LanguageCodeEnum
+
+  """
+  External ID of the customer.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -5362,6 +5469,13 @@ input DraftOrderCreateInput {
   """
   redirectUrl: String
 
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Variant line input consisting of variant ID and quantity of products."""
   lines: [OrderLineCreateInput!]
 }
@@ -5457,6 +5571,13 @@ input DraftOrderInput {
   URL of a view where users should be redirected to see the order details. URL in RFC 1808 format.
   """
   redirectUrl: String
+
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -7303,6 +7424,13 @@ type Invoice implements ObjectWithMetadata & Job & Node {
 
   """URL to download an invoice."""
   url: String
+
+  """
+  Order related to the invoice.
+  
+  Added in Saleor 3.10.
+  """
+  order: Order
 }
 
 """
@@ -7357,6 +7485,13 @@ type InvoiceDeleted implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
+
+  """
+  Order related to the invoice.
+  
+  Added in Saleor 3.10.
+  """
+  order: Order
 }
 
 type InvoiceError {
@@ -7430,6 +7565,13 @@ type InvoiceRequested implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
+
+  """
+  Order related to the invoice.
+  
+  Added in Saleor 3.10.
+  """
+  order: Order!
 }
 
 """
@@ -7465,6 +7607,13 @@ type InvoiceSent implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
+
+  """
+  Order related to the invoice.
+  
+  Added in Saleor 3.10.
+  """
+  order: Order
 }
 
 """
@@ -9148,6 +9297,23 @@ type Mutation {
   ): EventDeliveryRetry
 
   """
+  Performs a dry run of a webhook event. Supports a single event (the first if multiple provided in the `query`). Requires permission relevant to processed event.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  """
+  webhookDryRun(
+    """The ID of an object to serialize."""
+    objectId: ID!
+
+    """The subscription query that defines the webhook event and its payload."""
+    query: String!
+  ): WebhookDryRun
+
+  """
   Creates new warehouse. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -9788,8 +9954,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productDelete(
+    """
+    External ID of a product to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product to delete."""
-    id: ID!
+    id: ID
   ): ProductDelete
 
   """
@@ -9808,8 +9981,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productUpdate(
+    """
+    External ID of a product to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a product."""
     input: ProductInput!
@@ -10048,6 +10228,13 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantDelete(
+    """
+    External ID of a product variant to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product variant to delete."""
     id: ID
 
@@ -10140,7 +10327,14 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantUpdate(
-    """ID of a product variant to update."""
+    """
+    External ID of a product variant to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to update."""
     id: ID
 
     """Fields required to update a product variant."""
@@ -10314,11 +10508,13 @@ type Mutation {
   ): PaymentCheckBalance
 
   """
-  Create transaction for checkout or order. Requires the following permissions: HANDLE_PAYMENTS.
+  Create transaction for checkout or order.
   
   Added in Saleor 3.4.
   
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
   """
   transactionCreate(
     """The ID of the checkout or order."""
@@ -10332,11 +10528,13 @@ type Mutation {
   ): TransactionCreate
 
   """
-  Create transaction for checkout or order. Requires the following permissions: OWNER and HANDLE_PAYMENTS.
+  Create transaction for checkout or order.
   
   Added in Saleor 3.4.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires the following permissions: OWNER and HANDLE_PAYMENTS.
   """
   transactionUpdate(
     """The ID of the transaction."""
@@ -10370,6 +10568,45 @@ type Mutation {
     """The ID of the transaction."""
     id: ID!
   ): TransactionRequestAction
+
+  """
+  Report the event for the transaction.
+  
+  Added in Saleor 3.10.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Requires the following permissions: OWNER and HANDLE_PAYMENTS.
+  """
+  transactionEventReport(
+    """The amount of the event to report."""
+    amount: PositiveDecimal!
+
+    """List of all possible actions for the transaction"""
+    availableActions: [TransactionActionEnum!]
+
+    """
+    The url that will allow to redirect user to payment provider page with event details.
+    """
+    externalUrl: String
+
+    """The ID of the transaction."""
+    id: ID!
+
+    """The message related to the event."""
+    message: String
+
+    """PSP Reference of the event to report."""
+    pspReference: String!
+
+    """
+    The time of the event to report. If not provide, the current time will be used.
+    """
+    time: DateTime
+
+    """Current status of the event to report."""
+    type: TransactionEventTypeEnum!
+  ): TransactionEventReport
 
   """
   Creates a new page. 
@@ -10565,8 +10802,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderDelete(
-    """ID of a draft order to delete."""
-    id: ID!
+    """
+    External ID of a product to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to delete."""
+    id: ID
   ): DraftOrderDelete
 
   """
@@ -10595,8 +10839,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderUpdate(
+    """
+    External ID of a draft order to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a draft order to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an order."""
     input: DraftOrderInput!
@@ -10884,8 +11135,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   orderUpdate(
+    """
+    External ID of an order to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an order to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an order."""
     input: OrderUpdateInput!
@@ -12172,8 +12430,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeDelete(
+    """
+    External ID of an attribute to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an attribute to delete."""
-    id: ID!
+    id: ID
   ): AttributeDelete
 
   """
@@ -12182,8 +12447,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeUpdate(
+    """
+    External ID of an attribute to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an attribute to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an attribute."""
     input: AttributeUpdateInput!
@@ -12242,8 +12514,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeValueDelete(
+    """
+    External ID of a value to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a value to delete."""
-    id: ID!
+    id: ID
   ): AttributeValueDelete
 
   """
@@ -12252,8 +12531,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeValueUpdate(
+    """
+    External ID of an AttributeValue to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an AttributeValue to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an AttributeValue."""
     input: AttributeValueUpdateInput!
@@ -12740,8 +13026,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_USERS.
   """
   customerUpdate(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a customer to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a customer."""
     input: CustomerInput!
@@ -12753,8 +13046,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_USERS.
   """
   customerDelete(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a customer to delete."""
-    id: ID!
+    id: ID
   ): CustomerDelete
 
   """
@@ -13175,8 +13475,16 @@ type Order implements Node & ObjectWithMetadata {
   """Amount authorized for the order."""
   totalAuthorized: Money!
 
-  """Amount captured by payment."""
+  """
+  Amount captured for the order. This field will be removed in Saleor 4.0.Use `totalCharged` instead
+  """
   totalCaptured: Money!
+
+  """Amount charged for the order."""
+  totalCharged: Money!
+
+  """Amount canceled for the order."""
+  totalCanceled: Money!
 
   """
   List of events associated with the order.
@@ -13232,6 +13540,13 @@ type Order implements Node & ObjectWithMetadata {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   displayGrossPrices: Boolean!
+
+  """
+  External ID of this order. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """
   List of granted refunds.
@@ -13734,7 +14049,6 @@ enum OrderErrorCode {
   DUPLICATED_INPUT_ITEM
   NOT_AVAILABLE_IN_CHANNEL
   CHANNEL_INACTIVE
-  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
 }
 
 """History log of the order."""
@@ -14713,6 +15027,13 @@ input OrderUpdateInput {
 
   """Shipping address of the customer."""
   shippingAddress: AddressInput
+
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -16708,6 +17029,13 @@ type Product implements Node & ObjectWithMetadata {
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
   """
   taxClass: TaxClass
+
+  """
+  External ID of this product. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -17034,6 +17362,13 @@ input ProductCreateInput {
   """
   privateMetadata: [MetadataInput!]
 
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """ID of the type that product belongs to."""
   productType: ID!
 }
@@ -17322,6 +17657,13 @@ input ProductInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """Represents a product media."""
@@ -18176,6 +18518,13 @@ type ProductVariant implements Node & ObjectWithMetadata {
   preorder: PreorderData
   created: DateTime!
   updatedAt: DateTime!
+
+  """
+  External ID of this product. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -18272,6 +18621,13 @@ input ProductVariantBulkCreateInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Stocks of a product available for sale."""
   stocks: [StockInput!]
@@ -18428,6 +18784,13 @@ input ProductVariantCreateInput {
   """
   privateMetadata: [MetadataInput!]
 
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Product ID of which type is the variant."""
   product: ID!
 
@@ -18557,6 +18920,13 @@ input ProductVariantInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -18840,8 +19210,15 @@ type Query {
   Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS, MANAGE_SHIPPING.
   """
   warehouse(
-    """ID of an warehouse"""
-    id: ID!
+    """ID of a warehouse."""
+    id: ID
+
+    """
+    External ID of a warehouse. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Warehouse
 
   """
@@ -19199,6 +19576,13 @@ type Query {
     """Slug of the product."""
     slug: String
 
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
@@ -19265,6 +19649,13 @@ type Query {
 
     """Sku of the product variant."""
     sku: String
+
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19446,10 +19837,17 @@ type Query {
     last: Int
   ): OrderEventCountableConnection
 
-  """Look up an order by ID."""
+  """Look up an order by ID or external reference."""
   order(
     """ID of an order."""
-    id: ID!
+    id: ID
+
+    """
+    External ID of an order. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Order
 
   """
@@ -19971,13 +20369,20 @@ type Query {
     last: Int
   ): AttributeCountableConnection
 
-  """Look up an attribute by ID."""
+  """Look up an attribute by ID, slug or external reference."""
   attribute(
     """ID of the attribute."""
     id: ID
 
     """Slug of the attribute."""
     slug: String
+
+    """
+    External ID of the attribute. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Attribute
 
   """
@@ -20182,6 +20587,13 @@ type Query {
 
     """Email address of the user."""
     email: String
+
+    """
+    External ID of the user. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
@@ -23400,11 +23812,13 @@ type TransactionChargeRequested implements Event {
 }
 
 """
-Create transaction for checkout or order. Requires the following permissions: HANDLE_PAYMENTS.
+Create transaction for checkout or order.
 
 Added in Saleor 3.4.
 
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: HANDLE_PAYMENTS.
 """
 type TransactionCreate {
   transaction: TransactionItem
@@ -23465,8 +23879,15 @@ input TransactionCreateInput {
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
 
-  """Amount voided by this transaction."""
+  """
+  Amount voided by this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.Use `amountCanceled` instead.
+  """
   amountVoided: MoneyInput
+
+  """Amount canceled by this transaction."""
+  amountCanceled: MoneyInput
 
   """Payment public metadata."""
   metadata: [MetadataInput!]
@@ -23554,6 +23975,50 @@ input TransactionEventInput {
 
   """Name of the transaction."""
   name: String
+}
+
+"""
+Report the event for the transaction.
+
+Added in Saleor 3.10.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+
+Requires the following permissions: OWNER and HANDLE_PAYMENTS.
+"""
+type TransactionEventReport {
+  """Defines if the reported event hasn't been processed earlier."""
+  alreadyProcessed: Boolean
+
+  """The transaction related to the reported event."""
+  transaction: TransactionItem
+
+  """
+  The event assigned to this report. if `alreadyProcessed` is set to `true`, the previously processed event will be returned.
+  """
+  transactionEvent: TransactionEvent
+  errors: [TransactionEventReportError!]!
+}
+
+type TransactionEventReportError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TransactionEventReportErrorCode!
+}
+
+"""An enumeration."""
+enum TransactionEventReportErrorCode {
+  INVALID
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INCORRECT_DETAILS
 }
 
 """
@@ -23694,8 +24159,13 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """
   refundPendingAmount: Money!
 
-  """Total amount voided for this payment."""
+  """
+  Total amount voided for this payment. This field will be removed in Saleor 4.0.Use `canceledAmount` instead.
+  """
   voidedAmount: Money!
+
+  """Total amount canceled for this payment."""
+  canceledAmount: Money!
 
   """
   Total amount of ongoing cancel requests for the transaction.
@@ -23860,11 +24330,13 @@ enum TransactionRequestActionErrorCode {
 }
 
 """
-Create transaction for checkout or order. Requires the following permissions: OWNER and HANDLE_PAYMENTS.
+Create transaction for checkout or order.
 
 Added in Saleor 3.4.
 
 Note: this API is currently in Feature Preview and can be subject to changes at later point.
+
+Requires the following permissions: OWNER and HANDLE_PAYMENTS.
 """
 type TransactionUpdate {
   transaction: TransactionItem
@@ -23925,8 +24397,15 @@ input TransactionUpdateInput {
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
 
-  """Amount voided by this transaction."""
+  """
+  Amount voided by this transaction.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.Use `amountCanceled` instead.
+  """
   amountVoided: MoneyInput
+
+  """Amount canceled by this transaction."""
+  amountCanceled: MoneyInput
 
   """Payment public metadata."""
   metadata: [MetadataInput!]
@@ -24285,6 +24764,13 @@ type User implements Node & ObjectWithMetadata {
   languageCode: LanguageCodeEnum!
   defaultShippingAddress: Address
   defaultBillingAddress: Address
+
+  """
+  External ID of this user. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
   lastLogin: DateTime
   dateJoined: DateTime!
   updatedAt: DateTime!
@@ -24367,6 +24853,13 @@ input UserCreateInput {
 
   """User language code."""
   languageCode: LanguageCodeEnum
+
+  """
+  External ID of the customer.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """
   URL of a view where users should be redirected to set the password. URL in RFC 1808 format.
@@ -25157,6 +25650,13 @@ type Warehouse implements Node & ObjectWithMetadata {
     """Return the last n elements from the list."""
     last: Int
   ): ShippingZoneCountableConnection!
+
+  """
+  External ID of this warehouse. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """An enumeration."""
@@ -25200,6 +25700,13 @@ input WarehouseCreateInput {
 
   """The email address of the warehouse."""
   email: String
+
+  """
+  External ID of the warehouse.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Warehouse name."""
   name: String!
@@ -25386,6 +25893,13 @@ input WarehouseUpdateInput {
   """The email address of the warehouse."""
   email: String
 
+  """
+  External ID of the warehouse.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Warehouse name."""
   name: String
 
@@ -25547,6 +26061,44 @@ type WebhookDelete {
   webhookErrors: [WebhookError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [WebhookError!]!
   webhook: Webhook
+}
+
+"""
+Performs a dry run of a webhook event. Supports a single event (the first if multiple provided in the `query`). Requires permission relevant to processed event.
+
+Added in Saleor 3.10.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+"""
+type WebhookDryRun {
+  """JSON payload, that would be sent out to webhook's target URL."""
+  payload: JSONString
+  errors: [WebhookDryRunError!]!
+}
+
+type WebhookDryRunError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: WebhookDryRunErrorCode!
+}
+
+"""An enumeration."""
+enum WebhookDryRunErrorCode {
+  GRAPHQL_ERROR
+  UNABLE_TO_PARSE
+  NOT_FOUND
+  INVALID_ID
+  MISSING_PERMISSION
+  TYPE_NOT_SUPPORTED
 }
 
 type WebhookError {
