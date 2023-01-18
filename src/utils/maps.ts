@@ -3,7 +3,6 @@ import {
   ChoiceValue,
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
-import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   CountryFragment,
   CountryWithCodeFragment,
@@ -13,6 +12,7 @@ import {
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { Node, SlugNode, TagNode } from "@dashboard/types";
+import { Choice } from "@saleor/macaw-ui";
 
 interface Edge<T> {
   node: T;
