@@ -40,7 +40,9 @@ export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
   }));
 }
 
-export function mapPagesToChoices(pages: PageFragment[]): Choice[] {
+export function mapPagesToChoices(
+  pages: Array<Pick<PageFragment, "title" | "id">>,
+): Choice[] {
   return pages.map(page => ({
     label: page.title,
     value: page.id,
