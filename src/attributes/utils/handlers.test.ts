@@ -146,7 +146,7 @@ const createAttribute = ({
   },
   id: ATTR_ID,
   label: "MyAttribute",
-  value: value ? [value] : [],
+  value: value !== null && value !== undefined ? [value] : [],
 });
 
 const createSelectAttribute = (value: string) =>
