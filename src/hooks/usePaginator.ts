@@ -4,10 +4,10 @@ import { createContext, useContext, useMemo } from "react";
 import { Pagination } from "../types";
 
 export interface PageInfo {
-  endCursor: string;
+  endCursor: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  startCursor: string;
+  startCursor: string | null;
 }
 
 export interface PaginationState {
@@ -37,7 +37,7 @@ export function createPaginationState(
 }
 
 interface UsePaginatorArgs {
-  pageInfo: PageInfo;
+  pageInfo: PageInfo | undefined;
   paginationState: PaginationState;
   queryString: Pagination;
 }
@@ -99,12 +99,7 @@ function usePaginator({
 
 export default usePaginator;
 
-export interface PaginatorContextValuesCommon {
-  hasNextPage?: boolean;
-  hasPreviousPage?: boolean;
-  endCursor?: string | null;
-  startCursor?: string | null;
-}
+export type PaginatorContextValuesCommon = Partial<PageInfo>;
 
 export type PaginatorContextValues = PaginatorContextValuesCommon &
   (

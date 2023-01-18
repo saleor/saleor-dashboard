@@ -45,7 +45,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   });
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
-      if (data.updateWarehouse.errors.length === 0) {
+      if (data?.updateWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -57,7 +57,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
 
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
-      if (data.deleteWarehouse.errors.length === 0) {
+      if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -105,11 +105,11 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
 
   return (
     <>
-      <WindowTitle title={data?.warehouse?.name} />
+      <WindowTitle title={getStringOrPlaceholder(data?.warehouse?.name)} />
       <WarehouseDetailsPage
         countries={shop?.countries || []}
         disabled={loading || updateWarehouseOpts.loading}
-        errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
+        errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
         onDelete={() => openModal("delete")}
