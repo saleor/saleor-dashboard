@@ -16,6 +16,7 @@ import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import Container from "../Container";
+import DrawerButton from "../DrawerButton/DrawerButton";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import UserChip from "../UserChip";
@@ -108,6 +109,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                     )}
                     <div className={classes.spacer} />
                     <div className={classes.userBar}>
+                      <DrawerButton />
                       <NavigatorButton
                         isMac={navigator.platform.toLowerCase().includes("mac")}
                         onClick={() => setNavigatorVisibility(true)}
