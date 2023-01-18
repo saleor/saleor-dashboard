@@ -62,8 +62,8 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         });
 
         const updateMetaErrors = [
-          ...(updateMetaResult.data.deleteMetadata.errors || []),
-          ...(updateMetaResult.data.updateMetadata.errors || []),
+          ...(updateMetaResult?.data?.deleteMetadata?.errors || []),
+          ...(updateMetaResult?.data?.updateMetadata?.errors || []),
         ];
 
         if (updateMetaErrors.length > 0) {
@@ -84,8 +84,10 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         });
 
         const updatePrivateMetaErrors = [
-          ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
-          ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || []),
+          ...(updatePrivateMetaResult?.data?.deletePrivateMetadata?.errors ||
+            []),
+          ...(updatePrivateMetaResult?.data?.updatePrivateMetadata?.errors ||
+            []),
         ];
 
         if (updatePrivateMetaErrors.length > 0) {

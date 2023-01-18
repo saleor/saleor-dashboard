@@ -113,8 +113,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
-    const newValues = remove(values[id ?? ""], values, areValuesEqual);
-    setValues(newValues);
+    if (id) {
+      const newValues = remove(values[id], values, areValuesEqual);
+      setValues(newValues);
+    }
     closeModal();
   };
 
@@ -122,7 +124,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
-      setValues(updateAtIndex(input, values, id ?? 0));
+      if (id) {
+        setValues(updateAtIndex(input, values, id));
+      }
       closeModal();
     }
   };
@@ -180,7 +184,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       attribute={null}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
-      onDelete={() => ""}
+      onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
@@ -260,7 +264,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}
-                attributeValue={values[id ?? ""]}
+                attributeValue={id ? values[id] : null}
                 confirmButtonState="default"
                 disabled={false}
                 errors={valueErrors}

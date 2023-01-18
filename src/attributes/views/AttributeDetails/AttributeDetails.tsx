@@ -245,7 +245,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   return (
     <AttributePage
-      attribute={data?.attribute!}
+      attribute={data?.attribute}
       disabled={loading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       onDelete={() => openModal("remove")}
@@ -263,10 +263,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         })
       }
       saveButtonBarState={attributeUpdateOpts.status}
-      values={data?.attribute?.choices!}
+      values={data?.attribute?.choices}
       settings={settings}
       onUpdateListSettings={updateListSettings}
-      pageInfo={pageInfo!}
+      pageInfo={pageInfo ?? { hasNextPage: false, hasPreviousPage: false }}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
     >

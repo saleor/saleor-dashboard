@@ -71,15 +71,13 @@ const useStyles = makeStyles(
   { name: "AttributeValues" },
 );
 
-const getSwatchCellStyle = (
-  value?: AttributeValueFragment | undefined,
-): Record<string, string | null> => {
+const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
   if (!value) {
-    return {};
+    return;
   }
   return value.file
     ? { backgroundImage: `url(${value.file.url})` }
-    : { backgroundColor: value.value };
+    : { backgroundColor: value.value ?? undefined };
 };
 
 const AttributeValues: React.FC<AttributeValuesProps> = ({

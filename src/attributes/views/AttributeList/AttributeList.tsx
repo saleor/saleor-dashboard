@@ -142,7 +142,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <AttributeListPage
-        attributes={mapEdgesToItems(data?.attributes ?? undefined) ?? []}
+        attributes={mapEdgesToItems(data?.attributes) ?? []}
         currentTab={currentTab}
         disabled={loading || attributeBulkDeleteOpts.loading}
         filterOpts={getFilterOpts(params)}
