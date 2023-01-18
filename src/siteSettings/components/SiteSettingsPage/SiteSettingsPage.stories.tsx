@@ -9,7 +9,7 @@ import SiteSettingsPage, { SiteSettingsPageProps } from "./SiteSettingsPage";
 const props: Omit<SiteSettingsPageProps, "classes"> = {
   disabled: false,
   errors: [],
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   saveButtonBarState: "default",
   shop,
 };
