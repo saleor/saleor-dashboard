@@ -5,7 +5,7 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@dashboard/graphql";
-import { maybe, renderCollection, stopPropagation } from "@dashboard/misc";
+import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
@@ -64,8 +64,8 @@ const useStyles = makeStyles(
 interface WarehouseListProps
   extends ListProps,
     SortPage<WarehouseListUrlSortField> {
-  warehouses: WarehouseWithShippingFragment[];
-  onRemove: (id: string) => void;
+  warehouses: WarehouseWithShippingFragment[] | undefined;
+  onRemove: (id: string | undefined) => void;
 }
 
 const numberOfColumns = 3;
@@ -90,7 +90,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           <TableCellHeader
             direction={
               sort.sort === WarehouseListUrlSortField.name
-                ? getArrowDirection(sort.asc)
+                ? getArrowDirection(!!sort.asc)
                 : undefined
             }
             arrowPosition="right"
@@ -136,7 +136,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               }
             >
               <TableCell className={classes.colName} data-test-id="name">
-                {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
+                {warehouse?.name ?? <Skeleton />}
               </TableCell>
               <TableCell className={classes.colZones} data-test-id="zones">
                 {warehouse?.shippingZones === undefined ? (
@@ -160,7 +160,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                     <IconButton
                       variant="secondary"
                       color="primary"
-                      onClick={stopPropagation(() => onRemove(warehouse.id))}
+                      onClick={stopPropagation(() => onRemove(warehouse?.id))}
                     >
                       <DeleteIcon />
                     </IconButton>

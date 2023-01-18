@@ -23,8 +23,11 @@ const WarehouseCreate: React.FC = () => {
   const shop = useShop();
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation({
     onCompleted: data => {
-      if (data.createWarehouse.errors.length === 0) {
-        navigate(warehouseUrl(data.createWarehouse.warehouse.id));
+      if (data?.createWarehouse?.errors.length === 0) {
+        const warehouse = data?.createWarehouse?.warehouse;
+        if (warehouse?.id) {
+          navigate(warehouseUrl(warehouse.id));
+        }
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -68,7 +71,7 @@ const WarehouseCreate: React.FC = () => {
       <WarehouseCreatePage
         countries={shop?.countries || []}
         disabled={createWarehouseOpts.loading}
-        errors={createWarehouseOpts.data?.createWarehouse.errors || []}
+        errors={createWarehouseOpts.data?.createWarehouse?.errors || []}
         saveButtonBarState={createWarehouseTransitionState}
         onSubmit={handleSubmit}
       />

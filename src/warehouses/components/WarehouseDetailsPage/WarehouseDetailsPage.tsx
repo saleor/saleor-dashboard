@@ -9,7 +9,6 @@ import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
-  CountryCode,
   CountryWithCodeFragment,
   WarehouseClickAndCollectOptionEnum,
   WarehouseDetailsFragment,
@@ -20,7 +19,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { sectionNames } from "@dashboard/intl";
-import { findValueInEnum, maybe } from "@dashboard/misc";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
@@ -41,7 +39,7 @@ export interface WarehouseDetailsPageProps {
   disabled: boolean;
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouse: WarehouseDetailsFragment;
+  warehouse: WarehouseDetailsFragment | undefined;
   onDelete: () => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
@@ -68,21 +66,19 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   } = useAddressValidation(onSubmit);
 
   const initialForm: WarehouseDetailsPageFormData = {
-    city: maybe(() => warehouse.address.city, ""),
-    companyName: maybe(() => warehouse.address.companyName, ""),
-    country: maybe(() =>
-      findValueInEnum(warehouse.address.country.code, CountryCode),
-    ),
+    city: warehouse?.address.city ?? "",
+    companyName: warehouse?.address.companyName ?? "",
+    country: warehouse?.address.country.code ?? "",
     isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
       warehouse?.clickAndCollectOption ||
       WarehouseClickAndCollectOptionEnum.DISABLED,
-    countryArea: maybe(() => warehouse.address.countryArea, ""),
-    name: maybe(() => warehouse.name, ""),
-    phone: maybe(() => warehouse.address.phone, ""),
-    postalCode: maybe(() => warehouse.address.postalCode, ""),
-    streetAddress1: maybe(() => warehouse.address.streetAddress1, ""),
-    streetAddress2: maybe(() => warehouse.address.streetAddress2, ""),
+    countryArea: warehouse?.address.countryArea ?? "",
+    name: warehouse?.name ?? "",
+    phone: warehouse?.address.phone ?? "",
+    postalCode: warehouse?.address.postalCode ?? "",
+    streetAddress1: warehouse?.address.streetAddress1 ?? "",
+    streetAddress2: warehouse?.address.streetAddress2 ?? "",
   };
 
   return (
@@ -133,7 +129,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
               <div>
                 <WarehouseSettings
-                  zones={mapEdgesToItems(warehouse?.shippingZones)}
+                  zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
                   data={data}
                   disabled={disabled}
                   onChange={change}
@@ -142,7 +138,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
             </Grid>
             <Savebar
-              disabled={isSaveDisabled}
+              disabled={!!isSaveDisabled}
               onCancel={() => navigate(warehouseListUrl())}
               onDelete={onDelete}
               onSubmit={submit}
