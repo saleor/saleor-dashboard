@@ -10,7 +10,7 @@ const props: AppListPageProps = {
   installedApps: installedAppsList,
 };
 
-storiesOf("Views / New Apps / App List", module)
+storiesOf("Apps / New Apps / App List", module)
   .addDecorator(Decorator)
   .add("default", () => <AppListPage {...props} />)
   .add("empty", () => (
