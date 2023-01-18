@@ -22,7 +22,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -179,13 +178,13 @@ const AttributePage: React.FC<AttributePageProps> = ({
               </Backlink>
               <PageHeader
                 title={
-                  attribute === null
+                  !attribute
                     ? intl.formatMessage({
                         id: "8cUEPV",
                         defaultMessage: "Create New Attribute",
                         description: "page title",
                       })
-                    : maybe(() => attribute?.name)
+                    : attribute.name
                 }
               />
               <Grid>
