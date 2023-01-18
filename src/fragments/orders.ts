@@ -215,13 +215,28 @@ export const transactionItemFragment = gql`
     events {
       ...TransactionEvent
     }
-    refundedAmount {
+    authorizedAmount {
       ...Money
     }
     chargedAmount {
       ...Money
     }
-    authorizedAmount {
+    refundedAmount {
+      ...Money
+    }
+    canceledAmount {
+      ...Money
+    }
+    authorizePendingAmount {
+      ...Money
+    }
+    chargePendingAmount {
+      ...Money
+    }
+    refundPendingAmount {
+      ...Money
+    }
+    cancelPendingAmount {
       ...Money
     }
   }
@@ -241,6 +256,9 @@ export const fragmentPayment = gql`
       ...Money
     }
     total {
+      ...Money
+    }
+    availableRefundAmount {
       ...Money
     }
     modified
@@ -470,6 +488,9 @@ export const fragmentOrderDetails = gql`
       ...Money
     }
     totalChargePending {
+      ...Money
+    }
+    totalCanceled {
       ...Money
     }
     totalCancelPending {

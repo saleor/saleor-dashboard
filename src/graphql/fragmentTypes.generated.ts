@@ -227,6 +227,7 @@
       "Webhook"
     ],
     "ObjectWithMetadata": [
+      "Address",
       "App",
       "Attribute",
       "Category",

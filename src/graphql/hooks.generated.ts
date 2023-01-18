@@ -1345,13 +1345,28 @@ export const TransactionItemFragmentDoc = gql`
   events {
     ...TransactionEvent
   }
-  refundedAmount {
+  authorizedAmount {
     ...Money
   }
   chargedAmount {
     ...Money
   }
-  authorizedAmount {
+  refundedAmount {
+    ...Money
+  }
+  canceledAmount {
+    ...Money
+  }
+  authorizePendingAmount {
+    ...Money
+  }
+  chargePendingAmount {
+    ...Money
+  }
+  refundPendingAmount {
+    ...Money
+  }
+  cancelPendingAmount {
     ...Money
   }
 }
@@ -1723,6 +1738,9 @@ export const OrderDetailsFragmentDoc = gql`
     ...Money
   }
   totalChargePending {
+    ...Money
+  }
+  totalCanceled {
     ...Money
   }
   totalCancelPending {
