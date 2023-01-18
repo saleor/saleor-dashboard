@@ -31,19 +31,25 @@ function setupHook() {
 
 describe("useDatagridChange", () => {
   it("properly adds row", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(result.current.onRowAdded);
 
+    // Assert
     expect(result.current.added).toHaveLength(1);
     expect(result.current.added[0]).toBe(10);
   });
 
   it("properly adds multiple row", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(() => result.current.onRowAdded(5));
 
+    // Assert
     expect(result.current.added).toHaveLength(5);
     expect(result.current.added[0]).toBe(10);
     expect(result.current.added[1]).toBe(11);
@@ -53,8 +59,10 @@ describe("useDatagridChange", () => {
   });
 
   it("properly removes rows", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(() => {
       result.current.onRowsRemoved([7]);
     });
@@ -62,14 +70,17 @@ describe("useDatagridChange", () => {
       result.current.onRowsRemoved([7]);
     });
 
+    // Assert
     expect(result.current.removed).toHaveLength(2);
     expect(result.current.removed[0]).toBe(7);
     expect(result.current.removed[1]).toBe(8);
   });
 
   it("properly removes added rows", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(result.current.onRowAdded);
     act(() => {
       result.current.onRowsRemoved([7]);
@@ -78,28 +89,34 @@ describe("useDatagridChange", () => {
       result.current.onRowsRemoved([9]);
     });
 
+    // Assert
     expect(result.current.added).toHaveLength(0);
     expect(result.current.removed).toHaveLength(1);
     expect(result.current.removed[0]).toBe(7);
   });
 
   it("properly removes added rows 2", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(result.current.onRowAdded);
     act(result.current.onRowAdded);
     act(() => {
       result.current.onRowsRemoved([10]);
     });
 
+    // Assert
     expect(result.current.added).toHaveLength(1);
     expect(result.current.added[0]).toBe(10);
     expect(result.current.removed).toHaveLength(0);
   });
 
   it("properly removes added rows 3", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(result.current.onRowAdded);
     act(result.current.onRowAdded);
     act(() => {
@@ -109,13 +126,16 @@ describe("useDatagridChange", () => {
       result.current.onRowsRemoved([10]);
     });
 
+    // Assert
     expect(result.current.added).toHaveLength(0);
     expect(result.current.removed).toHaveLength(0);
   });
 
   it("properly updates changes after row removal", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(() => {
       result.current.onCellEdited([1, 1], {} as any);
     });
@@ -123,13 +143,16 @@ describe("useDatagridChange", () => {
       result.current.onRowsRemoved([0]);
     });
 
+    // Assert
     expect(result.current.changes.current).toHaveLength(1);
     expect(result.current.changes.current[0].row).toBe(0);
   });
 
   it("properly updates changes after row removal 2", () => {
+    // Arrange
     const { result } = setupHook();
 
+    // Act
     act(result.current.onRowAdded);
     act(() => {
       result.current.onCellEdited([1, 10], {} as any);
@@ -138,6 +161,7 @@ describe("useDatagridChange", () => {
       result.current.onRowsRemoved([0]);
     });
 
+    // Assert
     expect(result.current.changes.current).toHaveLength(1);
     expect(result.current.changes.current[0].row).toBe(9);
   });
