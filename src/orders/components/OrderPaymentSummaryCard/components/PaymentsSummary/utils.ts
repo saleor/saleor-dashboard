@@ -29,7 +29,7 @@ export const getShouldDisplayAmounts = (
   const captured = order.totalCaptured?.amount ?? 0;
   const capturePending = order.totalChargePending?.amount ?? 0;
 
-  const cancelled = 0; // TODO: Add cancelled value
+  const cancelled = order.totalCanceled?.amount ?? 0;
   const cancelPending = order.totalCancelPending?.amount ?? 0;
 
   const total = order.total.gross?.amount ?? 0;

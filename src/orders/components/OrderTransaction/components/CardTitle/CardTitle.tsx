@@ -14,12 +14,22 @@ import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 import { useStyles } from "./styles";
 
+type TransactionAmounts = Pick<
+  TransactionItemFragment,
+  | "chargedAmount"
+  | "authorizedAmount"
+  | "refundedAmount"
+  | "canceledAmount"
+  | "chargePendingAmount"
+  | "cancelPendingAmount"
+  | "refundPendingAmount"
+  | "authorizePendingAmount"
+>;
+
 interface CardTitleProps {
   title: string;
   id: string;
-  refundedAmount: TransactionItemFragment["refundedAmount"];
-  chargedAmount: TransactionItemFragment["chargedAmount"];
-  authorizedAmount: TransactionItemFragment["authorizedAmount"];
+  amounts: TransactionAmounts;
   actions: TransactionItemFragment["actions"];
   link?: string;
   className?: string;
@@ -31,9 +41,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
   title,
   id,
   onTransactionAction,
-  refundedAmount,
-  chargedAmount,
-  authorizedAmount,
+  amounts,
   actions,
   link,
   showActions = true,
@@ -43,6 +51,17 @@ export const CardTitle: React.FC<CardTitleProps> = ({
   const intl = useIntl();
 
   const TransactionLink = link ? "a" : "span";
+
+  const {
+    refundedAmount,
+    refundPendingAmount,
+    authorizePendingAmount,
+    cancelPendingAmount,
+    chargePendingAmount,
+    canceledAmount,
+    chargedAmount,
+    authorizedAmount,
+  } = amounts;
 
   return (
     <DefaultCardTitle
@@ -71,7 +90,26 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                   </Button>
                 ))}
 
-            {/* TODO: Pending refund */}
+            {cancelPendingAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.cancelPending)}
+                money={cancelPendingAmount}
+              />
+            )}
+
+            {canceledAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.canceled)}
+                money={canceledAmount}
+              />
+            )}
+
+            {refundPendingAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.refundPending)}
+                money={refundPendingAmount}
+              />
+            )}
 
             {refundedAmount.amount > 0 && (
               <MoneyDisplay
@@ -80,20 +118,32 @@ export const CardTitle: React.FC<CardTitleProps> = ({
               />
             )}
 
-            {/* TODO: Pending capture */}
+            {chargePendingAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.chargePending)}
+                money={chargePendingAmount}
+              />
+            )}
 
-            <MoneyDisplay
-              label={intl.formatMessage(messages.charged)}
-              money={chargedAmount}
-            />
+            {chargedAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.charged)}
+                money={chargedAmount}
+              />
+            )}
+
+            {authorizePendingAmount.amount > 0 && (
+              <MoneyDisplay
+                label={intl.formatMessage(messages.authorizePending)}
+                money={authorizePendingAmount}
+              />
+            )}
 
             {authorizedAmount.amount > 0 && (
-              <>
-                <MoneyDisplay
-                  label={intl.formatMessage(messages.authorized)}
-                  money={authorizedAmount}
-                />
-              </>
+              <MoneyDisplay
+                label={intl.formatMessage(messages.authorized)}
+                money={authorizedAmount}
+              />
             )}
           </div>
         </div>

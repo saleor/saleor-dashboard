@@ -5,6 +5,7 @@ import {
   TransactionEventTypeEnum,
 } from "@saleor/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@saleor/orders/types";
+import { prepareMoney } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -67,21 +68,15 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
     pspReference: giftCard.last4CodeChars,
     status: "",
     externalUrl: null,
-    chargedAmount: {
-      currency,
-      amount,
-      __typename: "Money",
-    },
-    refundedAmount: {
-      currency,
-      amount: 0,
-      __typename: "Money",
-    },
-    authorizedAmount: {
-      currency,
-      amount: 0,
-      __typename: "Money",
-    },
+    chargedAmount: prepareMoney(amount, currency),
+    // Fake amounts
+    authorizedAmount: prepareMoney(0, currency),
+    authorizePendingAmount: prepareMoney(0, currency),
+    chargePendingAmount: prepareMoney(0, currency),
+    refundedAmount: prepareMoney(0, currency),
+    refundPendingAmount: prepareMoney(0, currency),
+    canceledAmount: prepareMoney(0, currency),
+    cancelPendingAmount: prepareMoney(0, currency),
     __typename: "FakeTransaction",
   };
 

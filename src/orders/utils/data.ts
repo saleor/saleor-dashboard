@@ -6,6 +6,7 @@ import {
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
+  OrderDetailsQuery,
   OrderFulfillLineFragment,
   OrderLineFragment,
   OrderLineStockDataFragment,
@@ -426,3 +427,12 @@ export const getAttributesCaption = (
       attribute.values.map(attributeValue => attributeValue.name).join(", "),
     )
     .join(" / ");
+
+export const prepareMoney = (
+  amount: number,
+  currency: string,
+): OrderDetailsQuery["order"]["totalCaptured"] => ({
+  __typename: "Money",
+  amount,
+  currency: currency ?? "USD",
+});

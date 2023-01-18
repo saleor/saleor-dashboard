@@ -9,6 +9,8 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { prepareMoney } from "../fixtures";
+
 const props: OrderTransactionProps = {
   onTransactionAction: () => undefined,
   transaction: {
@@ -115,21 +117,14 @@ const props: OrderTransactionProps = {
         __typename: "TransactionEvent",
       },
     ],
-    authorizedAmount: {
-      amount: 1.21,
-      currency: "USD",
-      __typename: "Money",
-    },
-    refundedAmount: {
-      amount: 34.21,
-      currency: "USD",
-      __typename: "Money",
-    },
-    chargedAmount: {
-      amount: 0,
-      currency: "USD",
-      __typename: "Money",
-    },
+    authorizedAmount: prepareMoney(1.21),
+    authorizePendingAmount: prepareMoney(0),
+    chargedAmount: prepareMoney(0),
+    chargePendingAmount: prepareMoney(0),
+    refundedAmount: prepareMoney(34.21),
+    refundPendingAmount: prepareMoney(0),
+    canceledAmount: prepareMoney(0),
+    cancelPendingAmount: prepareMoney(0),
   },
 };
 

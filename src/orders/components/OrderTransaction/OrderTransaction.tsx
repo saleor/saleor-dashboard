@@ -49,9 +49,16 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
         link={transaction.externalUrl}
         id={transaction.id}
         actions={transaction.actions}
-        authorizedAmount={transaction.authorizedAmount}
-        refundedAmount={transaction.refundedAmount}
-        chargedAmount={transaction.chargedAmount}
+        amounts={{
+          authorizedAmount: transaction.authorizedAmount,
+          authorizePendingAmount: transaction.authorizePendingAmount,
+          chargedAmount: transaction.chargedAmount,
+          chargePendingAmount: transaction.chargePendingAmount,
+          refundedAmount: transaction.refundedAmount,
+          refundPendingAmount: transaction.refundPendingAmount,
+          canceledAmount: transaction.canceledAmount,
+          cancelPendingAmount: transaction.cancelPendingAmount,
+        }}
         onTransactionAction={onTransactionAction}
         showActions={showActions}
       />

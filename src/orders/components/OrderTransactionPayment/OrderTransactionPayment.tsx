@@ -5,6 +5,7 @@ import {
 } from "@saleor/graphql";
 import { OrderTransactionProps } from "@saleor/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@saleor/orders/types";
+import { prepareMoney } from "@saleor/orders/utils/data";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";
@@ -53,11 +54,13 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
       payment.availableCaptureAmount,
       currency,
     ),
-    refundedAmount: {
-      currency,
-      amount: refunded > 0 ? refunded : 0,
-      __typename: "Money",
-    },
+    refundedAmount: prepareMoney(refunded > 0 ? refunded : 0, currency),
+    // Fake amounts
+    refundPendingAmount: prepareMoney(0, currency),
+    canceledAmount: prepareMoney(0, currency),
+    authorizePendingAmount: prepareMoney(0, currency),
+    chargePendingAmount: prepareMoney(0, currency),
+    cancelPendingAmount: prepareMoney(0, currency),
     __typename: "FakeTransaction",
   };
 
