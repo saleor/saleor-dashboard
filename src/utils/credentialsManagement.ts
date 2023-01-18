@@ -1,4 +1,5 @@
 import { UserFragment } from "@dashboard/graphql";
+import { UserDetailsFragment } from "@saleor/sdk/dist/apollo/types";
 
 export const isSupported = !!window.PasswordCredential;
 
@@ -20,7 +21,7 @@ export async function login<T>(
 }
 
 export function saveCredentials(
-  user: UserFragment,
+  user: UserFragment | UserDetailsFragment,
   password: string,
 ): Promise<CredentialType> | null {
   let result: Promise<CredentialType> | null;
