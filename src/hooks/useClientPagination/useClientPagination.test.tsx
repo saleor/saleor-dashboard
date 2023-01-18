@@ -52,4 +52,43 @@ describe("useClientPagination", () => {
     // Assert
     expect(result.current.rowNumber).toEqual(20);
   });
+
+  test("should return paginated data slice to first 10", () => {
+    // Arrange & Act
+    const { result } = renderHook(() => useClientPagination());
+    const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
+
+    // Assert
+    expect(paginatedData.hasNextPage).toEqual(true);
+    expect(paginatedData.hasPreviousPage).toEqual(false);
+    expect(paginatedData.data.length).toEqual(10);
+  });
+
+  test("should return paginated data with false hasNextPage", () => {
+    // Arrange
+    const { result } = renderHook(() => useClientPagination());
+
+    // Act
+    act(() => result.current.changeCurrentPage(2));
+
+    // Assert
+    const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
+    expect(paginatedData.hasNextPage).toEqual(false);
+    expect(paginatedData.hasPreviousPage).toEqual(true);
+    expect(paginatedData.data.length).toEqual(10);
+  });
+
+  test("should return paginated data with false hasNextPage and hasPreviousPage", () => {
+    // Arrange
+    const { result } = renderHook(() => useClientPagination());
+
+    // Act
+    act(() => result.current.changeRowNumber(25));
+
+    // Assert
+    const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
+    expect(paginatedData.hasNextPage).toEqual(false);
+    expect(paginatedData.hasPreviousPage).toEqual(false);
+    expect(paginatedData.data.length).toEqual(20);
+  });
 });
