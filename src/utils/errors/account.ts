@@ -1,4 +1,6 @@
 import { AccountErrorCode } from "@dashboard/graphql";
+import { SetPasswordData } from "@saleor/sdk";
+import { AccountErrorCode as SdkAccountErrorCode } from "@saleor/sdk/dist/apollo/types";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
@@ -52,7 +54,7 @@ interface ErrorFragment {
 }
 
 function getAccountErrorMessage(
-  err: ErrorFragment,
+  err: ErrorFragment | SetPasswordData["errors"][0],
   intl: IntlShape,
 ): string | undefined {
   if (err) {
@@ -80,7 +82,10 @@ function getAccountErrorMessage(
     }
   }
 
-  return getCommonFormFieldErrorMessage(err, intl);
+  return getCommonFormFieldErrorMessage<AccountErrorCode | SdkAccountErrorCode>(
+    err,
+    intl,
+  );
 }
 
 export default getAccountErrorMessage;
