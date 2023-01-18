@@ -4,10 +4,10 @@ import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
 import { CardActions, Typography } from "@material-ui/core";
-import { Indicator, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import InstallErrorAction from "./ErrorInstallAction";
 import { messages } from "./messages";
 import { useActionsStyles } from "./styles";
 
@@ -73,39 +73,11 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
             <FormattedMessage {...appInstallationStatusMessages.pending} />
           </Typography>
         )}
-        {(retryInstallHandler || removeInstallHandler) && (
-          <>
-            <Typography
-              className={classes.cardActionsIssueText}
-              data-test-id="app-installation-failed"
-            >
-              <FormattedMessage {...appInstallationStatusMessages.failed} />
-              <Tooltip title={appInstallation?.message} variant="error">
-                <TooltipMountWrapper>
-                  <Indicator icon="error" />
-                </TooltipMountWrapper>
-              </Tooltip>
-            </Typography>
-            {retryInstallHandler && (
-              <Button
-                variant="secondary"
-                onClick={retryInstallHandler}
-                data-test-id="app-retry-install-button"
-              >
-                <FormattedMessage {...buttonMessages.retry} />
-              </Button>
-            )}
-            {removeInstallHandler && (
-              <Button
-                variant="secondary"
-                onClick={removeInstallHandler}
-                data-test-id="app-remove-install-button"
-              >
-                <FormattedMessage {...buttonMessages.cancel} />
-              </Button>
-            )}
-          </>
-        )}
+        <InstallErrorAction
+          appInstallation={appInstallation}
+          retryInstall={retryInstallHandler}
+          removeInstall={removeInstallHandler}
+        />
         {releaseDate && (
           <Typography className={classes.releaseDate}>
             <FormattedMessage
