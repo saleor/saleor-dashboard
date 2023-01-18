@@ -15,13 +15,13 @@ export interface AppInProgressDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const AppInProgressDeleteDialog: React.FC<AppInProgressDeleteDialogProps> = ({
+const AppInProgressDeleteDialog = ({
   confirmButtonState,
   open,
   name,
   onClose,
   onConfirm,
-}) => {
+}: AppInProgressDeleteDialogProps) => {
   const intl = useIntl();
 
   const isNameMissing = name === null || name === "";

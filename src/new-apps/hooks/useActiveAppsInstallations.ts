@@ -86,8 +86,10 @@ function useActiveAppsInstallations({
       },
     });
 
+  /**
+   * Check for active installations to make its status in localStorage up to date.
+   */
   useEffect(() => {
-    const appsInProgress = appsInProgressData?.appsInstallations || [];
     if (activeInstallations.length && !!appsInProgressData) {
       if (!intervalId.current) {
         intervalId.current = window.setInterval(
@@ -95,6 +97,23 @@ function useActiveAppsInstallations({
           2000,
         );
       }
+    }
+    if (!activeInstallations.length && intervalId.current) {
+      clearInterval(intervalId.current);
+      intervalId.current = null;
+    }
+
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+        intervalId.current = null;
+      }
+    };
+  }, [activeInstallations.length, appsInProgressData]);
+
+  useEffect(() => {
+    const appsInProgress = appsInProgressData?.appsInstallations || [];
+    if (activeInstallations.length && !!appsInProgressData) {
       let newAppInstalled = false;
       activeInstallations.forEach(installation => {
         const item = appsInProgress?.find(app => app.id === installation.id);
@@ -117,17 +136,6 @@ function useActiveAppsInstallations({
         refetchExtensionList();
       }
     }
-    if (!activeInstallations.length && intervalId.current) {
-      clearInterval(intervalId.current);
-      intervalId.current = null;
-    }
-
-    return () => {
-      if (intervalId.current) {
-        clearInterval(intervalId.current);
-        intervalId.current = null;
-      }
-    };
   }, [activeInstallations.length, appsInProgressData]);
 
   return {
