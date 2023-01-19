@@ -42,6 +42,7 @@ import useFormset, {
   FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { useKeepPreviousData } from "@dashboard/hooks/useKeepPreviousData";
 import { errorMessages } from "@dashboard/intl";
 import {
   getAttributeInputFromProductType,
@@ -233,6 +234,8 @@ function useProductCreateForm(
     formId,
   } = form;
 
+  const allReferenceProducts = useKeepPreviousData(opts.referenceProducts);
+
   const attributes = useFormset<AttributeInputData>(
     opts.selectedProductType
       ? getAttributeInputFromProductType(opts.selectedProductType)
@@ -356,7 +359,7 @@ function useProductCreateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts,
+      allReferenceProducts,
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: null,

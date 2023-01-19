@@ -23,6 +23,7 @@ import { ProductFragment } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { useKeepPreviousData } from "@dashboard/hooks/useKeepPreviousData";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getAttributeInputFromProduct,
@@ -60,6 +61,7 @@ function useProductUpdateForm(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
   );
+  const allReferenceProducts = useKeepPreviousData(opts.referenceProducts);
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
@@ -183,7 +185,7 @@ function useProductUpdateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      opts.referenceProducts,
+      allReferenceProducts,
     ),
     channels,
     description: null,
