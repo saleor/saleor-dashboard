@@ -108,9 +108,9 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     onCompleted: data => {
       if (!data?.appDelete?.errors?.length) {
         refetch();
-        closeModal();
         refetchExtensionList();
         removeAppNotify();
+        navigate(appsListPath);
       }
     },
   });

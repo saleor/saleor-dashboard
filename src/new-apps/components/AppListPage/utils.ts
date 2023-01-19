@@ -1,34 +1,73 @@
-import { AppListItemFragment } from "@dashboard/graphql";
+import {
+  AppInstallationFragment,
+  AppListItemFragment,
+} from "@dashboard/graphql";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { InstalledApp } from "@dashboard/new-apps/types";
+import { AppInstallation, InstalledApp } from "@dashboard/new-apps/types";
 
 import { AppListPageSections } from "./types";
 
 export const resolveSectionsAvailability = ({
+  appsInstallations,
   installedApps,
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  installed: !installedApps || !!installedApps.length,
+  installed:
+    !installedApps ||
+    !!installedApps.length ||
+    !appsInstallations ||
+    !!appsInstallations.length,
   all: !installableMarketplaceApps || !!installableMarketplaceApps.length,
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
 
-const isAppExternal = (
+const findAppInMarketplace = (
   manifestUrl: string | null,
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
-) =>
-  !!manifestUrl &&
-  !!installableMarketplaceApps?.every(app => app.manifestUrl !== manifestUrl);
+) => {
+  if (!manifestUrl) {
+    return undefined;
+  }
+
+  return installableMarketplaceApps?.find(
+    app => app.manifestUrl === manifestUrl,
+  );
+};
 
 export const getVerifiedInstalledApps = (
   installedApps?: AppListItemFragment[],
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
 ): InstalledApp[] | undefined =>
-  installedApps?.map(app => ({
-    app,
-    isExternal: isAppExternal(app.manifestUrl, installableMarketplaceApps),
-  }));
+  installedApps?.map(app => {
+    const marketplaceApp = findAppInMarketplace(
+      app.manifestUrl,
+      installableMarketplaceApps,
+    );
+
+    return {
+      app,
+      isExternal: !marketplaceApp,
+      logo: marketplaceApp?.logo,
+    };
+  });
+
+export const getVerifiedAppsInstallations = (
+  appsInstallations?: AppInstallationFragment[],
+  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+): AppInstallation[] | undefined =>
+  appsInstallations?.map(appInstallation => {
+    const marketplaceApp = findAppInMarketplace(
+      appInstallation.manifestUrl,
+      installableMarketplaceApps,
+    );
+
+    return {
+      appInstallation,
+      isExternal: !marketplaceApp,
+      logo: marketplaceApp?.logo,
+    };
+  });
 
 /*
  * Temporary solution for checking if app is not installed.

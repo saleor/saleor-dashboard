@@ -531,6 +531,10 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "26VlBZ": {
+    "context": "information",
+    "string": "Problem occured during installation."
+  },
   "28GZnc": {
     "string": "Start typing to begin search..."
   },
@@ -2123,6 +2127,10 @@
     "context": "dialog header",
     "string": "Select a page type"
   },
+  "F1VtFa": {
+    "context": "information",
+    "string": "Installation is pending..."
+  },
   "F2cR19": {
     "context": "error message",
     "string": "Error details: {message}"
@@ -2937,6 +2945,10 @@
   "KKQUMK": {
     "context": "edit menu item, header",
     "string": "Edit Item"
+  },
+  "KMxiiF": {
+    "context": "button",
+    "string": "Retry"
   },
   "KN7zKn": {
     "string": "Error"
