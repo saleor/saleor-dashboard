@@ -60,6 +60,14 @@ function updateVaraintWithPriceFormat(
     product.channelListings,
   );
 
+  /**
+    When we copy-paste rows, glide transforms an empty value into symbol
+    We need o filter this out, to not allow format price when it's empty value (symbol)
+  */
+  if (typeof dataChange.data.value === "symbol") {
+    return dataChange;
+  }
+
   dataChange.data.value = parseCurrency(
     `${dataChange.data.value}`,
     locale,
