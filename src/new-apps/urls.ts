@@ -8,7 +8,7 @@ export type AppListUrlDialog = "app-installation-remove";
 export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
 
 export const AppSections = {
-  appsSection: "/new-apps/",
+  appsSection: "/apps/",
 };
 
 export const AppPaths = {
