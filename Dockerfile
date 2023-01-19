@@ -9,7 +9,7 @@ COPY nginx/ nginx/
 COPY assets/ assets/
 COPY locale/ locale/
 COPY scripts/removeSourcemaps.js scripts/
-COPY codegen.yml ./
+COPY scripts/build-types.js scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
 COPY sw.js ./
