@@ -4,6 +4,7 @@ import {
   PermissionEnum,
 } from "@dashboard/graphql";
 import {
+  appsInProgress,
   comingSoonApp,
   installedAppsList,
   releasedApp,
@@ -20,6 +21,7 @@ describe("App List available sections util", () => {
   it("should return available app list sections when all data are passed", () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
+      appsInstallations: appsInProgress,
       installedApps: installedAppsList,
       installableMarketplaceApps: [releasedApp],
       comingSoonMarketplaceApps: [comingSoonApp],
@@ -40,6 +42,7 @@ describe("App List available sections util", () => {
   it("should return no available app list sections when no data are passed", () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
+      appsInstallations: [],
       installedApps: [],
       installableMarketplaceApps: [],
       comingSoonMarketplaceApps: [],
@@ -51,6 +54,111 @@ describe("App List available sections util", () => {
     // Assert
     const expectedSectionsAvailability = {
       installed: false,
+      all: false,
+      comingSoon: false,
+    };
+    expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
+  });
+
+  it("should return only installed apps section as available when only installed apps are passed", () => {
+    // Arrange
+    const appSectionsData: AppListPageSections = {
+      appsInstallations: [],
+      installedApps: installedAppsList,
+      installableMarketplaceApps: [],
+      comingSoonMarketplaceApps: [],
+    };
+
+    // Act
+    const sectionsAvailability = resolveSectionsAvailability(appSectionsData);
+
+    // Assert
+    const expectedSectionsAvailability = {
+      installed: true,
+      all: false,
+      comingSoon: false,
+    };
+    expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
+  });
+
+  it("should return only installed apps section as available when only installations are passed", () => {
+    // Arrange
+    const appSectionsData: AppListPageSections = {
+      appsInstallations: appsInProgress,
+      installedApps: [],
+      installableMarketplaceApps: [],
+      comingSoonMarketplaceApps: [],
+    };
+
+    // Act
+    const sectionsAvailability = resolveSectionsAvailability(appSectionsData);
+
+    // Assert
+    const expectedSectionsAvailability = {
+      installed: true,
+      all: false,
+      comingSoon: false,
+    };
+    expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
+  });
+
+  it("should return available app list sections when all data are undefined", () => {
+    // Arrange
+    const appSectionsData: AppListPageSections = {
+      appsInstallations: undefined,
+      installedApps: undefined,
+      installableMarketplaceApps: undefined,
+      comingSoonMarketplaceApps: undefined,
+    };
+
+    // Act
+    const sectionsAvailability = resolveSectionsAvailability(appSectionsData);
+
+    // Assert
+    const expectedSectionsAvailability = {
+      installed: true,
+      all: true,
+      comingSoon: true,
+    };
+    expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
+  });
+
+  it("should return installed apps section as available when installed apps passed and installations is undefined", () => {
+    // Arrange
+    const appSectionsData: AppListPageSections = {
+      appsInstallations: undefined,
+      installedApps: installedAppsList,
+      installableMarketplaceApps: [],
+      comingSoonMarketplaceApps: [],
+    };
+
+    // Act
+    const sectionsAvailability = resolveSectionsAvailability(appSectionsData);
+
+    // Assert
+    const expectedSectionsAvailability = {
+      installed: true,
+      all: false,
+      comingSoon: false,
+    };
+    expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
+  });
+
+  it("should return installed apps section as available when installed apps is undefined and installations are passed", () => {
+    // Arrange
+    const appSectionsData: AppListPageSections = {
+      appsInstallations: appsInProgress,
+      installedApps: undefined,
+      installableMarketplaceApps: [],
+      comingSoonMarketplaceApps: [],
+    };
+
+    // Act
+    const sectionsAvailability = resolveSectionsAvailability(appSectionsData);
+
+    // Assert
+    const expectedSectionsAvailability = {
+      installed: true,
       all: false,
       comingSoon: false,
     };
@@ -134,10 +242,15 @@ describe("App List verified installed apps util", () => {
       {
         app: installedApps[0],
         isExternal: false,
+        logo: {
+          source: "https://www.example.com/logo",
+          color: "#000000",
+        },
       },
       {
         app: installedApps[1],
         isExternal: true,
+        logo: undefined,
       },
     ];
     expect(verifiedInstalledApps).toEqual(expectedVerifiedInstalledApps);

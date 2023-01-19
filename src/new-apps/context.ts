@@ -2,9 +2,9 @@
 import React from "react";
 
 export interface AppListContextValues {
-  activateApp: (appId: string) => void;
-  deactivateApp: (appId: string) => void;
-  removeApp: (appId: string) => void;
+  removeAppInstallation: (installationId: string) => void;
+  retryAppInstallation: (installationId: string) => void;
+  openAppSettings: (appId: string) => void;
 }
 
 export const AppListContext = React.createContext<

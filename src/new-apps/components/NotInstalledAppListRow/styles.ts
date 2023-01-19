@@ -1,7 +1,7 @@
-import { InstalledApp } from "@dashboard/new-apps/types";
+import { AppInstallation } from "@dashboard/new-apps/types";
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useStyles = makeStyles<InstalledApp>(
+export const useStyles = makeStyles<AppInstallation>(
   theme => ({
     mainContent: {
       display: "flex",
@@ -18,12 +18,30 @@ export const useStyles = makeStyles<InstalledApp>(
     name: {
       fontWeight: 600,
     },
-    version: {
-      color: theme.palette.saleor.main[3],
-    },
     tunnel: {
       color: theme.palette.saleor.main[3],
       whiteSpace: "nowrap",
+    },
+    failed: {
+      color: theme.palette.error.main,
+      whiteSpace: "nowrap",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      gap: theme.spacing(1),
+    },
+    pending: {
+      color: theme.palette.saleor.main[3],
+      whiteSpace: "nowrap",
+    },
+    colSpinner: {
+      "& svg": {
+        textAlign: "right",
+      },
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(2),
+      display: "flex",
+      alignItems: "center",
     },
     actions: {
       alignItems: "center",
@@ -34,9 +52,6 @@ export const useStyles = makeStyles<InstalledApp>(
       gap: theme.spacing(1),
     },
     externalAppLabel: {
-      cursor: "pointer",
-    },
-    row: {
       cursor: "pointer",
     },
     col: {

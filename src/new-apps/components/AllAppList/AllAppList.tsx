@@ -1,4 +1,6 @@
+import { AppInstallationFragment } from "@dashboard/graphql";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { resolveInstallationOfMarketplaceApp } from "@dashboard/new-apps/utils";
 import { Skeleton } from "@material-ui/lab";
 import React from "react";
 
@@ -7,12 +9,14 @@ import { useStyles } from "./styles";
 
 interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];
+  appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
 const AllAppList: React.FC<AllAppListProps> = ({
   appList,
+  appInstallationList,
   navigateToAppInstallPage,
   navigateToVercelDeploymentPage,
 }) => {
@@ -28,6 +32,10 @@ const AllAppList: React.FC<AllAppListProps> = ({
         <AppListCard
           key={app.name.en}
           app={app}
+          appInstallation={resolveInstallationOfMarketplaceApp(
+            app,
+            appInstallationList,
+          )}
           navigateToAppInstallPage={navigateToAppInstallPage}
           navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
         />

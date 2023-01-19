@@ -12,6 +12,9 @@ export const useStyles = makeStyles(
       margin: theme.spacing(8, 0, 3, 0),
       textTransform: "uppercase",
     },
+    previewLabel: {
+      marginLeft: theme.spacing(2),
+    },
   }),
   { name: "AppListPage" },
 );

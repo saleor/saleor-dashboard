@@ -1,3 +1,5 @@
+import { AppInstallationFragment } from "@dashboard/graphql";
+import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { getAppDetails } from "@dashboard/new-apps/utils";
 import { Card, CardContent } from "@material-ui/core";
@@ -12,24 +14,30 @@ import { useStyles } from "./styles";
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
+  appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
 const AppListCard: React.FC<AppListCardProps> = ({
   app,
+  appInstallation,
   navigateToAppInstallPage,
   navigateToVercelDeploymentPage,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
+  const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
-  const details = getAppDetails(
+  const details = getAppDetails({
     intl,
     app,
+    appInstallation,
     navigateToAppInstallPage,
     navigateToVercelDeploymentPage,
-  );
+    retryAppInstallation,
+    removeAppInstallation,
+  });
 
   return (
     <>
@@ -41,8 +49,11 @@ const AppListCard: React.FC<AppListCardProps> = ({
         </CardContent>
         <AppListCardActions
           releaseDate={details.releaseDate}
+          installationPending={details.installationPending}
           installHandler={details.installHandler}
           vercelDeployHandler={details.vercelDeployHandler}
+          retryInstallHandler={details.retryInstallHandler}
+          removeInstallHandler={details.removeInstallHandler}
         />
       </Card>
     </>
