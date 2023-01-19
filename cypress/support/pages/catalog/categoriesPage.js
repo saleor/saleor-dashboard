@@ -22,7 +22,7 @@ export function fillUpCategoryGeneralInfo({ name, description }) {
     .get(CATEGORY_DETAILS.descriptionInput)
     .find(SHARED_ELEMENTS.contentEditable)
     .get(CATEGORY_DETAILS.descriptionInput)
-    .clearAndType(description)
+    .type(description)
     .get(CATEGORY_DETAILS.nameInput)
     .clearAndType(name);
 }
