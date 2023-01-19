@@ -20,10 +20,10 @@ import {
 } from "@dashboard/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { ProductFragment } from "@dashboard/graphql";
+import { useAllPreviousData } from "@dashboard/hooks/useAllPreviousData";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { useKeepPreviousData } from "@dashboard/hooks/useKeepPreviousData";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getAttributeInputFromProduct,
@@ -61,7 +61,7 @@ function useProductUpdateForm(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
   );
-  const allReferenceProducts = useKeepPreviousData(opts.referenceProducts);
+  const allReferenceProducts = useAllPreviousData(opts.referenceProducts);
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,

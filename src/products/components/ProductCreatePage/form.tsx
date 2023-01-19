@@ -31,6 +31,7 @@ import {
   SearchProductTypesQuery,
   SearchWarehousesQuery,
 } from "@dashboard/graphql";
+import { useAllPreviousData } from "@dashboard/hooks/useAllPreviousData";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
@@ -42,7 +43,6 @@ import useFormset, {
   FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { useKeepPreviousData } from "@dashboard/hooks/useKeepPreviousData";
 import { errorMessages } from "@dashboard/intl";
 import {
   getAttributeInputFromProductType,
@@ -234,7 +234,7 @@ function useProductCreateForm(
     formId,
   } = form;
 
-  const allReferenceProducts = useKeepPreviousData(opts.referenceProducts);
+  const allReferenceProducts = useAllPreviousData(opts.referenceProducts);
 
   const attributes = useFormset<AttributeInputData>(
     opts.selectedProductType

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useKeepPreviousData = <T>(data?: T[]): T[] => {
+export const useAllPreviousData = <T>(data?: T[]): T[] => {
   const allData = useRef<T[]>([]);
 
   useEffect(() => {
