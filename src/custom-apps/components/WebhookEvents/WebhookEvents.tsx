@@ -12,7 +12,6 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-  makeStyles,
   PageTab,
   PageTabPanel,
   PageTabs,
@@ -23,42 +22,8 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { useStyles } from "./styles";
 
-const useStyles = makeStyles(
-  theme => ({
-    eventsWrapper: {
-      overflow: "scroll",
-      padding: theme.spacing(4),
-      paddingLeft: 0,
-    },
-    objectsWrapper: {
-      borderRight: "1px solid",
-      borderRightColor: theme.palette.divider,
-      padding: theme.spacing(3),
-    },
-    listHeader: {
-      textTransform: "uppercase",
-      padding: theme.spacing(1),
-      minHeight: 0,
-    },
-    listItem: {
-      minHeight: 0,
-      gap: 0,
-      padding: theme.spacing(1),
-    },
-    listItemCell: {
-      paddingLeft: "0 !important",
-    },
-    listItems: {
-      height: 300,
-      overflow: "scroll",
-    },
-    checkbox: {
-      padding: 0,
-    },
-  }),
-  { name: "WebhookEvents" },
-);
 interface WebhookEventsProps {
   data: {
     syncEvents: WebhookEventTypeSyncEnum[];

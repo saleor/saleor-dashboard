@@ -4,13 +4,13 @@ import CardTitle from "@dashboard/components/CardTitle";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import GraphiQL from "../../../components/GraphiQL";
 import { WebhookFormData } from "../WebhookDetailsPage";
+import { useStyles } from "./styles";
 
 const messages = defineMessages({
   title: {
@@ -19,23 +19,6 @@ const messages = defineMessages({
     description: "Webhook subscription query card title",
   },
 });
-
-const useStyles = makeStyles(
-  theme => ({
-    disabled: {
-      pointerEvents: "none",
-      opacity: 0.6,
-    },
-    cardContent: {
-      height: 500,
-      padding: 0,
-    },
-    card: {
-      marginBottom: theme.spacing(2),
-    },
-  }),
-  { name: "WebhookSubscriptionQuery" },
-);
 
 interface WebhookSubscriptionQueryProps {
   query: any;

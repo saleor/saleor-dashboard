@@ -8,27 +8,24 @@ import {
   Tooltip,
   UnStyledButton,
   useCopyQuery,
-  useDragResize,
   useEditorContext,
   UseHeaderEditorArgs,
   usePluginContext,
   usePrettifyEditors,
   UseQueryEditorArgs,
   UseResponseEditorArgs,
-  useTheme as useGraphiqlTheme,
   UseVariableEditorArgs,
   WriteableEditorProps,
 } from "@graphiql/react";
-import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, {
-  ComponentType,
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { ComponentType, PropsWithChildren, ReactNode } from "react";
 
-import { useStyles } from "./styles";
+import {
+  useDashboardTheme,
+  useEditorStyles,
+  useGraphiQLThemeSwitcher,
+  useStyles,
+} from "./styles";
 
 export interface GraphiQLToolbarConfig {
   /**
@@ -117,7 +114,6 @@ export function GraphiQL({
 GraphiQL.Toolbar = GraphiQLToolbar;
 
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
-  // @ts-ignore
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
 
@@ -137,30 +133,16 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const editorContext = useEditorContext({ nonNull: true });
   const pluginContext = usePluginContext();
 
-  const classes = useStyles({});
+  const classes = useStyles();
+  const { pluginResize, editorResize, editorToolsResize } = useEditorStyles();
 
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
   const prettify = usePrettifyEditors();
+  const { rootStyle } = useDashboardTheme();
+
+  useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-
-  const pluginResize = useDragResize({
-    defaultSizeRelation: 1 / 3,
-    direction: "horizontal",
-    initiallyHidden: pluginContext?.visiblePlugin ? undefined : "first",
-    sizeThresholdSecond: 200,
-    storageKey: "docExplorerFlex",
-  });
-  const editorResize = useDragResize({
-    direction: "horizontal",
-    storageKey: "editorFlex",
-  });
-  const editorToolsResize = useDragResize({
-    defaultSizeRelation: 3,
-    direction: "vertical",
-    sizeThresholdSecond: 60,
-    storageKey: "secondaryEditorFlex",
-  });
 
   const children = React.Children.toArray(props.children);
 
@@ -186,24 +168,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       pluginResize.setHiddenElement(null);
     }
   };
-
-  const theme = useTheme();
-  const rootStyle = {
-    "--font-size-body": theme.typography.body2.fontSize,
-    "--font-size-h2": theme.typography.h3.fontSize,
-    "--font-size-h3": theme.typography.h3.fontSize,
-    "--font-size-h4": theme.typography.h4.fontSize,
-    "--font-size-hint": theme.typography.caption.fontSize,
-    "--font-size-inline-code": theme.typography.caption.fontSize,
-  } as React.CSSProperties;
-
-  const { theme: graphiqlTheme, setTheme: setGraphiqlTheme } =
-    useGraphiqlTheme();
-  useEffect(() => {
-    if (theme.themeType !== graphiqlTheme) {
-      setGraphiqlTheme(theme.themeType);
-    }
-  });
 
   return (
     <div
@@ -239,17 +203,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             );
           })}
         </div>
-        <div className="graphiql-sidebar-section">
-          {/* <Tooltip label="Open short keys dialog">
-            <UnStyledButton
-              type="button"
-              onClick={() => setShowDialog('short-keys')}
-              aria-label="Open short keys dialog"
-            >
-              <KeyboardShortcutIcon aria-hidden="true" />
-            </UnStyledButton>
-          </Tooltip> */}
-        </div>
+        <div className="graphiql-sidebar-section"></div>
       </div>
       <div className="graphiql-main">
         <div
@@ -321,14 +275,12 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   );
 }
 
-// Configure the UI by providing this Component as a child of GraphiQL.
 function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
   return <>{props.children}</>;
 }
 
 GraphiQLToolbar.displayName = "GraphiQLToolbar";
 
-// Determines if the React child is of the same type of the provided React component
 function isChildComponentType<T extends ComponentType>(
   child: any,
   component: T,

@@ -2,35 +2,17 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colAction: {
-        "& svg": {
-          color: theme.palette.primary.main,
-        },
-        textAlign: "right" as "right",
-      },
-      colName: {
-        "&&": {
-          width: "auto",
-        },
-      },
+    disabled: {
+      pointerEvents: "none",
+      opacity: 0.6,
     },
-    colName: {
-      paddingLeft: 0,
-      width: 250,
+    cardContent: {
+      height: 500,
+      padding: 0,
     },
-    colNameUnnamed: {
-      color: theme.palette.text.secondary,
-    },
-    colRight: {
-      textAlign: "right",
-    },
-    table: {
-      tableLayout: "fixed",
-    },
-    tableRow: {
-      cursor: "pointer",
+    card: {
+      marginBottom: theme.spacing(2),
     },
   }),
-  { name: "WebhooksList" },
+  { name: "WebhookSubscriptionQuery" },
 );
