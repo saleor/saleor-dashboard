@@ -1,8 +1,11 @@
 import {
   TransactionActionEnum,
   TransactionEventFragment,
+  TransactionEventTypeEnum,
+  TransactionItemFragment,
 } from "@saleor/graphql";
 import {
+  FakeTransaction,
   TransactionFakeEvent,
   TransactionMappingResult,
 } from "@saleor/orders/types";
@@ -24,8 +27,79 @@ export const mapActionToMessage: Record<
   REFUND: null,
 };
 
+const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
+  CHARGE_BACK: {
+    type: "CHARGEBACK",
+    status: null,
+  },
+  REFUND_REVERSE: {
+    type: "REFUND_REVERSED",
+    status: null,
+  },
+  AUTHORIZATION_ADJUSTMENT: {
+    type: "AUTHORIZATION_ADJUSTMENT",
+    status: null,
+  },
+
+  // Authorization
+  AUTHORIZATION_FAILURE: {
+    type: "AUTHORIZATION",
+    status: "FAILED",
+  },
+  AUTHORIZATION_REQUEST: {
+    type: "AUTHORIZATION",
+    status: "REQUEST",
+  },
+  AUTHORIZATION_SUCCESS: {
+    type: "AUTHORIZATION",
+    status: "SUCCESS",
+  },
+
+  // Charge
+  CHARGE_FAILURE: {
+    type: "CHARGE",
+    status: "FAILED",
+  },
+  CHARGE_REQUEST: {
+    type: "CHARGE",
+    status: "REQUEST",
+  },
+  CHARGE_SUCCESS: {
+    type: "CHARGE",
+    status: "SUCCESS",
+  },
+
+  // Cancel (previously void)
+  CANCEL_FAILURE: {
+    type: "CANCEL",
+    status: "FAILED",
+  },
+  CANCEL_REQUEST: {
+    type: "CANCEL",
+    status: "REQUEST",
+  },
+  CANCEL_SUCCESS: {
+    type: "CANCEL",
+    status: "SUCCESS",
+  },
+
+  // Refunds
+  REFUND_FAILURE: {
+    type: "REFUND",
+    status: "FAILED",
+  },
+  REFUND_REQUEST: {
+    type: "REFUND",
+    status: "REQUEST",
+  },
+  REFUND_SUCCESS: {
+    type: "REFUND",
+    status: "SUCCESS",
+  },
+};
+
 export const mapTransactionEvent = (
-  event: TransactionEventFragment | TransactionFakeEvent,
+  event: TransactionEventFragment | TransactionFakeEvent | undefined,
 ): TransactionMappingResult => {
   if (!event) {
     return {
@@ -38,106 +112,23 @@ export const mapTransactionEvent = (
     return event.mappedResult;
   }
 
-  switch (event.type) {
-    case "CHARGE_BACK": {
-      return {
-        type: "CHARGEBACK",
-        status: null,
-      };
-    }
-    case "REFUND_REVERSE": {
-      return {
-        type: "REFUND_REVERSED",
-        status: null,
-      };
-    }
-    case "AUTHORIZATION_ADJUSTMENT": {
-      return {
-        type: "AUTHORIZATION_ADJUSTMENT",
-        status: null,
-      };
-    }
-
-    case "AUTHORIZATION_FAILURE": {
-      return {
-        type: "AUTHORIZATION",
-        status: "FAILED",
-      };
-    }
-    case "AUTHORIZATION_REQUEST": {
-      return {
-        type: "AUTHORIZATION",
-        status: "REQUEST",
-      };
-    }
-    case "AUTHORIZATION_SUCCESS": {
-      return {
-        type: "AUTHORIZATION",
-        status: "SUCCESS",
-      };
-    }
-
-    case "CHARGE_FAILURE": {
-      return {
-        type: "CHARGE",
-        status: "FAILED",
-      };
-    }
-    case "CHARGE_REQUEST": {
-      return {
-        type: "CHARGE",
-        status: "REQUEST",
-      };
-    }
-    case "CHARGE_SUCCESS": {
-      return {
-        type: "CHARGE",
-        status: "SUCCESS",
-      };
-    }
-
-    case "CANCEL_FAILURE": {
-      return {
-        type: "CANCEL",
-        status: "FAILED",
-      };
-    }
-    case "CANCEL_REQUEST": {
-      return {
-        type: "CANCEL",
-        status: "REQUEST",
-      };
-    }
-    case "CANCEL_SUCCESS": {
-      return {
-        type: "CANCEL",
-        status: "SUCCESS",
-      };
-    }
-
-    case "REFUND_FAILURE": {
-      return {
-        type: "REFUND",
-        status: "FAILED",
-      };
-    }
-    case "REFUND_REQUEST": {
-      return {
-        type: "REFUND",
-        status: "REQUEST",
-      };
-    }
-    case "REFUND_SUCCESS": {
-      return {
-        type: "REFUND",
-        status: "SUCCESS",
-      };
-    }
-    default: {
-      return {
-        type: null,
-        status: null,
-      };
-    }
+  const mappedResult = typeMap[event.type];
+  if (mappedResult) {
+    return mappedResult;
   }
+
+  return {
+    type: null,
+    status: null,
+  };
+};
+
+export const getTransactionEvents = (
+  transaction: TransactionItemFragment | FakeTransaction,
+  fakeEvents: TransactionFakeEvent[] | undefined,
+) => {
+  if (transaction.__typename === "FakeTransaction") {
+    return fakeEvents;
+  }
+  return transaction.events;
 };

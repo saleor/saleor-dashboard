@@ -9,12 +9,13 @@ import { EventItem } from "./EventItem";
 
 describe("EventItem", () => {
   it("displays correct event data", () => {
+    const onHover = jest.fn();
     render(
       <MemoryRouter>
         <Wrapper>
           <EventItem
             event={transactionEvent}
-            onHover={() => undefined}
+            onHover={onHover}
             hoveredPspReference={null}
             hasCreatedBy={true}
           />
@@ -22,25 +23,15 @@ describe("EventItem", () => {
       </MemoryRouter>,
     );
     const row = screen.getByRole("row");
-    const intl = new Intl.DateTimeFormat("en-us", {
-      timeZoneName: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
 
     expect(row).toHaveTextContent("Success"); // Transaction event
     expect(row).toHaveTextContent("Capture");
     expect(row).toHaveTextContent(transactionEvent.amount.amount.toString());
     expect(row).toHaveTextContent(transactionEvent.amount.currency);
     expect(row).toHaveTextContent(transactionEvent.pspReference);
-    expect(row).toHaveTextContent(
-      intl.format(new Date(transactionEvent.createdAt)),
-      { normalizeWhitespace: true },
-    );
+    expect(row).toHaveTextContent("Aug 12, 2022, 04:40 PM"); // date from transactionEvent
     expect(row).toHaveTextContent(transactionEvent.createdBy.name);
+    expect(onHover).not.toHaveBeenCalled();
   });
 
   it("hides created by cell if prop is passed", () => {

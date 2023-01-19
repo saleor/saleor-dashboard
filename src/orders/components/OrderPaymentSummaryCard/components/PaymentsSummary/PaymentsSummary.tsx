@@ -8,8 +8,7 @@ import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../../../OrderSummaryCard/SummaryList";
 import { orderPaymentMessages } from "../../messages";
 import { useStyles } from "../../styles";
-import { PaymentState } from "./types";
-import { getShouldDisplayAmounts } from "./utils";
+import { getShouldDisplayAmounts, shouldHideSummary } from "./utils";
 
 interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
@@ -19,11 +18,7 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
   const classes = useStyles();
   const shouldDisplay = getShouldDisplayAmounts(order);
 
-  if (
-    [PaymentState.FULLY_SETTLED, PaymentState.NO_DATA].includes(
-      shouldDisplay.state,
-    )
-  ) {
+  if (shouldHideSummary(shouldDisplay)) {
     return null;
   }
 

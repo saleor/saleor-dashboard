@@ -9,6 +9,7 @@ import React from "react";
 import { CardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
 import { useStyles } from "./styles";
+import { getTransactionEvents } from "./utils";
 
 export interface OrderTransactionProps {
   transaction: TransactionItemFragment | FakeTransaction;
@@ -21,16 +22,6 @@ export interface OrderTransactionProps {
   cardFooter?: React.ReactNode;
 }
 
-const getEvents = (
-  transaction: TransactionItemFragment | FakeTransaction,
-  fakeEvents: TransactionFakeEvent[] | undefined,
-) => {
-  if (transaction.__typename === "FakeTransaction") {
-    return fakeEvents;
-  }
-  return transaction.events;
-};
-
 const OrderTransaction: React.FC<OrderTransactionProps> = ({
   transaction,
   fakeEvents,
@@ -40,7 +31,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
 }) => {
   const classes = useStyles();
 
-  const events = getEvents(transaction, fakeEvents);
+  const events = getTransactionEvents(transaction, fakeEvents);
 
   return (
     <Card className={classes.card}>

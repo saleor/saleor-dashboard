@@ -6,7 +6,7 @@ import { useManualTransactionContext } from "../context";
 export const PspReferenceField: React.FC<Omit<
   TextFieldProps,
   "onChange" | "value"
->> = ({ disabled, ...props }) => {
+>> = ({ disabled, variant = "outlined", ...props }) => {
   const {
     submitState,
     pspReference,
@@ -15,8 +15,8 @@ export const PspReferenceField: React.FC<Omit<
 
   return (
     <TextField
-      variant="outlined"
       {...props}
+      variant={variant}
       disabled={submitState === "loading" || disabled}
       onChange={handleChangePspReference}
       value={pspReference}

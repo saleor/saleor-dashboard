@@ -11,7 +11,7 @@ interface ShouldDisplayResult {
 }
 
 export const getShouldDisplayAmounts = (
-  order: OrderDetailsFragment,
+  order: OrderDetailsFragment | undefined,
 ): ShouldDisplayResult => {
   if (!order) {
     return {
@@ -94,3 +94,6 @@ export const getShouldDisplayAmounts = (
     pending: false,
   };
 };
+
+export const shouldHideSummary = (result: ShouldDisplayResult) =>
+  [PaymentState.FULLY_SETTLED, PaymentState.NO_DATA].includes(result.state);

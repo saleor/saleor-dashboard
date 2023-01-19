@@ -26,6 +26,7 @@ export interface TransactionMappingResult {
   status: TransactionEventStatus;
 }
 
+/** Some mapped transactions don't have a 1:1 mapping to TransactionEvent.type, we want to have manuall override */
 export type TransactionFakeEvent = Omit<
   TransactionEventFragment,
   "type" | "__typename"
@@ -34,6 +35,7 @@ export type TransactionFakeEvent = Omit<
   mappedResult: TransactionMappingResult;
 };
 
+/** Fake events should be passed separately into the component */
 export type FakeTransaction = Omit<
   TransactionItemFragment,
   "events" | "__typename"

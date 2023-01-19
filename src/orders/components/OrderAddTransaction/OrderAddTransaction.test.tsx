@@ -9,12 +9,10 @@ import OrderAddTransaction from "./OrderAddTransaction";
 describe("OrderAddTransaction", () => {
   it("renders skeleton when order is loading", () => {
     render(
-      <Wrapper>
-        <OrderAddTransaction
-          order={undefined}
-          onAddTransaction={() => undefined}
-        />
-      </Wrapper>,
+      <OrderAddTransaction
+        order={undefined}
+        onAddTransaction={() => undefined}
+      />,
     );
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
