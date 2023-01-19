@@ -1388,6 +1388,9 @@ export const OrderPaymentFragmentDoc = gql`
   total {
     ...Money
   }
+  availableRefundAmount {
+    ...Money
+  }
   modified
   transactions {
     id
