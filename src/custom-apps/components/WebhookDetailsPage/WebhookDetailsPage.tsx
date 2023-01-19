@@ -33,7 +33,7 @@ export interface WebhookFormData {
   asyncEvents: WebhookEventTypeAsyncEnum[];
   isActive: boolean;
   name: string;
-  secretKey: string | null;
+  secretKey?: string;
   targetUrl: string;
   subscriptionQuery: string;
 }
