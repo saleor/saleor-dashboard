@@ -43,6 +43,7 @@ import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
+import { DevToolsProvider } from "./devtools/components/DevToolsContext";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
@@ -97,7 +98,9 @@ const App: React.FC = () => (
                           <AppChannelProvider>
                             <ExternalAppProvider>
                               <ExitFormDialogProvider>
-                                <Routes />
+                                <DevToolsProvider>
+                                  <Routes />
+                                </DevToolsProvider>
                               </ExitFormDialogProvider>
                             </ExternalAppProvider>
                           </AppChannelProvider>

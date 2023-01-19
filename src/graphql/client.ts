@@ -3,25 +3,25 @@
 import { ApolloClient, ApolloLink, from, InMemoryCache } from "@apollo/client";
 import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
+import { print } from 'graphql';
 
 import { getApiUrl } from "../config";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
-const attachVariablesLink = new ApolloLink((operation, forward) =>
-  forward(operation).map(data => ({
-    ...data,
-    extensions: {
-      ...data.extensions,
-      variables: operation.variables,
-    },
-  })),
+const attachVariablesLink = new ApolloLink((operation, forward) => forward(operation).map(data => ({
+  ...data,
+  extensions: {
+    ...data.extensions,
+    variables: operation.variables,
+  },
+}))
 );
 
 const storeQueryMiddleware = new ApolloLink((operation, forward) => {
   const { query } = operation;
-  // TODO store query
-  localStorage.setItem("query", JSON.stringify(query));
+  const requests = JSON.parse(localStorage.getItem("requests") || "[]");
+  localStorage.setItem("requests", JSON.stringify([...requests, print(query)]));
 
   return forward(operation);
 });

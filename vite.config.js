@@ -11,6 +11,7 @@ import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
   const env = loadEnv(mode, process.cwd(), "");
+
   /*
     Using explicit env variables, there is no need to expose all of them (security).
   */
