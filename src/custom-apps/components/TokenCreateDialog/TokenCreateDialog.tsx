@@ -52,6 +52,13 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
     onClose: () => setStep("form"),
   });
 
+  const toMono = (text: string) => <span className={classes.mono}>{text}</span>;
+
+  const headers = `{\n  "authorization": "Bearer ${token}"\n}`;
+  const openPlayground = () => {
+    window.open(window.__SALEOR_CONFIG__.API_URL, "_blank");
+  };
+
   return (
     <Dialog open={open} fullWidth maxWidth="sm">
       <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
@@ -89,20 +96,17 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                 <>
                   <Typography>
                     <FormattedMessage
-                      id="t9a9GQ"
-                      defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+                      id="4T/RzC"
+                      defaultMessage="Make sure to save token, you won’t be able to see it again."
                     />
                   </Typography>
                   <CardSpacer />
                   <Paper className={classes.paper} elevation={0}>
                     <Typography variant="caption">
-                      <FormattedMessage
-                        id="Kxiige"
-                        defaultMessage="Generated Token"
-                      />
+                      <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Typography>
                     <Typography data-test-id="generated-token">
-                      {token}
+                      {toMono(token)}
                     </Typography>
                     <Button
                       className={classes.copy}
@@ -115,6 +119,33 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       />
                     </Button>
                   </Paper>
+                  <CardSpacer />
+                  <Paper className={classes.paper} elevation={0}>
+                    <Typography variant="caption">
+                      <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
+                    </Typography>
+                    <Typography data-test-id="generated-token">
+                      {toMono(headers)}
+                    </Typography>
+                    <Button
+                      className={classes.copy}
+                      onClick={() => handleCopy(headers)}
+                    >
+                      <FormattedMessage
+                        id="ZhqH8J"
+                        defaultMessage="Copy headers"
+                        description="button"
+                      />
+                    </Button>
+                    <Button className={classes.copy} onClick={openPlayground}>
+                      <FormattedMessage
+                        id="0KmZCN"
+                        defaultMessage="Open playground"
+                        description="button"
+                      />
+                    </Button>
+                  </Paper>
+                  <CardSpacer />
                 </>
               )}
             </DialogContent>
