@@ -38,3 +38,26 @@ export const encodeGraphQLStatement = (editorContent: EditorContent) => {
 
   return `saleor/${editorContentToSaveInUrl}`;
 };
+
+interface PlaygroundOpenHandlerInput {
+  query: string;
+  headers: string;
+  operationName: string;
+  variables: string;
+}
+
+export const playgroundOpenHandler = ({
+  query,
+  headers,
+  operationName,
+  variables,
+}: PlaygroundOpenHandlerInput) => () => {
+  const playgroundURL = new URL(process.env.API_URI);
+  playgroundURL.hash = encodeGraphQLStatement({
+    query,
+    headers,
+    operationName,
+    variables,
+  });
+  window.open(playgroundURL, "_blank").focus();
+};

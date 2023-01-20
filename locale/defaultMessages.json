@@ -1015,6 +1015,10 @@
     "context": "translations section name",
     "string": "Translations"
   },
+  "5i/InH": {
+    "context": "open new window button",
+    "string": "Open this order in GraphiQL"
+  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
@@ -1993,10 +1997,6 @@
   },
   "DWs4ba": {
     "string": "No menus found"
-  },
-  "DaIlPd": {
-    "context": "link",
-    "string": "Open this product in GraphiQL"
   },
   "Dgp38J": {
     "context": "checkbox label",
@@ -7164,10 +7164,6 @@
   "s8FlDW": {
     "context": "hide error log label in notification",
     "string": "Hide log"
-  },
-  "s8bQaF": {
-    "context": "link",
-    "string": "Open this order in GraphiQL"
   },
   "s97tLq": {
     "string": "Search Collections"

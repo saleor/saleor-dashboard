@@ -26,13 +26,13 @@ import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { encodeGraphQLStatement } from "@dashboard/utils/graphql";
+import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
 import OrderCustomer from "../OrderCustomer";
@@ -198,6 +198,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
+  const openPlaygroundURL = playgroundOpenHandler({
+    query: defaultGraphiQLQuery,
+    headers: "",
+    operationName: "",
+    variables: `{ "id": "${order?.id}" }`,
+  });
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
@@ -214,27 +221,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               title={<Title order={order} />}
               cardMenu={
                 <>
-                  <Button
-                    data-test-id="graphiql-redirect"
-                    onClick={() => {
-                      const playgroundURL = new URL(process.env.API_URI);
-                      playgroundURL.hash = encodeGraphQLStatement({
-                        query: defaultGraphiQLQuery,
-                        headers: "",
-                        operationName: "",
-                        variables: `{ "id": "${order.id}" }`,
-                      });
-                      window.open(playgroundURL, "_blank").focus();
-                    }}
-                  >
-                    <FormattedMessage
-                      id="s8bQaF"
-                      defaultMessage="Open this order in GraphiQL"
-                      description="link"
-                    />
-                  </Button>
                   <CardMenu
-                    menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+                    menuItems={[
+                      ...selectCardMenuItems,
+                      ...extensionMenuItems,
+                      {
+                        label: intl.formatMessage(messages.openGraphiQL),
+                        onSelect: openPlaygroundURL,
+                        testId: "graphiql-redirect",
+                      },
+                    ]}
                   />
                 </>
               }
