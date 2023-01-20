@@ -207,8 +207,6 @@ interface GetDataOrError {
   getChangeIndex: (column: string, row: number) => number;
 }
 
-const isPriceEmpty = price => ["undefined", "symbol"].includes(price);
-
 export function getData({
   availableColumns,
   changes,
@@ -255,13 +253,11 @@ export function getData({
     const listing = dataRow?.channelListings.find(
       listing => listing.channel.id === channelId,
     );
-    const indexOfChange = getChangeIndex(
-      `availableInChannel:${channelId}`,
-      row,
-    );
-    const available = changes.current[indexOfChange]?.data ?? !!listing;
+    const available =
+      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]
+        ?.data ?? !!listing;
 
-    if (!available && isPriceEmpty(typeof change?.value)) {
+    if (!available) {
       return {
         ...numberCell(numberCellEmptyValue),
         readonly: false,
@@ -281,10 +277,7 @@ export function getData({
     const listing = dataRow?.channelListings.find(
       listing => listing.channel.id === channelId,
     );
-    const indexOfChange = getChangeIndex(`channel:${channelId}`, row);
-    const channelUpdate = changes.current[indexOfChange];
-    const value =
-      (change ?? !!listing) || !isPriceEmpty(typeof channelUpdate?.data.value);
+    const value = change ?? !!listing;
 
     return booleanCell(value);
   }
