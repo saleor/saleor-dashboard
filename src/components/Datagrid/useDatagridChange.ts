@@ -141,6 +141,7 @@ function useDatagridChange(
     onCellEdited,
     onRowsRemoved,
     onRowAdded,
+    appendRows: setAdded,
   };
 }
 

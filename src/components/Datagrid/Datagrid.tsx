@@ -30,6 +30,7 @@ import useDatagridChange, {
   OnDatagridChange,
 } from "./useDatagridChange";
 import { useFullScreenMode } from "./useFullScreenMode";
+import { usePasteRowsCalculation } from "./usePasteRowsCalculation";
 import { usePortalClasses } from "./usePortalClasses";
 
 export interface GetCellContentOpts {
@@ -93,7 +94,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     onColumnsChange,
     picker,
   } = useColumns(availableColumns);
-
   const {
     added,
     onCellEdited,
@@ -102,7 +102,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     removed,
     getChangeIndex,
     onRowAdded,
+    appendRows,
   } = useDatagridChange(availableColumns, rows, onChange);
+
+  usePasteRowsCalculation({
+    onRowsCalculated: appendRows,
+    totalRows: rows,
+    anchor: window,
+  });
 
   const theme = useTheme();
 
@@ -239,7 +246,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   {selectionActionsComponent}
                 </div>
               )}
-              <div className={classes.editorContainer}>
+              <div className={classes.editorContainer} id="grid">
                 <DataEditor
                   {...props}
                   theme={datagridTheme}
