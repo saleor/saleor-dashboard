@@ -13,6 +13,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { getApiUrl } from "@saleor/config";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
@@ -36,11 +37,18 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
+const Mono = ({ children, className }) => (
+  <span className={className}>{children}</span>
+);
+const createHeadersString = (token: string) =>
+  `{\n  "authorization": "Bearer ${token}"\n}`;
+
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
   const classes = useStyles(props);
+  const headers = createHeadersString(token);
 
   React.useEffect(() => {
     if (token !== undefined) {
@@ -52,11 +60,8 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
     onClose: () => setStep("form"),
   });
 
-  const toMono = (text: string) => <span className={classes.mono}>{text}</span>;
-
-  const headers = `{\n  "authorization": "Bearer ${token}"\n}`;
   const openPlayground = () => {
-    window.open(window.__SALEOR_CONFIG__.API_URL, "_blank");
+    window.open(getApiUrl(), "_blank");
   };
 
   return (
@@ -106,7 +111,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Typography>
                     <Typography data-test-id="generated-token">
-                      {toMono(token)}
+                      <Mono className={classes.mono}>{token}</Mono>
                     </Typography>
                     <Button
                       className={classes.copy}
@@ -125,7 +130,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                     </Typography>
                     <Typography data-test-id="generated-token">
-                      {toMono(headers)}
+                      <Mono className={classes.mono}>{headers}</Mono>
                     </Typography>
                     <Button
                       className={classes.copy}
