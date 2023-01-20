@@ -246,7 +246,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   {selectionActionsComponent}
                 </div>
               )}
-              <div className={classes.editorContainer} id="grid">
+              <div className={classes.editorContainer}>
                 <DataEditor
                   {...props}
                   theme={datagridTheme}
