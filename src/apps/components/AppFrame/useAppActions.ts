@@ -1,3 +1,7 @@
+import { appPath } from "@dashboard/apps/urls";
+import { getAppMountUri } from "@dashboard/config";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import {
   Actions,
   DispatchResponseEvent,
@@ -5,10 +9,6 @@ import {
   NotificationAction,
   RedirectAction,
 } from "@saleor/app-sdk/app-bridge";
-import { appPath } from "@saleor/apps/urls";
-import { getAppMountUri } from "@saleor/config";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -112,7 +112,10 @@ export const useAppActions = (
       case "updateRouting": {
         const { newRoute, actionId } = action.payload;
 
-        const appCompletePath = appPath(encodeURIComponent(appId));
+        const appCompletePath = new URL(
+          appPath(encodeURIComponent(appId)),
+          getAppMountUri(),
+        ).href;
 
         window.history.pushState(null, "", appCompletePath + newRoute);
 

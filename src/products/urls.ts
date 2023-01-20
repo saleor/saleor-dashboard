@@ -1,4 +1,4 @@
-import { ChannelsAction } from "@saleor/channels/urls";
+import { ChannelsAction } from "@dashboard/channels/urls";
 import urlJoin from "url-join";
 
 import {

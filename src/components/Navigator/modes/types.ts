@@ -2,8 +2,8 @@ import {
   CheckIfOrderExistsQuery,
   SearchCatalogQuery,
   SearchCustomersQuery,
-} from "@saleor/graphql";
-import { RelayToFlat } from "@saleor/types";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 
 export interface ActionQueries {
   catalog: SearchCatalogQuery;

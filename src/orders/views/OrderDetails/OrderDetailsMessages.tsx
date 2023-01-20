@@ -1,6 +1,6 @@
-import { handleNestedMutationErrors } from "@saleor/auth";
-import { formatMoney } from "@saleor/components/Money";
-import messages from "@saleor/containers/BackgroundTasks/messages";
+import { handleNestedMutationErrors } from "@dashboard/auth";
+import { formatMoney } from "@dashboard/components/Money";
+import messages from "@dashboard/containers/BackgroundTasks/messages";
 import {
   CreateManualTransactionCaptureMutation,
   InvoiceEmailSendMutation,
@@ -23,18 +23,18 @@ import {
   OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
   OrderVoidMutation,
-} from "@saleor/graphql";
-import useLocale from "@saleor/hooks/useLocale";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
+} from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import {
   getOrderTransactionErrorMessage,
   getTransactionCreateErrorMessage,
   transactionCreateMessages,
   transactionRequestMessages as transactionMessages,
-} from "@saleor/utils/errors/transaction";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/utils/errors/transaction";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

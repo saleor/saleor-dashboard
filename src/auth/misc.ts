@@ -1,4 +1,4 @@
-import { PermissionEnum, UserFragment } from "@saleor/graphql";
+import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 
 export const hasPermission = (permission: PermissionEnum, user: UserFragment) =>
   user.userPermissions.map(perm => perm.code).includes(permission);

@@ -1,8 +1,8 @@
-import { StaffMemberStatus } from "@saleor/graphql";
-import { createFilterStructure } from "@saleor/staff/components/StaffListPage";
-import { StaffListUrlFilters } from "@saleor/staff/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { StaffMemberStatus } from "@dashboard/graphql";
+import { createFilterStructure } from "@dashboard/staff/components/StaffListPage";
+import { StaffListUrlFilters } from "@dashboard/staff/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

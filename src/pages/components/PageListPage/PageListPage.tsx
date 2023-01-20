@@ -1,15 +1,15 @@
-import { Card } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { PageFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { PageFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField,
-} from "@saleor/pages/urls";
-import { ListActions, PageListProps, SortPage } from "@saleor/types";
+} from "@dashboard/pages/urls";
+import { ListActions, PageListProps, SortPage } from "@dashboard/types";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

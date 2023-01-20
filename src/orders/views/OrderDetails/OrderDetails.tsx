@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { Task } from "@saleor/containers/BackgroundTasks/types";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsDocument,
@@ -10,14 +10,14 @@ import {
   useOrderDetailsQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@saleor/graphql";
-import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+} from "@dashboard/graphql";
+import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 

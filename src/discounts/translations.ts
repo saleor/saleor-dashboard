@@ -1,4 +1,4 @@
-import { VoucherTypeEnum } from "@saleor/graphql";
+import { VoucherTypeEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({

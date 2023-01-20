@@ -1,4 +1,4 @@
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -8,7 +8,6 @@ import AppPage, { AppPageProps } from "./AppPage";
 const props: AppPageProps = {
   data: appDetails,
   url: appDetails.appUrl!,
-  aboutHref: "",
   onError: () => undefined,
 };
 

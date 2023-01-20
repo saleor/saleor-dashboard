@@ -1,36 +1,36 @@
-import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
-} from "@saleor/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@saleor/components/Shop/queries";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useWarehouseDeleteMutation,
   useWarehouseListQuery,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { getById, getMutationStatus, maybe } from "@saleor/misc";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
-import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
-import WarehouseListPage from "@saleor/warehouses/components/WarehouseListPage";
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { getById, getMutationStatus, maybe } from "@dashboard/misc";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
+import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
+import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage";
 import {
   warehouseListUrl,
   WarehouseListUrlDialog,
   WarehouseListUrlQueryParams,
-} from "@saleor/warehouses/urls";
+} from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -78,7 +78,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   });
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
-      if (data.deleteWarehouse.errors.length === 0) {
+      if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -96,7 +96,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 
   const [, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: warehouseListUrl,
-    getFilterQueryParam: () => undefined,
+    getFilterQueryParam: async () => undefined,
     navigate,
     params,
   });
@@ -125,7 +125,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   };
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.warehouses.pageInfo),
+    pageInfo: data?.warehouses?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -155,19 +155,24 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
       />
-      <WarehouseDeleteDialog
-        confirmButtonState={deleteTransitionState}
-        name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name}
-        open={params.action === "delete"}
-        onClose={closeModal}
-        onConfirm={() =>
-          deleteWarehouse({
-            variables: {
-              id: params.id,
-            },
-          })
-        }
-      />
+      {!!params.id && (
+        <WarehouseDeleteDialog
+          confirmButtonState={deleteTransitionState}
+          name={
+            mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name ??
+            ""
+          }
+          open={params.action === "delete"}
+          onClose={closeModal}
+          onConfirm={() =>
+            deleteWarehouse({
+              variables: {
+                id: params.id!,
+              },
+            })
+          }
+        />
+      )}
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

@@ -1,6 +1,6 @@
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql";
+import { transformOrderStatus } from "@dashboard/misc";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
-import { transformOrderStatus } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

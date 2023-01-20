@@ -1,10 +1,10 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import TrashIcon from "@dashboard/icons/Trash";
+import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Card, TableBody } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
-import TrashIcon from "@saleor/icons/Trash";
 import { IconButton } from "@saleor/macaw-ui";
-import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 
 import { renderCollection } from "../../../misc";

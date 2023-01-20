@@ -4,7 +4,7 @@ import {
   GiftCardEventsEnum,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   grantedRefunds,
   order as orderFixture,
@@ -13,8 +13,8 @@ import {
   prepareMoney,
   shop as shopFixture,
   transactions,
-} from "@saleor/orders/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+} from "@dashboard/orders/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

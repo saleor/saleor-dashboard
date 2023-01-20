@@ -1,6 +1,6 @@
-import { ShippingErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { mapCountriesToCountriesCodes } from "@saleor/utils/maps";
+import { ShippingErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

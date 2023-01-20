@@ -1,5 +1,5 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { defaultListSettings } from "@saleor/config";
+import { defaultListSettings } from "@dashboard/config";
 import {
   fetchMoreProps,
   filterPageProps,
@@ -8,14 +8,14 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-} from "@saleor/fixtures";
-import { products as productListFixture } from "@saleor/products/fixtures";
-import { ProductListUrlSortField } from "@saleor/products/urls";
-import { productListFilterOpts } from "@saleor/products/views/ProductList/fixtures";
-import { attributes } from "@saleor/productTypes/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { ListViews } from "@saleor/types";
+} from "@dashboard/fixtures";
+import { products as productListFixture } from "@dashboard/products/fixtures";
+import { ProductListUrlSortField } from "@dashboard/products/urls";
+import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
+import { attributes } from "@dashboard/productTypes/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { ListViews } from "@dashboard/types";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

@@ -1,5 +1,5 @@
-import { ChannelData } from "@saleor/channels/utils";
-import { LocalizeDate } from "@saleor/hooks/useDateLocalize";
+import { ChannelData } from "@dashboard/channels/utils";
+import { LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { IntlShape } from "react-intl";
 
 import { publicationMessages } from "./messages";

@@ -1,6 +1,6 @@
-import { DEMO_MODE } from "@saleor/config";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import { DEMO_MODE } from "@dashboard/config";
+import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface LoginFormData {

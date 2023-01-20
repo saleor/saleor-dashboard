@@ -1,11 +1,14 @@
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
-} from "@saleor/collections/components/CollectionListPage";
-import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { CollectionFilterInput, CollectionPublished } from "@saleor/graphql";
-import { findValueInEnum, maybe } from "@saleor/misc";
+} from "@dashboard/collections/components/CollectionListPage";
+import {
+  FilterElement,
+  FilterElementRegular,
+} from "@dashboard/components/Filter";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
+import { findValueInEnum, maybe } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,

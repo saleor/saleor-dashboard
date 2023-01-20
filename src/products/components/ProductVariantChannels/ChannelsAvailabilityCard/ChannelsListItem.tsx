@@ -1,5 +1,5 @@
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { CardContent, Divider, Typography } from "@material-ui/core";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import React from "react";
 import { useIntl } from "react-intl";
 

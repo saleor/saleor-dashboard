@@ -1,6 +1,6 @@
-import { Button } from "@saleor/components/Button";
+import { Button } from "@dashboard/components/Button";
+import { SearchPageProps, TabPageProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { SearchPageProps, TabPageProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

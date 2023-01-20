@@ -1,9 +1,9 @@
-import { FormData } from "@saleor/channels/components/ChannelForm";
-import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
-import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
-import { getById, getByUnmatchingId } from "@saleor/misc";
-import { ReorderAction, ReorderEvent } from "@saleor/types";
-import { move } from "@saleor/utils/lists";
+import { FormData } from "@dashboard/channels/components/ChannelForm";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { getById, getByUnmatchingId } from "@dashboard/misc";
+import { ReorderAction, ReorderEvent } from "@dashboard/types";
+import { move } from "@dashboard/utils/lists";
 
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 

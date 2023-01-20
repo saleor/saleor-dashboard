@@ -1,13 +1,12 @@
-import { Card, CardContent, Divider } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
-import { configurationMenuUrl } from "@saleor/configuration";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   CountryCode,
   CountryFragment,
@@ -15,9 +14,13 @@ import {
   TaxConfigurationFragment,
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import TaxCountryDialog from "@dashboard/taxes/components/TaxCountryDialog";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
+import { Card, CardContent, Divider } from "@material-ui/core";
 import {
   Button,
   ConfirmButtonTransitionState,
@@ -28,9 +31,6 @@ import {
   PageTab,
   PageTabs,
 } from "@saleor/macaw-ui";
-import TaxCountryDialog from "@saleor/taxes/components/TaxCountryDialog";
-import { taxesMessages } from "@saleor/taxes/messages";
-import { isLastElement } from "@saleor/taxes/utils/utils";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -161,7 +161,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
         return (
           <Container>
-            <PageHeader title={intl.formatMessage(sectionNames.taxes)} />
+            <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="channels" onChange={handleTabChange}>
               <PageTab
                 label={intl.formatMessage(taxesMessages.channelsSection)}

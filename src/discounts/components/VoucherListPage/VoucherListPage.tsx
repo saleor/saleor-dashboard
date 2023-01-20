@@ -1,12 +1,14 @@
-import { Card } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import { getByName } from "@saleor/components/Filter/utils";
-import FilterBar from "@saleor/components/FilterBar";
-import PageHeader from "@saleor/components/PageHeader";
-import { voucherAddUrl, VoucherListUrlSortField } from "@saleor/discounts/urls";
-import { VoucherFragment } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import { getByName } from "@dashboard/components/Filter/utils";
+import FilterBar from "@dashboard/components/FilterBar";
+import PageHeader from "@dashboard/components/PageHeader";
+import {
+  voucherAddUrl,
+  VoucherListUrlSortField,
+} from "@dashboard/discounts/urls";
+import { VoucherFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
   FilterPageProps,
@@ -14,7 +16,8 @@ import {
   PageListProps,
   SortPage,
   TabPageProps,
-} from "@saleor/types";
+} from "@dashboard/types";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

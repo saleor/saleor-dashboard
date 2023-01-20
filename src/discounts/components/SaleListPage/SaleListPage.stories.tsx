@@ -1,15 +1,15 @@
-import { saleList } from "@saleor/discounts/fixtures";
-import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import { saleList } from "@dashboard/discounts/fixtures";
+import { SaleListUrlSortField } from "@dashboard/discounts/urls";
 import {
   filterPageProps,
   listActionsProps,
   pageListProps,
   sortPageProps,
   tabPageProps,
-} from "@saleor/fixtures";
-import { DiscountStatusEnum, DiscountValueTypeEnum } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

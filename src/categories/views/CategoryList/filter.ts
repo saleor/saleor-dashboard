@@ -1,4 +1,4 @@
-import { CategoryFilterInput } from "@saleor/graphql";
+import { CategoryFilterInput } from "@dashboard/graphql";
 
 import {
   createFilterTabUtils,

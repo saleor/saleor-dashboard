@@ -1,7 +1,7 @@
-import { ChannelFragment } from "@saleor/graphql";
+import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelProps } from "@dashboard/types";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
-import { ChannelProps } from "@saleor/types";
-import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 
 import SingleSelectField from "../SingleSelectField";

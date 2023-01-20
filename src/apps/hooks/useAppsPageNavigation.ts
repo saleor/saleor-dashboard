@@ -1,5 +1,5 @@
-import { appsSection } from "@saleor/apps/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
+import { appsSection } from "@dashboard/apps/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { useCallback, useMemo } from "react";
 import useRouter from "use-react-router";
 

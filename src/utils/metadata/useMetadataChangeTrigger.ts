@@ -1,4 +1,4 @@
-import { FormChange } from "@saleor/hooks/useForm";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { useState } from "react";
 
 function useMetadataChangeTrigger() {

@@ -1,5 +1,5 @@
+import { IconButton } from "@dashboard/components/IconButton";
 import { CircularProgress } from "@material-ui/core";
-import { IconButton } from "@saleor/components/IconButton";
 import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

@@ -3,10 +3,10 @@ import {
   CustomerAddressesQuery,
   OrderDetailsQuery,
   OrderErrorFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { transformAddressToForm } from "@dashboard/misc";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { transformAddressToForm } from "@saleor/misc";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog, {

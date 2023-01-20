@@ -1,4 +1,4 @@
-import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
+import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

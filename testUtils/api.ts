@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import { getApiUrl } from "@saleor/config";
+import { getApiUrl } from "@dashboard/config";
 import { createFetch } from "@saleor/sdk";
 import { isCI } from "ci-info";
 import { get } from "env-var";

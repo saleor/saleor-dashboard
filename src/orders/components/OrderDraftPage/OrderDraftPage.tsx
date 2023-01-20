@@ -1,27 +1,27 @@
-import { Typography } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import CardMenu from "@saleor/components/CardMenu";
-import CardSpacer from "@saleor/components/CardSpacer";
-import { Container } from "@saleor/components/Container";
-import { DateTime } from "@saleor/components/Date";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardMenu from "@dashboard/components/CardMenu";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { Container } from "@dashboard/components/Container";
+import { DateTime } from "@dashboard/components/Date";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
   SearchCustomersQuery,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import { orderDraftListUrl } from "@dashboard/orders/urls";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { orderDraftListUrl } from "@saleor/orders/urls";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

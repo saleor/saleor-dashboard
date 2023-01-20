@@ -1,4 +1,23 @@
 import {
+  ChannelData,
+  ChannelPriceAndPreorderArgs,
+} from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
+import { FormChange, FormErrors } from "@dashboard/hooks/useForm";
+import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
+import { sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
+import {
   Card,
   CardContent,
   ClickAwayListener,
@@ -13,26 +32,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import {
-  ChannelData,
-  ChannelPriceAndPreorderArgs,
-} from "@saleor/channels/utils";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import { DateTimeTimezoneField } from "@saleor/components/DateTimeTimezoneField";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import Link from "@saleor/components/Link";
-import PreviewPill from "@saleor/components/PreviewPill";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { ProductErrorFragment, WarehouseFragment } from "@saleor/graphql";
-import { FormChange, FormErrors } from "@saleor/hooks/useForm";
-import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { sectionNames } from "@saleor/intl";
 import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -155,6 +155,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             name="sku"
             onChange={handleChange}
             value={data.sku}
+            data-test-id="sku"
           />
         </div>
         <ControlledCheckbox

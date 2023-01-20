@@ -1,9 +1,9 @@
 import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum,
-} from "@saleor/graphql";
-import Decorator from "@saleor/storybook//Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
+} from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook//Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

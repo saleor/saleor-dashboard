@@ -1,21 +1,21 @@
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@saleor/components/TableCellHeader";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CustomAppUrls } from "@saleor/custom-apps/urls";
-import { isUnnamed } from "@saleor/custom-apps/utils";
-import { WebhookFragment } from "@saleor/graphql";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { isUnnamed } from "@dashboard/custom-apps/utils";
+import { WebhookFragment } from "@dashboard/graphql";
 import {
   commonMessages,
   commonStatusMessages,
   sectionNames,
-} from "@saleor/intl";
+} from "@dashboard/intl";
+import { renderCollection, stopPropagation } from "@dashboard/misc";
+import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@saleor/misc";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

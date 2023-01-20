@@ -1,15 +1,15 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   OrderFilterInput,
   OrderStatusFilter,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
-import { findInEnum, findValueInEnum, parseBoolean } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
 import {
   OrderFilterGiftCard,
   OrderFilterKeys,
   OrderListFilterOpts,
-} from "@saleor/orders/components/OrderListPage/filters";
+} from "@dashboard/orders/components/OrderListPage/filters";
 
 import {
   FilterElement,

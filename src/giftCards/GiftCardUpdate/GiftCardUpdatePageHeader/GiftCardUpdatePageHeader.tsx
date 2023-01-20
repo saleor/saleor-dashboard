@@ -1,11 +1,11 @@
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import PageHeader from "@saleor/components/PageHeader";
-import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
-import { giftCardsListPath } from "@saleor/giftCards/urls";
-import { sectionNames } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import PageHeader from "@dashboard/components/PageHeader";
+import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { giftCardsListPath } from "@dashboard/giftCards/urls";
+import { sectionNames } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 

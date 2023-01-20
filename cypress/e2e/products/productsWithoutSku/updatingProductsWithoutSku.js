@@ -73,7 +73,20 @@ describe("Updating products without sku", () => {
           categoryId: category.id,
         });
       })
-      .then(productResp => (product = productResp));
+      .then(productResp => {
+        product = productResp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          address,
+          warehouse,
+          shippingMethod,
+          attribute,
+          category,
+          productTypeWithVariants,
+          productTypeWithoutVariants,
+          product,
+        });
+      });
   });
 
   beforeEach(() => {
@@ -107,7 +120,7 @@ describe("Updating products without sku", () => {
         )
           .get(SHARED_ELEMENTS.skeleton)
           .should("not.exist")
-          .get(VARIANTS_SELECTORS.skuInput)
+          .get(VARIANTS_SELECTORS.skuTextField)
           .type(sku)
           .addAliasToGraphRequest("VariantUpdate")
           .get(BUTTON_SELECTORS.confirm)
@@ -143,7 +156,7 @@ describe("Updating products without sku", () => {
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
+            .get(VARIANTS_SELECTORS.skuTextField)
             .type(sku)
             .addAliasToGraphRequest("VariantUpdate")
             .get(BUTTON_SELECTORS.confirm)
@@ -178,9 +191,12 @@ describe("Updating products without sku", () => {
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
+            .get(VARIANTS_SELECTORS.skuTextField)
+            .find("input")
             .clear()
             .addAliasToGraphRequest("VariantUpdate")
+            .get(VARIANTS_SELECTORS.variantNameInput)
+            .type(name)
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .waitForRequestAndCheckIfNoErrors("@VariantUpdate");

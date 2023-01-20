@@ -1,8 +1,8 @@
-import { ProductTypeConfigurable, ProductTypeEnum } from "@saleor/graphql";
-import { createFilterStructure } from "@saleor/productTypes/components/ProductTypeListPage";
-import { ProductTypeListUrlFilters } from "@saleor/productTypes/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+import { createFilterStructure } from "@dashboard/productTypes/components/ProductTypeListPage";
+import { ProductTypeListUrlFilters } from "@dashboard/productTypes/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

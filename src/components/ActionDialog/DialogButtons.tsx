@@ -1,5 +1,5 @@
+import { buttonMessages } from "@dashboard/intl";
 import { DialogActions } from "@material-ui/core";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

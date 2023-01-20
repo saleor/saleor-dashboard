@@ -5,7 +5,7 @@ import {
   Search,
   SingleAction,
   Sort,
-} from "@saleor/types";
+} from "@dashboard/types";
 
 import { GiftCardListUrlFilters } from "./GiftCardListSearchAndFilters/types";
 

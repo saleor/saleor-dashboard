@@ -1,3 +1,16 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import {
+  SearchPermissionGroupsQuery,
+  StaffErrorFragment,
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { commonMessages } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
 import {
   Dialog,
   DialogActions,
@@ -5,20 +18,7 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import {
-  SearchPermissionGroupsQuery,
-  StaffErrorFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
-import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

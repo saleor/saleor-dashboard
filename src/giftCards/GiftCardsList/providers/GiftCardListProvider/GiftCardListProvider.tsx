@@ -1,30 +1,30 @@
 import { ApolloError } from "@apollo/client";
-import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
-import { giftCardListUrl } from "@saleor/giftCards/urls";
+import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import {
   GiftCardListQuery,
   GiftCardListQueryVariables,
   useGiftCardListQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import useBulkActions, {
   UseBulkActionsProps,
-} from "@saleor/hooks/useBulkActions";
+} from "@dashboard/hooks/useBulkActions";
 import useListSettings, {
   UseListSettings,
-} from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import {
   createPaginationState,
   PageInfo,
   PaginationState,
-} from "@saleor/hooks/usePaginator";
-import { ListViews, SortPage } from "@saleor/types";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { getSortParams } from "@saleor/utils/sort";
+} from "@dashboard/hooks/usePaginator";
+import { ListViews, SortPage } from "@dashboard/types";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
 import React, { createContext, useContext } from "react";
 
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";

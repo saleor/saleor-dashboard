@@ -1,28 +1,28 @@
-import { FilterElement, IFilter } from "@saleor/components/Filter";
-import { SearchWithFetchMoreProps } from "@saleor/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
-import { SearchPageTypesQuery } from "@saleor/graphql";
+import { FilterElement, IFilter } from "@dashboard/components/Filter";
+import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
+import { SearchPageTypesQuery } from "@dashboard/graphql";
 import {
   PageListUrlFilters,
   PageListUrlFiltersWithMultipleValues,
   PageListUrlSort,
-} from "@saleor/pages/urls";
+} from "@dashboard/pages/urls";
 import {
   ActiveTab,
   AutocompleteFilterOpts,
   FilterOpts,
   Pagination,
   Search,
-} from "@saleor/types";
+} from "@dashboard/types";
 import {
   createFilterTabUtils,
   createFilterUtils,
   getMultipleValueQueryParam,
-} from "@saleor/utils/filters";
-import { createAutocompleteField } from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters";
+import { createAutocompleteField } from "@dashboard/utils/filters/fields";
 import {
   mapNodeToChoice,
   mapSingleValueNodeToChoice,
-} from "@saleor/utils/maps";
+} from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {

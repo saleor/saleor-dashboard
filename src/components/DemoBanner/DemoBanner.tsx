@@ -1,6 +1,6 @@
+import ExternalLink from "@dashboard/components/ExternalLink";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ExternalLink from "@saleor/components/ExternalLink";
 import React from "react";
 import GitHubButton from "react-github-btn";
 import { FormattedMessage } from "react-intl";

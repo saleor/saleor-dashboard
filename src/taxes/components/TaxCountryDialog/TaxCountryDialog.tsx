@@ -1,3 +1,9 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { CountryFragment } from "@dashboard/graphql";
+import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
+import { taxesMessages } from "@dashboard/taxes/messages";
 import {
   Dialog,
   DialogActions,
@@ -8,13 +14,7 @@ import {
   Radio,
   TextField,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { CountryFragment } from "@saleor/graphql";
-import { useLocalSearch } from "@saleor/hooks/useLocalSearch";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import { buttonMessages } from "@saleor/intl";
 import { Button, DialogHeader, SearchIcon } from "@saleor/macaw-ui";
-import { taxesMessages } from "@saleor/taxes/messages";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -2,7 +2,7 @@ import {
   TaxClassCreateErrorFragment,
   TaxClassDeleteErrorFragment,
   TaxClassUpdateErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 import {

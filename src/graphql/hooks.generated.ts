@@ -3,8 +3,27 @@ import * as Types from './types.generated';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import * as ApolloReactHooks from '@saleor/hooks/graphql';
+import * as ApolloReactHooks from '@dashboard/hooks/graphql';
 const defaultOptions = {} as const;
+export const AppManifestFragmentDoc = gql`
+    fragment AppManifest on Manifest {
+  identifier
+  version
+  about
+  name
+  appUrl
+  configurationUrl
+  tokenTargetUrl
+  dataPrivacy
+  dataPrivacyUrl
+  homepageUrl
+  supportUrl
+  permissions {
+    code
+    name
+  }
+}
+    `;
 export const WebhookFragmentDoc = gql`
     fragment Webhook on Webhook {
   id
@@ -48,6 +67,15 @@ export const AppFragmentDoc = gql`
   }
 }
     ${WebhookFragmentDoc}`;
+export const AppInstallationFragmentDoc = gql`
+    fragment AppInstallation on AppInstallation {
+  status
+  message
+  appName
+  manifestUrl
+  id
+}
+    `;
 export const AppPermissionFragmentDoc = gql`
     fragment AppPermission on Permission {
   name
@@ -62,6 +90,7 @@ export const AppListItemFragmentDoc = gql`
   type
   appUrl
   manifestUrl
+  version
   permissions {
     ...AppPermission
   }
@@ -1491,6 +1520,16 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1522,6 +1561,9 @@ export const OrderLineFragmentDoc = gql`
   quantity
   quantityFulfilled
   quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
   unitDiscount {
     amount
     currency
@@ -1554,7 +1596,8 @@ export const OrderLineFragmentDoc = gql`
     url
   }
 }
-    ${StockFragmentDoc}`;
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   id
@@ -2614,16 +2657,6 @@ export const StaffMemberAvatarFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
 export const CountryFragmentDoc = gql`
     fragment Country on CountryDisplay {
   country
@@ -3151,28 +3184,15 @@ export const AppFetchDocument = gql`
     mutation AppFetch($manifestUrl: String!) {
   appFetchManifest(manifestUrl: $manifestUrl) {
     manifest {
-      identifier
-      version
-      about
-      name
-      appUrl
-      configurationUrl
-      tokenTargetUrl
-      dataPrivacy
-      dataPrivacyUrl
-      homepageUrl
-      supportUrl
-      permissions {
-        code
-        name
-      }
+      ...AppManifest
     }
     errors {
       ...AppError
     }
   }
 }
-    ${AppErrorFragmentDoc}`;
+    ${AppManifestFragmentDoc}
+${AppErrorFragmentDoc}`;
 export type AppFetchMutationFn = Apollo.MutationFunction<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
 
 /**
@@ -3539,14 +3559,10 @@ export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.
 export const AppsInstallationsDocument = gql`
     query AppsInstallations {
   appsInstallations {
-    status
-    message
-    appName
-    manifestUrl
-    id
+    ...AppInstallation
   }
 }
-    `;
+    ${AppInstallationFragmentDoc}`;
 
 /**
  * __useAppsInstallationsQuery__

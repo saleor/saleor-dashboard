@@ -1,4 +1,4 @@
-import { DiscountValueTypeEnum } from "@saleor/graphql";
+import { DiscountValueTypeEnum } from "@dashboard/graphql";
 
 export const ORDER_DISCOUNT = "add-order-discount";
 export const ORDER_LINE_DISCOUNT = "add-order-line-discount";

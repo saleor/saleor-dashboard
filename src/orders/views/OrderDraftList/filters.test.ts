@@ -1,8 +1,8 @@
-import { date } from "@saleor/fixtures";
-import { createFilterStructure } from "@saleor/orders/components/OrderDraftListPage";
-import { OrderDraftListUrlFilters } from "@saleor/orders/urls";
-import { getFilterQueryParams } from "@saleor/utils/filters";
-import { stringifyQs } from "@saleor/utils/urls";
+import { date } from "@dashboard/fixtures";
+import { createFilterStructure } from "@dashboard/orders/components/OrderDraftListPage";
+import { OrderDraftListUrlFilters } from "@dashboard/orders/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
 import { createIntl } from "react-intl";

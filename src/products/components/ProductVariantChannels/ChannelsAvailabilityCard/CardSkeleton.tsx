@@ -1,5 +1,5 @@
+import Skeleton from "@dashboard/components/Skeleton";
 import { CardContent } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
 import React from "react";
 
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";

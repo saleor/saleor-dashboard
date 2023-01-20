@@ -1,5 +1,5 @@
-import Decorator from "@saleor/storybook/Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

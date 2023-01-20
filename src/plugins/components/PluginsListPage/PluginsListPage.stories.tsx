@@ -2,12 +2,12 @@ import {
   filterPageProps,
   pageListProps,
   sortPageProps,
-} from "@saleor/fixtures";
-import { PluginConfigurationType } from "@saleor/graphql";
-import { pluginList } from "@saleor/plugins/fixtures";
-import { PluginListUrlSortField } from "@saleor/plugins/urls";
-import Decorator from "@saleor/storybook/Decorator";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
+} from "@dashboard/fixtures";
+import { PluginConfigurationType } from "@dashboard/graphql";
+import { pluginList } from "@dashboard/plugins/fixtures";
+import { PluginListUrlSortField } from "@dashboard/plugins/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

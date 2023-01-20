@@ -1,9 +1,9 @@
+import DebounceForm from "@dashboard/components/DebounceForm";
+import Form from "@dashboard/components/Form";
+import { OrderLineFragment, OrderLineInput } from "@dashboard/graphql";
+import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { TextField } from "@material-ui/core";
-import DebounceForm from "@saleor/components/DebounceForm";
-import Form from "@saleor/components/Form";
-import { OrderLineFragment, OrderLineInput } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 
 const useStyles = makeStyles(

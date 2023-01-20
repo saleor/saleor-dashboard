@@ -9,12 +9,12 @@ import {
   handleNestedMutationErrors,
   showAllErrors,
   useUser,
-} from "@saleor/auth";
-import { isJwtError } from "@saleor/auth/errors";
-import { commonMessages } from "@saleor/intl";
-import { getMutationStatus } from "@saleor/misc";
-import { MutationResultAdditionalProps } from "@saleor/types";
-import { GqlErrors, hasError } from "@saleor/utils/api";
+} from "@dashboard/auth";
+import { isJwtError } from "@dashboard/auth/errors";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationStatus } from "@dashboard/misc";
+import { MutationResultAdditionalProps } from "@dashboard/types";
+import { GqlErrors, hasError } from "@dashboard/utils/api";
 import { DocumentNode } from "graphql";
 import { useIntl } from "react-intl";
 

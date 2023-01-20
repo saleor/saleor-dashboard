@@ -1,5 +1,6 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
   DataEditorRef,
   EditableGridCell,
@@ -8,7 +9,6 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { usePreventHistoryBack } from "@saleor/hooks/usePreventHistoryBack";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import range from "lodash/range";

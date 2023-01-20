@@ -1,3 +1,10 @@
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
+import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
+import { getById } from "@dashboard/misc";
 import {
   Checkbox,
   DialogActions,
@@ -6,18 +13,11 @@ import {
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import { ConfirmButton } from "@saleor/components/ConfirmButton";
-import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
-import { AddressFragment, AddressTypeEnum } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
   SearchIcon,
 } from "@saleor/macaw-ui";
-import { getById } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

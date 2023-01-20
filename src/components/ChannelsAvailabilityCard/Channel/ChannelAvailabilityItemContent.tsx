@@ -1,11 +1,11 @@
+import { ChannelData } from "@dashboard/channels/utils";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import Hr from "@dashboard/components/Hr";
+import RadioSwitchField from "@dashboard/components/RadioSwitchField";
+import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { TextField, Typography } from "@material-ui/core";
-import { ChannelData } from "@saleor/channels/utils";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import Hr from "@saleor/components/Hr";
-import RadioSwitchField from "@saleor/components/RadioSwitchField";
-import useCurrentDate from "@saleor/hooks/useCurrentDate";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";

@@ -1,7 +1,10 @@
 import { FetchResult } from "@apollo/client";
-import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
-import { getChannelsVariables } from "@saleor/discounts/handlers";
-import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { getChannelsVariables } from "@dashboard/discounts/handlers";
+import {
+  DiscountTypeEnum,
+  RequirementsPicker,
+} from "@dashboard/discounts/types";
 import {
   DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
@@ -9,12 +12,12 @@ import {
   VoucherCreateMutation,
   VoucherCreateMutationVariables,
   VoucherTypeEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   extractMutationErrors,
   getMutationErrors,
   joinDateTime,
-} from "@saleor/misc";
+} from "@dashboard/misc";
 
 export function createHandler(
   voucherCreate: (

@@ -1,8 +1,8 @@
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
 import {
   NumberCell,
   numberCellEmptyValue,
-} from "@saleor/components/Datagrid/NumberCell";
+} from "@dashboard/components/Datagrid/NumberCell";
+import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
 
 import {
   DropdownCell,

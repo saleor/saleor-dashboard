@@ -1,5 +1,5 @@
-import { GiftCardSortField } from "@saleor/graphql";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { GiftCardSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 import { GiftCardUrlSortField } from "../../types";
 

@@ -1,16 +1,16 @@
 import {
   createAttributeMultiChangeHandler,
   prepareAttributesInput,
-} from "@saleor/attributes/utils/handlers";
+} from "@dashboard/attributes/utils/handlers";
 import {
   AttributeInput,
   AttributeInputData,
-} from "@saleor/components/Attributes";
+} from "@dashboard/components/Attributes";
 import {
   AttributeInputTypeEnum,
   AttributeValueDetailsFragment,
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   {

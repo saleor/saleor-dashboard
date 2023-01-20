@@ -3,8 +3,8 @@ import {
   SearchGiftCardTagsDocument,
   SearchGiftCardTagsQuery,
   SearchGiftCardTagsQueryVariables,
-} from "@saleor/graphql";
-import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
+} from "@dashboard/graphql";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchGiftCardTags = gql`
   query SearchGiftCardTags(

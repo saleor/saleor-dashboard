@@ -2,14 +2,14 @@ import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
-import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
-import { orderUrl } from "@saleor/orders/urls";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
+import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
+import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

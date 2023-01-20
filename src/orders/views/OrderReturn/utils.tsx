@@ -2,12 +2,12 @@ import {
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput,
-} from "@saleor/graphql";
-import { getById } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { getById } from "@dashboard/misc";
 import {
   FormsetQuantityData,
   OrderReturnFormData,
-} from "@saleor/orders/components/OrderReturnPage/form";
+} from "@dashboard/orders/components/OrderReturnPage/form";
 
 class ReturnFormDataParser {
   private formData: OrderReturnFormData;

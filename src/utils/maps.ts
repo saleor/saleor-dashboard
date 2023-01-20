@@ -1,27 +1,27 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   ChoiceValue,
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
+} from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   CountryFragment,
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
   SearchPagesQuery,
-} from "@saleor/graphql";
-import { getFullName } from "@saleor/misc";
-import { Node, RelayToFlat, SlugNode, TagNode } from "@saleor/types";
+} from "@dashboard/graphql";
+import { getFullName } from "@dashboard/misc";
+import { Node, RelayToFlat, SlugNode, TagNode } from "@dashboard/types";
 
 interface Edge<T> {
   node: T;
 }
 interface Connection<T> {
-  edges: Array<Edge<T>> | undefined;
+  edges: Array<Edge<T>> | undefined | null;
 }
 
 export function mapEdgesToItems<T>(
-  data: Connection<T> | undefined,
+  data?: Connection<T> | undefined | null,
 ): T[] | undefined {
   return data?.edges?.map(({ node }) => node);
 }
