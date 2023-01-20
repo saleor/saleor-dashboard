@@ -4,6 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ConfirmButton from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
