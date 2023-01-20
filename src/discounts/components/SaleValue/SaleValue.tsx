@@ -1,3 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import {
   Card,
   CardContent,
@@ -6,14 +14,6 @@ import {
   TableHead,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { DiscountErrorFragment } from "@saleor/graphql";
-import { renderCollection } from "@saleor/misc";
-import { getFormErrors } from "@saleor/utils/errors";
-import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

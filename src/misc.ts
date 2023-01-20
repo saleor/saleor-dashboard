@@ -5,9 +5,9 @@ import {
   DateRangeInput,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Node, SlugNode } from "@dashboard/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
-import { Node, SlugNode } from "@saleor/types";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -43,11 +43,11 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
   }[Keys];
 
 export function renderCollection<T>(
-  collection: T[],
+  collection: T[] | undefined,
   renderItem: (
     item: T | undefined,
     index: number | undefined,
-    collection: T[],
+    collection: T[] | undefined,
   ) => any,
   renderEmpty?: (collection: T[]) => any,
 ) {
@@ -535,9 +535,6 @@ export const combinedMultiAutocompleteChoices = (
   selected: MultiAutocompleteChoiceType[],
   choices: MultiAutocompleteChoiceType[],
 ) => uniqBy([...selected, ...choices], "value");
-
-export const isInDevelopment =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> &
   Partial<Pick<T, K>>;

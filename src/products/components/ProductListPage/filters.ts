@@ -1,14 +1,14 @@
-import { IFilter } from "@saleor/components/Filter";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import { AttributeInputTypeEnum, StockAvailability } from "@saleor/graphql";
-import { commonMessages, sectionNames } from "@saleor/intl";
-import { ProductListUrlFiltersAsDictWithMultipleValues } from "@saleor/products/urls";
+import { IFilter } from "@dashboard/components/Filter";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { ProductListUrlFiltersAsDictWithMultipleValues } from "@dashboard/products/urls";
 import {
   AutocompleteFilterOpts,
   FilterOpts,
   KeyValue,
   MinMax,
-} from "@saleor/types";
+} from "@dashboard/types";
 import {
   createAutocompleteField,
   createBooleanField,
@@ -18,7 +18,7 @@ import {
   createNumberField,
   createOptionsField,
   createPriceField,
-} from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const ProductFilterKeys = {

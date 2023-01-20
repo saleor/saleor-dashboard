@@ -1,7 +1,7 @@
 import {
   ProductErrorCode,
   ProductErrorWithAttributesFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
@@ -40,4 +40,4 @@ export const validateProductCreateData = (data: ProductCreateData) => {
 export const validateVariantData = (
   data: ProductVariantCreateData | ProductVariantUpdateSubmitData,
 ): ProductErrorWithAttributesFragment[] =>
-  !data.name ? [createEmptyRequiredError("name")] : [];
+  !data.variantName ? [createEmptyRequiredError("variantName")] : [];

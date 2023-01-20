@@ -1,13 +1,16 @@
-import { TableCell, Typography } from "@material-ui/core";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { FulfillmentFragment, OrderFulfillLineFragment } from "@saleor/graphql";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  FulfillmentFragment,
+  OrderFulfillLineFragment,
+} from "@dashboard/graphql";
 import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
-} from "@saleor/orders/utils/data";
+} from "@dashboard/orders/utils/data";
+import { TableCell, Typography } from "@material-ui/core";
 import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";

@@ -1,13 +1,14 @@
 import {
+  MoneyFragment,
   OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
+import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -25,6 +26,8 @@ export interface OrderDiscountContextConsumerProps
   orderDiscount?: OrderDiscountData;
   addOrderDiscount: (data: OrderDiscountCommonInput) => void;
   removeOrderDiscount: () => void;
+  discountedPrice: MoneyFragment;
+  undiscountedPrice: MoneyFragment;
 }
 
 interface OrderDiscountProviderProps {

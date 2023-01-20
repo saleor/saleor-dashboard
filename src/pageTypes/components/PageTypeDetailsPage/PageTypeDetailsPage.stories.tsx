@@ -1,11 +1,13 @@
-import { listActionsProps } from "@saleor/fixtures";
-import { PageErrorCode } from "@saleor/graphql";
+import { listActionsProps } from "@dashboard/fixtures";
+import { PageErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import Decorator from "../../../storybook/Decorator";
 import { pageType } from "../../fixtures";
-import PageTypeDetailsPage, { PageTypeDetailsPageProps } from ".";
+import PageTypeDetailsPage, {
+  PageTypeDetailsPageProps,
+} from "./PageTypeDetailsPage";
 
 const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   attributeList: listActionsProps,
@@ -21,7 +23,7 @@ const props: Omit<PageTypeDetailsPageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Views / Page types / Page type details", module)
+storiesOf("Page types / Page type details", module)
   .addDecorator(Decorator)
   .add("default", () => <PageTypeDetailsPage {...props} />)
   .add("loading", () => (

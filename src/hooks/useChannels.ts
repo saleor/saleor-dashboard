@@ -1,9 +1,8 @@
-import { ChannelsAction } from "@saleor/channels/urls";
-import { Channel } from "@saleor/channels/utils";
-import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import useListActions from "@saleor/hooks/useListActions";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { ChannelsAction } from "@dashboard/channels/urls";
+import { Channel } from "@dashboard/channels/utils";
+import { useExitFormDialog, WithFormId } from "@dashboard/components/Form";
+import useListActions from "@dashboard/hooks/useListActions";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 
 interface Modal {
   openModal: (action: ChannelsAction) => void;

@@ -1,12 +1,12 @@
-import CardSpacer from "@saleor/components/CardSpacer";
-import Container from "@saleor/components/Container";
-import Grid from "@saleor/components/Grid";
-import Money from "@saleor/components/Money";
-import RequirePermissions from "@saleor/components/RequirePermissions";
-import Skeleton from "@saleor/components/Skeleton";
-import { HomeQuery, PermissionEnum } from "@saleor/graphql";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Container from "@dashboard/components/Container";
+import Grid from "@dashboard/components/Grid";
+import Money from "@dashboard/components/Money";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Skeleton from "@dashboard/components/Skeleton";
+import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { RelayToFlat } from "@saleor/types";
 import React from "react";
 
 import Orders from "../../../icons/Orders";

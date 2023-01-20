@@ -1,11 +1,11 @@
-import ActionDialog from "@saleor/components/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { FetchMoreProps } from "@dashboard/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 

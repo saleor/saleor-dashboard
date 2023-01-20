@@ -1,5 +1,5 @@
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { buttonMessages } from "@saleor/intl";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
@@ -38,7 +38,7 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
   return (
     <div className={classes.root}>
       <ConfirmButton
-        data-test="button-bar-confirm"
+        data-test-id="button-bar-confirm"
         className={classes.confirmButton}
         transitionState={saveButtonState}
         onClick={onSave}

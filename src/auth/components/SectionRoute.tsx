@@ -1,4 +1,4 @@
-import { PermissionEnum } from "@saleor/graphql";
+import { PermissionEnum } from "@dashboard/graphql";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 

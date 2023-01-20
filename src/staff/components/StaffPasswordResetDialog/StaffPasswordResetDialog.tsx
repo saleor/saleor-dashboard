@@ -1,3 +1,14 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { AccountErrorFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import { DialogProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import {
   Dialog,
   DialogActions,
@@ -5,18 +16,7 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import { AccountErrorFragment } from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { DialogProps } from "@saleor/types";
-import { getFormErrors } from "@saleor/utils/errors";
-import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -60,7 +60,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
         />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, submit }) => (
+        {({ change, data }) => (
           <>
             <DialogContent>
               <TextField
@@ -110,10 +110,10 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
             <DialogActions>
               <BackButton onClick={onClose} />
               <ConfirmButton
+                data-test-id="submit"
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
                 type="submit"
-                onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>

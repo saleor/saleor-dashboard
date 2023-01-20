@@ -1,13 +1,13 @@
-import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
-import { appMessages } from "@saleor/apps/messages";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { getApiUrl } from "@saleor/config";
-import TokenCreateDialog from "@saleor/custom-apps/components/TokenCreateDialog";
-import TokenDeleteDialog from "@saleor/custom-apps/components/TokenDeleteDialog";
-import WebhookDeleteDialog from "@saleor/custom-apps/components/WebhookDeleteDialog";
-import { CustomAppUrls } from "@saleor/custom-apps/urls";
+import AppActivateDialog from "@dashboard/apps/components/AppActivateDialog";
+import AppDeactivateDialog from "@dashboard/apps/components/AppDeactivateDialog";
+import { appMessages } from "@dashboard/apps/messages";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { getApiUrl } from "@dashboard/config";
+import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
+import TokenDeleteDialog from "@dashboard/custom-apps/components/TokenDeleteDialog";
+import WebhookDeleteDialog from "@dashboard/custom-apps/components/WebhookDeleteDialog";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -20,14 +20,14 @@ import {
   useAppUpdateMutation,
   useWebhookDeleteMutation,
   WebhookDeleteMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
-import getAppErrorMessage from "@saleor/utils/errors/app";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 

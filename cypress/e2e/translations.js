@@ -20,9 +20,10 @@ describe("As an admin I want to manage translations", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteCategoriesStartsWith(startsWith);
-    createCategory({ name: startsWith }).then(
-      categoryResp => (category = categoryResp),
-    );
+    createCategory({ name: startsWith }).then(categoryResp => {
+      category = categoryResp;
+      cy.checkIfDataAreNotNull({ category });
+    });
   });
 
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe("As an admin I want to manage translations", () => {
 
   it(
     "should be able to create new translation. TC:SALEOR_1701",
-    { tags: ["@translations", "@stagedOnly", "@stable"] },
+    { tags: ["@translations", "@allEnv", "@stable"] },
     () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
@@ -57,7 +58,7 @@ describe("As an admin I want to manage translations", () => {
 
   it(
     "should be able to update translation. TC:SALEOR_1702",
-    { tags: ["@translations", "@stagedOnly", "@stable"] },
+    { tags: ["@translations", "@allEnv", "@stable"] },
     () => {
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;

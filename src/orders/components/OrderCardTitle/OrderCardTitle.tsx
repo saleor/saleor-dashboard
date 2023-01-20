@@ -1,9 +1,9 @@
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import DefaultCardTitle from "@dashboard/components/CardTitle";
+import { FulfillmentStatus } from "@dashboard/graphql";
+import { StatusType } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import DefaultCardTitle from "@saleor/components/CardTitle";
-import { FulfillmentStatus } from "@saleor/graphql";
 import { CircleIndicator, makeStyles } from "@saleor/macaw-ui";
-import { StatusType } from "@saleor/types";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

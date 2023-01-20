@@ -1,8 +1,8 @@
 import {
   SearchCatalogQueryHookResult,
   useSearchCatalogQuery,
-} from "@saleor/graphql";
-import useDebounce from "@saleor/hooks/useDebounce";
+} from "@dashboard/graphql";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { useState } from "react";
 
 type UseSearchCatalog = [SearchCatalogQueryHookResult, (query: string) => void];

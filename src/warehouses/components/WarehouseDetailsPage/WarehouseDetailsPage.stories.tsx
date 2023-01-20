@@ -1,6 +1,6 @@
-import { countries } from "@saleor/fixtures";
-import { WarehouseErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { countries } from "@dashboard/fixtures";
+import { WarehouseErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -19,11 +19,11 @@ const props: WarehouseDetailsPageProps = {
   disabled: false,
   errors: [],
   onDelete: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: async () => undefined,
   saveButtonBarState: "default",
   warehouse,
 };
-storiesOf("Views / Warehouses / Warehouse details", module)
+storiesOf("Warehouses / Warehouse details", module)
   .addDecorator(Decorator)
   .add("default", () => <WarehouseDetailsPage {...props} />)
   .add("loading", () => (

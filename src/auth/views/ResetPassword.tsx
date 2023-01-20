@@ -1,8 +1,8 @@
-import { useRequestPasswordResetMutation } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { commonMessages } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import { getAppMountUriForRedirect } from "@saleor/utils/urls";
+import { useRequestPasswordResetMutation } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";

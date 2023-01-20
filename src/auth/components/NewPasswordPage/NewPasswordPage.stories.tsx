@@ -1,12 +1,12 @@
-import { AccountErrorCode } from "@saleor/graphql";
-import CardDecorator from "@saleor/storybook//CardDecorator";
-import Decorator from "@saleor/storybook//Decorator";
+import { AccountErrorCode } from "@dashboard/graphql";
+import CardDecorator from "@dashboard/storybook//CardDecorator";
+import Decorator from "@dashboard/storybook//Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import NewPasswordPage from "./NewPasswordPage";
 
-storiesOf("Views / Authentication / Set up a new password", module)
+storiesOf("Authentication / Set up a new password", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => (

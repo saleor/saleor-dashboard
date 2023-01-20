@@ -1,7 +1,7 @@
-import { CheckIfOrderExistsQuery } from "@saleor/graphql";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { maybe, transformOrderStatus } from "@saleor/misc";
-import { orderUrl } from "@saleor/orders/urls";
+import { CheckIfOrderExistsQuery } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { maybe, transformOrderStatus } from "@dashboard/misc";
+import { orderUrl } from "@dashboard/orders/urls";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction } from "../types";

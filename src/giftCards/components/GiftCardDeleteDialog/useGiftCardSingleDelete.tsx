@@ -1,10 +1,10 @@
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
+import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import {
   DeleteGiftCardMutation,
   useDeleteGiftCardMutation,
-} from "@saleor/graphql";
-import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
-import useNotifier from "@saleor/hooks/useNotifier";
+} from "@dashboard/graphql";
+import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
 import { giftCardDeleteDialogMessages as messages } from "./messages";

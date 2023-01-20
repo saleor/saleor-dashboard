@@ -1,5 +1,5 @@
-import Money, { IMoney } from "@saleor/components/Money";
-import Skeleton from "@saleor/components/Skeleton";
+import Money, { IMoney } from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import reduce from "lodash/reduce";

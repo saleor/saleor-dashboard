@@ -1,4 +1,4 @@
-import { UserContextError } from "@saleor/auth/types";
+import { UserContextError } from "@dashboard/auth/types";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const errorMessages = defineMessages({

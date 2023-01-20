@@ -51,7 +51,7 @@ describe("As an admin I want to manage plugins", () => {
 
   it(
     "should change user email. TC: SALEOR_3601",
-    { tags: ["@plugins", "@stagedOnly", "@stable"] },
+    { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
       const customerEmail = `${randomName}@example.com`;
 
@@ -77,7 +77,7 @@ describe("As an admin I want to manage plugins", () => {
 
   it(
     "should change admin email plugin. TC: SALEOR_3602",
-    { tags: ["@plugins", "@stagedOnly", "@stable"] },
+    { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
       const adminName = `Admin${randomName}`;
 

@@ -1,25 +1,25 @@
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { Task } from "@dashboard/containers/BackgroundTasks/types";
+import {
+  useExportGiftCardsMutation,
+  useGiftCardTotalCountQuery,
+} from "@dashboard/graphql";
+import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useForm from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
+import {
+  ExportSettingsFormData,
+  exportSettingsInitialFormData,
+  exportSettingsInitialFormDataWithIds,
+} from "@dashboard/products/components/ProductExportDialog/types";
+import { DialogProps } from "@dashboard/types";
 import {
   DialogActions,
   DialogContent,
   DialogTitle,
   Typography,
 } from "@material-ui/core";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { Task } from "@saleor/containers/BackgroundTasks/types";
-import {
-  useExportGiftCardsMutation,
-  useGiftCardTotalCountQuery,
-} from "@saleor/graphql";
-import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
-import useForm from "@saleor/hooks/useForm";
-import useNotifier from "@saleor/hooks/useNotifier";
-import ExportDialogSettings from "@saleor/products/components/ProductExportDialog/ExportDialogSettings";
-import {
-  ExportSettingsFormData,
-  exportSettingsInitialFormData,
-  exportSettingsInitialFormDataWithIds,
-} from "@saleor/products/components/ProductExportDialog/types";
-import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

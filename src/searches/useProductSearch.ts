@@ -3,8 +3,8 @@ import {
   SearchProductsDocument,
   SearchProductsQuery,
   SearchProductsQueryVariables,
-} from "@saleor/graphql";
-import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
+} from "@dashboard/graphql";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchProducts = gql`
   query SearchProducts($after: String, $first: Int!, $query: String!) {

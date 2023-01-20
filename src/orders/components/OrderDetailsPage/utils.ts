@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@saleor/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 
 import {
   getFulfilledFulfillemnts,

@@ -1,11 +1,10 @@
-import { Card } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import Container from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
-import PageHeader from "@saleor/components/PageHeader";
-import { OrderDraftListQuery, RefreshLimitsQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import FilterBar from "@dashboard/components/FilterBar";
+import PageHeader from "@dashboard/components/PageHeader";
+import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import {
   FilterPageProps,
   ListActions,
@@ -13,8 +12,9 @@ import {
   RelayToFlat,
   SortPage,
   TabPageProps,
-} from "@saleor/types";
-import { hasLimits, isLimitReached } from "@saleor/utils/limits";
+} from "@dashboard/types";
+import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

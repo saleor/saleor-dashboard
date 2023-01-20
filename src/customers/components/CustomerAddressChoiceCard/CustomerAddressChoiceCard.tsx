@@ -1,7 +1,7 @@
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { AddressFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import AddressFormatter from "@saleor/components/AddressFormatter";
-import { AddressFragment } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
 import { EditIcon } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

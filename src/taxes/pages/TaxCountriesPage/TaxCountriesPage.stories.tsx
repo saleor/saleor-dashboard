@@ -1,5 +1,5 @@
-import Decorator from "@saleor/storybook/Decorator";
-import { taxCountryConfigurations } from "@saleor/taxes/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxCountryConfigurations } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -16,7 +16,7 @@ const props: TaxCountriesPageProps = {
   disabled: false,
 };
 
-storiesOf("Views / Taxes / Countries view", module)
+storiesOf("Taxes / Countries view", module)
   .addDecorator(Decorator)
   .add("loading", () => (
     <TaxCountriesPage {...props} countryTaxesData={undefined} />

@@ -1,6 +1,6 @@
+import { findPriceSeparator } from "@dashboard/components/PriceField/utils";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
-import { findPriceSeparator } from "@saleor/components/PriceField/utils";
-import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 
 import { useStyles } from "./styles";

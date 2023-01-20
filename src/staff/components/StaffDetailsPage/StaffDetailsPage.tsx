@@ -1,32 +1,35 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
+import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
   StaffMemberDetailsFragment,
   UserFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useLocale from "@saleor/hooks/useLocale";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { sectionNames } from "@dashboard/intl";
+import { getUserName } from "@dashboard/misc";
+import UserStatus from "@dashboard/staff/components/UserStatus";
+import { staffListUrl } from "@dashboard/staff/urls";
+import {
+  getMemberPermissionGroups,
+  isMemberActive,
+} from "@dashboard/staff/utils";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
+import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getUserName } from "@saleor/misc";
-import UserStatus from "@saleor/staff/components/UserStatus";
-import { staffListUrl } from "@saleor/staff/urls";
-import { getMemberPermissionGroups, isMemberActive } from "@saleor/staff/utils";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 

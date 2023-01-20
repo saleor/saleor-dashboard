@@ -1,4 +1,4 @@
-import { SiteSettingsQuery } from "@saleor/graphql";
+import { SiteSettingsQuery } from "@dashboard/graphql";
 
 export const shop: SiteSettingsQuery["shop"] = {
   __typename: "Shop",

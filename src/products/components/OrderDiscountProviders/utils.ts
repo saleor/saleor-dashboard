@@ -1,5 +1,5 @@
-import { OrderDetailsQuery, OrderDiscountType } from "@saleor/graphql";
-import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
+import { OrderDetailsQuery, OrderDiscountType } from "@dashboard/graphql";
+import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { useState } from "react";
 
 import { OrderLineDiscountData } from "./types";

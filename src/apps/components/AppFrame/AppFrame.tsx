@@ -1,10 +1,12 @@
 import {
   AppDetailsUrlQueryParams,
   getAppDeepPathFromDashboardUrl,
+  prepareFeatureFlagsList,
   resolveAppIframeUrl,
-} from "@saleor/apps/urls";
-import useLocale from "@saleor/hooks/useLocale";
-import useShop from "@saleor/hooks/useShop";
+} from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/hooks/useFlags";
+import useLocale from "@dashboard/hooks/useLocale";
+import useShop from "@dashboard/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect } from "react";
@@ -38,10 +40,11 @@ export const AppFrame: React.FC<Props> = ({
   refetch,
 }) => {
   const shop = useShop();
-  const frameRef = React.useRef<HTMLIFrameElement>();
+  const frameRef = React.useRef<HTMLIFrameElement>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
+  const flags = useAllFlags();
   const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
   const location = useLocation();
   const { locale } = useLocale();
@@ -102,7 +105,10 @@ export const AppFrame: React.FC<Props> = ({
   return (
     <iframe
       ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, params)}
+      src={resolveAppIframeUrl(appId, src, {
+        ...params,
+        featureFlags: prepareFeatureFlagsList(flags),
+      })}
       onError={onError}
       onLoad={handleLoad}
       className={clsx(classes.iframe, className)}

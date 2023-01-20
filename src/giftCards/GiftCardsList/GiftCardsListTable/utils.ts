@@ -1,5 +1,5 @@
-import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
-import { GiftCardDataFragment } from "@saleor/graphql";
+import { PLACEHOLDER } from "@dashboard/giftCards/GiftCardUpdate/types";
+import { GiftCardDataFragment } from "@dashboard/graphql";
 
 export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   if (!!tags.length) {

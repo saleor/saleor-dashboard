@@ -5,8 +5,8 @@ import {
   OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
-} from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
 import {
@@ -576,6 +576,19 @@ describe("Get the total value of all replaced products", () => {
         quantity: 2,
         quantityFulfilled: 2,
         quantityToFulfill: 0,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -676,6 +689,19 @@ describe("Get the total value of all replaced products", () => {
         quantity: 10,
         quantityFulfilled: 2,
         quantityToFulfill: 8,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -776,6 +802,19 @@ describe("Get the total value of all replaced products", () => {
         quantity: 6,
         quantityFulfilled: 1,
         quantityToFulfill: 5,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -882,6 +921,19 @@ describe("Get the total value of all replaced products", () => {
           quantity: 20,
           quantityFulfilled: 6,
           quantityToFulfill: 14,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -987,6 +1039,19 @@ describe("Get the total value of all replaced products", () => {
           quantity: 25,
           quantityFulfilled: 8,
           quantityToFulfill: 17,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -1092,6 +1157,19 @@ describe("Get the total value of all replaced products", () => {
           quantity: 10,
           quantityFulfilled: 3,
           quantityToFulfill: 7,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -1197,6 +1275,19 @@ describe("Get the total value of all replaced products", () => {
           quantity: 20,
           quantityFulfilled: 6,
           quantityToFulfill: 14,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -1302,6 +1393,19 @@ describe("Get the total value of all replaced products", () => {
           quantity: 25,
           quantityFulfilled: 8,
           quantityToFulfill: 17,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -1541,6 +1645,19 @@ describe("Get the total value of all selected products", () => {
         quantity: 2,
         quantityFulfilled: 2,
         quantityToFulfill: 0,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -1641,6 +1758,19 @@ describe("Get the total value of all selected products", () => {
         quantity: 10,
         quantityFulfilled: 2,
         quantityToFulfill: 8,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -1741,6 +1871,19 @@ describe("Get the total value of all selected products", () => {
         quantity: 6,
         quantityFulfilled: 1,
         quantityToFulfill: 5,
+        totalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+        },
         undiscountedUnitPrice: {
           __typename: "TaxedMoney",
           currency: "USD",
@@ -1847,6 +1990,19 @@ describe("Get the total value of all selected products", () => {
           quantity: 20,
           quantityFulfilled: 6,
           quantityToFulfill: 14,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -1952,6 +2108,19 @@ describe("Get the total value of all selected products", () => {
           quantity: 25,
           quantityFulfilled: 8,
           quantityToFulfill: 17,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -2057,6 +2226,19 @@ describe("Get the total value of all selected products", () => {
           quantity: 10,
           quantityFulfilled: 3,
           quantityToFulfill: 7,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -2290,6 +2472,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           quantity: 2,
           quantityFulfilled: 2,
           quantityToFulfill: 0,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -2395,6 +2590,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           quantity: 2,
           quantityFulfilled: 2,
           quantityToFulfill: 0,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",
@@ -2500,6 +2708,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           quantity: 3,
           quantityFulfilled: 1,
           quantityToFulfill: 2,
+          totalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 239.13,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 239.13,
+              currency: "USD",
+            },
+          },
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "USD",

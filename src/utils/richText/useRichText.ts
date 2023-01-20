@@ -1,5 +1,5 @@
+import { EditorCore } from "@dashboard/components/RichTextEditor";
 import { OutputData } from "@editorjs/editorjs";
-import { EditorCore } from "@saleor/components/RichTextEditor";
 import { useMemo, useRef, useState } from "react";
 
 interface UseRichTextOptions {

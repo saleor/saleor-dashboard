@@ -1,7 +1,7 @@
-import { customerUrl } from "@saleor/customers/urls";
-import { SearchCustomersQuery } from "@saleor/graphql";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { RelayToFlat } from "@saleor/types";
+import { customerUrl } from "@dashboard/customers/urls";
+import { SearchCustomersQuery } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { RelayToFlat } from "@dashboard/types";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction } from "../types";

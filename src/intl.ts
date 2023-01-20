@@ -186,6 +186,15 @@ export const commonMessages = defineMessages({
     id: "z9c6/C",
     defaultMessage: "Deprecated",
   },
+  settings: {
+    id: "D3idYv",
+    defaultMessage: "Settings",
+  },
+  noOfRows: {
+    id: "2HfSiT",
+    defaultMessage: "No. of rows",
+    description: "pagination",
+  },
 });
 
 export const errorMessages = defineMessages({
@@ -231,6 +240,16 @@ export const buttonMessages = defineMessages({
   assign: {
     id: "oiuwOl",
     defaultMessage: "Assign",
+    description: "button",
+  },
+  activate: {
+    id: "+b3KCV",
+    defaultMessage: "Activate",
+    description: "button",
+  },
+  deactivate: {
+    id: "gygOA1",
+    defaultMessage: "Deactivate",
     description: "button",
   },
   back: {
@@ -331,6 +350,16 @@ export const buttonMessages = defineMessages({
   undo: {
     id: "vN3qdA",
     defaultMessage: "Undo",
+    description: "button",
+  },
+  install: {
+    id: "KDvRBi",
+    defaultMessage: "Install",
+    description: "button",
+  },
+  retry: {
+    id: "KMxiiF",
+    defaultMessage: "Retry",
     description: "button",
   },
 });

@@ -29,7 +29,10 @@ describe("As an admin I want to manage product types", () => {
     deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     createCategory({ name: startsWith }).then(resp => (category = resp));
-    getDefaultChannel().then(resp => (channel = resp));
+    getDefaultChannel().then(resp => {
+      channel = resp;
+      cy.checkIfDataAreNotNull({ attribute, channel, category });
+    });
   });
 
   beforeEach(() => {

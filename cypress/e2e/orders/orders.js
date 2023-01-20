@@ -28,6 +28,10 @@ import {
   createShipping,
   deleteShippingStartsWith,
 } from "../../support/api/utils/shippingUtils";
+import {
+  getDefaultTaxClass,
+  updateTaxConfigurationForChannel,
+} from "../../support/api/utils/taxesUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
@@ -41,6 +45,7 @@ describe("Orders", () => {
   let shippingMethod;
   let variantsList;
   let address;
+  let taxClass;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -52,8 +57,11 @@ describe("Orders", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
+        updateTaxConfigurationForChannel({ channelSlug: defaultChannel.slug });
+        getDefaultTaxClass();
       })
-      .then(() => {
+      .then(resp => {
+        taxClass = resp;
         cy.fixture("addresses");
       })
       .then(addresses => {
@@ -66,6 +74,7 @@ describe("Orders", () => {
           channelId: defaultChannel.id,
           name: randomName,
           address,
+          taxClassId: taxClass.id,
         });
       })
       .then(
@@ -90,11 +99,20 @@ describe("Orders", () => {
             productTypeId: productTypeResp.id,
             attributeId: attributeResp.id,
             categoryId: categoryResp.id,
+            taxClassId: taxClass.id,
           });
         },
       )
       .then(({ variantsList: variantsResp }) => {
         variantsList = variantsResp;
+        cy.checkIfDataAreNotNull({
+          customer,
+          defaultChannel,
+          warehouse,
+          shippingMethod,
+          variantsList,
+          address,
+        });
       });
   });
 

@@ -1,17 +1,17 @@
-import { OutputData } from "@editorjs/editorjs";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import useForm, {
   CommonUseFormResult,
   FormChange,
-} from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+} from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import {
   RichTextContext,
   RichTextContextValues,
-} from "@saleor/utils/richText/context";
-import useRichText from "@saleor/utils/richText/useRichText";
+} from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect } from "react";
 
 export interface CategoryCreateFormData extends MetadataFormData {

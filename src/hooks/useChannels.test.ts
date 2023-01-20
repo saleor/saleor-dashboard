@@ -1,4 +1,4 @@
-import { ChannelData } from "@saleor/channels/utils";
+import { ChannelData } from "@dashboard/channels/utils";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import useChannels from "./useChannels";

@@ -1,18 +1,18 @@
-import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
-import { PaginatorContextDecorator } from "@saleor/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
-
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "../../../fixtures";
-import Decorator from "../../../storybook/Decorator";
+} from "@dashboard/fixtures";
+import { PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+
 import { pageTypes } from "../../fixtures";
-import PageTypeListPage, { PageTypeListPageProps } from ".";
+import PageTypeListPage, { PageTypeListPageProps } from "./PageTypeListPage";
 
 const props: PageTypeListPageProps = {
   ...listActionsProps,
@@ -27,7 +27,7 @@ const props: PageTypeListPageProps = {
   pageTypes,
 };
 
-storiesOf("Views / Page types / Page types list", module)
+storiesOf("Page types / Page types list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
   .add("default", () => <PageTypeListPage {...props} />)

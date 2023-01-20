@@ -1,11 +1,11 @@
-import { ChannelPriceAndPreorderData } from "@saleor/channels/utils";
-import { ProductVariantCreateDataQuery } from "@saleor/graphql";
-import { UseFormsetOutput } from "@saleor/hooks/useFormset";
-import { getChannelsInput } from "@saleor/products/utils/handlers";
+import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
+import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
+import { UseFormsetOutput } from "@dashboard/hooks/useFormset";
+import { getChannelsInput } from "@dashboard/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice,
-} from "@saleor/products/utils/validation";
+} from "@dashboard/products/utils/validation";
 
 import { VariantChannelListing } from "./types";
 

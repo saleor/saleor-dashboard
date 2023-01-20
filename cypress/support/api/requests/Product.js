@@ -102,6 +102,7 @@ export function createProduct({
   categoryId,
   collectionId,
   description,
+  taxClassId,
 }) {
   const collection = getValueWithDefault(
     collectionId,
@@ -120,6 +121,11 @@ export function createProduct({
       ${attributeValuesLine}
     }]`,
   );
+  const selectedTaxClass = getValueWithDefault(
+    taxClassId,
+    `taxClass: "${taxClassId}"`,
+    `taxClass: ""`,
+  );
   const mutation = `mutation createProduct${descriptionData.mutationVariables}{
     productCreate(input:{
       ${attributes}
@@ -130,6 +136,7 @@ export function createProduct({
       ${category}
       ${collection}
       ${descriptionData.descriptionLine}
+      ${selectedTaxClass}
     }){
       product{
         id
@@ -209,6 +216,58 @@ export function createVariant({
   return cy
     .sendRequestWithQuery(mutation)
     .its("body.data.productVariantBulkCreate.productVariants");
+}
+
+export function createVariantForSimpleProduct({
+  productId,
+  sku,
+  warehouseId,
+  quantityInWarehouse = 1,
+  trackInventory = true,
+  weight = 1,
+  attributeId,
+  attributeName = "value",
+}) {
+  const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
+
+  const attributeLines = getValueWithDefault(
+    attributeId,
+    `attributes: [{
+    id:"${attributeId}"
+    values: ["${attributeName}"]
+  }]`,
+    "attributes:[]",
+  );
+
+  const stocks = getValueWithDefault(
+    warehouseId,
+    `stocks:{
+      warehouse:"${warehouseId}"
+      quantity:${quantityInWarehouse}
+    }`,
+  );
+  const mutation = `mutation{
+    productVariantCreate(input: {
+      ${attributeLines}
+      ${skuLines}
+      trackInventory:${trackInventory}
+      weight: ${weight}
+      product: "${productId}"
+      ${stocks}
+    }) {
+      productVariant{
+        id
+        name
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productVariantCreate.productVariant");
 }
 
 export function deleteProduct(productId) {
@@ -304,12 +363,18 @@ export function updateVariantPrice({ variantId, channelId, price }) {
     .its("body.data.productVariantChannelListingUpdate");
 }
 
-export function updateVariantWarehouse({ variantId, warehouseId }) {
+export function updateVariantWarehouse({ variantId, warehouseId, quantity }) {
+  const quantityInWarehouse = getValueWithDefault(
+    quantity,
+    `quantity:${quantity}`,
+    `quantity: 0`,
+  );
+
   const mutation = `mutation{
     productVariantStocksCreate(variantId: "${variantId}", 
       stocks: 
       {
-        quantity: 0,
+        ${quantityInWarehouse}
         warehouse: "${warehouseId}"
       }
       ){

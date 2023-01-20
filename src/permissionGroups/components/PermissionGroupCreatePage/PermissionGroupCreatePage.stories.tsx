@@ -1,11 +1,12 @@
-import { permissions } from "@saleor/fixtures";
-import PermissionGroupCreatePage, {
-  PermissionGroupCreatePageProps,
-} from "@saleor/permissionGroups/components/PermissionGroupCreatePage";
-import { errorsOfPermissionGroupCreate } from "@saleor/permissionGroups/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+import { permissions } from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { errorsOfPermissionGroupCreate } from "../../fixtures";
+import PermissionGroupCreatePage, {
+  PermissionGroupCreatePageProps,
+} from "./PermissionGroupCreatePage";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
@@ -15,7 +16,7 @@ const props: PermissionGroupCreatePageProps = {
   saveButtonBarState: undefined,
 };
 
-storiesOf("Views / Permission Groups / Permission Group Create", module)
+storiesOf("Permission Groups / Permission Group Create", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupCreatePage {...props} />)
   .add("loading", () => (

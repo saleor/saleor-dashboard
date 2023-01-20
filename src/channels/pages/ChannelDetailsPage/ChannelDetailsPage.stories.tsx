@@ -1,10 +1,10 @@
-import { countries } from "@saleor/fixtures";
-import { ChannelErrorFragment } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { channel, channelCreateErrors } from "@dashboard/channels/fixtures";
+import { countries } from "@dashboard/fixtures";
+import { ChannelErrorFragment } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { channel, channelCreateErrors } from "../../fixtures";
 import ChannelDetailsPage, {
   ChannelDetailsPageProps,
 } from "./ChannelDetailsPage";
@@ -69,7 +69,7 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   },
 };
 
-storiesOf("Views / Channels / Channel details", module)
+storiesOf("Channels / Channel details", module)
   .addDecorator(Decorator)
   .add("default", () => <ChannelDetailsPage {...props} />)
   .add("disabled", () => <ChannelDetailsPage {...props} disabled={true} />)

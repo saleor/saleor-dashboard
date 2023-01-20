@@ -1,7 +1,7 @@
+import TablePagination from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import usePaginator from "@dashboard/hooks/usePaginator";
 import { TableFooter } from "@material-ui/core";
-import TablePagination from "@saleor/components/TablePagination";
-import TableRowLink from "@saleor/components/TableRowLink";
-import usePaginator from "@saleor/hooks/usePaginator";
 import React from "react";
 
 import { useGiftCardList } from "../providers/GiftCardListProvider";

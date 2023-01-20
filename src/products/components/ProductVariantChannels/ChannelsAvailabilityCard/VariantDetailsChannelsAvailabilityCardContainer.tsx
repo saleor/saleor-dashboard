@@ -1,6 +1,6 @@
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
 import { Card } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

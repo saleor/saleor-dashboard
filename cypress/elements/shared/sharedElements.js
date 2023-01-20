@@ -6,7 +6,9 @@ export const SHARED_ELEMENTS = {
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
   tableRow: '[data-test-id*="id"], [class*="MuiTableRow"]',
-  notificationSuccess: '[data-test="notification"][data-test-type="success"]',
+  notificationSuccess:
+    '[data-test-id="notification"][data-test-type="success"]',
+  notificationFailure: '[data-test-id="notification"][data-test-type="error"]',
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="search-input"]',
   selectOption: '[data-test-id*="select-field-option"]',

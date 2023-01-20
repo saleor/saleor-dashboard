@@ -1,5 +1,5 @@
-import { useUserPermissions } from "@saleor/auth/hooks/useUserPermissions";
-import { PermissionEnum, UserPermissionFragment } from "@saleor/graphql";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql";
 import React from "react";
 
 const findPerm = (permList, perm) =>

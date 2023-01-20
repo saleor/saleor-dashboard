@@ -1,28 +1,26 @@
-import { Card } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItems,
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
-} from "@saleor/apps/useExtensions";
-import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
-import CardMenu from "@saleor/components/CardMenu";
-import ColumnPicker from "@saleor/components/ColumnPicker";
-import Container from "@saleor/components/Container";
-import { getByName } from "@saleor/components/Filter/utils";
-import FilterBar from "@saleor/components/FilterBar";
-import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import PageHeader from "@saleor/components/PageHeader";
-import { ProductListColumns } from "@saleor/config";
+} from "@dashboard/apps/useExtensions";
+import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
+import CardMenu from "@dashboard/components/CardMenu";
+import ColumnPicker from "@dashboard/components/ColumnPicker";
+import Container from "@dashboard/components/Container";
+import { getByName } from "@dashboard/components/Filter/utils";
+import FilterBar from "@dashboard/components/FilterBar";
+import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import PageHeader from "@dashboard/components/PageHeader";
+import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
   SearchAvailableInGridAttributesQuery,
-} from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+} from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
   FetchMoreProps,
@@ -31,8 +29,10 @@ import {
   PageListProps,
   RelayToFlat,
   SortPage,
-} from "@saleor/types";
-import { hasLimits, isLimitReached } from "@saleor/utils/limits";
+} from "@dashboard/types";
+import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
+import { Card } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

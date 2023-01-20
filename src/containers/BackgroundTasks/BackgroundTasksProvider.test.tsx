@@ -1,5 +1,5 @@
 import { createMockClient } from "@apollo/client/testing";
-import { JobStatusEnum } from "@saleor/graphql";
+import { JobStatusEnum } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import {

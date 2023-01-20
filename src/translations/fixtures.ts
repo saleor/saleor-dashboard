@@ -1,4 +1,4 @@
-import { LanguageCodeEnum, LanguageFragment } from "@saleor/graphql";
+import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 
 export const languages: LanguageFragment[] = [
   {

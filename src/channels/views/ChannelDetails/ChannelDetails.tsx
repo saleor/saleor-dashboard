@@ -1,10 +1,10 @@
-import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog";
-import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
-import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
-import { Backlink } from "@saleor/components/Backlink";
-import Container from "@saleor/components/Container";
-import PageHeader from "@saleor/components/PageHeader";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
+import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { Backlink } from "@dashboard/components/Backlink";
+import Container from "@dashboard/components/Container";
+import PageHeader from "@dashboard/components/PageHeader";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
@@ -16,17 +16,17 @@ import {
   useChannelReorderWarehousesMutation,
   useChannelsQuery,
   useChannelUpdateMutation,
-} from "@saleor/graphql";
-import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import useShop from "@saleor/hooks/useShop";
-import { sectionNames } from "@saleor/intl";
-import { extractMutationErrors } from "@saleor/misc";
-import getChannelsErrorMessage from "@saleor/utils/errors/channels";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
+import useShop from "@dashboard/hooks/useShop";
+import { sectionNames } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 

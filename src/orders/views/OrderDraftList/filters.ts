@@ -1,10 +1,10 @@
-import { FilterElement } from "@saleor/components/Filter";
-import { OrderDraftFilterInput } from "@saleor/graphql";
-import { maybe } from "@saleor/misc";
+import { FilterElement } from "@dashboard/components/Filter";
+import { OrderDraftFilterInput } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
 import {
   OrderDraftFilterKeys,
   OrderDraftListFilterOpts,
-} from "@saleor/orders/components/OrderDraftListPage";
+} from "@dashboard/orders/components/OrderDraftListPage";
 
 import {
   createFilterTabUtils,

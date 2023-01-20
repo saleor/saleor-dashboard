@@ -1,8 +1,8 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { Card, CardContent, Divider } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
-import { WebhookErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { WebhookErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -17,7 +17,7 @@ const props: WebhookDetailsPageProps = {
   saveButtonBarState: "default",
   webhook,
 };
-storiesOf("Views / Apps / Webhooks / Webhook details", module)
+storiesOf("Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
   .add("default", () => <WebhookDetailsPage {...props} />)
   .add("undefined", () => <WebhookDetailsPage {...props} webhook={undefined} />)

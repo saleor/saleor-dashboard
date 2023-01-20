@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import useNotifier from "@saleor/hooks/useNotifier";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 

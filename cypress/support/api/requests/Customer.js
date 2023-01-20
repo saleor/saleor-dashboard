@@ -33,11 +33,13 @@ export function createCustomer(email, customerName, address, isActive = false) {
 }
 
 export function deleteCustomersStartsWith(startsWith) {
-  getCustomers(startsWith).then(resp => {
+  const serverStoredEmail = startsWith.toLowerCase();
+
+  getCustomers(serverStoredEmail).then(resp => {
     if (resp.body.data.customers) {
       const customers = resp.body.data.customers.edges;
       customers.forEach(element => {
-        if (element.node.email.includes(startsWith)) {
+        if (element.node.email.includes(serverStoredEmail)) {
           deleteCustomer(element.node.id);
         }
       });

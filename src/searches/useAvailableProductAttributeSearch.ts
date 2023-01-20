@@ -3,8 +3,8 @@ import {
   SearchAvailableProductAttributesDocument,
   SearchAvailableProductAttributesQuery,
   SearchAvailableProductAttributesQueryVariables,
-} from "@saleor/graphql";
-import makeSearch from "@saleor/hooks/makeSearch";
+} from "@dashboard/graphql";
+import makeSearch from "@dashboard/hooks/makeSearch";
 
 export const searchProductAttributes = gql`
   query SearchAvailableProductAttributes(

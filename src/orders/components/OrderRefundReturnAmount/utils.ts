@@ -1,13 +1,13 @@
-import { IMoney } from "@saleor/components/Money";
-import { OrderDetailsFragment, OrderRefundDataQuery } from "@saleor/graphql";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import { IMoney } from "@dashboard/components/Money";
+import { OrderDetailsFragment, OrderRefundDataQuery } from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
 import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
-} from "@saleor/orders/utils/data";
+} from "@dashboard/orders/utils/data";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
 import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";

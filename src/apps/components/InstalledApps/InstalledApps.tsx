@@ -1,24 +1,17 @@
-import {
-  Card,
-  Switch,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
-import { AppManifestTableDisplay } from "@saleor/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
-import { InstallWithManifestFormButton } from "@saleor/apps/components/InstallWithManifestFormButton";
-import { useAppListContext } from "@saleor/apps/context";
-import { appUrl, createAppInstallUrl } from "@saleor/apps/urls";
-import { isAppInTunnel } from "@saleor/apps/utils";
-import CardTitle from "@saleor/components/CardTitle";
-import { IconButton } from "@saleor/components/IconButton";
-import { TableButtonWrapper } from "@saleor/components/TableButtonWrapper/TableButtonWrapper";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { AppListItemFragment } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { ListProps } from "@saleor/types";
+import { AppManifestTableDisplay } from "@dashboard/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
+import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
+import { appUrl, createAppInstallUrl } from "@dashboard/apps/urls";
+import { isAppInTunnel } from "@dashboard/apps/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import { IconButton } from "@dashboard/components/IconButton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AppListItemFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { renderCollection } from "@dashboard/misc";
+import { ListProps } from "@dashboard/types";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
+import { ResponsiveTable, SettingsIcon } from "@saleor/macaw-ui";
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -28,20 +21,19 @@ import AppsSkeleton from "../AppsSkeleton";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppListItemFragment[];
-  onRemove: (id: string) => void;
+  onSettingsClick: (id: string) => void;
   displayQuickManifestButton?: boolean;
   title: string;
 }
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
   appsList,
-  onRemove,
+  onSettingsClick,
   title,
   displayQuickManifestButton = false,
   ...props
 }) => {
   const classes = useStyles(props);
-  const { activateApp, deactivateApp } = useAppListContext();
   const navigate = useNavigator();
 
   const navigateToAppInstallPage = useCallback(
@@ -50,14 +42,6 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
     },
     [navigate],
   );
-
-  const getHandleToggle = (app: AppListItemFragment) => () => {
-    if (app.isActive) {
-      deactivateApp(app.id);
-    } else {
-      activateApp(app.id);
-    }
-  };
 
   return (
     <Card className={classes.apps}>
@@ -102,20 +86,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     {app.manifestUrl && (
                       <AppManifestTableDisplay manifestUrl={app.manifestUrl} />
                     )}
-                    <TableButtonWrapper>
-                      <Switch
-                        checked={app.isActive}
-                        onChange={getHandleToggle(app)}
-                      />
-                    </TableButtonWrapper>
-                    <AppPermissions permissions={app.permissions} />
+                    <AppPermissions permissions={app.permissions || []} />
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
                         color="primary"
-                        onClick={() => onRemove(app.id)}
+                        onClick={() => onSettingsClick(app.id)}
                       >
-                        <DeleteIcon />
+                        <SettingsIcon />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

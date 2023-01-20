@@ -1,4 +1,4 @@
-import { FulfillmentStatus, OrderRefundDataQuery } from "@saleor/graphql";
+import { FulfillmentStatus, OrderRefundDataQuery } from "@dashboard/graphql";
 
 export const orderToRefund = (
   placeholder: string,

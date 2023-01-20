@@ -1,7 +1,10 @@
-import useForm, { SubmitPromise, UseFormResult } from "@saleor/hooks/useForm";
+import useForm, {
+  SubmitPromise,
+  UseFormResult,
+} from "@dashboard/hooks/useForm";
 import React from "react";
 
-import { FormId } from "./ExitFormDialogProvider";
+import { FormId } from "./types";
 
 export type CheckIfSaveIsDisabledFnType<T> = (data: T) => boolean;
 

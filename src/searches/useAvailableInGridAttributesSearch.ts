@@ -3,8 +3,8 @@ import {
   SearchAvailableInGridAttributesDocument,
   SearchAvailableInGridAttributesQuery,
   SearchAvailableInGridAttributesQueryVariables,
-} from "@saleor/graphql";
-import makeSearch from "@saleor/hooks/makeSearch";
+} from "@dashboard/graphql";
+import makeSearch from "@dashboard/hooks/makeSearch";
 
 export const availableInGridAttributes = gql`
   query SearchAvailableInGridAttributes(

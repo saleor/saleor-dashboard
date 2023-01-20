@@ -1,6 +1,6 @@
-import { SearchProductsQuery } from "@saleor/graphql";
-import { getById, getByUnmatchingId } from "@saleor/misc";
-import { RelayToFlat } from "@saleor/types";
+import { SearchProductsQuery } from "@dashboard/graphql";
+import { getById, getByUnmatchingId } from "@dashboard/misc";
+import { RelayToFlat } from "@dashboard/types";
 
 export type SearchVariant = RelayToFlat<
   SearchProductsQuery["search"]

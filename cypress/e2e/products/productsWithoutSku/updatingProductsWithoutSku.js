@@ -9,23 +9,15 @@ import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { productVariantDetailUrl } from "../../../fixtures/urlList";
 import {
   createVariant,
+  createVariantForSimpleProduct,
   getVariant,
+  updateChannelPriceInVariant,
 } from "../../../support/api/requests/Product";
-import {
-  createTypeProduct,
-  productAttributeAssignmentUpdate,
-} from "../../../support/api/requests/ProductType";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { createTypeProduct } from "../../../support/api/requests/ProductType";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductInChannelWithoutVariants,
-  createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
-} from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import * as productUtils from "../../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 
 describe("Updating products without sku", () => {
   const startsWith = "UpdateProductsSku";
@@ -47,55 +39,33 @@ describe("Updating products without sku", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        cy.fixture("addresses");
-      })
-      .then(fixtureAddresses => {
-        address = fixtureAddresses.plAddress;
-        createShipping({
-          channelId: defaultChannel.id,
-          name,
-          address,
+    productUtils.deleteProductsStartsWith(startsWith);
+    shippingUtils.deleteShippingStartsWith(startsWith);
+    deleteWarehouseStartsWith(startsWith);
+
+    cy.fixture("addresses").then(fixtureAddresses => {
+      address = fixtureAddresses.plAddress;
+    });
+    productUtils
+      .createShippingProductTypeAttributeAndCategory(name, attributeValues)
+      .then(resp => {
+        cy.log(resp);
+        attribute = resp.attribute;
+        productTypeWithVariants = resp.productType;
+        category = resp.category;
+        defaultChannel = resp.defaultChannel;
+        warehouse = resp.warehouse;
+        shippingMethod = resp.shippingMethod;
+
+        createTypeProduct({
+          name: productTypeWithoutVariantsName,
+          attributeId: attribute.id,
+          hasVariants: false,
         });
       })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-          createTypeAttributeAndCategoryForProduct({ name, attributeValues });
-        },
-      )
-      .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
-          attribute = attributeResp;
-          productTypeWithVariants = productTypeResp;
-          category = categoryResp;
-          productAttributeAssignmentUpdate({
-            productTypeId: productTypeWithVariants.id,
-            attributeId: attribute.id,
-          });
-          createTypeProduct({
-            name: productTypeWithoutVariantsName,
-            attributeId: attribute.id,
-            hasVariants: false,
-          });
-        },
-      )
       .then(productTypeResp => {
         productTypeWithoutVariants = productTypeResp;
-        productAttributeAssignmentUpdate({
-          productTypeId: productTypeWithoutVariants.id,
-          attributeId: attribute.id,
-        });
-        createProductInChannelWithoutVariants({
+        productUtils.createProductInChannelWithoutVariants({
           name,
           channelId: defaultChannel.id,
           attributeId: attribute.id,
@@ -103,15 +73,70 @@ describe("Updating products without sku", () => {
           categoryId: category.id,
         });
       })
-      .then(productResp => (product = productResp));
+      .then(productResp => {
+        product = productResp;
+        cy.checkIfDataAreNotNull({
+          defaultChannel,
+          address,
+          warehouse,
+          shippingMethod,
+          attribute,
+          category,
+          productTypeWithVariants,
+          productTypeWithoutVariants,
+          product,
+        });
+      });
   });
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
   });
+  it(
+    "should be able to add SKU to simple product TC: SALEOR_2802",
+    { tags: ["@products", "@allEnv"] },
+    () => {
+      const productName = `${startsWith}${faker.datatype.number()}`;
+      const sku = `Sku${faker.datatype.number()}`;
+      let product;
+      let variant;
+
+      const productData = {
+        name: productName,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        productTypeId: productTypeWithoutVariants.id,
+        channelId: defaultChannel.id,
+        warehouseId: warehouse.id,
+        quantityInWarehouse: 10,
+        trackInventory: false,
+      };
+      createSimpleProductWithVariant(productData).then(resp => {
+        product = resp.product;
+        variant = resp.variant;
+
+        cy.visitAndWaitForProgressBarToDisappear(
+          productVariantDetailUrl(product.id, variant.id),
+        )
+          .get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(VARIANTS_SELECTORS.skuTextField)
+          .type(sku)
+          .addAliasToGraphRequest("VariantUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
+          .then(({ response }) => {
+            const responseSku =
+              response.body.data.productVariantUpdate.productVariant.sku;
+            expect(responseSku).to.equal(sku);
+          });
+      });
+    },
+  );
 
   it(
-    "should add sku to variant",
+    "should add sku to variant TC: SALEOR_2803",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const sku = "NewSku";
@@ -131,7 +156,7 @@ describe("Updating products without sku", () => {
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
+            .get(VARIANTS_SELECTORS.skuTextField)
             .type(sku)
             .addAliasToGraphRequest("VariantUpdate")
             .get(BUTTON_SELECTORS.confirm)
@@ -146,7 +171,7 @@ describe("Updating products without sku", () => {
   );
 
   it(
-    "should remove sku from variant",
+    "should remove sku from variant TC: SALEOR_2805",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       let variant;
@@ -166,9 +191,12 @@ describe("Updating products without sku", () => {
           )
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(VARIANTS_SELECTORS.skuInput)
+            .get(VARIANTS_SELECTORS.skuTextField)
+            .find("input")
             .clear()
             .addAliasToGraphRequest("VariantUpdate")
+            .get(VARIANTS_SELECTORS.variantNameInput)
+            .type(name)
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .waitForRequestAndCheckIfNoErrors("@VariantUpdate");
@@ -191,5 +219,42 @@ describe("Updating products without sku", () => {
     }).then(({ order }) => {
       expect(order.id).to.be.ok;
     });
+  }
+
+  function createSimpleProductWithVariant({
+    name,
+    channelId,
+    warehouseId = null,
+    quantityInWarehouse = 10,
+    productTypeId,
+    attributeId,
+    categoryId,
+    trackInventory = true,
+  }) {
+    let product;
+    let variant;
+
+    return productUtils
+      .createProductInChannelWithoutVariants({
+        name,
+        channelId,
+        productTypeId,
+        attributeId,
+        categoryId,
+      })
+      .then(productResp => {
+        product = productResp;
+        createVariantForSimpleProduct({
+          productId: product.id,
+          warehouseId,
+          quantityInWarehouse,
+          trackInventory,
+        });
+      })
+      .then(variantResp => {
+        variant = variantResp;
+        updateChannelPriceInVariant(variant.id, defaultChannel.id);
+      })
+      .then(() => ({ product, variant }));
   }
 });

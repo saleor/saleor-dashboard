@@ -1,18 +1,18 @@
-import { getApiUrl } from "@saleor/config";
-import { stringifyQs } from "@saleor/utils/urls";
+import { getApiUrl } from "@dashboard/config";
+import { FlagWithName } from "@dashboard/hooks/useFlags/types";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
 
 export const MANIFEST_ATTR = "manifestUrl";
 
-export type AppListUrlDialog =
-  | "remove"
-  | "remove-app"
-  | "app-activate"
-  | "app-deactivate";
+export type AppListUrlDialog = "app-installation-remove";
 
-export type AppDetailsUrlDialog = "app-activate" | "app-deactivate";
+export type AppDetailsUrlDialog =
+  | "app-activate"
+  | "app-deactivate"
+  | "app-delete";
 
 export type AppListUrlQueryParams = ActiveTab &
   Dialog<AppListUrlDialog> &
@@ -27,9 +27,14 @@ export interface AppDetailsUrlMountQueryParams {
   customerIds?: string[];
 }
 
+interface FeatureFlagsQueryParams {
+  featureFlags?: Record<string, string>;
+}
+
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   SingleAction &
-  AppDetailsUrlMountQueryParams;
+  AppDetailsUrlMountQueryParams &
+  FeatureFlagsQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
@@ -131,3 +136,13 @@ export const resolveAppIframeUrl = (
 
   return urlJoin(appUrl, window.location.search, iframeContextQueryString);
 };
+
+export const prepareFeatureFlagsList = (
+  flags: FlagWithName[],
+): Record<string, string> =>
+  flags.reduce<Record<string, string>>((acc, flag) => {
+    if (flag.enabled) {
+      acc[flag.name] = `${flag.value || true}`;
+    }
+    return acc;
+  }, {});
