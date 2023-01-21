@@ -35,6 +35,8 @@ describe("Apps InstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+    const openAppInstallPage = jest.fn();
+    const openVercelDeploymentPage = jest.fn();
     render(
       <Component
         data={{
@@ -45,6 +47,8 @@ describe("Apps InstalledAppListRow", () => {
           openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
+          openAppInstallPage,
+          openVercelDeploymentPage,
         }}
       />,
     );
@@ -71,6 +75,8 @@ describe("Apps InstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+    const openAppInstallPage = jest.fn();
+    const openVercelDeploymentPage = jest.fn();
     render(
       <Component
         data={{
@@ -81,6 +87,8 @@ describe("Apps InstalledAppListRow", () => {
           openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
+          openAppInstallPage,
+          openVercelDeploymentPage,
         }}
       />,
     );
@@ -95,6 +103,8 @@ describe("Apps InstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+    const openAppInstallPage = jest.fn();
+    const openVercelDeploymentPage = jest.fn();
     const AppsConfig = getAppsConfig();
     render(
       <Component
@@ -110,6 +120,8 @@ describe("Apps InstalledAppListRow", () => {
           openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
+          openAppInstallPage,
+          openVercelDeploymentPage,
         }}
       />,
     );
@@ -124,6 +136,8 @@ describe("Apps InstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+    const openAppInstallPage = jest.fn();
+    const openVercelDeploymentPage = jest.fn();
     render(
       <Component
         data={{
@@ -134,6 +148,8 @@ describe("Apps InstalledAppListRow", () => {
           openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
+          openAppInstallPage,
+          openVercelDeploymentPage,
         }}
       />,
     );

@@ -1,12 +1,10 @@
+import Hr from "@dashboard/components/Hr";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { getAppDetails } from "@dashboard/new-apps/utils";
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardActions, CardContent } from "@material-ui/core";
 import React from "react";
-import { useIntl } from "react-intl";
 
-import AppListCardActions from "./AppListCardActions";
+import AppListCardActions from "../AppListCardActions";
 import AppListCardDescription from "./AppListCardDescription";
 import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
@@ -15,46 +13,23 @@ import { useStyles } from "./styles";
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
   appInstallation?: AppInstallationFragment;
-  navigateToAppInstallPage?: (manifestUrl: string) => void;
-  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
-const AppListCard: React.FC<AppListCardProps> = ({
-  app,
-  appInstallation,
-  navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
-}) => {
+const AppListCard: React.FC<AppListCardProps> = ({ app, appInstallation }) => {
   const classes = useStyles();
-  const intl = useIntl();
-  const { retryAppInstallation, removeAppInstallation } = useAppListContext();
-
-  const details = getAppDetails({
-    intl,
-    app,
-    appInstallation,
-    navigateToAppInstallPage,
-    navigateToVercelDeploymentPage,
-    retryAppInstallation,
-    removeAppInstallation,
-  });
 
   return (
     <>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <AppListCardDescription app={app} />
-          <AppListCardLinks links={details.links} />
+          <AppListCardLinks app={app} />
           <AppListCardIntegrations app={app} />
         </CardContent>
-        <AppListCardActions
-          releaseDate={details.releaseDate}
-          installationPending={details.installationPending}
-          installHandler={details.installHandler}
-          vercelDeployHandler={details.vercelDeployHandler}
-          retryInstallHandler={details.retryInstallHandler}
-          removeInstallHandler={details.removeInstallHandler}
-        />
+        <Hr />
+        <CardActions className={classes.cardActions}>
+          <AppListCardActions app={app} appInstallation={appInstallation} />
+        </CardActions>
       </Card>
     </>
   );

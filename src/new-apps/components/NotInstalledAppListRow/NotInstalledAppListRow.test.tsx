@@ -15,6 +15,8 @@ jest.mock("@dashboard/new-apps/context", () => ({
     openAppSettings: jest.fn(),
     removeAppInstallation: jest.fn(),
     retryAppInstallation: jest.fn(),
+    openAppInstallPage: jest.fn(),
+    openVercelDeploymentPage: jest.fn(),
   })),
 }));
 
@@ -72,10 +74,14 @@ describe("Apps NotInstalledAppListRow", () => {
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+    const openAppInstallPage = jest.fn();
+    const openVercelDeploymentPage = jest.fn();
     jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
       retryAppInstallation,
+      openAppInstallPage,
+      openVercelDeploymentPage,
     }));
     render(
       <Wrapper>

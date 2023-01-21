@@ -1,12 +1,11 @@
 import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import PreviewPill from "@dashboard/components/PreviewPill";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { AppUrls } from "@dashboard/new-apps/urls";
+import { useAppListContext } from "@dashboard/new-apps/context";
 import { ListProps } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import React, { useCallback } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AllAppList from "../AllAppList";
@@ -41,6 +40,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
+  const { openAppInstallPage } = useAppListContext();
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
     installableMarketplaceApps,
@@ -57,26 +57,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
   });
-  const navigate = useNavigator();
-
-  const navigateToAppInstallPage = useCallback(
-    (manifestUrl: string) => {
-      navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
-    },
-    [navigate],
-  );
-
-  const navigateToVercelDeploymentPage = useCallback(
-    (vercelDeploymentUrl: string) => {
-      window.open(vercelDeploymentUrl, "_blank");
-    },
-    [],
-  );
 
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.apps)}>
-        <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+        <InstallWithManifestFormButton onSubmitted={openAppInstallPage} />
       </PageHeader>
       <Typography variant="body1">
         <FormattedMessage {...messages.installAppDescription} />
@@ -108,8 +93,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <AllAppList
               appList={verifiedInstallableMarketplaceApps}
               appInstallationList={appsInstallations}
-              navigateToAppInstallPage={navigateToAppInstallPage}
-              navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
             />
           </>
         )}

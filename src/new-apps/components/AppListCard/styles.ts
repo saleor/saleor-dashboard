@@ -2,13 +2,19 @@ import { alpha } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  () => ({
+  theme => ({
     card: {
       display: "flex",
       flexDirection: "column",
     },
     cardContent: {
       height: "100%",
+    },
+    cardActions: {
+      display: "flex",
+      justifyContent: "flex-end",
+      padding: theme.spacing(2, 4),
+      minHeight: theme.spacing(9),
     },
   }),
   { name: "AppListCard" },
@@ -97,12 +103,6 @@ export const useIntegrationsStyles = makeStyles(
 
 export const useActionsStyles = makeStyles(
   theme => ({
-    cardActions: {
-      display: "flex",
-      justifyContent: "flex-end",
-      padding: theme.spacing(2, 4),
-      minHeight: theme.spacing(9),
-    },
     cardActionsText: {
       width: "100%",
     },

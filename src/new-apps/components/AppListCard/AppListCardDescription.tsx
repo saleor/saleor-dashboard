@@ -4,7 +4,7 @@ import React from "react";
 
 import { useDescriptionStyles } from "./styles";
 
-interface AppListCardDescriptionProps {
+export interface AppListCardDescriptionProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
 }
 

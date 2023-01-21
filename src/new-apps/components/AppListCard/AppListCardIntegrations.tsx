@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { messages } from "./messages";
 import { useIntegrationsStyles } from "./styles";
 
-interface AppListCardIntegrationsProps {
+export interface AppListCardIntegrationsProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
 }
 

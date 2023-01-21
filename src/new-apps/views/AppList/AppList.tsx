@@ -141,6 +141,12 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       retryAppInstallation: handleAppInstallRetry,
       removeAppInstallation: id => openModal("app-installation-remove", { id }),
       openAppSettings: id => navigate(AppUrls.resolveAppDetailsUrl(id)),
+      openAppInstallPage: (manifestUrl: string) => {
+        navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
+      },
+      openVercelDeploymentPage: (vercelDeploymentUrl: string) => {
+        window.open(vercelDeploymentUrl, "_blank");
+      },
     }),
     [navigate, openModal],
   );

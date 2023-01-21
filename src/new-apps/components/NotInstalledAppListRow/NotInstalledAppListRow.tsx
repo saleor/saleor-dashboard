@@ -36,7 +36,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
     <TableRowLink>
       <TableCellAvatar
         initials={appInstallation.appName?.[0]?.toUpperCase()}
-        thumbnail={logo?.source || undefined}
+        thumbnail={logo?.source}
         avatarProps={classes.logo}
         className={clsx(classes.col, classes.colLogo)}
       >

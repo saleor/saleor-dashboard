@@ -5,6 +5,8 @@ export interface AppListContextValues {
   removeAppInstallation: (installationId: string) => void;
   retryAppInstallation: (installationId: string) => void;
   openAppSettings: (appId: string) => void;
+  openAppInstallPage: (manifestUrl: string) => void;
+  openVercelDeploymentPage: (vercelDeploymentUrl: string) => void;
 }
 
 export const AppListContext = React.createContext<

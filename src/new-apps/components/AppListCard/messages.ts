@@ -6,14 +6,4 @@ export const messages = defineMessages({
     defaultMessage: "Integrations",
     description: "header",
   },
-  deployToVercel: {
-    id: "ohQrzn",
-    defaultMessage: "Deploy to Vercel",
-    description: "button",
-  },
-  releaseComingSoon: {
-    id: "oGIPb7",
-    defaultMessage: "Coming soon ({releaseDate})",
-    description: "information",
-  },
 });

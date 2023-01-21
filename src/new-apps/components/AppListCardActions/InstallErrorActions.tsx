@@ -11,19 +11,19 @@ import {
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { useActionsStyles } from "./styles";
+import { useActionsStyles } from "../AppListCard/styles";
 
-interface InstallErrorActionProps {
+export interface InstallErrorActionsProps {
   appInstallation?: AppInstallationFragment;
   retryInstall?: () => void;
   removeInstall?: () => void;
 }
 
-const InstallErrorAction = ({
+const InstallErrorActions = ({
   appInstallation,
   retryInstall,
   removeInstall,
-}: InstallErrorActionProps) => {
+}: InstallErrorActionsProps) => {
   const classes = useActionsStyles();
 
   if (!retryInstall && !removeInstall) {
@@ -64,5 +64,5 @@ const InstallErrorAction = ({
     </>
   );
 };
-InstallErrorAction.displayName = "InstallErrorAction";
-export default InstallErrorAction;
+InstallErrorActions.displayName = "InstallErrorActions";
+export default InstallErrorActions;

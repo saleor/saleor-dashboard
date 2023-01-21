@@ -27,7 +27,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
     <TableRowLink className={classes.row} href={AppUrls.resolveAppUrl(app.id)}>
       <TableCellAvatar
         initials={app.name?.[0]?.toUpperCase()}
-        thumbnail={logo?.source || undefined}
+        thumbnail={logo?.source}
         avatarProps={classes.logo}
         className={clsx(classes.col, classes.colLogo)}
       >

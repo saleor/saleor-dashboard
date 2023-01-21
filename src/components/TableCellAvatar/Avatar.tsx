@@ -8,7 +8,7 @@ export const AVATAR_MARGIN = 40;
 
 export interface AvatarProps {
   initials?: string;
-  thumbnail?: string;
+  thumbnail?: string | null;
   alignRight?: boolean;
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNode[];

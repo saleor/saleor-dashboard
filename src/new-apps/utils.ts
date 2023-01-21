@@ -1,10 +1,7 @@
 import { getAppsConfig } from "@dashboard/config";
-import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { AppInstallationFragment } from "@dashboard/graphql";
 
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
-import { appsMessages } from "./messages";
-import { AppLink } from "./types";
 
 const getInstallableMarketplaceApps = (
   marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
@@ -70,76 +67,12 @@ export const isAppInTunnel = (manifestUrl: string) =>
     ),
   );
 
-const prepareAppLinks = (
-  intl: IntlShape,
-  app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
-): AppLink[] => [
-  {
-    name: intl.formatMessage(appsMessages.repository),
-    url: app.repositoryUrl,
-  },
-  {
-    name: intl.formatMessage(appsMessages.support),
-    url: app.supportUrl,
-  },
-  {
-    name: intl.formatMessage(appsMessages.dataPrivacy),
-    url: app.privacyUrl,
-  },
-];
-
-interface GetAppDetailsOpts {
-  intl: IntlShape;
-  app: GetV2SaleorAppsResponse.SaleorApp;
-  appInstallation?: AppInstallationFragment;
-  navigateToAppInstallPage?: (url: string) => void;
-  navigateToVercelDeploymentPage?: (url?: string) => void;
-  retryAppInstallation: (installationId: string) => void;
-  removeAppInstallation: (installationId: string) => void;
-}
-
-export const getAppDetails = ({
-  intl,
-  app,
-  appInstallation,
-  navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
-  retryAppInstallation,
-  removeAppInstallation,
-}: GetAppDetailsOpts) => {
-  const isAppComingSoon =
-    !("manifestUrl" in app) &&
-    !("vercelDeploymentUrl" in app) &&
-    "releaseDate" in app;
-  const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
-  const isAppVercelDeployable =
-    "vercelDeploymentUrl" in app && !!navigateToVercelDeploymentPage;
-  const installationPending =
-    appInstallation && appInstallation.status === JobStatusEnum.PENDING;
-
-  return {
-    releaseDate:
-      !appInstallation && isAppComingSoon ? app.releaseDate : undefined,
-    installHandler:
-      !appInstallation && isAppInstallable
-        ? () => navigateToAppInstallPage(app.manifestUrl)
-        : undefined,
-    vercelDeployHandler:
-      !appInstallation && isAppVercelDeployable && !!app.vercelDeploymentUrl
-        ? () => navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
-        : undefined,
-    installationPending,
-    retryInstallHandler:
-      appInstallation && !installationPending
-        ? () => retryAppInstallation(appInstallation.id)
-        : undefined,
-    removeInstallHandler:
-      appInstallation && !installationPending
-        ? () => removeAppInstallation(appInstallation.id)
-        : undefined,
-    links: isAppComingSoon ? [] : prepareAppLinks(intl, app),
-  };
-};
+export const isAppComingSoon = (
+  app: GetV2SaleorAppsResponse.SaleorApp,
+): app is GetV2SaleorAppsResponse.ComingSoonSaleorApp =>
+  !("manifestUrl" in app) &&
+  !("vercelDeploymentUrl" in app) &&
+  "releaseDate" in app;
 
 export const getAppInProgressName = (
   id: string,

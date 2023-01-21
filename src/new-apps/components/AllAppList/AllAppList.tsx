@@ -10,15 +10,11 @@ import { useStyles } from "./styles";
 interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];
   appInstallationList?: AppInstallationFragment[];
-  navigateToAppInstallPage?: (manifestUrl: string) => void;
-  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
 }
 
 const AllAppList: React.FC<AllAppListProps> = ({
   appList,
   appInstallationList,
-  navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
 }) => {
   const classes = useStyles();
 
@@ -36,8 +32,6 @@ const AllAppList: React.FC<AllAppListProps> = ({
             app,
             appInstallationList,
           )}
-          navigateToAppInstallPage={navigateToAppInstallPage}
-          navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
         />
       ))}
     </div>

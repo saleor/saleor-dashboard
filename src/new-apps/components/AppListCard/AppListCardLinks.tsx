@@ -1,16 +1,19 @@
 import Link from "@dashboard/components/Link";
-import { AppLink } from "@dashboard/new-apps/types";
+import useAppLinks from "@dashboard/new-apps/hooks/useAppLinks";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { Typography } from "@material-ui/core";
 import React from "react";
 
 import { useLinksStyles } from "./styles";
 
-interface AppListCardLinksProps {
-  links: AppLink[];
+export interface AppListCardLinksProps {
+  app: GetV2SaleorAppsResponse.SaleorApp;
 }
 
-const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
+const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ app }) => {
   const classes = useLinksStyles();
+
+  const links = useAppLinks(app);
 
   if (!links.length) {
     return null;

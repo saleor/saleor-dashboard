@@ -7,7 +7,7 @@ import { useAvatarImageStyles } from "./styles";
 
 interface AvatarImageProps {
   initials?: string;
-  thumbnail?: string;
+  thumbnail?: string | null;
   avatarProps?: string;
 }
 
