@@ -39,6 +39,7 @@ describe("As an admin I should be able to create variant", () => {
 
     cy.clearSessionData().loginUserViaRequest();
 
+    updateTaxConfigurationForChannel({ pricesEnteredWithTax: true });
     productUtils
       .createShippingProductTypeAttributeAndCategory(name, attributeValues)
       .then(resp => {
@@ -56,15 +57,15 @@ describe("As an admin I should be able to create variant", () => {
           channelSlug: newChannel.slug,
           pricesEnteredWithTax: true,
         });
-        cy.checkIfDataAreNotNull({
-          defaultChannel,
-          warehouse,
-          attribute,
-          productType,
-          category,
-          newChannel,
-        });
       });
+    cy.checkIfDataAreNotNull({
+      defaultChannel,
+      warehouse,
+      attribute,
+      productType,
+      category,
+      newChannel,
+    });
   });
 
   beforeEach(() => {
