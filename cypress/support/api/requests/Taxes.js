@@ -22,12 +22,13 @@ export function updateTaxes({
   id,
   chargeTaxes = true,
   taxCalculationStrategy = "FLAT_RATES",
+  pricesEnteredWithTax = "false",
 }) {
   const mutation = `mutation{
       taxConfigurationUpdate(id:"${id}", input:{
         chargeTaxes:${chargeTaxes}
         displayGrossPrices:true
-        pricesEnteredWithTax:false
+        pricesEnteredWithTax:${pricesEnteredWithTax}
         removeCountriesConfiguration: []
         taxCalculationStrategy:${taxCalculationStrategy}
         updateCountriesConfiguration: []

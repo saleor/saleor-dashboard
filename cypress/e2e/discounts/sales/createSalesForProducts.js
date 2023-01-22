@@ -15,6 +15,10 @@ import {
 } from "../../../support/api/utils/shippingUtils";
 import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
+  getDefaultTaxClass,
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
+import {
   assignProducts,
   createSale,
   createSaleWithNewProduct,
@@ -31,6 +35,7 @@ describe("As an admin I want to create sale for products", () => {
   let category;
   let defaultChannel;
   let warehouse;
+  let taxClass;
 
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -57,6 +62,14 @@ describe("As an admin I want to create sale for products", () => {
       )
       .then(channel => {
         defaultChannel = channel;
+        updateTaxConfigurationForChannel({
+          channelSlug: defaultChannel.slug,
+          pricesEnteredWithTax: true,
+        });
+        getDefaultTaxClass();
+      })
+      .then(taxResp => {
+        taxClass = taxResp;
         cy.fixture("addresses");
       })
       .then(addresses => {
@@ -65,6 +78,7 @@ describe("As an admin I want to create sale for products", () => {
           name,
           address: addresses.plAddress,
           price: 100,
+          taxClassId: taxClass.id,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -100,6 +114,7 @@ describe("As an admin I want to create sale for products", () => {
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
         discountValue,
+        taxClassId: taxClass.id,
       }).should("eq", expectedPrice);
     },
   );
@@ -146,6 +161,7 @@ describe("As an admin I want to create sale for products", () => {
           attributeId: attribute.id,
           categoryId: category.id,
           price: productPrice,
+          taxClassId: taxClass.id,
         })
         .then(({ product: productResp }) => {
           product = productResp;

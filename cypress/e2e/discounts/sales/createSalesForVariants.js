@@ -16,6 +16,10 @@ import {
   createShipping,
   deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
+import {
+  getDefaultTaxClass,
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
 import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   createSaleWithNewVariant,
@@ -31,6 +35,7 @@ describe("Sales discounts for variant", () => {
   let warehouse;
   let productData;
   let address;
+  let taxClass;
 
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -40,9 +45,19 @@ describe("Sales discounts for variant", () => {
     deleteShippingStartsWith(startsWith);
     deleteSalesStartsWith(startsWith);
     deleteWarehouseStartsWith(startsWith);
-    channelsUtils.getDefaultChannel().then(channel => {
-      defaultChannel = channel;
-    });
+    channelsUtils
+      .getDefaultChannel()
+      .then(channel => {
+        defaultChannel = channel;
+        updateTaxConfigurationForChannel({
+          channelSlug: defaultChannel.slug,
+          pricesEnteredWithTax: true,
+        });
+        getDefaultTaxClass();
+      })
+      .then(taxResp => {
+        taxClass = taxResp;
+      });
     cy.fixture("addresses")
       .then(addresses => {
         address = addresses.usAddress;
@@ -51,6 +66,7 @@ describe("Sales discounts for variant", () => {
           channelId: defaultChannel.id,
           address,
           name,
+          taxClassId: taxClass.id,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -70,6 +86,7 @@ describe("Sales discounts for variant", () => {
           channelId: defaultChannel.id,
           warehouseId: warehouse.id,
           price: productPrice,
+          taxClassId: taxClass.id,
         };
         cy.checkIfDataAreNotNull({
           productData,
@@ -158,6 +175,7 @@ describe("Sales discounts for variant", () => {
         price: productPrice,
         discountOption: discountOptions.PERCENTAGE,
         discountValue,
+        taxClassId: taxClass.id,
       })
         .its("pricing.price.gross.amount")
         .should("eq", expectedPrice);

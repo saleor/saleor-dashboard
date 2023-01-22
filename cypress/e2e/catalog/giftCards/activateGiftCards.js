@@ -20,6 +20,7 @@ import {
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   changeGiftCardActiveStatus,
   enterAndSelectGiftCards,
@@ -63,6 +64,10 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           shippingMethodName: resp.shippingMethod.name,
           variantsList: resp.variantsList,
         };
+        updateTaxConfigurationForChannel({
+          channelSlug: defaultChannel.slug,
+          pricesEnteredWithTax: true,
+        });
         cy.checkIfDataAreNotNull(dataForCheckout);
       });
   });
