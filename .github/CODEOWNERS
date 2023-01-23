@@ -1,2 +1,1 @@
-# Restrict all workflows except deployments to SRE
 .github/workflows/* @saleor/sre
