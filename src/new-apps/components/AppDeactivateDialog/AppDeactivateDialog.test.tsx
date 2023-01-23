@@ -1,123 +1,70 @@
-import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { buttonMessages } from "@dashboard/intl";
+import { render } from "@testing-library/react";
 import React from "react";
 
 import AppDeactivateDialog from "./AppDeactivateDialog";
+import { AppDeactivateDialogContentProps } from "./AppDeactivateDialogContent";
 import msgs from "./messages";
 
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+}));
+
+const mockDialogComponent = jest.fn();
+
+jest.mock("@dashboard/components/ActionDialog", () => props => {
+  mockDialogComponent(props);
+  return <>{props.children}</>;
+});
+
+const mockContentComponent = jest.fn();
+
+jest.mock("./AppDeactivateDialogContent", () => props => {
+  mockContentComponent(props);
+  return <></>;
+});
+
+beforeEach(() => {
+  mockDialogComponent.mockClear();
+  mockContentComponent.mockClear();
+});
+
 describe("Apps AppDeactivateDialog", () => {
-  it("displays action text with app name when third-party app name passed", () => {
+  it("displays dialog with app name when third-party app name passed", () => {
     // Arrange
     const name = "Test App";
+    const onClose = jest.fn();
+    const onConfirm = jest.fn();
+
+    // Act
     render(
-      <Wrapper>
-        <AppDeactivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
+      <AppDeactivateDialog
+        confirmButtonState="default"
+        open={true}
+        name={name}
+        onClose={onClose}
+        onConfirm={onConfirm}
+      />,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
     // Assert
-    const expectedActionText = msgs.deactivateNamedApp.defaultMessage.replace(
-      "{name}",
+    expect(mockDialogComponent).toHaveBeenCalledWith({
+      children: expect.anything(),
+      confirmButtonLabel: buttonMessages.deactivate.defaultMessage,
+      confirmButtonState: "default",
+      title: msgs.deactivateAppTitle.defaultMessage,
+      open: true,
+      variant: "delete",
+      onClose,
+      onConfirm,
+    } as ActionDialogProps);
+    expect(mockContentComponent).toHaveBeenCalledWith({
       name,
-    );
-    const expectedBillingWarning = msgs.deactivateAppBillingInfo.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedActionText);
-    expect(dialogContent).toHaveTextContent(expectedBillingWarning);
-  });
-
-  it("displays action text without app name when third-party app name is empty", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeactivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={""}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deactivateApp.defaultMessage;
-    const expectedBillingWarning = msgs.deactivateAppBillingInfo.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedBillingWarning);
-  });
-
-  it("displays action text without app name when third-party app name is null", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeactivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={null}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deactivateApp.defaultMessage;
-    const expectedBillingWarning = msgs.deactivateAppBillingInfo.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedBillingWarning);
-  });
-
-  it("displays billing warning when app is marked explicitly as third-party", () => {
-    // Arrange
-    const name = "Test App";
-    render(
-      <Wrapper>
-        <AppDeactivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          thirdParty={true}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedBillingWarning = msgs.deactivateAppBillingInfo.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedBillingWarning);
-  });
-
-  it("doesn't display billing warning when app is marked explicitly as not third-party", () => {
-    // Arrange
-    const name = "Test App";
-    render(
-      <Wrapper>
-        <AppDeactivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          thirdParty={false}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const notExpectedBillingWarning =
-      msgs.deactivateAppBillingInfo.defaultMessage;
-    expect(dialogContent).not.toHaveTextContent(notExpectedBillingWarning);
+      thirdParty: true,
+    } as AppDeactivateDialogContentProps);
   });
 });

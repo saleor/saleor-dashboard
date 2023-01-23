@@ -1,72 +1,69 @@
-import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { buttonMessages } from "@dashboard/intl";
+import { render } from "@testing-library/react";
 import React from "react";
 
 import AppActivateDialog from "./AppActivateDialog";
+import { AppActivateDialogContentProps } from "./AppActivateDialogContent";
 import msgs from "./messages";
 
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+}));
+
+const mockDialogComponent = jest.fn();
+
+jest.mock("@dashboard/components/ActionDialog", () => props => {
+  mockDialogComponent(props);
+  return <>{props.children}</>;
+});
+
+const mockContentComponent = jest.fn();
+
+jest.mock("./AppActivateDialogContent", () => props => {
+  mockContentComponent(props);
+  return <></>;
+});
+
+beforeEach(() => {
+  mockDialogComponent.mockClear();
+  mockContentComponent.mockClear();
+});
+
 describe("Apps AppActivateDialog", () => {
-  it("displays action text with app name when app name passed", () => {
+  it("displays dialog with app name when app name passed", () => {
     // Arrange
     const name = "Test App";
+    const onClose = jest.fn();
+    const onConfirm = jest.fn();
+
+    // Act
     render(
-      <Wrapper>
-        <AppActivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
+      <AppActivateDialog
+        confirmButtonState="default"
+        open={true}
+        name={name}
+        onClose={onClose}
+        onConfirm={onConfirm}
+      />,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
     // Assert
-    const expectedText = msgs.activateNamedApp.defaultMessage.replace(
-      "{name}",
+    expect(mockDialogComponent).toHaveBeenCalledWith({
+      children: expect.anything(),
+      confirmButtonLabel: buttonMessages.activate.defaultMessage,
+      confirmButtonState: "default",
+      title: msgs.activateAppTitle.defaultMessage,
+      open: true,
+      variant: "default",
+      onClose,
+      onConfirm,
+    } as ActionDialogProps);
+    expect(mockContentComponent).toHaveBeenCalledWith({
       name,
-    );
-    expect(dialogContent).toHaveTextContent(expectedText);
-  });
-
-  it("displays action text without app name when app name is empty", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppActivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={""}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.activateApp.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-  });
-
-  it("displays action text without app name when app name is null", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppActivateDialog
-          confirmButtonState="default"
-          open={true}
-          name={null}
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.activateApp.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
+    } as AppActivateDialogContentProps);
   });
 });

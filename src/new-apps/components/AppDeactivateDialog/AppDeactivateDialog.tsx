@@ -1,11 +1,11 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { buttonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import { DialogContentText } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import AppDeactivateDialogContent from "./AppDeactivateDialogContent";
 import msgs from "./messages";
 
 export interface AppDeactivateDialogProps {
@@ -27,17 +27,6 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const isNameMissing = name === null || name === "";
-
-  const getMainText = () => {
-    if (isNameMissing) {
-      return intl.formatMessage(msgs.deactivateApp);
-    }
-    return intl.formatMessage(msgs.deactivateNamedApp, {
-      name: <strong>{getStringOrPlaceholder(name)}</strong>,
-    });
-  };
-
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage(buttonMessages.deactivate)}
@@ -49,13 +38,7 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
       variant="delete"
     >
       <DialogContentText data-test-id="dialog-content">
-        {getMainText()}
-        {thirdParty && (
-          <>
-            {" "}
-            <FormattedMessage {...msgs.deactivateAppBillingInfo} />
-          </>
-        )}
+        <AppDeactivateDialogContent name={name} thirdParty={thirdParty} />
       </DialogContentText>
     </ActionDialog>
   );

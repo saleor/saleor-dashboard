@@ -1,10 +1,10 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import { DialogContentText } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import AppDeleteDialogContent from "./AppDeleteDialogContent";
 import msgs from "./messages";
 
 export interface AppDeleteDialogProps {
@@ -26,26 +26,6 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const isNameMissing = name === null || name === "";
-  const isExternal = type === "EXTERNAL";
-
-  const getMainText = () => {
-    if (isNameMissing && isExternal) {
-      return intl.formatMessage(msgs.deleteApp);
-    }
-    if (isNameMissing) {
-      return intl.formatMessage(msgs.deleteLocalApp);
-    }
-    if (isExternal) {
-      return intl.formatMessage(msgs.deleteNamedApp, {
-        name: <strong>{getStringOrPlaceholder(name)}</strong>,
-      });
-    }
-    return intl.formatMessage(msgs.deleteLocalNamedApp, {
-      name: <strong>{getStringOrPlaceholder(name)}</strong>,
-    });
-  };
-
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
@@ -56,7 +36,7 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
       variant="delete"
     >
       <DialogContentText data-test-id="dialog-content">
-        {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
+        <AppDeleteDialogContent name={name} type={type} />
       </DialogContentText>
     </ActionDialog>
   );

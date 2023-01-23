@@ -1,154 +1,69 @@
-import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { render } from "@testing-library/react";
 import React from "react";
 
 import AppDeleteDialog from "./AppDeleteDialog";
+import { AppDeleteDialogContentProps } from "./AppDeleteDialogContent";
 import msgs from "./messages";
 
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: jest.fn(x => x),
+}));
+
+const mockDialogComponent = jest.fn();
+
+jest.mock("@dashboard/components/ActionDialog", () => props => {
+  mockDialogComponent(props);
+  return <>{props.children}</>;
+});
+
+const mockContentComponent = jest.fn();
+
+jest.mock("./AppDeleteDialogContent", () => props => {
+  mockContentComponent(props);
+  return <></>;
+});
+
+beforeEach(() => {
+  mockDialogComponent.mockClear();
+  mockContentComponent.mockClear();
+});
+
 describe("Apps AppDeleteDialog", () => {
-  it("displays external app action text with app name when external app with app name passed", () => {
+  it("displays app dialog with app name when external app with app name passed", () => {
     // Arrange
     const name = "Test App";
+    const onClose = jest.fn();
+    const onConfirm = jest.fn();
+
+    // Act
     render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
+      <AppDeleteDialog
+        confirmButtonState="default"
+        open={true}
+        name={name}
+        type="EXTERNAL"
+        onClose={onClose}
+        onConfirm={onConfirm}
+      />,
     );
-    const dialogContent = screen.getByTestId("dialog-content");
 
     // Assert
-    const expectedText = msgs.deleteNamedApp.defaultMessage.replace(
-      "{name}",
+    expect(mockDialogComponent).toHaveBeenCalledWith({
+      children: expect.anything(),
+      confirmButtonState: "default",
+      title: msgs.deleteAppTitle.defaultMessage,
+      open: true,
+      variant: "delete",
+      onClose,
+      onConfirm,
+    } as ActionDialogProps);
+    expect(mockContentComponent).toHaveBeenCalledWith({
       name,
-    );
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
-  });
-
-  it("displays custom app action text with app name when custom app with app name passed", () => {
-    // Arrange
-    const name = "Test App";
-    render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={name}
-          type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deleteLocalNamedApp.defaultMessage.replace(
-      "{name}",
-      name,
-    );
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
-  });
-
-  it("displays external action text without app name when external app name is empty", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={""}
-          type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deleteApp.defaultMessage;
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
-  });
-
-  it("displays custom action text without app name when custom app name is empty", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={""}
-          type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deleteLocalApp.defaultMessage;
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
-  });
-
-  it("displays external action text without app name when external app name is null", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={null}
-          type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deleteApp.defaultMessage;
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
-  });
-
-  it("displays custom action text without app name when custom app name is null", () => {
-    // Arrange
-    render(
-      <Wrapper>
-        <AppDeleteDialog
-          confirmButtonState="default"
-          open={true}
-          name={null}
-          type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
-        />
-      </Wrapper>,
-    );
-    const dialogContent = screen.getByTestId("dialog-content");
-
-    // Assert
-    const expectedText = msgs.deleteLocalApp.defaultMessage;
-    const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
-    expect(dialogContent).toHaveTextContent(expectedText);
-    expect(dialogContent).toHaveTextContent(expectedQuestion);
+      type: "EXTERNAL",
+    } as AppDeleteDialogContentProps);
   });
 });
