@@ -27,7 +27,7 @@ interface WebhookSubscriptionQueryProps {
 }
 
 const fetcher = createGraphiQLFetcher({
-  url: process.env.API_URI
+  url: process.env.API_URI,
 });
 
 const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
@@ -55,6 +55,7 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
           defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
+          storage={null}
           onEditQuery={setQuery}
           plugins={[explorerPlugin]}
           isHeadersEditorEnabled={false}

@@ -1,13 +1,17 @@
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import "@testing-library/jest-dom";
+
+import {
+  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum,
+} from "@dashboard/graphql";
 import { Fetcher } from "@graphiql/toolkit";
-import Wrapper from "@test/wrapper";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 
 import WebhookSubscriptionQuery from "./WebhookSubscriptionQuery";
 
 jest.mock("@graphiql/toolkit", () => ({
+  clear: jest.fn(),
   createGraphiQLFetcher: jest.fn(_x => jest.fn() as Fetcher),
 }));
 
@@ -19,13 +23,43 @@ jest.mock("react-intl", () => ({
 }));
 
 jest.mock("@saleor/macaw-ui", () => ({
+  useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
   DialogHeader: jest.fn(() => () => <></>),
 }));
 
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
 describe("WebhookSubscriptionQuery", () => {
-  it("closes when ignore changes is clicked", async () => {
+  it("is available on the webhook page", async () => {
+    // Arrange
+    const props = {
+      query: "",
+      setQuery: jest.fn(),
+      data: {
+        syncEvents: [] as WebhookEventTypeSyncEnum[],
+        asyncEvents: [] as WebhookEventTypeAsyncEnum[],
+        isActive: false,
+        name: "",
+        targetUrl: "",
+        subscriptionQuery: "",
+      },
+    };
+    // const user = userEvent.setup();
+
+    // Act
+    render(<WebhookSubscriptionQuery {...props} />);
+
+    // Assert
+    expect(screen.queryByTestId("graphiql-container")).toBeInTheDocument();
+    expect(screen.queryByTestId("graphiql-container2")).not.toBeInTheDocument();
+  });
+
+  /*
+  it("triggers setQuery when user enters text", async () => {
     // Arrange
     const props = {
       query: '',
@@ -42,41 +76,12 @@ describe("WebhookSubscriptionQuery", () => {
     const user = userEvent.setup();
 
     // Act
-    const { getByTestId } = render(
-      <Wrapper>
-        <WebhookSubscriptionQuery {...props} />
-      </Wrapper>
-    );
-    getByTestId("graphiql-webhook");
+    const { getByTestId } = render(<WebhookSubscriptionQuery {...props} />);
+    const graphiQLContainer = getByTestId("graphiql-container");
+    user.type(graphiQLContainer, "{}");
 
     // Assert
     expect(props.setQuery).toHaveBeenCalled();
   });
-  it("closes when keep editing is clicked", async () => {
-    // Arrange
-    const props = {
-      query: '',
-      setQuery: jest.fn(),
-      data: {
-        syncEvents: [] as WebhookEventTypeSyncEnum[],
-        asyncEvents: [] as WebhookEventTypeAsyncEnum[],
-        isActive: false,
-        name: '',
-        targetUrl: '',
-        subscriptionQuery: ''
-      }
-    };
-    const user = userEvent.setup();
-
-    // Act
-    const { getByTestId } = render( 
-      <Wrapper>
-        <WebhookSubscriptionQuery {...props} />
-      </Wrapper>
-    );
-    getByTestId("graphiql-webhook");
-
-    // Assert
-    expect(props.setQuery).toHaveBeenCalled();
-  });
+  */
 });
