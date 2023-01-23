@@ -1,6 +1,6 @@
 import ConfirmButton, {
   ConfirmButtonProps,
-} from "@saleor/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton";
 import React from "react";
 
 import { useManualTransactionContext } from "../context";

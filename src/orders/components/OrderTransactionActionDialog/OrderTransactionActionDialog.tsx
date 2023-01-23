@@ -1,3 +1,6 @@
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { TransactionActionEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
   DialogActions,
@@ -5,9 +8,6 @@ import {
   DialogProps,
   DialogTitle,
 } from "@material-ui/core";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import { TransactionActionEnum } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

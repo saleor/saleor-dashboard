@@ -1,4 +1,4 @@
-import { TransactionEventStatus } from "@saleor/graphql";
+import { TransactionEventStatus } from "@dashboard/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

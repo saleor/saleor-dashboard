@@ -3,8 +3,8 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@saleor/graphql";
-import { OrderTransactionProps } from "@saleor/orders/components/OrderTransaction/OrderTransaction";
+} from "@dashboard/graphql";
+import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";

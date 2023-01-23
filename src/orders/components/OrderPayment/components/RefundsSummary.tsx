@@ -1,5 +1,5 @@
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";
-import { OrderDetailsFragment } from "@saleor/graphql";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

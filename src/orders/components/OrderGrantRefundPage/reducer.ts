@@ -1,5 +1,5 @@
-import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
-import { exhaustiveCheck } from "@saleor/utils/ts";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { exhaustiveCheck } from "@dashboard/utils/ts";
 
 export interface ReducerOrderLine {
   selectedQuantity: number;

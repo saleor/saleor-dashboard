@@ -1,16 +1,16 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import EventTime from "@dashboard/components/EventTime";
+import Money, { formatMoney } from "@dashboard/components/Money";
+import OverflowTooltip from "@dashboard/components/OverflowTooltip";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { OrderDetailsFragment } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
+import { buttonMessages } from "@dashboard/intl";
+import { getUserInitials, renderCollection } from "@dashboard/misc";
+import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import EventTime from "@saleor/components/EventTime";
-import Money, { formatMoney } from "@saleor/components/Money";
-import OverflowTooltip from "@saleor/components/OverflowTooltip";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { OrderDetailsFragment } from "@saleor/graphql";
-import useLocale from "@saleor/hooks/useLocale";
-import { buttonMessages } from "@saleor/intl";
 import { Avatar, Pill } from "@saleor/macaw-ui";
-import { getUserInitials, renderCollection } from "@saleor/misc";
-import { orderGrantRefundEditUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

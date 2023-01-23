@@ -7,7 +7,7 @@ import {
   TransactionEventFragment,
   TransactionEventStatus,
   TransactionKind,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 type Money = OrderPaymentFragment["total"];
 

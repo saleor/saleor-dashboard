@@ -1,14 +1,14 @@
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { extractMutationErrors } from "@saleor/misc";
-import OrderGrantRefundPage from "@saleor/orders/components/OrderGrantRefundPage";
-import { OrderGrantRefundFormData } from "@saleor/orders/components/OrderGrantRefundPage/form";
-import { orderUrl } from "@saleor/orders/urls";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { extractMutationErrors } from "@dashboard/misc";
+import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage";
+import { OrderGrantRefundFormData } from "@dashboard/orders/components/OrderGrantRefundPage/form";
+import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 

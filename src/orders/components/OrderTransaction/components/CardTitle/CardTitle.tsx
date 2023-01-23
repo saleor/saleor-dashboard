@@ -1,9 +1,9 @@
-import { IconButton } from "@material-ui/core";
-import DefaultCardTitle from "@saleor/components/CardTitle";
+import DefaultCardTitle from "@dashboard/components/CardTitle";
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { IconButton } from "@material-ui/core";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

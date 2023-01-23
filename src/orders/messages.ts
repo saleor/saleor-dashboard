@@ -1,4 +1,4 @@
-import { TransactionEventActionTypeEnum } from "@saleor/graphql";
+import { TransactionEventActionTypeEnum } from "@dashboard/graphql";
 import { defineMessages } from "react-intl";
 
 export const orderMessages = defineMessages({

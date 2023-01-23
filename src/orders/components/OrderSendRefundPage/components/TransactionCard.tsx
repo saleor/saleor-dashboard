@@ -1,14 +1,14 @@
-import { Typography } from "@material-ui/core";
-import { useId } from "@reach/auto-id";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import PriceField from "@saleor/components/PriceField";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import PriceField from "@dashboard/components/PriceField";
 import {
   OrderDetailsDocument,
   OrderDetailsFragment,
   TransactionActionEnum,
   TransactionItemFragment,
   useOrderSendRefundMutation,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Typography } from "@material-ui/core";
+import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

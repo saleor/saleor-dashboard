@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { commonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

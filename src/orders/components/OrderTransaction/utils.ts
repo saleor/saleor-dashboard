@@ -1,4 +1,4 @@
-import { TransactionActionEnum } from "@saleor/graphql";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { MessageDescriptor } from "react-intl";
 
 import { transactionActionMessages } from "./messages";

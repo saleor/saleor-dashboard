@@ -1,10 +1,10 @@
-import Skeleton from "@saleor/components/Skeleton";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
   TransactionEventStatus,
   TransactionItemFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 

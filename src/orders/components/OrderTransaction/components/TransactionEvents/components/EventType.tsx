@@ -1,5 +1,5 @@
-import { TransactionEventFragment } from "@saleor/graphql";
-import { transactionEventTypeMap } from "@saleor/orders/messages";
+import { TransactionEventFragment } from "@dashboard/graphql";
+import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

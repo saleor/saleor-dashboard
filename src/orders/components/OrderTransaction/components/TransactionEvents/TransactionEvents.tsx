@@ -1,9 +1,9 @@
+import EventTime from "@dashboard/components/EventTime";
+import Money from "@dashboard/components/Money";
+import { TransactionEventFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
 import { TableCell, TableRow } from "@material-ui/core";
-import EventTime from "@saleor/components/EventTime";
-import Money from "@saleor/components/Money";
-import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
 import clsx from "clsx";
 import React, { useState } from "react";
 

@@ -1,18 +1,18 @@
-import { Card, CardContent, Container } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import { Grid } from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
-import PageHeader from "@saleor/components/PageHeader";
-import Skeleton from "@saleor/components/Skeleton";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Grid } from "@dashboard/components/Grid";
+import Hr from "@dashboard/components/Hr";
+import PageHeader from "@dashboard/components/PageHeader";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { orderMessages } from "@dashboard/orders/messages";
+import { orderUrl } from "@dashboard/orders/urls";
+import { Card, CardContent, Container } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { orderMessages } from "@saleor/orders/messages";
-import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

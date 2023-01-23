@@ -1,6 +1,6 @@
-import Money from "@saleor/components/Money";
-import Skeleton from "@saleor/components/Skeleton";
-import { IMoney } from "@saleor/utils/intl";
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import { IMoney } from "@dashboard/utils/intl";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";

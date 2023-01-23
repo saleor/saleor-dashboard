@@ -1,6 +1,6 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { FulfillmentStatus } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
+import { FulfillmentStatus } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

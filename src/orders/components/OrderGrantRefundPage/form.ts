@@ -1,6 +1,6 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import useForm from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import useForm from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderGrantRefundFormData {

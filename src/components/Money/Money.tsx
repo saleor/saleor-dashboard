@@ -1,6 +1,6 @@
 import useLocale from "@dashboard/hooks/useLocale";
+import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import { formatMoneyAmount } from ".";

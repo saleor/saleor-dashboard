@@ -1,5 +1,5 @@
+import { IMoney } from "@dashboard/utils/intl";
 import { Typography } from "@material-ui/core";
-import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import Money from "../Money";

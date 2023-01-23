@@ -1,8 +1,8 @@
-import { Card } from "@material-ui/core";
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { Card } from "@material-ui/core";
 import React from "react";
 
 import { CardTitle } from "./components";
