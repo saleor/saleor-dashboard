@@ -108,6 +108,7 @@ export const AppFrame: React.FC<Props> = ({
       src={resolveAppIframeUrl(appId, src, {
         ...params,
         featureFlags: prepareFeatureFlagsList(flags),
+        theme: themeType,
       })}
       onError={onError}
       onLoad={handleLoad}
