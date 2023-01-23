@@ -1,16 +1,16 @@
-import { Typography } from "@material-ui/core";
-import Form from "@saleor/components/Form";
-import Hr from "@saleor/components/Hr";
-import Skeleton from "@saleor/components/Skeleton";
+import Form from "@dashboard/components/Form";
+import Hr from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
 import Timeline, {
   TimelineAddNote,
   TimelineNote,
-} from "@saleor/components/Timeline";
+} from "@dashboard/components/Timeline";
 import {
   GiftCardEventsEnum,
   useGiftCardAddNoteMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

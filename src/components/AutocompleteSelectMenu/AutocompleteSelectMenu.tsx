@@ -1,3 +1,4 @@
+import { buttonMessages } from "@dashboard/intl";
 import {
   CircularProgress,
   MenuItem,
@@ -5,7 +6,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import React from "react";

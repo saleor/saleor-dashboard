@@ -3,12 +3,12 @@ import {
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   FakeTransaction,
   TransactionFakeEvent,
   TransactionMappingResult,
-} from "@saleor/orders/types";
+} from "@dashboard/orders/types";
 import { MessageDescriptor } from "react-intl";
 
 import { transactionActionMessages } from "./messages";

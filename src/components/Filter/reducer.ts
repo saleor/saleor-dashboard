@@ -1,4 +1,4 @@
-import { update } from "@saleor/utils/lists";
+import { update } from "@dashboard/utils/lists";
 
 import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
 

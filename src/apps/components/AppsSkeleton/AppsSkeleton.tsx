@@ -1,6 +1,6 @@
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell } from "@material-ui/core";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
 import React from "react";
 
 import { useStyles } from "../../styles";

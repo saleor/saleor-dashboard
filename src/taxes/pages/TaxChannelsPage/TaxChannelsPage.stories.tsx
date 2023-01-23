@@ -1,7 +1,7 @@
-import { countries } from "@saleor/fixtures";
-import { CountryFragment } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { taxConfigurations } from "@saleor/taxes/fixtures";
+import { countries } from "@dashboard/fixtures";
+import { CountryFragment } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxConfigurations } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

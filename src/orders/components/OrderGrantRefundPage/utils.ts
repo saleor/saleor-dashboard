@@ -1,4 +1,4 @@
-import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import currency from "currency.js";
 
 import { GrantRefundState } from "./reducer";

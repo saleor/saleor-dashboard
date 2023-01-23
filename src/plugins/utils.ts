@@ -1,7 +1,7 @@
 import {
   ConfigurationItemFragment,
   ConfigurationTypeFieldEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export function isSecretField(
   config: ConfigurationItemFragment[],

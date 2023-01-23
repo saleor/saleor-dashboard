@@ -6,7 +6,6 @@ import {
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
-import { Locale } from "../Locale";
 import { usePriceField } from "../PriceField/usePriceField";
 
 interface MoneyCellProps {
@@ -46,33 +45,13 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 };
 
-const getFractionDigits = (locale: Locale, currency: string) => {
-  try {
-    const numberFormat = new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-    });
-
-    return numberFormat.resolvedOptions().maximumFractionDigits;
-  } catch (e) {
-    return 2;
-  }
-};
-
-export const moneyCellRenderer = (
-  locale: Locale,
-): CustomCellRenderer<MoneyCell> => ({
+export const moneyCellRenderer = (): CustomCellRenderer<MoneyCell> => ({
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { currency, value } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const currencyFractionDigits = getFractionDigits(locale, currency);
-    const formatted =
-      value?.toLocaleString(locale, {
-        maximumFractionDigits: currencyFractionDigits,
-        minimumFractionDigits: currencyFractionDigits,
-      }) ?? "-";
+    const formatted = value?.toString() ?? "-";
 
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";

@@ -1,4 +1,4 @@
-import Decorator from "@saleor/storybook/Decorator";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -11,6 +11,7 @@ const props: AppDetailsPageProps = {
   navigateToApp: () => undefined,
   onAppActivateOpen: () => undefined,
   onAppDeactivateOpen: () => undefined,
+  onAppDeleteOpen: () => undefined,
 };
 
 storiesOf("Apps / App details", module)

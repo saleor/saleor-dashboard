@@ -1,4 +1,4 @@
-import { channelsList } from "@saleor/channels/fixtures";
+import { channelsList } from "@dashboard/channels/fixtures";
 import {
   AttributeInputTypeEnum,
   ProductFragment,
@@ -7,9 +7,9 @@ import {
   ProductVariantCreateDataQuery,
   ProductVariantFragment,
   WeightUnitsEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import { ProductType } from "@saleor/sdk/dist/apollo/types";
-import { RelayToFlat } from "@saleor/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

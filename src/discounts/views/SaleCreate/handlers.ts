@@ -1,6 +1,6 @@
 import { FetchResult } from "@apollo/client";
-import { FormData } from "@saleor/discounts/components/SaleCreatePage";
-import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
+import { FormData } from "@dashboard/discounts/components/SaleCreatePage";
+import { getSaleChannelsVariables } from "@dashboard/discounts/handlers";
 import {
   DiscountValueTypeEnum,
   SaleChannelListingUpdateMutation,
@@ -8,13 +8,13 @@ import {
   SaleCreateMutation,
   SaleCreateMutationVariables,
   SaleType,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   decimal,
   extractMutationErrors,
   getMutationErrors,
   joinDateTime,
-} from "@saleor/misc";
+} from "@dashboard/misc";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED

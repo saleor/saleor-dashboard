@@ -1,33 +1,33 @@
-import { DialogContentText } from "@material-ui/core";
-import { useUser } from "@saleor/auth";
-import ActionDialog from "@saleor/components/ActionDialog";
+import { useUser } from "@dashboard/auth";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   useBulkDeleteShippingZoneMutation,
   useDeleteShippingZoneMutation,
   useShippingZonesQuery,
   useUpdateDefaultWeightUnitMutation,
-} from "@saleor/graphql";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import useListSettings from "@saleor/hooks/useListSettings";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
-} from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+} from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   getById,
   getStringOrPlaceholder,
   maybe,
-} from "@saleor/misc";
-import { ListViews } from "@saleor/types";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/misc";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

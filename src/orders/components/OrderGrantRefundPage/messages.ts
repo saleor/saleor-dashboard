@@ -1,4 +1,4 @@
-import { FulfillmentStatus } from "@saleor/graphql";
+import { FulfillmentStatus } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const grantRefundPageMessages = defineMessages({

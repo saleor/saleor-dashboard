@@ -1,4 +1,4 @@
-import PriceField, { PriceFieldProps } from "@saleor/components/PriceField";
+import PriceField, { PriceFieldProps } from "@dashboard/components/PriceField";
 import React from "react";
 
 import { useManualTransactionContext } from "../context";

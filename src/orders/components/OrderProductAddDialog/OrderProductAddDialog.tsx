@@ -1,3 +1,21 @@
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  OrderErrorFragment,
+  SearchOrderVariantQuery,
+} from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { buttonMessages } from "@dashboard/intl";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import {
   CircularProgress,
   Dialog,
@@ -10,22 +28,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import FormSpacer from "@saleor/components/FormSpacer";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderErrorFragment, SearchOrderVariantQuery } from "@saleor/graphql";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
-import { FetchMoreProps, RelayToFlat } from "@saleor/types";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";

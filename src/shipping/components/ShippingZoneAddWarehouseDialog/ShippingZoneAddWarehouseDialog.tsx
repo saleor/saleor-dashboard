@@ -1,3 +1,23 @@
+import BackButton from "@dashboard/components/BackButton";
+import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import { AddressTypeInput } from "@dashboard/customers/types";
+import {
+  CountryWithCodeFragment,
+  WarehouseErrorFragment,
+} from "@dashboard/graphql";
+import useAddressValidation from "@dashboard/hooks/useAddressValidation";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import { DialogProps } from "@dashboard/types";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import {
   Dialog,
   DialogActions,
@@ -5,27 +25,7 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import { AddressTypeInput } from "@saleor/customers/types";
-import {
-  CountryWithCodeFragment,
-  WarehouseErrorFragment,
-} from "@saleor/graphql";
-import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { DialogProps } from "@saleor/types";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

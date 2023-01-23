@@ -3,7 +3,7 @@ import {
   MARKETPLACE_SALEOR_APPS_JSON_PATH,
   MARKETPLACE_SALEOR_APPS_PAGE_PATH,
   MARKETPLACE_URL,
-} from "@saleor/config";
+} from "@dashboard/config";
 import urlJoin from "url-join";
 
 export class MarketplaceUrlResolver {

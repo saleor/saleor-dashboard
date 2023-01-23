@@ -1,11 +1,11 @@
-import { useUser } from "@saleor/auth";
-import { WindowTitle } from "@saleor/components/WindowTitle";
-import { usePermissionGroupCreateMutation } from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { extractMutationErrors } from "@saleor/misc";
-import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
+import { useUser } from "@dashboard/auth";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { usePermissionGroupCreateMutation } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { extractMutationErrors } from "@dashboard/misc";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 

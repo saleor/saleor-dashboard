@@ -21,7 +21,7 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
-      "@saleor/*": ["src/*"],
+      "@dashboard/*": ["src/*"],
       "@test/*": ["testUtils/*"]
     },
     "resolveJsonModule": true

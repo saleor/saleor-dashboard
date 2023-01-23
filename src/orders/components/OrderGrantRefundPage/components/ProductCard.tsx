@@ -1,3 +1,9 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
 import {
   Card,
   Table,
@@ -6,12 +12,6 @@ import {
   TableHead,
   TextField,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { OrderLineGrantRefundFragment } from "@saleor/graphql";
-import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

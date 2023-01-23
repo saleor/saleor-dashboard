@@ -1,13 +1,14 @@
 import {
+  MoneyFragment,
   OrderDetailsFragment,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
+import { getById } from "@dashboard/misc";
+import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { getById } from "@saleor/misc";
-import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -30,6 +31,9 @@ export interface OrderLineDiscountContextConsumerProps
   orderLineDiscount?: OrderLineDiscountData;
   orderLineDiscountUpdateStatus: ConfirmButtonTransitionState;
   orderLineDiscountRemoveStatus: ConfirmButtonTransitionState;
+  totalDiscountedPrice: MoneyFragment;
+  unitUndiscountedPrice: MoneyFragment;
+  unitDiscountedPrice: MoneyFragment;
 }
 
 interface DiscountProviderProps {
@@ -108,8 +112,10 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
     orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
     closeDialog: handleCloseDialog,
     openDialog: handleOpenDialog(orderLineId),
-    discountedPrice: getOrderLine(orderLineId).unitPrice.gross,
-    undiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross,
+    totalDiscountedPrice: getOrderLine(orderLineId).totalPrice.gross,
+    unitDiscountedPrice: getOrderLine(orderLineId).unitPrice.gross,
+    unitUndiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice
+      .gross,
   });
 
   return (

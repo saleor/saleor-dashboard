@@ -1,21 +1,21 @@
-import { OutputData } from "@editorjs/editorjs";
 import {
   LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
   useUpdateAttributeTranslationsMutation,
   useUpdateAttributeValueTranslationsMutation,
-} from "@saleor/graphql";
-import useListSettings from "@saleor/hooks/useListSettings";
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useLocalPaginationState,
-} from "@saleor/hooks/useLocalPaginator";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { PaginatorContext } from "@saleor/hooks/usePaginator";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { ListViews, Pagination } from "@saleor/types";
-import { stringifyQs } from "@saleor/utils/urls";
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { ListViews, Pagination } from "@dashboard/types";
+import { stringifyQs } from "@dashboard/utils/urls";
+import { OutputData } from "@editorjs/editorjs";
 import React from "react";
 import { useIntl } from "react-intl";
 

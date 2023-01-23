@@ -1,3 +1,11 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Date from "@dashboard/components/Date";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { InvoiceFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Card,
   CardContent,
@@ -5,14 +13,6 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Date from "@saleor/components/Date";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { InvoiceFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

@@ -1,7 +1,7 @@
+import InlineAlert from "@dashboard/components/Alert/InlineAlert";
+import errorTracker from "@dashboard/services/errorTracking";
 import { Typography } from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import InlineAlert from "@saleor/components/Alert/InlineAlert";
-import errorTracker from "@saleor/services/errorTracking";
 import React from "react";
 import { useIntl } from "react-intl";
 

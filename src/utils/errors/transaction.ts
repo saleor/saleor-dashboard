@@ -3,7 +3,7 @@ import {
   TransactionCreateErrorFragment,
   TransactionRequestActionErrorCode,
   TransactionRequestActionErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";

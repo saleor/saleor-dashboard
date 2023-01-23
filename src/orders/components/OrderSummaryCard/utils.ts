@@ -1,6 +1,6 @@
-import { subtractMoney } from "@saleor/components/Money";
-import { GiftCardEventsEnum, OrderDetailsFragment } from "@saleor/graphql";
-import { IMoney } from "@saleor/utils/intl";
+import { subtractMoney } from "@dashboard/components/Money";
+import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
+import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
 import { IntlShape } from "react-intl";
 

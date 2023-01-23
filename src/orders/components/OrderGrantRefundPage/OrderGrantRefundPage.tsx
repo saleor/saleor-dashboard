@@ -1,3 +1,11 @@
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Grid from "@dashboard/components/Grid";
+import PageHeader from "@dashboard/components/PageHeader";
+import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { orderUrl } from "@dashboard/orders/urls";
 import {
   Card,
   CardContent,
@@ -5,15 +13,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Grid from "@saleor/components/Grid";
-import PageHeader from "@saleor/components/PageHeader";
-import Skeleton from "@saleor/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { orderUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

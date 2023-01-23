@@ -1,9 +1,9 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import CardTitle from "@saleor/components/CardTitle";
-import PreviewPill from "@saleor/components/PreviewPill";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import { AllocationStrategyEnum, StockSettingsInput } from "@saleor/graphql";
 import { Tooltip } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

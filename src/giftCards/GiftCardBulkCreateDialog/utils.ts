@@ -1,4 +1,4 @@
-import { GiftCardErrorCode, GiftCardErrorFragment } from "@saleor/graphql";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
 import reduce from "lodash/reduce";
 
 import {

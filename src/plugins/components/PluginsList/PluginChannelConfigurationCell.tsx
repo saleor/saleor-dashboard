@@ -1,6 +1,6 @@
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { TableCell } from "@material-ui/core";
-import { PluginBaseFragment } from "@saleor/graphql";
-import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

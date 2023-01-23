@@ -1,9 +1,9 @@
-import { IFilter } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { CollectionPublished } from "@saleor/graphql";
-import { commonMessages } from "@saleor/intl";
-import { FilterOpts } from "@saleor/types";
-import { createOptionsField } from "@saleor/utils/filters/fields";
+import { IFilter } from "@dashboard/components/Filter";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { CollectionPublished } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { FilterOpts } from "@dashboard/types";
+import { createOptionsField } from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {

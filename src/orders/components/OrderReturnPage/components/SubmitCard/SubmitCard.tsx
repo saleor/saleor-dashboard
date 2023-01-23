@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import ConfirmButton from "@saleor/components/ConfirmButton";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

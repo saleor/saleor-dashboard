@@ -1,4 +1,4 @@
-import { LocaleContext } from "@saleor/components/Locale";
+import { LocaleContext } from "@dashboard/components/Locale";
 import moment from "moment-timezone";
 import { useContext } from "react";
 

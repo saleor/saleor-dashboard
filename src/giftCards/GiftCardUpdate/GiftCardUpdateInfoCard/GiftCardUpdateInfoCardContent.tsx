@@ -1,16 +1,16 @@
+import { appUrl } from "@dashboard/apps/urls";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Link from "@dashboard/components/Link";
+import { customerUrl } from "@dashboard/customers/urls";
+import { GiftCardEventsEnum } from "@dashboard/graphql";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
+import Label from "@dashboard/orders/components/OrderHistory/Label";
+import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
+import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
+import { productUrl } from "@dashboard/products/urls";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Typography } from "@material-ui/core";
-import { appUrl } from "@saleor/apps/urls";
-import CardSpacer from "@saleor/components/CardSpacer";
-import Link from "@saleor/components/Link";
-import { customerUrl } from "@saleor/customers/urls";
-import { GiftCardEventsEnum } from "@saleor/graphql";
-import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { getFullName, getStringOrPlaceholder } from "@saleor/misc";
-import Label from "@saleor/orders/components/OrderHistory/Label";
-import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory/utils";
-import { getByType } from "@saleor/orders/components/OrderReturnPage/utils";
-import { productUrl } from "@saleor/products/urls";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

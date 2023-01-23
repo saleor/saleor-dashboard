@@ -1,3 +1,11 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import {
+  ConfigurationItemFragment,
+  ConfigurationTypeFieldEnum,
+} from "@dashboard/graphql";
+import { UserError } from "@dashboard/types";
+import { getFieldError } from "@dashboard/utils/errors";
 import {
   Card,
   CardContent,
@@ -6,14 +14,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
-import CardTitle from "@saleor/components/CardTitle";
-import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import {
-  ConfigurationItemFragment,
-  ConfigurationTypeFieldEnum,
-} from "@saleor/graphql";
-import { UserError } from "@saleor/types";
-import { getFieldError } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 

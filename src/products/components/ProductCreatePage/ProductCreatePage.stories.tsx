@@ -1,11 +1,14 @@
-import { channelsList } from "@saleor/channels/fixtures";
-import { createChannelsData } from "@saleor/channels/utils";
-import { fetchMoreProps } from "@saleor/fixtures";
-import { ProductErrorCode } from "@saleor/graphql";
-import { productTypes, productTypeSearch } from "@saleor/productTypes/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
-import { taxClasses } from "@saleor/taxes/fixtures";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createChannelsData } from "@dashboard/channels/utils";
+import { fetchMoreProps } from "@dashboard/fixtures";
+import { ProductErrorCode } from "@dashboard/graphql";
+import {
+  productTypes,
+  productTypeSearch,
+} from "@dashboard/productTypes/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

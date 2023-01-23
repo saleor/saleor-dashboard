@@ -2,16 +2,16 @@ import { FetchResult } from "@apollo/client";
 import {
   ChannelSaleFormData,
   SaleDetailsPageFormData,
-} from "@saleor/discounts/components/SaleDetailsPage";
-import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
+} from "@dashboard/discounts/components/SaleDetailsPage";
+import { getSaleChannelsVariables } from "@dashboard/discounts/handlers";
 import {
   DiscountValueTypeEnum,
   SaleDetailsFragment,
   SaleType,
   SaleUpdateMutation,
   SaleUpdateMutationVariables,
-} from "@saleor/graphql";
-import { joinDateTime } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { joinDateTime } from "@dashboard/misc";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED

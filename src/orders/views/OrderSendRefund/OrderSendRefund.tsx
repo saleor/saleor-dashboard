@@ -2,10 +2,10 @@ import {
   OrderDetailsDocument,
   useCreateManualTransactionRefundMutation,
   useOrderDetailsQuery,
-} from "@saleor/graphql/hooks.generated";
-import useNotifier from "@saleor/hooks/useNotifier";
-import OrderSendRefundPage from "@saleor/orders/components/OrderSendRefundPage";
-import { getTransactionCreateErrorMessage } from "@saleor/utils/errors/transaction";
+} from "@dashboard/graphql/hooks.generated";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import OrderSendRefundPage from "@dashboard/orders/components/OrderSendRefundPage";
+import { getTransactionCreateErrorMessage } from "@dashboard/utils/errors/transaction";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

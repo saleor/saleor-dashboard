@@ -1,9 +1,9 @@
-import { categoryUrl } from "@saleor/categories/urls";
-import { collectionUrl } from "@saleor/collections/urls";
-import { SearchCatalogQuery } from "@saleor/graphql";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { productUrl } from "@saleor/products/urls";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
+import { SearchCatalogQuery } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { productUrl } from "@dashboard/products/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 

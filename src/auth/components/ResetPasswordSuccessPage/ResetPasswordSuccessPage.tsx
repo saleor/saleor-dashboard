@@ -1,6 +1,6 @@
+import { Button } from "@dashboard/components/Button";
+import FormSpacer from "@dashboard/components/FormSpacer";
 import { Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import FormSpacer from "@saleor/components/FormSpacer";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,10 +1,10 @@
-import { FilterElement } from "@saleor/components/Filter";
+import { FilterElement } from "@dashboard/components/Filter";
 import {
   CustomerFilterKeys,
   CustomerListFilterOpts,
-} from "@saleor/customers/components/CustomerListPage";
-import { CustomerFilterInput } from "@saleor/graphql";
-import { maybe } from "@saleor/misc";
+} from "@dashboard/customers/components/CustomerListPage";
+import { CustomerFilterInput } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,

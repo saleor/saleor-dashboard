@@ -1,6 +1,6 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { OrderDetailsFragment, OrderDiscountType } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

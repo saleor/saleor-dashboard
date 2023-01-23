@@ -1,11 +1,11 @@
-import Skeleton from "@saleor/components/Skeleton";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
   TransactionEventTypeEnum,
-} from "@saleor/graphql";
-import { FakeTransaction, TransactionFakeEvent } from "@saleor/orders/types";
-import { prepareMoney } from "@saleor/orders/utils/data";
+} from "@dashboard/graphql";
+import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
+import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 

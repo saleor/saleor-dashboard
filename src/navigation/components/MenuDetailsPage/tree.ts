@@ -1,4 +1,4 @@
-import { RecursiveMenuItem } from "@saleor/navigation/types";
+import { RecursiveMenuItem } from "@dashboard/navigation/types";
 
 import { TreeOperation } from "../MenuItems";
 

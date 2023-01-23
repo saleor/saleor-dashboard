@@ -1,5 +1,5 @@
-import Skeleton from "@saleor/components/Skeleton";
-import { OrderDetailsFragment } from "@saleor/graphql";
+import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

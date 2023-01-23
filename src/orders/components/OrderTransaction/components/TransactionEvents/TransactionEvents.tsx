@@ -1,8 +1,8 @@
+import { TransactionEventFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
-import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { TransactionFakeEvent } from "@saleor/orders/types";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 

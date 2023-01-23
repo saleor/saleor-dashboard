@@ -1,12 +1,12 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Hr } from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
+import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
+import { transformPaymentStatus } from "@dashboard/misc";
+import { orderGrantRefundUrl, orderRefundUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import Hr from "@saleor/components/Hr";
-import Skeleton from "@saleor/components/Skeleton";
-import { OrderAction, OrderDetailsFragment } from "@saleor/graphql";
 import { Pill } from "@saleor/macaw-ui";
-import { transformPaymentStatus } from "@saleor/misc";
-import { orderGrantRefundUrl, orderRefundUrl } from "@saleor/orders/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

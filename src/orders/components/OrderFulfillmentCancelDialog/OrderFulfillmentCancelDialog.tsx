@@ -1,3 +1,12 @@
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import {
   Dialog,
   DialogActions,
@@ -5,16 +14,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { OrderErrorFragment, WarehouseFragment } from "@saleor/graphql";
-import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

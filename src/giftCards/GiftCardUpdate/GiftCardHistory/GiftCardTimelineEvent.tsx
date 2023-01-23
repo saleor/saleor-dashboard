@@ -1,10 +1,10 @@
-import { appPath } from "@saleor/apps/urls";
-import Link from "@saleor/components/Link";
-import { TimelineEvent } from "@saleor/components/Timeline";
-import { customerPath } from "@saleor/customers/urls";
-import { GiftCardEventFragment, GiftCardEventsEnum } from "@saleor/graphql";
-import { orderUrl } from "@saleor/orders/urls";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
+import { appPath } from "@dashboard/apps/urls";
+import Link from "@dashboard/components/Link";
+import { TimelineEvent } from "@dashboard/components/Timeline";
+import { customerPath } from "@dashboard/customers/urls";
+import { GiftCardEventFragment, GiftCardEventsEnum } from "@dashboard/graphql";
+import { orderUrl } from "@dashboard/orders/urls";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

@@ -1,8 +1,8 @@
 import {
   orderSettings as orderSettingsFixture,
   shopOrderSettings as shopOrderSettingsFixture,
-} from "@saleor/orders/fixtures";
-import Decorator from "@saleor/storybook/Decorator";
+} from "@dashboard/orders/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

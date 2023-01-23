@@ -1,31 +1,31 @@
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
   useWarehouseUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
   getMutationStatus,
   getStringOrPlaceholder,
-} from "@saleor/misc";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import WarehouseDeleteDialog from "@saleor/warehouses/components/WarehouseDeleteDialog";
+} from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
-} from "@saleor/warehouses/components/WarehouseDetailsPage";
+} from "@dashboard/warehouses/components/WarehouseDetailsPage";
 import {
   warehouseListUrl,
   warehouseUrl,
   WarehouseUrlQueryParams,
-} from "@saleor/warehouses/urls";
+} from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -45,7 +45,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   });
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
-      if (data.updateWarehouse.errors.length === 0) {
+      if (data?.updateWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -57,7 +57,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
 
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
-      if (data.deleteWarehouse.errors.length === 0) {
+      if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -105,11 +105,11 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
 
   return (
     <>
-      <WindowTitle title={data?.warehouse?.name} />
+      <WindowTitle title={getStringOrPlaceholder(data?.warehouse?.name)} />
       <WarehouseDetailsPage
         countries={shop?.countries || []}
         disabled={loading || updateWarehouseOpts.loading}
-        errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
+        errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
         onDelete={() => openModal("delete")}

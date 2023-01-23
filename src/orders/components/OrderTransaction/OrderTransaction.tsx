@@ -1,9 +1,9 @@
-import { Card } from "@material-ui/core";
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@saleor/graphql";
-import { FakeTransaction, TransactionFakeEvent } from "@saleor/orders/types";
+} from "@dashboard/graphql";
+import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
+import { Card } from "@material-ui/core";
 import React from "react";
 
 import { CardTitle } from "./components";

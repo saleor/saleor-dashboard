@@ -1,6 +1,7 @@
+import { FormChange } from "@dashboard/hooks/useForm";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { FetchMoreProps } from "@dashboard/types";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
-import { FormChange } from "@saleor/hooks/useForm";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   Choice,
   ColumnsIcon,
@@ -8,7 +9,6 @@ import {
   IconButtonProps,
   makeStyles,
 } from "@saleor/macaw-ui";
-import { FetchMoreProps } from "@saleor/types";
 import { score } from "fuzzaldrin";
 import sortBy from "lodash/sortBy";
 import React from "react";

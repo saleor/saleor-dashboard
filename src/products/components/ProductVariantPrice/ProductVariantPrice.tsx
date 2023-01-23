@@ -1,4 +1,21 @@
 import {
+  ChannelData,
+  ChannelPriceAndPreorderArgs,
+  ChannelPriceArgs,
+} from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import PriceField from "@dashboard/components/PriceField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import {
+  getFormChannelError,
+  getFormChannelErrors,
+} from "@dashboard/utils/errors";
+import getProductErrorMessage from "@dashboard/utils/errors/product";
+import {
   Card,
   CardContent,
   TableBody,
@@ -6,24 +23,7 @@ import {
   TableHead,
   Typography,
 } from "@material-ui/core";
-import {
-  ChannelData,
-  ChannelPriceAndPreorderArgs,
-  ChannelPriceArgs,
-} from "@saleor/channels/utils";
-import CardTitle from "@saleor/components/CardTitle";
-import PriceField from "@saleor/components/PriceField";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { ProductChannelListingErrorFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import {
-  getFormChannelError,
-  getFormChannelErrors,
-} from "@saleor/utils/errors";
-import getProductErrorMessage from "@saleor/utils/errors/product";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

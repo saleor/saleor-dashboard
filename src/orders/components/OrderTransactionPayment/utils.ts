@@ -4,12 +4,12 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
   TransactionKind,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import {
   TransactionEventStatus,
   TransactionFakeEvent,
   TransactionMappingResult,
-} from "@saleor/orders/types";
+} from "@dashboard/orders/types";
 
 type Money = OrderPaymentFragment["total"];
 

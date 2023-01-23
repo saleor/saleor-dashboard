@@ -1,35 +1,35 @@
-import { Typography } from "@material-ui/core";
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
   useExtensions,
-} from "@saleor/apps/useExtensions";
-import { Backlink } from "@saleor/components/Backlink";
-import CardMenu from "@saleor/components/CardMenu";
-import { CardSpacer } from "@saleor/components/CardSpacer";
-import { Container } from "@saleor/components/Container";
-import { DateTime } from "@saleor/components/Date";
-import Form from "@saleor/components/Form";
-import Grid from "@saleor/components/Grid";
-import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
-import PageHeader from "@saleor/components/PageHeader";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
+} from "@dashboard/apps/useExtensions";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardMenu from "@dashboard/components/CardMenu";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { Container } from "@dashboard/components/Container";
+import { DateTime } from "@dashboard/components/Date";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import PageHeader from "@dashboard/components/PageHeader";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderErrorFragment,
   OrderStatus,
   TransactionActionEnum,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { sectionNames } from "@saleor/intl";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import { orderListUrl } from "@dashboard/orders/urls";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { orderListUrl } from "@saleor/orders/urls";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 

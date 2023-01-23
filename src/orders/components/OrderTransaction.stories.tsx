@@ -1,11 +1,11 @@
 import {
   TransactionActionEnum,
   TransactionEventTypeEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import OrderTransaction, {
   OrderTransactionProps,
-} from "@saleor/orders/components/OrderTransaction";
-import Decorator from "@saleor/storybook/Decorator";
+} from "@dashboard/orders/components/OrderTransaction";
+import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

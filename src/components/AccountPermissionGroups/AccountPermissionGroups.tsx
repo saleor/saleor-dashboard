@@ -1,12 +1,12 @@
-import { Typography } from "@material-ui/core";
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
-} from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@saleor/types";
-import { getFormErrors } from "@saleor/utils/errors";
-import getStaffErrorMessage from "@saleor/utils/errors/staff";
+} from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getStaffErrorMessage from "@dashboard/utils/errors/staff";
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 

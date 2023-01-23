@@ -1,7 +1,7 @@
+import { formatMoneyAmount } from "@dashboard/components/Money";
+import useLocale from "@dashboard/hooks/useLocale";
+import { IMoney } from "@dashboard/utils/intl";
 import { Typography } from "@material-ui/core";
-import { formatMoneyAmount } from "@saleor/components/Money";
-import useLocale from "@saleor/hooks/useLocale";
-import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import { useMoneyDisplayStyles } from "./styles";

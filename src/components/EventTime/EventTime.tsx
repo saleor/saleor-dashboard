@@ -1,4 +1,4 @@
-import useLocale from "@saleor/hooks/useLocale";
+import useLocale from "@dashboard/hooks/useLocale";
 import React from "react";
 
 const EventTime: React.FC<{ date: string }> = ({ date }) => {

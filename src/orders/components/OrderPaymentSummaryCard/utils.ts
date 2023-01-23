@@ -1,5 +1,8 @@
-import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@saleor/graphql";
-import { IMoney } from "@saleor/utils/intl";
+import {
+  OrderDetailsFragment,
+  PaymentChargeStatusEnum,
+} from "@dashboard/graphql";
+import { IMoney } from "@dashboard/utils/intl";
 
 import { extractOutstandingBalance } from "../OrderSummaryCard/utils";
 

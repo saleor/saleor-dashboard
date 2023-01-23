@@ -1,6 +1,6 @@
 import * as placeholderImage from "@assets/images/sample-product.jpg";
-import { OrderFulfillDataQuery } from "@saleor/graphql";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { OrderFulfillDataQuery } from "@dashboard/graphql";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 
 export const orderToFulfill: OrderFulfillDataQuery["order"] = {
   __typename: "Order",

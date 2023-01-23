@@ -1,12 +1,12 @@
-import { appMessages } from "@saleor/apps/messages";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { useAppQuery } from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
+import { appMessages } from "@dashboard/apps/messages";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useAppQuery } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import AppPage from "../../components/AppPage";
-import { appDetailsUrl, appsListPath } from "../../urls";
+import { appsListPath } from "../../urls";
 
 interface AppSettingsProps {
   id: string;
@@ -31,7 +31,6 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
     <AppPage
       data={data?.app ?? null}
       url={data?.app?.configurationUrl ?? ""}
-      aboutHref={appDetailsUrl(id)}
       refetch={refetch}
       onError={() =>
         notify({

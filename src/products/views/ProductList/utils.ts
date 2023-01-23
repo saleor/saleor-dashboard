@@ -1,5 +1,5 @@
-import { ProductTypeKindEnum } from "@saleor/graphql";
-import { isInEnum } from "@saleor/misc";
+import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { isInEnum } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import { productKindMessages as messages } from "./messages";

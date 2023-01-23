@@ -1,4 +1,4 @@
-import { IMoney } from "@saleor/utils/intl";
+import { IMoney } from "@dashboard/utils/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 

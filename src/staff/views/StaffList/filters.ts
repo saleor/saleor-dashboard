@@ -1,10 +1,13 @@
-import { FilterElement, FilterElementRegular } from "@saleor/components/Filter";
-import { StaffMemberStatus, StaffUserInput } from "@saleor/graphql";
-import { findValueInEnum, maybe } from "@saleor/misc";
+import {
+  FilterElement,
+  FilterElementRegular,
+} from "@dashboard/components/Filter";
+import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
+import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   StaffFilterKeys,
   StaffListFilterOpts,
-} from "@saleor/staff/components/StaffListPage";
+} from "@dashboard/staff/components/StaffListPage";
 
 import {
   createFilterTabUtils,

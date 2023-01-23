@@ -1,22 +1,22 @@
-import { Card } from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import { Button } from "@saleor/components/Button";
-import { Container } from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
-import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
-import PageHeader from "@saleor/components/PageHeader";
-import { configurationMenuUrl } from "@saleor/configuration";
-import { RefreshLimitsQuery, StaffListQuery } from "@saleor/graphql";
-import { sectionNames } from "@saleor/intl";
-import { StaffListUrlSortField } from "@saleor/staff/urls";
+import { Backlink } from "@dashboard/components/Backlink";
+import { Button } from "@dashboard/components/Button";
+import { Container } from "@dashboard/components/Container";
+import FilterBar from "@dashboard/components/FilterBar";
+import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
+import PageHeader from "@dashboard/components/PageHeader";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { RefreshLimitsQuery, StaffListQuery } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import {
   FilterPageProps,
   ListProps,
   RelayToFlat,
   SortPage,
   TabPageProps,
-} from "@saleor/types";
-import { hasLimits, isLimitReached } from "@saleor/utils/limits";
+} from "@dashboard/types";
+import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
+import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

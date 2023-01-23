@@ -1,30 +1,30 @@
 import {
+  ChannelShippingZones,
+  ChannelWarehouses,
+} from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteChoiceType,
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import {
+  ChannelErrorFragment,
+  CountryCode,
+  StockSettingsInput,
+} from "@dashboard/graphql";
+import useClipboard from "@dashboard/hooks/useClipboard";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
+import {
   Card,
   CardContent,
   InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
-import {
-  ChannelShippingZones,
-  ChannelWarehouses,
-} from "@saleor/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteChoiceType,
-} from "@saleor/components/SingleAutocompleteSelectField";
-import {
-  ChannelErrorFragment,
-  CountryCode,
-  StockSettingsInput,
-} from "@saleor/graphql";
-import useClipboard from "@saleor/hooks/useClipboard";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
-import { getFormErrors } from "@saleor/utils/errors";
-import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

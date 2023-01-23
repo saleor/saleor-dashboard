@@ -1,4 +1,4 @@
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AccountErrorFragment,
   AddressFragment,
@@ -6,9 +6,9 @@ import {
   AddressTypeEnum,
   Node,
   OrderErrorFragment,
-} from "@saleor/graphql";
-import { FormChange } from "@saleor/hooks/useForm";
-import { flatten, getById } from "@saleor/misc";
+} from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { flatten, getById } from "@dashboard/misc";
 
 import {
   OrderCustomerAddressesEditData,

@@ -1,6 +1,6 @@
-import { CategoryListUrlSortField } from "@saleor/categories/urls";
-import { CategorySortField } from "@saleor/graphql";
-import { createGetSortQueryVariables } from "@saleor/utils/sort";
+import { CategoryListUrlSortField } from "@dashboard/categories/urls";
+import { CategorySortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(
   sort: CategoryListUrlSortField,

@@ -1,6 +1,6 @@
+import { FormChange } from "@dashboard/hooks/useForm";
+import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
-import { FormChange } from "@saleor/hooks/useForm";
-import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import clsx from "clsx";
 import { codes } from "keycode";
 import React from "react";

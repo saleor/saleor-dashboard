@@ -1,21 +1,14 @@
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
-import { Backlink } from "@saleor/components/Backlink";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import Container from "@saleor/components/Container";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import Form from "@saleor/components/Form";
-import PageHeader from "@saleor/components/PageHeader";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Savebar from "@saleor/components/Savebar";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Container from "@dashboard/components/Container";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import Form from "@dashboard/components/Form";
+import PageHeader from "@dashboard/components/PageHeader";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   FulfillOrderMutation,
   OrderErrorCode,
@@ -23,26 +16,33 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-} from "@saleor/graphql";
-import { SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
-import useNavigator from "@saleor/hooks/useNavigator";
-import { commonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import OrderChangeWarehouseDialog from "@saleor/orders/components/OrderChangeWarehouseDialog";
-import { orderMessages } from "@saleor/orders/messages";
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { commonMessages } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
+import { orderMessages } from "@dashboard/orders/messages";
 import {
   OrderFulfillUrlDialog,
   OrderFulfillUrlQueryParams,
   orderUrl,
-} from "@saleor/orders/urls";
+} from "@dashboard/orders/urls";
 import {
   getAttributesCaption,
   getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
-} from "@saleor/orders/utils/data";
+} from "@dashboard/orders/utils/data";
+import {
+  Card,
+  CardContent,
+  TableBody,
+  TableCell,
+  TableHead,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

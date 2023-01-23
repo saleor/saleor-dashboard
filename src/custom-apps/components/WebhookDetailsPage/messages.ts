@@ -1,6 +1,6 @@
-import { isUnnamed } from "@saleor/custom-apps/utils";
-import { WebhookDetailsQuery } from "@saleor/graphql";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { isUnnamed } from "@dashboard/custom-apps/utils";
+import { WebhookDetailsQuery } from "@dashboard/graphql";
+import { getStringOrPlaceholder } from "@dashboard/misc";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const messages = defineMessages({

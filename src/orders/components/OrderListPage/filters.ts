@@ -1,20 +1,20 @@
-import { IFilter } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@saleor/graphql";
+import { IFilter } from "@dashboard/components/Filter";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import {
   commonMessages,
   commonStatusMessages,
   orderStatusMessages,
   paymentStatusMessages,
-} from "@saleor/intl";
-import { FilterOpts, KeyValue, MinMax } from "@saleor/types";
+} from "@dashboard/intl";
+import { FilterOpts, KeyValue, MinMax } from "@dashboard/types";
 import {
   createBooleanField,
   createDateField,
   createKeyValueField,
   createOptionsField,
   createTextField,
-} from "@saleor/utils/filters/fields";
+} from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum OrderFilterKeys {

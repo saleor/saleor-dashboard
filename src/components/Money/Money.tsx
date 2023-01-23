@@ -1,6 +1,6 @@
-import useLocale from "@saleor/hooks/useLocale";
+import useLocale from "@dashboard/hooks/useLocale";
+import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { IMoney } from "@saleor/utils/intl";
 import React from "react";
 
 import { formatMoneyAmount } from ".";
@@ -22,7 +22,8 @@ export interface MoneyProps {
   money: IMoney | null;
 }
 
-export const Money: React.FC<MoneyProps> = ({ money }) => {
+export const Money: React.FC<MoneyProps> = props => {
+  const { money, ...rest } = props;
   const { locale } = useLocale();
   const classes = useStyles();
 
@@ -33,7 +34,7 @@ export const Money: React.FC<MoneyProps> = ({ money }) => {
   const amount = formatMoneyAmount(money, locale);
 
   return (
-    <span className={classes.root}>
+    <span className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
       {amount}
     </span>

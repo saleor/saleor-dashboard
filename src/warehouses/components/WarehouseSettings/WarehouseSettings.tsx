@@ -1,19 +1,19 @@
-import { Card, CardContent, Divider, Typography } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import Link from "@saleor/components/Link";
-import PreviewPill from "@saleor/components/PreviewPill";
-import { RadioGroupField } from "@saleor/components/RadioGroupField";
-import Skeleton from "@saleor/components/Skeleton";
+import CardTitle from "@dashboard/components/CardTitle";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { RadioGroupField } from "@dashboard/components/RadioGroupField";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { shippingZoneUrl } from "@dashboard/shipping/urls";
+import { RelayToFlat } from "@dashboard/types";
+import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
-import { shippingZoneUrl } from "@saleor/shipping/urls";
-import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -146,9 +146,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
 
   return (
     <Card>
-      <CardTitle
-        title={<FormattedMessage {...messages.warehouseSettingsTitle} />}
-      />
+      <CardTitle title={<FormattedMessage {...sectionNames.shippingZones} />} />
       <CardContent>
         {renderCollection(
           zones,
@@ -172,8 +170,10 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         )}
       </CardContent>
       <Divider />
+      <CardTitle
+        title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />}
+      />
       <CardContent>
-        <CardSpacer />
         <RadioGroupField
           disabled={disabled}
           choices={isPrivateChoices}
@@ -184,12 +184,15 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         />
       </CardContent>
       <Divider />
+      <CardTitle
+        title={
+          <>
+            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+            <PreviewPill className={classes.preview} />
+          </>
+        }
+      />
       <CardContent>
-        <Typography color="textSecondary" variant="h6">
-          <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-          <PreviewPill className={classes.preview} />
-        </Typography>
-        <CardSpacer />
         <RadioGroupField
           disabled={disabled}
           choices={

@@ -1,3 +1,17 @@
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CountryWithCodeFragment } from "@dashboard/graphql";
+import {
+  getCountrySelectionMap,
+  isRestWorldCountriesSelected,
+} from "@dashboard/shipping/handlers";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
   DialogActions,
@@ -8,21 +22,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton from "@saleor/components/ConfirmButton";
-import Form from "@saleor/components/Form";
-import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TableRowLink from "@saleor/components/TableRowLink";
-import { CountryWithCodeFragment } from "@saleor/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import {
-  getCountrySelectionMap,
-  isRestWorldCountriesSelected,
-} from "@saleor/shipping/handlers";
-import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -52,6 +52,7 @@ describe("Staff members", () => {
         cy.clearSessionData().visit(urlLink);
         fillUpSetPassword(password);
         cy.clearSessionData();
+        cy.checkIfDataAreNotNull({ user });
       });
   });
 
@@ -61,7 +62,7 @@ describe("Staff members", () => {
 
   it(
     "should be able to invite staff user. TC: SALEOR_3501",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const firstName = faker.name.firstName();
       const emailInvite = `${startsWith}${firstName}@example.com`;
@@ -81,7 +82,7 @@ describe("Staff members", () => {
 
   it(
     "should deactivate user. TC: SALEOR_3502",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
       updateUserActiveFlag(user.id);
@@ -100,7 +101,7 @@ describe("Staff members", () => {
 
   it(
     "should activate user. TC: SALEOR_3503",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
 
@@ -115,7 +116,7 @@ describe("Staff members", () => {
 
   it(
     "should remove user permissions. TC: SALEOR_3504",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
 
@@ -142,7 +143,7 @@ describe("Staff members", () => {
 
   it(
     "should reset password. TC: SALEOR_3505",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const newPassword = faker.random.alphaNumeric(8);
       updatePlugin(
@@ -178,7 +179,7 @@ describe("Staff members", () => {
 
   it(
     "should not be able to create staff member with not unique email. TC: SALEOR_3508",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const firstName = faker.name.firstName();
       const emailInvite = TEST_ADMIN_USER.email;
@@ -193,7 +194,7 @@ describe("Staff members", () => {
 
   it(
     "should not be able to update staff member with not unique email. TC: SALEOR_3509",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
@@ -221,7 +222,7 @@ describe("Staff members", () => {
   // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
   it.skip(
     "should update staff member name and email. TC: SALEOR_3507",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const newLastName = faker.name.lastName();
       const newEmail = `${startsWith}${newLastName}@example.com`;
@@ -272,7 +273,7 @@ describe("Staff members", () => {
 
   it(
     "should create new user and successfully change password. TC: SALEOR_3510",
-    { tags: ["@staffMembers", "@stagedOnly", "@allenv"] },
+    { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const newPass = "newTestPass";
       const newLastName = faker.name.lastName();

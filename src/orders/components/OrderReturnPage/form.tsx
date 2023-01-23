@@ -1,15 +1,15 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { FulfillmentStatus, OrderDetailsFragment } from "@saleor/graphql";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise,
-} from "@saleor/hooks/useForm";
+} from "@dashboard/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData,
-} from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { getById } from "@saleor/misc";
+} from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { getById } from "@dashboard/misc";
 import React, { useEffect } from "react";
 
 import {

@@ -1,3 +1,15 @@
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodTypeFragment,
+} from "@dashboard/graphql";
+import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
+import { renderCollection } from "@dashboard/misc";
 import {
   Card,
   CardContent,
@@ -6,19 +18,7 @@ import {
   TableHead,
   Typography,
 } from "@material-ui/core";
-import { Button } from "@saleor/components/Button";
-import CardTitle from "@saleor/components/CardTitle";
-import RadioGroupField from "@saleor/components/RadioGroupField";
-import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import Skeleton from "@saleor/components/Skeleton";
-import TableRowLink from "@saleor/components/TableRowLink";
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeFragment,
-} from "@saleor/graphql";
-import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { renderCollection } from "@saleor/misc";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

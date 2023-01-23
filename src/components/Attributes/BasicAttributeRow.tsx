@@ -1,6 +1,6 @@
+import Grid from "@dashboard/components/Grid";
 import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import Grid from "@saleor/components/Grid";
 import { Tooltip } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";

@@ -1,9 +1,9 @@
 import {
   useGiftCardActivateMutation,
   useGiftCardDeactivateMutation,
-} from "@saleor/graphql";
-import useNotifier from "@saleor/hooks/useNotifier";
-import commonErrorMessages from "@saleor/utils/errors/common";
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 
 import { GIFT_CARD_DETAILS_QUERY } from "../../queries";

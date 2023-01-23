@@ -1,4 +1,4 @@
-import { SearchOrderVariantQuery } from "@saleor/graphql";
+import { SearchOrderVariantQuery } from "@dashboard/graphql";
 
 type SetVariantsAction = (
   data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],

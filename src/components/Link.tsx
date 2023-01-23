@@ -1,7 +1,7 @@
+import { isExternalURL } from "@dashboard/utils/urls";
 import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
-import { isExternalURL } from "@saleor/utils/urls";
 import clsx from "clsx";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";

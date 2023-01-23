@@ -4,7 +4,7 @@ import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
   ProductErrorFragment,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";

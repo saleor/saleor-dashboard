@@ -6,8 +6,8 @@
  * Its use is similar in countries and tax classes views.
  */
 
-import { CountryWithCodeFragment } from "@saleor/graphql";
-import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
+import { CountryWithCodeFragment } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import React from "react";
 
 interface TaxEntityWithId {

@@ -1,5 +1,5 @@
-import { StaffMemberFragment } from "@saleor/graphql";
-import { getUserName } from "@saleor/misc";
+import { StaffMemberFragment } from "@dashboard/graphql";
+import { getUserName } from "@dashboard/misc";
 
 import { MembersListUrlSortField } from "./urls";
 

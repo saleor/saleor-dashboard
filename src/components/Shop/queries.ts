@@ -3,8 +3,8 @@ import {
   RefreshLimitsQuery,
   RefreshLimitsQueryVariables,
   useRefreshLimitsQuery,
-} from "@saleor/graphql";
-import { QueryHookOptions } from "@saleor/hooks/graphql";
+} from "@dashboard/graphql";
+import { QueryHookOptions } from "@dashboard/hooks/graphql";
 
 export const shopInfo = gql`
   query ShopInfo {

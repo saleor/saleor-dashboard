@@ -1,19 +1,19 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useMenuDeleteMutation,
   useMenuDetailsQuery,
   useMenuItemCreateMutation,
   useMenuItemUpdateMutation,
   useMenuUpdateMutation,
-} from "@saleor/graphql";
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import useCategorySearch from "@saleor/searches/useCategorySearch";
-import useCollectionSearch from "@saleor/searches/useCollectionSearch";
-import usePageSearch from "@saleor/searches/usePageSearch";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,6 +1,6 @@
-import { AccountErrorCode } from "@saleor/graphql";
-import Decorator from "@saleor/storybook/Decorator";
-import { MockedUserProvider } from "@saleor/storybook/MockedUserProvider";
+import { AccountErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

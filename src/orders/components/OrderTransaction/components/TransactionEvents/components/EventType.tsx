@@ -1,5 +1,5 @@
-import { transactionEventTypeMap } from "@saleor/orders/messages";
-import { TransactionEventType } from "@saleor/orders/types";
+import { transactionEventTypeMap } from "@dashboard/orders/messages";
+import { TransactionEventType } from "@dashboard/orders/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

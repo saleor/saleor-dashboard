@@ -1,9 +1,9 @@
-import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
-import { bulkEnableDisableSectionMessages } from "@saleor/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
-import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
-import useGiftCardActivateToggle from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
-import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { CustomerGiftCardFragment } from "@saleor/graphql";
+import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
+import { bulkEnableDisableSectionMessages } from "@dashboard/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
+import { giftCardsListTableMessages } from "@dashboard/giftCards/GiftCardsList/messages";
+import useGiftCardActivateToggle from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
+import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { CustomerGiftCardFragment } from "@dashboard/graphql";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

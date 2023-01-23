@@ -1,7 +1,7 @@
+import { Channel } from "@dashboard/channels/utils";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import Hr from "@dashboard/components/Hr";
 import { Typography } from "@material-ui/core";
-import { Channel } from "@saleor/channels/utils";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import Hr from "@saleor/components/Hr";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 

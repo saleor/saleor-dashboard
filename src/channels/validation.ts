@@ -1,4 +1,4 @@
-import { ChannelErrorCode, ChannelErrorFragment } from "@saleor/graphql";
+import { ChannelErrorCode, ChannelErrorFragment } from "@dashboard/graphql";
 
 import { FormData } from "./components/ChannelForm";
 

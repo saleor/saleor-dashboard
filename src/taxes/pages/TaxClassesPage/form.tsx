@@ -1,13 +1,13 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { TaxClassFragment } from "@saleor/graphql";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { TaxClassesPageFormData } from "@saleor/taxes/types";
-import { getTaxClassInitialFormData } from "@saleor/taxes/utils/data";
-import { validateTaxClassFormData } from "@saleor/taxes/utils/validation";
-import { TaxClassError } from "@saleor/utils/errors/taxes";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { TaxClassFragment } from "@dashboard/graphql";
+import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { TaxClassesPageFormData } from "@dashboard/taxes/types";
+import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
+import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
+import { TaxClassError } from "@dashboard/utils/errors/taxes";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import React, { useState } from "react";
 
 interface TaxClassesFormHandlers {

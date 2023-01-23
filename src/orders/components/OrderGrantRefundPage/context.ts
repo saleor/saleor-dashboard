@@ -1,4 +1,4 @@
-import { UseFormResult } from "@saleor/hooks/useForm";
+import { UseFormResult } from "@dashboard/hooks/useForm";
 import { createContext, useContext } from "react";
 
 import { OrderGrantRefundFormData } from "./form";

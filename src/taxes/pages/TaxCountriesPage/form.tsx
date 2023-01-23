@@ -1,13 +1,13 @@
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
   TaxClassFragment,
   TaxClassRateInput,
   TaxCountryConfigurationFragment,
-} from "@saleor/graphql";
-import useForm, { SubmitPromise } from "@saleor/hooks/useForm";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { taxesMessages } from "@saleor/taxes/messages";
+} from "@dashboard/graphql";
+import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { taxesMessages } from "@dashboard/taxes/messages";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -1,3 +1,6 @@
+import BackButton from "@dashboard/components/BackButton";
+import { commonMessages } from "@dashboard/intl";
+import { DialogProps } from "@dashboard/types";
 import {
   Dialog,
   DialogActions,
@@ -5,10 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import BackButton from "@saleor/components/BackButton";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

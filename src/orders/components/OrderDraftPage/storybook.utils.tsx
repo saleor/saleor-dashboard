@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { OrderDetailsQuery } from "@saleor/graphql";
+import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import {
   OrderLineDiscountContext,
   OrderLineDiscountContextConsumerProps,
-} from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+} from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React from "react";
 
 export const getDiscountsProvidersWrapper = (
@@ -17,8 +17,6 @@ export const getDiscountsProvidersWrapper = (
     openDialog: () => {},
     closeDialog: () => {},
     isDialogOpen: false,
-    undiscountedPrice: order.total.gross,
-    discountedPrice: order.total.gross,
   };
 
   const MockOrderDiscountProvider = ({ children }) => {
@@ -29,6 +27,8 @@ export const getDiscountsProvidersWrapper = (
       orderDiscount: null,
       addOrderDiscount: () => {},
       removeOrderDiscount: () => {},
+      discountedPrice: order.total.gross,
+      undiscountedPrice: order.undiscountedTotal.gross,
     };
 
     return (
@@ -46,6 +46,9 @@ export const getDiscountsProvidersWrapper = (
       orderLineDiscount: null,
       orderLineDiscountUpdateStatus: "default",
       orderLineDiscountRemoveStatus: "default",
+      totalDiscountedPrice: order.lines[0].totalPrice.gross,
+      unitUndiscountedPrice: order.lines[0].undiscountedUnitPrice.gross,
+      unitDiscountedPrice: order.lines[0].unitPrice.gross,
     });
 
     return (

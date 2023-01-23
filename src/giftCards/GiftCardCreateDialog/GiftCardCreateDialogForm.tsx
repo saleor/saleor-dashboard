@@ -1,19 +1,19 @@
-import { DialogContent, Divider, TextField } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
-import CardSpacer from "@saleor/components/CardSpacer";
-import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
   GiftCardErrorFragment,
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
-} from "@saleor/graphql";
-import useForm from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
+} from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import Label from "@dashboard/orders/components/OrderHistory/Label";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { DialogContent, Divider, TextField } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import Label from "@saleor/orders/components/OrderHistory/Label";
-import { getFormErrors } from "@saleor/utils/errors";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 

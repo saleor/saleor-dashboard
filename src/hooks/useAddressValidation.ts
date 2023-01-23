@@ -1,12 +1,12 @@
-import { AddressTypeInput } from "@saleor/customers/types";
+import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorCode,
   AccountErrorFragment,
   AddressInput,
   AddressTypeEnum,
-} from "@saleor/graphql";
-import { transformFormToAddressInput } from "@saleor/misc";
-import { add, remove } from "@saleor/utils/lists";
+} from "@dashboard/graphql";
+import { transformFormToAddressInput } from "@dashboard/misc";
+import { add, remove } from "@dashboard/utils/lists";
 import { useState } from "react";
 
 interface UseAddressValidation<TInput, TOutput> {

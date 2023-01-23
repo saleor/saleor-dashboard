@@ -1,3 +1,8 @@
+import CardTitle from "@dashboard/components/CardTitle";
+import { DateTime } from "@dashboard/components/Date";
+import Skeleton from "@dashboard/components/Skeleton";
+import { HomeQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import {
   Card,
   List,
@@ -5,12 +10,7 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import CardTitle from "@saleor/components/CardTitle";
-import { DateTime } from "@saleor/components/Date";
-import Skeleton from "@saleor/components/Skeleton";
-import { HomeQuery } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { RelayToFlat } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,23 +1,23 @@
-import { OutputData } from "@editorjs/editorjs";
-import { ChannelCollectionData } from "@saleor/channels/utils";
-import { createChannelsChangeHandler } from "@saleor/collections/utils";
-import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/consts";
-import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@saleor/components/Metadata";
-import { CollectionDetailsFragment } from "@saleor/graphql";
+import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { createChannelsChangeHandler } from "@dashboard/collections/utils";
+import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { CollectionDetailsFragment } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
-} from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
-import getMetadata from "@saleor/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+} from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import {
   RichTextContext,
   RichTextContextValues,
-} from "@saleor/utils/richText/context";
-import useRichText from "@saleor/utils/richText/useRichText";
+} from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
 import React, { useEffect } from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {

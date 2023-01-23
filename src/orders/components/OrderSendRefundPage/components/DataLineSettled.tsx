@@ -1,4 +1,4 @@
-import { IMoney } from "@saleor/utils/intl";
+import { IMoney } from "@dashboard/utils/intl";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

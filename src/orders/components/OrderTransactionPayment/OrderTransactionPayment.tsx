@@ -2,10 +2,10 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
-} from "@saleor/graphql";
-import { OrderTransactionProps } from "@saleor/orders/components/OrderTransaction/OrderTransaction";
-import { FakeTransaction } from "@saleor/orders/types";
-import { prepareMoney } from "@saleor/orders/utils/data";
+} from "@dashboard/graphql";
+import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
+import { FakeTransaction } from "@dashboard/orders/types";
+import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";

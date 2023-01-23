@@ -7,7 +7,7 @@ import {
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const appsList: AppListItemFragment[] = [
   {
@@ -16,6 +16,7 @@ export const appsList: AppListItemFragment[] = [
     isActive: true,
     name: "app",
     type: AppTypeEnum.THIRDPARTY,
+    version: "1.0.0",
     appUrl: null,
     manifestUrl: "http://localhost:3000/api/manifest",
     permissions: [
@@ -32,6 +33,7 @@ export const appsList: AppListItemFragment[] = [
     isActive: false,
     name: "app1",
     type: AppTypeEnum.THIRDPARTY,
+    version: "1.0.0",
     appUrl: "http://localhost:3000",
     manifestUrl: "http://localhost:3000/api/manifest",
     permissions: [
@@ -56,6 +58,7 @@ export const customAppsList: AppListItemFragment[] = [
     isActive: true,
     name: "app custom",
     type: AppTypeEnum.LOCAL,
+    version: "1.0.0",
     appUrl: null,
     manifestUrl: null,
     permissions: [

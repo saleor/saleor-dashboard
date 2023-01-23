@@ -1,7 +1,7 @@
+import { Channel } from "@dashboard/channels/utils";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import Hr from "@dashboard/components/Hr";
 import { TextField, Typography } from "@material-ui/core";
-import { Channel } from "@saleor/channels/utils";
-import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import Hr from "@saleor/components/Hr";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

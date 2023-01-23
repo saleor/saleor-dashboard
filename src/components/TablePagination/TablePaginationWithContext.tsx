@@ -1,4 +1,4 @@
-import { usePaginatorContext } from "@saleor/hooks/usePaginator";
+import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 import React from "react";
 
 import TablePagination, { PaginationProps } from "./TablePagination";

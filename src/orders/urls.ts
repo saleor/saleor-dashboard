@@ -1,5 +1,5 @@
-import { TransactionActionEnum } from "@saleor/graphql";
-import { stringifyQs } from "@saleor/utils/urls";
+import { TransactionActionEnum } from "@dashboard/graphql";
+import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {

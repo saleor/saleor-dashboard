@@ -5,7 +5,7 @@ import {
   AttributeListQuery,
   AttributeTypeEnum,
   ProductDetailsQuery,
-} from "@saleor/graphql";
+} from "@dashboard/graphql";
 
 export const attribute: AttributeDetailsQuery["attribute"] = {
   __typename: "Attribute" as "Attribute",
