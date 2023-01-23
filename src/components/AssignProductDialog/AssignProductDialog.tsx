@@ -45,7 +45,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
-  onChange: (product: RelayToFlatItem<SearchProductsQuery["search"]>) => void;
+  onChange?: (product: RelayToFlatItem<SearchProductsQuery["search"]>) => void;
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";

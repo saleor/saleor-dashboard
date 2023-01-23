@@ -1,8 +1,14 @@
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchPagesQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
+import {
+  DialogProps,
+  FetchMoreProps,
+  Node,
+  RelayToFlatItem,
+} from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -40,6 +46,7 @@ export interface AssignContainerDialogProps
   labels: Labels;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
+  onChange?: (page: RelayToFlatItem<SearchPagesQuery["search"]>) => void;
 }
 
 function handleContainerAssign(
@@ -73,6 +80,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
     onFetch,
     onFetchMore,
     onSubmit,
+    onChange,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
@@ -138,14 +146,19 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
                     >
                       <Checkbox
                         checked={isSelected}
-                        onChange={() =>
+                        onChange={() => {
+                          onChange({
+                            __typename: "Page",
+                            id: container.id,
+                            title: container.name,
+                          });
                           handleContainerAssign(
                             container.id,
                             isSelected,
                             selectedContainers,
                             setSelectedContainers,
-                          )
-                        }
+                          );
+                        }}
                       />
                     </TableCell>
                     <TableCell className={classes.wideCell}>

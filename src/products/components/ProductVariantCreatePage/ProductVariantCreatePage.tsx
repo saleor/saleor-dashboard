@@ -325,6 +325,11 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
+                onChangeHandlers={{
+                  PAGE: () => undefined,
+                  PRODUCT: () => undefined,
+                  PRODUCT_VARIANT: () => undefined,
+                }}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues,

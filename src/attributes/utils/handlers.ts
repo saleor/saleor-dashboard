@@ -14,15 +14,24 @@ import {
   PageSelectedAttributeFragment,
   ProductFragment,
   ProductVariantDetailsQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
 } from "@dashboard/graphql";
 import {
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
 } from "@dashboard/hooks/useFormset";
-import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { AttributeChangeHandlers } from "@dashboard/products/components/ProductUpdatePage/types";
+import {
+  FetchMoreProps,
+  RelayToFlat,
+  RelayToFlatItem,
+  ReorderEvent,
+} from "@dashboard/types";
 import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
+import { Dispatch, SetStateAction } from "react";
 
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
@@ -64,6 +73,68 @@ export function createAttributeReferenceChangeHandler(
   return (attributeId: string, values: string[]) => {
     changeAttributeData(attributeId, values);
     triggerChange();
+  };
+}
+
+export function createChangeAttributeHandlers(
+  pageReference: RelayToFlat<SearchPagesQuery["search"]>,
+  setPageReferences: Dispatch<
+    SetStateAction<RelayToFlat<SearchPagesQuery["search"]>>
+  >,
+  productReferences: RelayToFlat<SearchProductsQuery["search"]>,
+  setProductReferences: Dispatch<
+    SetStateAction<RelayToFlat<SearchProductsQuery["search"]>>
+  >,
+): AttributeChangeHandlers {
+  return {
+    [AttributeEntityTypeEnum.PAGE]: createOnChangeAttributePageReferenceHandler(
+      pageReference,
+      setPageReferences,
+    ),
+    [AttributeEntityTypeEnum.PRODUCT]: createOnChangeAttributeProductReferenceHandler(
+      productReferences,
+      setProductReferences,
+    ),
+    [AttributeEntityTypeEnum.PRODUCT_VARIANT]: createOnChangeAttributeProductReferenceHandler(
+      productReferences,
+      setProductReferences,
+    ),
+  };
+}
+
+export function createOnChangeAttributeProductReferenceHandler(
+  productReferences: RelayToFlat<SearchProductsQuery["search"]>,
+  setProductReferences: Dispatch<
+    SetStateAction<RelayToFlat<SearchProductsQuery["search"]>>
+  >,
+) {
+  return (newProduct: RelayToFlatItem<SearchProductsQuery["search"]>) => {
+    const hasProduct = productReferences.find(
+      prod => prod.id === newProduct.id,
+    );
+
+    if (hasProduct) {
+      return;
+    }
+
+    setProductReferences(prevProducts => [...prevProducts, newProduct]);
+  };
+}
+
+export function createOnChangeAttributePageReferenceHandler(
+  pageReferences: RelayToFlat<SearchPagesQuery["search"]>,
+  setPageReferences: Dispatch<
+    SetStateAction<RelayToFlat<SearchPagesQuery["search"]>>
+  >,
+) {
+  return (newPage: RelayToFlatItem<SearchPagesQuery["search"]>) => {
+    const hasProduct = pageReferences.find(prod => prod.id === newPage.id);
+
+    if (hasProduct) {
+      return;
+    }
+
+    setPageReferences(prevProducts => [...prevProducts, newPage]);
   };
 }
 

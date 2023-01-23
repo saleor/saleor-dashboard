@@ -7,7 +7,12 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import {
+  DialogProps,
+  FetchMoreProps,
+  RelayToFlat,
+  RelayToFlatItem,
+} from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -46,6 +51,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
+  onChange?: (product: RelayToFlatItem<SearchProductsQuery["search"]>) => void;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -61,8 +67,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     onFetch,
     onFetchMore,
     onSubmit,
+    onChange,
   } = props;
   const classes = useStyles(props);
+
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
   const intl = useIntl();
@@ -143,15 +151,16 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                             productsWithAllVariantsSelected[productIndex]
                           }
                           disabled={loading}
-                          onChange={() =>
+                          onChange={() => {
+                            onChange(product);
                             handleProductAssign(
                               product,
                               productIndex,
                               productsWithAllVariantsSelected,
                               variants,
                               setVariants,
-                            )
-                          }
+                            );
+                          }}
                         />
                       </TableCell>
                       <TableCellAvatar
@@ -178,7 +187,9 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                                 ]
                               }
                               disabled={loading}
-                              onChange={() =>
+                              onChange={() => {
+                                onChange(product);
+
                                 handleVariantAssign(
                                   variant,
                                   variantIndex,
@@ -186,8 +197,8 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                                   variants,
                                   selectedVariantsToProductsMap,
                                   setVariants,
-                                )
-                              }
+                                );
+                              }}
                             />
                           </TableCell>
                           <TableCell className={classes.colName}>

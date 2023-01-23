@@ -260,6 +260,11 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 onFetch={handlers.fetchReferences}
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
+                onChangeHandlers={{
+                  PAGE: () => undefined,
+                  PRODUCT: () => undefined,
+                  PRODUCT_VARIANT: () => undefined,
+                }}
                 onClose={onCloseDialog}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(

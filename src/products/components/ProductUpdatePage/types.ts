@@ -9,6 +9,7 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
+  AttributeEntityTypeEnum,
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
   ProductFragment,
@@ -97,9 +98,7 @@ export interface ProductUpdateHandlers
     > {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceOften: (
-    product: RelayToFlatItem<SearchProductsQuery["search"]>,
-  ) => void;
+  changeAttributeReference: () => AttributeChangeHandlers;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
@@ -116,6 +115,18 @@ export interface UseProductUpdateFormOutput
     RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
+}
+
+export interface AttributeChangeHandlers {
+  [AttributeEntityTypeEnum.PAGE]: (
+    newPage: RelayToFlatItem<SearchPagesQuery["search"]>,
+  ) => void;
+  [AttributeEntityTypeEnum.PRODUCT]: (
+    newProduct: RelayToFlatItem<SearchProductsQuery["search"]>,
+  ) => void;
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]: (
+    newProduct: RelayToFlatItem<SearchProductsQuery["search"]>,
+  ) => void;
 }
 
 export type UseProductUpdateFormRenderProps = Omit<

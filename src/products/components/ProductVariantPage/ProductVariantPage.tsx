@@ -400,6 +400,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       assignReferencesAttributeId,
                       data.attributes,
                     )}
+                    onChangeHandlers={{
+                      PAGE: () => undefined,
+                      PRODUCT: () => undefined,
+                      PRODUCT_VARIANT: () => undefined,
+                    }}
                     confirmButtonState={"default"}
                     products={referenceProducts}
                     pages={referencePages}
