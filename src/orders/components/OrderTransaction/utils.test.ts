@@ -1,8 +1,8 @@
-import { TransactionEventFragment } from "@saleor/graphql";
+import { TransactionEventFragment } from "@dashboard/graphql";
 import {
   TransactionFakeEvent,
   TransactionMappingResult,
-} from "@saleor/orders/types";
+} from "@dashboard/orders/types";
 
 import { mapTransactionEvent } from "./utils";
 

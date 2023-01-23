@@ -3171,6 +3171,7 @@ const paymentCommon = {
   gateway: MOCK_PAYMENT_GATEWAY_ID,
   id: "sdfgdfwe4sdSDFDS==",
   isActive: true,
+  availableRefundAmount: prepareMoney(0),
   __typename: "Payment",
 } as const;
 

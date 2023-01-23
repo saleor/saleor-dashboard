@@ -1,7 +1,7 @@
-import { appAvatar } from "@saleor/apps/fixtures";
-import { appPath } from "@saleor/apps/urls";
-import { staffMemberAvatar } from "@saleor/staff/fixtures";
-import { staffMemberDetailsPath } from "@saleor/staff/urls";
+import { appAvatar } from "@dashboard/apps/fixtures";
+import { appPath } from "@dashboard/apps/urls";
+import { staffMemberAvatar } from "@dashboard/staff/fixtures";
+import { staffMemberDetailsPath } from "@dashboard/staff/urls";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import React from "react";

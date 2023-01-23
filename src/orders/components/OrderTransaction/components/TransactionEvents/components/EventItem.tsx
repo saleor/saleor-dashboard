@@ -1,8 +1,8 @@
+import Money from "@dashboard/components/Money";
+import { TransactionEventFragment } from "@dashboard/graphql";
+import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
-import Money from "@saleor/components/Money";
-import { TransactionEventFragment } from "@saleor/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { TransactionFakeEvent } from "@saleor/orders/types";
 import clsx from "clsx";
 import React from "react";
 

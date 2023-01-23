@@ -1,8 +1,11 @@
-import { appUrl } from "@saleor/apps/urls";
-import { AppAvatarFragment, StaffMemberAvatarFragment } from "@saleor/graphql";
+import { appUrl } from "@dashboard/apps/urls";
+import {
+  AppAvatarFragment,
+  StaffMemberAvatarFragment,
+} from "@dashboard/graphql";
+import { getUserInitials, getUserName } from "@dashboard/misc";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Avatar, makeStyles } from "@saleor/macaw-ui";
-import { getUserInitials, getUserName } from "@saleor/misc";
-import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import React from "react";
 import { Link } from "react-router-dom";
 

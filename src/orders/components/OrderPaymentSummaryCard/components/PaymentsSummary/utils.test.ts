@@ -1,4 +1,4 @@
-import { order, prepareMoney } from "@saleor/orders/fixtures";
+import { order, prepareMoney } from "@dashboard/orders/fixtures";
 
 import { getShouldDisplayAmounts } from "./utils";
 
