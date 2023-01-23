@@ -1,3 +1,5 @@
+import "@saleor/macaw-ui/next/style";
+
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { PermissionEnum } from "@dashboard/graphql";
