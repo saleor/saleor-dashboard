@@ -15,6 +15,7 @@ interface SummaryLineProps {
   bold?: boolean;
   vertical?: boolean;
   money: IMoney | undefined;
+  hideEmpty?: boolean;
   className?: string;
 }
 
@@ -25,6 +26,7 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
   bold,
   vertical = false,
   money,
+  hideEmpty = false,
   className,
 }) => {
   const classes = useSummaryLineStyles();
@@ -55,6 +57,8 @@ const SummaryLine: React.FC<SummaryLineProps> = ({
         <dd>
           {money === undefined ? (
             <Skeleton className={classes.moneySkeleton} />
+          ) : money.amount === 0 && hideEmpty ? (
+            <span>&mdash;</span>
           ) : (
             <>
               {negative && (

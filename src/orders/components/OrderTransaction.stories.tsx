@@ -1,7 +1,6 @@
 import {
   TransactionActionEnum,
-  TransactionEventActionTypeEnum,
-  TransactionEventStatus,
+  TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import OrderTransaction, {
   OrderTransactionProps,
@@ -9,6 +8,8 @@ import OrderTransaction, {
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
+
+import { prepareMoney } from "../fixtures";
 
 const props: OrderTransactionProps = {
   onTransactionAction: () => undefined,
@@ -29,9 +30,10 @@ const props: OrderTransactionProps = {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "",
         createdAt: "2022-08-12T17:14:27.119138+00:00",
-        status: TransactionEventStatus.SUCCESS,
-        name: "Refund",
-        type: TransactionEventActionTypeEnum.REFUND,
+        type: TransactionEventTypeEnum.REFUND_SUCCESS,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 34.21,
           currency: "USD",
@@ -43,9 +45,10 @@ const props: OrderTransactionProps = {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "",
         createdAt: "2022-08-12T17:14:27.119138+00:00",
-        status: TransactionEventStatus.PENDING,
-        name: "Refund",
-        type: TransactionEventActionTypeEnum.REFUND,
+        type: TransactionEventTypeEnum.REFUND_REQUEST,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 34.21,
           currency: "USD",
@@ -57,9 +60,10 @@ const props: OrderTransactionProps = {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "SDFDS34543SDDFS",
         createdAt: "2022-08-12T15:14:27.119138+00:00",
-        status: TransactionEventStatus.SUCCESS,
-        name: "Capture",
-        type: TransactionEventActionTypeEnum.CHARGE,
+        type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 35.42,
           currency: "USD",
@@ -71,9 +75,10 @@ const props: OrderTransactionProps = {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "SDFDS34543SDDFS",
         createdAt: "2022-08-12T15:14:27.119138+00:00",
-        status: TransactionEventStatus.PENDING,
-        name: "Capture",
-        type: TransactionEventActionTypeEnum.CHARGE,
+        type: TransactionEventTypeEnum.CHARGE_REQUEST,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 35.42,
           currency: "USD",
@@ -85,46 +90,41 @@ const props: OrderTransactionProps = {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "SDFDS34543SDD12",
         createdAt: "2022-08-12T13:14:27.119138+00:00",
-        status: TransactionEventStatus.FAILURE,
-        type: TransactionEventActionTypeEnum.CHARGE,
+        type: TransactionEventTypeEnum.CHARGE_FAILURE,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 35.42,
           currency: "USD",
           __typename: "Money",
         },
-        name: null,
         __typename: "TransactionEvent",
       },
       {
         id: "VHJhbnNhY3Rpb25FdmVudDoy",
         pspReference: "SDFDS34543SDD12",
         createdAt: "2022-08-12T13:14:20.119138+00:00",
-        status: TransactionEventStatus.PENDING,
-        type: TransactionEventActionTypeEnum.AUTHORIZE,
+        type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+        message: null,
+        externalUrl: null,
+        createdBy: null,
         amount: {
           amount: 35.42,
           currency: "USD",
           __typename: "Money",
         },
-        name: null,
         __typename: "TransactionEvent",
       },
     ],
-    authorizedAmount: {
-      amount: 1.21,
-      currency: "USD",
-      __typename: "Money",
-    },
-    refundedAmount: {
-      amount: 34.21,
-      currency: "USD",
-      __typename: "Money",
-    },
-    chargedAmount: {
-      amount: 0,
-      currency: "USD",
-      __typename: "Money",
-    },
+    authorizedAmount: prepareMoney(1.21),
+    authorizePendingAmount: prepareMoney(0),
+    chargedAmount: prepareMoney(0),
+    chargePendingAmount: prepareMoney(0),
+    refundedAmount: prepareMoney(34.21),
+    refundPendingAmount: prepareMoney(0),
+    canceledAmount: prepareMoney(0),
+    cancelPendingAmount: prepareMoney(0),
   },
 };
 

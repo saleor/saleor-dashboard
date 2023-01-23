@@ -24,6 +24,7 @@ describe("OrderManualTrasactionForm / Form", () => {
         initialData={{
           amount: 1,
           description: "test",
+          pspReference: "test-1234",
         }}
       >
         <Form />
@@ -36,6 +37,7 @@ describe("OrderManualTrasactionForm / Form", () => {
     expect(submitFn).toHaveBeenCalledWith({
       amount: 1,
       description: "test",
+      pspReference: "test-1234",
     });
   });
 

@@ -186,6 +186,14 @@ export const commonMessages = defineMessages({
     id: "z9c6/C",
     defaultMessage: "Deprecated",
   },
+  pspReference: {
+    defaultMessage: "PSP Reference",
+    id: "kMziE/",
+  },
+  pspReferenceOptional: {
+    defaultMessage: "PSP Reference (optional)",
+    id: "GJwcSd",
+  },
   settings: {
     id: "D3idYv",
     defaultMessage: "Settings",

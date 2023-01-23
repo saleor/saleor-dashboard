@@ -1,11 +1,11 @@
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
 import useClipboard from "@dashboard/hooks/useClipboard";
+import { commonMessages } from "@dashboard/intl";
 import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "../messages";
 import { PspReferenceLink } from "./PspReferenceLink";
 
 const useStyles = makeStyles(
@@ -64,7 +64,7 @@ export const PspReference: React.FC<PspReferenceProps> = ({
     <div className={classes.wrapper}>
       <OverflowTooltip
         className={classes.pill}
-        header={intl.formatMessage(messages.pspReference)}
+        header={intl.formatMessage(commonMessages.pspReference)}
       >
         <PspReferenceLink href={url}>{reference}</PspReferenceLink>
       </OverflowTooltip>

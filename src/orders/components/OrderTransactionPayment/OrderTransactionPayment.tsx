@@ -2,9 +2,10 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
-  TransactionItemFragment,
 } from "@dashboard/graphql";
 import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
+import { FakeTransaction } from "@dashboard/orders/types";
+import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
 
 import OrderTransaction from "../OrderTransaction/OrderTransaction";
@@ -36,14 +37,14 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const refunded = total - captured - authorized;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const events = React.useMemo(() => mapPaymentToTransactionEvents(payment), [
-    payment.transactions,
-  ]);
+  const fakeEvents = React.useMemo(
+    () => mapPaymentToTransactionEvents(payment),
+    [payment.transactions],
+  );
 
-  const transactionFromPayment: TransactionItemFragment = {
+  const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     type: findMethodName(payment.gateway, allPaymentMethods),
-    events,
     actions: mapOrderActionsToTransactionActions(payment.actions),
     pspReference: "",
     status: "",
@@ -53,12 +54,14 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
       payment.availableCaptureAmount,
       currency,
     ),
-    refundedAmount: {
-      currency,
-      amount: refunded > 0 ? refunded : 0,
-      __typename: "Money",
-    },
-    __typename: "TransactionItem",
+    refundedAmount: prepareMoney(refunded > 0 ? refunded : 0, currency),
+    // Fake amounts
+    refundPendingAmount: prepareMoney(0, currency),
+    canceledAmount: prepareMoney(0, currency),
+    authorizePendingAmount: prepareMoney(0, currency),
+    chargePendingAmount: prepareMoney(0, currency),
+    cancelPendingAmount: prepareMoney(0, currency),
+    __typename: "FakeTransaction",
   };
 
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (
@@ -76,6 +79,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
+      fakeEvents={fakeEvents}
       onTransactionAction={handleTransactionAction}
     />
   );

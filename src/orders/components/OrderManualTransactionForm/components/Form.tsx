@@ -9,6 +9,7 @@ export const Form: React.FC<React.HTMLProps<HTMLFormElement>> = ({
   const {
     amount,
     description,
+    pspReference,
     onAddTransaction,
   } = useManualTransactionContext();
 
@@ -18,7 +19,7 @@ export const Form: React.FC<React.HTMLProps<HTMLFormElement>> = ({
       onSubmit={e => {
         e.preventDefault();
         if (amount) {
-          onAddTransaction({ amount, description });
+          onAddTransaction({ amount, description, pspReference });
         }
       }}
     >

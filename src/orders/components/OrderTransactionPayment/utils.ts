@@ -3,11 +3,13 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
-  TransactionEventActionTypeEnum,
-  TransactionEventFragment,
-  TransactionEventStatus,
   TransactionKind,
 } from "@dashboard/graphql";
+import {
+  TransactionEventStatus,
+  TransactionFakeEvent,
+  TransactionMappingResult,
+} from "@dashboard/orders/types";
 
 type Money = OrderPaymentFragment["total"];
 
@@ -32,53 +34,59 @@ export const findMethodName = (
 ): string =>
   allMethods.find(method => method.id === gatewayId)?.name ?? gatewayId;
 
-const mapPaymentKindToTransactionType = (
+const mapPaymentKindToTransaction = (
   kind: TransactionKind,
-): [TransactionEventActionTypeEnum, TransactionEventStatus] | [null, null] => {
+  isSuccess: boolean,
+): TransactionMappingResult => {
+  const status: TransactionEventStatus = isSuccess ? "SUCCESS" : "FAILED";
+
   switch (kind) {
     case TransactionKind.REFUND:
-      return [
-        TransactionEventActionTypeEnum.REFUND,
-        TransactionEventStatus.SUCCESS,
-      ];
+      return {
+        type: "REFUND",
+        status,
+      };
     case TransactionKind.REFUND_ONGOING:
-      return [
-        TransactionEventActionTypeEnum.REFUND,
-        TransactionEventStatus.PENDING,
-      ];
+      return {
+        type: "REFUND",
+        status: "PENDING",
+      };
     case TransactionKind.CANCEL:
-      return [
-        TransactionEventActionTypeEnum.CANCEL,
-        TransactionEventStatus.PENDING,
-      ];
+      return {
+        type: "CANCEL",
+        status,
+      };
     case TransactionKind.VOID:
-      return [
-        TransactionEventActionTypeEnum.CANCEL,
-        TransactionEventStatus.SUCCESS,
-      ];
+      return {
+        type: "CANCEL",
+        status,
+      };
     case TransactionKind.AUTH:
-      return [
-        TransactionEventActionTypeEnum.AUTHORIZE,
-        TransactionEventStatus.SUCCESS,
-      ];
+      return {
+        type: "AUTHORIZATION",
+        status,
+      };
     case TransactionKind.CAPTURE:
-      return [
-        TransactionEventActionTypeEnum.CHARGE,
-        TransactionEventStatus.SUCCESS,
-      ];
+      return {
+        type: "CHARGE",
+        status,
+      };
     case TransactionKind.PENDING:
-      return [
-        TransactionEventActionTypeEnum.CHARGE,
-        TransactionEventStatus.PENDING,
-      ];
+      return {
+        type: "CHARGE",
+        status: "PENDING",
+      };
     default:
-      return [null, null];
+      return {
+        type: null,
+        status: null,
+      };
   }
 };
 
 export const mapPaymentToTransactionEvents = (
   payment: OrderPaymentFragment,
-): TransactionEventFragment[] => {
+): TransactionFakeEvent[] => {
   const transactions = payment.transactions ?? [];
 
   if (transactions.length === 0) {
@@ -86,29 +94,34 @@ export const mapPaymentToTransactionEvents = (
       {
         id: "",
         pspReference: undefined,
-        type: TransactionEventActionTypeEnum.AUTHORIZE,
-        name: undefined,
-        status: TransactionEventStatus.PENDING,
+        mappedResult: {
+          type: "AUTHORIZATION",
+          status: "REQUEST",
+        },
+        createdBy: null,
+        externalUrl: null,
+        message: null,
         createdAt: payment.modified ?? new Date(),
         amount: null,
-        __typename: "TransactionEvent" as const,
+        __typename: "TransactionFakeEvent" as const,
       },
     ];
   }
 
   return transactions
     .map(({ id, isSuccess, kind, created, token }) => {
-      const [mappedType, mappedStatus] = mapPaymentKindToTransactionType(kind);
+      const mappedResult = mapPaymentKindToTransaction(kind, isSuccess);
 
       return {
         id,
         pspReference: token,
-        type: mappedType,
-        name: kind,
-        status: !isSuccess ? TransactionEventStatus.FAILURE : mappedStatus,
+        message: kind,
+        mappedResult,
+        createdBy: null,
+        externalUrl: null,
         createdAt: created,
         amount: null,
-        __typename: "TransactionEvent" as const,
+        __typename: "TransactionFakeEvent" as const,
       };
     })
     .sort(

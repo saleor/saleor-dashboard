@@ -19,6 +19,10 @@ export const useStyles = makeStyles(
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
     },
+    pendingGrid: {
+      marginTop: theme.spacing(1),
+      color: theme.palette.saleor.main[2],
+    },
     explainText: {
       color: theme.palette.saleor.main[3],
     },

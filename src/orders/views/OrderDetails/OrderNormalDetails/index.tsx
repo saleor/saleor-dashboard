@@ -434,14 +434,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             ?.message
         }
         currency={data?.order?.totalBalance?.currency}
-        onAddTransaction={({ amount, description }) =>
+        onAddTransaction={({ amount, description, pspReference }) =>
           orderAddManualTransaction.mutate({
             currency: data?.order?.totalBalance?.currency,
             orderId: id,
             amount,
-            // hack for GraphQL different types
-            amount2: amount,
             description,
+            pspReference,
           })
         }
       />

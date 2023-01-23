@@ -84,14 +84,13 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             currency={currency}
             submitState={addManualRefundState}
             error={addManualRefundError}
-            onAddTransaction={({ amount, description }) => {
+            onAddTransaction={({ amount, description, pspReference }) => {
               onAddManualRefund({
                 currency,
                 description,
                 amount,
-                // hack for types mismatch in graphql types
-                amount2: amount,
                 orderId: order?.id,
+                pspReference,
               });
             }}
           />
@@ -122,7 +121,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
                     <FormattedMessage {...refundPageMessages.pendingRefunds} />
                   }
                 >
-                  <DataLineMoney money={order?.totalPendingRefund} />
+                  <DataLineMoney money={order?.totalRefundPending} />
                 </DataLine>
               </ul>
             </CardContent>

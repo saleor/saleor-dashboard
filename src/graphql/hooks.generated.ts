@@ -96,12 +96,6 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
-export const AppAvatarFragmentDoc = gql`
-    fragment AppAvatar on App {
-  id
-  name
-}
-    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -1322,6 +1316,29 @@ export const OrderDetailsGrantRefundFragmentDoc = gql`
     ${OrderLineGrantRefundFragmentDoc}
 ${OrderFulfillmentGrantRefundFragmentDoc}
 ${MoneyFragmentDoc}`;
+export const StaffMemberFragmentDoc = gql`
+    fragment StaffMember on User {
+  id
+  email
+  firstName
+  isActive
+  lastName
+}
+    `;
+export const StaffMemberAvatarFragmentDoc = gql`
+    fragment StaffMemberAvatar on User {
+  ...StaffMember
+  avatar(size: 120) {
+    url
+  }
+}
+    ${StaffMemberFragmentDoc}`;
+export const AppAvatarFragmentDoc = gql`
+    fragment AppAvatar on App {
+  id
+  name
+}
+    `;
 export const TransactionEventFragmentDoc = gql`
     fragment TransactionEvent on TransactionEvent {
   id
@@ -1329,12 +1346,22 @@ export const TransactionEventFragmentDoc = gql`
   amount {
     ...Money
   }
-  createdAt
-  status
   type
-  name
+  message
+  createdAt
+  createdBy {
+    ... on User {
+      ...StaffMemberAvatar
+    }
+    ... on App {
+      ...AppAvatar
+    }
+  }
+  externalUrl
 }
-    ${MoneyFragmentDoc}`;
+    ${MoneyFragmentDoc}
+${StaffMemberAvatarFragmentDoc}
+${AppAvatarFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
   id
@@ -1347,13 +1374,28 @@ export const TransactionItemFragmentDoc = gql`
   events {
     ...TransactionEvent
   }
-  refundedAmount {
+  authorizedAmount {
     ...Money
   }
   chargedAmount {
     ...Money
   }
-  authorizedAmount {
+  refundedAmount {
+    ...Money
+  }
+  canceledAmount {
+    ...Money
+  }
+  authorizePendingAmount {
+    ...Money
+  }
+  chargePendingAmount {
+    ...Money
+  }
+  refundPendingAmount {
+    ...Money
+  }
+  cancelPendingAmount {
     ...Money
   }
 }
@@ -1373,6 +1415,9 @@ export const OrderPaymentFragmentDoc = gql`
     ...Money
   }
   total {
+    ...Money
+  }
+  availableRefundAmount {
     ...Money
   }
   modified
@@ -1722,17 +1767,29 @@ export const OrderDetailsFragmentDoc = gql`
   totalGrantedRefund {
     ...Money
   }
-  totalPendingRefund {
+  totalRefundPending {
     ...Money
   }
   totalRefunded {
     ...Money
   }
   actions
+  totalAuthorizePending {
+    ...Money
+  }
   totalAuthorized {
     ...Money
   }
   totalCaptured {
+    ...Money
+  }
+  totalChargePending {
+    ...Money
+  }
+  totalCanceled {
+    ...Money
+  }
+  totalCancelPending {
     ...Money
   }
   totalBalance {
@@ -2004,15 +2061,6 @@ export const PermissionFragmentDoc = gql`
     fragment Permission on Permission {
   code
   name
-}
-    `;
-export const StaffMemberFragmentDoc = gql`
-    fragment StaffMember on User {
-  id
-  email
-  firstName
-  isActive
-  lastName
 }
     `;
 export const PermissionGroupMemberFragmentDoc = gql`
@@ -2644,14 +2692,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
-  avatar(size: 120) {
-    url
-  }
-}
-    ${StaffMemberFragmentDoc}`;
-export const StaffMemberAvatarFragmentDoc = gql`
-    fragment StaffMemberAvatar on User {
-  ...StaffMember
   avatar(size: 120) {
     url
   }
@@ -9789,11 +9829,11 @@ export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRe
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
 export const CreateManualTransactionCaptureDocument = gql`
-    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $amount2: Decimal!, $currency: String!, $description: String) {
+    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual capture", status: "Success", reference: $description, amountCharged: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, type: CHARGE, pspReference: $description, amount: $amount2}
+    transaction: {type: "Manual capture", status: "Success", pspReference: $pspReference, amountCharged: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
   ) {
     transaction {
       ...TransactionItem
@@ -9822,9 +9862,9 @@ export type CreateManualTransactionCaptureMutationFn = Apollo.MutationFunction<T
  *   variables: {
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
- *      amount2: // value for 'amount2'
  *      currency: // value for 'currency'
  *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
  *   },
  * });
  */
@@ -9836,11 +9876,11 @@ export type CreateManualTransactionCaptureMutationHookResult = ReturnType<typeof
 export type CreateManualTransactionCaptureMutationResult = Apollo.MutationResult<Types.CreateManualTransactionCaptureMutation>;
 export type CreateManualTransactionCaptureMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
 export const CreateManualTransactionRefundDocument = gql`
-    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $amount2: Decimal!, $currency: String!, $description: String) {
+    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual refund", status: "Success", reference: $description, amountRefunded: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, type: REFUND, pspReference: $description, amount: $amount2}
+    transaction: {type: "Manual refund", status: "Success", pspReference: $pspReference, amountRefunded: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
   ) {
     transaction {
       ...TransactionItem
@@ -9869,9 +9909,9 @@ export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Ty
  *   variables: {
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
- *      amount2: // value for 'amount2'
  *      currency: // value for 'currency'
  *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
  *   },
  * });
  */

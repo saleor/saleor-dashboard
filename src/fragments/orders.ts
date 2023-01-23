@@ -191,11 +191,18 @@ export const transactionEvent = gql`
     amount {
       ...Money
     }
-    createdAt
-    status
     type
-    name
-    # TODO: Add user and app fields when they're added
+    message
+    createdAt
+    createdBy {
+      ... on User {
+        ...StaffMemberAvatar
+      }
+      ... on App {
+        ...AppAvatar
+      }
+    }
+    externalUrl
   }
 `;
 
@@ -211,13 +218,28 @@ export const transactionItemFragment = gql`
     events {
       ...TransactionEvent
     }
-    refundedAmount {
+    authorizedAmount {
       ...Money
     }
     chargedAmount {
       ...Money
     }
-    authorizedAmount {
+    refundedAmount {
+      ...Money
+    }
+    canceledAmount {
+      ...Money
+    }
+    authorizePendingAmount {
+      ...Money
+    }
+    chargePendingAmount {
+      ...Money
+    }
+    refundPendingAmount {
+      ...Money
+    }
+    cancelPendingAmount {
       ...Money
     }
   }
@@ -237,6 +259,9 @@ export const fragmentPayment = gql`
       ...Money
     }
     total {
+      ...Money
+    }
+    availableRefundAmount {
       ...Money
     }
     modified
@@ -449,17 +474,29 @@ export const fragmentOrderDetails = gql`
     totalGrantedRefund {
       ...Money
     }
-    totalPendingRefund {
+    totalRefundPending {
       ...Money
     }
     totalRefunded {
       ...Money
     }
     actions
+    totalAuthorizePending {
+      ...Money
+    }
     totalAuthorized {
       ...Money
     }
     totalCaptured {
+      ...Money
+    }
+    totalChargePending {
+      ...Money
+    }
+    totalCanceled {
+      ...Money
+    }
+    totalCancelPending {
       ...Money
     }
     totalBalance {

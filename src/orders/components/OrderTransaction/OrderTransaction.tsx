@@ -2,15 +2,18 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { Card } from "@material-ui/core";
 import React from "react";
 
 import { CardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
 import { useStyles } from "./styles";
+import { getTransactionEvents } from "./utils";
 
 export interface OrderTransactionProps {
-  transaction: TransactionItemFragment;
+  transaction: TransactionItemFragment | FakeTransaction;
+  fakeEvents?: TransactionFakeEvent[];
   onTransactionAction: (
     transactionId: string,
     actionType: TransactionActionEnum,
@@ -21,26 +24,27 @@ export interface OrderTransactionProps {
 
 const OrderTransaction: React.FC<OrderTransactionProps> = ({
   transaction,
+  fakeEvents,
   onTransactionAction,
   showActions,
   cardFooter,
 }) => {
   const classes = useStyles();
 
+  const events = getTransactionEvents(transaction, fakeEvents);
+
+  if (!transaction) {
+    return null;
+  }
+
   return (
     <Card className={classes.card}>
       <CardTitle
-        title={transaction.type}
-        link={transaction.externalUrl}
-        id={transaction.id}
-        actions={transaction.actions}
-        authorizedAmount={transaction.authorizedAmount}
-        refundedAmount={transaction.refundedAmount}
-        chargedAmount={transaction.chargedAmount}
+        transaction={transaction}
         onTransactionAction={onTransactionAction}
         showActions={showActions}
       />
-      <TransactionEvents events={transaction.events} />
+      <TransactionEvents events={events} />
       {cardFooter}
     </Card>
   );

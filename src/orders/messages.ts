@@ -1,5 +1,6 @@
-import { TransactionEventActionTypeEnum } from "@dashboard/graphql";
 import { defineMessages } from "react-intl";
+
+import { TransactionEventType } from "./types";
 
 export const orderMessages = defineMessages({
   headerOrder: {
@@ -14,10 +15,8 @@ export const orderMessages = defineMessages({
   },
 });
 
-export const transactionEventTypeMap = defineMessages<
-  TransactionEventActionTypeEnum
->({
-  AUTHORIZE: {
+export const transactionEventTypeMap = defineMessages<TransactionEventType>({
+  AUTHORIZATION: {
     defaultMessage: "Authorization",
     id: "qtF0Ft",
     description:
@@ -37,5 +36,22 @@ export const transactionEventTypeMap = defineMessages<
     defaultMessage: "Refund",
     id: "l3iOju",
     description: "transaction event type, transaction was refunded to client",
+  },
+  CHARGEBACK: {
+    defaultMessage: "Chargeback",
+    id: "DVgMit",
+    description:
+      "transaction event type, transaction was chargeback by payment provider",
+  },
+  AUTHORIZATION_ADJUSTMENT: {
+    defaultMessage: "Authorization amount adjusted",
+    id: "E1C9pp",
+    description: "transaction event type, authorization amount was changed",
+  },
+  REFUND_REVERSED: {
+    defaultMessage: "Refund reversed",
+    id: "of/+iV",
+    description:
+      "transaction event type, refund was reversed, funds are back to store account",
   },
 });

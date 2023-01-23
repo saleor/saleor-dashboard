@@ -1,6 +1,10 @@
 import avatarImage from "@assets/images/avatars/avatar1.png";
 import { permissions } from "@dashboard/fixtures";
-import { StaffListQuery, StaffMemberDetailsFragment } from "@dashboard/graphql";
+import {
+  StaffListQuery,
+  StaffMemberAvatarFragment,
+  StaffMemberDetailsFragment,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 
 export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
@@ -150,4 +154,14 @@ export const staffMember: StaffMemberDetailsFragment = {
     ...p,
     __typename: "UserPermission",
   })),
+};
+
+export const staffMemberAvatar: StaffMemberAvatarFragment = {
+  avatar: { __typename: "Image" as "Image", url: avatarImage },
+  email: "admin@example.com",
+  firstName: "Jacob",
+  id: "VXNlcjoyMQ==",
+  isActive: true,
+  lastName: "Smith",
+  __typename: "User",
 };

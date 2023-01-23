@@ -30,7 +30,11 @@ export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props
           <OrderManualTransactionForm.Form className={classes.form}>
             <OrderManualTransactionForm.DescriptionField
               className={classes.descriptionInput}
-              label={intl.formatMessage(commonMessages.description)}
+              label={intl.formatMessage(commonMessages.descriptionOptional)}
+            />
+            <OrderManualTransactionForm.PspReferenceField
+              className={classes.pspReferenceInput}
+              label={intl.formatMessage(commonMessages.pspReferenceOptional)}
             />
             <OrderManualTransactionForm.PriceInputField
               className={classes.priceInput}
