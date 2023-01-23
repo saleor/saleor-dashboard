@@ -12,6 +12,7 @@ import {
 } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
