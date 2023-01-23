@@ -33,7 +33,7 @@ export interface CommonError<ErrorCode> {
 export function getCommonFormFieldErrorMessage<ErrorCode>(
   error: CommonError<ErrorCode> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (error) {
     switch (error.code) {
       case "GRAPHQL_ERROR":
