@@ -19,7 +19,7 @@ const messages = defineMessages({
 function getShippingErrorMessage(
   err: Omit<ShippingErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case ShippingErrorCode.ALREADY_EXISTS:

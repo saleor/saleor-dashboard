@@ -1,19 +1,27 @@
 import { EditorCore } from "@dashboard/components/RichTextEditor";
 import { OutputData } from "@editorjs/editorjs";
-import { useMemo, useRef, useState } from "react";
+import { MutableRefObject, useMemo, useRef, useState } from "react";
 
 interface UseRichTextOptions {
-  initial: string | null;
+  initial: string | null | undefined;
   loading?: boolean;
   triggerChange: () => void;
+}
+
+interface UseRichTextResult {
+  editorRef: MutableRefObject<EditorCore | null>;
+  handleChange: () => void;
+  getValue: () => Promise<OutputData>;
+  defaultValue: OutputData | undefined;
+  isReadyForMount: boolean;
 }
 
 export function useRichText({
   initial,
   loading,
   triggerChange,
-}: UseRichTextOptions) {
-  const editorRef = useRef<EditorCore>(null);
+}: UseRichTextOptions): UseRichTextResult {
+  const editorRef = useRef<EditorCore | null>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
 
   const handleChange = () => {
@@ -33,7 +41,7 @@ export function useRichText({
       return;
     }
 
-    if (initial === undefined) {
+    if (!initial) {
       setIsReadyForMount(true);
       return "";
     }

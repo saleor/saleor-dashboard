@@ -20,6 +20,10 @@ function createMultiAutocompleteSelectHandler(
     const id = event.target.value;
     const choice = combinedChoices.find(choice => choice.value === id);
 
+    if (!choice) {
+      return;
+    }
+
     setSelected(toggle(choice, selected, (a, b) => a.value === b.value));
   };
 }

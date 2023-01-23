@@ -21,7 +21,7 @@ const messages = defineMessages({
 function getChannelsErrorMessage(
   err: Omit<ChannelErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case ChannelErrorCode.ALREADY_EXISTS:

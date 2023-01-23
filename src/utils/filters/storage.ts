@@ -8,7 +8,8 @@ export type GetFilterTabsOutput<TUrlFilters> = Array<UserFilter<TUrlFilters>>;
 function getFilterTabs<TUrlFilters>(
   key: string,
 ): GetFilterTabsOutput<TUrlFilters> {
-  return JSON.parse(localStorage.getItem(key)) || [];
+  const filterTabs = localStorage.getItem(key);
+  return filterTabs ? JSON.parse(filterTabs) : [];
 }
 
 function saveFilterTab<TUrlFilters>(

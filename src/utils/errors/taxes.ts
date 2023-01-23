@@ -20,7 +20,7 @@ export type TaxClassError =
 function getTaxesErrorMessage(
   err: Omit<TaxClassError, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
