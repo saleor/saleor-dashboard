@@ -53,10 +53,6 @@ describe("As an admin I want to update sales", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        updateTaxConfigurationForChannel({
-          channelSlug: defaultChannel.slug,
-          pricesEnteredWithTax: true,
-        });
         getDefaultTaxClass();
       })
       .then(taxResp => {
@@ -109,6 +105,10 @@ describe("As an admin I want to update sales", () => {
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
   });
 
   it(

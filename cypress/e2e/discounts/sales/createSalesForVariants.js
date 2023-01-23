@@ -49,10 +49,6 @@ describe("Sales discounts for variant", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        updateTaxConfigurationForChannel({
-          channelSlug: defaultChannel.slug,
-          pricesEnteredWithTax: true,
-        });
         getDefaultTaxClass();
       })
       .then(taxResp => {
@@ -99,6 +95,10 @@ describe("Sales discounts for variant", () => {
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
   });
 
   it(

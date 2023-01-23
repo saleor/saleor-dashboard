@@ -64,16 +64,16 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           shippingMethodName: resp.shippingMethod.name,
           variantsList: resp.variantsList,
         };
-        updateTaxConfigurationForChannel({
-          channelSlug: defaultChannel.slug,
-          pricesEnteredWithTax: true,
-        });
         cy.checkIfDataAreNotNull(dataForCheckout);
       });
   });
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
   });
 
   it(

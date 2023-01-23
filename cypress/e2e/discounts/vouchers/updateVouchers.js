@@ -55,6 +55,13 @@ describe("As an admin I want to update vouchers", () => {
     cy.checkIfDataAreNotNull({ dataForCheckout, defaultChannel, product });
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
+  });
   it(
     "should delete voucher. TC: SALEOR_1905",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
