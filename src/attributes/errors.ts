@@ -14,9 +14,9 @@ const messages = defineMessages({
 });
 
 export function getAttributeSlugErrorMessage(
-  err: AttributeErrorFragment,
+  err: AttributeErrorFragment | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   switch (err?.code) {
     case AttributeErrorCode.UNIQUE:
       return intl.formatMessage(messages.attributeSlugUnique);
@@ -26,9 +26,9 @@ export function getAttributeSlugErrorMessage(
 }
 
 export function getAttributeValueErrorMessage(
-  err: AttributeErrorFragment,
+  err: AttributeErrorFragment | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   switch (err?.code) {
     case AttributeErrorCode.ALREADY_EXISTS:
       return intl.formatMessage(messages.attributeValueAlreadyExists);
