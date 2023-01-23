@@ -29,7 +29,7 @@ const messages = defineMessages({
 function getPageErrorMessage(
   err: Omit<PageErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case PageErrorCode.UNIQUE:

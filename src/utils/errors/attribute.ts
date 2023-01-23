@@ -21,7 +21,7 @@ const messages = defineMessages({
 function getAttributeErrorMessage(
   err: Omit<AttributeErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case AttributeErrorCode.ALREADY_EXISTS:

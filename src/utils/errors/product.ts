@@ -83,7 +83,7 @@ function getProductErrorMessage(
       >
     | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case ProductErrorCode.ATTRIBUTE_ALREADY_ASSIGNED:
@@ -119,7 +119,7 @@ function getProductErrorMessage(
 export function getProductVariantAttributeErrorMessage(
   err: Omit<ProductErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case ProductErrorCode.UNIQUE:
@@ -135,7 +135,7 @@ export function getProductVariantAttributeErrorMessage(
 export function getBulkProductErrorMessage(
   err: BulkProductErrorFragment | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err?.code === ProductErrorCode.UNIQUE && err.field === "sku") {
     return intl.formatMessage(messages.skuUnique);
   }
