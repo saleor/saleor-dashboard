@@ -7,7 +7,12 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import {
+  DialogProps,
+  FetchMoreProps,
+  RelayToFlat,
+  RelayToFlatItem,
+} from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -40,6 +45,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
+  onChange: (product: RelayToFlatItem<SearchProductsQuery["search"]>) => void;
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -56,6 +62,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
     onFetchMore,
     onSubmit,
     selectedIds,
+    onChange,
   } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
@@ -94,6 +101,11 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   };
 
   const handleChange = productId => {
+    const changedProduct = products.find(product => product.id === productId);
+    if (changedProduct) {
+      onChange(changedProduct);
+    }
+
     setProductsDict(prev => ({
       ...prev,
       [productId]: !prev[productId] ?? true,

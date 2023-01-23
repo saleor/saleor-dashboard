@@ -237,3 +237,7 @@ export enum StatusType {
 export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<
   T["edges"][0]["node"]
 >;
+
+export type RelayToFlatItem<
+  T extends { edges: Array<{ node: any }> }
+> = T["edges"][0]["node"];

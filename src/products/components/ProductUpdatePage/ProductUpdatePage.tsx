@@ -449,6 +449,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}
+                  onChange={handlers.selectAttributeReferenceOften}
                   hasMore={handlers.fetchMoreReferences?.hasMore}
                   open={canOpenAssignReferencesAttributeDialog}
                   onFetch={handlers.fetchReferences}

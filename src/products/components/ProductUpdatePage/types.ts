@@ -28,7 +28,12 @@ import {
   FormsetData,
 } from "@dashboard/hooks/useFormset";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import {
+  FetchMoreProps,
+  RelayToFlat,
+  RelayToFlatItem,
+  ReorderEvent,
+} from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
@@ -92,6 +97,9 @@ export interface ProductUpdateHandlers
     > {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
+  selectAttributeReferenceOften: (
+    product: RelayToFlatItem<SearchProductsQuery["search"]>,
+  ) => void;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;

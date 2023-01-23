@@ -19,17 +19,17 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { ProductFragment } from "@dashboard/graphql";
+import { ProductFragment, SearchProductsQuery } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
-import { useAllPrevious } from "@dashboard/hooks/usePrevious";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
 } from "@dashboard/products/utils/data";
 import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
+import { RelayToFlat, RelayToFlatItem } from "@dashboard/types";
 import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
@@ -37,7 +37,13 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
@@ -61,7 +67,10 @@ function useProductUpdateForm(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
   );
-  const allReferenceProducts = useAllPrevious(opts.referenceProducts);
+  const [
+    keepPreviusProductReference,
+    setKeepPreviusProductReference,
+  ] = useState<RelayToFlat<SearchProductsQuery["search"]>>([]);
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
@@ -148,6 +157,21 @@ function useProductUpdateForm(
     attributes.change,
     triggerChange,
   );
+
+  const handleAttributeChangeOften = (
+    product: RelayToFlatItem<SearchProductsQuery["search"]>,
+  ) => {
+    setKeepPreviusProductReference(prevProducts => {
+      const hasProduct = prevProducts.find(prod => prod.id === product.id);
+
+      if (hasProduct) {
+        return prevProducts;
+      }
+
+      return [...prevProducts, product];
+    });
+  };
+
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
@@ -185,7 +209,7 @@ function useProductUpdateForm(
       attributes.data,
       attributesWithNewFileValue.data,
       opts.referencePages,
-      allReferenceProducts,
+      keepPreviusProductReference,
     ),
     channels,
     description: null,
@@ -302,6 +326,7 @@ function useProductUpdateForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
+      selectAttributeReferenceOften: handleAttributeChangeOften,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxClass: handleTaxClassSelect,
