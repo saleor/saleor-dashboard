@@ -8,6 +8,7 @@ export const useStyles = makeStyles(
     },
     manifestText: {
       color: theme.palette.text.secondary,
+      display: "inline",
       "&:hover svg": {
         visibility: "visible",
       },

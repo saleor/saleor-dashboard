@@ -6,7 +6,7 @@ import { getCommonFormFieldErrorMessage } from "./common";
 function getWebhookErrorMessage(
   err: Omit<WebhookErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   return getCommonFormFieldErrorMessage(err, intl);
 }
 

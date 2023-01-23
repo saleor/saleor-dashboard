@@ -75,7 +75,7 @@ const messages = defineMessages({
 function getOrderErrorMessage(
   err: OrderErrorFragment,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case OrderErrorCode.BILLING_ADDRESS_NOT_SET:

@@ -36,11 +36,7 @@ export const appsList = gql`
 export const appsInProgressList = gql`
   query AppsInstallations {
     appsInstallations {
-      status
-      message
-      appName
-      manifestUrl
-      id
+      ...AppInstallation
     }
   }
 `;

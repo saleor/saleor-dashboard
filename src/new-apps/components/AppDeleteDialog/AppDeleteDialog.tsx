@@ -26,14 +26,14 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const missingName = name === null || name === "";
+  const isNameMissing = name === null || name === "";
   const isExternal = type === "EXTERNAL";
 
   const getMainText = () => {
-    if (missingName && isExternal) {
+    if (isNameMissing && isExternal) {
       return intl.formatMessage(msgs.deleteApp);
     }
-    if (missingName) {
+    if (isNameMissing) {
       return intl.formatMessage(msgs.deleteLocalApp);
     }
     if (isExternal) {

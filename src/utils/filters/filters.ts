@@ -91,7 +91,7 @@ export function getSingleValueQueryParam<
 >(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
-  if (!active) {
+  if (!active || !value) {
     return {
       [key]: undefined,
     };
@@ -161,7 +161,7 @@ export function getMinMaxQueryParam<
 >(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
   const { active, multiple, value } = param;
 
-  if (!active) {
+  if (!active || !value) {
     return {
       [keyFrom]: undefined,
       [keyTo]: undefined,

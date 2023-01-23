@@ -1,10 +1,10 @@
 import { Typography } from "@material-ui/core";
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { useStyles } from "./styles";
 
 interface SectionHeaderProps {
-  title: string;
+  title: ReactNode;
 }
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
