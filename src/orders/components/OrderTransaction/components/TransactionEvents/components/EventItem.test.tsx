@@ -29,7 +29,7 @@ describe("EventItem", () => {
     expect(row).toHaveTextContent(transactionEvent.amount.amount.toString());
     expect(row).toHaveTextContent(transactionEvent.amount.currency);
     expect(row).toHaveTextContent(transactionEvent.pspReference);
-    expect(row).toHaveTextContent("Aug 12, 2022, 04:40 PM"); // date from transactionEvent
+    expect(row).toHaveTextContent("Aug 12, 2022, 02:40 PM"); // date from transactionEvent
     expect(row).toHaveTextContent(transactionEvent.createdBy.name);
     expect(onHover).not.toHaveBeenCalled();
   });
