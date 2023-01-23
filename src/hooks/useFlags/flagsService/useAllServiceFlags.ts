@@ -9,7 +9,7 @@ export const useAllServiceFlags = (): FlagWithName[] => {
 
   return Object.entries(flags).map(([name, { value, enabled }]) => ({
     name: camelCase(name),
-    value: value ?? "",
+    value: value.toString() ?? "",
     enabled,
   }));
 };

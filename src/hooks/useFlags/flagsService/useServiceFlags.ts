@@ -14,7 +14,7 @@ export const useServiceFlags = <T extends readonly string[]>(
     if (flagsmithFlags[flagName]) {
       acc[flag] = {
         enabled: flagsmithFlags[flagName].enabled,
-        value: flagsmithFlags[flagName].value ?? "",
+        value: flagsmithFlags[flagName].value.toString() ?? "",
       };
     }
 
