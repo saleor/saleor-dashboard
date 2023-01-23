@@ -33,23 +33,14 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
 
   const events = getTransactionEvents(transaction, fakeEvents);
 
+  if (!transaction) {
+    return null;
+  }
+
   return (
     <Card className={classes.card}>
       <CardTitle
-        title={transaction.type}
-        link={transaction.externalUrl}
-        id={transaction.id}
-        actions={transaction.actions}
-        amounts={{
-          authorizedAmount: transaction.authorizedAmount,
-          authorizePendingAmount: transaction.authorizePendingAmount,
-          chargedAmount: transaction.chargedAmount,
-          chargePendingAmount: transaction.chargePendingAmount,
-          refundedAmount: transaction.refundedAmount,
-          refundPendingAmount: transaction.refundPendingAmount,
-          canceledAmount: transaction.canceledAmount,
-          cancelPendingAmount: transaction.cancelPendingAmount,
-        }}
+        transaction={transaction}
         onTransactionAction={onTransactionAction}
         showActions={showActions}
       />

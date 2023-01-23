@@ -2,7 +2,6 @@ import { appAvatar } from "@dashboard/apps/fixtures";
 import { appPath } from "@dashboard/apps/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
-import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
@@ -18,9 +17,7 @@ describe("EventCreatedBy", () => {
   it("displays a link to the app if app is passed", () => {
     render(
       <MemoryRouter>
-        <Wrapper>
-          <EventCreatedBy createdBy={appAvatar} />
-        </Wrapper>
+        <EventCreatedBy createdBy={appAvatar} />
       </MemoryRouter>,
     );
     const link = screen.getByRole("link");
@@ -35,9 +32,7 @@ describe("EventCreatedBy", () => {
   it("displays a link to the user settings if user is passed", () => {
     render(
       <MemoryRouter>
-        <Wrapper>
-          <EventCreatedBy createdBy={staffMemberAvatar} />
-        </Wrapper>
+        <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,
     );
     const link = screen.getByRole("link");

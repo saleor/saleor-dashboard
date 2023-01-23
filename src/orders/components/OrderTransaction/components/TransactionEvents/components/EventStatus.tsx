@@ -38,6 +38,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
         <Pill color="info" label={intl.formatMessage(statusMessages.request)} />
       );
     default:
-      return null;
+      const _exhaustiveCheck: never = status;
+      return _exhaustiveCheck;
   }
 };

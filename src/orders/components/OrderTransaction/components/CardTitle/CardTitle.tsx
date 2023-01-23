@@ -3,6 +3,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import { FakeTransaction } from "@dashboard/orders/types";
 import { IconButton } from "@material-ui/core";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
 import React from "react";
@@ -14,43 +15,26 @@ import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 import { useStyles } from "./styles";
 
-type TransactionAmounts = Pick<
-  TransactionItemFragment,
-  | "chargedAmount"
-  | "authorizedAmount"
-  | "refundedAmount"
-  | "canceledAmount"
-  | "chargePendingAmount"
-  | "cancelPendingAmount"
-  | "refundPendingAmount"
-  | "authorizePendingAmount"
->;
-
 interface CardTitleProps {
-  title: string;
-  id: string;
-  amounts: TransactionAmounts;
-  actions: TransactionItemFragment["actions"];
-  link?: string;
-  className?: string;
+  transaction: TransactionItemFragment | FakeTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
   showActions?: boolean;
+  className?: string;
 }
 
 export const CardTitle: React.FC<CardTitleProps> = ({
-  title,
-  id,
+  transaction,
   onTransactionAction,
-  amounts,
-  actions,
-  link,
   showActions = true,
   className,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
 
-  const TransactionLink = link ? "a" : "span";
+  const TransactionLink = React.useMemo(
+    () => (transaction.externalUrl ? "a" : "span"),
+    [transaction.externalUrl],
+  );
 
   const {
     refundedAmount,
@@ -61,30 +45,33 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     canceledAmount,
     chargedAmount,
     authorizedAmount,
-  } = amounts;
+  } = transaction;
 
   return (
     <DefaultCardTitle
       className={className}
       title={
         <div className={classes.title}>
-          <TransactionLink href={link} className={classes.methodName}>
-            {link && (
+          <TransactionLink
+            href={transaction.externalUrl}
+            className={classes.methodName}
+          >
+            {transaction.externalUrl && (
               <IconButton>
                 <LinkIcon />
               </IconButton>
             )}
-            {title}
+            {transaction.type}
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
             {showActions &&
-              actions
+              transaction.actions
                 .filter(action => action !== TransactionActionEnum.REFUND)
                 .map(action => (
                   <Button
                     variant="tertiary"
-                    onClick={() => onTransactionAction(id, action)}
+                    onClick={() => onTransactionAction(transaction.id, action)}
                   >
                     <FormattedMessage {...mapActionToMessage[action]} />
                   </Button>
