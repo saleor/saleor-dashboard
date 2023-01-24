@@ -129,7 +129,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     <Typography variant="caption">
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                     </Typography>
-                    <Typography data-test-id="generated-token">
+                    <Typography data-test-id="generated-headers">
                       <Mono className={classes.mono}>{headers}</Mono>
                     </Typography>
                     <Button
