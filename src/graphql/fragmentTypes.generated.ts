@@ -224,6 +224,7 @@
       "Webhook"
     ],
     "ObjectWithMetadata": [
+      "Address",
       "App",
       "Attribute",
       "Category",
@@ -297,9 +298,9 @@
       "ProductVariant",
       "Product",
       "ProductType",
-      "Collection",
-      "Category",
       "ProductMedia",
+      "Category",
+      "Collection",
       "PageType"
     ]
   }

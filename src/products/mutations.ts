@@ -458,3 +458,19 @@ export const ProductVariantPreorderDeactivateMutation = gql`
     }
   }
 `;
+
+export const ProductVariantBulkUpdateMutation = gql`
+  mutation ProductVariantBulkUpdate(
+    $id: ID!
+    $input: [ProductVariantBulkUpdateInput!]!
+    $errorPolicy: ErrorPolicyEnum
+  ) {
+    productVariantBulkUpdate(
+      errorPolicy: $errorPolicy
+      product: $id
+      variants: $input
+    ) {
+      count
+    }
+  }
+`;

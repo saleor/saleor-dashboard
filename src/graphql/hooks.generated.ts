@@ -12404,6 +12404,45 @@ export function useProductVariantPreorderDeactivateMutation(baseOptions?: Apollo
 export type ProductVariantPreorderDeactivateMutationHookResult = ReturnType<typeof useProductVariantPreorderDeactivateMutation>;
 export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResult<Types.ProductVariantPreorderDeactivateMutation>;
 export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
+export const ProductVariantBulkUpdateDocument = gql`
+    mutation ProductVariantBulkUpdate($id: ID!, $input: [ProductVariantBulkUpdateInput!]!, $errorPolicy: ErrorPolicyEnum) {
+  productVariantBulkUpdate(
+    errorPolicy: $errorPolicy
+    product: $id
+    variants: $input
+  ) {
+    count
+  }
+}
+    `;
+export type ProductVariantBulkUpdateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>;
+
+/**
+ * __useProductVariantBulkUpdateMutation__
+ *
+ * To run a mutation, you first call `useProductVariantBulkUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantBulkUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [productVariantBulkUpdateMutation, { data, loading, error }] = useProductVariantBulkUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      errorPolicy: // value for 'errorPolicy'
+ *   },
+ * });
+ */
+export function useProductVariantBulkUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>(ProductVariantBulkUpdateDocument, options);
+      }
+export type ProductVariantBulkUpdateMutationHookResult = ReturnType<typeof useProductVariantBulkUpdateMutation>;
+export type ProductVariantBulkUpdateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkUpdateMutation>;
+export type ProductVariantBulkUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>;
 export const InitialProductFilterAttributesDocument = gql`
     query InitialProductFilterAttributes {
   attributes(first: 100, filter: {type: PRODUCT_TYPE}) {
