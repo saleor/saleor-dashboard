@@ -54,7 +54,7 @@ beforeEach(() => {
 });
 
 describe("User", () => {
-  it("will be logged in if has valid credentials", async done => {
+  it("will be logged in if has valid credentials", async () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
@@ -65,11 +65,9 @@ describe("User", () => {
       expect(result.user?.email).toBe(adminCredentials.email);
     });
     expect(hook.current.authenticated).toBe(true);
-
-    done();
   });
 
-  it("will not be logged in if doesn't have valid credentials", async done => {
+  it("will not be logged in if doesn't have valid credentials", async () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
@@ -80,11 +78,9 @@ describe("User", () => {
       expect(result.user).toBe(null);
     });
     expect(hook.current.authenticated).toBe(false);
-
-    done();
   });
 
-  it("will not be logged in if is non-staff", async done => {
+  it("will not be logged in if is non-staff", async () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
@@ -95,7 +91,5 @@ describe("User", () => {
       expect(result.user).toBe(null);
     });
     expect(hook.current.authenticated).toBe(false);
-
-    done();
   });
 });

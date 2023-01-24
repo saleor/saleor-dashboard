@@ -20,7 +20,7 @@ const messages = defineMessages({
 function getStockErrorMessage(
   err: Omit<StockErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case StockErrorCode.UNIQUE:
@@ -34,7 +34,7 @@ function getStockErrorMessage(
 export function getBulkStockErrorMessage(
   err: Omit<BulkStockErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   return getProductErrorMessage(err, intl);
 }
 

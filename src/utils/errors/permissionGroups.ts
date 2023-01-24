@@ -32,7 +32,7 @@ const messages = defineMessages({
 function getPermissionGroupErrorMessage(
   err: PermissionGroupErrorFragment,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case PermissionGroupErrorCode.ASSIGN_NON_STAFF_MEMBER:

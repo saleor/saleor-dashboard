@@ -20,7 +20,7 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
   return async (data: T) => {
     const { id, errors } = await create(data);
 
-    if (id === null || !!errors?.length) {
+    if (!id || !!errors?.length) {
       return errors;
     }
 
@@ -33,8 +33,8 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
         },
       });
       const updateMetaErrors = [
-        ...(updateMetaResult.data.deleteMetadata.errors || []),
-        ...(updateMetaResult.data.updateMetadata.errors || []),
+        ...(updateMetaResult.data?.deleteMetadata?.errors || []),
+        ...(updateMetaResult.data?.updateMetadata?.errors || []),
       ];
 
       if (updateMetaErrors.length > 0) {
@@ -52,8 +52,8 @@ function createMetadataCreateHandler<T extends MetadataFormData, TError>(
       });
 
       const updatePrivateMetaErrors = [
-        ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
-        ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || []),
+        ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors || []),
+        ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors || []),
       ];
 
       if (updatePrivateMetaErrors.length > 0) {

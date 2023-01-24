@@ -198,6 +198,11 @@ export const commonMessages = defineMessages({
     id: "D3idYv",
     defaultMessage: "Settings",
   },
+  noOfRows: {
+    id: "2HfSiT",
+    defaultMessage: "No. of rows",
+    description: "pagination",
+  },
 });
 
 export const errorMessages = defineMessages({

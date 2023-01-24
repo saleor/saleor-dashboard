@@ -20,13 +20,6 @@ const POLLY_RECORD_IF_MISSING = get("POLLY_RECORD_IF_MISSING")
 function setupApi() {
   setupPolly({
     adapters: [require("@pollyjs/adapter-node-http")],
-    persister: require("@pollyjs/persister-fs"),
-    persisterOptions: {
-      keepUnusedRequests: false,
-      fs: {
-        recordingsDir: path.resolve(__dirname, "../recordings"),
-      },
-    },
     matchRequestsBy: {
       headers: false,
       url: {
@@ -43,6 +36,13 @@ function setupApi() {
     },
     mode: POLLY_MODE,
     recordIfMissing: POLLY_RECORD_IF_MISSING,
+    persister: require("@pollyjs/persister-fs"),
+    persisterOptions: {
+      keepUnusedRequests: false,
+      fs: {
+        recordingsDir: path.resolve(__dirname, "../recordings"),
+      },
+    },
   });
   const cache = new InMemoryCache();
   const link = new BatchHttpLink({
