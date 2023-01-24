@@ -4,6 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ConfirmButton from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -36,11 +37,18 @@ function handleCopy(token: string) {
   navigator.clipboard.writeText(token);
 }
 
+const Mono = ({ children, className }) => (
+  <span className={className}>{children}</span>
+);
+const createHeadersString = (token: string) =>
+  `{\n  "authorization": "Bearer ${token}"\n}`;
+
 const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
   const classes = useStyles(props);
+  const headers = createHeadersString(token);
 
   React.useEffect(() => {
     if (token !== undefined) {
@@ -51,6 +59,10 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   useModalDialogOpen(open, {
     onClose: () => setStep("form"),
   });
+
+  const openPlayground = () => {
+    window.open(getApiUrl(), "_blank");
+  };
 
   return (
     <Dialog open={open} fullWidth maxWidth="sm">
@@ -89,20 +101,17 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                 <>
                   <Typography>
                     <FormattedMessage
-                      id="t9a9GQ"
-                      defaultMessage="We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+                      id="4T/RzC"
+                      defaultMessage="Make sure to save token, you won’t be able to see it again."
                     />
                   </Typography>
                   <CardSpacer />
                   <Paper className={classes.paper} elevation={0}>
                     <Typography variant="caption">
-                      <FormattedMessage
-                        id="Kxiige"
-                        defaultMessage="Generated Token"
-                      />
+                      <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
                     </Typography>
                     <Typography data-test-id="generated-token">
-                      {token}
+                      <Mono className={classes.mono}>{token}</Mono>
                     </Typography>
                     <Button
                       className={classes.copy}
@@ -115,6 +124,33 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       />
                     </Button>
                   </Paper>
+                  <CardSpacer />
+                  <Paper className={classes.paper} elevation={0}>
+                    <Typography variant="caption">
+                      <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
+                    </Typography>
+                    <Typography data-test-id="generated-token">
+                      <Mono className={classes.mono}>{headers}</Mono>
+                    </Typography>
+                    <Button
+                      className={classes.copy}
+                      onClick={() => handleCopy(headers)}
+                    >
+                      <FormattedMessage
+                        id="ZhqH8J"
+                        defaultMessage="Copy headers"
+                        description="button"
+                      />
+                    </Button>
+                    <Button className={classes.copy} onClick={openPlayground}>
+                      <FormattedMessage
+                        id="0KmZCN"
+                        defaultMessage="Open playground"
+                        description="button"
+                      />
+                    </Button>
+                  </Paper>
+                  <CardSpacer />
                 </>
               )}
             </DialogContent>
