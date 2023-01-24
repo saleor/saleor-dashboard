@@ -62,10 +62,12 @@ export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = (
             name: data.name,
             secretKey: data.secretKey,
             targetUrl: data.targetUrl,
+            query: data.subscriptionQuery,
           },
         },
       }),
     );
+
   if (!webhook && !loading) {
     return <NotFoundPage backHref={CustomAppUrls.resolveAppListUrl()} />;
   }
