@@ -2,18 +2,14 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { getApiUrl } from "@dashboard/config";
 import NodeHttpAdapter from "@pollyjs/adapter-node-http";
-import { Polly } from "@pollyjs/core";
 import FSPersister from "@pollyjs/persister-fs";
 import { createFetch } from "@saleor/sdk";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
-Polly.register(NodeHttpAdapter);
-Polly.register(FSPersister);
-
 function setupApi() {
   setupPolly({
-    adapters: ["node-http"],
+    adapters: [NodeHttpAdapter],
     matchRequestsBy: {
       headers: false,
       url: {
@@ -27,7 +23,7 @@ function setupApi() {
         username: false,
       },
     },
-    persister: "fs",
+    persister: FSPersister,
     persisterOptions: {
       fs: {
         recordingsDir: path.resolve(__dirname, "../recordings"),

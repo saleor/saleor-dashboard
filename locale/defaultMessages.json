@@ -300,6 +300,10 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0KmZCN": {
+    "context": "button",
+    "string": "Open playground"
+  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -827,6 +831,9 @@
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
   },
+  "4T/RzC": {
+    "string": "Make sure to save token, you won’t be able to see it again."
+  },
   "4VOIum": {
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
@@ -974,6 +981,9 @@
   },
   "5ZvuVw": {
     "string": "No products matching given query"
+  },
+  "5ZxAiY": {
+    "string": "Token"
   },
   "5aiFbL": {
     "context": "tabel column header",
@@ -4567,6 +4577,9 @@
     "context": "error message",
     "string": "Cannot choose a shipping method for an order without the shipping address"
   },
+  "Wm+KUd": {
+    "string": "Headers"
+  },
   "WnlZMO": {
     "context": "title",
     "string": "There’s a problem with app."
@@ -4964,6 +4977,10 @@
   "ZhaXLU": {
     "context": "button",
     "string": "Copy"
+  },
+  "ZhqH8J": {
+    "context": "button",
+    "string": "Copy headers"
   },
   "Zhxu58": {
     "context": "Fixed amount subtitle",
@@ -7274,9 +7291,6 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
-  },
-  "t9a9GQ": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
   "tA5HJx": {
     "context": "webhook input help text",

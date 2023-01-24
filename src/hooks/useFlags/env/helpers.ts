@@ -30,3 +30,5 @@ export const readAllFlagsFromEnv = (): Record<string, string> => {
 
   return {};
 };
+
+export const isFlagEnabled = (flag: string) => flag !== "" && flag !== "false";
