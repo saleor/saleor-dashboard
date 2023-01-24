@@ -10,6 +10,7 @@ import {
 import {
   AttributeErrorFragment,
   BulkProductErrorFragment,
+  ErrorPolicyEnum,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
   ProductErrorFragment,
@@ -22,11 +23,11 @@ import {
   useProductUpdateMutation,
   useProductVariantBulkCreateMutation,
   useProductVariantBulkDeleteMutation,
+  useProductVariantBulkUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVariantDatagridChannelListingUpdateMutation,
   useVariantDatagridStockUpdateMutation,
-  useVariantDatagridUpdateMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -84,7 +85,7 @@ export function useProductUpdateHandler(
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [updateStocks] = useVariantDatagridStockUpdateMutation({});
-  const [updateVariant] = useVariantDatagridUpdateMutation();
+  const [updateVariants] = useProductVariantBulkUpdateMutation();
   const [createVariants] = useProductVariantBulkCreateMutation();
   const [deleteVariants] = useProductVariantBulkDeleteMutation();
 
@@ -161,9 +162,6 @@ export function useProductUpdateHandler(
       ...getStocks(product.variants, data.variants).map(variables =>
         updateStocks({ variables }),
       ),
-      ...getVariantInputs(product.variants, data.variants).map(variables =>
-        updateVariant({ variables }),
-      ),
       ...getVariantChannels(product.variants, data.variants).map(variables =>
         updateVariantChannels({
           variables,
@@ -184,6 +182,16 @@ export function useProductUpdateHandler(
           },
         }),
       );
+    }
+
+    if (data.variants.updates.length > 0) {
+      await updateVariants({
+        variables: {
+          id: product.id,
+          input: getVariantInputs(product.variants, data.variants),
+          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+        },
+      });
     }
 
     const variantMutationResults = await Promise.all<FetchResult>(mutations);

@@ -17,9 +17,9 @@ import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
+  ProductVariantBulkUpdateInput,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
-  VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@dashboard/graphql";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
@@ -75,19 +75,17 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
 export function getVariantInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
-): VariantDatagridUpdateMutationVariables[] {
+): ProductVariantBulkUpdateInput[] {
   return variants
     .map(
-      (variant, variantIndex): VariantDatagridUpdateMutationVariables => ({
+      (variant, variantIndex): ProductVariantBulkUpdateInput => ({
         id: variant.id,
-        input: getVariantInput(data, variantIndex),
+        ...getVariantInput(data, variantIndex),
       }),
     )
     .filter(
       variables =>
-        variables.input.sku ||
-        variables.input.name ||
-        variables.input.attributes.length > 0,
+        variables.sku || variables.name || variables.attributes.length > 0,
     );
 }
 
