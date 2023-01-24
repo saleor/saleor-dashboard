@@ -470,7 +470,9 @@ export const ProductVariantBulkUpdateMutation = gql`
       product: $id
       variants: $input
     ) {
-      count
+      errors {
+        ...BulkProductError
+      }
     }
   }
 `;

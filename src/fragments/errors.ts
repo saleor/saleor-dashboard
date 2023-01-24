@@ -115,6 +115,7 @@ export const bulkProductErrorFragment = gql`
     index
     channels
     message
+    attributes
   }
 `;
 export const bulkStockErrorFragment = gql`

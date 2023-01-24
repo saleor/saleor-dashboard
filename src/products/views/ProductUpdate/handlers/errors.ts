@@ -3,12 +3,12 @@ import {
   ProductChannelListingUpdateMutation,
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
+  ProductVariantBulkUpdateMutation,
   ProductVariantChannelListingUpdateMutation,
   ProductVariantChannelListingUpdateMutationVariables,
   StockInput,
   VariantDatagridStockUpdateMutation,
   VariantDatagridStockUpdateMutationVariables,
-  VariantDatagridUpdateMutation,
   VariantDatagridUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { hasMutationErrors } from "@dashboard/misc";
@@ -40,6 +40,27 @@ export type ProductVariantListError =
       index: number;
       type: "create";
     };
+
+export function getVariantUpdateMutationErrors(
+  mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
+) {
+  const mutationErrors = mutationResult.data.productVariantBulkUpdate.errors;
+
+  if (!mutationErrors.length) {
+    return [];
+  }
+
+  const variables = mutationResult.extensions
+    .variables as VariantDatagridUpdateMutationVariables;
+
+  return mutationErrors.map<ProductVariantListError>(error => ({
+    __typename: "DatagridError",
+    type: "variantData",
+    variantId: (variables as VariantDatagridUpdateMutationVariables).id,
+    error: error.code,
+    attributes: error.attributes,
+  }));
+}
 
 export function getProductVariantListErrors(
   productChannelsUpdateResult: FetchResult<ProductChannelListingUpdateMutation>,
@@ -88,21 +109,6 @@ export function getProductVariantListErrors(
             warehouseId: null,
           })),
         ];
-      }
-
-      if (result.data.productVariantUpdate) {
-        const data = result.data as VariantDatagridUpdateMutation;
-        const variables = result.extensions
-          .variables as VariantDatagridUpdateMutationVariables;
-        return data.productVariantUpdate.errors.map<ProductVariantListError>(
-          error => ({
-            __typename: "DatagridError",
-            type: "variantData",
-            variantId: (variables as VariantDatagridUpdateMutationVariables).id,
-            error: error.code,
-            attributes: error.attributes,
-          }),
-        );
       }
 
       if (result.data.productVariantBulkCreate) {

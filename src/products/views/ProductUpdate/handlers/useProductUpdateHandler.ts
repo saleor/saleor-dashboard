@@ -45,7 +45,11 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { getProductVariantListErrors, ProductVariantListError } from "./errors";
+import {
+  getProductVariantListErrors,
+  getVariantUpdateMutationErrors,
+  ProductVariantListError,
+} from "./errors";
 import {
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
@@ -185,13 +189,15 @@ export function useProductUpdateHandler(
     }
 
     if (data.variants.updates.length > 0) {
-      await updateVariants({
+      const result = await updateVariants({
         variables: {
           id: product.id,
           input: getVariantInputs(product.variants, data.variants),
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },
       });
+
+      errors = [...errors, ...getVariantUpdateMutationErrors(result)];
     }
 
     const variantMutationResults = await Promise.all<FetchResult>(mutations);
