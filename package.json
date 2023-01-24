@@ -217,6 +217,7 @@
       "FLAGS_SERVICE_ENABLED": false,
       "FLAGS": {}
     },
+    "globalSetup": "<rootDir>/testUtils/globalSetup.ts",
     "setupFilesAfterEnv": [
       "jest-canvas-mock",
       "jest-localstorage-mock",
