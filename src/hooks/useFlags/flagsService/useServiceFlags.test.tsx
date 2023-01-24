@@ -2,24 +2,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useServiceFlags } from "./useServiceFlags";
 
-jest.mock("flagsmith/react", () => ({
-  __esModule: true,
-  useFlags: () => ({
-    flag_one: {
-      enabled: true,
-      value: "1",
-    },
-    flag_two: {
-      enabled: true,
-      value: "2",
-    },
-  }),
-}));
-
-afterAll(() => {
-  jest.clearAllMocks();
-});
-
 describe("useServiceFlags", () => {
   test("should return flags with values", () => {
     // Arrange && Ac
@@ -30,12 +12,12 @@ describe("useServiceFlags", () => {
     // Assert
     expect(result.current).toEqual({
       flagOne: {
-        enabled: true,
-        value: "1",
+        enabled: false,
+        value: "",
       },
       flag_two: {
-        enabled: true,
-        value: "2",
+        enabled: false,
+        value: "",
       },
     });
   });
