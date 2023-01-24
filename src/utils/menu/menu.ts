@@ -27,9 +27,11 @@ export type IFlatMenu<TMenuData = {}, TValue = string> = Array<
 export function validateMenuOptions<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
 ): boolean {
+  const isValue = (val: TValue | undefined): val is TValue => val !== undefined;
+
   const values: TValue[] = toFlat(menu)
     .map(menuItem => menuItem.value)
-    .filter(value => value !== undefined);
+    .filter(isValue);
   const uniqueValues = Array.from(new Set(values));
   return uniqueValues.length === values.length;
 }
@@ -56,9 +58,9 @@ export function getMenuItemByValue<TMenuData = {}, TValue = string>(
   value: TValue,
 ): IMenuItem<TMenuData, TValue> {
   const flatMenu = toFlat(menu);
-  const flatMenuItem: IFlatMenuItem<TMenuData, TValue> = flatMenu.find(
-    menuItem => menuItem.value === value,
-  );
+  const flatMenuItem:
+    | IFlatMenuItem<TMenuData, TValue>
+    | undefined = flatMenu.find(menuItem => menuItem.value === value);
 
   if (flatMenuItem === undefined) {
     throw new Error(`Value ${value} does not exist in menu`);
@@ -94,6 +96,10 @@ function _walkToRoot<TMenuData = {}, TValue = string>(
 ): IFlatMenu<TMenuData, TValue> {
   const menuItem = flatMenu.find(menuItem => menuItem.id === parent);
 
+  if (menuItem === undefined) {
+    throw new Error(`Value ${parent} does not exist in menu`);
+  }
+
   if (menuItem.parent === null) {
     return [menuItem];
   }
@@ -107,6 +113,10 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
   const flatMenu = toFlat(menu);
   const menuItem = flatMenu.find(menuItem => menuItem.value === value);
 
+  if (menuItem === undefined) {
+    throw new Error(`Value ${value} does not exist in menu`);
+  }
+
   return (menuItem.parent === null
     ? [menuItem]
     : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
@@ -116,7 +126,7 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
 function _toFlat<TMenuData = {}, TValue = string>(
   menuItem: IMenuItem<TMenuData, TValue>,
   sort: number,
-  parent: string,
+  parent: string | null,
 ): IFlatMenu<TMenuData, TValue> {
   const id = parent ? [parent, sort].join(":") : sort.toString();
   const flatMenuItem: IFlatMenuItem<TMenuData, TValue> = {

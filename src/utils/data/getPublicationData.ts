@@ -1,5 +1,5 @@
 interface PublicationData {
-  publicationDate: string;
+  publicationDate: string | null;
   isPublished: boolean;
 }
 

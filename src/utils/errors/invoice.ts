@@ -40,7 +40,7 @@ const messages = defineMessages({
 function getInvoiceErrorMessage(
   err: InvoiceErrorFragment,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err) {
     switch (err.code) {
       case InvoiceErrorCode.EMAIL_NOT_SET:

@@ -72,7 +72,7 @@ type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
 type GetSortQueryVariables<
   TSortField extends string,
   TParams extends Record<any, any>
-> = (params: TParams) => SortingInput<TSortField>;
+> = (params: TParams) => SortingInput<TSortField> | undefined;
 export function createGetSortQueryVariables<
   TUrlField extends string,
   TSortField extends string,
