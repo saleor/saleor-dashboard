@@ -5095,6 +5095,129 @@ export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHook
 export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
+export const TriggerWebhookDryRunDocument = gql`
+    mutation TriggerWebhookDryRun($objectId: ID!, $query: String!) {
+  webhookDryRun(objectId: $objectId, query: $query) {
+    payload
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type TriggerWebhookDryRunMutationFn = Apollo.MutationFunction<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>;
+
+/**
+ * __useTriggerWebhookDryRunMutation__
+ *
+ * To run a mutation, you first call `useTriggerWebhookDryRunMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTriggerWebhookDryRunMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [triggerWebhookDryRunMutation, { data, loading, error }] = useTriggerWebhookDryRunMutation({
+ *   variables: {
+ *      objectId: // value for 'objectId'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useTriggerWebhookDryRunMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>(TriggerWebhookDryRunDocument, options);
+      }
+export type TriggerWebhookDryRunMutationHookResult = ReturnType<typeof useTriggerWebhookDryRunMutation>;
+export type TriggerWebhookDryRunMutationResult = Apollo.MutationResult<Types.TriggerWebhookDryRunMutation>;
+export type TriggerWebhookDryRunMutationOptions = Apollo.BaseMutationOptions<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>;
+export const CheckoutListDocument = gql`
+    query CheckoutList($first: Int, $after: String, $last: Int, $before: String) {
+  checkouts(before: $before, after: $after, first: $first, last: $last) {
+    edges {
+      cursor
+      node {
+        id
+        created
+      }
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useCheckoutListQuery__
+ *
+ * To run a query within a React component, call `useCheckoutListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckoutListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckoutListQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useCheckoutListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListDocument, options);
+      }
+export function useCheckoutListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListDocument, options);
+        }
+export type CheckoutListQueryHookResult = ReturnType<typeof useCheckoutListQuery>;
+export type CheckoutListLazyQueryHookResult = ReturnType<typeof useCheckoutListLazyQuery>;
+export type CheckoutListQueryResult = Apollo.QueryResult<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>;
+export const ChannelListDocument = gql`
+    query ChannelList {
+  channels {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useChannelListQuery__
+ *
+ * To run a query within a React component, call `useChannelListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelListQuery, Types.ChannelListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListDocument, options);
+      }
+export function useChannelListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelListQuery, Types.ChannelListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListDocument, options);
+        }
+export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
+export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
+export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
 export const CheckIfOrderExistsDocument = gql`
     query CheckIfOrderExists($id: ID!) {
   order(id: $id) {

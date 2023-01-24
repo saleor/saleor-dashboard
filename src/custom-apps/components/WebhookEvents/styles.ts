@@ -3,7 +3,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     eventsWrapper: {
-      overflow: "scroll",
       padding: theme.spacing(4),
       paddingLeft: 0,
     },
@@ -17,6 +16,10 @@ export const useStyles = makeStyles(
       padding: theme.spacing(1),
       minHeight: 0,
     },
+    listBody: {
+      height: 300,
+      overflow: "scroll",
+    },
     listItem: {
       minHeight: 0,
       gap: 0,
@@ -24,10 +27,7 @@ export const useStyles = makeStyles(
     },
     listItemCell: {
       paddingLeft: "0 !important",
-    },
-    listItems: {
-      height: 300,
-      overflow: "scroll",
+      wordBreak: "break-all",
     },
     checkbox: {
       padding: 0,
