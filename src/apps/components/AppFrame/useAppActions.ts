@@ -1,12 +1,11 @@
+import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
 import { appPath } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
 import {
   Actions,
   DispatchResponseEvent,
   Events,
-  NotificationAction,
   RedirectAction,
 } from "@saleor/app-sdk/app-bridge";
 import React from "react";
@@ -39,33 +38,25 @@ export const useAppActions = (
   appId: string,
 ) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
+
   const location = useLocation();
   const { closeApp } = useExternalApp();
   const intl = useIntl();
+  const { handle: handleNotification } =
+    AppActionsHandler.useHandleNotificationAction();
+  const { handle: handleUpdateRouting } =
+    AppActionsHandler.useUpdateRoutingAction(appId);
 
   const actionReducer = (
     action: Actions | undefined,
   ): DispatchResponseEvent => {
     switch (action?.type) {
       case "notification": {
-        const {
-          actionId,
-          ...notification
-        } = action.payload as NotificationAction["payload"];
-
-        notify({
-          ...notification,
-        });
-
-        return sendResponseStatus(actionId, true);
+        return handleNotification(action);
       }
       case "redirect": {
-        const {
-          to,
-          newContext,
-          actionId,
-        } = action.payload as RedirectAction["payload"];
+        const { to, newContext, actionId } =
+          action.payload as RedirectAction["payload"];
 
         let success = true;
         const appDeepUrlChange = isAppDeepUrlChange(
@@ -110,16 +101,7 @@ export const useAppActions = (
         return sendResponseStatus(actionId, success);
       }
       case "updateRouting": {
-        const { newRoute, actionId } = action.payload;
-
-        const appCompletePath = new URL(
-          appPath(encodeURIComponent(appId)),
-          getAppMountUri(),
-        ).href;
-
-        window.history.pushState(null, "", appCompletePath + newRoute);
-
-        return sendResponseStatus(actionId, true);
+        return handleUpdateRouting(action);
       }
       default: {
         throw new Error("Unknown action type");

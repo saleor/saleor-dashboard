@@ -29,4 +29,7 @@ describe("AppActionsHandler", function () {
       // expect(useNotifier).toHaveBeenCalledWith({});
     });
   });
+  describe("useUpdateRoutingAction", () => {
+    it.todo("Updated dashboard url properly");
+  });
 });
