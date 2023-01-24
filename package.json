@@ -48,7 +48,6 @@
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
     "find-test-names": "^1.17.1",
-    "flagsmith": "^3.15.1",
     "fuse.js": "^6.6.2",
     "fuzzaldrin": "^2.1.0",
     "graphql": "^15.4.0",
@@ -219,6 +218,7 @@
       "FLAGS_SERVICE_ENABLED": false,
       "FLAGS": {}
     },
+    "globalSetup": "<rootDir>/testUtils/globalSetup.ts",
     "setupFilesAfterEnv": [
       "jest-canvas-mock",
       "jest-localstorage-mock",

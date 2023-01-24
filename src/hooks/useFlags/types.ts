@@ -1,5 +1,5 @@
 export interface Flag {
-  value: string | number | boolean;
+  value: string;
   enabled: boolean;
 }
 
