@@ -115,10 +115,7 @@
       "StaffDeleted",
       "StaffUpdated",
       "TransactionActionRequest",
-      "TransactionCancelationRequested",
-      "TransactionChargeRequested",
       "TransactionItemMetadataUpdated",
-      "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
       "VoucherCreated",
@@ -227,7 +224,6 @@
       "Webhook"
     ],
     "ObjectWithMetadata": [
-      "Address",
       "App",
       "Attribute",
       "Category",
@@ -293,10 +289,6 @@
       "VoucherTranslation",
       "MenuItemTranslation"
     ],
-    "UserOrApp": [
-      "User",
-      "App"
-    ],
     "_Entity": [
       "App",
       "Address",
@@ -305,9 +297,9 @@
       "ProductVariant",
       "Product",
       "ProductType",
-      "ProductMedia",
-      "Category",
       "Collection",
+      "Category",
+      "ProductMedia",
       "PageType"
     ]
   }
