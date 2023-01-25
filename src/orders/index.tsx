@@ -112,6 +112,7 @@ const Component = () => {
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
+        {/* TODO: switch based on feature flags */}
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
         <Route path={orderRefundPath(":id")} component={OrderSendRefund} />
         <Route

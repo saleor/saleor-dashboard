@@ -1,5 +1,5 @@
 import Money from "@dashboard/components/Money";
-import { TransactionEventFragment } from "@dashboard/graphql";
+import { TransactionEventFragment } from "@dashboard/graphql/transactions";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";

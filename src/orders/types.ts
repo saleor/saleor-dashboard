@@ -1,7 +1,7 @@
 import {
   TransactionEventFragment,
   TransactionItemFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 
 /** Type of the trasaction event (e.g. CHARGE_SUCCESS -> CHARGE) */
 export type TransactionEventType =

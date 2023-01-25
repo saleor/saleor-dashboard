@@ -1,7 +1,7 @@
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { Card } from "@material-ui/core";
 import React from "react";

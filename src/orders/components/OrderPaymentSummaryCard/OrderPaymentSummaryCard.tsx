@@ -2,7 +2,10 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { Hr } from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
+import {
+  OrderAction,
+  OrderDetailsFragment,
+} from "@dashboard/graphql/transactions";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { orderGrantRefundUrl, orderRefundUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";

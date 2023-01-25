@@ -2,7 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
+import { OrderLineGrantRefundFragment } from "@dashboard/graphql/transactions";
 import { renderCollection } from "@dashboard/misc";
 import {
   Card,

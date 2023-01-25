@@ -6,14 +6,10 @@ import {
   InvoiceFragment,
   JobStatusEnum,
   OrderAction,
-  OrderDetailsFragment,
-  OrderDetailsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
-  OrderGrantedRefundFragment,
   OrderListQuery,
-  OrderPaymentFragment,
   OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -22,12 +18,19 @@ import {
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   TransactionActionEnum,
-  TransactionEventFragment,
-  TransactionEventTypeEnum,
-  TransactionItemFragment,
   TransactionKind,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import {
+  OrderDetailsFragment,
+  OrderDetailsQuery,
+  OrderGrantedRefundFragment,
+  OrderPaymentFragment,
+  TransactionEventFragment,
+  TransactionEventTypeEnum,
+  TransactionItemFragment,
+} from "@dashboard/graphql/transactions";
+// TODO: Add fixtures for types not from transactions
 import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
 import {

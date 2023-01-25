@@ -6,7 +6,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
   useOrderSendRefundMutation,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";

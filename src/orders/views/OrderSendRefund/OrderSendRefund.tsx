@@ -2,7 +2,7 @@ import {
   OrderDetailsDocument,
   useCreateManualTransactionRefundMutation,
   useOrderDetailsQuery,
-} from "@dashboard/graphql/hooks.generated";
+} from "@dashboard/graphql/transactions";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import OrderSendRefundPage from "@dashboard/orders/components/OrderSendRefundPage";
 import { getTransactionCreateErrorMessage } from "@dashboard/utils/errors/transaction";

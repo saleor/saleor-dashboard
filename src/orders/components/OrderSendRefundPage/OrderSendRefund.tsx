@@ -8,7 +8,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { orderMessages } from "@dashboard/orders/messages";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, Container } from "@material-ui/core";

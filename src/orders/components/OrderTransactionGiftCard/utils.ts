@@ -1,4 +1,7 @@
-import { GiftCardEventsEnum, OrderGiftCardFragment } from "@dashboard/graphql";
+import {
+  GiftCardEventsEnum,
+  OrderGiftCardFragment,
+} from "@dashboard/graphql/transactions";
 
 export const getUsedInGiftCardEvents = (
   giftCard: OrderGiftCardFragment,

@@ -1,7 +1,7 @@
 import {
   TransactionActionEnum,
   TransactionEventTypeEnum,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import OrderTransaction, {
   OrderTransactionProps,
 } from "@dashboard/orders/components/OrderTransaction";

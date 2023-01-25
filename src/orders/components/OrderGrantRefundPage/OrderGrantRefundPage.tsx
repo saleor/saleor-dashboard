@@ -3,7 +3,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
 import { buttonMessages } from "@dashboard/intl";
 import { orderUrl } from "@dashboard/orders/urls";
 import {

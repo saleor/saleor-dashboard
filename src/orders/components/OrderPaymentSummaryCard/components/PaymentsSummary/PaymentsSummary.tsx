@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
 import { CardContent } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";

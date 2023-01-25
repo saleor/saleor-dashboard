@@ -1,19 +1,22 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CreateManualTransactionCaptureMutation,
-  CreateManualTransactionCaptureMutationVariables,
   FulfillmentFragment,
   FulfillmentStatus,
-  OrderDetailsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
-  OrderTransactionRequestActionMutation,
-  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
+// TODO: Add feature flags
+import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
+  OrderDetailsQueryResult,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
+} from "@dashboard/graphql/transactions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   extractMutationErrors,
@@ -190,6 +193,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         disabled={
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
         }
+        // TODO: Fix type mismatch
+        // @ts-expect-error
         errors={errors}
         onNoteAdd={variables =>
           extractMutationErrors(
