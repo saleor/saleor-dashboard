@@ -60,6 +60,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           borderColor="neutralPlain"
           borderRightWidth={1}
           borderStyle="solid"
+          // @ts-ignore
           __position="sticky"
           __top={0}
           __borderLeftWidth={0}

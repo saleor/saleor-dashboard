@@ -10,6 +10,7 @@ export const RightSidebar = ({ children }) => (
     borderLeftWidth={1}
     height="100vh"
     __paddingBottom={300}
+    // @ts-ignore
     __position="sticky"
     __top={0}
     __overflowY="scroll"
