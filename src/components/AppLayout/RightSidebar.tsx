@@ -19,6 +19,9 @@ export const RightSidebar = ({ children }) => (
     __borderTopWidth={0}
     __borderBottomWidth={0}
     __borderRightWidth={0}
+    padding={6}
+    // @ts-ignore
+    __gridArea="right"
   >
     {children}
   </Box>

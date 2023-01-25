@@ -2,10 +2,9 @@ import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -17,7 +16,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -106,35 +104,30 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailedContent>
+          <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
+            <Button
+              variant="secondary"
+              className={classes.activateButton}
+              disableFocusRipple
+              onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
+            >
+              <img src={activateIcon} alt="" />
+              {data?.isActive ? (
+                <FormattedMessage
+                  id="whTEcF"
+                  defaultMessage="Deactivate"
+                  description="link"
+                />
+              ) : (
+                <FormattedMessage
+                  id="P5twxk"
+                  defaultMessage="Activate"
+                  description="link"
+                />
+              )}
+            </Button>
+          </TopNav>
           <Content>
-            <Backlink href={CustomAppUrls.resolveAppListUrl()}>
-              {intl.formatMessage(sectionNames.apps)}
-            </Backlink>
-            <PageHeader title={app?.name}>
-              <Button
-                variant="secondary"
-                className={classes.activateButton}
-                disableFocusRipple
-                onClick={
-                  data.isActive ? onAppDeactivateOpen : onAppActivateOpen
-                }
-              >
-                <img src={activateIcon} alt="" />
-                {data?.isActive ? (
-                  <FormattedMessage
-                    id="whTEcF"
-                    defaultMessage="Deactivate"
-                    description="link"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="P5twxk"
-                    defaultMessage="Activate"
-                    description="link"
-                  />
-                )}
-              </Button>
-            </PageHeader>
             {token && (
               <>
                 <CustomAppDefaultToken

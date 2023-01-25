@@ -1,9 +1,8 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import { LanguageCodeEnum, PageTranslationFragment } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   PageTranslationInputFieldName,
@@ -43,14 +42,10 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
 
   return (
     <>
-      <Backlink
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.pages,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "oUWXLO",
@@ -70,7 +65,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             languageEntityUrl(lang, TranslatableEntities.pages, translationId)
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}

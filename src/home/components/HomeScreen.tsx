@@ -1,6 +1,5 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,8 +14,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   const intl = useIntl();
 
   return (
-    <Container>
-      <PageHeader
+    <>
+      <TopNav
         title={intl.formatMessage(
           {
             id: "By5ZBp",
@@ -49,6 +48,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
           </Typography>
         </CardContent>
       </Card>
-    </Container>
+    </>
   );
 };

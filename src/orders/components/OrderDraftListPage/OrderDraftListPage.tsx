@@ -1,6 +1,6 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
@@ -58,23 +58,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
 
   return (
     <>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.draftOrders)}
-        limitText={
-          hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "w2eTzO",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed orders counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )
-        }
-      >
+      <TopNav title={intl.formatMessage(sectionNames.draftOrders)}>
         <Button
           variant="primary"
           disabled={disabled || limitsReached}
@@ -86,7 +70,20 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        limitText:{" "}
+        {hasLimits(limits, "orders") &&
+          intl.formatMessage(
+            {
+              id: "w2eTzO",
+              defaultMessage: "{count}/{max} orders",
+              description: "placed orders counter",
+            },
+            {
+              count: limits.currentUsage.orders,
+              max: limits.allowedUsage.orders,
+            },
+          )}
+      </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar

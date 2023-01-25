@@ -1,8 +1,7 @@
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import PageHeader from "@dashboard/components/PageHeader";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -40,25 +39,9 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader
+      <TopNav
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.channels)}
-        limitText={
-          hasLimits(limits, "channels") &&
-          intl.formatMessage(
-            {
-              id: "rZMT44",
-              defaultMessage: "{count}/{max} channels used",
-              description: "created channels counter",
-            },
-            {
-              count: limits.currentUsage.channels,
-              max: limits.allowedUsage.channels,
-            },
-          )
-        }
       >
         <Button
           disabled={limitReached}
@@ -72,7 +55,20 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        limitText:{" "}
+        {hasLimits(limits, "channels") &&
+          intl.formatMessage(
+            {
+              id: "rZMT44",
+              defaultMessage: "{count}/{max} channels used",
+              description: "created channels counter",
+            },
+            {
+              count: limits.currentUsage.channels,
+              max: limits.allowedUsage.channels,
+            },
+          )}
+      </TopNav>
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({

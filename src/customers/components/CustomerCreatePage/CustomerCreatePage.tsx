@@ -1,10 +1,9 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { Content } from "@dashboard/components/AppLayout/Content";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
 import {
@@ -15,13 +14,11 @@ import {
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
@@ -154,51 +151,51 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Content>
-            <Backlink href={customerListUrl()}>
-              <FormattedMessage {...sectionNames.customers} />
-            </Backlink>
-            <PageHeader
+          <>
+            <TopNav
+              href={customerListUrl()}
               title={intl.formatMessage({
                 id: "N76zUg",
                 defaultMessage: "Create Customer",
                 description: "page header",
               })}
             />
-            <Grid>
-              <div>
-                <CustomerCreateDetails
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <CustomerCreateAddress
-                  countries={countryChoices}
-                  countryDisplayName={countryDisplayName}
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-                <CardSpacer />
-                <CustomerCreateNote
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
-            <Savebar
-              disabled={isSaveDisabled}
-              state={saveButtonBar}
-              onSubmit={submit}
-              onCancel={() => navigate(customerListUrl())}
-            />
-          </Content>
+            <Content>
+              <Grid>
+                <div>
+                  <CustomerCreateDetails
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                  />
+                  <CardSpacer />
+                  <CustomerCreateAddress
+                    countries={countryChoices}
+                    countryDisplayName={countryDisplayName}
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                    onCountryChange={handleCountrySelect}
+                  />
+                  <CardSpacer />
+                  <CustomerCreateNote
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                  />
+                </div>
+              </Grid>
+              <Savebar
+                disabled={isSaveDisabled}
+                state={saveButtonBar}
+                onSubmit={submit}
+                onCancel={() => navigate(customerListUrl())}
+              />
+            </Content>
+          </>
         );
       }}
     </Form>

@@ -2,7 +2,7 @@
 import useAppState from "@dashboard/hooks/useAppState";
 // import { isDarkTheme } from "@dashboard/misc";
 import { LinearProgress } from "@material-ui/core";
-import { useActionBar, useBacklink /* useTheme*/ } from "@saleor/macaw-ui";
+import { useActionBar /* useBacklink, useTheme*/ } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 // import clsx from "clsx";
 import React from "react";
@@ -29,7 +29,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   // const fullSizeClasses = useFullSizeStyles();
   // const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor } = useActionBar();
-  const appHeaderAnchor = useBacklink();
+  // const appHeaderAnchor = useBacklink();
   // const { logout, user } = useUser();
   const [appState] = useAppState();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
@@ -70,11 +70,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           <Sidebar />
         </Box>
         <Box __height="100%" __width="100%">
-          <Box
+          {/* <Box
             __height="50px"
             className={classes.headerAnchor}
             ref={appHeaderAnchor}
-          />
+          /> */}
 
           <Box as="main" __width="100%">
             {children}

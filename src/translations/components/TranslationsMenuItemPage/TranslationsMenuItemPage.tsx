@@ -1,11 +1,10 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   LanguageCodeEnum,
   MenuItemTranslationFragment,
 } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
@@ -42,14 +41,10 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
 
   return (
     <>
-      <Backlink
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.menuItems,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "IOshTA",
@@ -74,7 +69,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
             )
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}

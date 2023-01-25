@@ -2,11 +2,10 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
@@ -19,13 +18,12 @@ import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import WarehouseInfo from "../WarehouseInfo";
 import WarehouseSettings from "../WarehouseSettings";
@@ -100,11 +98,8 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={warehouseListUrl()} title={warehouse?.name} />
             <Content>
-              <Backlink href={warehouseListUrl()}>
-                <FormattedMessage {...sectionNames.warehouses} />
-              </Backlink>
-              <PageHeader title={warehouse?.name} />
               <WarehouseInfo
                 data={data}
                 disabled={disabled}

@@ -1,5 +1,4 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import PageHeader from "@dashboard/components/PageHeader";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
@@ -51,13 +50,8 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
 
   return (
     <>
-      <Backlink href={languageListUrl}>
-        {intl.formatMessage({
-          id: "GsBRWL",
-          defaultMessage: "Languages",
-        })}
-      </Backlink>
-      <PageHeader
+      <TopNav
+        href={languageListUrl}
         title={intl.formatMessage(
           {
             id: "FemBUF",

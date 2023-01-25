@@ -11,14 +11,13 @@ import { ChannelData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import { Choice } from "@dashboard/components/SingleSelectField";
@@ -42,7 +41,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
@@ -318,18 +316,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <>
             <DetailedContent>
+              <TopNav href={productListUrl()} title={header}>
+                {extensionMenuItems.length > 0 && (
+                  <CardMenu
+                    menuItems={extensionMenuItems}
+                    data-test-id="menu"
+                  />
+                )}
+              </TopNav>
               <Content>
-                <Backlink href={productListUrl()}>
-                  {intl.formatMessage(sectionNames.products)}
-                </Backlink>
-                <PageHeader title={header}>
-                  {extensionMenuItems.length > 0 && (
-                    <CardMenu
-                      menuItems={extensionMenuItems}
-                      data-test-id="menu"
-                    />
-                  )}
-                </PageHeader>
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}

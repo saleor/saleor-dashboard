@@ -2,13 +2,12 @@ import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
@@ -30,7 +29,6 @@ import {
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
@@ -215,11 +213,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={voucherListUrl()} title={voucher?.code} />
             <Content>
-              <Backlink href={voucherListUrl()}>
-                {intl.formatMessage(sectionNames.vouchers)}
-              </Backlink>
-              <PageHeader title={voucher?.code} />
               <VoucherInfo
                 data={data}
                 disabled={disabled}

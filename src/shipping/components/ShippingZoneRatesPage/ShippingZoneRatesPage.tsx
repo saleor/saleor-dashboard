@@ -2,12 +2,11 @@ import { ChannelShippingData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { WithFormId } from "@dashboard/components/Form";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -38,7 +37,6 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { FormEventHandler } from "react";
-import { FormattedMessage } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
@@ -185,11 +183,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
         <DetailedContent>
+          <TopNav href={backHref} title={rate?.name} />
           <Content>
-            <Backlink href={backHref}>
-              <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
-            </Backlink>
-            <PageHeader title={rate?.name} />
             <ShippingRateInfo
               data={data}
               disabled={disabled}

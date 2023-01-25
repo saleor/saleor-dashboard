@@ -2,11 +2,10 @@ import { ChannelShippingData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { WithFormId } from "@dashboard/components/Form";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -32,7 +31,7 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { FormEventHandler } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
@@ -150,25 +149,23 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
         <DetailedContent>
+          <TopNav
+            href={backUrl}
+            title={
+              isPriceVariant
+                ? intl.formatMessage({
+                    id: "RXPGi/",
+                    defaultMessage: "Price Rate Create",
+                    description: "page title",
+                  })
+                : intl.formatMessage({
+                    id: "NDm2Fe",
+                    defaultMessage: "Weight Rate Create",
+                    description: "page title",
+                  })
+            }
+          />
           <Content>
-            <Backlink href={backUrl}>
-              <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
-            </Backlink>
-            <PageHeader
-              title={
-                isPriceVariant
-                  ? intl.formatMessage({
-                      id: "RXPGi/",
-                      defaultMessage: "Price Rate Create",
-                      description: "page title",
-                    })
-                  : intl.formatMessage({
-                      id: "NDm2Fe",
-                      defaultMessage: "Weight Rate Create",
-                      description: "page title",
-                    })
-              }
-            />
             <ShippingRateInfo
               data={data}
               disabled={disabled}

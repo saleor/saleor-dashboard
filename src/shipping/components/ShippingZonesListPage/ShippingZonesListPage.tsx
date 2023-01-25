@@ -1,8 +1,7 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
-import PageHeader from "@dashboard/components/PageHeader";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -11,7 +10,6 @@ import {
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { sectionNames } from "@dashboard/intl";
 import {
   ListActions,
   PageListProps,
@@ -43,17 +41,15 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
 
   return (
     <DetailedContent>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage({
+          id: "uULcph",
+          defaultMessage: "Shipping",
+          description: "header",
+        })}
+      />
       <Content>
-        <Backlink href={configurationMenuUrl}>
-          {intl.formatMessage(sectionNames.configuration)}
-        </Backlink>
-        <PageHeader
-          title={intl.formatMessage({
-            id: "uULcph",
-            defaultMessage: "Shipping",
-            description: "header",
-          })}
-        />
         <ShippingZonesList disabled={disabled} {...listProps} />
       </Content>
       <RightSidebar>

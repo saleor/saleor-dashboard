@@ -2,8 +2,8 @@ import {
   categoryAddUrl,
   CategoryListUrlSortField,
 } from "@dashboard/categories/urls";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import PageHeader from "@dashboard/components/PageHeader";
 import SearchBar from "@dashboard/components/SearchBar";
 import { CategoryFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -53,7 +53,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
 
   return (
     <>
-      <PageHeader title={intl.formatMessage(sectionNames.categories)}>
+      <TopNav title={intl.formatMessage(sectionNames.categories)}>
         <Button
           variant="primary"
           href={categoryAddUrl()}
@@ -65,7 +65,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({

@@ -5,12 +5,11 @@ import {
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Metadata from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
@@ -25,7 +24,6 @@ import {
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { pageListUrl } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
@@ -153,15 +151,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav
+              href={pageListUrl()}
+              title={
+                !pageExists ? intl.formatMessage(messages.title) : page?.title
+              }
+            />
             <Content>
-              <Backlink href={pageListUrl()}>
-                {intl.formatMessage(sectionNames.pages)}
-              </Backlink>
-              <PageHeader
-                title={
-                  !pageExists ? intl.formatMessage(messages.title) : page?.title
-                }
-              />
               <PageInfo
                 data={data}
                 disabled={loading}

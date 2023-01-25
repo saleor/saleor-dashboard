@@ -5,10 +5,10 @@ import {
   useExtensions,
 } from "@dashboard/apps/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   customerAddUrl,
   CustomerListUrlSortField,
@@ -88,17 +88,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
 
   return (
     <>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.customers)}
-        cardMenu={
-          extensionMenuItems.length > 0 && (
-            <CardMenu
-              className={classes.settings}
-              menuItems={extensionMenuItems}
-            />
-          )
-        }
-      >
+      <TopNav title={intl.formatMessage(sectionNames.customers)}>
         <ButtonWithSelect
           onClick={() => navigate(customerAddUrl)}
           options={extensionCreateButtonItems}
@@ -110,7 +100,14 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-      </PageHeader>
+        cardMenu:{" "}
+        {extensionMenuItems.length > 0 && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={extensionMenuItems}
+          />
+        )}
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({

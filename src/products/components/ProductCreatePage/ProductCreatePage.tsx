@@ -7,14 +7,13 @@ import { ChannelData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Metadata from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import {
@@ -33,7 +32,6 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import ProductVariantPrice from "@dashboard/products/components/ProductVariantPrice";
 import {
   ProductCreateUrlQueryParams,
@@ -239,11 +237,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={productListUrl()} title={header} />
             <Content>
-              <Backlink href={productListUrl()}>
-                {intl.formatMessage(sectionNames.products)}
-              </Backlink>
-              <PageHeader title={header} />
               <ProductDetailsForm
                 data={data}
                 disabled={loading}

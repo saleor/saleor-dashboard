@@ -2,12 +2,11 @@ import { validateSalePrice } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { SALE_CREATE_FORM_ID } from "@dashboard/discounts/views/SaleCreate/consts";
@@ -17,7 +16,6 @@ import {
   SaleType as SaleTypeEnum,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { sectionNames } from "@dashboard/intl";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -106,17 +104,14 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav
+              title={intl.formatMessage({
+                id: "2E1xZ0",
+                defaultMessage: "Create Sale",
+                description: "page header",
+              })}
+            />
             <Content>
-              <Backlink onClick={onBack}>
-                {intl.formatMessage(sectionNames.sales)}
-              </Backlink>
-              <PageHeader
-                title={intl.formatMessage({
-                  id: "2E1xZ0",
-                  defaultMessage: "Create Sale",
-                  description: "page header",
-                })}
-              />
               <SaleInfo
                 data={data}
                 disabled={disabled}

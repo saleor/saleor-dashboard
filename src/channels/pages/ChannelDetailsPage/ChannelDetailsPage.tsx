@@ -6,6 +6,7 @@ import { validateChannelFormData } from "@dashboard/channels/validation";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -32,6 +33,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
@@ -92,6 +94,7 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [validationErrors, setValidationErrors] = useState<
     ChannelErrorFragment[]
@@ -197,6 +200,17 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
 
         return (
           <DetailedContent>
+            <TopNav
+              href={channelsListUrl()}
+              title={
+                channel?.name ||
+                intl.formatMessage({
+                  id: "DnghuS",
+                  defaultMessage: "New Channel",
+                  description: "channel create",
+                })
+              }
+            />
             <Content>
               <ChannelForm
                 data={data}

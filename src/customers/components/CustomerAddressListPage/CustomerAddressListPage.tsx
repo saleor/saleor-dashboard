@@ -1,7 +1,6 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import PageHeader from "@dashboard/components/PageHeader";
 import { customerUrl } from "@dashboard/customers/urls";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
@@ -94,63 +93,61 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   );
 
   return (
-    <Content>
-      <Backlink href={customerUrl(customer?.id)}>
-        {fullName.trim().length > 0
-          ? intl.formatMessage(messages.fullNameDetail, { fullName })
-          : intl.formatMessage(messages.noNameToShow)}
-      </Backlink>
-      {!isEmpty && (
-        <PageHeader
-          title={
-            fullName.trim().length > 0
-              ? intl.formatMessage(messages.fullNameAddress, { fullName })
-              : intl.formatMessage(messages.noNameToShow)
-          }
-        >
+    <>
+      <TopNav
+        href={customerUrl(customer?.id)}
+        title={
+          fullName.trim().length > 0
+            ? intl.formatMessage(messages.fullNameAddress, { fullName })
+            : intl.formatMessage(messages.noNameToShow)
+        }
+      >
+        {!isEmpty && (
           <Button variant="primary" onClick={onAdd} data-test-id="add-address">
             {intl.formatMessage(messages.addAddress)}
           </Button>
-        </PageHeader>
-      )}
-      {isEmpty ? (
-        <div className={classes.empty}>
-          <Typography variant="h5">
-            {intl.formatMessage(messages.noAddressToShow)}
-          </Typography>
-          <Typography className={classes.description}>
-            {intl.formatMessage(messages.doesntHaveAddresses)}
-          </Typography>
-          <Button
-            className={classes.addButton}
-            variant="primary"
-            onClick={onAdd}
-          >
-            {intl.formatMessage(messages.addAddress)}
-          </Button>
-        </div>
-      ) : (
-        <div className={classes.root}>
-          {renderCollection(customer?.addresses, (address, addressNumber) => (
-            <CustomerAddress
-              address={address}
-              addressNumber={addressNumber + 1}
-              disabled={disabled}
-              isDefaultBillingAddress={
-                customer?.defaultBillingAddress?.id === address?.id
-              }
-              isDefaultShippingAddress={
-                customer?.defaultShippingAddress?.id === address?.id
-              }
-              onEdit={() => onEdit(address.id)}
-              onRemove={() => onRemove(address.id)}
-              onSetAsDefault={type => onSetAsDefault(address.id, type)}
-              key={address?.id || "skeleton"}
-            />
-          ))}
-        </div>
-      )}
-    </Content>
+        )}
+      </TopNav>
+      <Content>
+        {isEmpty ? (
+          <div className={classes.empty}>
+            <Typography variant="h5">
+              {intl.formatMessage(messages.noAddressToShow)}
+            </Typography>
+            <Typography className={classes.description}>
+              {intl.formatMessage(messages.doesntHaveAddresses)}
+            </Typography>
+            <Button
+              className={classes.addButton}
+              variant="primary"
+              onClick={onAdd}
+            >
+              {intl.formatMessage(messages.addAddress)}
+            </Button>
+          </div>
+        ) : (
+          <div className={classes.root}>
+            {renderCollection(customer?.addresses, (address, addressNumber) => (
+              <CustomerAddress
+                address={address}
+                addressNumber={addressNumber + 1}
+                disabled={disabled}
+                isDefaultBillingAddress={
+                  customer?.defaultBillingAddress?.id === address?.id
+                }
+                isDefaultShippingAddress={
+                  customer?.defaultShippingAddress?.id === address?.id
+                }
+                onEdit={() => onEdit(address.id)}
+                onRemove={() => onRemove(address.id)}
+                onSetAsDefault={type => onSetAsDefault(address.id, type)}
+                key={address?.id || "skeleton"}
+              />
+            ))}
+          </div>
+        )}
+      </Content>
+    </>
   );
 };
 CustomerAddressListPage.displayName = "CustomerAddressListPage";
