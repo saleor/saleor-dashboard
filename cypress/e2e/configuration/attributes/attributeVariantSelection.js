@@ -32,8 +32,8 @@ describe("As an admin I want to use attributes in variant selection", () => {
     getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
     createCategory({ name: startsWith }).then(
       categoryResp => (category = categoryResp),
-      cy.checkIfDataAreNotNull({ channel, category }),
     );
+    cy.checkIfDataAreNotNull({ channel, category });
   });
 
   beforeEach(() => {

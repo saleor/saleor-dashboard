@@ -15,6 +15,7 @@ import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersU
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   fillUpPriceList,
@@ -64,6 +65,11 @@ describe("Creating variants", () => {
         defaultChannel = resp.defaultChannel;
         warehouse = resp.warehouse;
         shippingMethod = resp.shippingMethod;
+
+        updateTaxConfigurationForChannel({
+          channelSlug: defaultChannel.slug,
+          pricesEnteredWithTax: true,
+        });
       });
 
     productUtils
@@ -195,15 +201,15 @@ describe("Creating variants", () => {
           });
         });
       enterVariantEditPage();
-      cy.addAliasToGraphRequest("ProductVariantDetails");
+      cy.addAliasToGraphRequest("VariantUpdate");
       selectChannelsForVariant();
       cy.get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@ProductVariantDetails")
+        .wait("@VariantUpdate")
         .then(({ response }) => {
           const variants = [
-            response.body.data.productVariant.product.variants[0],
+            response.body.data.productVariantUpdate.productVariant,
           ];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
