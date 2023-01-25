@@ -15,24 +15,26 @@ program
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
     if (!isPatchRelease(options.version)) {
-      const taskId = await updateEnvironment(
-        environmentId,
+      //If it's minor version, check services, to get one before current
+      //Then create environment with this service, and big db
+      const snapshotWithBigDB = "nqw0Qmbr";
+      const versionBefore = await getServiceWithVersionOneBeforeVersion(
         options.version,
         options.token,
       );
-      const throwErrorAfterTimeout = setTimeout(function() {
-        throw new Error("Environment didn't upgraded after 20 minutes");
-      }, 1200000);
-      await waitUntilTaskInProgress(
-        taskId,
+      const environmentKey = await createEnvironment(
+        options.version,
         options.token,
-        throwErrorAfterTimeout,
+        versionBefore,
+        snapshotWithBigDB,
       );
+
+      //Update environment to current version
+      await updateEnvironment(environmentKey, options.version, options.token);
       const domain = await getDomainForUpdatedEnvironment(
-        environmentId,
+        environmentKey,
         options.token,
       );
-      clearTimeout(throwErrorAfterTimeout);
       core.setOutput("url", `https://${domain}/`);
     } else {
       core.setOutput(
@@ -45,9 +47,50 @@ program
   })
   .parse();
 
-async function updateEnvironment(environmentId, version, token) {
+async function createEnvironment(version, token, versionBefore, snapshot) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}/upgrade/`,
+    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    {
+      method: "POST",
+      body: `{ 
+        "service": "${versionBefore}",
+        "project": "staging",
+        "name": "minor-release-test-${version}",
+        "domain_label": "minor-release-test-${getFormattedVersion(version)}",
+        "restore_from": "${snapshot}"
+      }`,
+      headers: {
+        Authorization: `Token ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    },
+  );
+  const responseInJson = await response.json();
+
+  if (!responseInJson.task_id)
+    throw new Error(
+      `Can't create environment- ${JSON.stringify(responseInJson)}`,
+    );
+  const throwErrorAfterTimeoutWhenCreatingEnv = setTimeout(function() {
+    throw new Error("Environment didn't crated after 20 minutes");
+  }, 1200000);
+  return await waitUntilTaskInProgress(
+    responseInJson.task_id,
+    token,
+    throwErrorAfterTimeoutWhenCreatingEnv,
+  ).then(() => {
+    clearTimeout(throwErrorAfterTimeoutWhenCreatingEnv);
+    return responseInJson.key;
+  });
+}
+
+async function updateEnvironment(environmentId, version, token) {
+  console.log(
+    `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
+  );
+  const response = await fetch(
+    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}/upgrade/`,
     {
       method: "PUT",
       body: `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
@@ -63,7 +106,15 @@ async function updateEnvironment(environmentId, version, token) {
     throw new Error(
       `Can't update environment- ${JSON.stringify(responseInJson)}`,
     );
-  return responseInJson.task_id;
+  const throwErrorAfterTimeout = setTimeout(function() {
+    throw new Error("Environment didn't upgraded after 20 minutes");
+  }, 1200000);
+  await waitUntilTaskInProgress(
+    responseInJson.task_id,
+    token,
+    throwErrorAfterTimeout,
+  );
+  clearTimeout(throwErrorAfterTimeout);
 }
 
 async function waitUntilTaskInProgress(taskId, token) {
@@ -83,9 +134,11 @@ async function waitUntilTaskInProgress(taskId, token) {
     responseInJson.status == "PENDING" ||
     responseInJson.status == "IN_PROGRESS"
   ) {
-    setTimeout(function() {
-      waitUntilTaskInProgress(taskId, token);
-    }, 10000);
+    await new Promise(resolve =>
+      setTimeout(function() {
+        resolve(waitUntilTaskInProgress(taskId, token));
+      }, 10000),
+    );
   } else if (responseInJson.status == "SUCCEEDED") {
     return responseInJson.status;
   } else if (responseInJson.status !== "SUCCEEDED") {
@@ -109,7 +162,7 @@ function getFormattedVersion(version) {
 
 async function getDomainForUpdatedEnvironment(environmentId, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/qa/environments/${environmentId}`,
+    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}`,
     {
       method: "GET",
       json: true,
@@ -142,4 +195,64 @@ async function getTheNewestVersion() {
     },
   );
   return response.data["tag_name"];
+}
+
+async function getServices(token) {
+  // us-east-1
+  const response = await fetch(
+    `https://staging-cloud.saleor.io/api/regions/us-east-1/services`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    },
+  );
+  const responseInJson = await response.json();
+  return responseInJson;
+}
+
+async function getServiceWithVersionOneBeforeVersion(version, token) {
+  const services = await getServices(token);
+  const sandboxServices = services.filter(
+    element => element.service_type === "SANDBOX",
+  );
+  const sortedServices = sortServicesByVersion(sandboxServices);
+  const currentService = sortedServices.find(service => {
+    return service.name === `saleor-staging-v${getFormattedVersion(version)}`;
+  });
+  const serviceBeforeCurrent =
+    sortedServices[sortedServices.indexOf(currentService) + 1];
+  console.log(`Selected ${serviceBeforeCurrent.name} service`);
+  return serviceBeforeCurrent.name;
+}
+
+function sortServicesByVersion(services) {
+  // This function is used to sort environments by their version
+  // It returns sorted list of services in descending order
+
+  return services.sort(function(a, b) {
+    //Convert version from string to array eg. from "3.5.7" to [3, 5, 7]
+    // Where 3 is main version, 5 is major version and 7 is patch version
+
+    const versionASplittedToArray = a.version.split(/\D/);
+    const versionBSplittedToArray = b.version.split(/\D/);
+    const mainVersionNumberA = versionASplittedToArray[0];
+    const mainVersionNumberB = versionBSplittedToArray[0];
+    const majorVersionNumberA = versionASplittedToArray[1];
+    const majorVersionNumberB = versionBSplittedToArray[1];
+    const patchVersionNumberA = versionASplittedToArray[2];
+    const patchVersionNumberB = versionBSplittedToArray[2];
+
+    //Compare two versions
+    if (mainVersionNumberA !== mainVersionNumberB) {
+      return mainVersionNumberB - mainVersionNumberA;
+    } else if (majorVersionNumberA !== majorVersionNumberB) {
+      return majorVersionNumberB - majorVersionNumberA;
+    } else if (patchVersionNumberA !== patchVersionNumberB) {
+      return patchVersionNumberB - patchVersionNumberA;
+    } else return 0;
+  });
 }
