@@ -113,6 +113,7 @@ const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
 
 const Component = () => {
   const intl = useIntl();
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -122,17 +123,20 @@ const Component = () => {
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
-        {/* TODO: switch based on feature flags */}
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
         <Route path={orderRefundPath(":id")} component={OrderSendRefund} />
-        <Route
-          path={orderGrantRefundEditPath(":orderId", ":refundId")}
-          component={OrderGrantRefundEdit}
-        />
-        <Route
-          path={orderGrantRefundPath(":id")}
-          component={OrderGrantRefund}
-        />
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundEditPath(":orderId", ":refundId")}
+            component={OrderGrantRefundEdit}
+          />
+        )}
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundPath(":id")}
+            component={OrderGrantRefund}
+          />
+        )}
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

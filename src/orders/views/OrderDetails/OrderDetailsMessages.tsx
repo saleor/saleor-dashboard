@@ -22,7 +22,6 @@ import {
   OrderUpdateMutation,
   OrderVoidMutation,
 } from "@dashboard/graphql";
-// TODO: Add feature flags
 import {
   CreateManualTransactionCaptureMutation,
   OrderTransactionRequestActionMutation,

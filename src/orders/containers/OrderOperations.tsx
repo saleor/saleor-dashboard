@@ -54,7 +54,6 @@ import {
   useOrderUpdateMutation,
   useOrderVoidMutation,
 } from "@dashboard/graphql";
-// TODO: Move into separate component behind feature flag
 import {
   CreateManualTransactionCaptureMutation,
   CreateManualTransactionCaptureMutationVariables,

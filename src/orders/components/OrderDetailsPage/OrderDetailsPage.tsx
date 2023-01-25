@@ -21,7 +21,6 @@ import {
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql/transactions";
-// TODO: Use different imports for featuer flag
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
