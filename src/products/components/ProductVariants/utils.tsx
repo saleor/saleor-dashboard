@@ -15,6 +15,7 @@ import {
 } from "@dashboard/components/Datagrid/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
+  MetadataInput,
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantBulkUpdateInput,
@@ -82,6 +83,8 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
 export function getVariantBulkInput(
   data: DatagridChangeOpts,
   index: number,
+  metadata: MetadataInput[],
+  privateMetadata: MetadataInput[],
 ): Omit<ProductVariantBulkUpdateInput, "id"> {
   const stocks = data.updates
     .filter(
@@ -136,17 +139,21 @@ export function getVariantBulkInput(
     name,
     stocks,
     channelListings,
+    metadata: metadata.filter(meta => !!meta.key),
+    privateMetadata: privateMetadata.filter(meta => !!meta.key),
   };
 }
 
 export function getVariantInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
+  metadata: MetadataInput[],
+  privateMetadata: MetadataInput[],
 ): ProductVariantBulkUpdateInput[] {
   return variants.map(
     (variant, variantIndex): ProductVariantBulkUpdateInput => ({
       id: variant.id,
-      ...getVariantBulkInput(data, variantIndex),
+      ...getVariantBulkInput(data, variantIndex, metadata, privateMetadata),
     }),
   );
 }
