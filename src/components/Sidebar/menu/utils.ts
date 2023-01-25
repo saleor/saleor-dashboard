@@ -4,13 +4,13 @@ import { AppExtensionMountEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
-import { MenuItem } from "./useMenuStructure";
+import { SidebarMenuItem } from "./types";
 
 export const mapToExtensionsItems = (
   extensions: Extension[],
-  header: MenuItem,
+  header: SidebarMenuItem,
 ) => {
-  const items: MenuItem[] = extensions.map(
+  const items: SidebarMenuItem[] = extensions.map(
     ({ label, id, app, url, permissions, open }) => ({
       id: `extension-${id}`,
       label,
@@ -26,14 +26,7 @@ export const mapToExtensionsItems = (
   return items;
 };
 
-export function isMenuActive(location: string, menuItem: MenuItem) {
-  if (menuItem.children) {
-    return menuItem.children.reduce(
-      (acc, subMenuItem) => acc || isMenuActive(location, subMenuItem),
-      false,
-    );
-  }
-
+export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   if (!menuItem.url) {
     return false;
   }
@@ -58,7 +51,7 @@ export function isMenuActive(location: string, menuItem: MenuItem) {
   });
 }
 
-const isMenuItemExtension = (menuItem: MenuItem) =>
+const isMenuItemExtension = (menuItem: SidebarMenuItem) =>
   menuItem.id.startsWith("extension-");
 
 export const getMenuItemExtension = (

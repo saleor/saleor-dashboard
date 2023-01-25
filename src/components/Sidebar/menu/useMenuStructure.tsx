@@ -30,36 +30,24 @@ import {
   TranslationsIcon,
   VouchersIcon,
 } from "@saleor/macaw-ui/next";
+import isEmpty from "lodash/isEmpty";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getMenuItemExtension, mapToExtensionsItems } from "./utils";
+import { SidebarMenuItem } from "./types";
+import { mapToExtensionsItems } from "./utils";
 
-export interface MenuItem {
-  label?: string;
-  id: string;
-  url?: string;
-  permissions?: PermissionEnum[];
-  type: "item" | "itemGroup" | "divider";
-  icon?: React.ReactNode;
-  onClick?: () => void;
-  children?: MenuItem[];
-}
+const iconSettings = {
+  color: "iconNeutralSubdued",
+  size: "medium",
+} as const;
 
 export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
 
-  const handleMenuItemClick = (id: string) => {
-    const extension = getMenuItemExtension(extensions, id);
-    if (extension) {
-      extension.open();
-      return;
-    }
-  };
-
-  const appExtensionsHeaderItem: MenuItem = {
+  const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
@@ -67,10 +55,10 @@ export function useMenuStructure() {
 
   // This will be deleted when Marketplace is released
   // Consider this solution as temporary
-  const getAppSection = (): MenuItem => {
+  const getAppSection = (): SidebarMenuItem => {
     if (MARKETPLACE_URL) {
       return {
-        icon: <MarketplaceIcon color="iconNeutralSubdued" />,
+        icon: <MarketplaceIcon {...iconSettings} />,
         label: intl.formatMessage(sectionNames.apps),
         permissions: [PermissionEnum.MANAGE_APPS],
         id: "apps_section",
@@ -99,7 +87,7 @@ export function useMenuStructure() {
     }
 
     return {
-      icon: <MarketplaceIcon color="iconNeutralSubdued" />,
+      icon: <MarketplaceIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.apps),
       permissions: [PermissionEnum.MANAGE_APPS],
       id: "apps",
@@ -108,9 +96,9 @@ export function useMenuStructure() {
     };
   };
 
-  const menuItems: MenuItem[] = [
+  const menuItems: SidebarMenuItem[] = [
     {
-      icon: <HomeIcon color="iconNeutralSubdued" />,
+      icon: <HomeIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.home),
       id: "home",
       url: "/",
@@ -151,7 +139,7 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <ProductsIcons color="iconNeutralSubdued" />,
+      icon: <ProductsIcons {...iconSettings} />,
       label: intl.formatMessage(commonMessages.catalog),
       permissions: [
         PermissionEnum.MANAGE_GIFT_CARD,
@@ -181,14 +169,14 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <OrdersIcon color="iconNeutralSubdued" />,
+      icon: <OrdersIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.orders),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
       type: "itemGroup",
     },
     {
-      children: extensions.NAVIGATION_CUSTOMERS.length > 0 && [
+      children: !isEmpty(extensions.NAVIGATION_CUSTOMERS) && [
         {
           label: intl.formatMessage(sectionNames.customers),
           permissions: [PermissionEnum.MANAGE_USERS],
@@ -201,12 +189,12 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <CustomersIcon color="iconNeutralSubdued" />,
+      icon: <CustomersIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.customers),
       permissions: [PermissionEnum.MANAGE_USERS],
       id: "customers",
       url: customerListUrl(),
-      type: extensions.NAVIGATION_CUSTOMERS.length > 0 ? "itemGroup" : "item",
+      type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
     },
 
     {
@@ -228,14 +216,14 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <VouchersIcon color="iconNeutralSubdued" />,
+      icon: <VouchersIcon {...iconSettings} />,
       label: intl.formatMessage(commonMessages.discounts),
       permissions: [PermissionEnum.MANAGE_DISCOUNTS],
       id: "discounts",
       type: "itemGroup",
     },
     {
-      children: extensions.NAVIGATION_PAGES.length > 0 && [
+      children: !isEmpty(extensions.NAVIGATION_PAGES) && [
         {
           label: intl.formatMessage(sectionNames.pages),
           permissions: [PermissionEnum.MANAGE_PAGES],
@@ -248,16 +236,16 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <TableEditIcon color="iconNeutralSubdued" />,
+      icon: <TableEditIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.pages),
       permissions: [PermissionEnum.MANAGE_PAGES],
       id: "pages",
       url: pageListPath,
-      type: extensions.NAVIGATION_PAGES.length > 0 ? "itemGroup" : "item",
+      type: !isEmpty(extensions.NAVIGATION_PAGES) ? "itemGroup" : "item",
     },
     getAppSection(),
     {
-      children: extensions.NAVIGATION_TRANSLATIONS.length > 0 && [
+      children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) && [
         {
           label: intl.formatMessage(sectionNames.translations),
           permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
@@ -270,16 +258,15 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <TranslationsIcon color="iconNeutralSubdued" />,
+      icon: <TranslationsIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.translations),
       permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
       id: "translations",
       url: languageListUrl,
-      type:
-        extensions.NAVIGATION_TRANSLATIONS.length > 0 ? "itemGroup" : "item",
+      type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
     {
-      icon: <ConfigurationIcon color="iconNeutralSubdued" />,
+      icon: <ConfigurationIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.configuration),
       permissions: getConfigMenuItemsPermissions(intl),
       id: "configure",
@@ -288,7 +275,7 @@ export function useMenuStructure() {
     },
   ];
 
-  const isMenuItemPermitted = (menuItem: MenuItem) => {
+  const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
     const userPermissions = (user?.userPermissions || []).map(
       permission => permission.code,
     );
@@ -300,11 +287,11 @@ export function useMenuStructure() {
     );
   };
 
-  const getFilteredMenuItems = (menuItems: MenuItem[]) =>
+  const getFilteredMenuItems = (menuItems: SidebarMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
 
-  return [
-    menuItems.reduce((resultItems: MenuItem[], menuItem: MenuItem) => {
+  return menuItems.reduce(
+    (resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
       if (!isMenuItemPermitted(menuItem)) {
         return resultItems;
       }
@@ -314,7 +301,7 @@ export function useMenuStructure() {
         : undefined;
 
       return [...resultItems, { ...menuItem, children: filteredChildren }];
-    }, []),
-    handleMenuItemClick,
-  ] as const;
+    },
+    [],
+  );
 }
