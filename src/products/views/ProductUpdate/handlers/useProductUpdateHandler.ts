@@ -1,4 +1,3 @@
-import { FetchResult } from "@apollo/client";
 import {
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
@@ -26,8 +25,6 @@ import {
   useProductVariantBulkUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-  useVariantDatagridChannelListingUpdateMutation,
-  useVariantDatagridStockUpdateMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -35,8 +32,6 @@ import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductU
 import { getVariantChannelsInputs } from "@dashboard/products/components/ProductVariants/datagrid/getVariantChannelsInputs";
 import {
   getStockInputs,
-  getStocks,
-  getVariantChannels,
   getVariantInput,
   getVariantInputs,
 } from "@dashboard/products/components/ProductVariants/utils";
@@ -88,7 +83,6 @@ export function useProductUpdateHandler(
 
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [updateStocks] = useVariantDatagridStockUpdateMutation({});
   const [updateVariants] = useProductVariantBulkUpdateMutation();
   const [createVariants] = useProductVariantBulkCreateMutation();
   const [deleteVariants] = useProductVariantBulkDeleteMutation();
@@ -111,10 +105,6 @@ export function useProductUpdateHandler(
       }
     },
   });
-
-  const [
-    updateVariantChannels,
-  ] = useVariantDatagridChannelListingUpdateMutation();
 
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
@@ -162,30 +152,18 @@ export function useProductUpdateHandler(
       variables: getProductChannelsUpdateVariables(product, data),
     });
 
-    const mutations: Array<Promise<FetchResult>> = [
-      ...getStocks(product.variants, data.variants).map(variables =>
-        updateStocks({ variables }),
-      ),
-      ...getVariantChannels(product.variants, data.variants).map(variables =>
-        updateVariantChannels({
-          variables,
-        }),
-      ),
-    ];
-
+    let createVariantsResults: any;
     if (data.variants.added.length > 0) {
-      mutations.push(
-        createVariants({
-          variables: {
-            id: product.id,
-            inputs: data.variants.added.map(index => ({
-              ...getVariantInput(data.variants, index),
-              channelListings: getVariantChannelsInputs(data.variants, index),
-              stocks: getStockInputs(data.variants, index).stocks,
-            })),
-          },
-        }),
-      );
+      createVariantsResults = await createVariants({
+        variables: {
+          id: product.id,
+          inputs: data.variants.added.map(index => ({
+            ...getVariantInput(data.variants, index),
+            channelListings: getVariantChannelsInputs(data.variants, index),
+            stocks: getStockInputs(data.variants, index).stocks,
+          })),
+        },
+      });
     }
 
     if (data.variants.updates.length > 0) {
@@ -200,11 +178,9 @@ export function useProductUpdateHandler(
       errors = [...errors, ...getVariantUpdateMutationErrors(result)];
     }
 
-    const variantMutationResults = await Promise.all<FetchResult>(mutations);
-
     const variantErrors = getProductVariantListErrors(
       productChannelsUpdateResult,
-      variantMutationResults,
+      [createVariantsResults],
     );
 
     errors = [...errors, ...variantErrors];

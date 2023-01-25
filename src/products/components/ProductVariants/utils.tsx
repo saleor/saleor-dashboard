@@ -18,6 +18,7 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantBulkUpdateInput,
+  ProductVariantChannelListingAddInput,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   WarehouseFragment,
@@ -37,12 +38,20 @@ import {
 import { getVariantChannelsInputs } from "./datagrid/getVariantChannelsInputs";
 import messages from "./messages";
 
+const isChangeRow = (
+  rowIndex: number,
+  currentIndex: number,
+  removedIndexArray: number[],
+) =>
+  rowIndex ===
+  currentIndex + removedIndexArray.filter(r => r <= currentIndex).length;
+
 export function getVariantInput(data: DatagridChangeOpts, index: number) {
   const attributes = data.updates
     .filter(
       change =>
         getColumnAttribute(change.column) &&
-        change.row === index + data.removed.filter(r => r <= index).length,
+        isChangeRow(change.row, index, data.removed),
     )
     .map(change => {
       const attributeId = getColumnAttribute(change.column);
@@ -55,14 +64,12 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
 
   const sku = data.updates.find(
     change =>
-      change.column === "sku" &&
-      change.row === index + data.removed.filter(r => r <= index).length,
+      change.column === "sku" && isChangeRow(change.row, index, data.removed),
   )?.data;
 
   const name = data.updates.find(
     change =>
-      change.column === "name" &&
-      change.row === index + data.removed.filter(r => r <= index).length,
+      change.column === "name" && isChangeRow(change.row, index, data.removed),
   )?.data;
 
   return {
@@ -72,21 +79,76 @@ export function getVariantInput(data: DatagridChangeOpts, index: number) {
   };
 }
 
+export function getVariantBulkInput(
+  data: DatagridChangeOpts,
+  index: number,
+): Omit<ProductVariantBulkUpdateInput, "id"> {
+  const stocks = data.updates
+    .filter(
+      change =>
+        getColumnStock(change.column) &&
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map(change => ({
+      warehouse: getColumnStock(change.column),
+      quantity: change.data.value,
+    }));
+
+  const channelListings: ProductVariantChannelListingAddInput[] = data.updates
+    .filter(
+      change =>
+        getColumnChannel(change.column) &&
+        isChangeRow(change.row, index, data.removed),
+    )
+    .map(change => ({
+      channelId: getColumnChannel(change.column),
+      price: change.data.value,
+    }));
+
+  const attributes = data.updates
+    .filter(
+      change =>
+        getColumnAttribute(change.column) &&
+        isChangeRow(change.row, index, data.removed),
+    )
+    .map(change => {
+      const attributeId = getColumnAttribute(change.column);
+
+      return {
+        id: attributeId,
+        values: [change.data.value.value],
+      };
+    });
+
+  const sku = data.updates.find(
+    change =>
+      change.column === "sku" && isChangeRow(change.row, index, data.removed),
+  )?.data;
+
+  const name = data.updates.find(
+    change =>
+      change.column === "name" && isChangeRow(change.row, index, data.removed),
+  )?.data;
+
+  return {
+    attributes,
+    sku,
+    name,
+    stocks,
+    channelListings,
+  };
+}
+
 export function getVariantInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): ProductVariantBulkUpdateInput[] {
-  return variants
-    .map(
-      (variant, variantIndex): ProductVariantBulkUpdateInput => ({
-        id: variant.id,
-        ...getVariantInput(data, variantIndex),
-      }),
-    )
-    .filter(
-      variables =>
-        variables.sku || variables.name || variables.attributes.length > 0,
-    );
+  return variants.map(
+    (variant, variantIndex): ProductVariantBulkUpdateInput => ({
+      id: variant.id,
+      ...getVariantBulkInput(data, variantIndex),
+    }),
+  );
 }
 
 export function getStockInputs(data: DatagridChangeOpts, index: number) {
