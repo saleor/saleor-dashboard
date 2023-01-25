@@ -32,7 +32,7 @@ export function getArrowDirection(asc: boolean): TableCellHeaderArrowDirection {
 // Extracts Sort object from the querystring
 export function getSortParams<
   TParams extends Sort<TFields>,
-  TFields extends string
+  TFields extends string,
 >(params: TParams): Sort<TFields> {
   return {
     asc: params.asc,
@@ -43,7 +43,7 @@ export function getSortParams<
 // Appends Sort object to the querystring params
 export function asSortParams<
   TParams extends Record<any, string>,
-  TFields extends Record<any, string>
+  TFields extends Record<any, string>,
 >(
   params: TParams,
   fields: TFields,
@@ -71,12 +71,12 @@ type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
 ) => TSortField;
 type GetSortQueryVariables<
   TSortField extends string,
-  TParams extends Record<any, any>
+  TParams extends Record<any, any>,
 > = (params: TParams) => SortingInput<TSortField> | undefined;
 export function createGetSortQueryVariables<
   TUrlField extends string,
   TSortField extends string,
-  TParams extends Record<any, any>
+  TParams extends Record<any, any>,
 >(
   getSortQueryField: GetSortQueryField<TUrlField, TSortField>,
 ): GetSortQueryVariables<TSortField, TParams> {

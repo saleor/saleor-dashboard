@@ -226,6 +226,7 @@
       "jest-localstorage-mock",
       "<rootDir>/testUtils/setup.ts"
     ],
+    "testEnvironment": "jest-environment-jsdom",
     "transform": {
       "^.+\\.(jsx?|tsx?)$": "babel-jest",
       "^.+\\.(png|svg|jpe?g)$": "jest-file"

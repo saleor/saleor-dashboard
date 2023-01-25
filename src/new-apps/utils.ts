@@ -56,9 +56,8 @@ export const getMarketplaceAppsLists = (
   }
 
   return {
-    installableMarketplaceApps: getInstallableMarketplaceApps(
-      marketplaceAppList,
-    ),
+    installableMarketplaceApps:
+      getInstallableMarketplaceApps(marketplaceAppList),
     comingSoonMarketplaceApps: getComingSoonMarketplaceApps(marketplaceAppList),
   };
 };

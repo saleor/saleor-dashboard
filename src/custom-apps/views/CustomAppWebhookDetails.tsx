@@ -20,9 +20,9 @@ export interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = ({
-  id,
-}) => {
+export const CustomAppWebhookDetails: React.FC<
+  CustomAppWebhookDetailsProps
+> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 

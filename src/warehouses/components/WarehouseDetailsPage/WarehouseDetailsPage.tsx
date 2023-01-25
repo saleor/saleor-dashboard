@@ -60,10 +60,8 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     warehouse?.address?.country.country || "",
   );
 
-  const {
-    errors: validationErrors,
-    submit: handleSubmit,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmit } =
+    useAddressValidation(onSubmit);
 
   const initialForm: WarehouseDetailsPageFormData = {
     city: warehouse?.address.city ?? "",

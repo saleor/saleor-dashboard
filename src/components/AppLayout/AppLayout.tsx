@@ -48,12 +48,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const isMdUp = useMediaQuery((theme: SaleorTheme) =>
     theme.breakpoints.up("md"),
   );
-  const {
-    availableChannels,
-    channel,
-    isPickerActive,
-    setChannel,
-  } = useAppChannel(false);
+
+  const { availableChannels, channel, isPickerActive, setChannel } =
+    useAppChannel(false);
 
   const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
   const activeMenu = menuStructure.find(menuItem =>

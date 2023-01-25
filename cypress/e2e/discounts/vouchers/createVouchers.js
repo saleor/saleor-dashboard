@@ -53,6 +53,15 @@ describe("As an admin I want to create voucher", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+
+          updateTaxConfigurationForChannel({
+            channelSlug: defaultChannel.slug,
+          });
+          cy.checkIfDataAreNotNull({
+            createdChannel,
+            dataForCheckout,
+            defaultChannel,
+          });
         },
       );
     cy.checkIfDataAreNotNull({
@@ -162,9 +171,7 @@ describe("As an admin I want to create voucher", () => {
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
-      cy.clearSessionData()
-        .loginUserViaRequest()
-        .visit(urlList.vouchers);
+      cy.clearSessionData().loginUserViaRequest().visit(urlList.vouchers);
       cy.expectSkeletonIsVisible();
       createChannel({ name }).then(channel => {
         createdChannel = channel;
