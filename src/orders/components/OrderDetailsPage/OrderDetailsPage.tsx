@@ -6,13 +6,12 @@ import {
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { DateTime } from "@dashboard/components/Date";
 import Form from "@dashboard/components/Form";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
@@ -23,9 +22,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
-import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -213,20 +209,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <DetailedContent>
+            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+              cardMenu:{" "}
+              {
+                <CardMenu
+                  menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+                />
+              }
+            </TopNav>
             <Content data-test-id="order-fulfillment">
-              <Backlink href={orderListUrl()}>
-                {intl.formatMessage(sectionNames.orders)}
-              </Backlink>
-              <PageHeader
-                className={classes.header}
-                inline
-                title={<Title order={order} />}
-                cardMenu={
-                  <CardMenu
-                    menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
-                  />
-                }
-              />
               <div className={classes.date}>
                 {order && order.created ? (
                   <Typography variant="body2">

@@ -1,9 +1,8 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import PageHeader from "@dashboard/components/PageHeader";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
@@ -50,17 +49,13 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled }) => (
         <DetailedContent>
+          <TopNav
+            href={orderUrl(order?.id)}
+            title={intl.formatMessage(messages.pageTitle, {
+              orderNumber: order?.number,
+            })}
+          />
           <Content>
-            <Backlink href={orderUrl(order?.id)}>
-              {intl.formatMessage(messages.appTitle, {
-                orderNumber: order?.number,
-              })}
-            </Backlink>
-            <PageHeader
-              title={intl.formatMessage(messages.pageTitle, {
-                orderNumber: order?.number,
-              })}
-            />
             {!!data.unfulfilledItemsQuantities.length && (
               <>
                 <ItemsCard

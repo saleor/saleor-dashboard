@@ -4,17 +4,16 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { ChannelPriceData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Grid from "@dashboard/components/Grid";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
@@ -200,17 +199,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   return (
     <>
+      <TopNav href={productUrl(productId)} title={header}>
+        {variant?.product?.defaultVariant?.id !== variant?.id && (
+          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+        )}
+      </TopNav>
       <Content>
-        <Backlink href={productUrl(productId)}>
-          {variant?.product?.name}
-        </Backlink>
-        <PageHeader title={header}>
-          {variant?.product?.defaultVariant?.id !== variant?.id && (
-            <ProductVariantSetDefault
-              onSetDefaultVariant={onSetDefaultVariant}
-            />
-          )}
-        </PageHeader>
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}

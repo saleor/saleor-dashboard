@@ -2,12 +2,11 @@ import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
 import Metadata from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   createChannelsChangeHandler,
@@ -22,7 +21,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -124,17 +122,15 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav
+              href={voucherListUrl()}
+              title={intl.formatMessage({
+                id: "PsclSa",
+                defaultMessage: "Create Voucher",
+                description: "page header",
+              })}
+            />
             <Content>
-              <Backlink href={voucherListUrl()}>
-                {intl.formatMessage(sectionNames.vouchers)}
-              </Backlink>
-              <PageHeader
-                title={intl.formatMessage({
-                  id: "PsclSa",
-                  defaultMessage: "Create Voucher",
-                  description: "page header",
-                })}
-              />
               <VoucherInfo
                 data={data}
                 errors={errors}

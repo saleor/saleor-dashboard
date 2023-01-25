@@ -1,11 +1,10 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductTypeKindEnum,
@@ -15,7 +14,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import {
   handleTaxClassChange,
   makeProductTypeKindChangeHandler,
@@ -25,7 +23,6 @@ import { FetchMoreProps, UserError } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
@@ -74,7 +71,6 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   onSubmit,
   onFetchMoreTaxClasses,
 }: ProductTypeCreatePageProps) => {
-  const intl = useIntl();
   const navigate = useNavigator();
 
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
@@ -104,11 +100,8 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={productTypeListUrl()} title={pageTitle} />
             <Content>
-              <Backlink href={productTypeListUrl()}>
-                {intl.formatMessage(sectionNames.productTypes)}
-              </Backlink>
-              <PageHeader title={pageTitle} />
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}

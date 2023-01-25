@@ -1,8 +1,6 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   GiftCardSettingsExpiryTypeEnum,
@@ -11,7 +9,6 @@ import {
   useGiftCardSettingsUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Typography } from "@material-ui/core";
 import React from "react";
@@ -62,14 +59,10 @@ const GiftCardSettingsPage: React.FC = () => {
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
 
   return (
-    <Container>
-      <Backlink href={giftCardsListPath}>
-        {intl.formatMessage(sectionNames.giftCards)}
-      </Backlink>
-      <PageHeader
-        preview
+    <>
+      <TopNav
+        href={giftCardsListPath}
         title={intl.formatMessage(messages.title)}
-        underline={true}
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, change }) => (
@@ -96,7 +89,7 @@ const GiftCardSettingsPage: React.FC = () => {
           </Grid>
         )}
       </Form>
-    </Container>
+    </>
   );
 };
 

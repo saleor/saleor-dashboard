@@ -1,13 +1,12 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import Form from "@dashboard/components/Form";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductAttributeType,
@@ -19,7 +18,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -166,11 +164,8 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={productTypeListUrl()} title={pageTitle} />
             <Content>
-              <Backlink href={productTypeListUrl()}>
-                {intl.formatMessage(sectionNames.productTypes)}
-              </Backlink>
-              <PageHeader title={pageTitle} />
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}

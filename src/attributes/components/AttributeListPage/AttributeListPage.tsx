@@ -2,7 +2,7 @@ import {
   attributeAddUrl,
   AttributeListUrlSortField,
 } from "@dashboard/attributes/urls";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -12,7 +12,6 @@ import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PageHeader from "../../../components/PageHeader";
 import {
   FilterPageProps,
   ListActions,
@@ -55,10 +54,10 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
   return (
     <>
-      <Backlink href={configurationMenuUrl}>
-        <FormattedMessage {...sectionNames.configuration} />
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.attributes)}
+      >
         <Button
           href={attributeAddUrl()}
           variant="primary"
@@ -70,7 +69,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({

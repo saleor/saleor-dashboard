@@ -1,7 +1,7 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -54,7 +54,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
 
   return (
     <>
-      <PageHeader title={intl.formatMessage(sectionNames.sales)}>
+      <TopNav title={intl.formatMessage(sectionNames.sales)}>
         <Button
           href={saleAddUrl()}
           variant="primary"
@@ -66,7 +66,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({

@@ -1,9 +1,8 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
-import PageHeader from "@dashboard/components/PageHeader";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -194,18 +193,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   return (
     <>
-      <Backlink href={orderUrl(order?.id)}>
-        {order?.number
-          ? intl.formatMessage(messages.headerOrderNumber, {
-              orderNumber: order.number,
-            })
-          : intl.formatMessage(messages.headerOrder)}
-      </Backlink>
-      <PageHeader
+      <TopNav
+        href={orderUrl(order?.id)}
         title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
           orderNumber: order?.number,
         })}
-      />
+      ></TopNav>
       <Form
         confirmLeave
         initial={initialFormData}

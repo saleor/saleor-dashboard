@@ -1,6 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   OrderSettingsFragment,
@@ -8,7 +7,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -42,16 +40,13 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     >
       {({ data, submit, change, isSaveDisabled }) => (
         <>
-          <Backlink href={orderListUrl()}>
-            {intl.formatMessage(sectionNames.orders)}
-          </Backlink>
-          <PageHeader
+          <TopNav
+            href={orderListUrl()}
             title={intl.formatMessage({
               id: "Vu9nol",
               defaultMessage: "Order settings",
               description: "header",
             })}
-            underline={true}
           />
           <Grid variant="inverted">
             <div>

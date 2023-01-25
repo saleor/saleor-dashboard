@@ -1,6 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PermissionGroupFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -27,10 +26,10 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
 
   return (
     <>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.permissionGroups)}
+      >
         <Button
           variant="primary"
           href={permissionGroupAddUrl}
@@ -42,7 +41,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <PermissionGroupList {...listProps} />
       </Card>

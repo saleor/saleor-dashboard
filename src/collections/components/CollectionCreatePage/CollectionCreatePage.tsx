@@ -3,11 +3,10 @@ import { collectionListUrl } from "@dashboard/collections/urls";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Metadata from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import {
@@ -17,7 +16,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -61,17 +59,15 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailedContent>
+          <TopNav
+            href={collectionListUrl()}
+            title={intl.formatMessage({
+              id: "Fxa6xp",
+              defaultMessage: "Add Collection",
+              description: "page header",
+            })}
+          />
           <Content>
-            <Backlink href={collectionListUrl()}>
-              {intl.formatMessage(sectionNames.collections)}
-            </Backlink>
-            <PageHeader
-              title={intl.formatMessage({
-                id: "Fxa6xp",
-                defaultMessage: "Add Collection",
-                description: "page header",
-              })}
-            />
             <CollectionDetails
               data={data}
               disabled={disabled}

@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
@@ -9,7 +10,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
 import { MenuSection } from "./types";
 import { hasUserMenuItemPermissions } from "./utils";
@@ -89,44 +89,47 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Content>
-      {!isSmUp && renderVersionInfo}
-      <PageHeader title={intl.formatMessage(sectionNames.configuration)}>
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
-      </PageHeader>
-      {menus
-        .filter(menu =>
-          menu.menuItems.some(menuItem =>
-            hasUserMenuItemPermissions(menuItem, user),
-          ),
-        )
-        .map((menu, menuIndex) => (
-          <div className={classes.configurationCategory} key={menuIndex}>
-            <div className={classes.configurationLabel}>
-              <Typography>{menu.label}</Typography>
+      </TopNav>
+      <Content>
+        {menus
+          .filter(menu =>
+            menu.menuItems.some(menuItem =>
+              hasUserMenuItemPermissions(menuItem, user),
+            ),
+          )
+          .map((menu, menuIndex) => (
+            <div className={classes.configurationCategory} key={menuIndex}>
+              <div className={classes.configurationLabel}>
+                <Typography>{menu.label}</Typography>
+              </div>
+              <div className={classes.configurationItem}>
+                {menu.menuItems
+                  .filter(menuItem =>
+                    hasUserMenuItemPermissions(menuItem, user),
+                  )
+                  .map((item, itemIndex) => (
+                    <Link className={classes.link} to={item.url}>
+                      <NavigationCard
+                        key={itemIndex}
+                        icon={item.icon}
+                        title={item.title}
+                        description={item.description}
+                        data-test-id={
+                          item.testId +
+                          "-settings-subsection-" +
+                          item.title.toLowerCase()
+                        }
+                      />
+                    </Link>
+                  ))}
+              </div>
             </div>
-            <div className={classes.configurationItem}>
-              {menu.menuItems
-                .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
-                .map((item, itemIndex) => (
-                  <Link className={classes.link} to={item.url}>
-                    <NavigationCard
-                      key={itemIndex}
-                      icon={item.icon}
-                      title={item.title}
-                      description={item.description}
-                      data-test-id={
-                        item.testId +
-                        "-settings-subsection-" +
-                        item.title.toLowerCase()
-                      }
-                    />
-                  </Link>
-                ))}
-            </div>
-          </div>
-        ))}
-    </Content>
+          ))}
+      </Content>
+    </>
   );
 };
 ConfigurationPage.displayName = "ConfigurationPage";

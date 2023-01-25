@@ -1,14 +1,12 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeTranslationDetailsFragment,
   LanguageCodeEnum,
 } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
@@ -56,15 +54,11 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   const withChoices = data?.attribute?.withChoices;
 
   return (
-    <Container>
-      <Backlink
+    <>
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.attributes,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "SPBLzT",
@@ -89,7 +83,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
             )
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}
@@ -132,7 +126,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           onSubmit={onSubmit}
         />
       )}
-    </Container>
+    </>
   );
 };
 TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
