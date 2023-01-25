@@ -35,6 +35,7 @@ Cypress.Commands.add("fillBaseSelect", (selectSelector, value) => {
 });
 
 Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
+  let selectedOption = option;
   cy.get(selectSelector)
     .click()
     .get(BUTTON_SELECTORS.selectOption)
@@ -43,25 +44,30 @@ Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
     cy.get(BUTTON_SELECTORS.selectOption)
       .first()
       .then(detachedOption => {
-        cy.get(selectSelector).clear();
-        cy.get(selectSelector).type(option, { delay: 10 });
+        cy.get(selectSelector)
+          .find("input")
+          .clear()
+          .type(option, { delay: 10 });
         cy.wrap(detachedOption).should(det => {
           Cypress.dom.isDetached(det);
         });
         cy.contains(BUTTON_SELECTORS.selectOption, option)
           .should("be.visible")
-          .click({ force: true });
-        cy.wrap(option).as("option");
+          .click({ force: true })
+          .then(() => selectedOption);
       });
   } else {
     cy.get(BUTTON_SELECTORS.selectOption)
       .wait(1000)
       .first()
       .invoke("text")
-      .as("option")
+      .then(text => {
+        selectedOption = text;
+      });
+    return cy
       .get(BUTTON_SELECTORS.selectOption)
       .first()
-      .click();
+      .click()
+      .then(() => selectedOption);
   }
-  return cy.get("@option");
 });
