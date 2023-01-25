@@ -2,12 +2,11 @@ import AccountPermissionGroups from "@dashboard/components/AccountPermissionGrou
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   SearchPermissionGroupsQuery,
@@ -19,7 +18,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import { getUserName } from "@dashboard/misc";
 import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListUrl } from "@dashboard/staff/urls";
@@ -131,11 +129,8 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={staffListUrl()} title={getUserName(staffMember)} />
             <Content>
-              <Backlink href={staffListUrl()}>
-                {intl.formatMessage(sectionNames.staff)}
-              </Backlink>
-              <PageHeader title={getUserName(staffMember)} />
               <StaffProperties
                 errors={errors}
                 data={formData}

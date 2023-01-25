@@ -1,6 +1,6 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
-import PageHeader from "@dashboard/components/PageHeader";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -32,7 +32,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
 
   return (
     <>
-      <PageHeader title={intl.formatMessage(sectionNames.webhooksAndEvents)} />
+      <TopNav title={intl.formatMessage(sectionNames.webhooksAndEvents)} />
       <p>
         <FormattedMessage
           defaultMessage="Local apps are custom webhooks & token pairs that can be used to

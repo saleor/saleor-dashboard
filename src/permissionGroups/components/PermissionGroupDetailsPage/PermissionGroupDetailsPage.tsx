@@ -2,10 +2,9 @@ import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -15,7 +14,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import {
   MembersListUrlSortField,
   permissionGroupListUrl,
@@ -95,11 +93,11 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => (
         <DetailedContent>
+          <TopNav
+            href={permissionGroupListUrl()}
+            title={permissionGroup?.name}
+          />
           <Content>
-            <Backlink href={permissionGroupListUrl()}>
-              {intl.formatMessage(sectionNames.permissionGroups)}
-            </Backlink>
-            <PageHeader title={permissionGroup?.name} />
             <PermissionGroupInfo
               data={data}
               disabled={disabled}

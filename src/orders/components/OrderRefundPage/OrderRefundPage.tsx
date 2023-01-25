@@ -1,9 +1,8 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   FulfillmentStatus,
   OrderErrorFragment,
@@ -74,37 +73,20 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <DetailedContent>
+            <TopNav
+              href={orderUrl(order?.id)}
+              title={intl.formatMessage(
+                {
+                  id: "0krqBj",
+                  defaultMessage: "Order no. {orderNumber} - Refund",
+                  description: "page header",
+                },
+                {
+                  orderNumber: order?.number,
+                },
+              )}
+            ></TopNav>
             <Content>
-              <Backlink href={orderUrl(order?.id)}>
-                {order?.number
-                  ? intl.formatMessage(
-                      {
-                        id: "rVIlBs",
-                        defaultMessage: "Order #{orderNumber}",
-                        description: "page header with order number",
-                      },
-                      {
-                        orderNumber: order.number,
-                      },
-                    )
-                  : intl.formatMessage({
-                      id: "6u4K7e",
-                      defaultMessage: "Order",
-                      description: "page header",
-                    })}
-              </Backlink>
-              <PageHeader
-                title={intl.formatMessage(
-                  {
-                    id: "0krqBj",
-                    defaultMessage: "Order no. {orderNumber} - Refund",
-                    description: "page header",
-                  },
-                  {
-                    orderNumber: order?.number,
-                  },
-                )}
-              />
               <OrderRefund data={data} disabled={disabled} onChange={change} />
               {isProductRefund && (
                 <>

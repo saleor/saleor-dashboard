@@ -1,11 +1,10 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DateTime } from "@dashboard/components/Date";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
@@ -17,7 +16,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
@@ -86,28 +84,24 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
 
   return (
     <DetailedContent>
+      <TopNav
+        href={orderDraftListUrl()}
+        title={order?.number ? "#" + order?.number : undefined}
+      >
+        <CardMenu
+          menuItems={[
+            {
+              label: intl.formatMessage({
+                id: "PAqicb",
+                defaultMessage: "Cancel order",
+                description: "button",
+              }),
+              onSelect: onDraftRemove,
+            },
+          ]}
+        />
+      </TopNav>
       <Content>
-        <Backlink href={orderDraftListUrl()}>
-          {intl.formatMessage(sectionNames.draftOrders)}
-        </Backlink>
-        <PageHeader
-          className={classes.header}
-          inline
-          title={order?.number ? "#" + order?.number : undefined}
-        >
-          <CardMenu
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  id: "PAqicb",
-                  defaultMessage: "Cancel order",
-                  description: "button",
-                }),
-                onSelect: onDraftRemove,
-              },
-            ]}
-          />
-        </PageHeader>
         <div className={classes.date}>
           {order && order.created ? (
             <Typography variant="body2">

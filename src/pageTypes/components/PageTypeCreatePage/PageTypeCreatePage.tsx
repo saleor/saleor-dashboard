@@ -1,14 +1,12 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { PageErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
@@ -68,11 +66,9 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={pageTypeListUrl()}>
-              {intl.formatMessage(sectionNames.pageTypes)}
-            </Backlink>
-            <PageHeader
+          <>
+            <TopNav
+              href={pageTypeListUrl()}
               title={intl.formatMessage({
                 id: "caqRmN",
                 defaultMessage: "Create Page Type",
@@ -116,7 +112,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </Container>
+          </>
         );
       }}
     </Form>

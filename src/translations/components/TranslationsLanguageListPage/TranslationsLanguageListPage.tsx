@@ -1,4 +1,4 @@
-import PageHeader from "@dashboard/components/PageHeader";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageFragment } from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -16,12 +16,12 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
 
   return (
     <>
-      <PageHeader
+      <TopNav
         title={intl.formatMessage({
           id: "GsBRWL",
           defaultMessage: "Languages",
         })}
-      ></PageHeader>
+      ></TopNav>
       <TranslationsLanguageList languages={languages} />
     </>
   );

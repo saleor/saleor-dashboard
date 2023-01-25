@@ -3,10 +3,10 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
@@ -78,41 +78,23 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
   return (
     <>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.orders)}
-        limitText={
-          hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "zyceue",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed order counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )
-        }
-        cardMenu={
-          !!onSettingsOpen && (
-            <CardMenu
-              className={classes.settings}
-              menuItems={[
-                {
-                  label: intl.formatMessage({
-                    id: "WbV1Xm",
-                    defaultMessage: "Order Settings",
-                    description: "button",
-                  }),
-                  onSelect: onSettingsOpen,
-                },
-                ...extensionMenuItems,
-              ]}
-            />
-          )
-        }
-      >
+      <TopNav title={intl.formatMessage(sectionNames.orders)}>
+        {!!onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  id: "WbV1Xm",
+                  defaultMessage: "Order Settings",
+                  description: "button",
+                }),
+                onSelect: onSettingsOpen,
+              },
+              ...extensionMenuItems,
+            ]}
+          />
+        )}
         <ButtonWithSelect
           disabled={limitsReached}
           options={extensionCreateButtonItems}
@@ -125,7 +107,20 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-      </PageHeader>
+        limitText:{" "}
+        {hasLimits(limits, "orders") &&
+          intl.formatMessage(
+            {
+              id: "zyceue",
+              defaultMessage: "{count}/{max} orders",
+              description: "placed order counter",
+            },
+            {
+              count: limits.currentUsage.orders,
+              max: limits.allowedUsage.orders,
+            },
+          )}
+      </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar

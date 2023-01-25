@@ -1,5 +1,4 @@
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -72,10 +71,10 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   }, []);
 
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.apps)}>
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
-      </PageHeader>
+      </TopNav>
       <Typography variant="body1">
         <FormattedMessage {...messages.installAppDescription} />
       </Typography>
@@ -123,7 +122,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           </>
         )}
       </div>
-    </Container>
+    </>
   );
 };
 AppListPage.displayName = "AppListPage";

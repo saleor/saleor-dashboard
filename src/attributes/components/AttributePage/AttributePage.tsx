@@ -3,12 +3,11 @@ import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/uti
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
@@ -22,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -175,21 +174,19 @@ const AttributePage: React.FC<AttributePageProps> = ({
         return (
           <>
             <DetailedContent>
+              <TopNav
+                href={attributeListUrl()}
+                title={
+                  attribute === null
+                    ? intl.formatMessage({
+                        id: "8cUEPV",
+                        defaultMessage: "Create New Attribute",
+                        description: "page title",
+                      })
+                    : maybe(() => attribute.name)
+                }
+              ></TopNav>
               <Content>
-                <Backlink href={attributeListUrl()}>
-                  {intl.formatMessage(sectionNames.attributes)}
-                </Backlink>
-                <PageHeader
-                  title={
-                    attribute === null
-                      ? intl.formatMessage({
-                          id: "8cUEPV",
-                          defaultMessage: "Create New Attribute",
-                          description: "page title",
-                        })
-                      : maybe(() => attribute.name)
-                  }
-                />
                 <AttributeDetails
                   canChangeType={attribute === null}
                   data={data}

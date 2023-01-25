@@ -1,11 +1,10 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   LanguageCodeEnum,
   VoucherTranslationFragment,
 } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
@@ -43,14 +42,10 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
 
   return (
     <>
-      <Backlink
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.vouchers,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "1tXSSK",
@@ -75,7 +70,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
             )
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}

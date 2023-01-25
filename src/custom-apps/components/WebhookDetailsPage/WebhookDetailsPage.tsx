@@ -1,10 +1,9 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
@@ -51,7 +50,6 @@ export interface WebhookDetailsPageProps {
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   appId,
-  appName,
   disabled,
   errors,
   webhook,
@@ -107,9 +105,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         return (
           <DetailedContent>
+            <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <Content>
-              <Backlink href={backUrl}>{appName}</Backlink>
-              <PageHeader title={getHeaderTitle(intl, webhook)} />
               <WebhookInfo
                 data={data}
                 disabled={disabled}

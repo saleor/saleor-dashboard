@@ -1,14 +1,12 @@
 import { appsListPath } from "@dashboard/apps/urls";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import ExternalLink from "@dashboard/components/ExternalLink";
-import PageHeader from "@dashboard/components/PageHeader";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AppQuery } from "@dashboard/graphql";
-import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -42,11 +40,9 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   const classes = useStyles({});
 
   return (
-    <Container>
-      <Backlink href={appsListPath}>
-        {intl.formatMessage(sectionNames.apps)}
-      </Backlink>
-      <PageHeader
+    <>
+      <TopNav
+        href={appsListPath}
         title={
           <>
             {data?.name} {!data?.isActive && <DeactivatedText />}
@@ -60,7 +56,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <div className={classes.appHeader}>
         {data ? (
           <div className={classes.appHeaderLinks}>
@@ -182,7 +178,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         </Card>
       )}
       <CardSpacer />
-    </Container>
+    </>
   );
 };
 
