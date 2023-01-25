@@ -6,7 +6,7 @@ import {
 
 export function updateTaxConfigurationForChannel({
   channelSlug = "default-channel",
-  chargeTaxes = true,
+  chargeTaxes = false,
   taxCalculationStrategy = "FLAT_RATES",
   pricesEnteredWithTax = "false",
 }) {

@@ -174,9 +174,7 @@ describe("Creating variants", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const prices = { sellingPrice: 10, costPrice: 6 };
 
-      cy.visit(urlList.products)
-        .get(PRODUCTS_LIST.createProductBtn)
-        .click();
+      cy.visit(urlList.products).get(PRODUCTS_LIST.createProductBtn).click();
       fillUpProductTypeDialog({ productType: simpleProductType.name });
       cy.get(BUTTON_SELECTORS.submit)
         .click()

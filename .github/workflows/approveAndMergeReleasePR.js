@@ -142,7 +142,7 @@ async function getTestsStatusAndId(dashboardUrl) {
     buildNumber: dashboardUrl.match(getRunRegex)[1],
   };
 
-  const throwErrorAfterTimeout = setTimeout(function() {
+  const throwErrorAfterTimeout = setTimeout(function () {
     throw new Error("Run have still running status, after all tests executed");
   }, 1200000);
 
@@ -166,7 +166,7 @@ async function waitForTestsToFinish(requestVariables) {
       )
       .then(response => {
         if (response.runByBuildNumber.status === "RUNNING") {
-          setTimeout(async function() {
+          setTimeout(async function () {
             resolve(await waitForTestsToFinish(requestVariables));
           }, 10000);
         } else {

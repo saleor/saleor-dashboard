@@ -68,18 +68,16 @@ function useActiveAppsInstallations({
   const handleAppInstallRetry = (id: string) =>
     retryInstallApp({ variables: { id } });
 
-  const [
-    deleteInProgressApp,
-    deleteInProgressAppOpts,
-  ] = useAppDeleteFailedInstallationMutation({
-    onCompleted: data => {
-      if (!data?.appDeleteFailedInstallation?.errors?.length) {
-        removeInProgressAppNotify();
-        appsInProgressRefetch();
-        onRemoveInProgressAppSuccess();
-      }
-    },
-  });
+  const [deleteInProgressApp, deleteInProgressAppOpts] =
+    useAppDeleteFailedInstallationMutation({
+      onCompleted: data => {
+        if (!data?.appDeleteFailedInstallation?.errors?.length) {
+          removeInProgressAppNotify();
+          appsInProgressRefetch();
+          onRemoveInProgressAppSuccess();
+        }
+      },
+    });
 
   const handleRemoveInProgress = (id: string) =>
     deleteInProgressApp({

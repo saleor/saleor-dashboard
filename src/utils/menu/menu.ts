@@ -58,9 +58,8 @@ export function getMenuItemByValue<TMenuData = {}, TValue = string>(
   value: TValue,
 ): IMenuItem<TMenuData, TValue> {
   const flatMenu = toFlat(menu);
-  const flatMenuItem:
-    | IFlatMenuItem<TMenuData, TValue>
-    | undefined = flatMenu.find(menuItem => menuItem.value === value);
+  const flatMenuItem: IFlatMenuItem<TMenuData, TValue> | undefined =
+    flatMenu.find(menuItem => menuItem.value === value);
 
   if (flatMenuItem === undefined) {
     throw new Error(`Value ${value} does not exist in menu`);
@@ -117,9 +116,10 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
     throw new Error(`Value ${value} does not exist in menu`);
   }
 
-  return (menuItem.parent === null
-    ? [menuItem]
-    : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
+  return (
+    menuItem.parent === null
+      ? [menuItem]
+      : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
   ).map(flatMenuItem => _fromFlat(flatMenu, flatMenuItem));
 }
 

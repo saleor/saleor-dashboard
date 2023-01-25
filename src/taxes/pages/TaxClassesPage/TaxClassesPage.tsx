@@ -109,9 +109,11 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
           rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
 
-        const { data: paginatedRates, hasNextPage, hasPreviousPage } = paginate(
-          filteredRates,
-        );
+        const {
+          data: paginatedRates,
+          hasNextPage,
+          hasPreviousPage,
+        } = paginate(filteredRates);
 
         const formErrors = getFormErrors(["name"], validationErrors);
 

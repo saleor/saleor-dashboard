@@ -341,10 +341,11 @@ describe("App List verified installable marketplace apps util", () => {
     ];
 
     // Act
-    const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
-      installedApps,
-      installableMarketplaceApps,
-    );
+    const verifiedInstallableMarketplaceApps =
+      getVerifiedInstallableMarketplaceApps(
+        installedApps,
+        installableMarketplaceApps,
+      );
 
     // Assert
     const expectedVerifiedInstallableMarketplaceApps = [
