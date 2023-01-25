@@ -28,10 +28,8 @@ import uniq from "lodash/uniq";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  DryRunItemsList,
-  ExcludedDocumentMap,
-} from "../DryRunItemsList/DryRunItemsList";
+import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
+import { ExcludedDocumentMap } from "../DryRunItemsList/utils";
 import { messages } from "./messages";
 
 interface DryRunProps {
@@ -42,7 +40,7 @@ interface DryRunProps {
   setResult: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const DryRun = (props: DryRunProps) => {
+const DryRun = (props: DryRunProps) => {
   const { query, showDialog, setShowDialog } = props;
   const classes = useStyles();
   const [objectId, setObjectId] = useState(null);
@@ -113,7 +111,7 @@ export const DryRun = (props: DryRunProps) => {
   }
 
   return (
-    <Dialog open={showDialog} fullWidth maxWidth="md">
+    <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
       <DialogHeader onClose={closeDialog}>
         <FormattedMessage {...messages.header} />
       </DialogHeader>
@@ -236,4 +234,5 @@ const getEventsFromQuery = (query: string) => {
   }
 };
 
+DryRun.displayName = "DryRun";
 export default DryRun;
