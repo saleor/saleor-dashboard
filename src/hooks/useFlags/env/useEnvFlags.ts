@@ -1,5 +1,5 @@
 import { FlagsResults } from "../types";
-import { flagNameToEnvName, readFlagFromEnv } from "./helpers";
+import { flagNameToEnvName, isFlagEnabled, readFlagFromEnv } from "./helpers";
 
 export const useEnvFlags = <T extends readonly string[]>(
   flags: readonly [...T],
@@ -9,7 +9,7 @@ export const useEnvFlags = <T extends readonly string[]>(
 
     if (envFlag) {
       acc[flag] = {
-        enabled: envFlag !== "",
+        enabled: isFlagEnabled(envFlag),
         value: envFlag,
       };
     } else {

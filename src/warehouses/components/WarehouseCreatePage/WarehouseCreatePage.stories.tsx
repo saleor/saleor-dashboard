@@ -27,18 +27,20 @@ storiesOf("Warehouses / Create warehouse", module)
   .add("form errors", () => (
     <WarehouseCreatePage
       {...props}
-      errors={([
-        "name",
-        "city",
-        "cityArea",
-        "companyName",
-        "country",
-        "countryArea",
-        "phone",
-        "postalCode",
-        "streetAddress1",
-        "streetAddress2",
-      ] as Array<keyof WarehouseCreatePageFormData>).map(field => ({
+      errors={(
+        [
+          "name",
+          "city",
+          "cityArea",
+          "companyName",
+          "country",
+          "countryArea",
+          "phone",
+          "postalCode",
+          "streetAddress1",
+          "streetAddress2",
+        ] as Array<keyof WarehouseCreatePageFormData>
+      ).map(field => ({
         __typename: "WarehouseError",
         code: WarehouseErrorCode.INVALID,
         field,

@@ -54,4 +54,24 @@ describe("useEnvFlags hook", () => {
     // Assert
     expect(result.current).toEqual({});
   });
+
+  test("should return array with disabled flags", () => {
+    // Arrange && Act
+    FLAGS.FF_FLAG_ONE = "";
+    FLAGS.FF_FLAG_TWO = "false";
+
+    const { result } = renderHook(() => useEnvFlags(["flagOne", "flag_two"]));
+
+    // Assert
+    expect(result.current).toEqual({
+      flagOne: {
+        enabled: false,
+        value: "",
+      },
+      flag_two: {
+        enabled: false,
+        value: "false",
+      },
+    });
+  });
 });

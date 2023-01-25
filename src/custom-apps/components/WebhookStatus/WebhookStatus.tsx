@@ -1,7 +1,5 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,22 +19,19 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
 }) => {
   const intl = useIntl();
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.webhookStatus)} />
-      <CardContent>
-        <Typography variant="body1">
-          {intl.formatMessage(messages.webhookActiveDescription)}
-        </Typography>
-        <ControlledCheckbox
-          name={"isActive" as keyof WebhookFormData}
-          label={intl.formatMessage(messages.webhookActive)}
-          checked={data}
-          onChange={onChange}
-          disabled={disabled}
-        />
-      </CardContent>
-    </Card>
+    <ControlledSwitch
+      name={"isActive" as keyof WebhookFormData}
+      label={
+        data
+          ? intl.formatMessage(messages.webhookActive)
+          : intl.formatMessage(messages.webhookInactive)
+      }
+      checked={data}
+      onChange={onChange}
+      disabled={disabled}
+    />
   );
 };
+
 WebhookStatus.displayName = "WebhookStatus";
 export default WebhookStatus;
