@@ -23,6 +23,8 @@ import {
   useProductVariantBulkCreateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantBulkUpdateMutation,
+  useUpdateMetadataMutation,
+  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -34,6 +36,7 @@ import {
   getVariantInputs,
 } from "@dashboard/products/components/ProductVariants/utils";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -78,6 +81,8 @@ export function useProductUpdateHandler(
   const [called, setCalled] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [updateMetadata] = useUpdateMetadataMutation({});
+  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [updateVariants] = useProductVariantBulkUpdateMutation();
   const [createVariants] = useProductVariantBulkCreateMutation();
   const [deleteVariants] = useProductVariantBulkDeleteMutation();
@@ -165,12 +170,7 @@ export function useProductUpdateHandler(
       const result = await updateVariants({
         variables: {
           id: product.id,
-          input: getVariantInputs(
-            product.variants,
-            data.variants,
-            data.metadata,
-            data.privateMetadata,
-          ),
+          input: getVariantInputs(product.variants, data.variants),
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },
       });
@@ -194,7 +194,12 @@ export function useProductUpdateHandler(
     setCalled(true);
     setLoading(true);
 
-    const errors = await sendMutations(data);
+    const errors = await createMetadataUpdateHandler(
+      product,
+      sendMutations,
+      variables => updateMetadata({ variables }),
+      variables => updatePrivateMetadata({ variables }),
+    )(data);
 
     setLoading(false);
 
