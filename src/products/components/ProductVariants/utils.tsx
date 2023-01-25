@@ -18,7 +18,6 @@ import {
   ProductDetailsVariantFragment,
   ProductFragment,
   ProductVariantBulkUpdateInput,
-  ProductVariantChannelListingAddInput,
   VariantDatagridChannelListingUpdateMutationVariables,
   VariantDatagridStockUpdateMutationVariables,
   WarehouseFragment,
@@ -94,17 +93,6 @@ export function getVariantBulkInput(
       quantity: change.data.value,
     }));
 
-  const channelListings: ProductVariantChannelListingAddInput[] = data.updates
-    .filter(
-      change =>
-        getColumnChannel(change.column) &&
-        isChangeRow(change.row, index, data.removed),
-    )
-    .map(change => ({
-      channelId: getColumnChannel(change.column),
-      price: change.data.value,
-    }));
-
   const attributes = data.updates
     .filter(
       change =>
@@ -135,7 +123,7 @@ export function getVariantBulkInput(
     sku,
     name,
     stocks,
-    channelListings,
+    channelListings: getVariantChannelsInputs(data, index),
   };
 }
 
