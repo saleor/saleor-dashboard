@@ -12,6 +12,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
 import React, { useEffect } from "react";
 
+import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
   getLineItem,
   getOrderUnfulfilledLines,
@@ -36,6 +37,7 @@ export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 export interface OrderReturnData {
   amount: number;
   refundShipmentCosts: boolean;
+  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
 export interface OrderReturnHandlers {
@@ -69,6 +71,7 @@ interface OrderReturnProps {
 
 const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
+  amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false,
 });
 
@@ -176,14 +179,13 @@ function useOrderReturnForm(
   );
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
-      ({ id }) => {
+    const newQuantities: FormsetQuantityData =
+      unfulfiledItemsQuantites.data.map(({ id }) => {
         const line = order.lines.find(getById(id));
         const initialValue = line.quantityToFulfill;
 
         return getLineItem(line, { initialValue });
-      },
-    );
+      });
 
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
