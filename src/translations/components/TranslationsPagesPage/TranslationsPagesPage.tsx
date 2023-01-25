@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import { LanguageCodeEnum, PageTranslationFragment } from "@dashboard/graphql";
@@ -43,7 +42,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.pages,
@@ -165,7 +164,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           <CardSpacer />
         </>
       )}
-    </Container>
+    </>
   );
 };
 TranslationsPagesPage.displayName = "TranslationsPagesPage";

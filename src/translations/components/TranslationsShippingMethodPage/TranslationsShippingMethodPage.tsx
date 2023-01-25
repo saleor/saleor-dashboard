@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
@@ -42,7 +41,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.shippingMethods,
@@ -111,7 +110,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </>
   );
 };
 TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";

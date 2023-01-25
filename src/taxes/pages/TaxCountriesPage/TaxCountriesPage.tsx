@@ -1,6 +1,6 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -90,7 +90,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
         );
 
         return (
-          <Container>
+          <Content>
             <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="countries" onChange={handleTabChange}>
               <PageTab
@@ -202,7 +202,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
               onSubmit={submit}
               onCancel={() => navigate(configurationMenuUrl)}
             />
-          </Container>
+          </Content>
         );
       }}
     </TaxCountriesForm>

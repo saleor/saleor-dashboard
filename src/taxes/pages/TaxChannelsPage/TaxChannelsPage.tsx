@@ -1,6 +1,6 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -160,7 +160,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         };
 
         return (
-          <Container>
+          <Content>
             <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="channels" onChange={handleTabChange}>
               <PageTab
@@ -294,7 +294,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                 onClose={closeDialog}
               />
             )}
-          </Container>
+          </Content>
         );
       }}
     </Form>

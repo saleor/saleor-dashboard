@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -50,7 +49,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
@@ -80,7 +79,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
         />
         <PluginsList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PluginsListPage.displayName = "PluginsListPage";

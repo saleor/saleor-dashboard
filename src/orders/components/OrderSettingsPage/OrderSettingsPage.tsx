@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -42,7 +41,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, submit, change, isSaveDisabled }) => (
-        <Container>
+        <>
           <Backlink href={orderListUrl()}>
             {intl.formatMessage(sectionNames.orders)}
           </Backlink>
@@ -77,7 +76,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
             disabled={isSaveDisabled}
             state={saveButtonBarState}
           />
-        </Container>
+        </>
       )}
     </OrderSettingsForm>
   );

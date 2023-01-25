@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
@@ -40,7 +39,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.sales,
@@ -92,7 +91,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </>
   );
 };
 TranslationsSalesPage.displayName = "TranslationsSalesPage";

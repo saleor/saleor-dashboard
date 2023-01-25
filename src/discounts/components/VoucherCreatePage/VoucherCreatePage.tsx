@@ -1,10 +1,11 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -122,93 +123,91 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={voucherListUrl()}>
-              {intl.formatMessage(sectionNames.vouchers)}
-            </Backlink>
-            <PageHeader
-              title={intl.formatMessage({
-                id: "PsclSa",
-                defaultMessage: "Create Voucher",
-                description: "page header",
-              })}
-            />
-            <Grid>
-              <div>
-                <VoucherInfo
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
-                  onChange={event => handleDiscountTypeChange(data, event)}
-                  variant="create"
-                />
-                <CardSpacer />
-                <VoucherTypes
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                {data.discountType.toString() !== "SHIPPING" ? (
-                  <>
-                    <CardSpacer />
-                    <VoucherValue
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      onChannelChange={handleChannelChange}
-                      onChange={change}
-                      variant="create"
-                    />
-                  </>
-                ) : null}
-                <CardSpacer />
-                <VoucherRequirements
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChannelChange={handleChannelChange}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <VoucherLimits
-                  data={data}
-                  initialUsageLimit={initialForm.usageLimit}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                  setData={set}
-                  isNewVoucher
-                />
-                <CardSpacer />
-                <VoucherDates
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name,
-                  }))}
-                  disabled={disabled}
-                  openModal={openChannelsModal}
-                />
-              </div>
-              <Metadata data={data} onChange={changeMetadata} />
-            </Grid>
+          <DetailedContent>
+            <Content>
+              <Backlink href={voucherListUrl()}>
+                {intl.formatMessage(sectionNames.vouchers)}
+              </Backlink>
+              <PageHeader
+                title={intl.formatMessage({
+                  id: "PsclSa",
+                  defaultMessage: "Create Voucher",
+                  description: "page header",
+                })}
+              />
+              <VoucherInfo
+                data={data}
+                errors={errors}
+                disabled={disabled}
+                onChange={event => handleDiscountTypeChange(data, event)}
+                variant="create"
+              />
+              <CardSpacer />
+              <VoucherTypes
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              {data.discountType.toString() !== "SHIPPING" ? (
+                <>
+                  <CardSpacer />
+                  <VoucherValue
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChannelChange={handleChannelChange}
+                    onChange={change}
+                    variant="create"
+                  />
+                </>
+              ) : null}
+              <CardSpacer />
+              <VoucherRequirements
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChannelChange={handleChannelChange}
+                onChange={change}
+              />
+              <CardSpacer />
+              <VoucherLimits
+                data={data}
+                initialUsageLimit={initialForm.usageLimit}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                setData={set}
+                isNewVoucher
+              />
+              <CardSpacer />
+              <VoucherDates
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </Content>
+            <RightSidebar>
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings.map(channel => ({
+                  id: channel.id,
+                  name: channel.name,
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
+              />
+            </RightSidebar>
+            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

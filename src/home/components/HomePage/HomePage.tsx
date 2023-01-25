@@ -1,6 +1,7 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -75,95 +76,90 @@ const HomePage: React.FC<HomePageProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Container>
-      <HomeHeader userName={userName} />
-      <CardSpacer />
-      <Grid>
-        <div>
+    <DetailedContent>
+      <Content>
+        <HomeHeader userName={userName} />
+        <CardSpacer />
+        <RequirePermissions
+          requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+        >
+          <div className={classes.cardContainer}>
+            <HomeAnalyticsCard
+              title={"Sales"}
+              testId="sales-analytics"
+              icon={
+                <Sales
+                  className={classes.icon}
+                  fontSize={"inherit"}
+                  viewBox="0 0 64 64"
+                />
+              }
+            >
+              {noChannel ? (
+                0
+              ) : sales ? (
+                <Money money={sales} />
+              ) : (
+                <Skeleton style={{ width: "5em" }} />
+              )}
+            </HomeAnalyticsCard>
+            <HomeAnalyticsCard
+              title={"Orders"}
+              testId="orders-analytics"
+              icon={
+                <Orders
+                  className={classes.icon}
+                  fontSize={"inherit"}
+                  viewBox="0 0 64 64"
+                />
+              }
+            >
+              {noChannel ? (
+                0
+              ) : orders !== undefined ? (
+                orders
+              ) : (
+                <Skeleton style={{ width: "5em" }} />
+              )}
+            </HomeAnalyticsCard>
+          </div>
+        </RequirePermissions>
+        <HomeNotificationTable
+          createNewChannelHref={createNewChannelHref}
+          ordersToFulfillHref={ordersToFulfillHref}
+          ordersToCaptureHref={ordersToCaptureHref}
+          productsOutOfStockHref={productsOutOfStockHref}
+          ordersToCapture={ordersToCapture}
+          ordersToFulfill={ordersToFulfill}
+          productsOutOfStock={productsOutOfStock}
+          noChannel={noChannel}
+        />
+        <CardSpacer />
+        {topProducts && (
+          <RequirePermissions
+            requiredPermissions={[
+              PermissionEnum.MANAGE_ORDERS,
+              PermissionEnum.MANAGE_PRODUCTS,
+            ]}
+          >
+            <HomeProductListCard
+              testId="top-products"
+              topProducts={topProducts}
+            />
+            <CardSpacer />
+          </RequirePermissions>
+        )}
+      </Content>
+      {activities && (
+        <RightSidebar>
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
-            <div className={classes.cardContainer}>
-              <HomeAnalyticsCard
-                title={"Sales"}
-                testId="sales-analytics"
-                icon={
-                  <Sales
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
-              >
-                {noChannel ? (
-                  0
-                ) : sales ? (
-                  <Money money={sales} />
-                ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
-              </HomeAnalyticsCard>
-              <HomeAnalyticsCard
-                title={"Orders"}
-                testId="orders-analytics"
-                icon={
-                  <Orders
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
-              >
-                {noChannel ? (
-                  0
-                ) : orders !== undefined ? (
-                  orders
-                ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
-              </HomeAnalyticsCard>
-            </div>
+            <HomeActivityCard activities={activities} testId="activity-card" />
           </RequirePermissions>
-          <HomeNotificationTable
-            createNewChannelHref={createNewChannelHref}
-            ordersToFulfillHref={ordersToFulfillHref}
-            ordersToCaptureHref={ordersToCaptureHref}
-            productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture}
-            ordersToFulfill={ordersToFulfill}
-            productsOutOfStock={productsOutOfStock}
-            noChannel={noChannel}
-          />
-          <CardSpacer />
-          {topProducts && (
-            <RequirePermissions
-              requiredPermissions={[
-                PermissionEnum.MANAGE_ORDERS,
-                PermissionEnum.MANAGE_PRODUCTS,
-              ]}
-            >
-              <HomeProductListCard
-                testId="top-products"
-                topProducts={topProducts}
-              />
-              <CardSpacer />
-            </RequirePermissions>
-          )}
-        </div>
-        {activities && (
-          <div>
-            <RequirePermissions
-              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-            >
-              <HomeActivityCard
-                activities={activities}
-                testId="activity-card"
-              />
-            </RequirePermissions>
-          </div>
-        )}
-      </Grid>
-    </Container>
+        </RightSidebar>
+      )}
+    </DetailedContent>
   );
 };
 HomePage.displayName = "HomePage";

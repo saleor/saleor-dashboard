@@ -1,8 +1,8 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -79,7 +79,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
+          <Content>
             <Backlink href={warehouseListUrl()}>
               <FormattedMessage {...sectionNames.warehouses} />
             </Backlink>
@@ -121,7 +121,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </Content>
         );
       }}
     </Form>

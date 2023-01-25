@@ -3,13 +3,14 @@ import {
   mapToMenuItemsForOrderDetails,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { Container } from "@dashboard/components/Container";
 import { DateTime } from "@dashboard/components/Date";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -211,122 +212,110 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={orderListUrl()}>
-              {intl.formatMessage(sectionNames.orders)}
-            </Backlink>
-            <PageHeader
-              className={classes.header}
-              inline
-              title={<Title order={order} />}
-              cardMenu={
-                <>
+          <DetailedContent>
+            <Content data-test-id="order-fulfillment">
+              <Backlink href={orderListUrl()}>
+                {intl.formatMessage(sectionNames.orders)}
+              </Backlink>
+              <PageHeader
+                className={classes.header}
+                inline
+                title={<Title order={order} />}
+                cardMenu={
                   <CardMenu
-                    menuItems={[
-                      ...selectCardMenuItems,
-                      ...extensionMenuItems,
-                      {
-                        label: intl.formatMessage(messages.openGraphiQL),
-                        onSelect: openPlaygroundURL,
-                        testId: "graphiql-redirect",
-                      },
-                    ]}
+                    menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
                   />
-                </>
-              }
-            />
-            <div className={classes.date}>
-              {order && order.created ? (
-                <Typography variant="body2">
-                  <DateTime date={order.created} />
-                </Typography>
-              ) : (
-                <Skeleton style={{ width: "10em" }} />
-              )}
-            </div>
-            <Grid>
-              <div data-test-id="order-fulfillment">
-                {!isOrderUnconfirmed ? (
-                  <OrderUnfulfilledProductsCard
-                    showFulfillmentAction={canFulfill}
-                    notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
-                    lines={unfulfilled}
-                    onFulfill={onOrderFulfill}
-                  />
+                }
+              />
+              <div className={classes.date}>
+                {order && order.created ? (
+                  <Typography variant="body2">
+                    <DateTime date={order.created} />
+                  </Typography>
                 ) : (
-                  <>
-                    <OrderDraftDetails
-                      order={order}
-                      errors={errors}
-                      onOrderLineAdd={onOrderLineAdd}
-                      onOrderLineChange={onOrderLineChange}
-                      onOrderLineRemove={onOrderLineRemove}
-                      onShippingMethodEdit={onShippingMethodEdit}
-                    />
-                    <CardSpacer />
-                  </>
+                  <Skeleton style={{ width: "10em" }} />
                 )}
-                {order?.fulfillments?.map(fulfillment => (
-                  <React.Fragment key={fulfillment.id}>
-                    <OrderFulfilledProductsCard
-                      fulfillment={fulfillment}
-                      fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                      order={order}
-                      onOrderFulfillmentCancel={() =>
-                        onFulfillmentCancel(fulfillment.id)
-                      }
-                      onTrackingCodeAdd={() =>
-                        onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                      }
-                      onRefund={onPaymentRefund}
-                      onOrderFulfillmentApprove={() =>
-                        onFulfillmentApprove(fulfillment.id)
-                      }
-                    />
-                  </React.Fragment>
-                ))}
-                <OrderPayment
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-                <OrderHistory
-                  history={order?.events}
-                  orderCurrency={order?.total?.gross.currency}
-                  onNoteAdd={onNoteAdd}
-                />
               </div>
-              <div>
-                <OrderCustomer
-                  canEditAddresses={canEditAddresses}
-                  canEditCustomer={false}
-                  order={order}
-                  errors={errors}
-                  onBillingAddressEdit={onBillingAddressEdit}
-                  onShippingAddressEdit={onShippingAddressEdit}
-                  onProfileView={onProfileView}
+              {!isOrderUnconfirmed ? (
+                <OrderUnfulfilledProductsCard
+                  showFulfillmentAction={canFulfill}
+                  notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
+                  lines={unfulfilled}
+                  onFulfill={onOrderFulfill}
                 />
-                <CardSpacer />
-                <OrderChannelSectionCard channel={order?.channel} />
-                <CardSpacer />
-                {!isOrderUnconfirmed && (
-                  <>
-                    <OrderInvoiceList
-                      invoices={order?.invoices}
-                      onInvoiceClick={onInvoiceClick}
-                      onInvoiceGenerate={onInvoiceGenerate}
-                      onInvoiceSend={onInvoiceSend}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                <OrderCustomerNote note={maybe(() => order.customerNote)} />
-              </div>
-            </Grid>
+              ) : (
+                <>
+                  <OrderDraftDetails
+                    order={order}
+                    errors={errors}
+                    onOrderLineAdd={onOrderLineAdd}
+                    onOrderLineChange={onOrderLineChange}
+                    onOrderLineRemove={onOrderLineRemove}
+                    onShippingMethodEdit={onShippingMethodEdit}
+                  />
+                  <CardSpacer />
+                </>
+              )}
+              {order?.fulfillments?.map(fulfillment => (
+                <React.Fragment key={fulfillment.id}>
+                  <OrderFulfilledProductsCard
+                    fulfillment={fulfillment}
+                    fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                    order={order}
+                    onOrderFulfillmentCancel={() =>
+                      onFulfillmentCancel(fulfillment.id)
+                    }
+                    onTrackingCodeAdd={() =>
+                      onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                    }
+                    onRefund={onPaymentRefund}
+                    onOrderFulfillmentApprove={() =>
+                      onFulfillmentApprove(fulfillment.id)
+                    }
+                  />
+                </React.Fragment>
+              ))}
+              <OrderPayment
+                order={order}
+                onCapture={onPaymentCapture}
+                onMarkAsPaid={onPaymentPaid}
+                onRefund={onPaymentRefund}
+                onVoid={onPaymentVoid}
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={changeMetadata} />
+              <OrderHistory
+                history={order?.events}
+                orderCurrency={order?.total?.gross.currency}
+                onNoteAdd={onNoteAdd}
+              />
+            </Content>
+            <RightSidebar>
+              <OrderCustomer
+                canEditAddresses={canEditAddresses}
+                canEditCustomer={false}
+                order={order}
+                errors={errors}
+                onBillingAddressEdit={onBillingAddressEdit}
+                onShippingAddressEdit={onShippingAddressEdit}
+                onProfileView={onProfileView}
+              />
+              <CardSpacer />
+              <OrderChannelSectionCard channel={order?.channel} />
+              <CardSpacer />
+              {!isOrderUnconfirmed && (
+                <>
+                  <OrderInvoiceList
+                    invoices={order?.invoices}
+                    onInvoiceClick={onInvoiceClick}
+                    onInvoiceGenerate={onInvoiceGenerate}
+                    onInvoiceSend={onInvoiceSend}
+                  />
+                  <CardSpacer />
+                </>
+              )}
+              <OrderCustomerNote note={maybe(() => order.customerNote)} />
+            </RightSidebar>
             <Savebar
               labels={saveLabel}
               onCancel={() => navigate(orderListUrl())}
@@ -334,7 +323,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               state={saveButtonBarState}
               disabled={allowSave()}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

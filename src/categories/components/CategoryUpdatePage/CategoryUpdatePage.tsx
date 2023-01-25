@@ -3,11 +3,11 @@ import {
   categoryListUrl,
   categoryUrl,
 } from "@dashboard/categories/urls";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -91,7 +91,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       disabled={disabled}
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <Container>
+        <Content>
           <Backlink href={backHref}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
@@ -211,7 +211,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             state={saveButtonBarState}
             disabled={isSaveDisabled}
           />
-        </Container>
+        </Content>
       )}
     </CategoryUpdateForm>
   );

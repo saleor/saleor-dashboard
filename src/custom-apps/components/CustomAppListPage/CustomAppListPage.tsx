@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -32,7 +31,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   const classes = useStyles({});
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.webhooksAndEvents)} />
       <p>
         <FormattedMessage
@@ -111,7 +110,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           </TableBody>
         </ResponsiveTable>
       </Card>
-    </Container>
+    </>
   );
 };
 

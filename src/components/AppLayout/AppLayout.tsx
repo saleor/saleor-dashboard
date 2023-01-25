@@ -1,30 +1,21 @@
-import { useUser } from "@dashboard/auth";
+// import { useUser } from "@dashboard/auth";
 import useAppState from "@dashboard/hooks/useAppState";
-import { isDarkTheme } from "@dashboard/misc";
-import { LinearProgress, useMediaQuery } from "@material-ui/core";
-import {
-  SaleorTheme,
-  Sidebar,
-  SidebarDrawer,
-  useActionBar,
-  useBacklink,
-  useTheme,
-} from "@saleor/macaw-ui";
-import clsx from "clsx";
+// import { isDarkTheme } from "@dashboard/misc";
+import { LinearProgress } from "@material-ui/core";
+import { useActionBar, useBacklink /* useTheme*/ } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+// import clsx from "clsx";
 import React from "react";
-import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
-import Container from "../Container";
+// import Container from "../Container";
 import Navigator from "../Navigator";
-import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import UserChip from "../UserChip";
-import useAppChannel from "./AppChannelContext";
-import AppChannelSelect from "./AppChannelSelect";
-import useMenuStructure from "./menuStructure";
-import { SidebarLink } from "./SidebarLink";
-import { useFullSizeStyles, useStyles } from "./styles";
-import { isMenuActive } from "./utils";
+// import NavigatorButton from "../NavigatorButton/NavigatorButton";
+import { Sidebar /* SidebarDrawer*/ } from "../Sidebar";
+// import UserChip from "../UserChip";
+// import useAppChannel from "./AppChannelContext";
+// import AppChannelSelect from "./AppChannelSelect";
+import { /* useFullSizeStyles,*/ useStyles } from "./styles";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -33,15 +24,14 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({
   children,
-  fullSize = false,
+  // fullSize = false,
 }) => {
   const classes = useStyles();
-  const fullSizeClasses = useFullSizeStyles();
-  const { themeType, setTheme } = useTheme();
+  // const fullSizeClasses = useFullSizeStyles();
+  // const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
-  const { logout, user } = useUser();
-  const intl = useIntl();
+  // const { logout, user } = useUser();
   const [appState] = useAppState();
   const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
@@ -49,18 +39,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({
     theme.breakpoints.up("md"),
   );
 
-  const {
-    availableChannels,
-    channel,
-    isPickerActive,
-    setChannel,
-  } = useAppChannel(false);
-  const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
-  const activeMenu = menuStructure.find(menuItem =>
-    isMenuActive(location.pathname, menuItem),
-  )?.id;
+  // const {
+  //   availableChannels,
+  //   channel,
+  //   isPickerActive,
+  //   setChannel,
+  // } = useAppChannel(false);
 
-  const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
+  // const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
   return (
     <>
@@ -68,80 +54,38 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <div className={classes.root}>
-        {isMdUp && (
-          <Sidebar
-            activeId={activeMenu}
-            menuItems={menuStructure}
-            onMenuItemClick={handleMenuItemClick}
-            logoHref="/"
-            linkComponent={SidebarLink}
-          />
+      <Box display="flex">
+        {appState.loading ? (
+          <LinearProgress className={classes.appLoader} color="primary" />
+        ) : (
+          <div className={classes.appLoaderPlaceholder} />
         )}
-        <div
-          className={clsx(classes.content, {
-            [fullSizeClasses.content]: fullSize,
-          })}
+        <Box
+          height="100vh"
+          borderColor="neutralPlain"
+          borderRightWidth={1}
+          borderStyle="solid"
+          __position="sticky"
+          __top={0}
+          __borderLeftWidth={0}
+          __borderTopWidth={0}
+          __borderBottomWidth={0}
         >
-          {appState.loading ? (
-            <LinearProgress className={classes.appLoader} color="primary" />
-          ) : (
-            <div className={classes.appLoaderPlaceholder} />
-          )}
-          <div
-            className={clsx(classes.viewContainer, {
-              [fullSizeClasses.viewContainer]: fullSize,
-            })}
-          >
-            <div>
-              <Container>
-                <div className={classes.header}>
-                  <div className={classes.headerAnchor} ref={appHeaderAnchor} />
-                  <div className={classes.headerToolbar}>
-                    {!isMdUp && (
-                      <SidebarDrawer
-                        menuItems={menuStructure}
-                        logoHref="/"
-                        onMenuItemClick={handleMenuItemClick}
-                        linkComponent={SidebarLink}
-                      />
-                    )}
-                    <div className={classes.spacer} />
-                    <div className={classes.userBar}>
-                      <NavigatorButton
-                        isMac={navigator.platform.toLowerCase().includes("mac")}
-                        onClick={() => setNavigatorVisibility(true)}
-                      />
-                      {isPickerActive && (
-                        <AppChannelSelect
-                          channels={availableChannels}
-                          selectedChannelId={channel?.id}
-                          onChannelSelect={setChannel}
-                        />
-                      )}
-                      <UserChip
-                        isDarkThemeEnabled={isDarkTheme(themeType)}
-                        user={user}
-                        onLogout={logout}
-                        onThemeToggle={toggleTheme}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Container>
-            </div>
-            <main
-              className={clsx(classes.view, {
-                [classes.viewMargins]: !fullSize,
-                [fullSizeClasses.view]: fullSize,
-              })}
-            >
-              {children}
-            </main>
-          </div>
+          <Sidebar />
+        </Box>
+        <Box __height="100%" __width="100%">
+          <Box
+            __height="50px"
+            className={classes.headerAnchor}
+            ref={appHeaderAnchor}
+          />
+
+          <Box as="main" __width="100%">
+            {children}
+          </Box>
           <div className={classes.appAction} ref={appActionAnchor} />
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

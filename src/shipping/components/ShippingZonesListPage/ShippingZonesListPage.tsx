@@ -1,6 +1,7 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -41,34 +42,32 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader
-        title={intl.formatMessage({
-          id: "uULcph",
-          defaultMessage: "Shipping",
-          description: "header",
-        })}
-      />
-      <Grid>
-        <div>
-          <ShippingZonesList disabled={disabled} {...listProps} />
-        </div>
-        <div>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
-          >
-            <ShippingWeightUnitForm
-              defaultWeightUnit={defaultWeightUnit}
-              disabled={disabled}
-              onSubmit={onSubmit}
-            />
-          </RequirePermissions>
-        </div>
-      </Grid>
-    </Container>
+    <DetailedContent>
+      <Content>
+        <Backlink href={configurationMenuUrl}>
+          {intl.formatMessage(sectionNames.configuration)}
+        </Backlink>
+        <PageHeader
+          title={intl.formatMessage({
+            id: "uULcph",
+            defaultMessage: "Shipping",
+            description: "header",
+          })}
+        />
+        <ShippingZonesList disabled={disabled} {...listProps} />
+      </Content>
+      <RightSidebar>
+        <RequirePermissions
+          requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
+        >
+          <ShippingWeightUnitForm
+            defaultWeightUnit={defaultWeightUnit}
+            disabled={disabled}
+            onSubmit={onSubmit}
+          />
+        </RequirePermissions>
+      </RightSidebar>
+    </DetailedContent>
   );
 };
 ShippingZonesListPage.displayName = "ShippingZonesListPage";

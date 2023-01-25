@@ -1,6 +1,6 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -98,7 +98,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
           set(newData);
         };
         return (
-          <Container>
+          <Content>
             <Backlink href={pluginListUrl()}>
               {intl.formatMessage(sectionNames.plugins)}
             </Backlink>
@@ -162,7 +162,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               onCancel={() => navigate(pluginListUrl())}
               onSubmit={submit}
             />
-          </Container>
+          </Content>
         );
       }}
     </Form>
