@@ -13,6 +13,7 @@ import {
 } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
+import { updateTaxConfigurationForChannel } from "../../support/api/utils/taxesUtils";
 import {
   addVariantToDataGrid,
   enterVariantEditPage,
@@ -21,6 +22,7 @@ import {
   createVariant,
   selectChannelsForVariant,
 } from "../../support/pages/catalog/products/VariantsPage";
+
 describe("As an admin I should be able to create variant", () => {
   const startsWith = "CyCreateVariants-";
   const attributeValues = ["value1", "value2"];
@@ -37,6 +39,7 @@ describe("As an admin I should be able to create variant", () => {
 
     cy.clearSessionData().loginUserViaRequest();
 
+    updateTaxConfigurationForChannel({ pricesEnteredWithTax: true });
     productUtils
       .createShippingProductTypeAttributeAndCategory(name, attributeValues)
       .then(resp => {
@@ -50,15 +53,19 @@ describe("As an admin I should be able to create variant", () => {
       })
       .then(resp => {
         newChannel = resp;
-        cy.checkIfDataAreNotNull({
-          defaultChannel,
-          warehouse,
-          attribute,
-          productType,
-          category,
-          newChannel,
+        updateTaxConfigurationForChannel({
+          channelSlug: newChannel.slug,
+          pricesEnteredWithTax: true,
         });
       });
+    cy.checkIfDataAreNotNull({
+      defaultChannel,
+      warehouse,
+      attribute,
+      productType,
+      category,
+      newChannel,
+    });
   });
 
   beforeEach(() => {

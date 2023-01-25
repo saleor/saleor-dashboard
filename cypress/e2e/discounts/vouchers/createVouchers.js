@@ -13,6 +13,7 @@ import {
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   createVoucher,
   discountOptions,
@@ -53,14 +54,21 @@ describe("As an admin I want to create voucher", () => {
             auth: "token",
           };
         },
-        cy.checkIfDataAreNotNull({
-          createdChannel,
-          dataForCheckout,
-          defaultChannel,
-        }),
       );
+    cy.checkIfDataAreNotNull({
+      createdChannel,
+      dataForCheckout,
+      defaultChannel,
+    });
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
+  });
   it(
     "should be able to create fixed price voucher. TC: SALEOR_1901",
     { tags: ["@vouchers", "@allEnv", "@stable"] },

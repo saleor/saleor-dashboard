@@ -29,7 +29,7 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  it("should register customer", { tags: ["@customer", "@stagedOnly"] }, () => {
+  it("should register customer", { tags: ["@customer", "@allEnv"] }, () => {
     const email = `${startsWith}${faker.datatype.number()}@example.com`;
     customerRegistration({ email, channel: defaultChannel.slug });
     const registrationLinkRegex = /\[(\s*http[^\]]*)\]/;
