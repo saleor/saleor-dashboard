@@ -35,20 +35,14 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import OrderAddTransaction from "../OrderAddTransaction";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
-import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import OrderSummaryCard from "../OrderSummaryCard";
-import OrderTransaction from "../OrderTransaction";
-import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
-import OrderTransactionPayment from "../OrderTransactionPayment";
+import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -80,6 +74,7 @@ export interface OrderDetailsPageProps {
   onProductClick?(id: string);
   onPaymentCapture();
   onPaymentPaid();
+  onPaymentRefund();
   onPaymentVoid();
   onShippingAddressEdit();
   onOrderCancel();
@@ -110,6 +105,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderFulfill,
     onPaymentCapture,
     onPaymentPaid,
+    onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
@@ -206,14 +202,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
-  const filteredPayments = React.useMemo(
-    () =>
-      (order?.payments ?? []).filter(
-        payment => payment.isActive || payment.transactions.length > 0,
-      ),
-    [order?.payments],
-  );
-
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
@@ -283,48 +271,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <div className={classes.cardGrid}>
-                  <OrderSummaryCard order={order} />
-                  <OrderPaymentSummaryCard
-                    order={order}
-                    onMarkAsPaid={onPaymentPaid}
-                  />
-                </div>
-                <CardSpacer />
-                {order?.grantedRefunds?.length !== 0 ? (
-                  <>
-                    <OrderGrantedRefunds order={order} />
-                    <CardSpacer />
-                  </>
-                ) : null}
-                <div>
-                  {order?.transactions?.map(transaction => (
-                    <OrderTransaction
-                      key={transaction.id}
-                      transaction={transaction}
-                      onTransactionAction={onTransactionAction}
-                    />
-                  ))}
-                  {filteredPayments.map(payment => (
-                    <OrderTransactionPayment
-                      key={payment.id}
-                      payment={payment}
-                      allPaymentMethods={shop?.availablePaymentGateways}
-                      onCapture={onPaymentCapture}
-                      onVoid={onPaymentVoid}
-                    />
-                  ))}
-                  {order?.giftCards?.map(giftCard => (
-                    <OrderTransactionGiftCard
-                      key={giftCard.id}
-                      order={order}
-                      giftCard={giftCard}
-                    />
-                  ))}
-                </div>
-                <OrderAddTransaction
+                <OrderPaymentOrTransaction
                   order={order}
-                  onAddTransaction={onAddManualTransaction}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentPaid={onPaymentPaid}
+                  onPaymentVoid={onPaymentVoid}
+                  onPaymentRefund={onPaymentRefund}
+                  onMarkAsPaid={onPaymentPaid}
+                  onAddManualTransaction={onAddManualTransaction}
                 />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
