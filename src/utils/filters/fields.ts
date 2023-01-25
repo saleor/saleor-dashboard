@@ -161,6 +161,6 @@ export function createBooleanField<K extends string>(
       },
     ],
     type: FieldType.boolean,
-    value: [defaultValue?.toString()],
+    value: [defaultValue?.toString() ?? ""],
   };
 }

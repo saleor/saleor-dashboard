@@ -20,9 +20,9 @@ export interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = ({
-  id,
-}) => {
+export const CustomAppWebhookDetails: React.FC<
+  CustomAppWebhookDetailsProps
+> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -62,10 +62,12 @@ export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = (
             name: data.name,
             secretKey: data.secretKey,
             targetUrl: data.targetUrl,
+            query: data.subscriptionQuery,
           },
         },
       }),
     );
+
   if (!webhook && !loading) {
     return <NotFoundPage backHref={CustomAppUrls.resolveAppListUrl()} />;
   }

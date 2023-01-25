@@ -64,8 +64,20 @@ describe("As an admin I want to create voucher", () => {
           });
         },
       );
+    cy.checkIfDataAreNotNull({
+      createdChannel,
+      dataForCheckout,
+      defaultChannel,
+    });
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
+  });
   it(
     "should be able to create fixed price voucher. TC: SALEOR_1901",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
@@ -159,9 +171,7 @@ describe("As an admin I want to create voucher", () => {
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
-      cy.clearSessionData()
-        .loginUserViaRequest()
-        .visit(urlList.vouchers);
+      cy.clearSessionData().loginUserViaRequest().visit(urlList.vouchers);
       cy.expectSkeletonIsVisible();
       createChannel({ name }).then(channel => {
         createdChannel = channel;

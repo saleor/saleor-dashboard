@@ -53,6 +53,16 @@ export const appFragment = gql`
   }
 `;
 
+export const appInstallationFragment = gql`
+  fragment AppInstallation on AppInstallation {
+    status
+    message
+    appName
+    manifestUrl
+    id
+  }
+`;
+
 export const appListItemFragment = gql`
   fragment AppListItem on App {
     id

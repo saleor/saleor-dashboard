@@ -10,7 +10,7 @@ import isArray from "lodash/isArray";
 
 function createFilterUtils<
   TQueryParams extends {},
-  TFilters extends {}
+  TFilters extends {},
 >(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
@@ -30,7 +30,7 @@ function createFilterUtils<
     tabs: unknown[],
   ) {
     return params.activeTab === undefined
-      ? areFiltersApplied((params as unknown) as TQueryParams)
+      ? areFiltersApplied(params as unknown as TQueryParams)
         ? tabs.length + 1
         : 0
       : parseInt(params.activeTab, 10);
@@ -53,11 +53,11 @@ export function dedupeFilter<T>(array: T[]): T[] {
 
 export type GetFilterQueryParam<
   TFilterKeys extends string,
-  TFilters extends {}
+  TFilters extends {},
 > = (filter: FilterElement<TFilterKeys>, params?: {}) => TFilters;
 export function getFilterQueryParams<
   TFilterKeys extends string,
-  TUrlFilters extends {}
+  TUrlFilters extends {},
 >(
   filters: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>,
@@ -87,11 +87,11 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
 
 export function getSingleValueQueryParam<
   TKey extends string,
-  TUrlKey extends string
+  TUrlKey extends string,
 >(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
-  if (!active) {
+  if (!active || !value) {
     return {
       [key]: undefined,
     };
@@ -105,7 +105,7 @@ export function getSingleValueQueryParam<
 export function getSingleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends {}
+  TEnum extends {},
 >(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
@@ -123,7 +123,7 @@ export function getSingleEnumValueQueryParam<
 export function getMultipleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends {}
+  TEnum extends {},
 >(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
@@ -140,7 +140,7 @@ export function getMultipleEnumValueQueryParam<
 
 export function getMultipleValueQueryParam<
   TKey extends string,
-  TUrlKey extends string
+  TUrlKey extends string,
 >(param: FilterElement<TKey>, key: TUrlKey) {
   const { active, value } = param;
 
@@ -157,11 +157,11 @@ export function getMultipleValueQueryParam<
 
 export function getMinMaxQueryParam<
   TKey extends string,
-  TUrlKey extends string
+  TUrlKey extends string,
 >(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
   const { active, multiple, value } = param;
 
-  if (!active) {
+  if (!active || !value) {
     return {
       [keyFrom]: undefined,
       [keyTo]: undefined,
@@ -183,7 +183,7 @@ export function getMinMaxQueryParam<
 
 export function getKeyValueQueryParam<
   TKey extends string,
-  TUrlKey extends string
+  TUrlKey extends string,
 >(param: FilterElementKeyValue<TKey>, key: TUrlKey) {
   const { active, value } = param;
 

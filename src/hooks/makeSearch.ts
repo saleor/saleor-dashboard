@@ -6,7 +6,7 @@ import makeQuery, { UseQueryResult } from "./makeQuery";
 import useDebounce from "./useDebounce";
 
 export interface SearchVariables {
-  after?: string;
+  after?: string | null;
   first: number;
   query: string;
 }

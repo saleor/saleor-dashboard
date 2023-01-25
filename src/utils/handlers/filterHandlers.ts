@@ -4,7 +4,7 @@ import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
 import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
-type RequiredParams = ActiveTab & Search & Sort & Pagination;
+type RequiredParams = ActiveTab & Search & Sort<any> & Pagination;
 type CreateUrl = (params: RequiredParams) => string;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
@@ -14,7 +14,7 @@ type CreateFilterHandlers<TFilterKeys extends string> = [
 
 function createFilterHandlers<
   TFilterKeys extends string,
-  TFilters extends {}
+  TFilters extends {},
 >(opts: {
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
   navigate: UseNavigatorResult;

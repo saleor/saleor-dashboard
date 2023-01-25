@@ -1,8 +1,11 @@
+import "@saleor/macaw-ui/next/style";
+
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
-import { ThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider } from "@saleor/macaw-ui/next";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
 import { render } from "react-dom";
@@ -11,10 +14,8 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { useLocationState } from "./apps/hooks/useLocationState";
-import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { useUser } from "./auth";
@@ -50,12 +51,13 @@ import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
+import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import NewAppsSection from "./new-apps";
+import AppsSection from "./new-apps";
 import { AppSections } from "./new-apps/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
@@ -85,30 +87,34 @@ const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
-        <ThemeProvider overrides={themeOverrides}>
-          <DateProvider>
-            <LocaleProvider>
-              <MessageManagerProvider>
-                <ServiceWorker />
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <AuthProvider>
-                      <ShopProvider>
-                        <AppChannelProvider>
-                          <ExternalAppProvider>
-                            <ExitFormDialogProvider>
-                              <Routes />
-                            </ExitFormDialogProvider>
-                          </ExternalAppProvider>
-                        </AppChannelProvider>
-                      </ShopProvider>
-                    </AuthProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </MessageManagerProvider>
-            </LocaleProvider>
-          </DateProvider>
-        </ThemeProvider>
+        <LegacyThemeProvider overrides={themeOverrides}>
+          <ThemeProvider>
+            <DateProvider>
+              <LocaleProvider>
+                <MessageManagerProvider>
+                  <ServiceWorker />
+                  <BackgroundTasksProvider>
+                    <AppStateProvider>
+                      <FlagsServiceProvider>
+                        <AuthProvider>
+                          <ShopProvider>
+                            <AppChannelProvider>
+                              <ExternalAppProvider>
+                                <ExitFormDialogProvider>
+                                  <Routes />
+                                </ExitFormDialogProvider>
+                              </ExternalAppProvider>
+                            </AppChannelProvider>
+                          </ShopProvider>
+                        </AuthProvider>
+                      </FlagsServiceProvider>
+                    </AppStateProvider>
+                  </BackgroundTasksProvider>
+                </MessageManagerProvider>
+              </LocaleProvider>
+            </DateProvider>
+          </ThemeProvider>
+        </LegacyThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
   </SaleorProvider>
@@ -218,11 +224,7 @@ const Routes: React.FC = () => {
                 path="/product-types"
                 component={ProductTypesSection}
               />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_STAFF]}
-                path="/staff"
-                component={StaffSection}
-              />
+              <SectionRoute path="/staff" component={StaffSection} />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_STAFF]}
                 path="/permission-groups"
@@ -260,12 +262,8 @@ const Routes: React.FC = () => {
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
-                path={appsSection}
-                component={AppsSection}
-              />
-              <SectionRoute
                 path={AppSections.appsSection}
-                component={NewAppsSection}
+                component={AppsSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}

@@ -137,10 +137,6 @@
   "+xTpT1": {
     "string": "Attributes"
   },
-  "//iaFx": {
-    "context": "WarehouseSettings title",
-    "string": "Settings"
-  },
   "//k1GX": {
     "context": "expired on label",
     "string": "Expired on {date}"
@@ -304,6 +300,10 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0KmZCN": {
+    "context": "button",
+    "string": "Open playground"
+  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -394,10 +394,6 @@
     "context": "delete custom app",
     "string": "Deleting this app, you will delete all the data and webhooks regarding this app."
   },
-  "1+M/52": {
-    "context": "section header",
-    "string": "Webhook Status"
-  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
@@ -421,6 +417,10 @@
   "15fg+o": {
     "context": "weeks after label",
     "string": "weeks after issue"
+  },
+  "16Dpgb": {
+    "context": "Synchronous events description",
+    "string": "Synchronous webhook sends payload and waits for a response from the target URL to continue processing."
   },
   "16PGt9": {
     "context": "WarehouseSettings all warehouses label",
@@ -535,6 +535,10 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "26VlBZ": {
+    "context": "information",
+    "string": "Problem occured during installation."
+  },
   "28GZnc": {
     "string": "Start typing to begin search..."
   },
@@ -576,6 +580,10 @@
   "2OH46U": {
     "context": "search modal shipping title",
     "string": "Shipping address"
+  },
+  "2RYRdr": {
+    "context": "webhooks active label",
+    "string": "Active"
   },
   "2Sx05f": {
     "context": "Previous discount label",
@@ -827,6 +835,9 @@
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
   },
+  "4T/RzC": {
+    "string": "Make sure to save token, you won’t be able to see it again."
+  },
   "4VOIum": {
     "context": "product availability",
     "string": "Enabling this checkbox will remove product from search and category pages. It will be available on collection pages."
@@ -974,6 +985,9 @@
   },
   "5ZvuVw": {
     "string": "No products matching given query"
+  },
+  "5ZxAiY": {
+    "string": "Token"
   },
   "5aiFbL": {
     "context": "tabel column header",
@@ -1417,10 +1431,6 @@
   "9YazHG": {
     "string": "Company"
   },
-  "9Yhddc": {
-    "context": "input label",
-    "string": "Registered events"
-  },
   "9Zlogd": {
     "context": "staff member status",
     "string": "Active"
@@ -1440,6 +1450,10 @@
   "9hab/1": {
     "context": "bulk issue menu item",
     "string": "Bulk Issue"
+  },
+  "9kzIFd": {
+    "context": "WarehouseSettings stock title",
+    "string": "Stock settings"
   },
   "9mGA/Q": {
     "context": "button linking to dashboard",
@@ -2123,6 +2137,10 @@
     "context": "dialog header",
     "string": "Select a page type"
   },
+  "F1VtFa": {
+    "context": "information",
+    "string": "Installation is pending..."
+  },
   "F2cR19": {
     "context": "error message",
     "string": "Error details: {message}"
@@ -2141,6 +2159,10 @@
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
+  },
+  "F6LHyk": {
+    "context": "Webhook details objects",
+    "string": "Objects"
   },
   "F8gsds": {
     "context": "unpublish page, button",
@@ -2337,13 +2359,13 @@
     "context": "billing address",
     "string": "Same as shipping address"
   },
-  "GLewww": {
-    "context": "section header",
-    "string": "Events"
-  },
   "GLy2UR": {
     "context": "order history message",
     "string": "Fulfillment was cancelled"
+  },
+  "GNKG74": {
+    "context": "webhooks inactive label",
+    "string": "Inactive"
   },
   "GOdq5V": {
     "string": "Catalog"
@@ -2596,10 +2618,6 @@
   "I8mqqj": {
     "context": "PageTypeDeleteWarningDialog single assigned items button label",
     "string": "View pages"
-  },
-  "IBCBi1": {
-    "context": "webhook active description",
-    "string": "If you want to disable this webhook please uncheck the box below."
   },
   "IBw72y": {
     "context": "switch button",
@@ -2937,6 +2955,10 @@
   "KKQUMK": {
     "context": "edit menu item, header",
     "string": "Edit Item"
+  },
+  "KMxiiF": {
+    "context": "button",
+    "string": "Retry"
   },
   "KN7zKn": {
     "string": "Error"
@@ -3665,10 +3687,6 @@
     "context": "button",
     "string": "Delete Search"
   },
-  "QEvH8Q": {
-    "context": "section description",
-    "string": "Assign permissions to register asynchronous events for this webhook."
-  },
   "QFBjlV": {
     "context": "error message",
     "string": "Stock for this warehouse already exists for this product variant"
@@ -3773,6 +3791,10 @@
   "QpBqa9": {
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
+  },
+  "QpSQ5w": {
+    "context": "Webhook subscription query card title",
+    "string": "Payload Query"
   },
   "Qph0GE": {
     "context": "dialog content",
@@ -4113,10 +4135,6 @@
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
   },
-  "TjbB4Y": {
-    "context": "section subheader",
-    "string": "Asynchronous events"
-  },
   "Tl+7X4": {
     "context": "tabel column header",
     "string": "Refunded Qty"
@@ -4438,10 +4456,6 @@
     "context": "button label",
     "string": "Deactivate"
   },
-  "W+x5ZI": {
-    "context": "webhooks active label",
-    "string": "Webhook is active"
-  },
   "W/Es0H": {
     "string": "Order successfully cancelled"
   },
@@ -4554,6 +4568,9 @@
   "Wlc67M": {
     "context": "error message",
     "string": "Cannot choose a shipping method for an order without the shipping address"
+  },
+  "Wm+KUd": {
+    "string": "Headers"
   },
   "WnlZMO": {
     "context": "title",
@@ -4953,6 +4970,10 @@
     "context": "button",
     "string": "Copy"
   },
+  "ZhqH8J": {
+    "context": "button",
+    "string": "Copy headers"
+  },
   "Zhxu58": {
     "context": "Fixed amount subtitle",
     "string": "Fixed amount"
@@ -5338,6 +5359,10 @@
     "context": "empty metadata text",
     "string": "No metadata created for this element. Use the button below to add new metadata field."
   },
+  "cZN5Jd": {
+    "context": "Webhook details events",
+    "string": "Events"
+  },
   "caMMWN": {
     "string": "Search Warehouse"
   },
@@ -5440,10 +5465,6 @@
   },
   "dPYqy0": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
-  },
-  "dQdxLT": {
-    "context": "section subheader",
-    "string": "Synchronous events"
   },
   "dS+SOT": {
     "context": "header",
@@ -5587,10 +5608,6 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
-  },
-  "fHopox": {
-    "context": "section description",
-    "string": "Assign permissions to register synchronous events for this webhook."
   },
   "fLhj3a": {
     "context": "gift card history message",
@@ -6433,6 +6450,10 @@
     "context": "taxes title",
     "string": "Taxes (VAT included)"
   },
+  "mSCZd4": {
+    "context": "Webhook details asynchronous events",
+    "string": "Asynchronous"
+  },
   "mSLr9d": {
     "context": "voucher code, button",
     "string": "Generate Code"
@@ -7263,9 +7284,6 @@
     "context": "voucher status",
     "string": "Expired"
   },
-  "t9a9GQ": {
-    "string": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
@@ -7896,6 +7914,10 @@
     "context": "button",
     "string": "Create Voucher"
   },
+  "yAFaVK": {
+    "context": "Webhook details synchronous events",
+    "string": "Synchronous"
+  },
   "yDkmX7": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
@@ -7917,6 +7939,10 @@
   "yHwvLL": {
     "context": "voucher uses",
     "string": "Uses"
+  },
+  "yJqbYv": {
+    "context": "Asynchronous events description",
+    "string": "Asynchronous webhook sends payload and continues processing."
   },
   "yJynYK": {
     "context": "discount value",

@@ -3,20 +3,14 @@ import { UserError } from "@dashboard/types";
 export function getFieldError<T extends UserError>(
   errors: T[],
   field: string,
-): T {
+): T | undefined {
   return errors.find(err => err.field === field);
-}
-
-export function getErrors(errors: UserError[]): string[] {
-  return errors
-    .filter(err => ["", null].includes(err.field))
-    .map(err => err.message);
 }
 
 export type FormErrors<
   TField extends string,
-  TError extends UserError
-> = Record<TField, TError>;
+  TError extends UserError,
+> = Record<TField, TError | undefined>;
 
 export function getFormErrors<TField extends string, TError extends UserError>(
   fields: TField[],
@@ -25,7 +19,7 @@ export function getFormErrors<TField extends string, TError extends UserError>(
   return fields.reduce((errs, field) => {
     errs[field] = getFieldError(errors, field);
     return errs;
-  }, ({} as unknown) as Record<TField, TError>);
+  }, {} as unknown as Record<TField, TError | undefined>);
 }
 
 export interface ChannelError {
@@ -42,7 +36,7 @@ export function getFieldChannelError<T extends ChannelError>(
 
 export function getFormChannelErrors<
   TField extends string,
-  TError extends ChannelError
+  TError extends ChannelError,
 >(fields: TField[], errors: TError[]) {
   return fields.reduce((errs, field) => {
     errs[field] = [

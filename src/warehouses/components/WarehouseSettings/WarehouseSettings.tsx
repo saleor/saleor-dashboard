@@ -1,4 +1,3 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
@@ -9,6 +8,7 @@ import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseWithShippingFragment,
 } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { RelayToFlat } from "@dashboard/types";
@@ -146,9 +146,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
 
   return (
     <Card>
-      <CardTitle
-        title={<FormattedMessage {...messages.warehouseSettingsTitle} />}
-      />
+      <CardTitle title={<FormattedMessage {...sectionNames.shippingZones} />} />
       <CardContent>
         {renderCollection(
           zones,
@@ -172,8 +170,10 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         )}
       </CardContent>
       <Divider />
+      <CardTitle
+        title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />}
+      />
       <CardContent>
-        <CardSpacer />
         <RadioGroupField
           disabled={disabled}
           choices={isPrivateChoices}
@@ -184,12 +184,15 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         />
       </CardContent>
       <Divider />
+      <CardTitle
+        title={
+          <>
+            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+            <PreviewPill className={classes.preview} />
+          </>
+        }
+      />
       <CardContent>
-        <Typography color="textSecondary" variant="h6">
-          <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-          <PreviewPill className={classes.preview} />
-        </Typography>
-        <CardSpacer />
         <RadioGroupField
           disabled={disabled}
           choices={

@@ -2,35 +2,35 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   events: {
-    id: "GLewww",
+    id: "cZN5Jd",
     defaultMessage: "Events",
-    description: "section header",
+    description: "Webhook details events",
   },
-  synchronousEvents: {
-    id: "dQdxLT",
-    defaultMessage: "Synchronous events",
-    description: "section subheader",
+  synchronous: {
+    id: "yAFaVK",
+    defaultMessage: "Synchronous",
+    description: "Webhook details synchronous events",
   },
-  asynchronousEvents: {
-    id: "TjbB4Y",
-    defaultMessage: "Asynchronous events",
-    description: "section subheader",
+  asynchronous: {
+    id: "mSCZd4",
+    defaultMessage: "Asynchronous",
+    description: "Webhook details asynchronous events",
   },
-  assignPermissionsToSynchronousEvents: {
-    id: "fHopox",
+  synchronousDescription: {
+    id: "16Dpgb",
     defaultMessage:
-      "Assign permissions to register synchronous events for this webhook.",
-    description: "section description",
+      "Synchronous webhook sends payload and waits for a response from the target URL to continue processing.",
+    description: "Synchronous events description",
   },
-  assignPermissionsToAsynchronousEvents: {
-    id: "QEvH8Q",
+  asynchronousDescription: {
+    id: "yJqbYv",
     defaultMessage:
-      "Assign permissions to register asynchronous events for this webhook.",
-    description: "section description",
+      "Asynchronous webhook sends payload and continues processing.",
+    description: "Asynchronous events description",
   },
-  registeredEvents: {
-    id: "9Yhddc",
-    defaultMessage: "Registered events",
-    description: "input label",
+  objects: {
+    defaultMessage: "Objects",
+    id: "F6LHyk",
+    description: "Webhook details objects",
   },
 });

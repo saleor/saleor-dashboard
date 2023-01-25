@@ -1,5 +1,6 @@
 import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
+import PreviewPill from "@dashboard/components/PreviewPill";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { AppUrls } from "@dashboard/new-apps/urls";
@@ -17,6 +18,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
+  getVerifiedAppsInstallations,
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
@@ -28,6 +30,7 @@ export interface AppListPageProps extends AppListPageSections, ListProps {
 
 export const AppListPage: React.FC<AppListPageProps> = props => {
   const {
+    appsInstallations,
     installedApps,
     installableMarketplaceApps,
     comingSoonMarketplaceApps,
@@ -42,10 +45,15 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     installedApps,
     installableMarketplaceApps,
   );
-  const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
-    installedApps,
+  const verifiedAppsIntallations = getVerifiedAppsInstallations(
+    appsInstallations,
     installableMarketplaceApps,
   );
+  const verifiedInstallableMarketplaceApps =
+    getVerifiedInstallableMarketplaceApps(
+      installedApps,
+      installableMarketplaceApps,
+    );
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
@@ -80,6 +88,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader title={intl.formatMessage(messages.installedApps)} />
             <InstalledAppList
               appList={verifiedInstalledApps}
+              appInstallationList={verifiedAppsIntallations}
               disabled={disabled}
               settings={settings}
               onUpdateListSettings={onUpdateListSettings}
@@ -89,9 +98,17 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         <MarketplaceAlert error={marketplaceError} />
         {sectionsAvailability.all && !marketplaceError && (
           <>
-            <SectionHeader title={intl.formatMessage(messages.allApps)} />
+            <SectionHeader
+              title={
+                <>
+                  <FormattedMessage {...messages.allApps} />
+                  <PreviewPill className={classes.previewLabel} />
+                </>
+              }
+            />
             <AllAppList
               appList={verifiedInstallableMarketplaceApps}
+              appInstallationList={appsInstallations}
               navigateToAppInstallPage={navigateToAppInstallPage}
               navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
             />
@@ -102,7 +119,10 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             <SectionHeader
               title={intl.formatMessage(messages.comingSoonApps)}
             />
-            <AllAppList appList={comingSoonMarketplaceApps} />
+            <AllAppList
+              appList={comingSoonMarketplaceApps}
+              appInstallationList={appsInstallations}
+            />
           </>
         )}
       </div>

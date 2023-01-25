@@ -9,10 +9,9 @@ export function getSortQueryField(
     case WarehouseListUrlSortField.name:
       return WarehouseSortField.NAME;
     default:
-      return undefined;
+      throw new Error("Invalid sort field");
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

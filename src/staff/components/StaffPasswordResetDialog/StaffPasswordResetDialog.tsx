@@ -60,7 +60,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
         />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, submit }) => (
+        {({ change, data }) => (
           <>
             <DialogContent>
               <TextField
@@ -114,7 +114,6 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
                 type="submit"
-                onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>

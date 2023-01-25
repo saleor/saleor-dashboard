@@ -8,16 +8,17 @@ import {
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
-  SearchPagesQuery,
+  PageFragment,
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
-import { Node, RelayToFlat, SlugNode, TagNode } from "@dashboard/types";
+import { Node, SlugNode, TagNode } from "@dashboard/types";
+import { Choice } from "@saleor/macaw-ui";
 
 interface Edge<T> {
   node: T;
 }
 interface Connection<T> {
-  edges: Array<Edge<T>> | undefined;
+  edges: Array<Edge<T>> | undefined | null;
 }
 
 export function mapEdgesToItems<T>(
@@ -40,8 +41,8 @@ export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
 }
 
 export function mapPagesToChoices(
-  pages: RelayToFlat<SearchPagesQuery["search"]>,
-) {
+  pages: Array<Pick<PageFragment, "title" | "id">>,
+): Choice[] {
   return pages.map(page => ({
     label: page.title,
     value: page.id,
@@ -55,7 +56,7 @@ export function mapNodeToChoice<T extends ExtendedNode>(
 ): Array<SingleAutocompleteChoiceType<string>>;
 export function mapNodeToChoice<
   T extends ExtendedNode | Node,
-  K extends ChoiceValue
+  K extends ChoiceValue,
 >(nodes: T[], getterFn: (node: T) => K): Array<SingleAutocompleteChoiceType<K>>;
 
 export function mapNodeToChoice<T extends ExtendedNode>(
@@ -105,6 +106,10 @@ export function mapMultiValueNodeToChoice<T extends Record<string, any>>(
     return (nodes as string[]).map(node => ({ label: node, value: node }));
   }
 
+  if (!key) {
+    return [];
+  }
+
   return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
 }
 
@@ -118,6 +123,10 @@ export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
 
   if ((nodes as string[]).every(node => typeof node === "string")) {
     return (nodes as string[]).map(node => ({ label: node, value: node }));
+  }
+
+  if (!key) {
+    return [];
   }
 
   return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));

@@ -91,8 +91,8 @@ program
         }
         requestBody += `\nIf this bugs won't be fixed in next patch release for this version mark them as known issues`;
       }
-    }else if(testsStatus === "ERRORED"){
-      requestBody = `Tests ERRORED! Check log at ${options.dashboard_url}`
+    } else if (testsStatus === "ERRORED") {
+      requestBody = `Tests ERRORED! Check log at ${options.dashboard_url}`;
     }
 
     const event = "COMMENT";
@@ -142,7 +142,7 @@ async function getTestsStatusAndId(dashboardUrl) {
     buildNumber: dashboardUrl.match(getRunRegex)[1],
   };
 
-  const throwErrorAfterTimeout = setTimeout(function() {
+  const throwErrorAfterTimeout = setTimeout(function () {
     throw new Error("Run have still running status, after all tests executed");
   }, 1200000);
 
@@ -166,7 +166,7 @@ async function waitForTestsToFinish(requestVariables) {
       )
       .then(response => {
         if (response.runByBuildNumber.status === "RUNNING") {
-          setTimeout(async function() {
+          setTimeout(async function () {
             resolve(await waitForTestsToFinish(requestVariables));
           }, 10000);
         } else {

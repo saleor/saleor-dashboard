@@ -32,8 +32,8 @@ export interface WarehouseListPageProps
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     TabPageProps {
-  limits: RefreshLimitsQuery["shop"]["limits"];
-  warehouses: WarehouseWithShippingFragment[];
+  limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
+  warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string) => void;
 }
 
@@ -66,18 +66,19 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
       <PageHeader
         title={intl.formatMessage(sectionNames.warehouses)}
         limitText={
-          hasLimits(limits, "warehouses") &&
-          intl.formatMessage(
-            {
-              id: "YkOzse",
-              defaultMessage: "{count}/{max} warehouses used",
-              description: "used warehouses counter",
-            },
-            {
-              count: limits.currentUsage.warehouses,
-              max: limits.allowedUsage.warehouses,
-            },
-          )
+          hasLimits(limits, "warehouses")
+            ? intl.formatMessage(
+                {
+                  id: "YkOzse",
+                  defaultMessage: "{count}/{max} warehouses used",
+                  description: "used warehouses counter",
+                },
+                {
+                  count: limits?.currentUsage.warehouses,
+                  max: limits?.allowedUsage.warehouses,
+                },
+              )
+            : undefined
         }
       >
         <Button

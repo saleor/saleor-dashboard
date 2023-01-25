@@ -8,7 +8,9 @@ export function stringifyQs(params: unknown, arrayFormat?: string): string {
   });
 }
 
-export function getArrayQueryParam(param: string | string[]): string[] {
+export function getArrayQueryParam(
+  param: string | string[],
+): string[] | undefined {
   if (!param) {
     return undefined;
   }

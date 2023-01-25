@@ -12,6 +12,11 @@ export const messages = defineMessages({
     defaultMessage: "Installed Apps",
     description: "section header",
   },
+  ongoingInstallations: {
+    id: "nIrjSR",
+    defaultMessage: "Ongoing Installations",
+    description: "section header",
+  },
   allApps: {
     id: "yZB41s",
     defaultMessage: "All Apps",

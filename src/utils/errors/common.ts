@@ -22,7 +22,8 @@ export const CommonErrorCode = {
   REQUIRED: "REQUIRED",
 } as const;
 
-export type CommonErrorCode = typeof CommonErrorCode[keyof typeof CommonErrorCode];
+export type CommonErrorCode =
+  (typeof CommonErrorCode)[keyof typeof CommonErrorCode];
 
 export interface CommonError<ErrorCode> {
   code: ErrorCode | CommonErrorCode;
@@ -33,7 +34,7 @@ export interface CommonError<ErrorCode> {
 export function getCommonFormFieldErrorMessage<ErrorCode>(
   error: CommonError<ErrorCode> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (error) {
     switch (error.code) {
       case "GRAPHQL_ERROR":
