@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PermissionGroupFragment } from "@dashboard/graphql";
@@ -27,7 +26,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
@@ -47,7 +46,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
       <Card>
         <PermissionGroupList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PermissionGroupListPage.displayName = "PermissionGroupListPage";

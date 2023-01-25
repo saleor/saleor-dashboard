@@ -2,7 +2,6 @@ import { AppPageTabs } from "@dashboard/apps/components/AppPageTabs/AppPageTabs"
 import { useAppsPageNavigation } from "@dashboard/apps/hooks/useAppsPageNavigation";
 import { useSaleorApps } from "@dashboard/apps/hooks/useSaleorApps";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
   AppListItemFragment,
@@ -175,7 +174,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   };
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.apps)} />
       <AppPageTabs
         showSaleorApps={saleorAppsEnabled}
@@ -184,7 +183,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         value={activeTab}
       />
       {renderContent()}
-    </Container>
+    </>
   );
 };
 

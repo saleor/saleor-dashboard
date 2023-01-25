@@ -1,6 +1,6 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Metadata from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -36,7 +36,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   return (
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <Container>
+        <Content>
           <Backlink href={backUrl}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
@@ -81,7 +81,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               disabled={isSaveDisabled}
             />
           </div>
-        </Container>
+        </Content>
       )}
     </CategoryCreateForm>
   );

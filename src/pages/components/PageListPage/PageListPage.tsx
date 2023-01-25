@@ -1,5 +1,4 @@
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import { PageFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -39,7 +38,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
         <Button onClick={onAdd} variant="primary" data-test-id="create-page">
           <FormattedMessage
@@ -56,7 +55,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
         />
         <PageList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PageListPage.displayName = "PageListPage";

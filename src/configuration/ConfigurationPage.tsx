@@ -1,3 +1,4 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
@@ -8,7 +9,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
 import { MenuSection } from "./types";
@@ -89,7 +89,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Container>
+    <Content>
       {!isSmUp && renderVersionInfo}
       <PageHeader title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
@@ -126,7 +126,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             </div>
           </div>
         ))}
-    </Container>
+    </Content>
   );
 };
 ConfigurationPage.displayName = "ConfigurationPage";

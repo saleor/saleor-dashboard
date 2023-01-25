@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import { Container } from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -58,7 +57,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   const reachedLimit = isLimitReached(limits, "staffUsers");
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
@@ -130,7 +129,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         />
         <StaffList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 StaffListPage.displayName = "StaffListPage";

@@ -1,6 +1,5 @@
 import { collectionAddUrl } from "@dashboard/collections/urls";
 import { Button } from "@dashboard/components/Button";
-import { Container } from "@dashboard/components/Container";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -52,7 +51,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.collections)}>
         <Button
           disabled={disabled}
@@ -97,7 +96,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           {...listProps}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 CollectionListPage.displayName = "CollectionListPage";

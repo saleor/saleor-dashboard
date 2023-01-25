@@ -1,6 +1,7 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -30,19 +31,18 @@ const GiftCardUpdatePage: React.FC = () => {
   } = useGiftCardUpdate();
 
   return (
-    <Container>
-      <GiftCardUpdatePageHeader />
-      <Grid>
-        <div>
-          <GiftCardUpdateDetailsCard />
-          <CardSpacer />
-          <Metadata data={data} onChange={changeMetadata} />
-        </div>
-        <div>
-          <GiftCardUpdateInfoCard />
-        </div>
+    <DetailedContent>
+      <Content>
+        <GiftCardUpdatePageHeader />
+        <GiftCardUpdateDetailsCard />
+        <CardSpacer />
+        <Metadata data={data} onChange={changeMetadata} />
         <GiftCardHistory />
-      </Grid>
+      </Content>
+      <RightSidebar>
+        <GiftCardUpdateInfoCard />
+      </RightSidebar>
+
       <Savebar
         state={status}
         onCancel={() => navigate(giftCardsListPath)}
@@ -50,7 +50,7 @@ const GiftCardUpdatePage: React.FC = () => {
         onSubmit={submit}
         onDelete={openDeleteDialog}
       />
-    </Container>
+    </DetailedContent>
   );
 };
 

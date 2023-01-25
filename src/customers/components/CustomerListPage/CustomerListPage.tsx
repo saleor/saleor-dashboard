@@ -7,7 +7,6 @@ import {
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
@@ -88,7 +87,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const extensionCreateButtonItems = mapToMenuItems(CUSTOMER_OVERVIEW_CREATE);
 
   return (
-    <Container>
+    <>
       <PageHeader
         title={intl.formatMessage(sectionNames.customers)}
         cardMenu={
@@ -136,7 +135,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
         />
         <CustomerList {...customerListProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 CustomerListPage.displayName = "CustomerListPage";

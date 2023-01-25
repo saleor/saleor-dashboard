@@ -1,10 +1,11 @@
 import { validateSalePrice } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -104,63 +105,61 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink onClick={onBack}>
-              {intl.formatMessage(sectionNames.sales)}
-            </Backlink>
-            <PageHeader
-              title={intl.formatMessage({
-                id: "2E1xZ0",
-                defaultMessage: "Create Sale",
-                description: "page header",
-              })}
-            />
-            <Grid>
-              <div>
-                <SaleInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <SaleType data={data} disabled={disabled} onChange={change} />
-                <CardSpacer />
-                <SaleValue
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={handleChannelChange}
-                />
-                <CardSpacer />
-                <DiscountDates
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name,
-                  }))}
-                  disabled={disabled}
-                  openModal={openChannelsModal}
-                />
-              </div>
-              <Metadata data={data} onChange={changeMetadata} />
-            </Grid>
+          <DetailedContent>
+            <Content>
+              <Backlink onClick={onBack}>
+                {intl.formatMessage(sectionNames.sales)}
+              </Backlink>
+              <PageHeader
+                title={intl.formatMessage({
+                  id: "2E1xZ0",
+                  defaultMessage: "Create Sale",
+                  description: "page header",
+                })}
+              />
+              <SaleInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <SaleType data={data} disabled={disabled} onChange={change} />
+              <CardSpacer />
+              <SaleValue
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={handleChannelChange}
+              />
+              <CardSpacer />
+              <DiscountDates
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </Content>
+            <RightSidebar>
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings.map(channel => ({
+                  id: channel.id,
+                  name: channel.name,
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
+              />
+            </RightSidebar>
+            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

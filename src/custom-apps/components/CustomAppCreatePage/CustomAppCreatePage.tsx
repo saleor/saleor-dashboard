@@ -1,8 +1,9 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -59,26 +60,26 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
       disabled={disabled}
     >
       {({ data, change, submit, isSaveDisabled }) => (
-        <Container>
-          <Backlink href={CustomAppUrls.resolveAppListUrl()}>
-            {intl.formatMessage(sectionNames.apps)}
-          </Backlink>
-          <PageHeader
-            title={intl.formatMessage({
-              id: "GjH9uy",
-              defaultMessage: "Create New App",
-              description: "header",
-            })}
-          />
-          <Grid>
-            <div>
-              <CustomAppInformation
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-            </div>
+        <DetailedContent>
+          <Content>
+            <Backlink href={CustomAppUrls.resolveAppListUrl()}>
+              {intl.formatMessage(sectionNames.apps)}
+            </Backlink>
+            <PageHeader
+              title={intl.formatMessage({
+                id: "GjH9uy",
+                defaultMessage: "Create New App",
+                description: "header",
+              })}
+            />
+            <CustomAppInformation
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+          </Content>
+          <RightSidebar>
             <AccountPermissions
               data={data}
               errorMessage={permissionsError}
@@ -98,14 +99,14 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
                 description: "card description",
               })}
             />
-          </Grid>
+          </RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
-        </Container>
+        </DetailedContent>
       )}
     </Form>
   );

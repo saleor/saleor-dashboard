@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
@@ -51,7 +50,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
   const currentTab = queryTab >= 0 ? queryTab : 0;
 
   return (
-    <Container>
+    <>
       <Backlink href={languageListUrl}>
         {intl.formatMessage({
           id: "GsBRWL",
@@ -138,7 +137,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
         </FilterTabs>
         {children}
       </Card>
-    </Container>
+    </>
   );
 };
 TranslationsEntitiesListPage.displayName = "TranslationsEntitiesListPage";

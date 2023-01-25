@@ -5,7 +5,6 @@ import {
 } from "@dashboard/apps/useExtensions";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
@@ -78,7 +77,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
 
   return (
-    <Container>
+    <>
       <PageHeader
         title={intl.formatMessage(sectionNames.orders)}
         limitText={
@@ -152,7 +151,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         />
         <OrderList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 OrderListPage.displayName = "OrderListPage";

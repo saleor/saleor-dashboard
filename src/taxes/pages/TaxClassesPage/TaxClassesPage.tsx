@@ -1,6 +1,6 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -116,7 +116,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
-          <Container>
+          <Content>
             <PageHeader title={<TaxPageTitle />} />
             <PageTabs value="tax-classes" onChange={handleTabChange}>
               <PageTab
@@ -280,7 +280,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
               onSubmit={submit}
               onCancel={() => navigate(configurationMenuUrl)}
             />
-          </Container>
+          </Content>
         );
       }}
     </TaxClassesForm>

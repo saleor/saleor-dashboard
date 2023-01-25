@@ -1,8 +1,9 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
@@ -96,41 +97,39 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         );
 
         return (
-          <Container>
-            <Backlink href={backUrl}>{appName}</Backlink>
-            <PageHeader title={getHeaderTitle(intl, webhook)} />
-            <Grid variant="uniform">
-              <div>
-                <WebhookInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <FormSpacer />
-                <WebhookEvents
-                  data={data}
-                  syncEventsChoices={syncEventsChoices}
-                  asyncEventsChoices={asyncEventsChoices}
-                  onSyncEventChange={handleSyncEventsSelect}
-                  onAsyncEventChange={handleAsyncEventsSelect}
-                />
-              </div>
-            </Grid>
+          <DetailedContent>
+            <Content>
+              <Backlink href={backUrl}>{appName}</Backlink>
+              <PageHeader title={getHeaderTitle(intl, webhook)} />
+              <WebhookInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </Content>
+            <RightSidebar>
+              <WebhookStatus
+                data={data.isActive}
+                disabled={disabled}
+                onChange={change}
+              />
+              <FormSpacer />
+              <WebhookEvents
+                data={data}
+                syncEventsChoices={syncEventsChoices}
+                asyncEventsChoices={asyncEventsChoices}
+                onSyncEventChange={handleSyncEventsSelect}
+                onAsyncEventChange={handleAsyncEventsSelect}
+              />
+            </RightSidebar>
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
               onCancel={() => navigate(backUrl)}
               onSubmit={submit}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

@@ -12,7 +12,6 @@ import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import Container from "../../../components/Container";
 import PageHeader from "../../../components/PageHeader";
 import {
   FilterPageProps,
@@ -55,7 +54,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
@@ -96,7 +95,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         />
         <AttributeList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 AttributeListPage.displayName = "AttributeListPage";

@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
@@ -43,7 +42,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.vouchers,
@@ -100,7 +99,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </>
   );
 };
 TranslationsVouchersPage.displayName = "TranslationsVouchersPage";

@@ -4,13 +4,14 @@ import {
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -237,155 +238,153 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
 
         return (
-          <Container>
-            <Backlink href={productListUrl()}>
-              {intl.formatMessage(sectionNames.products)}
-            </Backlink>
-            <PageHeader title={header} />
-            <Grid>
-              <div>
-                <ProductDetailsForm
-                  data={data}
+          <DetailedContent>
+            <Content>
+              <Backlink href={productListUrl()}>
+                {intl.formatMessage(sectionNames.products)}
+              </Backlink>
+              <PageHeader title={header} />
+              <ProductDetailsForm
+                data={data}
+                disabled={loading}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              {data.attributes.length > 0 && (
+                <Attributes
+                  attributes={data.attributes}
+                  attributeValues={attributeValues}
+                  loading={loading}
                   disabled={loading}
                   errors={errors}
-                  onChange={change}
+                  onChange={handlers.selectAttribute}
+                  onMultiChange={handlers.selectAttributeMultiple}
+                  onFileChange={handlers.selectAttributeFile}
+                  onReferencesRemove={handlers.selectAttributeReference}
+                  onReferencesAddClick={onAssignReferencesClick}
+                  onReferencesReorder={handlers.reorderAttributeValue}
+                  fetchAttributeValues={fetchAttributeValues}
+                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  onAttributeSelectBlur={onAttributeSelectBlur}
+                  richTextGetters={attributeRichTextGetters}
                 />
-                <CardSpacer />
-                {data.attributes.length > 0 && (
-                  <Attributes
-                    attributes={data.attributes}
-                    attributeValues={attributeValues}
-                    loading={loading}
+              )}
+              <CardSpacer />
+              {isSimpleProduct && (
+                <>
+                  <ProductShipping
+                    data={data}
                     disabled={loading}
                     errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
+                    weightUnit={weightUnit}
+                    onChange={change}
                   />
-                )}
-                <CardSpacer />
-                {isSimpleProduct && (
-                  <>
-                    <ProductShipping
-                      data={data}
-                      disabled={loading}
-                      errors={errors}
-                      weightUnit={weightUnit}
-                      onChange={change}
-                    />
-                    <CardSpacer />
-                    <ProductVariantPrice
-                      ProductVariantChannelListings={data.channelListings}
-                      errors={channelsErrors}
-                      loading={loading}
-                      onChange={handlers.changeChannelPrice}
-                    />
-                    <CardSpacer />
-                    <ProductStocks
-                      data={data}
-                      disabled={loading}
-                      hasVariants={false}
-                      onFormDataChange={change}
-                      errors={errors}
-                      formErrors={formErrors}
-                      stocks={data.stocks}
-                      warehouses={warehouses}
-                      onChange={handlers.changeStock}
-                      onChangePreorderEndDate={handlers.changePreorderEndDate}
-                      onWarehouseStockAdd={handlers.addStock}
-                      onWarehouseStockDelete={handlers.deleteStock}
-                      onWarehouseConfigure={onWarehouseConfigure}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                <SeoForm
-                  allowEmptySlug={true}
-                  helperText={intl.formatMessage({
-                    id: "LKoIB1",
-                    defaultMessage:
-                      "Add search engine title and description to make this product easier to find",
-                  })}
-                  title={data.seoTitle}
-                  slug={data.slug}
-                  slugPlaceholder={data.name}
-                  titlePlaceholder={data.name}
-                  description={data.seoDescription}
-                  descriptionPlaceholder={data.seoTitle}
-                  loading={loading}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={handlers.changeMetadata} />
-              </div>
-              <div>
-                <ProductOrganization
-                  canChangeType={true}
-                  categories={categories}
-                  categoryInputDisplayValue={selectedCategory}
-                  collections={collections}
-                  data={data}
-                  disabled={loading}
-                  errors={[...errors, ...channelsErrors]}
-                  fetchCategories={fetchCategories}
-                  fetchCollections={fetchCollections}
-                  fetchMoreCategories={fetchMoreCategories}
-                  fetchMoreCollections={fetchMoreCollections}
-                  fetchMoreProductTypes={fetchMoreProductTypes}
-                  fetchProductTypes={fetchProductTypes}
-                  productType={data.productType}
-                  productTypeInputDisplayValue={data.productType?.name || ""}
-                  productTypes={productTypes}
-                  onCategoryChange={handlers.selectCategory}
-                  onCollectionChange={handlers.selectCollection}
-                  onProductTypeChange={handlers.selectProductType}
-                  collectionsInputDisplayValue={selectedCollections}
-                />
-                <CardSpacer />
-                {isSimpleProduct ? (
-                  <ChannelsAvailabilityCard
-                    managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                    messages={{
-                      hiddenLabel: intl.formatMessage({
-                        id: "saKXY3",
-                        defaultMessage: "Not published",
-                        description: "product label",
-                      }),
-
-                      visibleLabel: intl.formatMessage({
-                        id: "qJedl0",
-                        defaultMessage: "Published",
-                        description: "product label",
-                      }),
-                    }}
+                  <CardSpacer />
+                  <ProductVariantPrice
+                    ProductVariantChannelListings={data.channelListings}
                     errors={channelsErrors}
-                    allChannelsCount={allChannelsCount}
-                    channels={data.channelListings || []}
-                    disabled={loading}
-                    onChange={handlers.changeChannels}
-                    openModal={openChannelsModal}
+                    loading={loading}
+                    onChange={handlers.changeChannelPrice}
                   />
-                ) : (
-                  <CannotDefineChannelsAvailabilityCard />
-                )}
-                <CardSpacer />
-                <ProductTaxes
-                  value={data.taxClassId}
+                  <CardSpacer />
+                  <ProductStocks
+                    data={data}
+                    disabled={loading}
+                    hasVariants={false}
+                    onFormDataChange={change}
+                    errors={errors}
+                    formErrors={formErrors}
+                    stocks={data.stocks}
+                    warehouses={warehouses}
+                    onChange={handlers.changeStock}
+                    onChangePreorderEndDate={handlers.changePreorderEndDate}
+                    onWarehouseStockAdd={handlers.addStock}
+                    onWarehouseStockDelete={handlers.deleteStock}
+                    onWarehouseConfigure={onWarehouseConfigure}
+                  />
+                  <CardSpacer />
+                </>
+              )}
+              <SeoForm
+                allowEmptySlug={true}
+                helperText={intl.formatMessage({
+                  id: "LKoIB1",
+                  defaultMessage:
+                    "Add search engine title and description to make this product easier to find",
+                })}
+                title={data.seoTitle}
+                slug={data.slug}
+                slugPlaceholder={data.name}
+                titlePlaceholder={data.name}
+                description={data.seoDescription}
+                descriptionPlaceholder={data.seoTitle}
+                loading={loading}
+                onChange={change}
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={handlers.changeMetadata} />
+            </Content>
+            <RightSidebar>
+              <ProductOrganization
+                canChangeType={true}
+                categories={categories}
+                categoryInputDisplayValue={selectedCategory}
+                collections={collections}
+                data={data}
+                disabled={loading}
+                errors={[...errors, ...channelsErrors]}
+                fetchCategories={fetchCategories}
+                fetchCollections={fetchCollections}
+                fetchMoreCategories={fetchMoreCategories}
+                fetchMoreCollections={fetchMoreCollections}
+                fetchMoreProductTypes={fetchMoreProductTypes}
+                fetchProductTypes={fetchProductTypes}
+                productType={data.productType}
+                productTypeInputDisplayValue={data.productType?.name || ""}
+                productTypes={productTypes}
+                onCategoryChange={handlers.selectCategory}
+                onCollectionChange={handlers.selectCollection}
+                onProductTypeChange={handlers.selectProductType}
+                collectionsInputDisplayValue={selectedCollections}
+              />
+              <CardSpacer />
+              {isSimpleProduct ? (
+                <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  messages={{
+                    hiddenLabel: intl.formatMessage({
+                      id: "saKXY3",
+                      defaultMessage: "Not published",
+                      description: "product label",
+                    }),
+
+                    visibleLabel: intl.formatMessage({
+                      id: "qJedl0",
+                      defaultMessage: "Published",
+                      description: "product label",
+                    }),
+                  }}
+                  errors={channelsErrors}
+                  allChannelsCount={allChannelsCount}
+                  channels={data.channelListings || []}
                   disabled={loading}
-                  onChange={handlers.selectTaxClass}
-                  taxClassDisplayName={selectedTaxClass}
-                  taxClasses={taxClasses}
-                  onFetchMore={fetchMoreTaxClasses}
+                  onChange={handlers.changeChannels}
+                  openModal={openChannelsModal}
                 />
-              </div>
-            </Grid>
+              ) : (
+                <CannotDefineChannelsAvailabilityCard />
+              )}
+              <CardSpacer />
+              <ProductTaxes
+                value={data.taxClassId}
+                disabled={loading}
+                onChange={handlers.selectTaxClass}
+                taxClassDisplayName={selectedTaxClass}
+                taxClasses={taxClasses}
+                onFetchMore={fetchMoreTaxClasses}
+              />
+            </RightSidebar>
             <Savebar
               onCancel={() => navigate(productListUrl())}
               onSubmit={submit}
@@ -413,7 +412,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 }
               />
             )}
-          </Container>
+          </DetailedContent>
         );
       }}
     </ProductCreateForm>

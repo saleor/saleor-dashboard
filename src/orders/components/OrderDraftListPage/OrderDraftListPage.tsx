@@ -1,5 +1,4 @@
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
@@ -58,7 +57,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
-    <Container>
+    <>
       <PageHeader
         title={intl.formatMessage(sectionNames.draftOrders)}
         limitText={
@@ -113,7 +112,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
         />
         <OrderDraftList disabled={disabled} {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 OrderDraftListPage.displayName = "OrderDraftListPage";

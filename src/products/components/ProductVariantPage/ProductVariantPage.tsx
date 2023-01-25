@@ -3,6 +3,7 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { ChannelPriceData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
@@ -10,7 +11,6 @@ import Attributes, {
 } from "@dashboard/components/Attributes";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import Metadata from "@dashboard/components/Metadata/Metadata";
@@ -200,7 +200,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   return (
     <>
-      <Container>
+      <Content>
         <Backlink href={productUrl(productId)}>
           {variant?.product?.name}
         </Backlink>
@@ -440,7 +440,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             );
           }}
         </ProductVariantUpdateForm>
-      </Container>
+      </Content>
       {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={variantDeactivatePreoderButtonState}
