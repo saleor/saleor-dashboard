@@ -1,10 +1,11 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -96,45 +97,43 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
-            <Backlink href={warehouseListUrl()}>
-              <FormattedMessage {...sectionNames.warehouses} />
-            </Backlink>
-            <PageHeader title={warehouse?.name} />
-            <Grid>
-              <div>
-                <WarehouseInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <CompanyAddressInput
-                  countries={countryChoices}
-                  data={data}
-                  disabled={disabled}
-                  displayCountry={displayCountry}
-                  errors={[...errors, ...validationErrors]}
-                  header={intl.formatMessage({
-                    id: "43Nlay",
-                    defaultMessage: "Address Information",
-                    description: "warehouse",
-                  })}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-              </div>
-              <div>
-                <WarehouseSettings
-                  zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                  setData={set}
-                />
-              </div>
-            </Grid>
+          <DetailedContent>
+            <Content>
+              <Backlink href={warehouseListUrl()}>
+                <FormattedMessage {...sectionNames.warehouses} />
+              </Backlink>
+              <PageHeader title={warehouse?.name} />
+              <WarehouseInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CompanyAddressInput
+                countries={countryChoices}
+                data={data}
+                disabled={disabled}
+                displayCountry={displayCountry}
+                errors={[...errors, ...validationErrors]}
+                header={intl.formatMessage({
+                  id: "43Nlay",
+                  defaultMessage: "Address Information",
+                  description: "warehouse",
+                })}
+                onChange={change}
+                onCountryChange={handleCountrySelect}
+              />
+            </Content>
+            <RightSidebar>
+              <WarehouseSettings
+                zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
+                data={data}
+                disabled={disabled}
+                onChange={change}
+                setData={set}
+              />
+            </RightSidebar>
             <Savebar
               disabled={!!isSaveDisabled}
               onCancel={() => navigate(warehouseListUrl())}
@@ -142,7 +141,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

@@ -7,7 +7,6 @@ import {
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
 import ColumnPicker from "@dashboard/components/ColumnPicker";
-import Container from "@dashboard/components/Container";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -183,7 +182,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
-    <Container>
+    <>
       <PageHeader
         cardMenu={
           <CardMenu
@@ -292,7 +291,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           filterDependency={filterDependency}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 ProductListPage.displayName = "ProductListPage";

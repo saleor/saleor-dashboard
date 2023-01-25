@@ -3,9 +3,11 @@ import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
@@ -194,79 +196,77 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
         const allErrors = [...errors, ...validationErrors];
 
         return (
-          <>
-            <Grid>
-              <div>
-                <ChannelForm
-                  data={data}
-                  disabled={disabled}
-                  currencyCodes={currencyCodes}
-                  countries={countryChoices}
-                  selectedCurrencyCode={selectedCurrencyCode}
-                  selectedCountryDisplayName={selectedCountryDisplayName}
-                  onChange={change}
-                  onCurrencyCodeChange={handleCurrencyCodeSelect}
-                  onDefaultCountryChange={handleDefaultCountrySelect}
-                  errors={allErrors}
-                />
-              </div>
-              <div>
-                {!!updateChannelStatus && (
-                  <>
-                    <ChannelStatus
-                      isActive={channel?.isActive}
-                      disabled={disabledStatus}
-                      updateChannelStatus={updateChannelStatus}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                <RequirePermissions
-                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
-                >
-                  <ShippingZones
-                    shippingZonesChoices={getFilteredShippingZonesChoices(
-                      data.shippingZonesToDisplay,
-                    )}
-                    shippingZones={data.shippingZonesToDisplay}
-                    addShippingZone={addShippingZone}
-                    removeShippingZone={removeShippingZone}
-                    searchShippingZones={searchShippingZones}
-                    fetchMoreShippingZones={fetchMoreShippingZones}
-                    totalCount={allShippingZonesCount}
-                    loading={disabled}
+          <DetailedContent>
+            <Content>
+              <ChannelForm
+                data={data}
+                disabled={disabled}
+                currencyCodes={currencyCodes}
+                countries={countryChoices}
+                selectedCurrencyCode={selectedCurrencyCode}
+                selectedCountryDisplayName={selectedCountryDisplayName}
+                onChange={change}
+                onCurrencyCodeChange={handleCurrencyCodeSelect}
+                onDefaultCountryChange={handleDefaultCountrySelect}
+                errors={allErrors}
+              />
+            </Content>
+            <RightSidebar>
+              {!!updateChannelStatus && (
+                <>
+                  <ChannelStatus
+                    isActive={channel?.isActive}
+                    disabled={disabledStatus}
+                    updateChannelStatus={updateChannelStatus}
                   />
                   <CardSpacer />
-                </RequirePermissions>
-                <RequirePermissions
-                  oneOfPermissions={[
-                    PermissionEnum.MANAGE_SHIPPING,
-                    PermissionEnum.MANAGE_ORDERS,
-                    PermissionEnum.MANAGE_PRODUCTS,
-                  ]}
-                >
-                  <Warehouses
-                    warehousesChoices={getFilteredWarehousesChoices(
-                      data.warehousesToDisplay,
-                    )}
-                    warehouses={data.warehousesToDisplay}
-                    addWarehouse={addWarehouse}
-                    removeWarehouse={removeWarehouse}
-                    searchWarehouses={searchWarehouses}
-                    fetchMoreWarehouses={fetchMoreWarehouses}
-                    totalCount={allWarehousesCount}
-                    reorderWarehouses={reorderWarehouse}
-                    loading={disabled}
-                  />
-                  <CardSpacer />
-                </RequirePermissions>
-                <ChannelAllocationStrategy
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
+                </>
+              )}
+              <RequirePermissions
+                requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+              >
+                <ShippingZones
+                  shippingZonesChoices={getFilteredShippingZonesChoices(
+                    data.shippingZonesToDisplay,
+                  )}
+                  shippingZones={data.shippingZonesToDisplay}
+                  addShippingZone={addShippingZone}
+                  removeShippingZone={removeShippingZone}
+                  searchShippingZones={searchShippingZones}
+                  fetchMoreShippingZones={fetchMoreShippingZones}
+                  totalCount={allShippingZonesCount}
+                  loading={disabled}
                 />
-              </div>
-            </Grid>
+                <CardSpacer />
+              </RequirePermissions>
+              <RequirePermissions
+                oneOfPermissions={[
+                  PermissionEnum.MANAGE_SHIPPING,
+                  PermissionEnum.MANAGE_ORDERS,
+                  PermissionEnum.MANAGE_PRODUCTS,
+                ]}
+              >
+                <Warehouses
+                  warehousesChoices={getFilteredWarehousesChoices(
+                    data.warehousesToDisplay,
+                  )}
+                  warehouses={data.warehousesToDisplay}
+                  addWarehouse={addWarehouse}
+                  removeWarehouse={removeWarehouse}
+                  searchWarehouses={searchWarehouses}
+                  fetchMoreWarehouses={fetchMoreWarehouses}
+                  totalCount={allWarehousesCount}
+                  reorderWarehouses={reorderWarehouse}
+                  loading={disabled}
+                />
+                <CardSpacer />
+              </RequirePermissions>
+              <ChannelAllocationStrategy
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+            </RightSidebar>
             <Savebar
               onCancel={() => navigate(channelsListUrl())}
               onSubmit={submit}
@@ -274,7 +274,7 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
               state={saveButtonBarState}
               disabled={disabled}
             />
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

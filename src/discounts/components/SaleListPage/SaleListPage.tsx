@@ -1,5 +1,4 @@
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -54,7 +53,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const filterDependency = structure.find(getByName("channel"));
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.sales)}>
         <Button
           href={saleAddUrl()}
@@ -92,7 +91,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
         />
         <SaleList filterDependency={filterDependency} {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 SaleListPage.displayName = "SaleListPage";

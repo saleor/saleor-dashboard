@@ -1,10 +1,11 @@
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -131,80 +132,75 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
         );
 
         return (
-          <Container>
-            <Backlink href={staffListUrl()}>
-              {intl.formatMessage(sectionNames.staff)}
-            </Backlink>
-            <PageHeader title={getUserName(staffMember)} />
-            <Grid>
-              <div>
-                <StaffProperties
-                  errors={errors}
-                  data={formData}
-                  disabled={disabled}
-                  canEditAvatar={canEditAvatar}
-                  staffMember={staffMember}
-                  onChange={change}
-                  onImageUpload={onImageUpload}
-                  onImageDelete={onImageDelete}
-                />
-                {canEditPreferences && (
-                  <>
-                    <CardSpacer />
-                    <StaffPassword onChangePassword={onChangePassword} />
-                  </>
-                )}
-              </div>
-              <div className={classes.noOverflow}>
-                {canEditPreferences && (
-                  <StaffPreferences
-                    locale={locale}
-                    onLocaleChange={setLocale}
+          <DetailedContent>
+            <Content>
+              <Backlink href={staffListUrl()}>
+                {intl.formatMessage(sectionNames.staff)}
+              </Backlink>
+              <PageHeader title={getUserName(staffMember)} />
+              <StaffProperties
+                errors={errors}
+                data={formData}
+                disabled={disabled}
+                canEditAvatar={canEditAvatar}
+                staffMember={staffMember}
+                onChange={change}
+                onImageUpload={onImageUpload}
+                onImageDelete={onImageDelete}
+              />
+              {canEditPreferences && (
+                <>
+                  <CardSpacer />
+                  <StaffPassword onChangePassword={onChangePassword} />
+                </>
+              )}
+            </Content>
+            <RightSidebar className={classes.noOverflow}>
+              {canEditPreferences && (
+                <StaffPreferences locale={locale} onLocaleChange={setLocale} />
+              )}
+              {canEditStatus && (
+                <>
+                  <UserStatus
+                    data={formData}
+                    disabled={disabled}
+                    label={intl.formatMessage(messages.userStatusActive)}
+                    onChange={change}
                   />
-                )}
-                {canEditStatus && (
-                  <>
-                    <UserStatus
-                      data={formData}
-                      disabled={disabled}
-                      label={intl.formatMessage(messages.userStatusActive)}
-                      onChange={change}
+                  <CardSpacer />
+                  <Card>
+                    <CardTitle
+                      title={intl.formatMessage({
+                        id: "Fbr4Vp",
+                        defaultMessage: "Permissions",
+                        description: "dialog header",
+                      })}
                     />
-                    <CardSpacer />
-                    <Card>
-                      <CardTitle
-                        title={intl.formatMessage({
-                          id: "Fbr4Vp",
-                          defaultMessage: "Permissions",
-                          description: "dialog header",
+                    <CardContent>
+                      <Typography>
+                        {intl.formatMessage({
+                          id: "P+kVxW",
+                          defaultMessage: "User is assigned to:",
+                          description: "card description",
                         })}
-                      />
-                      <CardContent>
-                        <Typography>
-                          {intl.formatMessage({
-                            id: "P+kVxW",
-                            defaultMessage: "User is assigned to:",
-                            description: "card description",
-                          })}
-                        </Typography>
+                      </Typography>
 
-                        <AccountPermissionGroups
-                          formData={formData}
-                          disabled={disabled}
-                          errors={errors}
-                          initialSearch={initialSearch}
-                          availablePermissionGroups={availablePermissionGroups}
-                          onChange={permissionGroupsChange}
-                          onSearchChange={onSearchChange}
-                          displayValues={permissionGroupsDisplayValues}
-                          {...fetchMorePermissionGroups}
-                        />
-                      </CardContent>
-                    </Card>
-                  </>
-                )}
-              </div>
-            </Grid>
+                      <AccountPermissionGroups
+                        formData={formData}
+                        disabled={disabled}
+                        errors={errors}
+                        initialSearch={initialSearch}
+                        availablePermissionGroups={availablePermissionGroups}
+                        onChange={permissionGroupsChange}
+                        onSearchChange={onSearchChange}
+                        displayValues={permissionGroupsDisplayValues}
+                        {...fetchMorePermissionGroups}
+                      />
+                    </CardContent>
+                  </Card>
+                </>
+              )}
+            </RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBarState}
@@ -212,7 +208,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               onSubmit={submit}
               onDelete={canRemove ? onDelete : undefined}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

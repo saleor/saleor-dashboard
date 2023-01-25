@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -55,7 +54,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
@@ -96,7 +95,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
         />
         <ProductTypeList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 ProductTypeListPage.displayName = "ProductTypeListPage";

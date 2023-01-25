@@ -1,5 +1,4 @@
 import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
@@ -42,7 +41,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.menuItems,
@@ -100,7 +99,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </>
   );
 };
 TranslationsMenuItemPage.displayName = "TranslationsMenuItemPage";

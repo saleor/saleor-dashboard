@@ -3,7 +3,6 @@ import {
   CategoryListUrlSortField,
 } from "@dashboard/categories/urls";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import SearchBar from "@dashboard/components/SearchBar";
 import { CategoryFragment } from "@dashboard/graphql";
@@ -53,7 +52,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
         <Button
           variant="primary"
@@ -101,7 +100,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           {...listProps}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 CategoryListPage.displayName = "CategoryListPage";

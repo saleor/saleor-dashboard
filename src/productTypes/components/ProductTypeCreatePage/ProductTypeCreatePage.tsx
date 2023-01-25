@@ -1,8 +1,9 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -102,55 +103,53 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
         );
 
         return (
-          <Container>
-            <Backlink href={productTypeListUrl()}>
-              {intl.formatMessage(sectionNames.productTypes)}
-            </Backlink>
-            <PageHeader title={pageTitle} />
-            <Grid>
-              <div>
-                <ProductTypeDetails
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                  onKindChange={changeKind}
-                />
-                <CardSpacer />
-                <ProductTypeTaxes
-                  disabled={disabled}
-                  data={data}
-                  taxClasses={taxClasses}
-                  taxClassDisplayName={taxClassDisplayName}
-                  onChange={event =>
-                    handleTaxClassChange(
-                      event,
-                      taxClasses,
-                      change,
-                      setTaxClassDisplayName,
-                    )
-                  }
-                  onFetchMore={onFetchMoreTaxClasses}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-              </div>
-              <div>
-                <ProductTypeShipping
-                  disabled={disabled}
-                  data={data}
-                  weightUnit={defaultWeightUnit}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
+          <DetailedContent>
+            <Content>
+              <Backlink href={productTypeListUrl()}>
+                {intl.formatMessage(sectionNames.productTypes)}
+              </Backlink>
+              <PageHeader title={pageTitle} />
+              <ProductTypeDetails
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                onKindChange={changeKind}
+              />
+              <CardSpacer />
+              <ProductTypeTaxes
+                disabled={disabled}
+                data={data}
+                taxClasses={taxClasses}
+                taxClassDisplayName={taxClassDisplayName}
+                onChange={event =>
+                  handleTaxClassChange(
+                    event,
+                    taxClasses,
+                    change,
+                    setTaxClassDisplayName,
+                  )
+                }
+                onFetchMore={onFetchMoreTaxClasses}
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={changeMetadata} />
+            </Content>
+            <RightSidebar>
+              <ProductTypeShipping
+                disabled={disabled}
+                data={data}
+                weightUnit={defaultWeightUnit}
+                onChange={change}
+              />
+            </RightSidebar>
             <Savebar
               onCancel={() => navigate(productTypeListUrl())}
               onSubmit={submit}
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

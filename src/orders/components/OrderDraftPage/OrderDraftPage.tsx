@@ -1,9 +1,10 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { Container } from "@dashboard/components/Container";
 import { DateTime } from "@dashboard/components/Date";
-import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -84,78 +85,76 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink href={orderDraftListUrl()}>
-        {intl.formatMessage(sectionNames.draftOrders)}
-      </Backlink>
-      <PageHeader
-        className={classes.header}
-        inline
-        title={order?.number ? "#" + order?.number : undefined}
-      >
-        <CardMenu
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                id: "PAqicb",
-                defaultMessage: "Cancel order",
-                description: "button",
-              }),
-              onSelect: onDraftRemove,
-            },
-          ]}
+    <DetailedContent>
+      <Content>
+        <Backlink href={orderDraftListUrl()}>
+          {intl.formatMessage(sectionNames.draftOrders)}
+        </Backlink>
+        <PageHeader
+          className={classes.header}
+          inline
+          title={order?.number ? "#" + order?.number : undefined}
+        >
+          <CardMenu
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  id: "PAqicb",
+                  defaultMessage: "Cancel order",
+                  description: "button",
+                }),
+                onSelect: onDraftRemove,
+              },
+            ]}
+          />
+        </PageHeader>
+        <div className={classes.date}>
+          {order && order.created ? (
+            <Typography variant="body2">
+              <DateTime date={order.created} />
+            </Typography>
+          ) : (
+            <Skeleton style={{ width: "10em" }} />
+          )}
+        </div>
+        <OrderDraftAlert
+          order={order}
+          channelUsabilityData={channelUsabilityData}
         />
-      </PageHeader>
-      <div className={classes.date}>
-        {order && order.created ? (
-          <Typography variant="body2">
-            <DateTime date={order.created} />
-          </Typography>
-        ) : (
-          <Skeleton style={{ width: "10em" }} />
-        )}
-      </div>
-      <Grid>
-        <div>
-          <OrderDraftAlert
-            order={order}
-            channelUsabilityData={channelUsabilityData}
-          />
-          <OrderDraftDetails
-            order={order}
-            channelUsabilityData={channelUsabilityData}
-            errors={errors}
-            onOrderLineAdd={onOrderLineAdd}
-            onOrderLineChange={onOrderLineChange}
-            onOrderLineRemove={onOrderLineRemove}
-            onShippingMethodEdit={onShippingMethodEdit}
-          />
-          <OrderHistory
-            history={order?.events}
-            orderCurrency={order?.total?.gross.currency}
-            onNoteAdd={onNoteAdd}
-          />
-        </div>
-        <div>
-          <OrderChannelSectionCard channel={order?.channel} />
-          <CardSpacer />
-          <OrderCustomer
-            canEditAddresses={!!order?.user}
-            canEditCustomer={true}
-            fetchUsers={fetchUsers}
-            hasMore={hasMore}
-            loading={usersLoading}
-            errors={errors}
-            order={order}
-            users={users}
-            onBillingAddressEdit={onBillingAddressEdit}
-            onCustomerEdit={onCustomerEdit}
-            onFetchMore={onFetchMore}
-            onProfileView={onProfileView}
-            onShippingAddressEdit={onShippingAddressEdit}
-          />
-        </div>
-      </Grid>
+        <OrderDraftDetails
+          order={order}
+          channelUsabilityData={channelUsabilityData}
+          errors={errors}
+          onOrderLineAdd={onOrderLineAdd}
+          onOrderLineChange={onOrderLineChange}
+          onOrderLineRemove={onOrderLineRemove}
+          onShippingMethodEdit={onShippingMethodEdit}
+        />
+        <OrderHistory
+          history={order?.events}
+          orderCurrency={order?.total?.gross.currency}
+          onNoteAdd={onNoteAdd}
+        />
+      </Content>
+      <RightSidebar>
+        <OrderChannelSectionCard channel={order?.channel} />
+        <CardSpacer />
+        <OrderCustomer
+          canEditAddresses={!!order?.user}
+          canEditCustomer={true}
+          fetchUsers={fetchUsers}
+          hasMore={hasMore}
+          loading={usersLoading}
+          errors={errors}
+          order={order}
+          users={users}
+          onBillingAddressEdit={onBillingAddressEdit}
+          onCustomerEdit={onCustomerEdit}
+          onFetchMore={onFetchMore}
+          onProfileView={onProfileView}
+          onShippingAddressEdit={onShippingAddressEdit}
+        />
+      </RightSidebar>
       <Savebar
         state={saveButtonBarState}
         disabled={disabled}
@@ -169,7 +168,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           }),
         }}
       />
-    </Container>
+    </DetailedContent>
   );
 };
 OrderDraftPage.displayName = "OrderDraftPage";

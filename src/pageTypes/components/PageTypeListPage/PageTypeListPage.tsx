@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -45,7 +44,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
 }) => {
   const intl = useIntl();
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
@@ -84,7 +83,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
         />
         <PageTypeList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PageTypeListPage.displayName = "PageTypeListPage";

@@ -1,6 +1,6 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import { customerUrl } from "@dashboard/customers/urls";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
@@ -94,7 +94,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   );
 
   return (
-    <Container>
+    <Content>
       <Backlink href={customerUrl(customer?.id)}>
         {fullName.trim().length > 0
           ? intl.formatMessage(messages.fullNameDetail, { fullName })
@@ -150,7 +150,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
           ))}
         </div>
       )}
-    </Container>
+    </Content>
   );
 };
 CustomerAddressListPage.displayName = "CustomerAddressListPage";

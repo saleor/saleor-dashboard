@@ -1,7 +1,7 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
@@ -138,7 +138,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
+          <Content>
             <Backlink href={configurationMenuUrl}>
               {intl.formatMessage(sectionNames.configuration)}
             </Backlink>
@@ -187,7 +187,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               onCancel={() => navigate(configurationMenuUrl)}
               onSubmit={submit}
             />
-          </Container>
+          </Content>
         );
       }}
     </Form>

@@ -1,6 +1,6 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -80,7 +80,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
     >
       {({ change, data, isSaveDisabled, submit }) => (
         <>
-          <Container>
+          <Content>
             <Backlink href={shippingZonesListUrl()}>
               {intl.formatMessage(sectionNames.shipping)}
             </Backlink>
@@ -121,7 +121,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </Content>
           <ShippingZoneCountriesAssignDialog
             open={isModalOpened}
             onConfirm={formData => {

@@ -1,7 +1,7 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -154,7 +154,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
+          <Content>
             <Backlink href={customerListUrl()}>
               <FormattedMessage {...sectionNames.customers} />
             </Backlink>
@@ -198,7 +198,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               onSubmit={submit}
               onCancel={() => navigate(customerListUrl())}
             />
-          </Container>
+          </Content>
         );
       }}
     </Form>

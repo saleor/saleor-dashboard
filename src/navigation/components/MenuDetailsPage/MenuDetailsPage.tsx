@@ -1,6 +1,6 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Savebar from "@dashboard/components/Savebar";
@@ -84,7 +84,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
-        <Container>
+        <Content>
           <Backlink href={menuListUrl()}>
             {intl.formatMessage(sectionNames.navigation)}
           </Backlink>
@@ -140,7 +140,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
             onSubmit={submit}
             state={saveButtonState}
           />
-        </Container>
+        </Content>
       )}
     </Form>
   );

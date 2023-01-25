@@ -1,4 +1,3 @@
-import Container from "@dashboard/components/Container";
 import PageHeader from "@dashboard/components/PageHeader";
 import { LanguageFragment } from "@dashboard/graphql";
 import React from "react";
@@ -16,7 +15,7 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <PageHeader
         title={intl.formatMessage({
           id: "GsBRWL",
@@ -24,7 +23,7 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
         })}
       ></PageHeader>
       <TranslationsLanguageList languages={languages} />
-    </Container>
+    </>
   );
 };
 TranslationsLanguageListPage.displayName = "TranslationsLanguageListPage";

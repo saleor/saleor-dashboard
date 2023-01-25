@@ -1,6 +1,5 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import PageHeader from "@dashboard/components/PageHeader";
 import {
@@ -49,7 +48,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
+    <>
       <Backlink
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
@@ -179,7 +178,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           <CardSpacer />
         </>
       )}
-    </Container>
+    </>
   );
 };
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
