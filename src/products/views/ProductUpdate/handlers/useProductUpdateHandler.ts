@@ -29,25 +29,23 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { getVariantChannelsInputs } from "@dashboard/products/components/ProductVariants/datagrid/getVariantChannelsInputs";
-import {
-  getStockInputs,
-  getVariantInput,
-  getVariantInputs,
-} from "@dashboard/products/components/ProductVariants/utils";
+import { getVariantChannelsInputs } from "@dashboard/products/utils/getVariantChannelsInputs";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
-  getProductVariantListErrors,
+  getCreateVariantMutationError,
   getVariantUpdateMutationErrors,
   ProductVariantListError,
 } from "./errors";
 import {
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
+  getStockInputs,
+  getVariantInput,
+  getVariantInputs,
 } from "./utils";
 
 export type UseProductUpdateHandlerError =
@@ -90,21 +88,19 @@ export function useProductUpdateHandler(
   const [uploadFile] = useFileUploadMutation();
 
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useProductChannelListingUpdateMutation({
-    onCompleted: data => {
-      if (!!data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      }
-    },
-  });
+  const [updateChannels, updateChannelsOpts] =
+    useProductChannelListingUpdateMutation({
+      onCompleted: data => {
+        if (!!data.productChannelListingUpdate.errors.length) {
+          data.productChannelListingUpdate.errors.forEach(error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl),
+            }),
+          );
+        }
+      },
+    });
 
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
@@ -117,11 +113,12 @@ export function useProductUpdateHandler(
       variables => uploadFile({ variables }),
     );
 
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      product?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
+    const deleteAttributeValuesResult =
+      await handleDeleteMultipleAttributeValues(
+        data.attributesWithNewFileValue,
+        product?.attributes,
+        variables => deleteAttributeValue({ variables }),
+      );
 
     errors = [
       ...errors,
@@ -148,13 +145,14 @@ export function useProductUpdateHandler(
     });
     errors = [...errors, ...result.data.productUpdate.errors];
 
-    const productChannelsUpdateResult = await updateChannels({
+    let variantErrors: ProductVariantListError[] = [];
+
+    await updateChannels({
       variables: getProductChannelsUpdateVariables(product, data),
     });
 
-    let createVariantsResults: any;
     if (data.variants.added.length > 0) {
-      createVariantsResults = await createVariants({
+      const createVariantsResults = await createVariants({
         variables: {
           id: product.id,
           inputs: data.variants.added.map(index => ({
@@ -164,10 +162,17 @@ export function useProductUpdateHandler(
           })),
         },
       });
+
+      const createVariantsErrors = getCreateVariantMutationError(
+        createVariantsResults,
+      );
+
+      errors = [...errors, ...createVariantsErrors];
+      variantErrors = [...variantErrors, ...createVariantsErrors];
     }
 
     if (data.variants.updates.length > 0) {
-      const result = await updateVariants({
+      const updateVariantsResults = await updateVariants({
         variables: {
           id: product.id,
           input: getVariantInputs(product.variants, data.variants),
@@ -175,15 +180,13 @@ export function useProductUpdateHandler(
         },
       });
 
-      errors = [...errors, ...getVariantUpdateMutationErrors(result)];
+      const updateVariantsErrors = getVariantUpdateMutationErrors(
+        updateVariantsResults,
+      );
+
+      variantErrors = [...variantErrors, ...updateVariantsErrors];
+      errors = [...errors, ...updateVariantsErrors];
     }
-
-    const variantErrors = getProductVariantListErrors(
-      productChannelsUpdateResult,
-      [createVariantsResults],
-    );
-
-    errors = [...errors, ...variantErrors];
 
     setVariantListErrors(variantErrors);
 

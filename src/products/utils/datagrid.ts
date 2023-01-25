@@ -16,3 +16,11 @@ export const getColumnChannelAvailability = makeGetColumnData(
   /^availableInChannel:(.*)/,
 );
 export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
+
+export const getCurrentRow = (
+  rowIndex: number,
+  currentIndex: number,
+  removedIndexArray: number[],
+) =>
+  rowIndex ===
+  currentIndex + removedIndexArray.filter(r => r <= currentIndex).length;

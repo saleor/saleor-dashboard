@@ -1,16 +1,27 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
+  ProductVariantBulkUpdateInput,
+  VariantDatagridChannelListingUpdateMutationVariables,
+  VariantDatagridStockUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { getColumnChannelAvailability } from "@dashboard/products/components/ProductVariants/datagrid/columnData";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
+import {
+  getColumnAttribute,
+  getColumnChannelAvailability,
+  getColumnStock,
+  getCurrentRow,
+} from "@dashboard/products/utils/datagrid";
+import { getVariantChannelsInputs } from "@dashboard/products/utils/getVariantChannelsInputs";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
@@ -149,4 +160,161 @@ export function getProductChannelsUpdateVariables(
       updateChannels,
     },
   };
+}
+
+export function getVariantInput(data: DatagridChangeOpts, index: number) {
+  const attributes = data.updates
+    .filter(
+      change =>
+        getColumnAttribute(change.column) &&
+        getCurrentRow(change.row, index, data.removed),
+    )
+    .map(change => {
+      const attributeId = getColumnAttribute(change.column);
+
+      return {
+        id: attributeId,
+        values: [change.data.value.value],
+      };
+    });
+
+  const sku = data.updates.find(
+    change =>
+      change.column === "sku" && getCurrentRow(change.row, index, data.removed),
+  )?.data;
+
+  const name = data.updates.find(
+    change =>
+      change.column === "name" &&
+      getCurrentRow(change.row, index, data.removed),
+  )?.data;
+
+  return {
+    attributes,
+    sku,
+    name,
+  };
+}
+
+export function getVariantBulkInput(
+  data: DatagridChangeOpts,
+  index: number,
+): Omit<ProductVariantBulkUpdateInput, "id"> {
+  const stocks = data.updates
+    .filter(
+      change =>
+        getColumnStock(change.column) &&
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map(change => ({
+      warehouse: getColumnStock(change.column),
+      quantity: change.data.value,
+    }));
+
+  const attributes = data.updates
+    .filter(
+      change =>
+        getColumnAttribute(change.column) &&
+        getCurrentRow(change.row, index, data.removed),
+    )
+    .map(change => {
+      const attributeId = getColumnAttribute(change.column);
+
+      return {
+        id: attributeId,
+        values: [change.data.value.value],
+      };
+    });
+
+  const sku = data.updates.find(
+    change =>
+      change.column === "sku" && getCurrentRow(change.row, index, data.removed),
+  )?.data;
+
+  const name = data.updates.find(
+    change =>
+      change.column === "name" &&
+      getCurrentRow(change.row, index, data.removed),
+  )?.data;
+
+  return {
+    attributes,
+    sku,
+    name,
+    stocks,
+    channelListings: getVariantChannelsInputs(data, index),
+  };
+}
+
+export function getVariantInputs(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): ProductVariantBulkUpdateInput[] {
+  return variants
+    .map(
+      (variant, variantIndex): ProductVariantBulkUpdateInput => ({
+        id: variant.id,
+        ...getVariantBulkInput(data, variantIndex),
+      }),
+    )
+    .filter(
+      variant =>
+        variant.name ||
+        variant.sku ||
+        variant.attributes.length > 0 ||
+        variant.stocks.length > 0 ||
+        variant.channelListings.length > 0,
+    );
+}
+
+export function getStockInputs(data: DatagridChangeOpts, index: number) {
+  const stockChanges = data.updates.filter(change =>
+    getColumnStock(change.column),
+  );
+
+  const variantChanges = stockChanges
+    .filter(
+      change =>
+        change.row === index + data.removed.filter(r => r <= index).length,
+    )
+    .map(change => ({
+      warehouse: getColumnStock(change.column),
+      quantity: change.data.value,
+    }));
+
+  return {
+    stocks: variantChanges.filter(
+      change => change.quantity !== numberCellEmptyValue,
+    ),
+    removeStocks: variantChanges
+      .filter(change => change.quantity === numberCellEmptyValue)
+      .map(({ warehouse }) => warehouse),
+  };
+}
+
+export function getStocks(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridStockUpdateMutationVariables[] {
+  return variants
+    .map((variant, variantIndex) => ({
+      id: variant.id,
+      ...getStockInputs(data, variantIndex),
+    }))
+    .filter(
+      variables =>
+        variables.removeStocks.length > 0 || variables.stocks.length > 0,
+    );
+}
+
+export function getVariantChannels(
+  variants: ProductFragment["variants"],
+  data: DatagridChangeOpts,
+): VariantDatagridChannelListingUpdateMutationVariables[] {
+  return variants
+    .map((variant, variantIndex) => ({
+      id: variant.id,
+      input: getVariantChannelsInputs(data, variantIndex),
+    }))
+    .filter(({ input }) => input.length > 0);
 }

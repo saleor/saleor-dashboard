@@ -3,14 +3,13 @@ import {
   DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/useDatagridChange";
 
-import { getColumnChannel, getColumnChannelAvailability } from "./columnData";
+import { getColumnChannel, getColumnChannelAvailability } from "./datagrid";
 
-const byCurrentRowByIndex = (index: number, data: DatagridChangeOpts) => (
-  change: DatagridChange,
-) => {
-  const totalRemoved = data.removed.filter(r => r <= index).length;
-  return change.row === index + totalRemoved;
-};
+const byCurrentRowByIndex =
+  (index: number, data: DatagridChangeOpts) => (change: DatagridChange) => {
+    const totalRemoved = data.removed.filter(r => r <= index).length;
+    return change.row === index + totalRemoved;
+  };
 
 const byChannelColumn = (change: DatagridChange) =>
   getColumnChannel(change.column);

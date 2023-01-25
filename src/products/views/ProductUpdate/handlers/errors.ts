@@ -1,17 +1,10 @@
 import { FetchResult } from "@apollo/client";
 import {
-  ProductChannelListingUpdateMutation,
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
   ProductVariantBulkUpdateMutation,
-  ProductVariantChannelListingUpdateMutation,
-  ProductVariantChannelListingUpdateMutationVariables,
-  StockInput,
-  VariantDatagridStockUpdateMutation,
-  VariantDatagridStockUpdateMutationVariables,
   VariantDatagridUpdateMutationVariables,
 } from "@dashboard/graphql";
-import { hasMutationErrors } from "@dashboard/misc";
 
 export type ProductVariantListError =
   | {
@@ -41,86 +34,59 @@ export type ProductVariantListError =
       type: "create";
     };
 
+export function getCreateVariantMutationError(
+  result: FetchResult<ProductVariantBulkCreateMutation>,
+) {
+  return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(
+    error => ({
+      __typename: "DatagridError",
+      type: "create",
+      index: error.index,
+      error: error.code,
+    }),
+  );
+}
+
 export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
 ) {
-  const mutationErrors = mutationResult.data.productVariantBulkUpdate.errors;
-
-  if (!mutationErrors.length) {
-    return [];
-  }
-
   const variables = mutationResult.extensions
     .variables as VariantDatagridUpdateMutationVariables;
+  return mutationResult.data.productVariantBulkUpdate.errors.reduce<
+    ProductVariantListError[]
+  >((acc, error) => {
+    if (error.channels.length) {
+      acc.push({
+        __typename: "DatagridError",
+        type: "channel",
+        error: error.code,
+        variantId: variables.id,
+        channelIds: error.channels,
+      });
+    }
 
-  return mutationErrors.map<ProductVariantListError>(error => ({
-    __typename: "DatagridError",
-    type: "variantData",
-    variantId: (variables as VariantDatagridUpdateMutationVariables).id,
-    error: error.code,
-    attributes: error.attributes,
-  }));
-}
+    if (error.warehouses.length) {
+      acc.push(
+        ...error.warehouses.map(
+          warehouse =>
+            ({
+              __typename: "DatagridError",
+              variantId: variables.id,
+              warehouseId: warehouse,
+              type: "stock",
+            } as const),
+        ),
+      );
+    }
 
-export function getProductVariantListErrors(
-  productChannelsUpdateResult: FetchResult<ProductChannelListingUpdateMutation>,
-  variantMutationResults: FetchResult[],
-): ProductVariantListError[] {
-  return [productChannelsUpdateResult, ...variantMutationResults]
-    .filter(hasMutationErrors)
-    .flatMap(result => {
-      if (result.data.productVariantChannelListingUpdate) {
-        const data = result.data as ProductVariantChannelListingUpdateMutation;
-        return data.productVariantChannelListingUpdate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "channel",
-          error: error.code,
-          variantId: (result.extensions
-            .variables as ProductVariantChannelListingUpdateMutationVariables)
-            .id,
-          channelIds: error.channels,
-        }));
-      }
-
-      if (result.data.productVariantStocksUpdate) {
-        const data = result.data as VariantDatagridStockUpdateMutation;
-        const variables = result.extensions
-          .variables as VariantDatagridStockUpdateMutationVariables;
-        return [
-          ...data.productVariantStocksUpdate.errors.map<
-            ProductVariantListError
-          >(error => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: (variables.stocks as StockInput[])[error.index]
-              .warehouse,
-          })),
-          ...data.productVariantStocksDelete.errors.map<
-            ProductVariantListError
-          >(() => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: null,
-          })),
-        ];
-      }
-
-      if (result.data.productVariantBulkCreate) {
-        const data = result.data as ProductVariantBulkCreateMutation;
-        return data.productVariantBulkCreate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "create",
-          index: error.index,
-          error: error.code,
-        }));
-      }
+    acc.push({
+      __typename: "DatagridError",
+      type: "variantData",
+      variantId: (variables as VariantDatagridUpdateMutationVariables).id,
+      error: error.code,
+      attributes: error.attributes,
     });
+
+    return acc;
+  }, []);
 }
