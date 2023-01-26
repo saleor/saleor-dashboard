@@ -47,60 +47,104 @@ const useHandleNotificationAction = () => {
   };
 };
 
+const isExternalHost = (host: string) =>
+  new URL(host).hostname !== window.location.hostname;
+
+const isLocalPath = (path: string) => path.startsWith("/");
+
 const useHandleRedirectAction = (appId: string) => {
   const navigate = useNavigator();
   const { closeApp } = useExternalApp();
   const intl = useIntl();
 
+  const handleAppDeepChange = (action: RedirectAction) => {
+    const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
+
+    if (action.payload.newContext) {
+      // Open new dashboard in new tab
+      window.open(exactLocation);
+    } else {
+      // Change only url without reloading if we are in the same app
+      window.history.pushState(null, "", exactLocation);
+    }
+  };
+
+  const handleExternalHostChange = (action: RedirectAction) => {
+    if (action.payload.newContext) {
+      window.open(action.payload.to);
+    } else {
+      const confirmed = window.confirm(
+        intl.formatMessage({
+          id: "MSItJD",
+          defaultMessage:
+            "You are about to leave the Dashboard. Do you want to continue?",
+        }),
+      );
+
+      if (confirmed) {
+        window.location.href = action.payload.to;
+      }
+    }
+  };
+
+  const handleLocalDashboardPathChange = (action: RedirectAction) => {
+    if (action.payload.newContext) {
+      const url = new URL(action.payload.to, getAppMountUri());
+
+      window.open(url.href);
+    } else {
+      navigate(action.payload.to);
+      closeApp();
+    }
+  };
+
   return {
     handle: useCallback(
       (action: RedirectAction) => {
-        const { to, newContext, actionId } = action.payload;
+        const { actionId } = action.payload;
 
-        let success = true;
-
-        const appDeepUrlChange = AppUrls.isAppDeepUrlChange(
+        const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
           appId,
           location.pathname,
-          to,
+          action.payload.to,
         );
 
-        try {
-          if (newContext) {
-            window.open(to);
-          } else if (appDeepUrlChange) {
-            const exactLocation = urlJoin(getAppMountUri(), to);
+        /**
+         * Handle local app URL changes, eg apps/XYZ/app/configuration -> apps/XYZ/app/preview
+         */
+        if (onlyAppDeepChange) {
+          try {
+            handleAppDeepChange(action);
 
-            // Change only url without reloading if we are in the same app
-            window.history.pushState(null, "", exactLocation);
-          } else if (to.startsWith("/")) {
-            navigate(to);
-            closeApp();
-          } else {
-            const isExternalDomain =
-              new URL(to).hostname !== window.location.hostname;
-
-            if (isExternalDomain) {
-              success = window.confirm(
-                intl.formatMessage({
-                  id: "MSItJD",
-                  defaultMessage:
-                    "You are about to leave the Dashboard. Do you want to continue?",
-                }),
-              );
-            }
-
-            if (success) {
-              window.location.href = to;
-            }
+            return createResponseStatus(actionId, true);
+          } catch (e) {
+            return createResponseStatus(actionId, false);
           }
-        } catch (e) {
-          success = false;
         }
 
-        return createResponseStatus(actionId, success);
+        if (isExternalHost(action.payload.to)) {
+          try {
+            handleExternalHostChange(action);
+
+            return createResponseStatus(actionId, true);
+          } catch (e) {
+            return createResponseStatus(actionId, false);
+          }
+        }
+
+        if (isLocalPath(action.payload.to)) {
+          try {
+            handleLocalDashboardPathChange(action);
+            return createResponseStatus(actionId, true);
+          } catch (e) {
+            return createResponseStatus(actionId, false);
+          }
+        }
+
+        // If nothing was catched, assume failure
+        return createResponseStatus(actionId, false);
       },
-      [appId, closeApp, intl, navigate],
+      [appId, handleExternalHostChange, handleLocalDashboardPathChange],
     ),
   };
 };
