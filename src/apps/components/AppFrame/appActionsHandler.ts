@@ -1,4 +1,4 @@
-import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext";
+import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import { appPath } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -116,19 +116,19 @@ const useHandleRedirectAction = (appId: string) => {
         }
       }
 
-      if (isExternalHost(action.payload.to)) {
+      if (isLocalPath(action.payload.to)) {
         try {
-          handleExternalHostChange(action);
-
+          handleLocalDashboardPathChange(action);
           return createResponseStatus(actionId, true);
         } catch (e) {
           return createResponseStatus(actionId, false);
         }
       }
 
-      if (isLocalPath(action.payload.to)) {
+      if (isExternalHost(action.payload.to)) {
         try {
-          handleLocalDashboardPathChange(action);
+          handleExternalHostChange(action);
+
           return createResponseStatus(actionId, true);
         } catch (e) {
           return createResponseStatus(actionId, false);
