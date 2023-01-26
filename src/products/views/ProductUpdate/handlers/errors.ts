@@ -2,6 +2,7 @@ import { FetchResult } from "@apollo/client";
 import {
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
+  ProductVariantBulkErrorCode,
   ProductVariantBulkUpdateMutation,
   VariantDatagridUpdateMutationVariables,
 } from "@dashboard/graphql";
@@ -10,7 +11,7 @@ export type ProductVariantListError =
   | {
       __typename: "DatagridError";
       attributes: string[] | null;
-      error: ProductErrorCode;
+      error: ProductVariantBulkErrorCode;
       variantId: string;
       type: "variantData";
     }
@@ -22,7 +23,7 @@ export type ProductVariantListError =
     }
   | {
       __typename: "DatagridError";
-      error: ProductErrorCode;
+      error: ProductVariantBulkErrorCode;
       variantId: string;
       channelIds: string[];
       type: "channel";
