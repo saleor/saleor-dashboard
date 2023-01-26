@@ -42,7 +42,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   return (
-    <Card>
+    <Card data-test-id="OrderSummaryCard">
       <CardTitle
         title={<FormattedMessage {...orderSummaryMessages.orderSummary} />}
       />
