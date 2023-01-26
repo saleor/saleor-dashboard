@@ -11,7 +11,7 @@ import useRouter from "use-react-router";
 // import Container from "../Container";
 import Navigator from "../Navigator";
 // import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import { Sidebar /* SidebarDrawer*/ } from "../Sidebar";
+import { NewSidebar } from "../Sidebar/NewSidebar";
 // import UserChip from "../UserChip";
 // import useAppChannel from "./AppChannelContext";
 // import AppChannelSelect from "./AppChannelSelect";
@@ -64,6 +64,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           height="100vh"
           borderColor="neutralPlain"
           borderRightWidth={1}
+          backgroundColor="subdued"
           borderStyle="solid"
           // @ts-ignore
           __position="sticky"
@@ -72,7 +73,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           __borderTopWidth={0}
           __borderBottomWidth={0}
         >
-          <Sidebar />
+          <NewSidebar />
         </Box>
         <Box __height="100%" __width="100%">
           {/* <Box
