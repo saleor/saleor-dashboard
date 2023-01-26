@@ -1015,6 +1015,10 @@
     "context": "translations section name",
     "string": "Translations"
   },
+  "5i/InH": {
+    "context": "open new window button",
+    "string": "Open this order in GraphiQL"
+  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
