@@ -139,6 +139,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
   const handleSubmit = (data: AttributePageFormData) => {
     const metadata = !attribute || isMetadataModified ? data.metadata : [];
+    const type = attribute === null ? data.type : undefined;
     const privateMetadata =
       !attribute || isPrivateMetadataModified ? data.privateMetadata : [];
 
@@ -147,7 +148,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
       metadata,
       privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
-      type: data.type,
+      type,
     });
   };
 
