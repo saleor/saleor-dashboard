@@ -36,7 +36,7 @@ export type ProductVariantListError =
 
 export function getCreateVariantMutationError(
   result: FetchResult<ProductVariantBulkCreateMutation>,
-) {
+): ProductVariantListError[] {
   return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(
     error => ({
       __typename: "DatagridError",
@@ -49,7 +49,7 @@ export function getCreateVariantMutationError(
 
 export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
-) {
+): ProductVariantListError[] {
   const variables = mutationResult.extensions.variables;
   return mutationResult.data.productVariantBulkUpdate.errors.reduce<
     ProductVariantListError[]

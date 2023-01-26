@@ -8,7 +8,6 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
-  BulkProductErrorFragment,
   ErrorPolicyEnum,
   MetadataErrorFragment,
   ProductChannelListingErrorFragment,
@@ -41,17 +40,16 @@ import {
   ProductVariantListError,
 } from "./errors";
 import {
+  getBulkVariantUpdateInputs,
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
   getStockInputs,
   getVariantInput,
-  getVariantInputs,
 } from "./utils";
 
 export type UseProductUpdateHandlerError =
   | ProductErrorWithAttributesFragment
   | ProductErrorFragment
-  | BulkProductErrorFragment
   | AttributeErrorFragment
   | UploadErrorFragment
   | ProductChannelListingErrorFragment
@@ -60,6 +58,7 @@ export type UseProductUpdateHandlerError =
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
 ) => Promise<Array<UseProductUpdateHandlerError | MetadataErrorFragment>>;
+
 interface UseProductUpdateHandlerOpts {
   called: boolean;
   loading: boolean;
@@ -108,6 +107,8 @@ export function useProductUpdateHandler(
     data: ProductUpdateSubmitData,
   ): Promise<UseProductUpdateHandlerError[]> => {
     let errors: UseProductUpdateHandlerError[] = [];
+    const variantErrors: ProductVariantListError[] = [];
+
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
@@ -120,34 +121,24 @@ export function useProductUpdateHandler(
         variables => deleteAttributeValue({ variables }),
       );
 
-    errors = [
-      ...errors,
-      ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-    ];
-
     if (data.variants.removed.length > 0) {
-      errors.push(
-        ...(
-          await deleteVariants({
-            variables: {
-              ids: data.variants.removed.map(
-                index => product.variants[index].id,
-              ),
-            },
-          })
-        ).data.productVariantBulkDelete.errors,
-      );
+      const deleteVaraintsResult = await deleteVariants({
+        variables: {
+          ids: data.variants.removed.map(index => product.variants[index].id),
+        },
+      });
+
+      errors = [
+        ...errors,
+        ...deleteVaraintsResult.data.productVariantBulkDelete.errors,
+      ];
     }
 
-    const result = await updateProduct({
+    const updateProductResult = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
-    errors = [...errors, ...result.data.productUpdate.errors];
 
-    let variantErrors: ProductVariantListError[] = [];
-
-    await updateChannels({
+    const updateChannelsResult = await updateChannels({
       variables: getProductChannelsUpdateVariables(product, data),
     });
 
@@ -167,15 +158,15 @@ export function useProductUpdateHandler(
         createVariantsResults,
       );
 
-      errors = [...errors, ...createVariantsErrors];
-      variantErrors = [...variantErrors, ...createVariantsErrors];
+      errors.push(...createVariantsErrors);
+      variantErrors.push(...createVariantsErrors);
     }
 
     if (data.variants.updates.length > 0) {
       const updateVariantsResults = await updateVariants({
         variables: {
           id: product.id,
-          input: getVariantInputs(product.variants, data.variants),
+          input: getBulkVariantUpdateInputs(product.variants, data.variants),
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },
       });
@@ -184,9 +175,17 @@ export function useProductUpdateHandler(
         updateVariantsResults,
       );
 
-      variantErrors = [...variantErrors, ...updateVariantsErrors];
-      errors = [...errors, ...updateVariantsErrors];
+      variantErrors.push(...updateVariantsErrors);
+      errors.push(...updateVariantsErrors);
     }
+
+    errors = [
+      ...errors,
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+      ...updateProductResult.data.productUpdate.errors,
+      ...updateChannelsResult.data.productChannelListingUpdate.errors,
+    ];
 
     setVariantListErrors(variantErrors);
 
