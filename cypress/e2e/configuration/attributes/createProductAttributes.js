@@ -238,7 +238,7 @@ describe("As an admin I want to create product attribute", () => {
     },
   );
 
-  it.only(
+  it(
     "should be able update product attribute. TC:SALEOR_0526",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
