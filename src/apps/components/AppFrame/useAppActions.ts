@@ -29,6 +29,9 @@ export const useAppActions = (
       case "updateRouting": {
         return handleUpdateRouting(action);
       }
+      case "notifyReady": {
+        console.warn("Not implemented");
+      }
       default: {
         throw new Error("Unknown action type");
       }

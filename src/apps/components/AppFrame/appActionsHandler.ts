@@ -7,10 +7,10 @@ import { AppUrls } from "@dashboard/new-apps/urls";
 import {
   DispatchResponseEvent,
   NotificationAction,
+  NotifyReady,
   RedirectAction,
   UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
-import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -25,11 +25,16 @@ const createResponseStatus = (
   },
 });
 
+const isExternalHost = (host: string) =>
+  new URL(host).hostname !== window.location.hostname;
+
+const isLocalPath = (path: string) => path.startsWith("/");
+
 const useHandleNotificationAction = () => {
   const notify = useNotifier();
 
-  const handle = useCallback(
-    (action: NotificationAction) => {
+  return {
+    handle: (action: NotificationAction) => {
       const { actionId, ...notification } =
         action.payload as NotificationAction["payload"];
 
@@ -39,18 +44,8 @@ const useHandleNotificationAction = () => {
 
       return createResponseStatus(actionId, true);
     },
-    [notify],
-  );
-
-  return {
-    handle,
   };
 };
-
-const isExternalHost = (host: string) =>
-  new URL(host).hostname !== window.location.hostname;
-
-const isLocalPath = (path: string) => path.startsWith("/");
 
 const useHandleRedirectAction = (appId: string) => {
   const navigate = useNavigator();
@@ -99,76 +94,78 @@ const useHandleRedirectAction = (appId: string) => {
   };
 
   return {
-    handle: useCallback(
-      (action: RedirectAction) => {
-        const { actionId } = action.payload;
+    handle: (action: RedirectAction) => {
+      const { actionId } = action.payload;
 
-        const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
-          appId,
-          location.pathname,
-          action.payload.to,
-        );
+      const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
+        appId,
+        location.pathname,
+        action.payload.to,
+      );
 
-        /**
-         * Handle local app URL changes, eg apps/XYZ/app/configuration -> apps/XYZ/app/preview
-         */
-        if (onlyAppDeepChange) {
-          try {
-            handleAppDeepChange(action);
+      /**
+       * Handle local app URL changes, eg apps/XYZ/app/configuration -> apps/XYZ/app/preview
+       */
+      if (onlyAppDeepChange) {
+        try {
+          handleAppDeepChange(action);
 
-            return createResponseStatus(actionId, true);
-          } catch (e) {
-            return createResponseStatus(actionId, false);
-          }
+          return createResponseStatus(actionId, true);
+        } catch (e) {
+          return createResponseStatus(actionId, false);
         }
+      }
 
-        if (isExternalHost(action.payload.to)) {
-          try {
-            handleExternalHostChange(action);
+      if (isExternalHost(action.payload.to)) {
+        try {
+          handleExternalHostChange(action);
 
-            return createResponseStatus(actionId, true);
-          } catch (e) {
-            return createResponseStatus(actionId, false);
-          }
+          return createResponseStatus(actionId, true);
+        } catch (e) {
+          return createResponseStatus(actionId, false);
         }
+      }
 
-        if (isLocalPath(action.payload.to)) {
-          try {
-            handleLocalDashboardPathChange(action);
-            return createResponseStatus(actionId, true);
-          } catch (e) {
-            return createResponseStatus(actionId, false);
-          }
+      if (isLocalPath(action.payload.to)) {
+        try {
+          handleLocalDashboardPathChange(action);
+          return createResponseStatus(actionId, true);
+        } catch (e) {
+          return createResponseStatus(actionId, false);
         }
+      }
 
-        // If nothing was catched, assume failure
-        return createResponseStatus(actionId, false);
-      },
-      [appId, handleExternalHostChange, handleLocalDashboardPathChange],
-    ),
+      // If nothing was catched, assume failure
+      return createResponseStatus(actionId, false);
+    },
   };
 };
 
 const useUpdateRoutingAction = (appId: string) => ({
-  handle: useCallback(
-    (action: UpdateRouting) => {
-      const { newRoute, actionId } = action.payload;
+  handle: (action: UpdateRouting) => {
+    const { newRoute, actionId } = action.payload;
 
-      const appCompletePath = new URL(
-        appPath(encodeURIComponent(appId)),
-        getAppMountUri(),
-      ).href;
+    const appCompletePath = new URL(
+      appPath(encodeURIComponent(appId)),
+      getAppMountUri(),
+    ).href;
 
-      window.history.pushState(null, "", appCompletePath + newRoute);
+    window.history.pushState(null, "", appCompletePath + newRoute);
 
-      return createResponseStatus(actionId, true);
-    },
-    [appId],
-  ),
+    return createResponseStatus(actionId, true);
+  },
+});
+
+const useNotifyReadyAction = () => ({
+  handle(action: NotifyReady) {
+    console.warn("Not implemented");
+    return createResponseStatus(action.payload.actionId, true);
+  },
 });
 
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useUpdateRoutingAction,
   useHandleRedirectAction,
+  useNotifyReadyAction,
 };
