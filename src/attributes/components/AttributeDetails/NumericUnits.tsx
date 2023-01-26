@@ -40,7 +40,7 @@ const useStyles = makeStyles(
 );
 
 interface UnitData {
-  unit?: MeasurementUnitsEnum;
+  unit: MeasurementUnitsEnum | null | undefined;
   system?: UnitSystem;
   type?: UnitType;
 }
@@ -145,7 +145,10 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             label={formatMessage(M.messages.unitSystem)}
             choices={systemChoices}
             onChange={({ target }: React.ChangeEvent<HTMLSelectElement>) =>
-              setUnitData({ system: target.value as UnitSystem })
+              setUnitData(data => ({
+                ...data,
+                system: target.value as UnitSystem,
+              }))
             }
             value={system}
             disabled={disabled}
@@ -156,8 +159,8 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             label={formatMessage(M.messages.unitOf)}
             choices={typeChoices}
             onChange={({ target }: React.ChangeEvent<HTMLSelectElement>) =>
-              setUnitData(({ system }) => ({
-                system,
+              setUnitData(data => ({
+                ...data,
                 type: target.value as UnitType,
               }))
             }
@@ -168,7 +171,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             {...(type && !unit && errorProps)}
             testId="unit"
             label={formatMessage(M.messages.unit)}
-            choices={type ? unitChoices[system][type] : []}
+            choices={type && system ? unitChoices[system][type] : []}
             onChange={({ target }: React.ChangeEvent<HTMLSelectElement>) =>
               setUnitData(data => ({
                 ...data,
@@ -177,7 +180,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             }
             disabled={!type || disabled}
             value={
-              type && unitMapping[system][type].includes(unit)
+              type && system && unit && unitMapping[system][type].includes(unit)
                 ? unit
                 : undefined
             }

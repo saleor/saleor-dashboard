@@ -431,7 +431,10 @@ export function findValueInEnum<TEnum extends {}>(
   return needle as unknown as TEnum[keyof TEnum];
 }
 
-export function parseBoolean(a: string, defaultValue: boolean): boolean {
+export function parseBoolean(
+  a: string | undefined,
+  defaultValue: boolean,
+): boolean {
   if (a === undefined) {
     return defaultValue;
   }
