@@ -61,7 +61,7 @@ describe("Staff members", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit(
+  it(
     "should be able to invite staff user. TC: SALEOR_3501",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -81,7 +81,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should deactivate user. TC: SALEOR_3502",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -100,7 +100,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should activate user. TC: SALEOR_3503",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -115,7 +115,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should remove user permissions. TC: SALEOR_3504",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -142,7 +142,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should reset password. TC: SALEOR_3505",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -178,7 +178,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should not be able to create staff member with not unique email. TC: SALEOR_3508",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -197,7 +197,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should not be able to update staff member with not unique email. TC: SALEOR_3509",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -223,7 +223,7 @@ describe("Staff members", () => {
   );
 
   // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
-  it(
+  it.skip(
     "should update staff member name and email. TC: SALEOR_3507",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -266,7 +266,7 @@ describe("Staff members", () => {
     },
   );
 
-  xit(
+  it(
     "should create new user and successfully change password. TC: SALEOR_3510",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
