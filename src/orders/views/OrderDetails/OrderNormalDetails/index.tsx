@@ -377,7 +377,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderInvoiceEmailSendDialog
         confirmButtonState={orderInvoiceSend.opts.status}
-        errors={orderInvoiceSend.opts.data?.invoiceSendEmail.errors || []}
+        errors={orderInvoiceSend.opts.data?.invoiceSendEmail?.errors || []}
         open={params.action === "invoice-send"}
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
