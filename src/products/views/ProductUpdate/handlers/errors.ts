@@ -4,7 +4,6 @@ import {
   ProductVariantBulkCreateMutation,
   ProductVariantBulkErrorCode,
   ProductVariantBulkUpdateMutation,
-  VariantDatagridUpdateMutationVariables,
 } from "@dashboard/graphql";
 
 export type ProductVariantListError =
@@ -51,8 +50,7 @@ export function getCreateVariantMutationError(
 export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
 ) {
-  const variables = mutationResult.extensions
-    .variables as VariantDatagridUpdateMutationVariables;
+  const variables = mutationResult.extensions.variables;
   return mutationResult.data.productVariantBulkUpdate.errors.reduce<
     ProductVariantListError[]
   >((acc, error) => {
@@ -83,7 +81,7 @@ export function getVariantUpdateMutationErrors(
     acc.push({
       __typename: "DatagridError",
       type: "variantData",
-      variantId: (variables as VariantDatagridUpdateMutationVariables).id,
+      variantId: variables.id,
       error: error.code,
       attributes: error.attributes,
     });

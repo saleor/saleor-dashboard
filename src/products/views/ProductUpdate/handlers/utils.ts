@@ -10,8 +10,6 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
-  VariantDatagridChannelListingUpdateMutationVariables,
-  VariantDatagridStockUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
@@ -242,7 +240,10 @@ export function getVariantBulkInput(
     sku,
     name,
     stocks,
-    channelListings: getVariantChannelsInputs(data, index),
+    channelListings: [
+      ...getVariantChannelsInputs(data, index),
+      { channelId: "", price: "" },
+    ],
   };
 }
 
@@ -290,31 +291,4 @@ export function getStockInputs(data: DatagridChangeOpts, index: number) {
       .filter(change => change.quantity === numberCellEmptyValue)
       .map(({ warehouse }) => warehouse),
   };
-}
-
-export function getStocks(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridStockUpdateMutationVariables[] {
-  return variants
-    .map((variant, variantIndex) => ({
-      id: variant.id,
-      ...getStockInputs(data, variantIndex),
-    }))
-    .filter(
-      variables =>
-        variables.removeStocks.length > 0 || variables.stocks.length > 0,
-    );
-}
-
-export function getVariantChannels(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridChannelListingUpdateMutationVariables[] {
-  return variants
-    .map((variant, variantIndex) => ({
-      id: variant.id,
-      input: getVariantChannelsInputs(data, variantIndex),
-    }))
-    .filter(({ input }) => input.length > 0);
 }
