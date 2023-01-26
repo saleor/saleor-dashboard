@@ -51,8 +51,12 @@ describe("As an admin I want to update vouchers", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+          cy.checkIfDataAreNotNull({
+            dataForCheckout,
+            defaultChannel,
+            product,
+          });
         },
-        cy.checkIfDataAreNotNull({ dataForCheckout, defaultChannel, product }),
       );
   });
 

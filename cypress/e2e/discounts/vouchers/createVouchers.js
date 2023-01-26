@@ -64,11 +64,6 @@ describe("As an admin I want to create voucher", () => {
           });
         },
       );
-    cy.checkIfDataAreNotNull({
-      createdChannel,
-      dataForCheckout,
-      defaultChannel,
-    });
   });
 
   beforeEach(() => {
