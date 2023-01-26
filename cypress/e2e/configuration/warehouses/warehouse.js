@@ -70,7 +70,7 @@ describe("As an admin I want to manage warehouses", () => {
     },
   );
 
-  it(
+  it.only(
     "should be able to add warehouse to shipping zone. TC: SALEOR_1102",
     { tags: ["@warehouse", "@allEnv", "@stable"] },
     () => {
