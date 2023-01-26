@@ -31,7 +31,7 @@ export function getMailActivationLinkForUser(email, regex, i = 0) {
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).should(mails => {
+  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUser(serverStoredEmail, regex, i + 1);
@@ -56,7 +56,7 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).should(mails => {
+  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUserAndSubject(serverStoredEmail, subject, i + 1);
@@ -98,7 +98,7 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
       `There is no email with reset password for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).should(mails => {
+  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
@@ -117,7 +117,7 @@ export function getMailsForUser(email, i = 0) {
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).should(mails => {
+  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailsForUser(serverStoredEmail, i + 1);
