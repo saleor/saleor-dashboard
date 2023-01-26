@@ -13,7 +13,7 @@ import {
 } from "@saleor/macaw-ui";
 import camelCase from "lodash/camelCase";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import Avatar from "../TableCellAvatar/Avatar";
 import { messages } from "./messages";
@@ -25,6 +25,7 @@ interface DryRunItemsListProps {
 }
 
 const DryRunItemsList = (props: DryRunItemsListProps) => {
+  const intl = useIntl();
   const classes = useStyles();
   const { checkbox } = useListWidths();
   const { object, objectId, setObjectId } = props;
@@ -48,7 +49,7 @@ const DryRunItemsList = (props: DryRunItemsListProps) => {
       <ListHeader>
         <ListItem className={classes.listHeader}>
           <ListItemCell className={classes.listItemCell}>
-            <FormattedMessage {...messages.item} />
+            {intl.formatMessage(messages.item)}
             &nbsp;
             {objectDocument.collection
               ?.split(/(?=[A-Z])/)

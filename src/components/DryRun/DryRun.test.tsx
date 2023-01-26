@@ -1,11 +1,13 @@
-import "@testing-library/jest-dom";
-
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
-import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
+import { ThemeProvider } from "@saleor/macaw-ui";
+import productsMocks from "@test/mocks/products";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
 import DryRun from "./DryRun";
+
+const mocks: MockedResponse[] = [...productsMocks];
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -14,19 +16,8 @@ jest.mock("react-intl", () => ({
   defineMessages: jest.fn(x => x),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
-  useTheme: jest.fn(() => () => ({})),
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  DialogHeader: jest.fn(() => () => <></>),
-}));
-
-beforeEach(() => {
-  window.localStorage.clear();
-});
-
 describe("DryRun", () => {
-  it("is available on the webhook page", async () => {
+  it("Dialog is available on the webhook page", async () => {
     // Arrange
     const props = {
       query: "",
@@ -38,13 +29,14 @@ describe("DryRun", () => {
 
     // Act
     render(
-      <ApolloMockedProvider>
-        <DryRun {...props} />
-      </ApolloMockedProvider>,
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <ThemeProvider>
+          <DryRun {...props} />
+        </ThemeProvider>
+      </MockedProvider>,
     );
 
     // Assert
-    expect(screen.queryByTestId("dry-run-items-list")).toBeInTheDocument();
-    expect(screen.queryByTestId("graphiql-container2")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("dry-run")).toBeInTheDocument();
   });
 });

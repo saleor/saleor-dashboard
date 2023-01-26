@@ -23,7 +23,7 @@ import {
   ListItemCell,
 } from "@saleor/macaw-ui";
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
 import { messages } from "./messages";
@@ -38,6 +38,7 @@ interface DryRunProps {
 }
 
 const DryRun = (props: DryRunProps) => {
+  const intl = useIntl();
   const { query, showDialog, setShowDialog } = props;
   const classes = useStyles();
   const [objectId, setObjectId] = useState(null);
@@ -71,17 +72,17 @@ const DryRun = (props: DryRunProps) => {
   return (
     <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
       <DialogHeader onClose={closeDialog}>
-        <FormattedMessage {...messages.header} />
+        {intl.formatMessage(messages.header)}
       </DialogHeader>
       <DialogContent style={{ overflow: "scroll" }}>
         <DialogContentText>
-          <FormattedMessage {...messages.selectObject} />
+          {intl.formatMessage(messages.selectObject)}
         </DialogContentText>
 
         {unavailableObjects.length && (
           <Alert variant="warning" close={false}>
             <Typography>
-              <FormattedMessage {...messages.unavailableObjects} />
+              {intl.formatMessage(messages.unavailableObjects)}
               &nbsp;
               <strong>{unavailableObjects.join(", ")}</strong>
             </Typography>
@@ -94,7 +95,7 @@ const DryRun = (props: DryRunProps) => {
               <ListHeader>
                 <ListItem className={classes.listHeader}>
                   <ListItemCell className={classes.listItemCell}>
-                    <FormattedMessage {...messages.objects} />
+                    {intl.formatMessage(messages.objects)}
                   </ListItemCell>
                   <ListItemCell></ListItemCell>
                 </ListItem>
@@ -102,7 +103,7 @@ const DryRun = (props: DryRunProps) => {
               <ListBody className={classes.listBody}>
                 {!availableObjects.length && (
                   <Typography>
-                    <FormattedMessage {...messages.noObjects} />
+                    {intl.formatMessage(messages.noObjects)}
                   </Typography>
                 )}
                 {availableObjects.map((object, idx) => (
@@ -136,13 +137,13 @@ const DryRun = (props: DryRunProps) => {
                 <ListHeader>
                   <ListItem className={classes.listHeader}>
                     <ListItemCell className={classes.listItemCell}>
-                      <FormattedMessage {...messages.item} />
+                      {intl.formatMessage(messages.item)}
                     </ListItemCell>
                   </ListItem>
                 </ListHeader>
                 <ListBody className={classes.listBody}>
                   <Typography>
-                    <FormattedMessage {...messages.itemsDefaultMessage} />
+                    {intl.formatMessage(messages.itemsDefaultMessage)}
                   </Typography>
                 </ListBody>
               </>
@@ -157,7 +158,7 @@ const DryRun = (props: DryRunProps) => {
           onClick={() => dryRun()}
           disabled={!availableObjects.length}
         >
-          <FormattedMessage {...messages.run} />
+          {intl.formatMessage(messages.run)}
         </Button>
       </DialogActions>
     </Dialog>
