@@ -192,7 +192,7 @@ describe("Staff members", () => {
       cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
         "be.visible",
       );
-      cy.get('[data-test-id="back"]').click();
+      cy.get(BUTTON_SELECTORS.dialogBackButton).click();
       cy.confirmationErrorMessageShouldAppear();
     },
   );
