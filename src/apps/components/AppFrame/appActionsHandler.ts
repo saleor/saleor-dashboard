@@ -3,6 +3,7 @@ import { appPath } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import {
   DispatchResponseEvent,
   NotificationAction,
@@ -23,12 +24,6 @@ const createResponseStatus = (
     ok,
   },
 });
-
-const isAppDeepUrlChange = (appId: string, from: string, to: string) => {
-  const appCompletePath = appPath(encodeURIComponent(appId));
-
-  return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
-};
 
 const useHandleNotificationAction = () => {
   const notify = useNotifier();
@@ -60,11 +55,11 @@ const useHandleRedirectAction = (appId: string) => {
   return {
     handle: useCallback(
       (action: RedirectAction) => {
-        const { to, newContext, actionId } =
-          action.payload as RedirectAction["payload"];
+        const { to, newContext, actionId } = action.payload;
 
         let success = true;
-        const appDeepUrlChange = isAppDeepUrlChange(
+
+        const appDeepUrlChange = AppUrls.isAppDeepUrlChange(
           appId,
           location.pathname,
           to,
