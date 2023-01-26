@@ -1,5 +1,4 @@
 import Grid from "@dashboard/components/Grid";
-import { AsyncWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import {
   useTriggerWebhookDryRunMutation,
@@ -23,14 +22,12 @@ import {
   ListItem,
   ListItemCell,
 } from "@saleor/macaw-ui";
-import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
-import uniq from "lodash/uniq";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
-import { ExcludedDocumentMap } from "../DryRunItemsList/utils";
 import { messages } from "./messages";
+import { getObjects } from "./utils";
 
 interface DryRunProps {
   query: string;
@@ -45,47 +42,8 @@ const DryRun = (props: DryRunProps) => {
   const classes = useStyles();
   const [objectId, setObjectId] = useState(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
-  const queryEvents = getEventsFromQuery(query);
-  const availableObjects = uniq(
-    queryEvents.map(event => {
-      const object = event.split(/(?=[A-Z])/).slice(0, -1);
-      if (
-        Object.keys(AsyncWebhookTypes)
-          .filter(
-            object =>
-              !Object.keys(ExcludedDocumentMap).includes(object.toUpperCase()),
-          )
-          .includes(object.join("_").toUpperCase())
-      ) {
-        return object.join(" ");
-      }
-
-      return event
-        .split(/(?=[A-Z])/)
-        .slice(0, -2)
-        .join(" ");
-    }),
-  ).filter(object => object.length > 0);
-
-  const unavailableObjects = uniq(
-    queryEvents.map(event => {
-      const object = event.split(/(?=[A-Z])/).slice(0, -1);
-      if (
-        Object.keys(AsyncWebhookTypes)
-          .filter(object =>
-            Object.keys(ExcludedDocumentMap).includes(object.toUpperCase()),
-          )
-          .includes(object.join("_").toUpperCase())
-      ) {
-        return object.join(" ");
-      }
-
-      return event
-        .split(/(?=[A-Z])/)
-        .slice(0, -2)
-        .join(" ");
-    }),
-  ).filter(object => object.length > 0);
+  const availableObjects = getObjects(query);
+  const unavailableObjects = getObjects(query, false);
 
   const [object, setObject] = useState(null);
 
@@ -204,34 +162,6 @@ const DryRun = (props: DryRunProps) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-const getEventsFromQuery = (query: string) => {
-  if (query.length === 0) {
-    return [];
-  }
-
-  try {
-    const ast = parse(query);
-    const events: string[] = [];
-
-    visit(ast, {
-      SelectionSet(node, _key, parent) {
-        if ((parent as ObjectFieldNode).name?.value === "event") {
-          const queryEvents = node.selections.map(
-            selection =>
-              (selection as InlineFragmentNode).typeCondition.name.value,
-          );
-
-          queryEvents.map(event => events.push(event));
-        }
-      },
-    });
-
-    return events;
-  } catch {
-    return [];
-  }
 };
 
 DryRun.displayName = "DryRun";
