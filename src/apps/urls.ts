@@ -1,6 +1,7 @@
 import { getApiUrl } from "@dashboard/config";
 import { FlagWithName } from "@dashboard/hooks/useFlags/types";
 import { stringifyQs } from "@dashboard/utils/urls";
+import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
 
 import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
@@ -25,6 +26,10 @@ export interface AppDetailsUrlMountQueryParams {
   orderId?: string;
   customerId?: string;
   customerIds?: string[];
+}
+
+export interface AppDetailsCommonParams {
+  theme: ThemeType;
 }
 
 interface FeatureFlagsQueryParams {
@@ -109,7 +114,7 @@ export const appsListUrl = (params?: AppListUrlQueryParams) =>
 export const resolveAppIframeUrl = (
   appId: string,
   appUrl: string,
-  params: AppDetailsUrlQueryParams,
+  params: AppDetailsUrlQueryParams & AppDetailsCommonParams,
 ) => {
   const apiUrl = new URL(getApiUrl(), window.location.origin).href;
   /**
