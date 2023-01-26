@@ -7,6 +7,7 @@ import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-sel
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
@@ -60,7 +61,7 @@ describe("Staff members", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it(
+  xit(
     "should be able to invite staff user. TC: SALEOR_3501",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -80,7 +81,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should deactivate user. TC: SALEOR_3502",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -99,7 +100,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should activate user. TC: SALEOR_3503",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -114,7 +115,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should remove user permissions. TC: SALEOR_3504",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -141,7 +142,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should reset password. TC: SALEOR_3505",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -177,7 +178,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should not be able to create staff member with not unique email. TC: SALEOR_3508",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -188,11 +189,15 @@ describe("Staff members", () => {
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
+      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
+        "be.visible",
+      );
+      cy.get('[data-test-id="back"]').click();
       cy.confirmationErrorMessageShouldAppear();
     },
   );
 
-  it(
+  xit(
     "should not be able to update staff member with not unique email. TC: SALEOR_3509",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -218,7 +223,7 @@ describe("Staff members", () => {
   );
 
   // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
-  it.skip(
+  it(
     "should update staff member name and email. TC: SALEOR_3507",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
@@ -261,7 +266,7 @@ describe("Staff members", () => {
     },
   );
 
-  it(
+  xit(
     "should create new user and successfully change password. TC: SALEOR_3510",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {

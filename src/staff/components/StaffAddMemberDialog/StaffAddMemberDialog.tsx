@@ -22,6 +22,8 @@ import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ExtendedFormHelperTextProps } from "./types";
+
 export interface AddMemberFormData {
   email: string;
   firstName: string;
@@ -122,6 +124,11 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 type="email"
                 value={formData.email}
                 onChange={change}
+                FormHelperTextProps={
+                  {
+                    "data-test-id": "email-text-input-helper-text",
+                  } as ExtendedFormHelperTextProps
+                }
               />
             </DialogContent>
             <hr className={classes.hr} />
