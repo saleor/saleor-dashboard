@@ -680,6 +680,13 @@ export const BulkProductErrorFragmentDoc = gql`
   index
   channels
   message
+}
+    `;
+export const ProductVariantBulkErrorFragmentDoc = gql`
+    fragment ProductVariantBulkError on ProductVariantBulkError {
+  field
+  code
+  message
   attributes
   values
   warehouses
@@ -12416,11 +12423,11 @@ export const ProductVariantBulkUpdateDocument = gql`
     variants: $input
   ) {
     errors {
-      ...BulkProductError
+      ...ProductVariantBulkError
     }
   }
 }
-    ${BulkProductErrorFragmentDoc}`;
+    ${ProductVariantBulkErrorFragmentDoc}`;
 export type ProductVariantBulkUpdateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>;
 
 /**

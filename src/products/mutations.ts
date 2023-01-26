@@ -471,7 +471,7 @@ export const ProductVariantBulkUpdateMutation = gql`
       variants: $input
     ) {
       errors {
-        ...BulkProductError
+        ...ProductVariantBulkError
       }
     }
   }

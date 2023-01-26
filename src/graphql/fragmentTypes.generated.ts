@@ -98,6 +98,7 @@
       "ProductVariantDeleted",
       "ProductVariantMetadataUpdated",
       "ProductVariantOutOfStock",
+      "ProductVariantStockUpdated",
       "ProductVariantUpdated",
       "SaleCreated",
       "SaleDeleted",

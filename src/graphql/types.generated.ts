@@ -321,13 +321,25 @@ export type AttributeCreateInput = {
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute should be visible or not in storefront. */
   visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
-  /** Whether the attribute can be filtered in storefront. */
+  /**
+   * Whether the attribute can be filtered in storefront.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /** The position of the attribute in the storefront navigation (0 by default). */
+  /**
+   * The position of the attribute in the storefront navigation (0 by default).
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
-  /** Whether the attribute can be displayed in the admin product list. */
+  /**
+   * Whether the attribute can be displayed in the admin product list.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /**
    * External ID of this attribute.
@@ -343,6 +355,13 @@ export enum AttributeEntityTypeEnum {
   PRODUCT = 'PRODUCT',
   PRODUCT_VARIANT = 'PRODUCT_VARIANT'
 }
+
+export type AttributeEntityTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<AttributeEntityTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<AttributeEntityTypeEnum>>;
+};
 
 /** An enumeration. */
 export enum AttributeErrorCode {
@@ -406,6 +425,13 @@ export enum AttributeInputTypeEnum {
   DATE_TIME = 'DATE_TIME'
 }
 
+export type AttributeInputTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<AttributeInputTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<AttributeInputTypeEnum>>;
+};
+
 export enum AttributeSortField {
   /** Sort attributes by name */
   NAME = 'NAME',
@@ -440,6 +466,13 @@ export enum AttributeTypeEnum {
   PAGE_TYPE = 'PAGE_TYPE'
 }
 
+export type AttributeTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<AttributeTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<AttributeTypeEnum>>;
+};
+
 export type AttributeUpdateInput = {
   /** Name of an attribute displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
@@ -457,13 +490,25 @@ export type AttributeUpdateInput = {
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute should be visible or not in storefront. */
   visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
-  /** Whether the attribute can be filtered in storefront. */
+  /**
+   * Whether the attribute can be filtered in storefront.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /** The position of the attribute in the storefront navigation (0 by default). */
+  /**
+   * The position of the attribute in the storefront navigation (0 by default).
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
-  /** Whether the attribute can be displayed in the admin product list. */
+  /**
+   * Whether the attribute can be displayed in the admin product list.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0.
+   */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /**
    * External ID of this product.
@@ -520,6 +565,12 @@ export type AttributeValueInput = {
    * Added in Saleor 3.9.
    */
   dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
+  /**
+   * Attribute value ID.
+   *
+   * Added in Saleor 3.9.
+   */
+  swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /**
    * List of attribute value IDs.
    *
@@ -603,6 +654,34 @@ export type AttributeValueUpdateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
+};
+
+/**
+ * Where filtering options.
+ *
+ * Added in Saleor 3.11.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+export type AttributeWhereInput = {
+  valueRequired?: InputMaybe<Scalars['Boolean']>;
+  visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
+  filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
+  metadata?: InputMaybe<Array<MetadataFilter>>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  name?: InputMaybe<StringFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  withChoices?: InputMaybe<Scalars['Boolean']>;
+  inputType?: InputMaybe<AttributeInputTypeEnumFilterInput>;
+  entityType?: InputMaybe<AttributeEntityTypeEnumFilterInput>;
+  type?: InputMaybe<AttributeTypeEnumFilterInput>;
+  unit?: InputMaybe<MeasurementUnitsEnumFilterInput>;
+  inCollection?: InputMaybe<Scalars['ID']>;
+  inCategory?: InputMaybe<Scalars['ID']>;
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<AttributeWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<AttributeWhereInput>>;
 };
 
 export type BulkAttributeValueInput = {
@@ -1610,10 +1689,12 @@ export type DraftOrderInput = {
   externalReference?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum ErrorPolicyEnum {
+  /** Save what is possible within a single row. If there are errors in an input data row, try to save it partially and skip the invalid part. */
   IGNORE_FAILED = 'IGNORE_FAILED',
+  /** Reject all rows if there is at least one error in any of them. */
   REJECT_EVERYTHING = 'REJECT_EVERYTHING',
+  /** Reject rows with errors. */
   REJECT_FAILED_ROWS = 'REJECT_FAILED_ROWS'
 }
 
@@ -2864,6 +2945,13 @@ export enum MeasurementUnitsEnum {
   TONNE = 'TONNE'
 }
 
+export type MeasurementUnitsEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<MeasurementUnitsEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<MeasurementUnitsEnum>>;
+};
+
 export enum MediaChoicesSortField {
   /** Sort media by ID. */
   ID = 'ID'
@@ -3253,6 +3341,7 @@ export type OrderFilterInput = {
   giftCardUsed?: InputMaybe<Scalars['Boolean']>;
   giftCardBought?: InputMaybe<Scalars['Boolean']>;
   numbers?: InputMaybe<Array<Scalars['String']>>;
+  checkoutIds?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type OrderFulfillInput = {
@@ -4000,6 +4089,7 @@ export enum ProductErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_PRICE = 'INVALID_PRICE',
   PRODUCT_WITHOUT_CATEGORY = 'PRODUCT_WITHOUT_CATEGORY',
   NOT_PRODUCTS_IMAGE = 'NOT_PRODUCTS_IMAGE',
   NOT_PRODUCTS_VARIANT = 'NOT_PRODUCTS_VARIANT',
@@ -4365,6 +4455,27 @@ export type ProductVariantBulkCreateInput = {
   channelListings?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
 };
 
+/** An enumeration. */
+export enum ProductVariantBulkErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
+  ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
+  ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  INVALID_PRICE = 'INVALID_PRICE',
+  NOT_PRODUCTS_VARIANT = 'NOT_PRODUCTS_VARIANT',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE',
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL = 'PRODUCT_NOT_ASSIGNED_TO_CHANNEL'
+}
+
+/**
+ * Input fields to update product variants.
+ *
+ * Added in Saleor 3.11.
+ */
 export type ProductVariantBulkUpdateInput = {
   /** List of attributes specific to this variant. */
   attributes?: InputMaybe<Array<BulkAttributeValueInput>>;
@@ -4990,6 +5101,20 @@ export enum StorePaymentMethodEnum {
   /** Storage is disabled. The payment is not stored. */
   NONE = 'NONE'
 }
+
+/**
+ * Define the filtering options for string fields.
+ *
+ * Added in Saleor 3.11.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+export type StringFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<Scalars['String']>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<Scalars['String']>>;
+};
 
 export enum TaxCalculationStrategy {
   FLAT_RATES = 'FLAT_RATES',
@@ -5807,6 +5932,8 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /** A product variant stock is updated */
+  PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /**
    * A product variant metadata is updated.
    *
@@ -6097,6 +6224,8 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /** A product variant stock is updated */
+  PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /**
    * A product variant metadata is updated.
    *
@@ -6366,6 +6495,7 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
@@ -6407,6 +6537,17 @@ export enum WebhookSampleEventTypeEnum {
   VOUCHER_DELETED = 'VOUCHER_DELETED',
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   OBSERVABILITY = 'OBSERVABILITY'
+}
+
+/** An enumeration. */
+export enum WebhookTriggerErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  INVALID_ID = 'INVALID_ID',
+  MISSING_PERMISSION = 'MISSING_PERMISSION',
+  MISSING_QUERY = 'MISSING_QUERY',
+  TYPE_NOT_SUPPORTED = 'TYPE_NOT_SUPPORTED',
+  UNABLE_TO_PARSE = 'UNABLE_TO_PARSE'
 }
 
 export type WebhookUpdateInput = {
@@ -7346,7 +7487,9 @@ export type PageErrorWithAttributesFragment = { __typename: 'PageError', attribu
 
 export type PermissionGroupErrorFragment = { __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null };
 
-export type BulkProductErrorFragment = { __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null };
+export type BulkProductErrorFragment = { __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null };
+
+export type ProductVariantBulkErrorFragment = { __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null };
 
 export type BulkStockErrorFragment = { __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null };
 
@@ -8690,7 +8833,7 @@ export type ProductVariantBulkCreateMutationVariables = Exact<{
 }>;
 
 
-export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string }> } | null };
+export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string }> } | null };
 
 export type ProductVariantBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
@@ -8744,7 +8887,7 @@ export type ProductVariantBulkUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null }> } | null };
+export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> } | null };
 
 export type InitialProductFilterAttributesQueryVariables = Exact<{ [key: string]: never; }>;
 

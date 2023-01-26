@@ -115,6 +115,13 @@ export const bulkProductErrorFragment = gql`
     index
     channels
     message
+  }
+`;
+export const productVariantBulkError = gql`
+  fragment ProductVariantBulkError on ProductVariantBulkError {
+    field
+    code
+    message
     attributes
     values
     warehouses
