@@ -39,6 +39,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onPaymentCapture: undefined,
   onPaymentPaid: undefined,
   onPaymentVoid: undefined,
+  onPaymentRefund: undefined,
   onProductClick: undefined,
   onProfileView: () => undefined,
   onShippingAddressEdit: undefined,

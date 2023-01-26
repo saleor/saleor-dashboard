@@ -9,7 +9,6 @@ import {
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
-// TODO: Add feature flags
 import {
   CreateManualTransactionCaptureMutation,
   CreateManualTransactionCaptureMutationVariables,
@@ -136,15 +135,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
-  const {
-    data: customerAddresses,
-    loading: customerAddressesLoading,
-  } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
+  const { data: customerAddresses, loading: customerAddressesLoading } =
+    useCustomerAddressesQuery({
+      variables: {
+        id: order?.user?.id,
+      },
+      skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
+    });
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
   ): Promise<any> =>
@@ -156,10 +153,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
-  const [
-    currentApproval,
-    setCurrentApproval,
-  ] = React.useState<ApprovalState | null>(null);
+  const [currentApproval, setCurrentApproval] =
+    React.useState<ApprovalState | null>(null);
   const [stockExceeded, setStockExceeded] = React.useState(false);
   const approvalErrors =
     orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];

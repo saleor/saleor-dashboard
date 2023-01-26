@@ -17,7 +17,6 @@ interface AcionButtonsProps {
   fulfillmentAllowUnpaid: boolean;
   onTrackingCodeAdd();
   onApprove();
-  onRefund();
 }
 
 const statusesToShow = [
