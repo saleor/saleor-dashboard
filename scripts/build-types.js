@@ -39,7 +39,7 @@ for (const rawSuffix of schemaSuffixes) {
           ],
         },
         [getOutputPath("types", suffix)]: {
-          documents: getDocumentsPaths(suffix),
+          documents: getDocumentsPaths(suffix, rawSuffix),
           config: {
             nonOptionalTypename: true,
             avoidOptionals: {
@@ -64,7 +64,7 @@ for (const rawSuffix of schemaSuffixes) {
           ],
         },
         [getOutputPath("hooks", suffix)]: {
-          documents: getDocumentsPaths(suffix),
+          documents: getDocumentsPaths(suffix, rawSuffix),
           preset: "import-types",
           presetConfig: {
             typesPath: "./types" + suffix + ".generated",
@@ -92,12 +92,18 @@ function getOutputPath(path, suffix) {
   return `./src/graphql/${path}${suffix}.generated.ts`;
 }
 
-function getDocumentsPaths(suffix) {
+function getDocumentsPaths(suffix, rawSuffix) {
   return [
     `./src/**/queries${suffix}.ts`,
     `./src/**/mutations${suffix}.ts`,
     `./src/**/fragments/*${suffix}.ts`,
     `./src/searches/*${suffix}.ts`,
+    // Remove feature flag files from default suffix (matches glob)
+    ...FEATURE_FLAGS.filter(flag => flag !== rawSuffix).map(
+      flag => `!./src/**/*${prepareSuffix(flag)}.ts`,
+    ),
+    // Always add all fragments (e.g. Money)
+    ...(rawSuffix !== "default" ? ["./src/**/fragments/*.ts"] : []),
   ];
 }
 
