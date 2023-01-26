@@ -22,7 +22,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -37,11 +36,13 @@ import AttributeProperties from "../AttributeProperties";
 import AttributeValues from "../AttributeValues";
 
 export interface AttributePageProps {
-  attribute: AttributeDetailsFragment | null;
+  attribute?: AttributeDetailsFragment | null | undefined;
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetailsQuery["attribute"]["choices"];
+  values?:
+    | NonNullable<AttributeDetailsQuery["attribute"]>["choices"]
+    | undefined;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
@@ -64,7 +65,7 @@ export interface AttributePageFormData extends MetadataFormData {
   availableInGrid: boolean;
   filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
-  entityType: AttributeEntityTypeEnum;
+  entityType: AttributeEntityTypeEnum | null;
   filterableInStorefront: boolean;
   name: string;
   slug: string;
@@ -102,59 +103,51 @@ const AttributePage: React.FC<AttributePageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
-  const initialForm: AttributePageFormData =
-    attribute === null
-      ? {
-          availableInGrid: true,
-          entityType: null,
-          filterableInDashboard: true,
-          filterableInStorefront: true,
-          inputType: AttributeInputTypeEnum.DROPDOWN,
-          metadata: [],
-          name: "",
-          privateMetadata: [],
-          slug: "",
-          storefrontSearchPosition: "",
-          type: AttributeTypeEnum.PRODUCT_TYPE,
-          valueRequired: true,
-          visibleInStorefront: true,
-          unit: undefined,
-        }
-      : {
-          availableInGrid: attribute?.availableInGrid ?? true,
-          entityType: attribute?.entityType ?? null,
-          filterableInDashboard: attribute?.filterableInDashboard ?? true,
-          filterableInStorefront: attribute?.filterableInStorefront ?? true,
-          inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
-          metadata: attribute?.metadata?.map(mapMetadataItemToInput),
-          name: attribute?.name ?? "",
-          privateMetadata: attribute?.privateMetadata?.map(
-            mapMetadataItemToInput,
-          ),
-          slug: attribute?.slug ?? "",
-          storefrontSearchPosition:
-            attribute?.storefrontSearchPosition.toString() ?? "",
-          type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
-          valueRequired: !!attribute?.valueRequired ?? true,
-          visibleInStorefront: attribute?.visibleInStorefront ?? true,
-          unit: attribute?.unit || null,
-        };
+  const initialForm: AttributePageFormData = !attribute
+    ? {
+        availableInGrid: true,
+        entityType: null,
+        filterableInDashboard: true,
+        filterableInStorefront: true,
+        inputType: AttributeInputTypeEnum.DROPDOWN,
+        metadata: [],
+        name: "",
+        privateMetadata: [],
+        slug: "",
+        storefrontSearchPosition: "",
+        type: AttributeTypeEnum.PRODUCT_TYPE,
+        valueRequired: true,
+        visibleInStorefront: true,
+        unit: undefined,
+      }
+    : {
+        availableInGrid: attribute.availableInGrid,
+        entityType: attribute.entityType,
+        filterableInDashboard: attribute.filterableInDashboard,
+        filterableInStorefront: attribute.filterableInStorefront,
+        inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
+        metadata: attribute.metadata.map(mapMetadataItemToInput),
+        name: attribute?.name ?? "",
+        privateMetadata: attribute.privateMetadata.map(mapMetadataItemToInput),
+        slug: attribute?.slug ?? "",
+        storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
+        type: attribute?.type ?? AttributeTypeEnum.PRODUCT_TYPE,
+        valueRequired: !!attribute.valueRequired,
+        visibleInStorefront: attribute.visibleInStorefront,
+        unit: attribute?.unit ?? null,
+      };
 
   const handleSubmit = (data: AttributePageFormData) => {
-    const metadata =
-      !attribute || isMetadataModified ? data.metadata : undefined;
+    const metadata = !attribute || isMetadataModified ? data.metadata : [];
     const privateMetadata =
-      !attribute || isPrivateMetadataModified
-        ? data.privateMetadata
-        : undefined;
-    const type = attribute === null ? data.type : undefined;
+      !attribute || isPrivateMetadataModified ? data.privateMetadata : [];
 
     return onSubmit({
       ...data,
       metadata,
       privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
-      type,
+      type: data.type,
     });
   };
 
@@ -185,13 +178,13 @@ const AttributePage: React.FC<AttributePageProps> = ({
               </Backlink>
               <PageHeader
                 title={
-                  attribute === null
+                  !attribute
                     ? intl.formatMessage({
                         id: "8cUEPV",
                         defaultMessage: "Create New Attribute",
                         description: "page title",
                       })
-                    : maybe(() => attribute.name)
+                    : attribute.name
                 }
               />
               <Grid>
@@ -215,7 +208,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                       <AttributeValues
                         inputType={data.inputType}
                         disabled={disabled}
-                        values={mapEdgesToItems(values)}
+                        values={mapEdgesToItems(values) ?? []}
                         onValueAdd={onValueAdd}
                         onValueDelete={onValueDelete}
                         onValueReorder={onValueReorder}
@@ -248,7 +241,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 </div>
               </Grid>
               <Savebar
-                disabled={isSaveDisabled}
+                disabled={!!isSaveDisabled}
                 state={saveButtonBarState}
                 onCancel={() => navigate(attributeListUrl())}
                 onSubmit={submit}
