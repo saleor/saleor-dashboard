@@ -5,9 +5,10 @@ import {
 } from "../requests/Taxes";
 
 export function updateTaxConfigurationForChannel({
-  channelSlug,
-  chargeTaxes = true,
+  channelSlug = "default-channel",
+  chargeTaxes = false,
   taxCalculationStrategy = "FLAT_RATES",
+  pricesEnteredWithTax = "false",
 }) {
   getTaxConfigurationList().then(taxConfigurationList => {
     const taxConfigurationForChannel = taxConfigurationList.find(
@@ -17,6 +18,7 @@ export function updateTaxConfigurationForChannel({
       id: taxConfigurationForChannel.node.id,
       chargeTaxes,
       taxCalculationStrategy,
+      pricesEnteredWithTax,
     });
   });
 }

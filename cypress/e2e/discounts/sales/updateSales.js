@@ -24,6 +24,10 @@ import {
   createShipping,
   deleteShippingStartsWith,
 } from "../../../support/api/utils/shippingUtils";
+import {
+  getDefaultTaxClass,
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
 
 describe("As an admin I want to update sales", () => {
   const startsWith = "CySales";
@@ -37,6 +41,7 @@ describe("As an admin I want to update sales", () => {
   let address;
   let productData;
   let variants;
+  let taxClass;
 
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -48,7 +53,10 @@ describe("As an admin I want to update sales", () => {
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-
+        getDefaultTaxClass();
+      })
+      .then(taxResp => {
+        taxClass = taxResp;
         createSaleInChannel({
           name,
           type: "FIXED",
@@ -65,6 +73,7 @@ describe("As an admin I want to update sales", () => {
           channelId: defaultChannel.id,
           address,
           name: startsWith,
+          taxClassId: taxClass.id,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -81,6 +90,7 @@ describe("As an admin I want to update sales", () => {
         channelId: defaultChannel.id,
         warehouseId: warehouse.id,
         price: productPrice,
+        taxClassId: taxClass.id,
       };
       cy.checkIfDataAreNotNull({
         productData,
@@ -95,6 +105,10 @@ describe("As an admin I want to update sales", () => {
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
   });
 
   it(

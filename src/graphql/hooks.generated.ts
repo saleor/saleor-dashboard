@@ -2828,6 +2828,7 @@ export const WebhookDetailsFragmentDoc = gql`
   }
   secretKey
   targetUrl
+  subscriptionQuery
 }
     ${WebhookFragmentDoc}`;
 export const AppCreateDocument = gql`

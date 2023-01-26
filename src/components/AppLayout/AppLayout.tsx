@@ -33,12 +33,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const [appState] = useAppState();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
 
-  const {
-    availableChannels,
-    channel,
-    isPickerActive,
-    setChannel,
-  } = useAppChannel(false);
+  const { availableChannels, channel, isPickerActive, setChannel } =
+    useAppChannel(false);
 
   const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
