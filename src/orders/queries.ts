@@ -200,3 +200,18 @@ export const channelUsabilityData = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query OrderDetails($id: ID!) { 
+  order(id: $id) { 
+    id
+    number
+    status
+    isShippingRequired
+    canFinalize
+    created
+    customerNote
+    paymentStatus
+    userEmail
+    isPaid
+  } 
+}`;

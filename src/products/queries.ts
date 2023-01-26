@@ -260,3 +260,12 @@ export const gridAttributes = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
+  product(id: $id) {
+    id
+    name
+    slug
+    description
+  }
+}`;
