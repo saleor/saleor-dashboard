@@ -63,7 +63,7 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
     } else {
       cy.wrap(mails)
         .mhGetMailsBySubject(subject)
-        .should(mailsWithSubject => {
+        .then(mailsWithSubject => {
           if (!mailsWithSubject.length) {
             cy.wait(10000);
             getMailActivationLinkForUserAndSubject(
@@ -136,7 +136,7 @@ export function getMailWithGiftCardExportWithAttachment(
   if (i > 5) {
     throw new Error(`There is no email Gift Card export for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).should(mails => {
+  return cy.mhGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithGiftCardExportWithAttachment(
@@ -146,7 +146,7 @@ export function getMailWithGiftCardExportWithAttachment(
         i + 1,
       );
     } else {
-      cy.mhGetMailsBySubject(subject).should(mailsWithSubject => {
+      cy.mhGetMailsBySubject(subject).then(mailsWithSubject => {
         if (!mailsWithSubject.length) {
           cy.wait(10000);
           getMailWithGiftCardExportWithAttachment(
