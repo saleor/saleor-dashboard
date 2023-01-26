@@ -30,10 +30,10 @@ describe("As an admin I want to use attributes in variant selection", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
     getDefaultChannel().then(defaultChannel => (channel = defaultChannel));
-    createCategory({ name: startsWith }).then(
-      categoryResp => (category = categoryResp),
-      cy.checkIfDataAreNotNull({ channel, category }),
-    );
+    createCategory({ name: startsWith }).then(categoryResp => {
+      category = categoryResp;
+      cy.checkIfDataAreNotNull({ channel, category });
+    });
   });
 
   beforeEach(() => {

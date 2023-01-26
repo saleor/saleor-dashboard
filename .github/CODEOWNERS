@@ -1,7 +1,1 @@
-# Restrict all workflows except deployments to SRE
 .github/workflows/* @saleor/sre
-
-# Restrict Deployment Workflows to be Approved by Cloud Team
-.github/workflows/test-env* @saleor/cloud
-.github/workflows/deploy-* @saleor/cloud
-.github/workflows/notify/* @saleor/cloud

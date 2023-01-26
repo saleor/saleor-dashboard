@@ -84,6 +84,7 @@ export function createSaleWithNewProduct({
   price,
   discountOption,
   discountValue,
+  taxClassId,
 }) {
   return createProductInChannel({
     name,
@@ -93,6 +94,7 @@ export function createSaleWithNewProduct({
     attributeId,
     categoryId,
     price,
+    taxClassId,
   }).then(({ product: productResp }) => {
     const product = productResp;
     /* Uncomment after fixing SALEOR-3367 bug
