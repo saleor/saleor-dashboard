@@ -1,3 +1,4 @@
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
@@ -78,9 +79,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             description="button"
           />
         </Button>
-        limitText:{" "}
-        {hasLimits(limits, "warehouses")
-          ? intl.formatMessage(
+        {hasLimits(limits, "warehouses") && (
+          <LimitsInfo
+            text={intl.formatMessage(
               {
                 id: "YkOzse",
                 defaultMessage: "{count}/{max} warehouses used",
@@ -90,8 +91,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                 count: limits?.currentUsage.warehouses,
                 max: limits?.allowedUsage.warehouses,
               },
-            )
-          : undefined}
+            )}
+          />
+        )}
       </TopNav>
       {limitReached && (
         <LimitReachedAlert

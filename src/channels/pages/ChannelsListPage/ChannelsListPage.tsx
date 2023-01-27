@@ -1,4 +1,5 @@
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -55,19 +56,21 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             description="button"
           />
         </Button>
-        limitText:{" "}
-        {hasLimits(limits, "channels") &&
-          intl.formatMessage(
-            {
-              id: "rZMT44",
-              defaultMessage: "{count}/{max} channels used",
-              description: "created channels counter",
-            },
-            {
-              count: limits.currentUsage.channels,
-              max: limits.allowedUsage.channels,
-            },
-          )}
+        {hasLimits(limits, "channels") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "rZMT44",
+                defaultMessage: "{count}/{max} channels used",
+                description: "created channels counter",
+              },
+              {
+                count: limits.currentUsage.channels,
+                max: limits.allowedUsage.channels,
+              },
+            )}
+          />
+        )}
       </TopNav>
       {limitReached && (
         <LimitReachedAlert

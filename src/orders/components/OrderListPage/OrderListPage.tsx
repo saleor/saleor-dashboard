@@ -3,6 +3,7 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
@@ -107,19 +108,21 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-        limitText:{" "}
-        {hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "zyceue",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed order counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )}
+        {hasLimits(limits, "orders") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "zyceue",
+                defaultMessage: "{count}/{max} orders",
+                description: "placed order counter",
+              },
+              {
+                count: limits.currentUsage.orders,
+                max: limits.allowedUsage.orders,
+              },
+            )}
+          />
+        )}
       </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>

@@ -89,6 +89,12 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   return (
     <>
       <TopNav title={intl.formatMessage(sectionNames.customers)}>
+        {extensionMenuItems.length > 0 && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={extensionMenuItems}
+          />
+        )}
         <ButtonWithSelect
           onClick={() => navigate(customerAddUrl)}
           options={extensionCreateButtonItems}
@@ -100,13 +106,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-        cardMenu:{" "}
-        {extensionMenuItems.length > 0 && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={extensionMenuItems}
-          />
-        )}
       </TopNav>
       <Card>
         <FilterBar

@@ -1,3 +1,4 @@
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
@@ -70,19 +71,21 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             description="button"
           />
         </Button>
-        limitText:{" "}
-        {hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "w2eTzO",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed orders counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )}
+        {hasLimits(limits, "orders") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "w2eTzO",
+                defaultMessage: "{count}/{max} orders",
+                description: "placed orders counter",
+              },
+              {
+                count: limits.currentUsage.orders,
+                max: limits.allowedUsage.orders,
+              },
+            )}
+          />
+        )}
       </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>

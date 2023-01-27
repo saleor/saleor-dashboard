@@ -211,12 +211,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         return (
           <DetailedContent>
             <TopNav href={orderListUrl()} title={<Title order={order} />}>
-              cardMenu:{" "}
-              {
-                <CardMenu
-                  menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
-                />
-              }
+              <CardMenu
+                menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+              />
             </TopNav>
             <Content data-test-id="order-fulfillment">
               <div className={classes.date}>
