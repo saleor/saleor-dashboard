@@ -81,7 +81,7 @@ export const DryRun: React.FC<DryRunProps> = ({
           {intl.formatMessage(messages.selectObject)}
         </DialogContentText>
 
-        {unavailableObjects.length && (
+        {!!unavailableObjects.length && (
           <Alert variant="warning" close={false}>
             <Typography>
               {intl.formatMessage(messages.unavailableObjects)}
