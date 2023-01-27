@@ -32,8 +32,8 @@ const GiftCardUpdatePage: React.FC = () => {
 
   return (
     <DetailedContent>
+      <GiftCardUpdatePageHeader />
       <Content>
-        <GiftCardUpdatePageHeader />
         <GiftCardUpdateDetailsCard />
         <CardSpacer />
         <Metadata data={data} onChange={changeMetadata} />
