@@ -49,43 +49,46 @@ export function getCreateVariantMutationError(
 
 export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
+  varaintsIds: string[],
 ): ProductVariantListError[] {
-  const variables = mutationResult.extensions.variables;
-  return mutationResult.data.productVariantBulkUpdate.errors.reduce<
-    ProductVariantListError[]
-  >((acc, error) => {
-    if (error.channels.length) {
+  const results = mutationResult.data.productVariantBulkUpdate;
+
+  return results.results
+    .flatMap(res => res.errors)
+    .reduce<ProductVariantListError[]>((acc, error, index) => {
+      const variantId = varaintsIds[index];
+
+      if (error.channels?.length) {
+        acc.push({
+          __typename: "DatagridError",
+          type: "channel",
+          error: error.code,
+          variantId,
+          channelIds: error.channels,
+        });
+      }
+
+      if (error.warehouses?.length) {
+        acc.push(
+          ...error.warehouses.map(
+            warehouse =>
+              ({
+                __typename: "DatagridError",
+                variantId,
+                warehouseId: warehouse,
+                type: "stock",
+              } as const),
+          ),
+        );
+      }
+
       acc.push({
         __typename: "DatagridError",
-        type: "channel",
+        type: "variantData",
+        variantId,
         error: error.code,
-        variantId: variables.id,
-        channelIds: error.channels,
+        attributes: error.attributes,
       });
-    }
-
-    if (error.warehouses.length) {
-      acc.push(
-        ...error.warehouses.map(
-          warehouse =>
-            ({
-              __typename: "DatagridError",
-              variantId: variables.id,
-              warehouseId: warehouse,
-              type: "stock",
-            } as const),
-        ),
-      );
-    }
-
-    acc.push({
-      __typename: "DatagridError",
-      type: "variantData",
-      variantId: variables.id,
-      error: error.code,
-      attributes: error.attributes,
-    });
-
-    return acc;
-  }, []);
+      return acc;
+    }, []);
 }

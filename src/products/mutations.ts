@@ -419,17 +419,26 @@ export const ProductVariantPreorderDeactivateMutation = gql`
 
 export const ProductVariantBulkUpdateMutation = gql`
   mutation ProductVariantBulkUpdate(
-    $id: ID!
+    $product: ID!
     $input: [ProductVariantBulkUpdateInput!]!
     $errorPolicy: ErrorPolicyEnum
   ) {
     productVariantBulkUpdate(
       errorPolicy: $errorPolicy
-      product: $id
+      product: $product
       variants: $input
     ) {
       errors {
         ...ProductVariantBulkError
+      }
+      results {
+        productVariant {
+          id
+          name
+        }
+        errors {
+          ...ProductVariantBulkError
+        }
       }
     }
   }

@@ -163,16 +163,21 @@ export function useProductUpdateHandler(
     }
 
     if (data.variants.updates.length > 0) {
+      const updateInputdData = getBulkVariantUpdateInputs(
+        product.variants,
+        data.variants,
+      );
       const updateVariantsResults = await updateVariants({
         variables: {
-          id: product.id,
-          input: getBulkVariantUpdateInputs(product.variants, data.variants),
+          product: product.id,
+          input: updateInputdData,
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },
       });
 
       const updateVariantsErrors = getVariantUpdateMutationErrors(
         updateVariantsResults,
+        updateInputdData.map(data => data.id),
       );
 
       variantErrors.push(...updateVariantsErrors);

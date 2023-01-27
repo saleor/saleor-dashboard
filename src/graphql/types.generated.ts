@@ -8856,13 +8856,13 @@ export type ProductVariantPreorderDeactivateMutationVariables = Exact<{
 export type ProductVariantPreorderDeactivateMutation = { __typename: 'Mutation', productVariantPreorderDeactivate: { __typename: 'ProductVariantPreorderDeactivate', productVariant: { __typename: 'ProductVariant', id: string, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductVariantBulkUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  product: Scalars['ID'];
   input: Array<ProductVariantBulkUpdateInput> | ProductVariantBulkUpdateInput;
   errorPolicy?: InputMaybe<ErrorPolicyEnum>;
 }>;
 
 
-export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> } | null };
+export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }>, results: Array<{ __typename: 'ProductVariantBulkResult', productVariant: { __typename: 'ProductVariant', id: string, name: string } | null, errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> | null }> } | null };
 
 export type InitialProductFilterAttributesQueryVariables = Exact<{ [key: string]: never; }>;
 

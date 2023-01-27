@@ -12302,14 +12302,23 @@ export type ProductVariantPreorderDeactivateMutationHookResult = ReturnType<type
 export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResult<Types.ProductVariantPreorderDeactivateMutation>;
 export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 export const ProductVariantBulkUpdateDocument = gql`
-    mutation ProductVariantBulkUpdate($id: ID!, $input: [ProductVariantBulkUpdateInput!]!, $errorPolicy: ErrorPolicyEnum) {
+    mutation ProductVariantBulkUpdate($product: ID!, $input: [ProductVariantBulkUpdateInput!]!, $errorPolicy: ErrorPolicyEnum) {
   productVariantBulkUpdate(
     errorPolicy: $errorPolicy
-    product: $id
+    product: $product
     variants: $input
   ) {
     errors {
       ...ProductVariantBulkError
+    }
+    results {
+      productVariant {
+        id
+        name
+      }
+      errors {
+        ...ProductVariantBulkError
+      }
     }
   }
 }
@@ -12329,7 +12338,7 @@ export type ProductVariantBulkUpdateMutationFn = Apollo.MutationFunction<Types.P
  * @example
  * const [productVariantBulkUpdateMutation, { data, loading, error }] = useProductVariantBulkUpdateMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      product: // value for 'product'
  *      input: // value for 'input'
  *      errorPolicy: // value for 'errorPolicy'
  *   },

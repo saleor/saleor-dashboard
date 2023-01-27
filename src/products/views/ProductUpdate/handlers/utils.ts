@@ -199,12 +199,9 @@ function getBulkUpdateVariantInput(
   return {
     attributes: getAttributeData(data.updates, index, data.removed),
     sku: getSkuData(data.updates, index, data.removed),
-    name: getSkuData(data.updates, index, data.removed),
+    name: getNameData(data.updates, index, data.removed),
     stocks: getStockData(data.updates, index, data.removed),
-    channelListings: [
-      ...getVariantChannelsInputs(data, index),
-      { channelId: "", price: "" },
-    ],
+    channelListings: getVariantChannelsInputs(data, index),
   };
 }
 
