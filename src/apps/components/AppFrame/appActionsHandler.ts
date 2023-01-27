@@ -1,5 +1,4 @@
 import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
-import { appPath } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -152,16 +151,19 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
   handle: (action: UpdateRouting) => {
     const { newRoute, actionId } = action.payload;
 
-    console.debug(`Handling UpdateRouting action with ID: ${actionId}`);
+    console.debug(
+      `Handling UpdateRouting action with ID: ${actionId} and new route: ${newRoute}`,
+    );
 
-    const appCompletePath = new URL(
-      appPath(encodeURIComponent(appId)),
+    const exactLocation = urlJoin(
       getAppMountUri(),
-    ).href;
+      `apps/${appId}/app`,
+      action.payload.newRoute,
+    );
 
-    console.debug(`App complete path: ${appCompletePath}`);
+    console.debug(`Update to new nested route ${exactLocation}`);
 
-    window.history.pushState(null, "", appCompletePath + newRoute);
+    window.history.pushState(null, "", exactLocation);
 
     return createResponseStatus(actionId, true);
   },
