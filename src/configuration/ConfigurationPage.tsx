@@ -33,9 +33,6 @@ const useStyles = makeStyles(
     },
 
     configurationItem: {
-      [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr",
-      },
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 1fr",

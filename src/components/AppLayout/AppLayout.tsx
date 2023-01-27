@@ -54,7 +54,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <Box display="grid" __gridTemplateColumns="auto auto 1fr">
+      <Box display="grid" __gridTemplateColumns="auto 325px 1fr">
         {appState.loading ? (
           <LinearProgress className={classes.appLoader} color="primary" />
         ) : (
@@ -76,16 +76,21 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           <NewSidebar />
         </Box>
         <Box __height="100%" __width="100%">
-          {/* <Box
-            __height="50px"
-            className={classes.headerAnchor}
-            ref={appHeaderAnchor}
-          /> */}
-
           <Box as="main" __width="100%">
             {children}
           </Box>
-          <div className={classes.appAction} ref={appActionAnchor} />
+          <Box
+            ref={appActionAnchor}
+            // @ts-ignore
+            __position="fixed"
+            __bottom={0}
+            __left={325}
+            __right={0}
+            backgroundColor="plain"
+            borderTopWidth={1}
+            borderTopStyle="solid"
+            borderColor="neutralPlain"
+          />
         </Box>
       </Box>
     </>
