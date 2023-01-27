@@ -1,4 +1,4 @@
-import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { AppDetailsUrlQueryParams, appPath } from "@dashboard/apps/urls";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
@@ -29,4 +29,9 @@ export const AppUrls = {
     stringifyQs(params),
   resolveAppInstallUrl: (manifestUrl: string) =>
     `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
+  isAppDeepUrlChange: (appId: string, from: string, to: string) => {
+    const appCompletePath = appPath(encodeURIComponent(appId));
+
+    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+  },
 };
