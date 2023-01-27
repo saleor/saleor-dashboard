@@ -103,39 +103,23 @@ const useHandleRedirectAction = (appId: string) => {
         action.payload.to,
       );
 
-      /**
-       * Handle local app URL changes, eg apps/XYZ/app/configuration -> apps/XYZ/app/preview
-       */
-      if (onlyAppDeepChange) {
-        try {
+      try {
+        if (onlyAppDeepChange) {
           handleAppDeepChange(action);
-
-          return createResponseStatus(actionId, true);
-        } catch (e) {
-          return createResponseStatus(actionId, false);
-        }
-      }
-
-      if (isLocalPath(action.payload.to)) {
-        try {
+        } else if (isLocalPath(action.payload.to)) {
           handleLocalDashboardPathChange(action);
-          return createResponseStatus(actionId, true);
-        } catch (e) {
-          return createResponseStatus(actionId, false);
-        }
-      }
-
-      if (isExternalHost(action.payload.to)) {
-        try {
+        } else if (isExternalHost(action.payload.to)) {
           handleExternalHostChange(action);
-
-          return createResponseStatus(actionId, true);
-        } catch (e) {
-          return createResponseStatus(actionId, false);
         }
+      } catch (e) {
+        console.error(
+          "Couldnt handle Redirect action properly, this should not happen",
+        );
       }
 
-      // If nothing was catched, assume failure
+      /**
+       * Assume failure if nothing catched
+       */
       return createResponseStatus(actionId, false);
     },
   };
