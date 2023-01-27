@@ -98,7 +98,9 @@ describe("AppActionsHandler", function () {
         result: {
           current: { handle },
         },
-      } = renderHook(() => AppActionsHandler.useUpdateRoutingAction("XYZ"));
+      } = renderHook(() =>
+        AppActionsHandler.useHandleUpdateRoutingAction("XYZ"),
+      );
 
       handle({
         type: "updateRouting",

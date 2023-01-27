@@ -35,8 +35,9 @@ const useHandleNotificationAction = () => {
 
   return {
     handle: (action: NotificationAction) => {
-      const { actionId, ...notification } =
-        action.payload as NotificationAction["payload"];
+      const { actionId, ...notification } = action.payload;
+
+      console.debug(`Handling Notification action with ID: ${actionId}`);
 
       notify({
         ...notification,
@@ -53,7 +54,9 @@ const useHandleRedirectAction = (appId: string) => {
   const intl = useIntl();
 
   const handleAppDeepChange = (action: RedirectAction) => {
+    console.debug("Handling deep app URL change");
     const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
+    console.debug(`Exact location to redirect: ${exactLocation}`);
 
     if (action.payload.newContext) {
       // Open new dashboard in new tab
@@ -62,11 +65,20 @@ const useHandleRedirectAction = (appId: string) => {
       // Change only url without reloading if we are in the same app
       window.history.pushState(null, "", exactLocation);
     }
+
+    return createResponseStatus(action.payload.actionId, true);
   };
 
   const handleExternalHostChange = (action: RedirectAction) => {
+    console.debug(
+      `Handling external host change action with ID: ${action.payload.actionId}`,
+    );
+    console.debug(`Action payload is `, action.payload);
+
     if (action.payload.newContext) {
       window.open(action.payload.to);
+
+      return createResponseStatus(action.payload.actionId, true);
     } else {
       const confirmed = window.confirm(
         intl.formatMessage({
@@ -78,7 +90,11 @@ const useHandleRedirectAction = (appId: string) => {
 
       if (confirmed) {
         window.location.href = action.payload.to;
+
+        return createResponseStatus(action.payload.actionId, true);
       }
+
+      return createResponseStatus(action.payload.actionId, false);
     }
   };
 
@@ -91,11 +107,15 @@ const useHandleRedirectAction = (appId: string) => {
       navigate(action.payload.to);
       closeApp();
     }
+
+    return createResponseStatus(action.payload.actionId, true);
   };
 
   return {
     handle: (action: RedirectAction) => {
       const { actionId } = action.payload;
+      console.debug(`Handling Redirect action with ID ${actionId}`);
+      console.debug(`Action payload`, action.payload);
 
       const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
         appId,
@@ -103,36 +123,43 @@ const useHandleRedirectAction = (appId: string) => {
         action.payload.to,
       );
 
+      console.debug(`Is app deep URL change: ${onlyAppDeepChange}`);
+
       try {
         if (onlyAppDeepChange) {
-          handleAppDeepChange(action);
+          return handleAppDeepChange(action);
         } else if (isLocalPath(action.payload.to)) {
-          handleLocalDashboardPathChange(action);
+          return handleLocalDashboardPathChange(action);
         } else if (isExternalHost(action.payload.to)) {
-          handleExternalHostChange(action);
+          return handleExternalHostChange(action);
         }
       } catch (e) {
-        console.error(
-          "Couldnt handle Redirect action properly, this should not happen",
-        );
+        console.error("Action handler thrown", e);
       }
 
       /**
        * Assume failure if nothing catched
        */
+      console.error(
+        "Couldnt handle Redirect action properly, this should not happen",
+      );
       return createResponseStatus(actionId, false);
     },
   };
 };
 
-const useUpdateRoutingAction = (appId: string) => ({
+const useHandleUpdateRoutingAction = (appId: string) => ({
   handle: (action: UpdateRouting) => {
     const { newRoute, actionId } = action.payload;
+
+    console.debug(`Handling UpdateRouting action with ID: ${actionId}`);
 
     const appCompletePath = new URL(
       appPath(encodeURIComponent(appId)),
       getAppMountUri(),
     ).href;
+
+    console.debug(`App complete path: ${appCompletePath}`);
 
     window.history.pushState(null, "", appCompletePath + newRoute);
 
@@ -142,6 +169,9 @@ const useUpdateRoutingAction = (appId: string) => ({
 
 const useNotifyReadyAction = () => ({
   handle(action: NotifyReady) {
+    console.debug(
+      `Handling NotifyReady action with ID: ${action.payload.actionId}`,
+    );
     console.warn("Not implemented");
     return createResponseStatus(action.payload.actionId, true);
   },
@@ -149,7 +179,7 @@ const useNotifyReadyAction = () => ({
 
 export const AppActionsHandler = {
   useHandleNotificationAction,
-  useUpdateRoutingAction,
+  useHandleUpdateRoutingAction,
   useHandleRedirectAction,
   useNotifyReadyAction,
 };

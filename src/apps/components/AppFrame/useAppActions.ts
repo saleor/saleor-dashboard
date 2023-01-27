@@ -14,7 +14,7 @@ export const useAppActions = (
   const { handle: handleNotification } =
     AppActionsHandler.useHandleNotificationAction();
   const { handle: handleUpdateRouting } =
-    AppActionsHandler.useUpdateRoutingAction(appId);
+    AppActionsHandler.useHandleUpdateRoutingAction(appId);
   const { handle: handleRedirect } =
     AppActionsHandler.useHandleRedirectAction(appId);
 
