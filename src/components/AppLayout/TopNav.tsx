@@ -2,7 +2,7 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { PropsWithChildren } from "react";
 
 interface TopNavProps {
-  title: string;
+  title: string | React.ReactNode;
   href?: string;
 }
 
