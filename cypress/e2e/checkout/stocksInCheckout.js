@@ -120,6 +120,7 @@ describe("Manage products stocks in checkout", () => {
       })
         .then(({ order }) => {
           expect(order, "order should be created").to.be.ok;
+          cy.clearSessionData().loginUserViaRequest();
           getVariants([lastVariantInStock]);
         })
         .then(variantsList => {
