@@ -20,7 +20,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
     borderBottomWidth={1}
     borderBottomStyle="solid"
     borderColor="neutralPlain"
-    // @ts-ignore
     __gridArea="nav"
   >
     <Box>

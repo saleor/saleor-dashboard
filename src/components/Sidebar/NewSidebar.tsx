@@ -3,7 +3,7 @@ import React from "react";
 
 import { Menu } from "./menu";
 import { MountingPoint } from "./MountingPoint";
-import { UserControls } from "./UserControls";
+import { UserInfo } from "./user";
 
 export const NewSidebar = () => (
   <Box
@@ -11,11 +11,10 @@ export const NewSidebar = () => (
     as="aside"
     height="100%"
     display="grid"
-    // @ts-ignore
-    __gridTemplateRows={`auto 1fr auto`}
+    __gridTemplateRows="auto 1fr auto"
   >
     <MountingPoint />
     <Menu />
-    <UserControls />
+    <UserInfo />
   </Box>
 );

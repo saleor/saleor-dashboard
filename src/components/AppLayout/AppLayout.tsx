@@ -61,8 +61,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           borderRightWidth={1}
           backgroundColor="subdued"
           borderStyle="solid"
-          // @ts-ignore
           __position="sticky"
+          // @ts-ignore
           __top={0}
           __borderLeftWidth={0}
           __borderTopWidth={0}

@@ -10,8 +10,8 @@ export const RightSidebar = ({ children }) => (
     borderLeftWidth={1}
     height="100vh"
     __paddingBottom={300}
-    // @ts-ignore
     __position="sticky"
+    // @ts-ignore
     __top={0}
     __overflowY="scroll"
     __overflowX="hidden"
@@ -21,7 +21,6 @@ export const RightSidebar = ({ children }) => (
     __borderRightWidth={0}
     __scrollbarWidth="none"
     padding={6}
-    // @ts-ignore
     __gridArea="right"
   >
     {children}

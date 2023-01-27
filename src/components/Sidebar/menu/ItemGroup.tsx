@@ -1,4 +1,4 @@
-import { Box, List, Text } from "@saleor/macaw-ui/next";
+import { Box, List, Text, vars } from "@saleor/macaw-ui/next";
 import { calc } from "@vanilla-extract/css-utils";
 import React from "react";
 
@@ -9,11 +9,11 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-const iconSizeVar = "var(--space-8)";
-const gapVar = "var(--space-5)";
+const iconSize = vars.space[8];
+const gap = vars.space[5];
 
-const borderOffset = calc(iconSizeVar)
-  .add(gapVar)
+const borderOffset = calc(iconSize)
+  .add(gap)
   .divide(2)
   .toString();
 
