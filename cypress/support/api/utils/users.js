@@ -103,8 +103,14 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
       cy.wait(3000);
       getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
     } else {
-      cy.mhGetMailsBySubject(subject);
-      cy.wrap(mails).then(mails => mails);
+      cy.mhGetMailsBySubject(subject).then(resetPasswordMails => {
+        if (!resetPasswordMails.length) {
+          cy.wait(3000);
+          getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
+        } else {
+          cy.wrap(resetPasswordMails);
+        }
+      });
     }
   });
 }
