@@ -4,6 +4,7 @@ export const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
+        paddingLeft: "0 !important",
         "&&": {
           width: "auto",
         },
