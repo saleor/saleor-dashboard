@@ -49,7 +49,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <Box display="flex">
+      <Box display="grid" __gridTemplateColumns="auto auto 1fr">
         {appState.loading ? (
           <LinearProgress className={classes.appLoader} color="primary" />
         ) : (
