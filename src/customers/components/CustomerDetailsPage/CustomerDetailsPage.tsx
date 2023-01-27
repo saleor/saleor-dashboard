@@ -113,7 +113,6 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               href={customerListUrl()}
               title={getUserName(customer, true)}
             >
-              cardMenu:{" "}
               {extensionMenuItems.length > 0 && (
                 <CardMenu menuItems={extensionMenuItems} />
               )}

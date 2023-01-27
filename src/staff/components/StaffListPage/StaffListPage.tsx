@@ -1,3 +1,4 @@
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
@@ -73,19 +74,21 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             description="button"
           />
         </Button>
-        limitText:{" "}
-        {hasLimits(limits, "staffUsers") &&
-          intl.formatMessage(
-            {
-              id: "9xlPgt",
-              defaultMessage: "{count}/{max} members",
-              description: "used staff users counter",
-            },
-            {
-              count: limits.currentUsage.staffUsers,
-              max: limits.allowedUsage.staffUsers,
-            },
-          )}
+        {hasLimits(limits, "staffUsers") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "9xlPgt",
+                defaultMessage: "{count}/{max} members",
+                description: "used staff users counter",
+              },
+              {
+                count: limits.currentUsage.staffUsers,
+                max: limits.allowedUsage.staffUsers,
+              },
+            )}
+          />
+        )}
       </TopNav>
       {reachedLimit && (
         <LimitReachedAlert
