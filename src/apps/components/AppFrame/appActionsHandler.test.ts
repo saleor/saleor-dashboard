@@ -8,6 +8,7 @@ import { IntlShape } from "react-intl";
 
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
+
 jest.mock(
   "@dashboard/hooks/useNotifier",
   (): UseNotifierResult => () => mockNotify,
@@ -31,11 +32,33 @@ jest.spyOn(ReactIntl, "useIntl").mockImplementation(
   }),
 );
 
-jest.mock("@dashboard/hooks/useNavigator", () => jest.fn());
+const mockNavigate = jest.fn();
+jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 
 describe("AppActionsHandler", function () {
+  const { location } = window;
+
   beforeEach(() => {
-    // jest.clearAllMocks();
+    jest.clearAllMocks();
+  });
+
+  /**
+   * jsdom doesnt allow src code to write to window.location.href,
+   * so totally replace this object so its writeable
+   *
+   * @see https://wildwolf.name/jest-how-to-mock-window-location-href/
+   */
+  beforeEach((): void => {
+    delete window.location;
+    // @ts-ignore
+    window.location = {
+      href: "http://localhost:3000",
+      hostname: "localhost",
+      pathname: "/apps/XYZ/app",
+    };
+  });
+  afterAll((): void => {
+    window.location = location;
   });
 
   describe("useHandleNotificationAction", () => {
@@ -163,11 +186,63 @@ describe("AppActionsHandler", function () {
     });
 
     describe("Open in new the same browser context", () => {
-      it.todo("Opens external URL in new browser context");
+      jest.spyOn(window, "confirm").mockReturnValue(true);
 
-      it.todo("Opens another dashboard url in new browser context");
+      const hookRenderResult = renderHook(() =>
+        AppActionsHandler.useHandleRedirectAction("XYZ"),
+      );
 
-      it.todo("Opens another app route in new browser context");
+      it("Redirects to external URL after confirmation", () => {
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "https://google.com",
+            newContext: false,
+          },
+        });
+
+        expect(window.location.href).toBe("https://google.com");
+      });
+
+      it("Opens another dashboard url", () => {
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "/orders",
+            newContext: false,
+          },
+        });
+
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith("/orders");
+      });
+
+      it("Update route within the same app", () => {
+        const mockHistoryPushState = jest.fn();
+        jest
+          .spyOn(window.history, "pushState")
+          .mockImplementation(mockHistoryPushState);
+
+        window.location.pathname = "/apps/XYZ/app/foo";
+
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "/apps/XYZ/app/config",
+            newContext: false,
+          },
+        });
+
+        expect(mockHistoryPushState).toHaveBeenCalledTimes(1);
+        expect(mockHistoryPushState).toHaveBeenCalledWith(
+          null,
+          "",
+          "http://localhost:3000/apps/XYZ/app/config",
+        );
+      });
     });
   });
 });
