@@ -32,6 +32,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
+import OrderChannelSectionCard from "../OrderChannelSectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";

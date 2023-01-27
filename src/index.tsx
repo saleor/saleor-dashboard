@@ -141,6 +141,14 @@ const Routes: React.FC = () => {
           border: 0;
           background: none;
         }
+
+        #dashboard-app .MuiCardHeader-root,
+        #dashboard-app .MuiCardContent-root,
+        #dashboard-app .MuiListItem-root,
+        #dashboard-app .MuiCardActions-root {
+          padding-left: 0;
+          padding-right: 0;
+        }
         #dashboard-app .MuiPaper-root {
           background: none;
         }
