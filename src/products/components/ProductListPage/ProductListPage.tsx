@@ -4,6 +4,7 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
@@ -225,19 +226,21 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             description="button"
           />
         </ButtonWithSelect>
-        limitText:{" "}
-        {hasLimits(limits, "productVariants") &&
-          intl.formatMessage(
-            {
-              id: "Kw0jHS",
-              defaultMessage: "{count}/{max} SKUs used",
-              description: "created products counter",
-            },
-            {
-              count: limits.currentUsage.productVariants,
-              max: limits.allowedUsage.productVariants,
-            },
-          )}
+        {hasLimits(limits, "productVariants") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "Kw0jHS",
+                defaultMessage: "{count}/{max} SKUs used",
+                description: "created products counter",
+              },
+              {
+                count: limits.currentUsage.productVariants,
+                max: limits.allowedUsage.productVariants,
+              },
+            )}
+          />
+        )}
       </TopNav>
       {limitReached && (
         <LimitReachedAlert
