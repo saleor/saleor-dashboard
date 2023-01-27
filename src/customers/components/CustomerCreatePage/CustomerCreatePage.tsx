@@ -19,6 +19,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
