@@ -22,7 +22,7 @@ import {
   ListItem,
   ListItemCell,
 } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
@@ -32,29 +32,31 @@ import { getObjects } from "./utils";
 interface DryRunProps {
   query: string;
   showDialog: boolean;
-  setShowDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowDialog: Dispatch<SetStateAction<boolean>>;
   asyncEvents: WebhookEventTypeAsyncEnum[];
-  setResult: React.Dispatch<React.SetStateAction<string>>;
+  setResult: Dispatch<SetStateAction<string>>;
 }
 
-const DryRun = (props: DryRunProps) => {
+export const DryRun: React.FC<DryRunProps> = ({
+  setResult,
+  showDialog,
+  setShowDialog,
+  query,
+}: DryRunProps) => {
   const intl = useIntl();
-  const { query, showDialog, setShowDialog } = props;
   const classes = useStyles();
-  const [objectId, setObjectId] = useState(null);
+  const [objectId, setObjectId] = useState<string | null>(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
   const availableObjects = getObjects(query);
   const unavailableObjects = getObjects(query, false);
 
-  const [object, setObject] = useState(null);
+  const [object, setObject] = useState<string | null>(null);
 
   const dryRun = async () => {
     const { data } = await triggerWebhookDryRun({
       variables: { objectId, query },
     });
-    props.setResult(
-      JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2),
-    );
+    setResult(JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2));
     closeDialog();
   };
 
@@ -62,7 +64,7 @@ const DryRun = (props: DryRunProps) => {
     setShowDialog(false);
     setObjectId(null);
     setObject(null);
-    props.setShowDialog(false);
+    setShowDialog(false);
   };
 
   if (!showDialog) {
@@ -155,7 +157,7 @@ const DryRun = (props: DryRunProps) => {
         <Button
           color="primary"
           variant="primary"
-          onClick={() => dryRun()}
+          onClick={dryRun}
           disabled={!availableObjects.length}
         >
           {intl.formatMessage(messages.run)}
