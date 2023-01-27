@@ -1765,7 +1765,7 @@ export const OrderDetailsWithTransactionsFragmentDoc = gql`
   totalAuthorized {
     ...Money
   }
-  totalCaptured {
+  totalCharged {
     ...Money
   }
   totalChargePending {

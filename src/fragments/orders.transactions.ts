@@ -303,7 +303,7 @@ export const fragmentOrderDetailsWithTransactions = gql`
     totalAuthorized {
       ...Money
     }
-    totalCaptured {
+    totalCharged {
       ...Money
     }
     totalChargePending {
