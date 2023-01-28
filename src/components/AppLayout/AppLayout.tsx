@@ -9,8 +9,8 @@ import React from "react";
 
 // import Container from "../Container";
 import Navigator from "../Navigator";
+import { Sidebar } from "../Sidebar";
 // import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import { NewSidebar } from "../Sidebar/NewSidebar";
 // import UserChip from "../UserChip";
 // import useAppChannel from "./AppChannelContext";
 // import AppChannelSelect from "./AppChannelSelect";
@@ -68,7 +68,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           __borderTopWidth={0}
           __borderBottomWidth={0}
         >
-          <NewSidebar />
+          <Sidebar />
         </Box>
         <Box __height="100%" __width="100%">
           {/* <Box

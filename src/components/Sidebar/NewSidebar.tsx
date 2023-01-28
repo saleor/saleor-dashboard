@@ -12,6 +12,8 @@ export const NewSidebar = () => (
     height="100%"
     display="grid"
     __gridTemplateRows="auto 1fr auto"
+    // @ts-ignore
+    __overflow="scroll"
   >
     <MountingPoint />
     <Menu />
