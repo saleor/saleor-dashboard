@@ -157,7 +157,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
 
     const exactLocation = urlJoin(
       getAppMountUri(),
-      `apps/${appId}/app`,
+      `apps/${encodeURIComponent(appId)}/app`,
       action.payload.newRoute,
     );
 
