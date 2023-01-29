@@ -12,6 +12,7 @@ export type ProductVariantListError =
       attributes: string[] | null;
       error: ProductVariantBulkErrorCode;
       variantId: string;
+      field?: string;
       type: "variantData";
     }
   | {
@@ -51,44 +52,49 @@ export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
   varaintsIds: string[],
 ): ProductVariantListError[] {
-  const results = mutationResult.data.productVariantBulkUpdate;
+  const { productVariantBulkUpdate } = mutationResult.data;
+  const generalErrors = productVariantBulkUpdate.errors;
+  const variantsErrors = productVariantBulkUpdate.results.flatMap(
+    res => res.errors,
+  );
 
-  return results.results
-    .flatMap(res => res.errors)
-    .reduce<ProductVariantListError[]>((acc, error, index) => {
-      const variantId = varaintsIds[index];
+  return [...generalErrors, ...variantsErrors].reduce<
+    ProductVariantListError[]
+  >((acc, error, index) => {
+    const variantId = varaintsIds[index];
 
-      if (error.channels?.length) {
-        acc.push({
-          __typename: "DatagridError",
-          type: "channel",
-          error: error.code,
-          variantId,
-          channelIds: error.channels,
-        });
-      }
-
-      if (error.warehouses?.length) {
-        acc.push(
-          ...error.warehouses.map(
-            warehouse =>
-              ({
-                __typename: "DatagridError",
-                variantId,
-                warehouseId: warehouse,
-                type: "stock",
-              } as const),
-          ),
-        );
-      }
-
+    if (error.channels?.length) {
       acc.push({
         __typename: "DatagridError",
-        type: "variantData",
-        variantId,
+        type: "channel",
         error: error.code,
-        attributes: error.attributes,
+        variantId,
+        channelIds: error.channels,
       });
-      return acc;
-    }, []);
+    }
+
+    if (error.warehouses?.length) {
+      acc.push(
+        ...error.warehouses.map(
+          warehouse =>
+            ({
+              __typename: "DatagridError",
+              variantId,
+              warehouseId: warehouse,
+              type: "stock",
+            } as const),
+        ),
+      );
+    }
+
+    acc.push({
+      __typename: "DatagridError",
+      type: "variantData",
+      variantId,
+      error: error.code,
+      attributes: error.attributes,
+      field: error.field,
+    });
+    return acc;
+  }, []);
 }

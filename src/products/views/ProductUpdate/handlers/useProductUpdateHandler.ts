@@ -169,7 +169,7 @@ export function useProductUpdateHandler(
       );
       const updateVariantsResults = await updateVariants({
         variables: {
-          product: product.id,
+          product: "product.id",
           input: updateInputdData,
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },

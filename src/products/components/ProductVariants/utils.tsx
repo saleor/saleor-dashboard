@@ -49,7 +49,7 @@ function errorMatchesColumn(
     if (error.attributes?.length > 0) {
       return error.attributes.includes(getColumnAttribute(columnId));
     }
-    return columnId === "sku";
+    return error.field === columnId;
   }
 }
 
