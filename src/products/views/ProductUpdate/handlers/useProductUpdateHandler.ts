@@ -136,9 +136,24 @@ export function useProductUpdateHandler(
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
 
-    const updateChannelsResult = await updateChannels({
-      variables: getProductChannelsUpdateVariables(product, data),
-    });
+    const updateProductChannelsData = getProductChannelsUpdateVariables(
+      product,
+      data,
+    );
+
+    if (
+      updateProductChannelsData.input.removeChannels.length ||
+      updateProductChannelsData.input.updateChannels.length
+    ) {
+      const updateChannelsResult = await updateChannels({
+        variables: updateProductChannelsData,
+      });
+
+      errors = [
+        ...errors,
+        ...updateChannelsResult.data.productChannelListingUpdate.errors,
+      ];
+    }
 
     if (data.variants.added.length > 0) {
       const createVariantsResults = await createVariants({
@@ -185,7 +200,6 @@ export function useProductUpdateHandler(
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...updateProductResult.data.productUpdate.errors,
-      ...updateChannelsResult.data.productChannelListingUpdate.errors,
     ];
 
     setVariantListErrors(variantErrors);
