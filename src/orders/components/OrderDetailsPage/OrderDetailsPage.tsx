@@ -22,6 +22,7 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -212,7 +213,15 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
           <DetailedContent>
             <TopNav href={orderListUrl()} title={<Title order={order} />}>
               <CardMenu
-                menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
+                menuItems={[
+                  ...selectCardMenuItems,
+                  ...extensionMenuItems,
+                  {
+                    label: intl.formatMessage(messages.openGraphiQL),
+                    onSelect: openPlaygroundURL,
+                    testId: "graphiql-redirect",
+                  },
+                ]}
               />
             </TopNav>
             <Content data-test-id="order-fulfillment">
