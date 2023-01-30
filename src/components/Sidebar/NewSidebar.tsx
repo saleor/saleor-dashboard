@@ -3,7 +3,7 @@ import React from "react";
 
 import { Menu } from "./menu";
 import { MountingPoint } from "./MountingPoint";
-import { UserControls } from "./UserControls";
+import { UserInfo } from "./user";
 
 export const NewSidebar = () => (
   <Box
@@ -16,6 +16,6 @@ export const NewSidebar = () => (
   >
     <MountingPoint />
     <Menu />
-    <UserControls />
+    <UserInfo />
   </Box>
 );

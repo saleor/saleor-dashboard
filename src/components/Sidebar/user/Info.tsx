@@ -1,9 +1,11 @@
 import { useUser } from "@dashboard/auth";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Avatar, Box, MoreOptionsIcon, Text } from "@saleor/macaw-ui/next";
+import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
-export const UserControls = () => {
+import { UserControls } from "./Controls";
+
+export const UserInfo = () => {
   const { user } = useUser();
 
   return (
@@ -28,9 +30,7 @@ export const UserControls = () => {
           {getUserName(user, true)}
         </Text>
       </Box>
-      <Box cursor="pointer" display="flex" justifyContent="center">
-        <MoreOptionsIcon />
-      </Box>
+      <UserControls />
     </Box>
   );
 };
