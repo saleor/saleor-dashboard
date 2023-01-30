@@ -6,7 +6,6 @@ import { useActionBar /* useBacklink, useTheme*/ } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 // import clsx from "clsx";
 import React from "react";
-import useRouter from "use-react-router";
 
 // import Container from "../Container";
 import Navigator from "../Navigator";
@@ -33,11 +32,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   // const appHeaderAnchor = useBacklink();
   // const { logout, user } = useUser();
   const [appState] = useAppState();
-  const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
-  const isMdUp = useMediaQuery((theme: SaleorTheme) =>
-    theme.breakpoints.up("md"),
-  );
 
   // const {
   //   availableChannels,

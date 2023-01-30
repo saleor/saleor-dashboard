@@ -26,6 +26,7 @@ import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
 export interface WebhookFormData {
@@ -107,26 +108,29 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <DetailedContent>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <Content>
+              <WebhookStatus
+                data={data.isActive}
+                disabled={disabled}
+                onChange={change}
+              />
+            </Content>
+            <RightSidebar>
               <WebhookInfo
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
               />
-            </Content>
-            <RightSidebar>
-              <WebhookStatus
-                data={data.isActive}
-                disabled={disabled}
-                onChange={change}
-              />
               <FormSpacer />
               <WebhookEvents
                 data={data}
-                syncEventsChoices={syncEventsChoices}
-                asyncEventsChoices={asyncEventsChoices}
                 onSyncEventChange={handleSyncEventsSelect}
                 onAsyncEventChange={handleAsyncEventsSelect}
+              />
+              <WebhookSubscriptionQuery
+                query={query}
+                setQuery={setQuery}
+                data={data}
               />
             </RightSidebar>
             <Savebar
