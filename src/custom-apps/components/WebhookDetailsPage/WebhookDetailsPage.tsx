@@ -1,6 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -113,8 +112,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 disabled={disabled}
                 onChange={change}
               />
-            </Content>
-            <RightSidebar>
               <WebhookInfo
                 data={data}
                 disabled={disabled}
@@ -132,7 +129,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 setQuery={setQuery}
                 data={data}
               />
-            </RightSidebar>
+            </Content>
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}

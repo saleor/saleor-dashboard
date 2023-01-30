@@ -61,8 +61,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           borderRightWidth={1}
           backgroundColor="subdued"
           borderStyle="solid"
-          // @ts-ignore
           __position="sticky"
+          // @ts-ignore
           __top={0}
           __borderLeftWidth={0}
           __borderTopWidth={0}
@@ -76,8 +76,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           </Box>
           <Box
             ref={appActionAnchor}
-            // @ts-ignore
             __position="fixed"
+            // @ts-ignore
             __bottom={0}
             __left={325}
             __right={0}
