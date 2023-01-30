@@ -256,6 +256,7 @@
       "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
       "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
+      "^@saleor/macaw-ui/next$": "<rootDir>/node_modules/@saleor/macaw-ui/dist/macaw-ui.cjs",
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
