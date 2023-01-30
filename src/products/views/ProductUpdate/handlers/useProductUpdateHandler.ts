@@ -28,7 +28,6 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { getVariantChannelsInputs } from "@dashboard/products/utils/getVariantChannelsInputs";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
@@ -41,10 +40,9 @@ import {
 } from "./errors";
 import {
   getBulkVariantUpdateInputs,
+  getCreateVariantInput,
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
-  getStockInputs,
-  getVariantInput,
 } from "./utils";
 
 export type UseProductUpdateHandlerError =
@@ -147,9 +145,7 @@ export function useProductUpdateHandler(
         variables: {
           id: product.id,
           inputs: data.variants.added.map(index => ({
-            ...getVariantInput(data.variants, index),
-            channelListings: getVariantChannelsInputs(data.variants, index),
-            stocks: getStockInputs(data.variants, index).stocks,
+            ...getCreateVariantInput(data.variants, index),
           })),
         },
       });
@@ -169,7 +165,7 @@ export function useProductUpdateHandler(
       );
       const updateVariantsResults = await updateVariants({
         variables: {
-          product: "product.id",
+          product: product.id,
           input: updateInputdData,
           errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
         },

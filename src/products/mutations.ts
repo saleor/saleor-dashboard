@@ -432,10 +432,6 @@ export const ProductVariantBulkUpdateMutation = gql`
         ...ProductVariantBulkError
       }
       results {
-        productVariant {
-          id
-          name
-        }
         errors {
           ...ProductVariantBulkError
         }

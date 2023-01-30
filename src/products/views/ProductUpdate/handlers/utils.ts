@@ -1,7 +1,6 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
-import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
 import {
   DatagridChange,
   DatagridChangeOpts,
@@ -20,7 +19,7 @@ import {
   getColumnAttribute,
   getColumnChannelAvailability,
   getColumnStock,
-  getCurrentRow,
+  isCurrentRow,
 } from "@dashboard/products/utils/datagrid";
 import { getVariantChannelsInputs } from "@dashboard/products/utils/getVariantChannelsInputs";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
@@ -59,36 +58,6 @@ export function getProductUpdateVariables(
     },
     firstValues: VALUES_PAGINATE_BY,
   };
-}
-
-const hasChannel = (
-  channelId: string,
-  variant?: ProductFragment["variants"][number],
-) => {
-  if (!variant) {
-    return false;
-  }
-
-  return variant.channelListings.some(c => c.channel.id === channelId);
-};
-
-export function inferProductChannelsAfterUpdate(
-  product: ProductFragment,
-  data: ProductUpdateSubmitData,
-) {
-  const productChannelsIds = product.channelListings.map(
-    listing => listing.channel.id,
-  );
-  const updatedChannelsIds =
-    data.channels.updateChannels?.map(listing => listing.channelId) || [];
-  const removedChannelsIds = data.channels.removeChannels || [];
-
-  return uniq([
-    ...productChannelsIds.filter(
-      channelId => !removedChannelsIds.includes(channelId),
-    ),
-    ...updatedChannelsIds,
-  ]);
 }
 
 export function getProductChannelsUpdateVariables(
@@ -163,11 +132,13 @@ export function getProductChannelsUpdateVariables(
   };
 }
 
-export function getVariantInput(data: DatagridChangeOpts, index: number) {
+export function getCreateVariantInput(data: DatagridChangeOpts, index: number) {
   return {
     attributes: getAttributeData(data.updates, index, data.removed),
     sku: getSkuData(data.updates, index, data.removed),
     name: getNameData(data.updates, index, data.removed),
+    channelListings: getVariantChannelsInputs(data, index),
+    stocks: getStockData(data.updates, index, data.removed),
   };
 }
 
@@ -179,7 +150,11 @@ export function getBulkVariantUpdateInputs(
     .map(
       (variant, variantIndex): ProductVariantBulkUpdateInput => ({
         id: variant.id,
-        ...getBulkUpdateVariantInput(data, variantIndex),
+        attributes: getAttributeData(data.updates, variantIndex, data.removed),
+        sku: getSkuData(data.updates, variantIndex, data.removed),
+        name: getNameData(data.updates, variantIndex, data.removed),
+        stocks: getStockData(data.updates, variantIndex, data.removed),
+        channelListings: getVariantChannelsInputs(data, variantIndex),
       }),
     )
     .filter(
@@ -192,44 +167,6 @@ export function getBulkVariantUpdateInputs(
     );
 }
 
-function getBulkUpdateVariantInput(
-  data: DatagridChangeOpts,
-  index: number,
-): Omit<ProductVariantBulkUpdateInput, "id"> {
-  return {
-    attributes: getAttributeData(data.updates, index, data.removed),
-    sku: getSkuData(data.updates, index, data.removed),
-    name: getNameData(data.updates, index, data.removed),
-    stocks: getStockData(data.updates, index, data.removed),
-    channelListings: getVariantChannelsInputs(data, index),
-  };
-}
-
-export function getStockInputs(data: DatagridChangeOpts, index: number) {
-  const stockChanges = data.updates.filter(change =>
-    getColumnStock(change.column),
-  );
-
-  const variantChanges = stockChanges
-    .filter(
-      change =>
-        change.row === index + data.removed.filter(r => r <= index).length,
-    )
-    .map(change => ({
-      warehouse: getColumnStock(change.column),
-      quantity: change.data.value,
-    }));
-
-  return {
-    stocks: variantChanges.filter(
-      change => change.quantity !== numberCellEmptyValue,
-    ),
-    removeStocks: variantChanges
-      .filter(change => change.quantity === numberCellEmptyValue)
-      .map(({ warehouse }) => warehouse),
-  };
-}
-
 function getAttributeData(
   data: DatagridChange[],
   currentIndex: number,
@@ -239,7 +176,7 @@ function getAttributeData(
     .filter(
       change =>
         getColumnAttribute(change.column) &&
-        getCurrentRow(change.row, currentIndex, removedIds),
+        isCurrentRow(change.row, currentIndex, removedIds),
     )
     .map(change => {
       const attributeId = getColumnAttribute(change.column);
@@ -259,7 +196,7 @@ function getSkuData(
   return data.find(
     change =>
       change.column === "sku" &&
-      getCurrentRow(change.row, currentIndex, removedIds),
+      isCurrentRow(change.row, currentIndex, removedIds),
   )?.data;
 }
 
@@ -271,7 +208,7 @@ function getNameData(
   return data.find(
     change =>
       change.column === "name" &&
-      getCurrentRow(change.row, currentIndex, removedIds),
+      isCurrentRow(change.row, currentIndex, removedIds),
   )?.data;
 }
 
@@ -284,10 +221,40 @@ function getStockData(
     .filter(
       change =>
         getColumnStock(change.column) &&
-        getCurrentRow(change.row, currentIndex, removedIds),
+        isCurrentRow(change.row, currentIndex, removedIds),
     )
     .map(change => ({
       warehouse: getColumnStock(change.column),
       quantity: change.data.value,
     }));
+}
+
+export function inferProductChannelsAfterUpdate(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+) {
+  const productChannelsIds = product.channelListings.map(
+    listing => listing.channel.id,
+  );
+  const updatedChannelsIds =
+    data.channels.updateChannels?.map(listing => listing.channelId) || [];
+  const removedChannelsIds = data.channels.removeChannels || [];
+
+  return uniq([
+    ...productChannelsIds.filter(
+      channelId => !removedChannelsIds.includes(channelId),
+    ),
+    ...updatedChannelsIds,
+  ]);
+}
+
+function hasChannel(
+  channelId: string,
+  variant?: ProductFragment["variants"][number],
+) {
+  if (!variant) {
+    return false;
+  }
+
+  return variant.channelListings.some(c => c.channel.id === channelId);
 }

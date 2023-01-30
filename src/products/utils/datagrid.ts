@@ -17,10 +17,11 @@ export const getColumnChannelAvailability = makeGetColumnData(
 );
 export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
-export const getCurrentRow = (
-  rowIndex: number,
-  currentIndex: number,
-  removedIndexArray: number[],
+export const isCurrentRow = (
+  datagridChangeIndex: number,
+  variantIndex: number,
+  datagridRemovedRowsIds: number[],
 ) =>
-  rowIndex ===
-  currentIndex + removedIndexArray.filter(r => r <= currentIndex).length;
+  datagridChangeIndex ===
+  variantIndex +
+    datagridRemovedRowsIds.filter(index => index <= variantIndex).length;

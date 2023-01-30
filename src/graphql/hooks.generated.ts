@@ -12312,10 +12312,6 @@ export const ProductVariantBulkUpdateDocument = gql`
       ...ProductVariantBulkError
     }
     results {
-      productVariant {
-        id
-        name
-      }
       errors {
         ...ProductVariantBulkError
       }
