@@ -192,6 +192,7 @@ describe("Updating products without sku", () => {
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .get(VARIANTS_SELECTORS.skuTextField)
+            .find("input")
             .clear()
             .addAliasToGraphRequest("VariantUpdate")
             .get(VARIANTS_SELECTORS.variantNameInput)
