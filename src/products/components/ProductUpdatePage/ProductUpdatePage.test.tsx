@@ -122,7 +122,6 @@ describe("Product details page", () => {
     const moreButton = screen.queryAllByTestId("show-more-button")[0];
     await user.click(moreButton);
     const graphiQLLink = screen.queryAllByTestId("graphiql-redirect")[0];
-
     // Assert
     expect(graphiQLLink).toBeInTheDocument();
   });

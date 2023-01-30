@@ -327,19 +327,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           <>
             <DetailedContent>
               <TopNav href={productListUrl()} title={header}>
-                {extensionMenuItems.length > 0 && (
-                  <CardMenu
-                    menuItems={[
-                      ...extensionMenuItems,
-                      {
-                        label: intl.formatMessage(messages.openGraphiQL),
-                        onSelect: openPlaygroundURL,
-                        testId: "graphiql-redirect",
-                      },
-                    ]}
-                    data-test-id="menu"
-                  />
-                )}
+                <CardMenu
+                  menuItems={[
+                    ...extensionMenuItems,
+                    {
+                      label: intl.formatMessage(messages.openGraphiQL),
+                      onSelect: openPlaygroundURL,
+                      testId: "graphiql-redirect",
+                    },
+                  ]}
+                  data-test-id="menu"
+                />
               </TopNav>
               <Content>
                 <ProductDetailsForm
