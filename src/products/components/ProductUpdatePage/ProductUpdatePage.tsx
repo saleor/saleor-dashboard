@@ -60,6 +60,7 @@ import ProductOrganization from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
+import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 import {
   ProductUpdateData,
@@ -328,7 +329,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <TopNav href={productListUrl()} title={header}>
                 {extensionMenuItems.length > 0 && (
                   <CardMenu
-                    menuItems={extensionMenuItems}
+                    menuItems={[
+                      ...extensionMenuItems,
+                      {
+                        label: intl.formatMessage(messages.openGraphiQL),
+                        onSelect: openPlaygroundURL,
+                        testId: "graphiql-redirect",
+                      },
+                    ]}
                     data-test-id="menu"
                   />
                 )}
