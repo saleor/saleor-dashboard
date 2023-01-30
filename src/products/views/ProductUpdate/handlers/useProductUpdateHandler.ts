@@ -43,6 +43,7 @@ import {
   getCreateVariantInput,
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
+  hasProductChannelsUpdate,
 } from "./utils";
 
 export type UseProductUpdateHandlerError =
@@ -141,10 +142,7 @@ export function useProductUpdateHandler(
       data,
     );
 
-    if (
-      updateProductChannelsData.input.removeChannels.length ||
-      updateProductChannelsData.input.updateChannels.length
-    ) {
+    if (hasProductChannelsUpdate(updateProductChannelsData.input)) {
       const updateChannelsResult = await updateChannels({
         variables: updateProductChannelsData,
       });

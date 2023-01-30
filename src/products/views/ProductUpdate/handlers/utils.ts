@@ -9,6 +9,7 @@ import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
+  ProductChannelListingUpdateInput,
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
@@ -165,6 +166,12 @@ export function getBulkVariantUpdateInputs(
         variant.stocks.length > 0 ||
         variant.channelListings.length > 0,
     );
+}
+
+export function hasProductChannelsUpdate(
+  data: ProductChannelListingUpdateInput,
+) {
+  return data?.removeChannels?.length || data?.updateChannels?.length;
 }
 
 function getAttributeData(
