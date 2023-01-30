@@ -53,6 +53,10 @@ describe("As an unlogged customer I want to order physical and digital products"
     });
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+  });
+
   it(
     "should purchase digital product as unlogged customer. TC: SALEOR_0402",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },

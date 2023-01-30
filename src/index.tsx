@@ -1,11 +1,8 @@
-import "@saleor/macaw-ui/next/style";
-
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
-import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui/next";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
 import { render } from "react-dom";
@@ -87,34 +84,32 @@ const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
-        <LegacyThemeProvider overrides={themeOverrides}>
-          <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <ServiceWorker />
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <FlagsServiceProvider>
-                        <AuthProvider>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExternalAppProvider>
-                                <ExitFormDialogProvider>
-                                  <Routes />
-                                </ExitFormDialogProvider>
-                              </ExternalAppProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </AuthProvider>
-                      </FlagsServiceProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
+        <ThemeProvider overrides={themeOverrides}>
+          <DateProvider>
+            <LocaleProvider>
+              <MessageManagerProvider>
+                <ServiceWorker />
+                <BackgroundTasksProvider>
+                  <AppStateProvider>
+                    <FlagsServiceProvider>
+                      <AuthProvider>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExternalAppProvider>
+                              <ExitFormDialogProvider>
+                                <Routes />
+                              </ExitFormDialogProvider>
+                            </ExternalAppProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </AuthProvider>
+                    </FlagsServiceProvider>
+                  </AppStateProvider>
+                </BackgroundTasksProvider>
+              </MessageManagerProvider>
+            </LocaleProvider>
+          </DateProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
   </SaleorProvider>
