@@ -26,6 +26,7 @@ import {
   getColumnAttribute,
   getColumnChannel,
   getColumnChannelAvailability,
+  getColumnName,
   getColumnStock,
 } from "../../utils/datagrid";
 import messages from "./messages";
@@ -49,7 +50,8 @@ function errorMatchesColumn(
     if (error.attributes?.length > 0) {
       return error.attributes.includes(getColumnAttribute(columnId));
     }
-    return error.field === columnId;
+
+    return error?.field?.includes(getColumnName(columnId)) ?? false;
   }
 }
 
