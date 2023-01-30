@@ -26,12 +26,10 @@ export const parseCurrency = (
   // Thousand seperators are not allowedd
   const number = value.replace(/,/, ".");
   const fractionDigits = getFractionDigits(locale, currency);
-  const trimmedNumber = number.slice(
-    0,
-    number.lastIndexOf(".") + 1 + fractionDigits,
-  );
+  const lastDecimalPoint = number.lastIndexOf(".");
+  const trimmedNumber = number.slice(0, lastDecimalPoint + 1 + fractionDigits);
 
-  return parseFloat(trimmedNumber);
+  return parseFloat(lastDecimalPoint !== -1 ? trimmedNumber : number);
 };
 
 export const prepareVariantChangeData = (
