@@ -66,6 +66,10 @@ const useStyles = makeStyles(
       width: 240,
     },
     popover: {
+      backgroundColor: "#fff",
+      overflowY: "scroll",
+      boxShadow: `0px 6px 11px 9px ${theme.palette.divider}`,
+      height: 450,
       width: 376,
       zIndex: 3,
     },
@@ -182,14 +186,8 @@ const Filter: React.FC<FilterProps> = props => {
             },
           }}
         >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "right top" : "right bottom",
-              }}
-            >
+          {() => (
+            <Grow>
               <FilterContent
                 errorMessages={errorMessages}
                 errors={filterErrors}

@@ -142,6 +142,15 @@ const Routes: React.FC = () => {
         body {
           background: none;
         }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+
+        #dashboard-app .MuiIconButton-edgeEnd,
+        #dashboard-app .MuiCardHeader-action {
+          margin-right: 0;
+        }
+
         #dashboard-app .MuiCard-root {
           border: 0;
           background: none;

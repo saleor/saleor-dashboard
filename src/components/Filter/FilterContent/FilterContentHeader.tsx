@@ -11,7 +11,12 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
+      position: "sticky",
+      top: 0,
       padding: theme.spacing(1, 3),
+      backgroundColor: "#fff",
+      borderBottom: "1px solid #EAEAEA",
+      zIndex: 1,
     },
     clear: {
       marginRight: theme.spacing(1),
