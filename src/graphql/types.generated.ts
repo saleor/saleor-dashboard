@@ -329,6 +329,12 @@ export type AttributeCreateInput = {
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * External ID of this attribute.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 /** An enumeration. */
@@ -459,6 +465,12 @@ export type AttributeUpdateInput = {
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * External ID of this product.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export type AttributeValueCreateInput = {
@@ -482,6 +494,12 @@ export type AttributeValueCreateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
   contentType?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of this attribute value.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name: Scalars['String'];
 };
@@ -494,8 +512,26 @@ export type AttributeValueFilterInput = {
 export type AttributeValueInput = {
   /** ID of the selected attribute. */
   id?: InputMaybe<Scalars['ID']>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0. */
   values?: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * Attribute value ID.
+   *
+   * Added in Saleor 3.9.
+   */
+  dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
+  /**
+   * List of attribute value IDs.
+   *
+   * Added in Saleor 3.9.
+   */
+  multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
+  /**
+   * Numeric value of an attribute.
+   *
+   * Added in Saleor 3.9.
+   */
+  numeric?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   file?: InputMaybe<Scalars['String']>;
   /** File content type. */
@@ -512,6 +548,18 @@ export type AttributeValueInput = {
   date?: InputMaybe<Scalars['Date']>;
   /** Represents the date/time value of the attribute value. */
   dateTime?: InputMaybe<Scalars['DateTime']>;
+};
+
+/**
+ * Represents attribute value. If no ID provided, value will be resolved.
+ *
+ * Added in Saleor 3.9.
+ */
+export type AttributeValueSelectableTypeInput = {
+  /** ID of an attribute value. */
+  id?: InputMaybe<Scalars['ID']>;
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
+  value?: InputMaybe<Scalars['String']>;
 };
 
 export type AttributeValueTranslationInput = {
@@ -547,6 +595,12 @@ export type AttributeValueUpdateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** File content type. */
   contentType?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of this attribute value.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
 };
@@ -1388,6 +1442,12 @@ export type CustomerInput = {
   note?: InputMaybe<Scalars['String']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
+  /**
+   * External ID of the customer.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export type DateRangeInput = {
@@ -1511,6 +1571,12 @@ export type DraftOrderCreateInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of this order.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Variant line input consisting of variant ID and quantity of products. */
   lines?: InputMaybe<Array<OrderLineCreateInput>>;
 };
@@ -1536,6 +1602,12 @@ export type DraftOrderInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of this order.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export enum EventDeliveryAttemptSortField {
@@ -2785,6 +2857,18 @@ export enum MeasurementUnitsEnum {
   TONNE = 'TONNE'
 }
 
+export enum MediaChoicesSortField {
+  /** Sort media by ID. */
+  ID = 'ID'
+}
+
+export type MediaSortingInput = {
+  /** Specifies the direction in which to sort products. */
+  direction: OrderDirection;
+  /** Sort media by the selected field. */
+  field: MediaChoicesSortField;
+};
+
 export type MenuCreateInput = {
   /** Name of the menu. */
   name: Scalars['String'];
@@ -3351,6 +3435,12 @@ export type OrderUpdateInput = {
   userEmail?: InputMaybe<Scalars['String']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
+  /**
+   * External ID of this order.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export type OrderUpdateShippingInput = {
@@ -3883,6 +3973,12 @@ export type ProductCreateInput = {
    * Added in Saleor 3.8.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * External ID of this product.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID'];
 };
@@ -4028,6 +4124,12 @@ export type ProductInput = {
    * Added in Saleor 3.8.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * External ID of this product.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export type ProductMediaCreateInput = {
@@ -4244,6 +4346,12 @@ export type ProductVariantBulkCreateInput = {
    * Added in Saleor 3.8.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * External ID of this product variant.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
   /** List of prices assigned to channels. */
@@ -4306,6 +4414,12 @@ export type ProductVariantCreateInput = {
    * Added in Saleor 3.8.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * External ID of this product variant.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
   /** Stocks of a product available for sale. */
@@ -4359,6 +4473,12 @@ export type ProductVariantInput = {
    * Added in Saleor 3.8.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * External ID of this product variant.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
 };
 
 export enum ProductVariantSortField {
@@ -5142,6 +5262,12 @@ export type UserCreateInput = {
   note?: InputMaybe<Scalars['String']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
+  /**
+   * External ID of the customer.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
@@ -5320,6 +5446,12 @@ export type WarehouseCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** The email address of the warehouse. */
   email?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of the warehouse.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Warehouse name. */
   name: Scalars['String'];
   /** Address of the warehouse. */
@@ -5368,6 +5500,12 @@ export type WarehouseUpdateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** The email address of the warehouse. */
   email?: InputMaybe<Scalars['String']>;
+  /**
+   * External ID of the warehouse.
+   *
+   * Added in Saleor 3.10.
+   */
+  externalReference?: InputMaybe<Scalars['String']>;
   /** Warehouse name. */
   name?: InputMaybe<Scalars['String']>;
   /** Address of the warehouse. */
@@ -5426,12 +5564,21 @@ export type WebhookCreateInput = {
 };
 
 /** An enumeration. */
+export enum WebhookDryRunErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  INVALID_ID = 'INVALID_ID',
+  MISSING_PERMISSION = 'MISSING_PERMISSION'
+}
+
+/** An enumeration. */
 export enum WebhookErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
-  UNIQUE = 'UNIQUE'
+  UNIQUE = 'UNIQUE',
+  DELETE_FAILED = 'DELETE_FAILED'
 }
 
 /** Enum determining type of webhook. */
@@ -6200,6 +6347,15 @@ export enum WebhookSampleEventTypeEnum {
   OBSERVABILITY = 'OBSERVABILITY'
 }
 
+/** An enumeration. */
+export enum WebhookTriggerErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  INVALID_ID = 'INVALID_ID',
+  MISSING_PERMISSION = 'MISSING_PERMISSION',
+  MISSING_QUERY = 'MISSING_QUERY'
+}
+
 export type WebhookUpdateInput = {
   /** The new name of the webhook. */
   name?: InputMaybe<Scalars['String']>;
@@ -6676,6 +6832,29 @@ export type AddressValidationRulesQueryVariables = Exact<{
 
 
 export type AddressValidationRulesQuery = { __typename: 'Query', addressValidationRules: { __typename: 'AddressValidationData', allowedFields: Array<string>, countryAreaChoices: Array<{ __typename: 'ChoiceValue', raw: string | null, verbose: string | null }> } | null };
+
+export type TriggerWebhookDryRunMutationVariables = Exact<{
+  objectId: Scalars['ID'];
+  query: Scalars['String'];
+}>;
+
+
+export type TriggerWebhookDryRunMutation = { __typename: 'Mutation', webhookDryRun: { __typename: 'WebhookDryRun', payload: any | null, errors: Array<{ __typename: 'WebhookDryRunError', field: string | null, message: string | null }> } | null };
+
+export type CheckoutListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CheckoutListQuery = { __typename: 'Query', checkouts: { __typename: 'CheckoutCountableConnection', edges: Array<{ __typename: 'CheckoutCountableEdge', cursor: string, node: { __typename: 'Checkout', id: string, created: any } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
+
+export type ChannelListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelListQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null };
 
 export type CheckIfOrderExistsQueryVariables = Exact<{
   id: Scalars['ID'];

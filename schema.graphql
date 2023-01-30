@@ -1221,6 +1221,13 @@ type Attribute implements Node & ObjectWithMetadata {
     """Return the last n elements from the list."""
     last: Int
   ): ProductTypeCountableConnection!
+
+  """
+  External ID of this attribute. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1319,6 +1326,13 @@ input AttributeCreateInput {
 
   """Whether the attribute can be displayed in the admin product list."""
   availableInGrid: Boolean
+
+  """
+  External ID of this attribute.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1609,6 +1623,13 @@ input AttributeUpdateInput {
 
   """Whether the attribute can be displayed in the admin product list."""
   availableInGrid: Boolean
+
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1685,6 +1706,13 @@ type AttributeValue implements Node {
 
   """Represents the date/time value of the attribute value."""
   dateTime: DateTime
+
+  """
+  External ID of this attribute value. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -1756,6 +1784,13 @@ input AttributeValueCreateInput {
 
   """File content type."""
   contentType: String
+
+  """
+  External ID of this attribute value.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Name of a value displayed in the interface."""
   name: String!
@@ -1832,9 +1867,30 @@ input AttributeValueInput {
   id: ID
 
   """
-  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0.
   """
   values: [String!]
+
+  """
+  Attribute value ID.
+  
+  Added in Saleor 3.9.
+  """
+  dropdown: AttributeValueSelectableTypeInput
+
+  """
+  List of attribute value IDs.
+  
+  Added in Saleor 3.9.
+  """
+  multiselect: [AttributeValueSelectableTypeInput!]
+
+  """
+  Numeric value of an attribute.
+  
+  Added in Saleor 3.9.
+  """
+  numeric: String
 
   """URL of the file attribute. Every time, a new value is created."""
   file: String
@@ -1861,6 +1917,21 @@ input AttributeValueInput {
   dateTime: DateTime
 }
 
+"""
+Represents attribute value. If no ID provided, value will be resolved. 
+
+Added in Saleor 3.9.
+"""
+input AttributeValueSelectableTypeInput {
+  """ID of an attribute value."""
+  id: ID
+
+  """
+  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+  """
+  value: String
+}
+
 type AttributeValueTranslatableContent implements Node {
   id: ID!
   name: String!
@@ -1880,9 +1951,6 @@ type AttributeValueTranslatableContent implements Node {
     """A language code to return the translation for attribute value."""
     languageCode: LanguageCodeEnum!
   ): AttributeValueTranslation
-
-  """Represents an attribute."""
-  attribute: Attribute!
 
   """Represents a value of an attribute."""
   attributeValue: AttributeValue @deprecated(reason: "This field will be removed in Saleor 4.0. Get model fields from the root level queries.")
@@ -1978,6 +2046,13 @@ input AttributeValueUpdateInput {
 
   """File content type."""
   contentType: String
+
+  """
+  External ID of this attribute value.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Name of a value displayed in the interface."""
   name: String
@@ -2216,6 +2291,20 @@ type Category implements Node & ObjectWithMetadata {
   List of products in the category. Requires the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   products(
+    """
+    Filtering options for products.
+    
+    Added in Saleor 3.10.
+    """
+    filter: ProductFilterInput
+
+    """
+    Sort products.
+    
+    Added in Saleor 3.10.
+    """
+    sortBy: ProductOrder
+
     """Slug of a channel for which the data should be returned."""
     channel: String
 
@@ -2689,30 +2778,6 @@ input ChannelCreateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   defaultCountry: CountryCode!
-}
-
-"""
-Event sent when new channel is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type ChannelCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The channel the event relates to."""
-  channel: Channel
 }
 
 """
@@ -4003,33 +4068,6 @@ type CollectionCreated implements Event {
 }
 
 """
-Event sent when new collection is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type CollectionCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The collection the event relates to."""
-  collection(
-    """Slug of a channel for which the data should be returned."""
-    channel: String
-  ): Collection
-}
-
-"""
 Deletes a collection. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -4889,6 +4927,13 @@ input CustomerInput {
 
   """User language code."""
   languageCode: LanguageCodeEnum
+
+  """
+  External ID of the customer.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -5358,32 +5403,15 @@ input DraftOrderCreateInput {
   """
   redirectUrl: String
 
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Variant line input consisting of variant ID and quantity of products."""
   lines: [OrderLineCreateInput!]
-}
-
-"""
-Event sent when new draft order is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type DraftOrderCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The order the event relates to."""
-  order: Order
 }
 
 """
@@ -5477,6 +5505,13 @@ input DraftOrderInput {
   URL of a view where users should be redirected to see the order details. URL in RFC 1808 format.
   """
   redirectUrl: String
+
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -6726,30 +6761,6 @@ input GiftCardCreateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   note: String
-}
-
-"""
-Event sent when new gift card is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type GiftCardCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The gift card the event relates to."""
-  giftCard: GiftCard
 }
 
 """
@@ -8433,6 +8444,19 @@ enum MeasurementUnitsEnum {
   TONNE
 }
 
+enum MediaChoicesSortField {
+  """Sort media by ID."""
+  ID
+}
+
+input MediaSortingInput {
+  """Specifies the direction in which to sort products."""
+  direction: OrderDirection!
+
+  """Sort media by the selected field."""
+  field: MediaChoicesSortField!
+}
+
 """
 Represents a single menu - an object that is used to help navigate through the store.
 """
@@ -9146,7 +9170,7 @@ type Mutation {
   ): WebhookCreate
 
   """
-  Deletes a webhook subscription. 
+  Delete a webhook. Before the deletion, the webhook is deactivated to pause any deliveries that are already scheduled. The deletion might fail if delivery is in progress. In such a case, the webhook is not deleted but remains deactivated. 
   
   Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
@@ -9177,6 +9201,32 @@ type Mutation {
     """ID of the event delivery to retry."""
     id: ID!
   ): EventDeliveryRetry
+
+  """
+  Performs a dry run of a webhook event. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  webhookDryRun(
+    """The ID of an object to serialize."""
+    objectId: ID!
+
+    """The subscription query that defines the webhook event and its payload."""
+    query: String!
+  ): WebhookDryRun
+
+  """
+  Trigger a webhook event. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  webhookTrigger(
+    """The ID of an object to serialize."""
+    objectId: ID!
+
+    """The ID of the webhook."""
+    webhookId: ID!
+  ): WebhookTrigger
 
   """
   Creates new warehouse. 
@@ -9819,8 +9869,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productDelete(
+    """
+    External ID of a product to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product to delete."""
-    id: ID!
+    id: ID
   ): ProductDelete
 
   """
@@ -9839,8 +9896,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productUpdate(
+    """
+    External ID of a product to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a product."""
     input: ProductInput!
@@ -10079,6 +10143,13 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantDelete(
+    """
+    External ID of a product variant to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a product variant to delete."""
     id: ID
 
@@ -10171,7 +10242,14 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantUpdate(
-    """ID of a product variant to update."""
+    """
+    External ID of a product variant to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to update."""
     id: ID
 
     """Fields required to update a product variant."""
@@ -10596,8 +10674,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderDelete(
-    """ID of a draft order to delete."""
-    id: ID!
+    """
+    External ID of a product to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
+    """ID of a product to delete."""
+    id: ID
   ): DraftOrderDelete
 
   """
@@ -10626,8 +10711,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderUpdate(
+    """
+    External ID of a draft order to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a draft order to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an order."""
     input: DraftOrderInput!
@@ -10889,8 +10981,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   orderUpdate(
+    """
+    External ID of an order to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an order to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an order."""
     input: OrderUpdateInput!
@@ -12177,8 +12276,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeDelete(
+    """
+    External ID of an attribute to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an attribute to delete."""
-    id: ID!
+    id: ID
   ): AttributeDelete
 
   """
@@ -12187,8 +12293,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeUpdate(
+    """
+    External ID of an attribute to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an attribute to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an attribute."""
     input: AttributeUpdateInput!
@@ -12247,8 +12360,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeValueDelete(
+    """
+    External ID of a value to delete. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a value to delete."""
-    id: ID!
+    id: ID
   ): AttributeValueDelete
 
   """
@@ -12257,8 +12377,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   attributeValueUpdate(
+    """
+    External ID of an AttributeValue to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of an AttributeValue to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update an AttributeValue."""
     input: AttributeValueUpdateInput!
@@ -12745,8 +12872,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_USERS.
   """
   customerUpdate(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a customer to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a customer."""
     input: CustomerInput!
@@ -12758,8 +12892,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_USERS.
   """
   customerDelete(
+    """
+    External ID of a customer to update. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """ID of a customer to delete."""
-    id: ID!
+    id: ID
   ): CustomerDelete
 
   """
@@ -13237,6 +13378,13 @@ type Order implements Node & ObjectWithMetadata {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   displayGrossPrices: Boolean!
+
+  """
+  External ID of this order. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 enum OrderAction {
@@ -14517,6 +14665,13 @@ input OrderUpdateInput {
 
   """Shipping address of the customer."""
   shippingAddress: AddressInput
+
+  """
+  External ID of this order.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -14536,30 +14691,6 @@ input OrderUpdateShippingInput {
   ID of the selected shipping method, pass null to remove currently assigned shipping method.
   """
   shippingMethod: ID
-}
-
-"""
-Event sent when order is updated.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type OrderUpdated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The order the event relates to."""
-  order: Order
 }
 
 """
@@ -14804,30 +14935,6 @@ input PageCreateInput {
 
   """ID of the page type that page belongs to."""
   pageType: ID!
-}
-
-"""
-Event sent when new page is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type PageCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The page the event relates to."""
-  page: Page
 }
 
 """
@@ -15973,11 +16080,6 @@ enum PermissionEnum {
   HANDLE_TAXES
   MANAGE_TAXES
   MANAGE_CHANNELS
-  MANAGE_CHECKOUTS
-  HANDLE_CHECKOUTS
-  HANDLE_TAXES
-  MANAGE_TAXES
-  MANAGE_CHANNELS
   MANAGE_DISCOUNTS
   MANAGE_GIFT_CARD
   MANAGE_MENUS
@@ -16476,6 +16578,16 @@ type Product implements Node & ObjectWithMetadata {
   """A type of tax. Assigned by enabled tax gateway"""
   taxType: TaxType @deprecated(reason: "This field will be removed in Saleor 4.0. Use `taxClass` field instead.")
 
+  """
+  Get a single attribute attached to product by attribute slug.
+  
+  Added in Saleor 3.9.
+  """
+  attribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): SelectedAttribute
+
   """List of attributes assigned to this product."""
   attributes: [SelectedAttribute!]!
 
@@ -16499,12 +16611,32 @@ type Product implements Node & ObjectWithMetadata {
   ): ProductImage @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `mediaById` field instead.")
 
   """
+  Get a single variant by SKU or ID. 
+  
+  Added in Saleor 3.9.
+  """
+  variant(
+    """ID of the variant."""
+    id: ID
+
+    """SKU of the variant."""
+    sku: String
+  ): ProductVariant
+
+  """
   List of variants for the product. Requires the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   variants: [ProductVariant!]
 
   """List of media for the product."""
-  media: [ProductMedia!]
+  media(
+    """
+    Sort media. 
+    
+    Added in Saleor 3.9.
+    """
+    sortBy: MediaSortingInput
+  ): [ProductMedia!]
 
   """List of images for the product."""
   images: [ProductImage!] @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `media` field instead.")
@@ -16535,6 +16667,13 @@ type Product implements Node & ObjectWithMetadata {
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
   """
   taxClass: TaxClass
+
+  """
+  External ID of this product. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -16861,38 +17000,15 @@ input ProductCreateInput {
   """
   privateMetadata: [MetadataInput!]
 
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """ID of the type that product belongs to."""
   productType: ID!
-}
-
-"""
-Event sent when new product is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type ProductCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The product the event relates to."""
-  product(
-    """Slug of a channel for which the data should be returned."""
-    channel: String
-  ): Product
-
-  """The category of the product."""
-  category: Category
 }
 
 """
@@ -17179,6 +17295,13 @@ input ProductInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """Represents a product media."""
@@ -17621,13 +17744,6 @@ type ProductType implements Node & ObjectWithMetadata {
   """
   taxClass: TaxClass
 
-  """
-  Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.
-  
-  Requires one of the following permissions: MANAGE_TAXES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  taxClass: TaxClass
-
   """Variant attributes of that product type."""
   variantAttributes(
     """Define scope of returned attributes."""
@@ -18040,6 +18156,13 @@ type ProductVariant implements Node & ObjectWithMetadata {
   preorder: PreorderData
   created: DateTime!
   updatedAt: DateTime!
+
+  """
+  External ID of this product. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -18136,6 +18259,13 @@ input ProductVariantBulkCreateInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Stocks of a product available for sale."""
   stocks: [StockInput!]
@@ -18292,38 +18422,18 @@ input ProductVariantCreateInput {
   """
   privateMetadata: [MetadataInput!]
 
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Product ID of which type is the variant."""
   product: ID!
 
   """Stocks of a product available for sale."""
   stocks: [StockInput!]
-}
-
-"""
-Event sent when new product variant is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type ProductVariantCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The product variant the event relates to."""
-  productVariant(
-    """Slug of a channel for which the data should be returned."""
-    channel: String
-  ): ProductVariant
 }
 
 """
@@ -18448,6 +18558,13 @@ input ProductVariantInput {
   Added in Saleor 3.8.
   """
   privateMetadata: [MetadataInput!]
+
+  """
+  External ID of this product variant.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """
@@ -18731,8 +18848,15 @@ type Query {
   Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS, MANAGE_SHIPPING.
   """
   warehouse(
-    """ID of an warehouse"""
-    id: ID!
+    """ID of a warehouse."""
+    id: ID
+
+    """
+    External ID of a warehouse. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Warehouse
 
   """
@@ -19090,6 +19214,13 @@ type Query {
     """Slug of the product."""
     slug: String
 
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
+
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Product
@@ -19156,6 +19287,13 @@ type Query {
 
     """Sku of the product variant."""
     sku: String
+
+    """
+    External ID of the product. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -19337,10 +19475,17 @@ type Query {
     last: Int
   ): OrderEventCountableConnection
 
-  """Look up an order by ID."""
+  """Look up an order by ID or external reference."""
   order(
     """ID of an order."""
-    id: ID!
+    id: ID
+
+    """
+    External ID of an order. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Order
 
   """
@@ -19862,13 +20007,20 @@ type Query {
     last: Int
   ): AttributeCountableConnection
 
-  """Look up an attribute by ID."""
+  """Look up an attribute by ID, slug or external reference."""
   attribute(
     """ID of the attribute."""
     id: ID
 
     """Slug of the attribute."""
     slug: String
+
+    """
+    External ID of the attribute. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): Attribute
 
   """
@@ -20073,6 +20225,13 @@ type Query {
 
     """Email address of the user."""
     email: String
+
+    """
+    External ID of the user. 
+    
+    Added in Saleor 3.10.
+    """
+    externalReference: String
   ): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
@@ -21505,33 +21664,6 @@ type ShippingZoneCreated implements Event {
 }
 
 """
-Event sent when new shipping zone is created.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type ShippingZoneCreated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The shipping zone the event relates to."""
-  shippingZone(
-    """Slug of a channel for which the data should be returned."""
-    channel: String
-  ): ShippingZone
-}
-
-"""
 Deletes a shipping zone. 
 
 Requires one of the following permissions: MANAGE_SHIPPING.
@@ -21638,33 +21770,6 @@ input ShippingZoneUpdateInput {
 
   """List of channels to unassign from the shipping zone."""
   removeChannels: [ID!]
-}
-
-"""
-Event sent when shipping zone is updated.
-
-Added in Saleor 3.2.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type ShippingZoneUpdated implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The shipping zone the event relates to."""
-  shippingZone(
-    """Slug of a channel for which the data should be returned."""
-    channel: String
-  ): ShippingZone
 }
 
 """
@@ -21885,6 +21990,13 @@ type Shop {
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   version: String!
+
+  """
+  Minor Saleor API version.
+  
+  Added in Saleor 3.5.
+  """
+  schemaVersion: String!
 
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Channel.taxConfiguration.pricesEnteredWithTax` to determine whether prices are entered with tax.")
@@ -23974,6 +24086,13 @@ type User implements Node & ObjectWithMetadata {
   languageCode: LanguageCodeEnum!
   defaultShippingAddress: Address
   defaultBillingAddress: Address
+
+  """
+  External ID of this user. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
   lastLogin: DateTime
   dateJoined: DateTime!
   updatedAt: DateTime!
@@ -24056,6 +24175,13 @@ input UserCreateInput {
 
   """User language code."""
   languageCode: LanguageCodeEnum
+
+  """
+  External ID of the customer.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """
   URL of a view where users should be redirected to set the password. URL in RFC 1808 format.
@@ -24844,6 +24970,13 @@ type Warehouse implements Node & ObjectWithMetadata {
     """Return the last n elements from the list."""
     last: Int
   ): ShippingZoneCountableConnection!
+
+  """
+  External ID of this warehouse. 
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 }
 
 """An enumeration."""
@@ -24887,6 +25020,13 @@ input WarehouseCreateInput {
 
   """The email address of the warehouse."""
   email: String
+
+  """
+  External ID of the warehouse.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
 
   """Warehouse name."""
   name: String!
@@ -25073,6 +25213,13 @@ input WarehouseUpdateInput {
   """The email address of the warehouse."""
   email: String
 
+  """
+  External ID of the warehouse.
+  
+  Added in Saleor 3.10.
+  """
+  externalReference: String
+
   """Warehouse name."""
   name: String
 
@@ -25226,7 +25373,7 @@ input WebhookCreateInput {
 }
 
 """
-Deletes a webhook subscription. 
+Delete a webhook. Before the deletion, the webhook is deactivated to pause any deliveries that are already scheduled. The deletion might fail if delivery is in progress. In such a case, the webhook is not deleted but remains deactivated. 
 
 Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
 """
@@ -25234,6 +25381,38 @@ type WebhookDelete {
   webhookErrors: [WebhookError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [WebhookError!]!
   webhook: Webhook
+}
+
+"""
+Performs a dry run of a webhook event. 
+
+Requires one of the following permissions: MANAGE_APPS.
+"""
+type WebhookDryRun {
+  """JSON payload, that would be sent out to webhook's target URL."""
+  payload: JSONString
+  errors: [WebhookDryRunError!]!
+}
+
+type WebhookDryRunError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: WebhookDryRunErrorCode!
+}
+
+"""An enumeration."""
+enum WebhookDryRunErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INVALID_ID
+  MISSING_PERMISSION
 }
 
 type WebhookError {
@@ -25256,6 +25435,7 @@ enum WebhookErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
+  DELETE_FAILED
 }
 
 """Webhook event."""
@@ -26299,6 +26479,38 @@ enum WebhookSampleEventTypeEnum {
 }
 
 """
+Trigger a webhook event. 
+
+Requires one of the following permissions: MANAGE_APPS.
+"""
+type WebhookTrigger {
+  delivery: EventDelivery
+  errors: [WebhookTriggerError!]!
+}
+
+type WebhookTriggerError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: WebhookTriggerErrorCode!
+}
+
+"""An enumeration."""
+enum WebhookTriggerErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INVALID_ID
+  MISSING_PERMISSION
+  MISSING_QUERY
+}
+
+"""
 Updates a webhook subscription. 
 
 Requires one of the following permissions: MANAGE_APPS.
@@ -26376,7 +26588,7 @@ enum WeightUnitsEnum {
 scalar _Any
 
 """_Entity union as defined by Federation spec."""
-union _Entity = App | Address | User | Group | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | PageType
+union _Entity = App | Address | User | Group | ProductVariant | Product | ProductType | ProductMedia | Category | Collection | PageType
 
 """_Service manifest as defined by Federation spec."""
 type _Service {
