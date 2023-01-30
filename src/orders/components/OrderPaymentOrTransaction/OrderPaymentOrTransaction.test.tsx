@@ -1,5 +1,10 @@
 import { useFlags } from "@dashboard/hooks/useFlags";
-import { order, shop } from "@dashboard/orders/fixtures";
+import {
+  order,
+  orderWithTransactions,
+  shop,
+  shopWithTransactions,
+} from "@dashboard/orders/fixtures";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
@@ -58,8 +63,8 @@ describe("OrderPaymentOrTransaction", () => {
 
     render(
       <OrderPaymentOrTransaction
-        order={order(undefined)}
-        shop={shop}
+        order={orderWithTransactions}
+        shop={shopWithTransactions}
         onMarkAsPaid={() => undefined}
         onPaymentRefund={() => undefined}
         onAddManualTransaction={() => undefined}

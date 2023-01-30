@@ -107,7 +107,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
                     <FormattedMessage {...refundPageMessages.totalCaptured} />
                   }
                 >
-                  <DataLineMoney money={order?.totalCaptured} />
+                  <DataLineMoney money={order?.totalCharged} />
                 </DataLine>
                 <DataLine
                   label={

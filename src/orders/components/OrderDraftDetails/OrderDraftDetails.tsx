@@ -2,10 +2,10 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import {
   ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
 } from "@dashboard/graphql";
+import { OrderSharedType } from "@dashboard/orders/types";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
@@ -19,7 +19,7 @@ import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
-  order: OrderDetailsFragment;
+  order: OrderSharedType;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
   onOrderLineAdd: () => void;

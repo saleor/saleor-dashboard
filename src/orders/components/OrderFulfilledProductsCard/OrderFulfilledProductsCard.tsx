@@ -2,6 +2,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Card, TableBody } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
@@ -18,7 +19,7 @@ import useStyles from "./styles";
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
@@ -35,7 +36,9 @@ const cancelableStatuses = [
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
-const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
+const OrderFulfilledProductsCard: React.FC<
+  OrderFulfilledProductsCardProps
+> = props => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,

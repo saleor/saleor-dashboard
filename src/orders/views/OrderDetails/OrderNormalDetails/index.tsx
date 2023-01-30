@@ -2,6 +2,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   FulfillmentFragment,
   FulfillmentStatus,
+  OrderDetailsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
   OrderUpdateMutation,
@@ -12,7 +13,7 @@ import {
 import {
   CreateManualTransactionCaptureMutation,
   CreateManualTransactionCaptureMutationVariables,
-  OrderDetailsQueryResult,
+  OrderDetailsWithTransactionsQueryResult,
   OrderTransactionRequestActionMutation,
   OrderTransactionRequestActionMutationVariables,
 } from "@dashboard/graphql/transactions";
@@ -62,7 +63,9 @@ import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: OrderDetailsQueryResult["data"];
+  data:
+    | OrderDetailsQueryResult["data"]
+    | OrderDetailsWithTransactionsQueryResult["data"];
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;

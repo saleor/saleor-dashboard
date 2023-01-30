@@ -32,8 +32,8 @@ export const orderPaymentMessages = defineMessages({
     description: "sum of pending amount (any status) in order's transactions",
   },
   grantedRefund: {
-    defaultMessage: "Waiting",
-    id: "MVqpEU",
+    defaultMessage: "Granted",
+    id: "NPIBGp",
     description:
       "heading, sum of all granted refunds from transactions in order",
   },

@@ -5,7 +5,7 @@ import { PaymentState } from "./types";
 interface ShouldDisplayResult {
   state: PaymentState;
   authorized: boolean;
-  captured: boolean;
+  charged: boolean;
   cancelled: boolean;
   pending: boolean;
 }
@@ -17,7 +17,7 @@ export const getShouldDisplayAmounts = (
     return {
       state: PaymentState.NO_DATA,
       authorized: false,
-      captured: false,
+      charged: false,
       cancelled: false,
       pending: false,
     };
@@ -26,41 +26,41 @@ export const getShouldDisplayAmounts = (
   const authorized = order.totalAuthorized?.amount ?? 0;
   const authorizePending = order.totalAuthorizePending?.amount ?? 0;
 
-  const captured = order.totalCaptured?.amount ?? 0;
-  const capturePending = order.totalChargePending?.amount ?? 0;
+  const charged = order.totalCharged?.amount ?? 0;
+  const chargePending = order.totalChargePending?.amount ?? 0;
 
   const cancelled = order.totalCanceled?.amount ?? 0;
   const cancelPending = order.totalCancelPending?.amount ?? 0;
 
   const total = order.total.gross?.amount ?? 0;
   const anyPending =
-    authorizePending > 0 || capturePending > 0 || cancelPending > 0;
+    authorizePending > 0 || chargePending > 0 || cancelPending > 0;
 
   if (anyPending) {
     return {
       state: PaymentState.IS_PENDING,
       authorized: !!authorized || !!authorizePending,
-      captured: true,
+      charged: true,
       cancelled: true,
       pending: true,
     };
   }
 
-  if (authorized && captured) {
+  if (authorized && charged) {
     return {
       state: PaymentState.AMOUNTS_MISMATCH,
       authorized: true,
-      captured: true,
+      charged: true,
       cancelled: !!cancelled,
       pending: false,
     };
   }
 
-  if (captured !== 0 && captured !== total) {
+  if (charged !== 0 && charged !== total) {
     return {
       state: PaymentState.PARTIAL_CAPTURE,
       authorized: false,
-      captured: true,
+      charged: true,
       cancelled: !!cancelled,
       pending: false,
     };
@@ -70,7 +70,7 @@ export const getShouldDisplayAmounts = (
     return {
       state: PaymentState.PARTIAL_AUTHORIZED,
       authorized: true,
-      captured: false,
+      charged: false,
       cancelled: !!cancelled,
       pending: false,
     };
@@ -80,7 +80,7 @@ export const getShouldDisplayAmounts = (
     return {
       state: PaymentState.AMOUNTS_MISMATCH,
       authorized: false,
-      captured: false,
+      charged: false,
       cancelled: true,
       pending: false,
     };
@@ -88,7 +88,7 @@ export const getShouldDisplayAmounts = (
 
   return {
     state: PaymentState.FULLY_SETTLED,
-    captured: false,
+    charged: false,
     authorized: false,
     cancelled: false,
     pending: false,

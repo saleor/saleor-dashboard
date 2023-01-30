@@ -1,4 +1,3 @@
-import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
   FulfillmentStatus,
   GiftCardEventsEnum,
@@ -7,20 +6,19 @@ import {
 } from "@dashboard/graphql";
 import {
   grantedRefunds,
-  order as orderFixture,
   ORDER_AMOUNT,
+  orderWithTransactions as order,
   payments,
   prepareMoney,
-  shop as shopFixture,
+  shopWithTransactions,
   transactions,
 } from "@dashboard/orders/fixtures";
+import { OrderBothTypes } from "@dashboard/orders/types";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderDetailsPage, { OrderDetailsPageProps } from "./OrderDetailsPage";
-
-const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
@@ -47,7 +45,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onAddManualTransaction: () => undefined,
   order,
   errors: [],
-  shop: shopFixture,
+  shop: shopWithTransactions,
   saveButtonBarState: "default",
 };
 
@@ -141,7 +139,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         ...props.order,
         isPaid: false,
         totalAuthorized: prepareMoney(),
-        totalCaptured: prepareMoney(0),
+        totalCharged: prepareMoney(0),
         paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
         transactions: transactions.preauthorized,
       }}
@@ -165,7 +163,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         ...props.order,
         isPaid: true,
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(),
+        totalCharged: prepareMoney(),
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
         transactions: transactions.chargeSuccess,
       }}
@@ -178,7 +176,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         ...props.order,
         isPaid: true,
         totalAuthorized: prepareMoney(ORDER_AMOUNT - 10),
-        totalCaptured: prepareMoney(10),
+        totalCharged: prepareMoney(10),
         paymentStatus: PaymentChargeStatusEnum.PARTIALLY_CHARGED,
         transactions: transactions.chargePartial,
       }}
@@ -202,7 +200,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         ...props.order,
         isPaid: true,
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(),
+        totalCharged: prepareMoney(),
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
         transactions: transactions.refundRequested,
       }}
@@ -217,7 +215,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         grantedRefunds,
         totalGrantedRefund: prepareMoney(),
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(),
+        totalCharged: prepareMoney(),
         paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
         transactions: transactions.chargeSuccess,
       }}
@@ -232,7 +230,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         grantedRefunds,
         totalRefunded: prepareMoney(),
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(0),
+        totalCharged: prepareMoney(0),
         paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED,
         transactions: transactions.refundCompleted,
       }}
@@ -247,7 +245,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
         grantedRefunds,
         totalRefunded: prepareMoney(10),
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(ORDER_AMOUNT - 10),
+        totalCharged: prepareMoney(ORDER_AMOUNT - 10),
         paymentStatus: PaymentChargeStatusEnum.PARTIALLY_REFUNDED,
         transactions: transactions.refundPartial,
       }}
@@ -256,56 +254,58 @@ storiesOf("Views / Orders / Order details / transactions", module)
   .add("paid with giftcard", () => (
     <OrderDetailsPage
       {...props}
-      order={{
-        ...props.order,
-        isPaid: true,
-        transactions: [],
-        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-        // gift cards are treated as dicounts
-        total: {
-          net: prepareMoney(0),
-          gross: prepareMoney(0),
-          tax: prepareMoney(0),
-          __typename: "TaxedMoney",
-        },
-        giftCards: [
-          {
-            __typename: "GiftCard",
-            id: "R2lmdENhcmQ6Ng==",
-            last4CodeChars: "43FA",
-            events: [
-              {
-                __typename: "GiftCardEvent",
-                id: "R2lmdENhcmRFdmVudDo1",
-                type: GiftCardEventsEnum.ISSUED,
-                orderId: null,
-                date: "2022-09-20T13:00:42.676174+00:00",
-                balance: {
-                  __typename: "GiftCardEventBalance",
-                  initialBalance: prepareMoney(),
-                  currentBalance: prepareMoney(),
-                  oldInitialBalance: null,
-                  oldCurrentBalance: null,
-                },
-              },
-              {
-                __typename: "GiftCardEvent",
-                id: "R2lmdENhcmRFdmVudDo2",
-                type: GiftCardEventsEnum.USED_IN_ORDER,
-                orderId: props.order.id,
-                date: "2022-09-20T13:04:20.017419+00:00",
-                balance: {
-                  __typename: "GiftCardEventBalance",
-                  initialBalance: null,
-                  currentBalance: prepareMoney(0),
-                  oldInitialBalance: null,
-                  oldCurrentBalance: prepareMoney(),
-                },
-              },
-            ],
+      order={
+        {
+          ...props.order,
+          isPaid: true,
+          transactions: [],
+          paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+          // gift cards are treated as dicounts
+          total: {
+            net: prepareMoney(0),
+            gross: prepareMoney(0),
+            tax: prepareMoney(0),
+            __typename: "TaxedMoney",
           },
-        ],
-      }}
+          giftCards: [
+            {
+              __typename: "GiftCard",
+              id: "R2lmdENhcmQ6Ng==",
+              last4CodeChars: "43FA",
+              events: [
+                {
+                  __typename: "GiftCardEvent",
+                  id: "R2lmdENhcmRFdmVudDo1",
+                  type: GiftCardEventsEnum.ISSUED,
+                  orderId: null,
+                  date: "2022-09-20T13:00:42.676174+00:00",
+                  balance: {
+                    __typename: "GiftCardEventBalance",
+                    initialBalance: prepareMoney(),
+                    currentBalance: prepareMoney(),
+                    oldInitialBalance: null,
+                    oldCurrentBalance: null,
+                  },
+                },
+                {
+                  __typename: "GiftCardEvent",
+                  id: "R2lmdENhcmRFdmVudDo2",
+                  type: GiftCardEventsEnum.USED_IN_ORDER,
+                  orderId: props.order.id,
+                  date: "2022-09-20T13:04:20.017419+00:00",
+                  balance: {
+                    __typename: "GiftCardEventBalance",
+                    initialBalance: null,
+                    currentBalance: prepareMoney(0),
+                    oldInitialBalance: null,
+                    oldCurrentBalance: prepareMoney(),
+                  },
+                },
+              ],
+            },
+          ],
+        } as OrderBothTypes
+      }
     />
   ));
 

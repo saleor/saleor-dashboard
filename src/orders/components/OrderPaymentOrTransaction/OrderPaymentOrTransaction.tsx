@@ -1,25 +1,20 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  TransactionActionEnum,
-} from "@dashboard/graphql/transactions";
+import { TransactionActionEnum } from "@dashboard/graphql/transactions";
 import { useFlags } from "@dashboard/hooks/useFlags";
+import {
+  isOrderWithTransactions,
+  OrderBothTypes,
+  ShopBothTypes,
+  ShopWithTransactions,
+} from "@dashboard/orders/types";
 import React from "react";
 
-import OrderAddTransaction from "../OrderAddTransaction";
-import { useStyles } from "../OrderDetailsPage/styles";
-import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import OrderSummaryCard from "../OrderSummaryCard";
-import OrderTransaction from "../OrderTransaction";
-import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
-import OrderTransactionPayment from "../OrderTransactionPayment";
+import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
 interface OrderPaymentOrTransactionProps {
-  order: OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"];
+  order: OrderBothTypes;
+  shop: ShopBothTypes;
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onPaymentCapture();
   onPaymentPaid();
@@ -43,60 +38,18 @@ export const OrderPaymentOrTransaction: React.FC<
   onAddManualTransaction,
 }) => {
   const { orderTransactions } = useFlags(["orderTransactions"]);
-  const classes = useStyles();
 
-  const filteredPayments = React.useMemo(
-    () =>
-      (order?.payments ?? []).filter(
-        payment => payment.isActive || payment.transactions.length > 0,
-      ),
-    [order?.payments],
-  );
-
-  if (orderTransactions.enabled) {
+  if (isOrderWithTransactions(order, orderTransactions.enabled)) {
     return (
-      <>
-        <div className={classes.cardGrid}>
-          <OrderSummaryCard order={order} />
-          <OrderPaymentSummaryCard order={order} onMarkAsPaid={onPaymentPaid} />
-        </div>
-        <CardSpacer />
-        {order?.grantedRefunds?.length !== 0 ? (
-          <>
-            <OrderGrantedRefunds order={order} />
-            <CardSpacer />
-          </>
-        ) : null}
-        <div>
-          {order?.transactions?.map(transaction => (
-            <OrderTransaction
-              key={transaction.id}
-              transaction={transaction}
-              onTransactionAction={onTransactionAction}
-            />
-          ))}
-          {filteredPayments.map(payment => (
-            <OrderTransactionPayment
-              key={payment.id}
-              payment={payment}
-              allPaymentMethods={shop?.availablePaymentGateways}
-              onCapture={onPaymentCapture}
-              onVoid={onPaymentVoid}
-            />
-          ))}
-          {order?.giftCards?.map(giftCard => (
-            <OrderTransactionGiftCard
-              key={giftCard.id}
-              order={order}
-              giftCard={giftCard}
-            />
-          ))}
-        </div>
-        <OrderAddTransaction
-          order={order}
-          onAddTransaction={onAddManualTransaction}
-        />
-      </>
+      <OrderTransactionsWrapper
+        order={order}
+        shop={shop as ShopWithTransactions}
+        onTransactionAction={onTransactionAction}
+        onPaymentCapture={onPaymentCapture}
+        onPaymentPaid={onPaymentPaid}
+        onPaymentVoid={onPaymentVoid}
+        onAddManualTransaction={onAddManualTransaction}
+      />
     );
   }
 

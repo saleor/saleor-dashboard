@@ -1,7 +1,5 @@
-import {
-  ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-} from "@dashboard/graphql";
+import { ChannelUsabilityDataQuery } from "@dashboard/graphql";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
@@ -11,7 +9,7 @@ import { alertMessages } from "./messages";
 import { useAlertStyles } from "./styles";
 
 const getAlerts = (
-  order?: OrderDetailsFragment,
+  order?: OrderSharedType,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
   const canDetermineShippingMethods =
@@ -38,7 +36,7 @@ const getAlerts = (
 };
 
 export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
   channelUsabilityData?: ChannelUsabilityDataQuery;
 };
 

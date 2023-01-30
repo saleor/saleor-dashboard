@@ -14,9 +14,10 @@ import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
 import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
+  OrderDetailsWithTransactionsFragment,
+  OrderDetailsWithTransactionsQuery,
   OrderErrorFragment,
   OrderStatus,
   TransactionActionEnum,
@@ -25,6 +26,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -49,8 +51,8 @@ import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 export interface OrderDetailsPageProps {
-  order: OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"];
+  order: OrderDetailsFragment | OrderDetailsWithTransactionsFragment;
+  shop: OrderDetailsQuery["shop"] | OrderDetailsWithTransactionsQuery["shop"];
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -188,7 +190,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         label: intl.formatMessage(messages.returnOrder),
         onSelect: onOrderReturn,
       },
-      shouldExist: hasAnyItemsReplaceable(order),
+      shouldExist: hasAnyItemsReplaceable(order as OrderSharedType),
     },
   ]);
 
@@ -214,7 +216,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={<Title order={order} />}
+              title={<Title order={order as OrderSharedType} />}
               cardMenu={
                 <CardMenu
                   menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
@@ -242,7 +244,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ) : (
                   <>
                     <OrderDraftDetails
-                      order={order}
+                      order={order as OrderSharedType}
                       errors={errors}
                       onOrderLineAdd={onOrderLineAdd}
                       onOrderLineChange={onOrderLineChange}
@@ -257,7 +259,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     <OrderFulfilledProductsCard
                       fulfillment={fulfillment}
                       fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                      order={order}
+                      order={order as OrderSharedType}
                       onOrderFulfillmentCancel={() =>
                         onFulfillmentCancel(fulfillment.id)
                       }
@@ -292,7 +294,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomer
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
-                  order={order}
+                  order={order as OrderSharedType}
                   errors={errors}
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}

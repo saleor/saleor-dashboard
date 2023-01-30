@@ -74,7 +74,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
         title={<FormattedMessage {...orderPaymentMessages.paymentTitle} />}
       />
       {!canAnyRefund &&
-        !shouldDisplay.captured &&
+        !shouldDisplay.charged &&
         !shouldDisplay.authorized &&
         !hasGiftCards && (
           <CardContent className={classes.noPaymentContent}>

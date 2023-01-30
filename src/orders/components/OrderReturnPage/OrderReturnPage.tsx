@@ -3,10 +3,15 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/graphql";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
+import {
+  isOrderWithTransactions,
+  OrderBothTypes,
+  OrderSharedType,
+} from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -26,7 +31,7 @@ import {
 } from "./utils";
 
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
   loading: boolean;
   errors?: OrderErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
@@ -60,7 +65,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                   <ItemsCard
                     errors={errors}
                     order={order}
-                    lines={getUnfulfilledLines(order)}
+                    lines={getUnfulfilledLines(order as OrderSharedType)}
                     itemsQuantities={data.unfulfilledItemsQuantities}
                     itemsSelections={data.itemsToBeReplaced}
                     onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
@@ -73,7 +78,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 </>
               )}
               {renderCollection(
-                getWaitingFulfillments(order),
+                getWaitingFulfillments(order as OrderSharedType),
                 ({ id, lines }) => (
                   <React.Fragment key={id}>
                     <ItemsCard
@@ -94,7 +99,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 ),
               )}
               {renderCollection(
-                getFulfilledFulfillemnts(order),
+                getFulfilledFulfillemnts(order as OrderSharedType),
                 ({ id, lines }) => (
                   <React.Fragment key={id}>
                     <ItemsCard
@@ -116,7 +121,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               )}
             </div>
             <div>
-              {orderTransactions.enabled ? (
+              {isOrderWithTransactions(order, orderTransactions.enabled) ? (
                 <SubmitCard
                   disabled={isSaveDisabled}
                   onSubmit={submit}

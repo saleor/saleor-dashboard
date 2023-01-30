@@ -6,14 +6,16 @@ import {
   JobStatusEnum,
   OrderStatus,
   useOrderConfirmMutation,
+  useOrderDetailsQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import {
-  OrderDetailsDocument,
-  useOrderDetailsQuery,
+  OrderDetailsWithTransactionsDocument,
+  useOrderDetailsWithTransactionsQuery,
 } from "@dashboard/graphql/transactions";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -42,14 +44,13 @@ interface OrderDetailsProps {
 
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [
-    updatePrivateMetadata,
-    updatePrivateMetadataOpts,
-  ] = useUpdatePrivateMetadataMutation({});
+  const [updatePrivateMetadata, updatePrivateMetadataOpts] =
+    useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
   const apolloClient = useApolloClient();
 
@@ -73,12 +74,24 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const { data, loading } = useOrderDetailsQuery({
+  const { data: dataOrder, loading: loadingOrder } = useOrderDetailsQuery({
     displayLoader: true,
     variables: { id },
+    skip: orderTransactions.enabled,
   });
 
-  const order = data?.order;
+  const {
+    data: dataOrderWithTransactions,
+    loading: loadingOrderWithTransactions,
+  } = useOrderDetailsWithTransactionsQuery({
+    displayLoader: true,
+    variables: { id },
+    skip: !orderTransactions.enabled,
+  });
+
+  const data = dataOrder || dataOrderWithTransactions;
+  const loading = loadingOrder || loadingOrderWithTransactions;
+  const order = dataOrder?.order || dataOrderWithTransactions?.order;
   if (order === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
@@ -153,7 +166,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           onTransactionActionSend={orderMessages.handleTransactionAction}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
-              include: [OrderDetailsDocument],
+              include: [OrderDetailsWithTransactionsDocument],
             });
             orderMessages.handleAddManualTransaction(data);
           }}

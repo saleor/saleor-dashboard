@@ -1,7 +1,12 @@
-import { OrderDetailsFragment, OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import {
+  OrderBothTypes,
+  OrderRefundSharedType,
+  OrderSharedType,
+} from "@dashboard/orders/types";
+import {
   getAllFulfillmentLinesPriceSum,
+  getOrderCharged,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -14,11 +19,11 @@ import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";
 import { OrderRefundAmountValuesProps } from "./OrderRefundReturnAmountValues";
 
 export const getMiscellaneousAmountValues = (
-  order: OrderRefundDataQuery["order"],
+  order: OrderRefundSharedType,
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = order?.totalCaptured;
+  const maxRefund = getOrderCharged(order);
 
   return {
     authorizedAmount,
@@ -27,18 +32,15 @@ export const getMiscellaneousAmountValues = (
   };
 };
 
-const getAuthorizedAmount = (order: OrderRefundDataQuery["order"]) =>
+const getAuthorizedAmount = (order: OrderRefundSharedType) =>
   order?.total?.gross;
 
-const getShipmentCost = (order: OrderRefundDataQuery["order"]) =>
+const getShipmentCost = (order: OrderRefundSharedType) =>
   getAuthorizedAmount(order)?.currency &&
   (order?.shippingPrice?.gross || {
     amount: 0,
     currency: getAuthorizedAmount(order)?.currency,
   });
-
-const getMaxRefund = (order: OrderRefundDataQuery["order"]) =>
-  order?.totalCaptured;
 
 export const getProductsAmountValues = ({
   order,
@@ -47,7 +49,7 @@ export const getProductsAmountValues = ({
   unfulfilledItemsQuantities,
   refundShipmentCosts,
 }: {
-  order: OrderRefundDataQuery["order"];
+  order: OrderRefundSharedType;
   fulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>;
   waitingItemsQuantities: FormsetData<null | LineItemData, string | number>;
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>;
@@ -57,7 +59,7 @@ export const getProductsAmountValues = ({
   const shipmentCost = getShipmentCost(order);
 
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = getMaxRefund(order);
+  const maxRefund = getOrderCharged(order);
   const refundedLinesSum = getRefundedLinesPriceSum(
     order?.lines,
     unfulfilledItemsQuantities as FormsetData<null, string>,
@@ -136,7 +138,7 @@ const getReturnTotalAmount = ({
   order,
   maxRefund,
 }: {
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
   selectedProductsValue: IMoney;
   refundShipmentCosts: boolean;
   maxRefund: IMoney;
@@ -155,7 +157,7 @@ const getReturnTotalAmount = ({
 };
 
 export const getReturnProductsAmountValues = (
-  order: OrderDetailsFragment,
+  order: OrderBothTypes,
   formData: OrderReturnFormData,
 ) => {
   const authorizedAmount = getAuthorizedAmount(order);
@@ -168,18 +170,18 @@ export const getReturnProductsAmountValues = (
   } = formData;
 
   const replacedProductsValue = authorizedAmount?.currency && {
-    amount: getReplacedProductsAmount(order, formData),
+    amount: getReplacedProductsAmount(order as OrderSharedType, formData),
     currency: authorizedAmount.currency,
   };
 
   const selectedProductsValue = authorizedAmount?.currency && {
-    amount: getReturnSelectedProductsAmount(order, formData),
+    amount: getReturnSelectedProductsAmount(order as OrderSharedType, formData),
     currency: authorizedAmount.currency,
   };
 
   const refundTotalAmount = authorizedAmount?.currency && {
     amount: getReturnTotalAmount({
-      maxRefund: getMaxRefund(order),
+      maxRefund: getOrderCharged(order),
       order,
       refundShipmentCosts,
       selectedProductsValue,
@@ -202,7 +204,7 @@ export const getReturnProductsAmountValues = (
 };
 
 export const getRefundProductsAmountValues = (
-  order: OrderRefundDataQuery["order"],
+  order: OrderRefundSharedType,
   {
     refundedFulfilledProductQuantities,
     refundShipmentCosts,
