@@ -26,6 +26,12 @@ module.exports = ({ config }) => {
   // Resolve macaw ui's peer dependencies to our own node_modules
   // to make it work with npm link
   config.resolve.alias = {
+    "@saleor/macaw-ui/next": path.resolve(
+      "./node_modules/@saleor/macaw-ui/dist/macaw-ui.js",
+    ),
+    "@saleor/macaw-ui": path.resolve(
+      "./node_modules/@saleor/macaw-ui/legacy/dist/esm/index.js",
+    ),
     react: path.resolve("./node_modules/react"),
     "react-dom": path.resolve("./node_modules/react-dom"),
     "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
