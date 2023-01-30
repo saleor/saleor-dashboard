@@ -5,7 +5,7 @@ import { Menu } from "./menu";
 import { MountingPoint } from "./MountingPoint";
 import { UserInfo } from "./user";
 
-export const NewSidebar = () => (
+export const SidebarContent = () => (
   <Box
     backgroundColor="subdued"
     as="aside"
