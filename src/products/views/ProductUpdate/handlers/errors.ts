@@ -3,6 +3,7 @@ import {
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
   ProductVariantBulkErrorCode,
+  ProductVariantBulkErrorFragment,
   ProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
 
@@ -57,13 +58,23 @@ export function getVariantUpdateMutationErrors(
   const variantsErrors = productVariantBulkUpdate.results.flatMap(
     res => res.errors,
   );
+  const allErrors = [...generalErrors, ...variantsErrors];
 
-  return [...generalErrors, ...variantsErrors].reduce<
-    ProductVariantListError[]
-  >((acc, error, index) => {
-    const variantId = varaintsIds[index];
+  return [
+    ...getChannelErrors(allErrors, varaintsIds),
+    ...getStockErrors(allErrors, varaintsIds),
+    ...getRestOfError(allErrors, varaintsIds),
+  ];
+}
 
+function getChannelErrors(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
     if (error.channels?.length) {
+      const variantId = varaintsIds[index];
+
       acc.push({
         __typename: "DatagridError",
         type: "channel",
@@ -73,7 +84,18 @@ export function getVariantUpdateMutationErrors(
       });
     }
 
+    return acc;
+  }, []);
+}
+
+function getStockErrors(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
     if (error.warehouses?.length) {
+      const variantId = varaintsIds[index];
+
       acc.push(
         ...error.warehouses.map(
           warehouse =>
@@ -87,14 +109,28 @@ export function getVariantUpdateMutationErrors(
       );
     }
 
-    acc.push({
-      __typename: "DatagridError",
-      type: "variantData",
-      variantId,
-      error: error.code,
-      attributes: error.attributes,
-      field: error.field,
-    });
+    return acc;
+  }, []);
+}
+
+function getRestOfError(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
+    if (!error.warehouses?.length && !error.channels?.length) {
+      const variantId = varaintsIds[index];
+
+      acc.push({
+        __typename: "DatagridError",
+        type: "variantData",
+        variantId,
+        error: error.code,
+        attributes: error.attributes,
+        field: error.field,
+      });
+    }
+
     return acc;
   }, []);
 }

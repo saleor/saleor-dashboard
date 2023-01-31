@@ -147,31 +147,62 @@ export function getBulkVariantUpdateInputs(
   variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): ProductVariantBulkUpdateInput[] {
-  return variants
-    .map(
-      (variant, variantIndex): ProductVariantBulkUpdateInput => ({
-        id: variant.id,
-        attributes: getAttributeData(data.updates, variantIndex, data.removed),
-        sku: getSkuData(data.updates, variantIndex, data.removed),
-        name: getNameData(data.updates, variantIndex, data.removed),
-        stocks: getStockData(data.updates, variantIndex, data.removed),
-        channelListings: getVariantChannelsInputs(data, variantIndex),
-      }),
-    )
-    .filter(
-      variant =>
-        variant.name ||
-        variant.sku ||
-        variant.attributes.length > 0 ||
-        variant.stocks.length > 0 ||
-        variant.channelListings.length > 0,
-    );
+  const toUpdateInput = createToUpdateInput(data);
+  return variants.map(toUpdateInput).filter(byAvailability);
 }
+
+const createToUpdateInput =
+  (data: DatagridChangeOpts) =>
+  (variant, variantIndex): ProductVariantBulkUpdateInput => ({
+    id: variant.id,
+    attributes: getAttributeData(data.updates, variantIndex, data.removed),
+    sku: getSkuData(data.updates, variantIndex, data.removed),
+    name: getNameData(data.updates, variantIndex, data.removed),
+    stocks: getStockData(data.updates, variantIndex, data.removed),
+    channelListings: getVariantChannelsInputs(data, variantIndex),
+  });
+
+const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
+  !!variant.name ||
+  !!variant.sku ||
+  variant.attributes.length > 0 ||
+  variant.stocks.length > 0 ||
+  variant.channelListings.length > 0;
 
 export function hasProductChannelsUpdate(
   data: ProductChannelListingUpdateInput,
 ) {
   return data?.removeChannels?.length || data?.updateChannels?.length;
+}
+
+export function inferProductChannelsAfterUpdate(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+) {
+  const productChannelsIds = product.channelListings.map(
+    listing => listing.channel.id,
+  );
+  const updatedChannelsIds =
+    data.channels.updateChannels?.map(listing => listing.channelId) || [];
+  const removedChannelsIds = data.channels.removeChannels || [];
+
+  return uniq([
+    ...productChannelsIds.filter(
+      channelId => !removedChannelsIds.includes(channelId),
+    ),
+    ...updatedChannelsIds,
+  ]);
+}
+
+function hasChannel(
+  channelId: string,
+  variant?: ProductFragment["variants"][number],
+) {
+  if (!variant) {
+    return false;
+  }
+
+  return variant.channelListings.some(c => c.channel.id === channelId);
 }
 
 function getAttributeData(
@@ -180,19 +211,22 @@ function getAttributeData(
   removedIds: number[],
 ) {
   return data
-    .filter(
-      change =>
-        getColumnAttribute(change.column) &&
-        isCurrentRow(change.row, currentIndex, removedIds),
-    )
-    .map(change => {
-      const attributeId = getColumnAttribute(change.column);
+    .filter(change => isCurrentRow(change.row, currentIndex, removedIds))
+    .filter(byHavingAnyAttribute)
+    .map(toAttributeData);
+}
 
-      return {
-        id: attributeId,
-        values: [change.data.value.value],
-      };
-    });
+function byHavingAnyAttribute(change: DatagridChange) {
+  return getColumnAttribute(change.column);
+}
+
+function toAttributeData(change: DatagridChange) {
+  const attributeId = getColumnAttribute(change.column);
+
+  return {
+    id: attributeId,
+    values: [change.data.value.value],
+  };
 }
 
 function getSkuData(
@@ -225,43 +259,24 @@ function getStockData(
   removedIds: number[],
 ) {
   return data
-    .filter(
-      change =>
-        getColumnStock(change.column) &&
-        isCurrentRow(change.row, currentIndex, removedIds),
-    )
-    .map(change => ({
-      warehouse: getColumnStock(change.column),
-      quantity: change.data.value,
-    }));
+    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
+    .map(toStockData);
 }
 
-export function inferProductChannelsAfterUpdate(
-  product: ProductFragment,
-  data: ProductUpdateSubmitData,
+function toStockData(change: DatagridChange) {
+  return {
+    warehouse: getColumnStock(change.column),
+    quantity: change.data.value,
+  };
+}
+
+function byHavingStockColumn(
+  change: DatagridChange,
+  currentIndex: number,
+  removedIds: number[],
 ) {
-  const productChannelsIds = product.channelListings.map(
-    listing => listing.channel.id,
+  return (
+    getColumnStock(change.column) &&
+    isCurrentRow(change.row, currentIndex, removedIds)
   );
-  const updatedChannelsIds =
-    data.channels.updateChannels?.map(listing => listing.channelId) || [];
-  const removedChannelsIds = data.channels.removeChannels || [];
-
-  return uniq([
-    ...productChannelsIds.filter(
-      channelId => !removedChannelsIds.includes(channelId),
-    ),
-    ...updatedChannelsIds,
-  ]);
-}
-
-function hasChannel(
-  channelId: string,
-  variant?: ProductFragment["variants"][number],
-) {
-  if (!variant) {
-    return false;
-  }
-
-  return variant.channelListings.some(c => c.channel.id === channelId);
 }
