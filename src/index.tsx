@@ -146,6 +146,10 @@ const Routes: React.FC = () => {
           display: none;
         }
 
+        #dashboard-app .MuiTable-root {
+          table-layout: auto !important;
+        }
+
         #dashboard-app .MuiIconButton-edgeEnd,
         #dashboard-app .MuiCardHeader-action {
           margin-right: 0;
