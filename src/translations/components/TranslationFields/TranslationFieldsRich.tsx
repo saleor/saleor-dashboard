@@ -6,7 +6,7 @@ import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEdi
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
@@ -39,9 +39,16 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     triggerChange: () => setIsDirty(true)
   });
 
-  useEffect(() => setExitDialogSubmitRef(onSubmit), [content]);
+  const submit = useCallback(async () => {
+    const errors = await onSubmit(content.current);
+    if (errors?.length === 0) {
+      setIsDirty(false);
 
-  const submit = () => onSubmit(content.current);
+      return [];
+    }
+  }, []);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return edit ? (
     <form onSubmit={submit}>
