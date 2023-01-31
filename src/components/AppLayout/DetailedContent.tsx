@@ -7,7 +7,6 @@ export const DetailedContent = ({ children }) => (
     display="grid"
     __height="100%"
     __gridTemplateColumns="9fr 4fr"
-    // @ts-ignore
     __gridTemplateRows="auto 1fr"
     __gridTemplateAreas="
       'nav right'
