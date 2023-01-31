@@ -286,3 +286,14 @@ jobs:
             --pull_request_number $pull_request_number \
             --dashboard_url $dashboard_url \
             $auto_release
+
+      - name: Notify Slack
+        if: ${{ always() && job.status != 'success' && github.event_name == 'repository_dispatch'}}
+        env:
+          JOB_DEPLOYMENT_KIND: staging
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
+          JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
+          JOB_KIND: "release tests"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py
