@@ -70,7 +70,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   const initialForm: WebhookFormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
     asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
-    isActive: !!webhook?.isActive,
+    isActive: !!webhook?.isActive || true,
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",

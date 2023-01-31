@@ -7027,6 +7027,29 @@ export type AddressValidationRulesQueryVariables = Exact<{
 
 export type AddressValidationRulesQuery = { __typename: 'Query', addressValidationRules: { __typename: 'AddressValidationData', allowedFields: Array<string>, countryAreaChoices: Array<{ __typename: 'ChoiceValue', raw: string | null, verbose: string | null }> } | null };
 
+export type TriggerWebhookDryRunMutationVariables = Exact<{
+  objectId: Scalars['ID'];
+  query: Scalars['String'];
+}>;
+
+
+export type TriggerWebhookDryRunMutation = { __typename: 'Mutation', webhookDryRun: { __typename: 'WebhookDryRun', payload: any | null, errors: Array<{ __typename: 'WebhookDryRunError', field: string | null, message: string | null }> } | null };
+
+export type CheckoutListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CheckoutListQuery = { __typename: 'Query', checkouts: { __typename: 'CheckoutCountableConnection', edges: Array<{ __typename: 'CheckoutCountableEdge', cursor: string, node: { __typename: 'Checkout', id: string, created: any } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
+
+export type ChannelListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelListQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null };
+
 export type CheckIfOrderExistsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;

@@ -5,6 +5,7 @@ import {
   WebhookEventTypeSyncEnum,
 } from "@dashboard/graphql";
 import { Fetcher } from "@graphiql/toolkit";
+import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
@@ -51,7 +52,11 @@ describe("WebhookSubscriptionQuery", () => {
     // const user = userEvent.setup();
 
     // Act
-    render(<WebhookSubscriptionQuery {...props} />);
+    render(
+      <ApolloMockedProvider>
+        <WebhookSubscriptionQuery {...props} />
+      </ApolloMockedProvider>,
+    );
 
     // Assert
     expect(screen.queryByTestId("graphiql-container")).toBeInTheDocument();

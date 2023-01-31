@@ -64,4 +64,16 @@ describe("parseCurrency", () => {
     // Assert
     expect(parsed).toBe(2.07);
   });
+  it("should not trim price without decimal", () => {
+    // Arrange
+    const value = "2123";
+    const currency = "EUR";
+    const locale = Locale.PL;
+
+    // Act
+    const parsed = parseCurrency(value, locale, currency);
+
+    // Assert
+    expect(parsed).toBe(2123);
+  });
 });

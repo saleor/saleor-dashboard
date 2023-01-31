@@ -7,6 +7,7 @@ import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-sel
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
@@ -188,6 +189,10 @@ describe("Staff members", () => {
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
+      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
+        "be.visible",
+      );
+      cy.get(BUTTON_SELECTORS.dialogBackButton).click();
       cy.confirmationErrorMessageShouldAppear();
     },
   );
