@@ -7,12 +7,14 @@ import { UserInfo } from "./user";
 
 export const SidebarContent = () => (
   <Box
+    className="hide-scrollbar"
     backgroundColor="subdued"
     as="aside"
     height="100%"
     display="grid"
     __gridTemplateRows="auto 1fr auto"
-    overflow="scroll"
+    // @ts-ignore
+    __overflowY="scroll"
   >
     <MountingPoint />
     <Menu />
