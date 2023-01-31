@@ -3334,10 +3334,6 @@
     "context": "exceeded permissions description",
     "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
   },
-  "MVqpEU": {
-    "context": "heading, sum of all granted refunds from transactions in order",
-    "string": "Waiting"
-  },
   "MWSacl": {
     "string": "Multichannel"
   },
@@ -3466,6 +3462,10 @@
   "NNT3Lp": {
     "context": "collections section name",
     "string": "Collections"
+  },
+  "NPIBGp": {
+    "context": "heading, sum of all granted refunds from transactions in order",
+    "string": "Granted"
   },
   "NPfmdK": {
     "context": "webhook input label",

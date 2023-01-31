@@ -10,7 +10,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     expect(getShouldDisplayAmounts(undefined)).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),
@@ -29,7 +29,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: true,
+        charged: true,
         cancelled: true,
         pending: true,
       }),
@@ -52,7 +52,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
 
     const expectedResult = {
       authorized: true,
-      captured: true,
+      charged: true,
       cancelled: true,
       pending: true,
     };
@@ -71,7 +71,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: true,
-        captured: true,
+        charged: true,
         cancelled: false,
         pending: false,
       }),
@@ -94,7 +94,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: true,
+        charged: true,
         cancelled: false,
         pending: false,
       }),
@@ -111,7 +111,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: true,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),
@@ -139,7 +139,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),
