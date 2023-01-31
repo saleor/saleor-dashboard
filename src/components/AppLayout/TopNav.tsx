@@ -23,7 +23,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
     borderColor="neutralPlain"
     position="relative"
     __alignItems="center"
-    // @ts-ignore
     __gridArea="nav"
   >
     {href && (

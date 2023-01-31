@@ -12,7 +12,6 @@ export const RightSidebar = ({ children }) => (
     __paddingBottom={300}
     __position="sticky"
     __top={0}
-    // @ts-ignore
     __overflowY="scroll"
     __overflowX="hidden"
     __borderYWidth={0}
@@ -20,7 +19,6 @@ export const RightSidebar = ({ children }) => (
     __borderBottomWidth={0}
     __borderRightWidth={0}
     padding={6}
-    // @ts-ignore
     __gridArea="right"
     className="hide-scrollbar"
   >
