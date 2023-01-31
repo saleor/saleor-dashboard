@@ -1,8 +1,10 @@
 import { useUser } from "@dashboard/auth";
+import { isDarkTheme } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
+import { useTheme } from "@dashboard/theme";
+import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
 import {
   Box,
-  DarkModeIcon,
   Dropdown,
   List,
   MoreOptionsIcon,
@@ -13,8 +15,13 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { ThemeSwitcher } from "./ThemeSwitcher";
+
 export const UserControls = () => {
   const { user, logout } = useUser();
+  const { theme, setTheme } = useTheme();
+  const { themeType: legacyThemeType, setTheme: setLegacyTheme } =
+    useLegacyTheme();
 
   return (
     <Dropdown>
@@ -79,16 +86,15 @@ export const UserControls = () => {
               alignItems="center"
               gap={5}
               marginTop={3}
+              onClick={() => {
+                setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
+                setTheme(
+                  theme === "defaultLight" ? "defaultDark" : "defaultLight",
+                );
+              }}
               {...listItemStyles}
             >
-              <DarkModeIcon color="iconNeutralSubdued" />
-              <Text>
-                <FormattedMessage
-                  id="2r4cTE"
-                  defaultMessage="Enable Dark Mode"
-                  description="button"
-                />
-              </Text>
+              <ThemeSwitcher theme={theme} />
             </List.Item>
           </Dropdown.Item>
         </List>
