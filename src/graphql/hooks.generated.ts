@@ -14865,6 +14865,77 @@ export function useStaffMemberUpdateMutation(baseOptions?: ApolloReactHooks.Muta
 export type StaffMemberUpdateMutationHookResult = ReturnType<typeof useStaffMemberUpdateMutation>;
 export type StaffMemberUpdateMutationResult = Apollo.MutationResult<Types.StaffMemberUpdateMutation>;
 export type StaffMemberUpdateMutationOptions = Apollo.BaseMutationOptions<Types.StaffMemberUpdateMutation, Types.StaffMemberUpdateMutationVariables>;
+export const UserPassowrdChangeDocument = gql`
+    mutation UserPassowrdChange($newPassword: String!, $oldPassword: String!) {
+  passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type UserPassowrdChangeMutationFn = Apollo.MutationFunction<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>;
+
+/**
+ * __useUserPassowrdChangeMutation__
+ *
+ * To run a mutation, you first call `useUserPassowrdChangeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserPassowrdChangeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userPassowrdChangeMutation, { data, loading, error }] = useUserPassowrdChangeMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      oldPassword: // value for 'oldPassword'
+ *   },
+ * });
+ */
+export function useUserPassowrdChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>(UserPassowrdChangeDocument, options);
+      }
+export type UserPassowrdChangeMutationHookResult = ReturnType<typeof useUserPassowrdChangeMutation>;
+export type UserPassowrdChangeMutationResult = Apollo.MutationResult<Types.UserPassowrdChangeMutation>;
+export type UserPassowrdChangeMutationOptions = Apollo.BaseMutationOptions<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>;
+export const UserAccountUpdateMutationDocument = gql`
+    mutation UserAccountUpdateMutation($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type UserAccountUpdateMutationMutationFn = Apollo.MutationFunction<Types.UserAccountUpdateMutationMutation, Types.UserAccountUpdateMutationMutationVariables>;
+
+/**
+ * __useUserAccountUpdateMutationMutation__
+ *
+ * To run a mutation, you first call `useUserAccountUpdateMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserAccountUpdateMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userAccountUpdateMutationMutation, { data, loading, error }] = useUserAccountUpdateMutationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserAccountUpdateMutationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserAccountUpdateMutationMutation, Types.UserAccountUpdateMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UserAccountUpdateMutationMutation, Types.UserAccountUpdateMutationMutationVariables>(UserAccountUpdateMutationDocument, options);
+      }
+export type UserAccountUpdateMutationMutationHookResult = ReturnType<typeof useUserAccountUpdateMutationMutation>;
+export type UserAccountUpdateMutationMutationResult = Apollo.MutationResult<Types.UserAccountUpdateMutationMutation>;
+export type UserAccountUpdateMutationMutationOptions = Apollo.BaseMutationOptions<Types.UserAccountUpdateMutationMutation, Types.UserAccountUpdateMutationMutationVariables>;
 export const StaffMemberDeleteDocument = gql`
     mutation StaffMemberDelete($id: ID!) {
   staffDelete(id: $id) {
