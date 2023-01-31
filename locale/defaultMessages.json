@@ -824,6 +824,9 @@
     "context": "order status",
     "string": "Returned"
   },
+  "4EkOwL": {
+    "string": "Enable Light Mode"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -2425,6 +2428,9 @@
   "Gg4+K7": {
     "string": "No Products"
   },
+  "GgkZ5I": {
+    "string": "Enable Dark Mode"
+  },
   "GhXwO/": {
     "context": "dialog header",
     "string": "delete Staff User"
@@ -3333,6 +3339,9 @@
     "context": "webhook input label",
     "string": "Secret Key"
   },
+  "NQgbYA": {
+    "string": "Account Settings"
+  },
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
@@ -3567,9 +3576,6 @@
   "PRXpBm": {
     "context": "dialog header",
     "string": "Cancel Order"
-  },
-  "PRlD0A": {
-    "string": "Shipping"
   },
   "PTW56s": {
     "context": "alert",
