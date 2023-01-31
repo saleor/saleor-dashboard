@@ -1,4 +1,3 @@
-import Container from "@dashboard/components/Container";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
@@ -21,19 +20,17 @@ export const AppPage: React.FC<AppPageProps> = ({
   const classes = useStyles();
 
   return (
-    <Container className={classes.container}>
-      <div className={classes.iframeContainer}>
-        {url && (
-          <AppFrame
-            src={url}
-            appToken={data?.accessToken ?? ""}
-            onError={onError}
-            appId={data?.id ?? ""}
-            refetch={refetch}
-          />
-        )}
-      </div>
-    </Container>
+    <div className={classes.iframeContainer}>
+      {url && (
+        <AppFrame
+          src={url}
+          appToken={data?.accessToken ?? ""}
+          onError={onError}
+          appId={data?.id ?? ""}
+          refetch={refetch}
+        />
+      )}
+    </div>
   );
 };
 
