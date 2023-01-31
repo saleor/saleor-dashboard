@@ -1,10 +1,11 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { ListProps } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +13,6 @@ import AllAppList from "../AllAppList";
 import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
-import SectionHeader from "../SectionHeader";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
@@ -78,13 +78,14 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
       </TopNav>
-      <Typography variant="body1">
-        <FormattedMessage {...messages.installAppDescription} />
-      </Typography>
       <div className={classes.appContent}>
         {sectionsAvailability.installed && (
           <>
-            <SectionHeader title={intl.formatMessage(messages.installedApps)} />
+            <Box paddingX={7} paddingY={5}>
+              <Text as="h3" variant="heading">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+            </Box>
             <InstalledAppList
               appList={verifiedInstalledApps}
               appInstallationList={verifiedAppsIntallations}
@@ -94,35 +95,36 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             />
           </>
         )}
+
         <MarketplaceAlert error={marketplaceError} />
         {sectionsAvailability.all && !marketplaceError && (
-          <>
-            <SectionHeader
-              title={
-                <>
-                  <FormattedMessage {...messages.allApps} />
-                  <PreviewPill className={classes.previewLabel} />
-                </>
-              }
-            />
+          <Content>
+            <Box paddingY={5} display="flex">
+              <Text as="h3" variant="heading">
+                <FormattedMessage {...messages.allApps} />
+              </Text>
+              <PreviewPill className={classes.previewLabel} />
+            </Box>
             <AllAppList
               appList={verifiedInstallableMarketplaceApps}
               appInstallationList={appsInstallations}
               navigateToAppInstallPage={navigateToAppInstallPage}
               navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
             />
-          </>
+          </Content>
         )}
         {sectionsAvailability.comingSoon && !marketplaceError && (
-          <>
-            <SectionHeader
-              title={intl.formatMessage(messages.comingSoonApps)}
-            />
+          <Content>
+            <Box paddingY={5}>
+              <Text as="h3" variant="heading">
+                {intl.formatMessage(messages.comingSoonApps)}
+              </Text>
+            </Box>
             <AllAppList
               appList={comingSoonMarketplaceApps}
               appInstallationList={appsInstallations}
             />
-          </>
+          </Content>
         )}
       </div>
     </>
