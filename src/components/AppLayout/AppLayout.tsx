@@ -76,10 +76,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           </Box>
           <Box
             ref={appActionAnchor}
-            __position="fixed"
+            __position="sticky"
             // @ts-ignore
             __bottom={0}
-            __left={325}
+            __left={0}
             __right={0}
             backgroundColor="plain"
             borderTopWidth={1}
