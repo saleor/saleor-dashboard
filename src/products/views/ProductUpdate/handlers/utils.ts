@@ -1,6 +1,7 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
 import {
   DatagridChange,
   DatagridChangeOpts,
@@ -260,7 +261,8 @@ function getStockData(
 ) {
   return data
     .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
-    .map(toStockData);
+    .map(toStockData)
+    .filter(byStockWithQuantity);
 }
 
 function toStockData(change: DatagridChange) {
@@ -268,6 +270,10 @@ function toStockData(change: DatagridChange) {
     warehouse: getColumnStock(change.column),
     quantity: change.data.value,
   };
+}
+
+function byStockWithQuantity(stock: { quantity: unknown }) {
+  return stock.quantity !== numberCellEmptyValue;
 }
 
 function byHavingStockColumn(
