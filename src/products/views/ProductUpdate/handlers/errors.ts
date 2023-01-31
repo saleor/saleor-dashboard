@@ -63,7 +63,7 @@ export function getVariantUpdateMutationErrors(
   return [
     ...getChannelErrors(allErrors, varaintsIds),
     ...getStockErrors(allErrors, varaintsIds),
-    ...getRestOfError(allErrors, varaintsIds),
+    ...getRestOfErrors(allErrors, varaintsIds),
   ];
 }
 
@@ -113,7 +113,7 @@ function getStockErrors(
   }, []);
 }
 
-function getRestOfError(
+function getRestOfErrors(
   errors: ProductVariantBulkErrorFragment[],
   varaintsIds: string[],
 ) {

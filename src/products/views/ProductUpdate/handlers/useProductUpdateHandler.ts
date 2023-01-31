@@ -176,21 +176,24 @@ export function useProductUpdateHandler(
         product.variants,
         data.variants,
       );
-      const updateVariantsResults = await updateVariants({
-        variables: {
-          product: product.id,
-          input: updateInputdData,
-          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
-        },
-      });
 
-      const updateVariantsErrors = getVariantUpdateMutationErrors(
-        updateVariantsResults,
-        updateInputdData.map(data => data.id),
-      );
+      if (updateInputdData.length) {
+        const updateVariantsResults = await updateVariants({
+          variables: {
+            product: product.id,
+            input: updateInputdData,
+            errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+          },
+        });
 
-      variantErrors.push(...updateVariantsErrors);
-      errors.push(...updateVariantsErrors);
+        const updateVariantsErrors = getVariantUpdateMutationErrors(
+          updateVariantsResults,
+          updateInputdData.map(data => data.id),
+        );
+
+        variantErrors.push(...updateVariantsErrors);
+        errors.push(...updateVariantsErrors);
+      }
     }
 
     errors = [
