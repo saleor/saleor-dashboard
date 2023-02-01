@@ -1,2 +1,2 @@
 export * from "./useStaffUserOperations";
-export * from "./useUserOperations";
+export * from "./useProfileOperations";
