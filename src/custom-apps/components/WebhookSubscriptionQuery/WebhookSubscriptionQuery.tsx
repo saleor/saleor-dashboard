@@ -59,6 +59,7 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
           onEditQuery={setQuery}
           plugins={[explorerPlugin]}
           isHeadersEditorEnabled={false}
+          asyncEvents={data.asyncEvents}
         />
       </CardContent>
     </Card>

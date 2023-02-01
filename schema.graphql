@@ -185,66 +185,8 @@ type AccountUpdate {
 }
 
 """Represents user address data."""
-type Address implements Node & ObjectWithMetadata {
+type Address implements Node {
   id: ID!
-
-  """
-  List of private metadata items. Requires staff permissions to access.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """
-  List of public metadata items. Can be accessed without permissions.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  metafields(keys: [String!]): Metadata
   firstName: String!
   lastName: String!
   companyName: String!
@@ -5094,14 +5036,6 @@ type DeactivateAllUserTokens {
 }
 
 """
-Custom Decimal implementation.
-
-Returns Decimal as a float in the API,
-parses float to the Decimal on the way back.
-"""
-scalar Decimal
-
-"""
 Delete metadata of an object. To use it, you need to have access to the modified object.
 """
 type DeleteMetadata {
@@ -7424,13 +7358,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
 
   """URL to download an invoice."""
   url: String
-
-  """
-  Order related to the invoice.
-  
-  Added in Saleor 3.10.
-  """
-  order: Order
 }
 
 """
@@ -7485,13 +7412,6 @@ type InvoiceDeleted implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
-
-  """
-  Order related to the invoice.
-  
-  Added in Saleor 3.10.
-  """
-  order: Order
 }
 
 type InvoiceError {
@@ -7565,13 +7485,6 @@ type InvoiceRequested implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
-
-  """
-  Order related to the invoice.
-  
-  Added in Saleor 3.10.
-  """
-  order: Order!
 }
 
 """
@@ -7607,13 +7520,6 @@ type InvoiceSent implements Event {
 
   """The invoice the event relates to."""
   invoice: Invoice
-
-  """
-  Order related to the invoice.
-  
-  Added in Saleor 3.10.
-  """
-  order: Order
 }
 
 """
@@ -9297,13 +9203,9 @@ type Mutation {
   ): EventDeliveryRetry
 
   """
-  Performs a dry run of a webhook event. Supports a single event (the first if multiple provided in the `query`). Requires permission relevant to processed event.
+  Performs a dry run of a webhook event. 
   
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
-  
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  Requires one of the following permissions: MANAGE_APPS.
   """
   webhookDryRun(
     """The ID of an object to serialize."""
@@ -9312,6 +9214,19 @@ type Mutation {
     """The subscription query that defines the webhook event and its payload."""
     query: String!
   ): WebhookDryRun
+
+  """
+  Trigger a webhook event. 
+  
+  Requires one of the following permissions: MANAGE_APPS.
+  """
+  webhookTrigger(
+    """The ID of an object to serialize."""
+    objectId: ID!
+
+    """The ID of the webhook."""
+    webhookId: ID!
+  ): WebhookTrigger
 
   """
   Creates new warehouse. 
@@ -10508,13 +10423,11 @@ type Mutation {
   ): PaymentCheckBalance
 
   """
-  Create transaction for checkout or order.
+  Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
   
-  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
-  
-  Requires one of the following permissions: HANDLE_PAYMENTS.
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   transactionCreate(
     """The ID of the checkout or order."""
@@ -10528,13 +10441,11 @@ type Mutation {
   ): TransactionCreate
 
   """
-  Create transaction for checkout or order.
+  Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
   
   Added in Saleor 3.4.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires the following permissions: OWNER and HANDLE_PAYMENTS.
   """
   transactionUpdate(
     """The ID of the transaction."""
@@ -10554,7 +10465,7 @@ type Mutation {
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
-  Requires one of the following permissions: HANDLE_PAYMENTS.
+  Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
   """
   transactionRequestAction(
     """Determines the action type."""
@@ -10568,45 +10479,6 @@ type Mutation {
     """The ID of the transaction."""
     id: ID!
   ): TransactionRequestAction
-
-  """
-  Report the event for the transaction.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires the following permissions: OWNER and HANDLE_PAYMENTS.
-  """
-  transactionEventReport(
-    """The amount of the event to report."""
-    amount: PositiveDecimal!
-
-    """List of all possible actions for the transaction"""
-    availableActions: [TransactionActionEnum!]
-
-    """
-    The url that will allow to redirect user to payment provider page with event details.
-    """
-    externalUrl: String
-
-    """The ID of the transaction."""
-    id: ID!
-
-    """The message related to the event."""
-    message: String
-
-    """PSP Reference of the event to report."""
-    pspReference: String!
-
-    """
-    The time of the event to report. If not provide, the current time will be used.
-    """
-    time: DateTime
-
-    """Current status of the event to report."""
-    type: TransactionEventTypeEnum!
-  ): TransactionEventReport
 
   """
   Creates a new page. 
@@ -10981,32 +10853,6 @@ type Mutation {
     """ID of the order to be returned."""
     order: ID!
   ): FulfillmentReturnProducts
-
-  """
-  Adds granted refund to the order. 
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  orderGrantRefundCreate(
-    """ID of the order."""
-    id: ID!
-
-    """Fields required to create a granted refund for the order."""
-    input: OrderGrantRefundCreateInput!
-  ): OrderGrantRefundCreate
-
-  """
-  Updates granted refund. 
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  orderGrantRefundUpdate(
-    """ID of the granted refund."""
-    id: ID!
-
-    """Fields required to update a granted refund."""
-    input: OrderGrantRefundUpdateInput!
-  ): OrderGrantRefundUpdate
 
   """
   Create order lines for an order. 
@@ -13475,16 +13321,8 @@ type Order implements Node & ObjectWithMetadata {
   """Amount authorized for the order."""
   totalAuthorized: Money!
 
-  """
-  Amount captured for the order. This field will be removed in Saleor 4.0.Use `totalCharged` instead
-  """
+  """Amount captured by payment."""
   totalCaptured: Money!
-
-  """Amount charged for the order."""
-  totalCharged: Money!
-
-  """Amount canceled for the order."""
-  totalCanceled: Money!
 
   """
   List of events associated with the order.
@@ -13547,92 +13385,6 @@ type Order implements Node & ObjectWithMetadata {
   Added in Saleor 3.10.
   """
   externalReference: String
-
-  """
-  List of granted refunds.
-  
-  Added in Saleor 3.8.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  grantedRefunds: [OrderGrantedRefund!]!
-
-  """
-  Total amount of granted refund.
-  
-  Added in Saleor 3.8.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalGrantedRefund: Money!
-
-  """
-  Total refund amount for the order.
-  
-  Added in Saleor 3.8.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
-  totalRefunded: Money!
-
-  """
-  Total amount of ongoing refund requests for the order's transactions.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalRefundPending: Money!
-
-  """
-  Total amount of ongoing authorize requests for the order's transactions.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalAuthorizePending: Money!
-
-  """
-  Total amount of ongoing charge requests for the order's transactions.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalChargePending: Money!
-
-  """
-  Total amount of ongoing cancel requests for the order's transactions.
-  
-  Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalCancelPending: Money!
-
-  """
-  The difference amount between granted refund and the amounts that are pending and refunded.
-  
-  Added in Saleor 3.8.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
-  Requires one of the following permissions: MANAGE_ORDERS.
-  """
-  totalRemainingGrant: Money!
 }
 
 enum OrderAction {
@@ -14049,6 +13801,7 @@ enum OrderErrorCode {
   DUPLICATED_INPUT_ITEM
   NOT_AVAILABLE_IN_CHANNEL
   CHANNEL_INACTIVE
+  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
 }
 
 """History log of the order."""
@@ -14124,7 +13877,7 @@ type OrderEvent implements Node {
   discount: OrderEventDiscountObject
 
   """The status of payment's transaction."""
-  status: TransactionEventStatus
+  status: TransactionStatus
 
   """The reference of payment's transaction."""
   reference: String
@@ -14394,121 +14147,6 @@ type OrderFullyPaid implements Event {
 
   """The order the event relates to."""
   order: Order
-}
-
-"""
-Adds granted refund to the order. 
-
-Requires one of the following permissions: MANAGE_ORDERS.
-"""
-type OrderGrantRefundCreate {
-  """Order which has assigned new grant refund."""
-  order: Order
-
-  """Created granted refund."""
-  grantedRefund: OrderGrantedRefund
-  errors: [OrderGrantRefundCreateError!]!
-}
-
-type OrderGrantRefundCreateError {
-  """
-  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-  """
-  field: String
-
-  """The error message."""
-  message: String
-
-  """The error code."""
-  code: OrderGrantRefundCreateErrorCode!
-}
-
-"""An enumeration."""
-enum OrderGrantRefundCreateErrorCode {
-  GRAPHQL_ERROR
-  NOT_FOUND
-}
-
-input OrderGrantRefundCreateInput {
-  """Amount of the granted refund."""
-  amount: Decimal!
-
-  """Reason of the granted refund."""
-  reason: String
-}
-
-"""
-Updates granted refund. 
-
-Requires one of the following permissions: MANAGE_ORDERS.
-"""
-type OrderGrantRefundUpdate {
-  """Order which has assigned updated grant refund."""
-  order: Order
-
-  """Created granted refund."""
-  grantedRefund: OrderGrantedRefund
-  errors: [OrderGrantRefundUpdateError!]!
-  orderGrantedRefund: OrderGrantedRefund
-}
-
-type OrderGrantRefundUpdateError {
-  """
-  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-  """
-  field: String
-
-  """The error message."""
-  message: String
-
-  """The error code."""
-  code: OrderGrantRefundUpdateErrorCode!
-}
-
-"""An enumeration."""
-enum OrderGrantRefundUpdateErrorCode {
-  GRAPHQL_ERROR
-  NOT_FOUND
-  REQUIRED
-}
-
-input OrderGrantRefundUpdateInput {
-  """Amount of the granted refund."""
-  amount: Decimal
-
-  """Reason of the granted refund."""
-  reason: String
-}
-
-"""
-The details of granted refund.
-
-Added in Saleor 3.8.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type OrderGrantedRefund {
-  id: ID!
-
-  """Time of creation."""
-  createdAt: DateTime!
-
-  """Time of last update."""
-  updatedAt: DateTime!
-
-  """Refund amount."""
-  amount: Money!
-
-  """Reason of the refund."""
-  reason: String
-
-  """
-  User who performed the action. Requires of of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
-  """
-  user: User
-
-  """App that performed the action."""
-  app: App
 }
 
 """Represents order line of particular order."""
@@ -23718,16 +23356,13 @@ Represents possible actions on payment transaction.
     The following actions are possible:
     CHARGE - Represents the charge action.
     REFUND - Represents a refund action.
-    VOID - Represents a void action. DEPRECATED: this enum value will be removed
-    in Saleor 3.9 (Feature Preview). Use `CANCEL` instead.
-    CANCEL - Represents a cancel action.
+    VOID - Represents a void action.
     
 """
 enum TransactionActionEnum {
   CHARGE
   REFUND
   VOID
-  CANCEL
 }
 
 """
@@ -23735,7 +23370,7 @@ Event sent when transaction action is requested.
 
 Added in Saleor 3.4.
 
-DEPRECATED: This subscription will be removed in 3.10 release. Use `TransactionRequestCapture`, `TransactionRequestRefund`, `TransactionRequestCancel` instead.
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
 """
 type TransactionActionRequest implements Event {
   """Time of the event."""
@@ -23750,75 +23385,31 @@ type TransactionActionRequest implements Event {
   """The application receiving the webhook."""
   recipient: App
 
-  """Look up a transaction."""
+  """
+  Look up a transaction.
+  
+  Added in Saleor 3.4.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
   transaction: TransactionItem
 
-  """Requested action data."""
+  """
+  Requested action data.
+  
+  Added in Saleor 3.4.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
   action: TransactionAction!
 }
 
 """
-Event sent when transaction cancelation is requested.
-
-Added in Saleor 3.9.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type TransactionCancelationRequested implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """Look up a transaction."""
-  transaction: TransactionItem
-
-  """Requested action data."""
-  action: TransactionAction!
-}
-
-"""
-Event sent when transaction charge is requested.
-
-Added in Saleor 3.9.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type TransactionChargeRequested implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """Look up a transaction."""
-  transaction: TransactionItem
-
-  """Requested action data."""
-  action: TransactionAction!
-}
-
-"""
-Create transaction for checkout or order.
+Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
 
 Added in Saleor 3.4.
 
-Note: this API is currently in Feature Preview and can be subject to changes at later point. 
-
-Requires one of the following permissions: HANDLE_PAYMENTS.
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
 """
 type TransactionCreate {
   transaction: TransactionItem
@@ -23845,7 +23436,6 @@ enum TransactionCreateErrorCode {
   NOT_FOUND
   INCORRECT_CURRENCY
   METADATA_KEY_REQUIRED
-  UNIQUE
 }
 
 input TransactionCreateInput {
@@ -23855,17 +23445,8 @@ input TransactionCreateInput {
   """Payment type used for this transaction."""
   type: String!
 
-  """
-  Reference of the transaction. The reference and PSP reference must be unique across all `transactionItem` objects. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.
-  """
+  """Reference of the transaction."""
   reference: String
-
-  """
-  PSP Reference of the transaction. The PSP reference must be unique across all `transactionItem` objects.
-  
-  Added in Saleor 3.8.
-  """
-  pspReference: String
 
   """List of all possible actions for the transaction"""
   availableActions: [TransactionActionEnum!]
@@ -23879,28 +23460,14 @@ input TransactionCreateInput {
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
 
-  """
-  Amount voided by this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 4.0.Use `amountCanceled` instead.
-  """
+  """Amount voided by this transaction."""
   amountVoided: MoneyInput
-
-  """Amount canceled by this transaction."""
-  amountCanceled: MoneyInput
 
   """Payment public metadata."""
   metadata: [MetadataInput!]
 
   """Payment private metadata."""
   privateMetadata: [MetadataInput!]
-
-  """
-  The url that will allow to redirect user to payment provider page with transaction event details.
-  
-  Added in Saleor 3.10.
-  """
-  externalUrl: String
 }
 
 """Represents transaction's event."""
@@ -23910,169 +23477,24 @@ type TransactionEvent implements Node {
   createdAt: DateTime!
 
   """Status of transaction's event."""
-  status: TransactionEventStatus! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `type` instead.")
+  status: TransactionStatus!
 
   """Reference of transaction's event."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.")
-
-  """
-  PSP reference of transaction.
-  
-  Added in Saleor 3.8.
-  """
-  pspReference: String!
+  reference: String!
 
   """Name of the transaction's event."""
-  name: String @deprecated(reason: "This field will be removed in Saleor 4.0. Use `message` instead.")
-
-  """Message related to the transaction's event."""
-  message: String
-
-  """
-  The url that will allow to redirect user to payment provider page with transaction details.
-  
-  Added in Saleor 3.8.
-  """
-  externalUrl: String!
-
-  """
-  The amount related to this event.
-  
-  Added in Saleor 3.8.
-  """
-  amount: Money!
-
-  """
-  The type of action related to this event.
-  
-  Added in Saleor 3.8.
-  """
-  type: TransactionEventTypeEnum
-
-  """
-  User or App that created the transaction event.
-  
-  Added in Saleor 3.10.
-  """
-  createdBy: UserOrApp
+  name: String
 }
 
 input TransactionEventInput {
   """Current status of the payment transaction."""
-  status: TransactionEventStatus!
+  status: TransactionStatus!
 
-  """
-  Reference of the transaction. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.
-  """
+  """Reference of the transaction."""
   reference: String
-
-  """
-  PSP Reference related to this action.
-  
-  Added in Saleor 3.10.
-  """
-  pspReference: String
 
   """Name of the transaction."""
   name: String
-}
-
-"""
-Report the event for the transaction.
-
-Added in Saleor 3.10.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-
-Requires the following permissions: OWNER and HANDLE_PAYMENTS.
-"""
-type TransactionEventReport {
-  """Defines if the reported event hasn't been processed earlier."""
-  alreadyProcessed: Boolean
-
-  """The transaction related to the reported event."""
-  transaction: TransactionItem
-
-  """
-  The event assigned to this report. if `alreadyProcessed` is set to `true`, the previously processed event will be returned.
-  """
-  transactionEvent: TransactionEvent
-  errors: [TransactionEventReportError!]!
-}
-
-type TransactionEventReportError {
-  """
-  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-  """
-  field: String
-
-  """The error message."""
-  message: String
-
-  """The error code."""
-  code: TransactionEventReportErrorCode!
-}
-
-"""An enumeration."""
-enum TransactionEventReportErrorCode {
-  INVALID
-  GRAPHQL_ERROR
-  NOT_FOUND
-  INCORRECT_DETAILS
-}
-
-"""
-Represents a status of payment transaction.
-
-    The following statuses are possible:
-    SUCCESS - Represents a sucess action.
-    FAILURE - Represents a failure action.
-    PENDING - Represents a pending action.
-    
-"""
-enum TransactionEventStatus {
-  PENDING
-  SUCCESS
-  FAILURE
-}
-
-"""
-Represents possible event types.
-
-    The following types are possible:
-    AUTHORIZATION_SUCCESS - represents success authorization.
-    AUTHORIZATION_FAILURE - represents failure authorization.
-    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.
-    AUTHORIZATION_REQUEST - represents authorization request.
-    CHARGE_SUCCESS - represents success charge.
-    CHARGE_FAILURE - represents failure charge.
-    CHARGE_BACK - represents chargeback.
-    CHARGE_REQUEST - represents charge request.
-    REFUND_SUCCESS - represents success refund.
-    REFUND_FAILURE - represents failure refund.
-    REFUND_REVERSE - represents reverse refund.
-    REFUND_REQUEST - represents refund request.
-    CANCEL_SUCCESS - represents success cancel.
-    CANCEL_FAILURE - represents failure cancel.
-    CANCEL_REQUEST - represents cancel request.
-    
-"""
-enum TransactionEventTypeEnum {
-  AUTHORIZATION_SUCCESS
-  AUTHORIZATION_FAILURE
-  AUTHORIZATION_ADJUSTMENT
-  AUTHORIZATION_REQUEST
-  CHARGE_SUCCESS
-  CHARGE_FAILURE
-  CHARGE_BACK
-  CHARGE_REQUEST
-  REFUND_SUCCESS
-  REFUND_FAILURE
-  REFUND_REVERSE
-  REFUND_REQUEST
-  CANCEL_SUCCESS
-  CANCEL_FAILURE
-  CANCEL_REQUEST
 }
 
 """
@@ -24142,47 +23564,14 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """Total amount authorized for this payment."""
   authorizedAmount: Money!
 
-  """
-  Total amount of ongoing authorization requests for the transaction.
-  
-  Added in Saleor 3.10.
-  """
-  authorizePendingAmount: Money!
-
   """Total amount refunded for this payment."""
   refundedAmount: Money!
 
-  """
-  Total amount of ongoing refund requests for the transaction.
-  
-  Added in Saleor 3.10.
-  """
-  refundPendingAmount: Money!
-
-  """
-  Total amount voided for this payment. This field will be removed in Saleor 4.0.Use `canceledAmount` instead.
-  """
+  """Total amount voided for this payment."""
   voidedAmount: Money!
-
-  """Total amount canceled for this payment."""
-  canceledAmount: Money!
-
-  """
-  Total amount of ongoing cancel requests for the transaction.
-  
-  Added in Saleor 3.10.
-  """
-  cancelPendingAmount: Money!
 
   """Total amount charged for this payment."""
   chargedAmount: Money!
-
-  """
-  Total amount of ongoing charge requests for the transaction.
-  
-  Added in Saleor 3.10.
-  """
-  chargePendingAmount: Money!
 
   """Status of transaction."""
   status: String!
@@ -24191,14 +23580,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
   type: String!
 
   """Reference of transaction."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.")
-
-  """
-  PSP reference of transaction.
-  
-  Added in Saleor 3.8.
-  """
-  pspReference: String!
+  reference: String!
 
   """
   The related order.
@@ -24209,20 +23591,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
 
   """List of all transaction's events."""
   events: [TransactionEvent!]!
-
-  """
-  User or App that created the transaction.
-  
-  Added in Saleor 3.10.
-  """
-  createdBy: UserOrApp
-
-  """
-  The url that will allow to redirect user to payment provider page with transaction details.
-  
-  Added in Saleor 3.8.
-  """
-  externalUrl: String!
 }
 
 """
@@ -24268,40 +23636,13 @@ enum TransactionKind {
 }
 
 """
-Event sent when transaction refund is requested.
-
-Added in Saleor 3.9.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point.
-"""
-type TransactionRefundRequested implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """Look up a transaction."""
-  transaction: TransactionItem
-
-  """Requested action data."""
-  action: TransactionAction!
-}
-
-"""
 Request an action for payment transaction.
 
 Added in Saleor 3.4.
 
 Note: this API is currently in Feature Preview and can be subject to changes at later point. 
 
-Requires one of the following permissions: HANDLE_PAYMENTS.
+Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
 """
 type TransactionRequestAction {
   transaction: TransactionItem
@@ -24329,14 +23670,19 @@ enum TransactionRequestActionErrorCode {
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
 }
 
+"""An enumeration."""
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILURE
+}
+
 """
-Create transaction for checkout or order.
+Create transaction for checkout or order. Requires the following permissions: AUTHENTICATED_APP and HANDLE_PAYMENTS.
 
 Added in Saleor 3.4.
 
 Note: this API is currently in Feature Preview and can be subject to changes at later point.
-
-Requires the following permissions: OWNER and HANDLE_PAYMENTS.
 """
 type TransactionUpdate {
   transaction: TransactionItem
@@ -24363,7 +23709,6 @@ enum TransactionUpdateErrorCode {
   NOT_FOUND
   INCORRECT_CURRENCY
   METADATA_KEY_REQUIRED
-  UNIQUE
 }
 
 input TransactionUpdateInput {
@@ -24373,17 +23718,8 @@ input TransactionUpdateInput {
   """Payment type used for this transaction."""
   type: String
 
-  """
-  Reference of the transaction. The reference and PSP reference must be unique across all `transactionItem` objects. DEPRECATED: this field will be removed in Saleor 3.9 (Feature Preview). Use `pspReference` instead.
-  """
+  """Reference of the transaction."""
   reference: String
-
-  """
-  PSP Reference of the transaction. The PSP reference must be unique across all `transactionItem` objects.
-  
-  Added in Saleor 3.8.
-  """
-  pspReference: String
 
   """List of all possible actions for the transaction"""
   availableActions: [TransactionActionEnum!]
@@ -24397,28 +23733,14 @@ input TransactionUpdateInput {
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
 
-  """
-  Amount voided by this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 4.0.Use `amountCanceled` instead.
-  """
+  """Amount voided by this transaction."""
   amountVoided: MoneyInput
-
-  """Amount canceled by this transaction."""
-  amountCanceled: MoneyInput
 
   """Payment public metadata."""
   metadata: [MetadataInput!]
 
   """Payment private metadata."""
   privateMetadata: [MetadataInput!]
-
-  """
-  The url that will allow to redirect user to payment provider page with transaction event details.
-  
-  Added in Saleor 3.10.
-  """
-  externalUrl: String
 }
 
 union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | SaleTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent
@@ -24871,8 +24193,6 @@ input UserCreateInput {
   """
   channel: String
 }
-
-union UserOrApp = User | App
 
 type UserPermission {
   """Internal code for permission."""
@@ -26064,13 +25384,9 @@ type WebhookDelete {
 }
 
 """
-Performs a dry run of a webhook event. Supports a single event (the first if multiple provided in the `query`). Requires permission relevant to processed event.
+Performs a dry run of a webhook event. 
 
-Added in Saleor 3.10.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point. 
-
-Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+Requires one of the following permissions: MANAGE_APPS.
 """
 type WebhookDryRun {
   """JSON payload, that would be sent out to webhook's target URL."""
@@ -26094,11 +25410,9 @@ type WebhookDryRunError {
 """An enumeration."""
 enum WebhookDryRunErrorCode {
   GRAPHQL_ERROR
-  UNABLE_TO_PARSE
   NOT_FOUND
   INVALID_ID
   MISSING_PERMISSION
-  TYPE_NOT_SUPPORTED
 }
 
 type WebhookError {
@@ -26974,9 +26288,6 @@ enum WebhookEventTypeEnum {
 
   """Void payment."""
   PAYMENT_VOID
-  TRANSACTION_CHARGE_REQUESTED
-  TRANSACTION_REFUND_REQUESTED
-  TRANSACTION_CANCELATION_REQUESTED
 
   """
   Event called for checkout tax calculation.
@@ -27028,9 +26339,6 @@ enum WebhookEventTypeSyncEnum {
 
   """Void payment."""
   PAYMENT_VOID
-  TRANSACTION_CHARGE_REQUESTED
-  TRANSACTION_REFUND_REQUESTED
-  TRANSACTION_CANCELATION_REQUESTED
 
   """
   Event called for checkout tax calculation.
@@ -27168,6 +26476,38 @@ enum WebhookSampleEventTypeEnum {
   VOUCHER_DELETED
   VOUCHER_METADATA_UPDATED
   OBSERVABILITY
+}
+
+"""
+Trigger a webhook event. 
+
+Requires one of the following permissions: MANAGE_APPS.
+"""
+type WebhookTrigger {
+  delivery: EventDelivery
+  errors: [WebhookTriggerError!]!
+}
+
+type WebhookTriggerError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: WebhookTriggerErrorCode!
+}
+
+"""An enumeration."""
+enum WebhookTriggerErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INVALID_ID
+  MISSING_PERMISSION
+  MISSING_QUERY
 }
 
 """

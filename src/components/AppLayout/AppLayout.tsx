@@ -1,19 +1,30 @@
 import { useUser } from "@dashboard/auth";
 import useAppState from "@dashboard/hooks/useAppState";
 import { isDarkTheme } from "@dashboard/misc";
-import { LinearProgress } from "@material-ui/core";
-import { useActionBar, useBacklink, useTheme } from "@saleor/macaw-ui";
+import { LinearProgress, useMediaQuery } from "@material-ui/core";
+import {
+  SaleorTheme,
+  Sidebar,
+  SidebarDrawer,
+  useActionBar,
+  useBacklink,
+  useTheme,
+} from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
+import { useIntl } from "react-intl";
+import useRouter from "use-react-router";
 
 import Container from "../Container";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import { Sidebar, SidebarDrawer } from "../Sidebar";
 import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
+import useMenuStructure from "./menuStructure";
+import { SidebarLink } from "./SidebarLink";
 import { useFullSizeStyles, useStyles } from "./styles";
+import { isMenuActive } from "./utils";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -30,11 +41,20 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   const { anchor: appActionAnchor } = useActionBar();
   const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
+  const intl = useIntl();
   const [appState] = useAppState();
+  const { location } = useRouter();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
+  const isMdUp = useMediaQuery((theme: SaleorTheme) =>
+    theme.breakpoints.up("md"),
+  );
 
   const { availableChannels, channel, isPickerActive, setChannel } =
     useAppChannel(false);
+  const [menuStructure, handleMenuItemClick] = useMenuStructure(intl, user);
+  const activeMenu = menuStructure.find(menuItem =>
+    isMenuActive(location.pathname, menuItem),
+  )?.id;
 
   const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
@@ -45,7 +65,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({
         setVisibility={setNavigatorVisibility}
       />
       <div className={classes.root}>
-        <Sidebar />
+        {isMdUp && (
+          <Sidebar
+            activeId={activeMenu}
+            menuItems={menuStructure}
+            onMenuItemClick={handleMenuItemClick}
+            logoHref="/"
+            linkComponent={SidebarLink}
+          />
+        )}
         <div
           className={clsx(classes.content, {
             [fullSizeClasses.content]: fullSize,
@@ -66,7 +94,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                 <div className={classes.header}>
                   <div className={classes.headerAnchor} ref={appHeaderAnchor} />
                   <div className={classes.headerToolbar}>
-                    <SidebarDrawer />
+                    {!isMdUp && (
+                      <SidebarDrawer
+                        menuItems={menuStructure}
+                        logoHref="/"
+                        onMenuItemClick={handleMenuItemClick}
+                        linkComponent={SidebarLink}
+                      />
+                    )}
                     <div className={classes.spacer} />
                     <div className={classes.userBar}>
                       <NavigatorButton

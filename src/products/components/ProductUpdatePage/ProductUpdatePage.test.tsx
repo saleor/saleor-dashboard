@@ -117,5 +117,13 @@ describe("Product details page", () => {
     );
     // Assert
     expect(onSubmit.mock.calls[0][0].attributes[0].value.length).toEqual(0);
+
+    // Act
+    const moreButton = screen.queryAllByTestId("show-more-button")[0];
+    await user.click(moreButton);
+    const graphiQLLink = screen.queryAllByTestId("graphiql-redirect")[0];
+
+    // Assert
+    expect(graphiQLLink).toBeInTheDocument();
   });
 });

@@ -11,7 +11,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment } from "@dashboard/graphql";
 import { translateBoolean } from "@dashboard/intl";
-import { maybe, renderCollection } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
@@ -95,7 +95,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           className={classes.colSlug}
           direction={
             sort.sort === AttributeListUrlSortField.slug
-              ? getArrowDirection(sort.asc)
+              ? getArrowDirection(!!sort.asc)
               : undefined
           }
           arrowPosition="right"
@@ -107,7 +107,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           className={classes.colName}
           direction={
             sort.sort === AttributeListUrlSortField.name
-              ? getArrowDirection(sort.asc)
+              ? getArrowDirection(!!sort.asc)
               : undefined
           }
           onClick={() => onSort(AttributeListUrlSortField.name)}
@@ -122,7 +122,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           className={classes.colVisible}
           direction={
             sort.sort === AttributeListUrlSortField.visible
-              ? getArrowDirection(sort.asc)
+              ? getArrowDirection(!!sort.asc)
               : undefined
           }
           textAlign="center"
@@ -138,7 +138,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           className={classes.colSearchable}
           direction={
             sort.sort === AttributeListUrlSortField.searchable
-              ? getArrowDirection(sort.asc)
+              ? getArrowDirection(!!sort.asc)
               : undefined
           }
           textAlign="center"
@@ -154,7 +154,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           className={classes.colFaceted}
           direction={
             sort.sort === AttributeListUrlSortField.useInFacetedSearch
-              ? getArrowDirection(sort.asc)
+              ? getArrowDirection(!!sort.asc)
               : undefined
           }
           textAlign="center"
@@ -185,14 +185,14 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 key={attribute ? attribute.id : "skeleton"}
                 href={attribute && attributeUrl(attribute.id)}
                 className={classes.link}
-                data-test-id={"id-" + maybe(() => attribute.id)}
+                data-test-id={`id-${attribute?.id}`}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
                     checked={isSelected}
                     disabled={disabled}
                     disableClickPropagation
-                    onChange={() => toggle(attribute.id)}
+                    onChange={() => toggle(attribute?.id ?? "")}
                   />
                 </TableCell>
                 <TableCell className={classes.colSlug} data-test-id="slug">
@@ -204,7 +204,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 <TableCell
                   className={classes.colVisible}
                   data-test-id="visible"
-                  data-test-visible={maybe(() => attribute.visibleInStorefront)}
+                  data-test-visible={attribute?.visibleInStorefront}
                 >
                   {attribute ? (
                     translateBoolean(attribute.visibleInStorefront, intl)
@@ -215,9 +215,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 <TableCell
                   className={classes.colSearchable}
                   data-test-id="searchable"
-                  data-test-searchable={maybe(
-                    () => attribute.filterableInDashboard,
-                  )}
+                  data-test-searchable={attribute?.filterableInDashboard}
                 >
                   {attribute ? (
                     translateBoolean(attribute.filterableInDashboard, intl)
@@ -228,9 +226,9 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 <TableCell
                   className={classes.colFaceted}
                   data-test-id="use-in-faceted-search"
-                  data-test-use-in-faceted-search={maybe(
-                    () => attribute.filterableInStorefront,
-                  )}
+                  data-test-use-in-faceted-search={
+                    attribute?.filterableInStorefront
+                  }
                 >
                   {attribute ? (
                     translateBoolean(attribute.filterableInStorefront, intl)

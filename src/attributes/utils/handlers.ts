@@ -48,7 +48,7 @@ export function createAttributeMultiChangeHandler(
 
     const newAttributeValues = toggle(
       value,
-      attribute.value,
+      attribute?.value ?? [],
       (a, b) => a === b,
     );
 
@@ -88,6 +88,7 @@ export function createFetchReferencesHandler(
     ) {
       fetchReferencePages(value);
     } else if (
+      attribute.data?.entityType &&
       [
         AttributeEntityTypeEnum.PRODUCT,
         AttributeEntityTypeEnum.PRODUCT_VARIANT,
@@ -116,6 +117,7 @@ export function createFetchMoreReferencesHandler(
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return fetchMoreReferencePages;
   } else if (
+    attribute.data?.entityType &&
     [
       AttributeEntityTypeEnum.PRODUCT,
       AttributeEntityTypeEnum.PRODUCT_VARIANT,
@@ -145,7 +147,7 @@ export function createAttributeFileChangeHandler(
       addAttributeNewFileValue({
         data: null,
         id: attributeId,
-        label: null,
+        label: "",
         value,
       });
     }
@@ -167,8 +169,8 @@ export function createAttributeValueReorderHandler(
     );
 
     const reorderedValues = move(
-      attribute.value[reorder.oldIndex],
-      attribute.value,
+      attribute?.value?.[reorder.oldIndex] ?? "",
+      attribute?.value ?? [],
       (a, b) => a === b,
       reorder.newIndex,
     );
@@ -194,7 +196,7 @@ function getFileInput(
   }
   return {
     file: attribute.data.selectedValues?.[0]?.file?.url,
-    contentType: attribute.data.selectedValues?.[0]?.file.contentType,
+    contentType: attribute.data.selectedValues?.[0]?.file?.contentType,
     id: attribute.id,
   };
 }
@@ -318,7 +320,9 @@ export const handleDeleteMultipleAttributeValues = async (
   attributes: Array<
     | PageSelectedAttributeFragment
     | ProductFragment["attributes"][0]
-    | ProductVariantDetailsQuery["productVariant"]["nonSelectionAttributes"][0]
+    | NonNullable<
+        ProductVariantDetailsQuery["productVariant"]
+      >["nonSelectionAttributes"][0]
   >,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,

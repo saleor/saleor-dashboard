@@ -76,17 +76,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     ListViews.ATTRIBUTE_VALUE_LIST,
   );
 
-  const {
-    pageInfo,
-    pageValues,
-    loadNextPage,
-    loadPreviousPage,
-    loadPage,
-  } = useLocalPageInfo(values, settings?.rowNumber);
+  const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } =
+    useLocalPageInfo(values, settings?.rowNumber);
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
-      if (data.attributeCreate.errors.length === 0) {
+      if (data?.attributeCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -94,7 +89,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             defaultMessage: "Successfully created attribute",
           }),
         });
-        navigate(attributeUrl(data.attributeCreate.attribute.id));
+        navigate(attributeUrl(data?.attributeCreate?.attribute?.id ?? ""));
       }
     },
   });
@@ -113,8 +108,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   React.useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
-    const newValues = remove(values[id], values, areValuesEqual);
-    setValues(newValues);
+    if (id) {
+      const newValues = remove(values[id], values, areValuesEqual);
+      setValues(newValues);
+    }
     closeModal();
   };
 
@@ -122,7 +119,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
-      setValues(updateAtIndex(input, values, id));
+      if (id) {
+        setValues(updateAtIndex(input, values, id));
+      }
       closeModal();
     }
   };
@@ -164,7 +163,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     });
 
     return {
-      id: result.data.attributeCreate?.attribute?.id || null,
+      id: result.data?.attributeCreate?.attribute?.id ?? undefined,
       errors: getMutationErrors(result),
     };
   };
@@ -179,8 +178,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     <AttributePage
       attribute={null}
       disabled={attributeCreateOpts.loading}
-      errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-      onDelete={undefined}
+      errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
+      onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
@@ -196,7 +195,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       }
       saveButtonBarState={attributeCreateOpts.status}
       values={{
-        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        __typename:
+          "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           __typename: "PageInfo" as "PageInfo",
           endCursor: "",
@@ -205,14 +205,15 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           startCursor: "",
         },
         edges: pageValues.map((value, valueIndex) => ({
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "1",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
             file: value?.fileUrl
               ? {
                   url: value.fileUrl,
-                  contentType: value.contentType,
+                  contentType: value.contentType ?? "",
                   __typename: "File",
                 }
               : null,
@@ -251,16 +252,16 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           {values.length > 0 && (
             <>
               <AttributeValueDeleteDialog
-                attributeName={undefined}
+                attributeName=""
                 open={params.action === "remove-value"}
-                name={getStringOrPlaceholder(values[id]?.name)}
+                name={getStringOrPlaceholder(id ? values[id]?.name : "")}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}
-                attributeValue={values[id]}
+                attributeValue={id ? values[id] : null}
                 confirmButtonState="default"
                 disabled={false}
                 errors={valueErrors}

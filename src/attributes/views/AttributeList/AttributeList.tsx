@@ -68,26 +68,24 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
-  const [
-    attributeBulkDelete,
-    attributeBulkDeleteOpts,
-  ] = useAttributeBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.attributeBulkDelete.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "lw9WIk",
-            defaultMessage: "Attributes successfully delete",
-            description: "deleted multiple attributes",
-          }),
-        });
-        reset();
-        refetch();
-      }
-    },
-  });
+  const [attributeBulkDelete, attributeBulkDeleteOpts] =
+    useAttributeBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.attributeBulkDelete?.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "lw9WIk",
+              defaultMessage: "Attributes successfully delete",
+              description: "deleted multiple attributes",
+            }),
+          });
+          reset();
+          refetch();
+        }
+      },
+    });
 
   const tabs = getFilterTabs();
 
@@ -98,17 +96,14 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     AttributeListUrlQueryParams
   >(navigate, attributeListUrl, params);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: attributeListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: attributeListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -132,7 +127,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   };
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.attributes.pageInfo),
+    pageInfo: data?.attributes?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -142,7 +137,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <AttributeListPage
-        attributes={mapEdgesToItems(data?.attributes)}
+        attributes={mapEdgesToItems(data?.attributes) ?? []}
         currentTab={currentTab}
         disabled={loading || attributeBulkDeleteOpts.loading}
         filterOpts={getFilterOpts(params)}
@@ -176,12 +171,14 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
       />
       <AttributeBulkDeleteDialog
         confirmButtonState={attributeBulkDeleteOpts.status}
-        open={params.action === "remove" && maybe(() => params.ids.length > 0)}
+        open={
+          params.action === "remove" && !!params.ids && params.ids.length > 0
+        }
         onConfirm={() =>
-          attributeBulkDelete({ variables: { ids: params.ids } })
+          attributeBulkDelete({ variables: { ids: params?.ids ?? [] } })
         }
         onClose={closeModal}
-        quantity={maybe(() => params.ids.length)}
+        quantity={params.ids?.length ?? 0}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

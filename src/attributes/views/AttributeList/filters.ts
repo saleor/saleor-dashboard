@@ -4,7 +4,7 @@ import {
 } from "@dashboard/attributes/components/AttributeListPage";
 import { FilterElement } from "@dashboard/components/Filter";
 import { AttributeFilterInput } from "@dashboard/graphql";
-import { maybe, parseBoolean } from "@dashboard/misc";
+import { parseBoolean } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,
@@ -25,19 +25,19 @@ export function getFilterOpts(
   return {
     filterableInStorefront: {
       active: params.filterableInStorefront !== undefined,
-      value: maybe(() => parseBoolean(params.filterableInStorefront, true)),
+      value: parseBoolean(params.filterableInStorefront, true),
     },
     isVariantOnly: {
       active: params.isVariantOnly !== undefined,
-      value: maybe(() => parseBoolean(params.isVariantOnly, true)),
+      value: parseBoolean(params.isVariantOnly, true),
     },
     valueRequired: {
       active: params.valueRequired !== undefined,
-      value: maybe(() => parseBoolean(params.valueRequired, true)),
+      value: parseBoolean(params.valueRequired, true),
     },
     visibleInStorefront: {
       active: params.visibleInStorefront !== undefined,
-      value: maybe(() => parseBoolean(params.visibleInStorefront, true)),
+      value: parseBoolean(params.visibleInStorefront, true),
     },
   };
 }
@@ -98,16 +98,10 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<AttributeListUrlQueryParams, AttributeListUrlFilters>(
-  AttributeListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<AttributeListUrlQueryParams, AttributeListUrlFilters>(
+    AttributeListUrlFiltersEnum,
+  );

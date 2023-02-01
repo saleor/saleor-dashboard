@@ -66,7 +66,7 @@ export function filterable(
   attribute: Pick<AttributeFragment, "inputType">,
 ): boolean {
   return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
-    attribute.inputType,
+    attribute.inputType!,
   );
 }
 
@@ -86,9 +86,9 @@ export function attributeValueFragmentToFormData(
   data: AttributeValueFragment | null,
 ): AttributeValueEditDialogFormData {
   return {
-    name: data?.name,
-    value: data?.value,
-    contentType: data?.file?.contentType,
+    name: data?.name ?? "",
+    value: data?.value ?? "",
+    contentType: data?.file?.contentType ?? "",
     fileUrl: data?.file?.url,
   };
 }
@@ -265,7 +265,7 @@ export const mergeAttributeValues = (
 ) => {
   const attribute = attributes.find(attribute => attribute.id === attributeId);
 
-  return attribute.value
+  return attribute?.value
     ? [...attribute.value, ...attributeValues]
     : attributeValues;
 };
@@ -332,8 +332,8 @@ export const getAttributesOfUploadedFiles = (
     const attribute = fileValuesToUpload[index];
 
     return {
-      file: uploadFileResult.data.fileUpload.uploadedFile.url,
-      contentType: uploadFileResult.data.fileUpload.uploadedFile.contentType,
+      file: uploadFileResult.data?.fileUpload?.uploadedFile?.url,
+      contentType: uploadFileResult.data?.fileUpload?.uploadedFile?.contentType,
       id: attribute.id,
       values: [],
     };
@@ -380,7 +380,7 @@ export const getFileAttributeDisplayData = (
 
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -388,12 +388,18 @@ export const getPageReferenceAttributeDisplayData = (
     references:
       referencePages?.length > 0 && attribute.value?.length > 0
         ? mapPagesToChoices(
-            attribute.value.map(value => {
+            attribute.value.reduce<
+              RelayToFlat<NonNullable<SearchPagesQuery["search"]>>
+            >((acc, value) => {
               const reference = referencePages.find(
                 reference => reference.id === value,
               );
-              return { ...reference };
-            }),
+
+              if (reference) {
+                acc.push(reference);
+              }
+              return acc;
+            }, []),
           )
         : [],
   },
@@ -401,7 +407,7 @@ export const getPageReferenceAttributeDisplayData = (
 
 export const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -409,12 +415,18 @@ export const getProductReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.map(value => {
+            attribute.value.reduce<
+              RelayToFlat<NonNullable<SearchProductsQuery["search"]>>
+            >((acc, value) => {
               const reference = referenceProducts.find(
                 reference => reference.id === value,
               );
-              return { ...reference };
-            }),
+
+              if (reference) {
+                acc.push(reference);
+              }
+              return acc;
+            }, []),
           )
         : [],
   },
@@ -422,7 +434,7 @@ export const getProductReferenceAttributeDisplayData = (
 
 export const getProductVariantReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -430,12 +442,19 @@ export const getProductVariantReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.map(value => {
-              const reference = mapReferenceProductsToVariants(
-                referenceProducts,
-              ).find(reference => reference.id === value);
-              return { ...reference };
-            }),
+            attribute.value.reduce<Array<Node & Record<"name", string>>>(
+              (acc, value) => {
+                const reference = mapReferenceProductsToVariants(
+                  referenceProducts,
+                ).find(reference => reference.id === value);
+
+                if (reference) {
+                  acc.push(reference);
+                }
+                return acc;
+              },
+              [],
+            ),
           )
         : [],
   },
@@ -443,8 +462,8 @@ export const getProductVariantReferenceAttributeDisplayData = (
 
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => {
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return getPageReferenceAttributeDisplayData(attribute, referencePages);
@@ -466,8 +485,8 @@ export const getReferenceAttributeDisplayData = (
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>,
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
@@ -499,11 +518,11 @@ export const getReferenceAttributeEntityTypeFromAttribute = (
   attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 
 export const mapReferenceProductsToVariants = (
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   referenceProducts.flatMap(product =>
-    product.variants.map(variant => ({
+    (product.variants || []).map(variant => ({
       ...variant,
-      name: product.name + " " + variant.name,
+      name: `${product.name} ${variant.name}`,
     })),
   );
