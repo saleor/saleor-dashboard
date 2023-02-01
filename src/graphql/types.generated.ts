@@ -9144,6 +9144,21 @@ export type StaffMemberUpdateMutationVariables = Exact<{
 
 export type StaffMemberUpdateMutation = { __typename: 'Mutation', staffUpdate: { __typename: 'StaffUpdate', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
+export type UserPassowrdChangeMutationVariables = Exact<{
+  newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
+}>;
+
+
+export type UserPassowrdChangeMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+
+export type UserAccountUpdateMutationVariables = Exact<{
+  input: AccountInput;
+}>;
+
+
+export type UserAccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+
 export type StaffMemberDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -9151,25 +9166,25 @@ export type StaffMemberDeleteMutationVariables = Exact<{
 
 export type StaffMemberDeleteMutation = { __typename: 'Mutation', staffDelete: { __typename: 'StaffDelete', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
 
-export type StaffAvatarUpdateMutationVariables = Exact<{
+export type UserAvatarUpdateMutationVariables = Exact<{
   image: Scalars['Upload'];
 }>;
 
 
-export type StaffAvatarUpdateMutation = { __typename: 'Mutation', userAvatarUpdate: { __typename: 'UserAvatarUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
+export type UserAvatarUpdateMutation = { __typename: 'Mutation', userAvatarUpdate: { __typename: 'UserAvatarUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
-export type StaffAvatarDeleteMutationVariables = Exact<{ [key: string]: never; }>;
+export type UserAvatarDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StaffAvatarDeleteMutation = { __typename: 'Mutation', userAvatarDelete: { __typename: 'UserAvatarDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
+export type UserAvatarDeleteMutation = { __typename: 'Mutation', userAvatarDelete: { __typename: 'UserAvatarDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
-export type ChangeStaffPasswordMutationVariables = Exact<{
+export type ChangeUserPasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 }>;
 
 
-export type ChangeStaffPasswordMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type ChangeUserPasswordMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type StaffListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
