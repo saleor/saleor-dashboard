@@ -9152,12 +9152,12 @@ export type UserPassowrdChangeMutationVariables = Exact<{
 
 export type UserPassowrdChangeMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
-export type UserAccountUpdateMutationMutationVariables = Exact<{
+export type UserAccountUpdateMutationVariables = Exact<{
   input: AccountInput;
 }>;
 
 
-export type UserAccountUpdateMutationMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type UserAccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type StaffMemberDeleteMutationVariables = Exact<{
   id: Scalars['ID'];

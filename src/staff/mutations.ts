@@ -37,7 +37,7 @@ export const userPassowrdChangeMutation = gql`
 `;
 
 export const userAccountUpdateMutation = gql`
-  mutation UserAccountUpdateMutation($input: AccountInput!) {
+  mutation UserAccountUpdate($input: AccountInput!) {
     accountUpdate(input: $input) {
       errors {
         ...AccountError
