@@ -17,7 +17,7 @@ import StaffDetailsPage, {
   StaffDetailsFormData,
 } from "../components/StaffDetailsPage/StaffDetailsPage";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
-import { useStaffMutation, useUserMutation } from "../hooks";
+import { useStaffUserOperations, useUserOperations } from "../hooks";
 import {
   staffListUrl,
   staffMemberDetailsUrl,
@@ -55,7 +55,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     deleteStaffMember,
     updateStaffMember,
     updateStaffMemberOpts,
-  } = useStaffMutation();
+  } = useStaffUserOperations();
 
   const {
     updateUserAccount,
@@ -65,7 +65,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     deleteAvatarResult,
     deleteUserAvatar,
     updateUserAvatar,
-  } = useUserMutation({ closeModal, id, refetch });
+  } = useUserOperations({ closeModal, id, refetch });
 
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [

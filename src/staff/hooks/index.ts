@@ -1,2 +1,2 @@
-export * from "./useStaffMutation";
-export * from "./useUserMutation";
+export * from "./useStaffUserOperations";
+export * from "./useUserOperations";

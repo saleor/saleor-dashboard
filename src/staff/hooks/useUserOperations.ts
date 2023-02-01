@@ -17,7 +17,7 @@ interface UseUserMutationProps {
   closeModal: () => void;
 }
 
-export const useUserMutation = ({
+export const useUserOperations = ({
   refetch,
   id,
   closeModal,

@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { staffListUrl } from "../urls";
 
-export const useStaffMutation = () => {
+export const useStaffUserOperations = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
