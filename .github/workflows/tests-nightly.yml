@@ -288,7 +288,7 @@ jobs:
             $auto_release
 
       - name: Notify Slack
-        if: ${{ always() && job.status != 'success' && github.event_name == 'repository_dispatch'}}
+        if: ${{ failure() && github.event_name == 'repository_dispatch'}}
         env:
           JOB_DEPLOYMENT_KIND: staging
           JOB_STATUS: ${{ job.status }}
