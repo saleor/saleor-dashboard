@@ -42,12 +42,8 @@ export function useAuthProvider({
   notify,
   apolloClient,
 }: UseAuthProviderOpts): UserContext {
-  const {
-    login,
-    getExternalAuthUrl,
-    getExternalAccessToken,
-    logout,
-  } = useAuth();
+  const { login, getExternalAuthUrl, getExternalAccessToken, logout } =
+    useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
