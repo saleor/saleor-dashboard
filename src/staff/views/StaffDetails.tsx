@@ -4,22 +4,9 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import {
-  useChangeStaffPasswordMutation,
-  useStaffAvatarDeleteMutation,
-  useStaffAvatarUpdateMutation,
-  useStaffMemberDeleteMutation,
-  useStaffMemberDetailsQuery,
-  useStaffMemberUpdateMutation,
-} from "@saleor/graphql";
+import { useStaffMemberDetailsQuery } from "@saleor/graphql";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@saleor/intl";
-import {
-  extractMutationErrors,
-  getStringOrPlaceholder,
-  maybe,
-} from "@saleor/misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -29,6 +16,7 @@ import StaffDetailsPage, {
   StaffDetailsFormData,
 } from "../components/StaffDetailsPage/StaffDetailsPage";
 import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
+import { useProfileOperations, useStaffUserOperations } from "../hooks";
 import {
   staffListUrl,
   staffMemberDetailsUrl,
@@ -43,7 +31,6 @@ interface OrderListProps {
 
 export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
   const user = useUser();
   const intl = useIntl();
 
@@ -55,24 +42,32 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
       }),
     );
 
+  const isUserSameAsViewer = user.user?.id === id;
+
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
+    skip: isUserSameAsViewer,
   });
 
-  const staffMember = data?.user;
+  const {
+    deleteResult,
+    deleteStaffMember,
+    updateStaffMember,
+    updateStaffMemberOpts,
+  } = useStaffUserOperations();
 
-  const [changePassword, changePasswordOpts] = useChangeStaffPasswordMutation({
-    onCompleted: data => {
-      if (data.passwordChange.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-      }
-    },
-  });
+  const {
+    updateUserAccount,
+    updateUserAccountOpts,
+    changePassword,
+    changePasswordOpts,
+    deleteAvatarResult,
+    deleteUserAvatar,
+    updateUserAvatar,
+  } = useProfileOperations({ closeModal, id, refetch });
+
+  const staffMember = isUserSameAsViewer ? user.user : data?.user;
 
   const {
     loadMore: loadMorePermissionGroups,
@@ -82,68 +77,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const [
-    updateStaffMember,
-    updateStaffMemberOpts,
-  ] = useStaffMemberUpdateMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
-
-  const [deleteStaffMember, deleteResult] = useStaffMemberDeleteMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.staffDelete.errors.length !== 0)) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(staffListUrl());
-      }
-    },
-  });
-
-  const [updateStaffAvatar] = useStaffAvatarUpdateMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-      } else {
-        notify({
-          status: "error",
-          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-          text: intl.formatMessage(errorMessages.imageUploadErrorText),
-        });
-      }
-    },
-  });
-
-  const [deleteStaffAvatar, deleteAvatarResult] = useStaffAvatarDeleteMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(staffMemberDetailsUrl(id));
-        refetch();
-      }
-    },
-  });
-
   if (staffMember === null) {
     return <NotFoundPage backHref={staffListUrl()} />;
   }
 
-  const handleUpdate = (formData: StaffDetailsFormData) =>
+  const handleStaffUpdate = (formData: StaffDetailsFormData) =>
     extractMutationErrors(
       updateStaffMember({
         variables: {
@@ -159,7 +97,17 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
       }),
     );
 
-  const isUserSameAsViewer = user.user?.id === data?.user?.id;
+  const handleUserUpdate = (formData: StaffDetailsFormData) =>
+    extractMutationErrors(
+      updateUserAccount({
+        variables: {
+          input: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+          },
+        },
+      }),
+    );
 
   return (
     <>
@@ -186,9 +134,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             }),
           )
         }
-        onSubmit={handleUpdate}
+        onSubmit={isUserSameAsViewer ? handleUserUpdate : handleStaffUpdate}
         onImageUpload={file =>
-          updateStaffAvatar({
+          updateUserAvatar({
             variables: {
               image: file,
             },
@@ -205,7 +153,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
           searchPermissionGroupsOpts?.data?.search,
         )}
         staffMember={staffMember}
-        saveButtonBarState={updateStaffMemberOpts.status}
+        saveButtonBarState={
+          isUserSameAsViewer
+            ? updateUserAccountOpts.status
+            : updateStaffMemberOpts.status
+        }
         fetchMorePermissionGroups={{
           hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
           loading: searchPermissionGroupsOpts.loading,
@@ -249,7 +201,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         confirmButtonState={deleteAvatarResult.status}
         variant="delete"
         onClose={closeModal}
-        onConfirm={deleteStaffAvatar}
+        onConfirm={deleteUserAvatar}
       >
         <DialogContentText>
           <FormattedMessage
