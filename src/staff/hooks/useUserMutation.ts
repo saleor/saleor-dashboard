@@ -27,17 +27,18 @@ export const useUserMutation = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [updateUserAccount] = useUserAccountUpdateMutation({
-    onCompleted: data => {
-      if (!maybe(() => data.accountUpdate.errors.length !== 0)) {
-        refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateUserAccount, updateUserAccountOpts] =
+    useUserAccountUpdateMutation({
+      onCompleted: data => {
+        if (!maybe(() => data.accountUpdate.errors.length !== 0)) {
+          refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const [updateUserAvatar] = useUserAvatarUpdateMutation({
     onCompleted: data => {
@@ -90,5 +91,6 @@ export const useUserMutation = ({
     updateUserAvatar,
     changePassword,
     changePasswordOpts,
+    updateUserAccountOpts,
   };
 };

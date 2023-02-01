@@ -59,6 +59,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
 
   const {
     updateUserAccount,
+    updateUserAccountOpts,
     changePassword,
     changePasswordOpts,
     deleteAvatarResult,
@@ -158,7 +159,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
           searchPermissionGroupsOpts?.data?.search,
         )}
         staffMember={staffMember}
-        saveButtonBarState={updateStaffMemberOpts.status}
+        saveButtonBarState={
+          isUserSameAsViewer
+            ? updateUserAccountOpts.status
+            : updateStaffMemberOpts.status
+        }
         fetchMorePermissionGroups={{
           hasMore:
             searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
