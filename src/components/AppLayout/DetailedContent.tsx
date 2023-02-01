@@ -5,7 +5,7 @@ export const DetailedContent = ({ children }) => (
   <Box
     as="div"
     display="grid"
-    __height="100%"
+    height="100%"
     __gridTemplateColumns="9fr 4fr"
     __gridTemplateRows="auto 1fr"
     __gridTemplateAreas="

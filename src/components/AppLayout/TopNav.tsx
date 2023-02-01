@@ -22,7 +22,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
     borderBottomStyle="solid"
     borderColor="neutralPlain"
     position="relative"
-    __alignItems="center"
     __gridArea="nav"
   >
     {href && (
