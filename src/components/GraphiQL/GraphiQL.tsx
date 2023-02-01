@@ -1,7 +1,9 @@
+import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import {
   CopyIcon,
   GraphiQLProvider,
   GraphiQLProviderProps,
+  PlayIcon,
   PrettifyIcon,
   QueryEditor,
   ToolbarButton,
@@ -18,8 +20,16 @@ import {
   WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import React, { ComponentType, PropsWithChildren, ReactNode } from "react";
+import React, {
+  ComponentType,
+  PropsWithChildren,
+  ReactNode,
+  useState,
+} from "react";
+import { useIntl } from "react-intl";
 
+import DryRun from "../DryRun";
+import { messages } from "./messages";
 import {
   useDashboardTheme,
   useEditorStyles,
@@ -68,13 +78,16 @@ export function GraphiQL({
   visiblePlugin,
   defaultHeaders,
   ...props
-}: GraphiQLProps) {
+}: GraphiQLProps & { asyncEvents: WebhookEventTypeAsyncEnum[] }) {
   // Ensure props are correct
   if (typeof fetcher !== "function") {
     throw new TypeError(
       "The `GraphiQL` component requires a `fetcher` function to be passed as prop.",
     );
   }
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [result, setResult] = useState("");
 
   return (
     <GraphiQLProvider
@@ -106,7 +119,19 @@ export function GraphiQL({
       validationRules={validationRules}
       variables={variables}
     >
-      <GraphiQLInterface {...props} />
+      <GraphiQLInterface
+        {...props}
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+        result={result}
+      />
+      <DryRun
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+        query={query}
+        setResult={setResult}
+        asyncEvents={props.asyncEvents}
+      />
     </GraphiQLProvider>
   );
 }
@@ -127,9 +152,13 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
     defaultEditorToolsVisibility?: boolean | "variables" | "headers";
     isHeadersEditorEnabled?: boolean;
     toolbar?: GraphiQLToolbarConfig;
+    showDialog?: boolean;
+    setShowDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+    result?: string;
   };
 
 export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
+  const intl = useIntl();
   const editorContext = useEditorContext({ nonNull: true });
   const pluginContext = usePluginContext();
 
@@ -150,6 +179,13 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     isChildComponentType(child, GraphiQL.Toolbar),
   ) || (
     <>
+      <ToolbarButton
+        onClick={() => props.setShowDialog(true)}
+        label={intl.formatMessage(messages.toolbarButonLabel)}
+      >
+        <PlayIcon className="graphiql-toolbar-icon" aria-hidden="true" />
+      </ToolbarButton>
+
       <ToolbarButton
         onClick={() => prettify()}
         label="Prettify query (Shift-Ctrl-P)"
@@ -264,6 +300,14 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                         {toolbar}
                       </div>
                     </section>
+                  </div>
+                </div>
+                <div ref={editorResize.dragBarRef}>
+                  <div className="graphiql-horizontal-drag-bar" />
+                </div>
+                <div ref={editorResize.secondRef}>
+                  <div className="graphiql-response">
+                    <pre className={classes.pre}>{props.result}</pre>
                   </div>
                 </div>
               </div>

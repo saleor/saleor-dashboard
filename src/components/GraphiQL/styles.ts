@@ -8,6 +8,9 @@ import { useEffect } from "react";
 
 export const useStyles = makeStyles(
   () => ({
+    pre: {
+      whiteSpace: "break-spaces",
+    },
     scrollable: {
       // Overrides inline styling which breaks scroll
       // on doc explorer plugin

@@ -17,10 +17,9 @@ export function getSortQueryField(
     case AttributeListUrlSortField.visible:
       return AttributeSortField.VISIBLE_IN_STOREFRONT;
     default:
-      return undefined;
+      return AttributeSortField.NAME;
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

@@ -55,6 +55,10 @@
     "context": "tabel column header",
     "string": "Total"
   },
+  "+RffqY": {
+    "context": "Dry run dialog object title",
+    "string": "Select object type to perform dry run on provided query"
+  },
   "+RjQjs": {
     "context": "return button",
     "string": "Return / Replace order"
@@ -415,6 +419,10 @@
   "0sd4ez": {
     "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
+  },
+  "0u9Ng0": {
+    "context": "Dry run no objects found",
+    "string": "No objects found in the provided query"
   },
   "0vsMRq": {
     "context": "delete custom app",
@@ -856,6 +864,10 @@
     "context": "open full-screen",
     "string": "Open"
   },
+  "48dMqY": {
+    "context": "Dry run trigger button",
+    "string": "Run"
+  },
   "4B32Ba": {
     "context": "delete page",
     "string": "Are you sure you want to delete {title}?"
@@ -1057,6 +1069,10 @@
     "context": "tabel column header",
     "string": "Price"
   },
+  "5b0Boq": {
+    "context": "Dry run items list default message",
+    "string": "Choose the object"
+  },
   "5bJ26s": {
     "string": "Successfully created page type"
   },
@@ -1078,6 +1094,10 @@
   "5fCMUI": {
     "context": "translations section name",
     "string": "Translations"
+  },
+  "5i/InH": {
+    "context": "open new window button",
+    "string": "Open this order in GraphiQL"
   },
   "5kvaFR": {
     "context": "product field",
@@ -1674,6 +1694,10 @@
   "AnqH4p": {
     "context": "sale status",
     "string": "Active"
+  },
+  "ApNw0L": {
+    "context": "Dry run objects unavailable",
+    "string": "The following objects are currently not available for dry run:"
   },
   "AqHafs": {
     "context": "provided email input placeholder",
@@ -3821,6 +3845,10 @@
     "context": "modal button url upload",
     "string": "Upload URL"
   },
+  "Q2us5X": {
+    "context": "Dry run icon label",
+    "string": "Dry run"
+  },
   "Q47ovw": {
     "context": "activate app",
     "string": "Are you sure you want to activate this app? Activating will start gathering events."
@@ -4983,6 +5011,10 @@
     "context": "header",
     "string": "Edit Authorization Field"
   },
+  "Xz/sDf": {
+    "context": "Dry run items list item",
+    "string": "Item:"
+  },
   "Y1B0PN": {
     "context": "error message",
     "string": "There's no payment associated with the order"
@@ -5191,6 +5223,10 @@
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
+  },
+  "ZepEWY": {
+    "context": "Dry run item",
+    "string": "Item"
   },
   "Zg0dRo": {
     "context": "dialog description",
@@ -5918,6 +5954,10 @@
   },
   "fhksPD": {
     "string": "Number of Orders"
+  },
+  "fi9Qa/": {
+    "context": "Dry run dialog header",
+    "string": "Dry run"
   },
   "fjPWOA": {
     "context": "header",
@@ -7854,6 +7894,10 @@
   },
   "ubmFc8": {
     "string": "Install"
+  },
+  "uccjUM": {
+    "context": "Dry run objects",
+    "string": "Objects"
   },
   "ud0w8h": {
     "context": "number of postal code ranges",
