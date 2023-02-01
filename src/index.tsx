@@ -1,4 +1,5 @@
 import "@saleor/macaw-ui/next/style";
+import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
@@ -72,7 +73,7 @@ import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
-import themeOverrides from "./themeOverrides";
+import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
@@ -87,7 +88,10 @@ const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
-        <LegacyThemeProvider overrides={themeOverrides}>
+        <LegacyThemeProvider
+          overrides={themeOverrides}
+          palettes={paletteOverrides}
+        >
           <ThemeProvider>
             <DateProvider>
               <LocaleProvider>
@@ -137,40 +141,6 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      <style>{`
-        #portal { position: fixed; top: 0; }
-        body {
-          background: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-
-        #dashboard-app .MuiTable-root {
-          table-layout: auto !important;
-        }
-
-        #dashboard-app .MuiIconButton-edgeEnd,
-        #dashboard-app .MuiCardHeader-action {
-          margin-right: 0;
-        }
-
-        #dashboard-app .MuiCard-root {
-          border: 0;
-          background: none;
-        }
-
-        #dashboard-app .MuiCardHeader-root,
-        #dashboard-app .MuiCardContent-root,
-        #dashboard-app .MuiListItem-root,
-        #dashboard-app .MuiCardActions-root {
-          padding-left: 0;
-          padding-right: 0;
-        }
-        #dashboard-app .MuiPaper-root {
-          background: none;
-        }
-      `}</style>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (

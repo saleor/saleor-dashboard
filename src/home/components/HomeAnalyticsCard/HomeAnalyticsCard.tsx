@@ -7,9 +7,6 @@ import { FormattedMessage } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     cardContent: {
-      "&:last-child": {
-        padding: theme.spacing(2, 3),
-      },
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 64px",
