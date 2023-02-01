@@ -14,6 +14,7 @@ import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
+import { getFilteredPayments } from "./utils";
 
 interface OrderTransactionsWrapper {
   order: OrderDetailsWithTransactionsFragment;
@@ -37,11 +38,8 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   const classes = useStyles();
 
   const filteredPayments = React.useMemo(
-    () =>
-      (order?.payments ?? []).filter(
-        payment => payment.isActive || payment.transactions.length > 0,
-      ),
-    [order?.payments],
+    () => getFilteredPayments(order),
+    [order],
   );
   return (
     <>
