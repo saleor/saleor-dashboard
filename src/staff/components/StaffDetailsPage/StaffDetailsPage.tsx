@@ -149,10 +149,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               )}
             </Content>
 
-            <RightSidebar
-              // @ts-ignore
-              className={classes.noOverflow}
-            >
+            <RightSidebar className={classes.noOverflow}>
               {canEditPreferences && (
                 <StaffPreferences locale={locale} onLocaleChange={setLocale} />
               )}

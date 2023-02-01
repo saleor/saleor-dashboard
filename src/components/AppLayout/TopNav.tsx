@@ -42,10 +42,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
         <ArrowBack />
       </Link>
     )}
-    <Box
-      // @ts-ignore
-      __flex={1}
-    >
+    <Box __flex={1}>
       <Text variant="title">{title}</Text>
     </Box>
     <Box display="flex" flexWrap="nowrap">
