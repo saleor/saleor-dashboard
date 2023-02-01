@@ -6,7 +6,6 @@ import {
 } from "@dashboard/components/Filter";
 import { findValueInEnum } from "@dashboard/misc";
 import { ActiveTab } from "@dashboard/types";
-import isArray from "lodash/isArray";
 
 function createFilterUtils<
   TQueryParams extends {},
@@ -44,7 +43,7 @@ function createFilterUtils<
 }
 
 export function dedupeFilter<T>(array: T[]): T[] {
-  if (!isArray(array)) {
+  if (!Array.isArray(array)) {
     return [array];
   }
 

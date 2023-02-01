@@ -13,8 +13,7 @@ export const SidebarContent = () => (
     height="100%"
     display="grid"
     __gridTemplateRows="auto 1fr auto"
-    // @ts-ignore
-    __overflowY="scroll"
+    overflowY="scroll"
   >
     <MountingPoint />
     <Menu />

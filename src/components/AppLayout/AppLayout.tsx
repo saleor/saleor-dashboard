@@ -61,24 +61,24 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           borderRightWidth={1}
           backgroundColor="subdued"
           borderStyle="solid"
-          __position="sticky"
-          __top={0}
-          __borderLeftWidth={0}
-          __borderTopWidth={0}
-          __borderBottomWidth={0}
+          position="sticky"
+          top={0}
+          borderLeftWidth={0}
+          borderTopWidth={0}
+          borderBottomWidth={0}
         >
           <Sidebar />
         </Box>
-        <Box __height="100%" __width="100%">
-          <Box as="main" __width="100%">
+        <Box height="100%" width="100%">
+          <Box as="main" width="100%">
             {children}
           </Box>
           <Box
             ref={appActionAnchor}
-            __position="sticky"
-            __bottom={0}
-            __left={0}
-            __right={0}
+            position="sticky"
+            bottom={0}
+            left={0}
+            right={0}
             backgroundColor="plain"
             borderTopWidth={1}
             borderTopStyle="solid"
