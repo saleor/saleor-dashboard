@@ -1,4 +1,3 @@
-import { maybe } from "@apollo/client/utilities";
 import {
   useChangeUserPasswordMutation,
   useUserAccountUpdateMutation,
@@ -30,7 +29,7 @@ export const useUserMutation = ({
   const [updateUserAccount, updateUserAccountOpts] =
     useUserAccountUpdateMutation({
       onCompleted: data => {
-        if (!maybe(() => data.accountUpdate.errors.length !== 0)) {
+        if (!data.accountUpdate?.errors.length) {
           refetch();
           notify({
             status: "success",
@@ -42,7 +41,7 @@ export const useUserMutation = ({
 
   const [updateUserAvatar] = useUserAvatarUpdateMutation({
     onCompleted: data => {
-      if (!maybe(() => data.userAvatarUpdate.errors.length !== 0)) {
+      if (!data.userAvatarUpdate?.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -61,7 +60,7 @@ export const useUserMutation = ({
 
   const [deleteUserAvatar, deleteAvatarResult] = useUserAvatarDeleteMutation({
     onCompleted: data => {
-      if (!maybe(() => data.userAvatarDelete.errors.length !== 0)) {
+      if (!data.userAvatarDelete?.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -74,7 +73,7 @@ export const useUserMutation = ({
 
   const [changePassword, changePasswordOpts] = useChangeUserPasswordMutation({
     onCompleted: data => {
-      if (data.passwordChange.errors.length === 0) {
+      if (!data.passwordChange?.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),

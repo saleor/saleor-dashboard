@@ -5,7 +5,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
 import { staffListUrl } from "../urls";
@@ -18,7 +17,7 @@ export const useStaffMutation = () => {
   const [updateStaffMember, updateStaffMemberOpts] =
     useStaffMemberUpdateMutation({
       onCompleted: data => {
-        if (!maybe(() => data.staffUpdate.errors.length !== 0)) {
+        if (!data.staffUpdate?.errors.length) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
@@ -29,7 +28,7 @@ export const useStaffMutation = () => {
 
   const [deleteStaffMember, deleteResult] = useStaffMemberDeleteMutation({
     onCompleted: data => {
-      if (!maybe(() => data.staffDelete.errors.length !== 0)) {
+      if (!data.staffDelete?.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
