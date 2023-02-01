@@ -37,7 +37,7 @@ interface DryRunProps {
   setResult: Dispatch<SetStateAction<string>>;
 }
 
-export const DryRun: React.FC<DryRunProps> = ({
+const DryRun: React.FC<DryRunProps> = ({
   setResult,
   showDialog,
   setShowDialog,
