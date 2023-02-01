@@ -73,7 +73,7 @@ import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
-import themeOverrides, { paletteOverrides } from "./themeOverrides";
+import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";

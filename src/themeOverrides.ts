@@ -7,7 +7,7 @@ const breakpoints = {
   values: { lg: 1680, md: 1280, sm: 600, xl: 1920, xs: 0 },
 } as unknown as Theme["breakpoints"];
 
-const themeOverrides: Partial<Theme> = {
+export const themeOverrides: Partial<Theme> = {
   breakpoints,
   overrides: {
     MuiCard: {
@@ -18,7 +18,7 @@ const themeOverrides: Partial<Theme> = {
     },
     MuiPaper: {
       root: {
-        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        backgroundColor: vars.colors.background.plain,
         color: vars.colors.foreground.textNeutralDefault,
       },
     },
@@ -65,8 +65,6 @@ const themeOverrides: Partial<Theme> = {
     },
   },
 };
-
-export default themeOverrides;
 
 export const paletteOverrides: Themes = {
   light: {
