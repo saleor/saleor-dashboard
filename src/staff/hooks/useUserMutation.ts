@@ -12,7 +12,17 @@ import { useIntl } from "react-intl";
 
 import { staffMemberDetailsUrl } from "../urls";
 
-export const useUserMutation = ({ refetch, id, closeModal }) => {
+interface UseUserMutationProps {
+  refetch: () => void;
+  id: string;
+  closeModal: () => void;
+}
+
+export const useUserMutation = ({
+  refetch,
+  id,
+  closeModal,
+}: UseUserMutationProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
@@ -20,6 +30,7 @@ export const useUserMutation = ({ refetch, id, closeModal }) => {
   const [updateUserAccount] = useUserAccountUpdateMutation({
     onCompleted: data => {
       if (!maybe(() => data.accountUpdate.errors.length !== 0)) {
+        refetch();
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -36,6 +47,7 @@ export const useUserMutation = ({ refetch, id, closeModal }) => {
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         refetch();
+        navigate(staffMemberDetailsUrl(id));
       } else {
         notify({
           status: "error",
@@ -53,8 +65,8 @@ export const useUserMutation = ({ refetch, id, closeModal }) => {
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate(staffMemberDetailsUrl(id));
         refetch();
+        navigate(staffMemberDetailsUrl(id));
       }
     },
   });
