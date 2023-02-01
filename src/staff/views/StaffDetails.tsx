@@ -51,22 +51,20 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     skip: isUserSameAsViewer,
   });
   const {
+    deleteResult,
+    deleteStaffMember,
+    updateStaffMember,
+    updateStaffMemberOpts,
+  } = useStaffMutation();
+
+  const {
+    updateUserAccount,
     changePassword,
     changePasswordOpts,
     deleteAvatarResult,
-    deleteResult,
-    deleteStaffAvatar,
-    deleteStaffMember,
-    updateStaffAvatar,
-    updateStaffMember,
-    updateStaffMemberOpts,
-  } = useStaffMutation({
-    closeModal,
-    id,
-    refetch,
-  });
-
-  const { updateUserAccount } = useUserMutation();
+    deleteUserAvatar,
+    updateUserAvatar,
+  } = useUserMutation({ closeModal, id, refetch });
 
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
@@ -143,7 +141,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         }
         onSubmit={isUserSameAsViewer ? handleUserUpdate : handleStaffUpdate}
         onImageUpload={file =>
-          updateStaffAvatar({
+          updateUserAvatar({
             variables: {
               image: file,
             },
@@ -205,7 +203,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         confirmButtonState={deleteAvatarResult.status}
         variant="delete"
         onClose={closeModal}
-        onConfirm={deleteStaffAvatar}
+        onConfirm={deleteUserAvatar}
       >
         <DialogContentText>
           <FormattedMessage
