@@ -60,7 +60,7 @@ export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({
     TaxesUrlQueryParams
   >(navigate, params => taxConfigurationListUrl(id, params), params);
 
-  const { data } = useTaxConfigurationsListQuery({ variables: { first: 20 } });
+  const { data } = useTaxConfigurationsListQuery({ variables: { first: 100 } });
 
   const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
 
