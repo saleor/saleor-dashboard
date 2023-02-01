@@ -141,15 +141,6 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      {/* <style>{`
-        #portal { position: fixed; top: 0; }
-        body {
-          background: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }     
-      `}</style> */}
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
