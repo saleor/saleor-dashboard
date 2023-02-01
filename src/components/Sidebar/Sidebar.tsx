@@ -19,11 +19,15 @@ export const Sidebar = () => (
             borderWidth={0}
             backgroundColor="interactiveNeutralHighlightDefault"
             cursor="pointer"
+            data-test-id="sidebar-drawer-open"
           >
             <MenuIcon />
           </Box>
         </Drawer.Trigger>
-        <Drawer.Content backgroundColor="subdued">
+        <Drawer.Content
+          backgroundColor="subdued"
+          data-test-id="sidebar-drawer-content"
+        >
           <SidebarContent />
         </Drawer.Content>
       </Drawer>
