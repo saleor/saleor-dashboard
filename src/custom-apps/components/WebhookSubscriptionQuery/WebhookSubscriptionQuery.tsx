@@ -4,7 +4,6 @@ import CardTitle from "@dashboard/components/CardTitle";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Card, CardContent } from "@material-ui/core";
-import clsx from "clsx";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -45,13 +44,8 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   const classes = useStyles();
 
   return (
-    <Card
-      className={clsx(classes.card, data.syncEvents.length && classes.disabled)}
-    >
-      <CardTitle
-        title={intl.formatMessage(messages.title)}
-        className={classes.cardTitle}
-      />
+    <Card className={classes.card}>
+      <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

@@ -64,9 +64,13 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
 
   const countEvents = object => {
     const selected = tab === "sync" ? data.syncEvents : data.asyncEvents;
-    const objectEvents = EventTypes[tab][object].map(
-      event => `${object}_${event}`,
-    );
+    const objectEvents = EventTypes[tab][object].map(event => {
+      if (event === object) {
+        return object;
+      }
+
+      return `${object}_${event}`;
+    });
 
     return objectEvents.filter((event: never) => selected.includes(event))
       .length;
@@ -183,59 +187,52 @@ export default WebhookEvents;
 
 type Actions = string[];
 
-export const AsyncWebhookTypes: Record<string, Actions> = {
-  ADDRESS: ["CREATED", "UPDATED", "DELETED"],
-  APP: ["INSTALLED", "UPDATED", "DELETED"],
-  ATTRIBUTE: ["CREATED", "UPDATED", "DELETED"],
-  CATEGORY: ["CREATED", "UPDATED", "DELETED"],
-  CHANNEL: ["CREATED", "UPDATED", "DELETED"],
-  GIFT_CARD: ["CREATED", "UPDATED", "DELETED", "STATUS_CHANGED"],
+const getWebhookTypes = (webhookEvents: string[]) => {
+  const webhookTypes: Record<string, Actions> = {};
+  const multiWords = ["DRAFT_ORDER", "GIFT_CARD", "ANY_EVENTS"];
 
-  CHECKOUT: ["CREATED", "UPDATED", "DELETED"],
-  COLLECTION: ["CREATED", "UPDATED", "DELETED"],
-  CUSTOMER: ["CREATED", "UPDATED", "DELETED"],
-  FULFILLMENT: ["CREATED"],
-  INVOICE: ["DELETED", "REQUESTED", "SENT"],
-  MENU: ["CREATED", "UPDATED", "DELETED"],
-  ORDER: [
-    "CANCELLED",
-    "CONFIRMED",
-    "CREATED",
-    "FULFILLED",
-    "FULLY_PAID",
-    "UPDATED",
-  ],
-  PAGE: ["CREATED", "UPDATED", "DELETED"],
-  PRODUCT: ["CREATED", "UPDATED", "DELETED"],
-  PRODUCT_VARIANT: ["CREATED", "UPDATED", "DELETED"],
-  SALE: ["CREATED", "UPDATED", "DELETED", "TOGGLE"],
-  SHIPPING_PRICE: ["CREATED", "UPDATED", "DELETED"],
-  SHIPPING_ZONE: ["CREATED", "UPDATED", "DELETED"],
-  STAFF: ["CREATED", "UPDATED", "DELETED"],
-  TRANSLATION: ["ACTION_REQUEST", "CREATED", "UPDATED"],
-  VOUCHER: ["CREATED", "UPDATED", "DELETED"],
-  WAREHOUSE: ["CREATED", "UPDATED", "DELETED"],
+  const setObject = (
+    keywords: string[],
+    object: string,
+    objectLength: number,
+  ) => {
+    const events = webhookTypes[object] || [];
+    const event = keywords.slice(objectLength).join("_");
+    events.push(!!event.length ? event : object);
+    webhookTypes[object] = events;
+  };
+
+  webhookEvents.map(key => {
+    const keywords = key.split("_");
+
+    // handle 2 word exceptions
+    if (multiWords.includes(keywords.slice(0, 2).join("_"))) {
+      setObject(keywords, keywords.slice(0, 2).join("_"), 2);
+      return;
+    }
+
+    setObject(keywords, keywords[0], 1);
+  });
+
+  return webhookTypes;
 };
 
-const SyncWebhookTypes: Record<string, Actions> = {
-  PAYMENT: [
-    "AUTHORIZE",
-    "CAPTURE",
-    "CONFIRM",
-    "LIST_GATEWAYS",
-    "PROCESS",
-    "REFUND",
-    "VOID",
-  ],
-  CHECKOUT: ["CALCULATE_TAXES", "FILTER_SHIPPING_METHODS"],
-  ORDER: ["CALCULATE_TAXES", "FILTER_SHIPPING_METHODS"],
-  SHIPPING: ["LIST_METHODS_FOR_CHECKOUT"],
-};
+export const AsyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
+  Object.keys(WebhookEventTypeAsyncEnum),
+);
+
+const SyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
+  Object.keys(WebhookEventTypeSyncEnum),
+);
 
 const EventTypes = {
   async: AsyncWebhookTypes,
   sync: SyncWebhookTypes,
 };
 
-const getEventName = (object: string, event: string) =>
-  [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
+const getEventName = (object: string, event: string) => {
+  if (object === event) {
+    return object.toUpperCase() as WebhookEventTypeSyncEnum;
+  }
+  return [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
+};
