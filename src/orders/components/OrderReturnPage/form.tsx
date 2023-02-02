@@ -1,5 +1,5 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { FulfillmentStatus } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise,
@@ -10,8 +10,10 @@ import useFormset, {
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
+import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
 import React, { useEffect } from "react";
 
+import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
   getLineItem,
   getOrderUnfulfilledLines,
@@ -36,6 +38,7 @@ export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 export interface OrderReturnData {
   amount: number;
   refundShipmentCosts: boolean;
+  amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
 export interface OrderReturnHandlers {
@@ -63,17 +66,18 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
 const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
+  amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false,
 });
 
 function useOrderReturnForm(
-  order: OrderDetailsFragment,
+  order: OrderSharedType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
 ): UseOrderRefundFormResult {
   const {
@@ -176,14 +180,13 @@ function useOrderReturnForm(
   );
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
-      ({ id }) => {
+    const newQuantities: FormsetQuantityData =
+      unfulfiledItemsQuantites.data.map(({ id }) => {
         const line = order.lines.find(getById(id));
         const initialValue = line.quantityToFulfill;
 
         return getLineItem(line, { initialValue });
-      },
-    );
+      });
 
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
@@ -273,7 +276,7 @@ const OrderReturnForm: React.FC<OrderReturnProps> = ({
   order,
   onSubmit,
 }) => {
-  const props = useOrderReturnForm(order, onSubmit);
+  const props = useOrderReturnForm(order as OrderSharedType, onSubmit);
 
   return <form>{children(props)}</form>;
 };

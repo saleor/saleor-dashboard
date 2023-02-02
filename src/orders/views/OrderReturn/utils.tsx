@@ -1,19 +1,29 @@
 import {
+  OrderDetailsFragment,
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput,
 } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
+import { OrderRefundAmountCalculationMode } from "@dashboard/orders/components/OrderRefundPage/form";
 import {
   FormsetQuantityData,
   OrderReturnFormData,
 } from "@dashboard/orders/components/OrderReturnPage/form";
 
 class ReturnFormDataParser {
+  private order: OrderDetailsFragment;
   private formData: OrderReturnFormData;
+  private refundsEnabled: boolean;
 
-  constructor(formData: OrderReturnFormData) {
-    this.formData = formData;
+  constructor(data: {
+    order: OrderDetailsFragment;
+    formData: OrderReturnFormData;
+    refundsEnabled: boolean;
+  }) {
+    this.order = data.order;
+    this.formData = data.formData;
+    this.refundsEnabled = data.refundsEnabled;
   }
 
   public getParsedData = (): OrderReturnProductsInput => {
@@ -24,18 +34,32 @@ class ReturnFormDataParser {
       refundShipmentCosts,
     } = this.formData;
 
-    const fulfillmentLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(fulfilledItemsQuantities, "fulfillmentLineId");
+    const fulfillmentLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        fulfilledItemsQuantities,
+        "fulfillmentLineId",
+      );
 
-    const waitingLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(waitingItemsQuantities, "fulfillmentLineId");
+    const waitingLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        waitingItemsQuantities,
+        "fulfillmentLineId",
+      );
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
       unfulfilledItemsQuantities,
       "orderLineId",
     );
+
+    if (this.refundsEnabled) {
+      return {
+        amountToRefund: this.getAmountToRefund(),
+        fulfillmentLines: fulfillmentLines.concat(waitingLines),
+        includeShippingCosts: refundShipmentCosts,
+        orderLines,
+        refund: this.getShouldRefund(orderLines, fulfillmentLines),
+      };
+    }
 
     return {
       fulfillmentLines: fulfillmentLines.concat(waitingLines),
@@ -46,8 +70,14 @@ class ReturnFormDataParser {
     };
   };
 
+  private getAmountToRefund = (): number | undefined =>
+    this.formData.amountCalculationMode ===
+    OrderRefundAmountCalculationMode.MANUAL
+      ? this.formData.amount
+      : undefined;
+
   private getParsedLineData = <
-    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
+    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput,
   >(
     itemsQuantities: FormsetQuantityData,
     idKey: "fulfillmentLineId" | "orderLineId",
@@ -63,9 +93,38 @@ class ReturnFormDataParser {
 
       return [
         ...result,
-        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T,
+        { [idKey]: id, quantity, replace: shouldReplace } as unknown as T,
       ];
     }, []);
+  };
+
+  private getShouldRefund = (
+    orderLines: OrderReturnLineInput[],
+    fulfillmentLines: OrderReturnFulfillmentLineInput[],
+  ) => {
+    if (
+      !this.order.totalCaptured?.amount ||
+      this.formData.amountCalculationMode ===
+        OrderRefundAmountCalculationMode.NONE
+    ) {
+      return false;
+    }
+
+    if (!!this.getAmountToRefund()) {
+      return true;
+    }
+
+    return (
+      orderLines.some(ReturnFormDataParser.isLineRefundable) ||
+      fulfillmentLines.some(ReturnFormDataParser.isLineRefundable)
+    );
+  };
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  private static isLineRefundable = function <
+    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
+  >({ replace }: T) {
+    return !replace;
   };
 }
 

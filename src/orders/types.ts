@@ -1,7 +1,40 @@
 import {
+  OrderDetailsFragment,
+  OrderDetailsQuery,
+  OrderRefundDataQuery,
+} from "@dashboard/graphql";
+import {
+  OrderDetailsWithTransactionsFragment,
+  OrderDetailsWithTransactionsQuery,
   TransactionEventFragment,
   TransactionItemFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
+
+export type ShopWithTransactions = OrderDetailsWithTransactionsQuery["shop"];
+export type ShopBothTypes = OrderDetailsQuery["shop"] | ShopWithTransactions;
+
+export type OrderBothTypes =
+  | OrderDetailsFragment
+  | OrderDetailsWithTransactionsFragment;
+
+/** use type from WithTransactions, exclude fields not available on old OrderDetails */
+export type OrderSharedType = Pick<
+  OrderDetailsWithTransactionsFragment,
+  keyof OrderDetailsFragment & keyof OrderDetailsWithTransactionsFragment
+>;
+
+export const isOrderWithTransactions = (
+  _order: any,
+  featureFlag: boolean,
+): _order is OrderDetailsWithTransactionsFragment => featureFlag;
+
+export type OrderRefundData = OrderRefundDataQuery["order"];
+export type OrderRefundSharedType = Pick<
+  OrderRefundData,
+  keyof OrderDetailsFragment &
+    keyof OrderDetailsWithTransactionsFragment &
+    keyof OrderRefundData
+>;
 
 /** Type of the trasaction event (e.g. CHARGE_SUCCESS -> CHARGE) */
 export type TransactionEventType =

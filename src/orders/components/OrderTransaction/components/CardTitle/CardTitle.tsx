@@ -2,7 +2,7 @@ import DefaultCardTitle from "@dashboard/components/CardTitle";
 import {
   TransactionActionEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { IconButton } from "@material-ui/core";
 import { Button, LinkIcon } from "@saleor/macaw-ui";

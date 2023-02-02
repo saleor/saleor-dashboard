@@ -3,7 +3,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundEditQuery,
   useOrderGrantRefundEditMutation,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";

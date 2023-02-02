@@ -1,4 +1,7 @@
-import { order, prepareMoney } from "@dashboard/orders/fixtures";
+import {
+  orderWithTransactions,
+  prepareMoney,
+} from "@dashboard/orders/fixtures";
 
 import { getShouldDisplayAmounts } from "./utils";
 
@@ -7,7 +10,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     expect(getShouldDisplayAmounts(undefined)).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),
@@ -17,16 +20,16 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays everything, but authorized if there's a pending value", () => {
     expect(
       getShouldDisplayAmounts({
-        ...order(null),
+        ...orderWithTransactions,
         totalAuthorized: prepareMoney(0),
         totalAuthorizePending: prepareMoney(0),
-        totalCaptured: prepareMoney(1),
+        totalCharged: prepareMoney(1),
         totalChargePending: prepareMoney(1),
       }),
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: true,
+        charged: true,
         cancelled: true,
         pending: true,
       }),
@@ -35,21 +38,21 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
 
   it("displays everything with authorized if there's a pending value", () => {
     const result1 = getShouldDisplayAmounts({
-      ...order(null),
+      ...orderWithTransactions,
       totalAuthorized: prepareMoney(12),
       totalAuthorizePending: prepareMoney(0),
       totalChargePending: prepareMoney(1),
     });
 
     const result2 = getShouldDisplayAmounts({
-      ...order(null),
+      ...orderWithTransactions,
       totalAuthorized: prepareMoney(12),
       totalAuthorizePending: prepareMoney(12),
     });
 
     const expectedResult = {
       authorized: true,
-      captured: true,
+      charged: true,
       cancelled: true,
       pending: true,
     };
@@ -61,14 +64,14 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays capture and authorize amount when they are different", () => {
     expect(
       getShouldDisplayAmounts({
-        ...order(null),
+        ...orderWithTransactions,
         totalAuthorized: prepareMoney(10),
-        totalCaptured: prepareMoney(12),
+        totalCharged: prepareMoney(12),
       }),
     ).toStrictEqual(
       expect.objectContaining({
         authorized: true,
-        captured: true,
+        charged: true,
         cancelled: false,
         pending: false,
       }),
@@ -78,9 +81,9 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays capoture amount when it's not equal to total amount", () => {
     expect(
       getShouldDisplayAmounts({
-        ...order(null),
+        ...orderWithTransactions,
         totalAuthorized: prepareMoney(0),
-        totalCaptured: prepareMoney(12),
+        totalCharged: prepareMoney(12),
         total: {
           gross: prepareMoney(13),
           net: prepareMoney(13),
@@ -91,7 +94,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: true,
+        charged: true,
         cancelled: false,
         pending: false,
       }),
@@ -101,14 +104,14 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays authorized if there is authorized amount", () => {
     expect(
       getShouldDisplayAmounts({
-        ...order(null),
+        ...orderWithTransactions,
         totalAuthorized: prepareMoney(10),
-        totalCaptured: prepareMoney(0),
+        totalCharged: prepareMoney(0),
       }),
     ).toStrictEqual(
       expect.objectContaining({
         authorized: true,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),
@@ -120,8 +123,8 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("hides everything if order is fully settled", () => {
     expect(
       getShouldDisplayAmounts({
-        ...order(null),
-        totalCaptured: prepareMoney(1),
+        ...orderWithTransactions,
+        totalCharged: prepareMoney(1),
         total: {
           tax: prepareMoney(0),
           net: prepareMoney(1),
@@ -136,7 +139,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
     ).toStrictEqual(
       expect.objectContaining({
         authorized: false,
-        captured: false,
+        charged: false,
         cancelled: false,
         pending: false,
       }),

@@ -4,7 +4,7 @@ import ConfirmButton from "@dashboard/components/ConfirmButton";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";

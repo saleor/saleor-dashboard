@@ -9,7 +9,6 @@ import RequirePermissions from "@dashboard/components/RequirePermissions";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
-  OrderDetailsFragment,
   OrderErrorCode,
   OrderErrorFragment,
   PermissionEnum,
@@ -17,6 +16,7 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -37,7 +37,7 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
-  order: OrderDetailsFragment;
+  order: OrderSharedType;
   users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
   errors: OrderErrorFragment[];

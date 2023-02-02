@@ -115,10 +115,7 @@
       "StaffDeleted",
       "StaffUpdated",
       "TransactionActionRequest",
-      "TransactionCancelationRequested",
-      "TransactionChargeRequested",
       "TransactionItemMetadataUpdated",
-      "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
       "VoucherCreated",
@@ -227,7 +224,6 @@
       "Webhook"
     ],
     "ObjectWithMetadata": [
-      "Address",
       "App",
       "Attribute",
       "Category",
@@ -292,10 +288,6 @@
       "SaleTranslation",
       "VoucherTranslation",
       "MenuItemTranslation"
-    ],
-    "UserOrApp": [
-      "User",
-      "App"
     ],
     "_Entity": [
       "App",

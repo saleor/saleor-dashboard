@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
 import { CardContent } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
@@ -33,11 +33,11 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
           />
         )}
 
-        {shouldDisplay.captured && (
+        {shouldDisplay.charged && (
           <SummaryLine
             vertical
             text={<FormattedMessage {...orderPaymentMessages.captured} />}
-            money={order.totalCaptured}
+            money={order.totalCharged}
           />
         )}
 
@@ -45,11 +45,7 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
           <SummaryLine
             vertical
             text={<FormattedMessage {...orderPaymentMessages.cancelled} />}
-            money={{
-              // TODO: Add cancelled amount
-              amount: 0,
-              currency: order.totalCancelPending.currency,
-            }}
+            money={order.totalCanceled}
           />
         )}
       </SummaryList>

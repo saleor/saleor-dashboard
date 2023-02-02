@@ -14,18 +14,20 @@ import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
 import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
+  OrderDetailsWithTransactionsFragment,
+  OrderDetailsWithTransactionsQuery,
   OrderErrorFragment,
   OrderStatus,
   TransactionActionEnum,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -36,20 +38,14 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import OrderAddTransaction from "../OrderAddTransaction";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
-import OrderGrantedRefunds from "../OrderGrantedRefunds";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
-import OrderSummaryCard from "../OrderSummaryCard";
-import OrderTransaction from "../OrderTransaction";
-import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
-import OrderTransactionPayment from "../OrderTransactionPayment";
+import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -57,8 +53,8 @@ import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 export interface OrderDetailsPageProps {
-  order: OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"];
+  order: OrderDetailsFragment | OrderDetailsWithTransactionsFragment;
+  shop: OrderDetailsQuery["shop"] | OrderDetailsWithTransactionsQuery["shop"];
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -81,6 +77,7 @@ export interface OrderDetailsPageProps {
   onProductClick?(id: string);
   onPaymentCapture();
   onPaymentPaid();
+  onPaymentRefund();
   onPaymentVoid();
   onShippingAddressEdit();
   onOrderCancel();
@@ -111,6 +108,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderFulfill,
     onPaymentCapture,
     onPaymentPaid,
+    onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
@@ -194,7 +192,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         label: intl.formatMessage(messages.returnOrder),
         onSelect: onOrderReturn,
       },
-      shouldExist: hasAnyItemsReplaceable(order),
+      shouldExist: hasAnyItemsReplaceable(order as OrderSharedType),
     },
   ]);
 
@@ -207,13 +205,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
-  const filteredPayments = React.useMemo(
-    () =>
-      (order?.payments ?? []).filter(
-        payment => payment.isActive || payment.transactions.length > 0,
-      ),
-    [order?.payments],
-  );
   const openPlaygroundURL = playgroundOpenHandler({
     query: defaultGraphiQLQuery,
     headers: "",
@@ -234,7 +225,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={<Title order={order} />}
+              title={<Title order={order as OrderSharedType} />}
               cardMenu={
                 <>
                   <CardMenu
@@ -272,7 +263,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ) : (
                   <>
                     <OrderDraftDetails
-                      order={order}
+                      order={order as OrderSharedType}
                       errors={errors}
                       onOrderLineAdd={onOrderLineAdd}
                       onOrderLineChange={onOrderLineChange}
@@ -287,7 +278,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     <OrderFulfilledProductsCard
                       fulfillment={fulfillment}
                       fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                      order={order}
+                      order={order as OrderSharedType}
                       onOrderFulfillmentCancel={() =>
                         onFulfillmentCancel(fulfillment.id)
                       }
@@ -300,48 +291,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <div className={classes.cardGrid}>
-                  <OrderSummaryCard order={order} />
-                  <OrderPaymentSummaryCard
-                    order={order}
-                    onMarkAsPaid={onPaymentPaid}
-                  />
-                </div>
-                <CardSpacer />
-                {order?.grantedRefunds?.length !== 0 ? (
-                  <>
-                    <OrderGrantedRefunds order={order} />
-                    <CardSpacer />
-                  </>
-                ) : null}
-                <div>
-                  {order?.transactions?.map(transaction => (
-                    <OrderTransaction
-                      key={transaction.id}
-                      transaction={transaction}
-                      onTransactionAction={onTransactionAction}
-                    />
-                  ))}
-                  {filteredPayments.map(payment => (
-                    <OrderTransactionPayment
-                      key={payment.id}
-                      payment={payment}
-                      allPaymentMethods={shop?.availablePaymentGateways}
-                      onCapture={onPaymentCapture}
-                      onVoid={onPaymentVoid}
-                    />
-                  ))}
-                  {order?.giftCards?.map(giftCard => (
-                    <OrderTransactionGiftCard
-                      key={giftCard.id}
-                      order={order}
-                      giftCard={giftCard}
-                    />
-                  ))}
-                </div>
-                <OrderAddTransaction
+                <OrderPaymentOrTransaction
                   order={order}
-                  onAddTransaction={onAddManualTransaction}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentPaid={onPaymentPaid}
+                  onPaymentVoid={onPaymentVoid}
+                  onPaymentRefund={onPaymentRefund}
+                  onMarkAsPaid={onPaymentPaid}
+                  onAddManualTransaction={onAddManualTransaction}
                 />
                 <Metadata data={data} onChange={changeMetadata} />
                 <OrderHistory
@@ -354,7 +313,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomer
                   canEditAddresses={canEditAddresses}
                   canEditCustomer={false}
-                  order={order}
+                  order={order as OrderSharedType}
                   errors={errors}
                   onBillingAddressEdit={onBillingAddressEdit}
                   onShippingAddressEdit={onShippingAddressEdit}

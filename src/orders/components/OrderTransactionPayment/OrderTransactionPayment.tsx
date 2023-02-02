@@ -2,7 +2,7 @@ import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
   TransactionActionEnum,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";

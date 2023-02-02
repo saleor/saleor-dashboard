@@ -1,3 +1,4 @@
+import { useFlags } from "@dashboard/hooks/useFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -29,6 +30,7 @@ import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
 import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
+import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
@@ -80,9 +82,17 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
-);
+const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => {
+  const { orderTransactions } = useFlags(["orderTransactions"]);
+
+  if (orderTransactions.enabled) {
+    return (
+      <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
+    );
+  }
+
+  return <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />;
+};
 
 const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
@@ -103,6 +113,7 @@ const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
 
 const Component = () => {
   const intl = useIntl();
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -114,14 +125,18 @@ const Component = () => {
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
         <Route path={orderRefundPath(":id")} component={OrderSendRefund} />
-        <Route
-          path={orderGrantRefundEditPath(":orderId", ":refundId")}
-          component={OrderGrantRefundEdit}
-        />
-        <Route
-          path={orderGrantRefundPath(":id")}
-          component={OrderGrantRefund}
-        />
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundEditPath(":orderId", ":refundId")}
+            component={OrderGrantRefundEdit}
+          />
+        )}
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundPath(":id")}
+            component={OrderGrantRefund}
+          />
+        )}
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

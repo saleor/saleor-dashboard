@@ -3,17 +3,26 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import PageHeader from "@dashboard/components/PageHeader";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
+import {
+  isOrderWithTransactions,
+  OrderBothTypes,
+  OrderSharedType,
+} from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ItemsCard, SubmitCard } from "./components";
+import OrderAmount from "../OrderRefundReturnAmount";
+import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
+import { SubmitCard } from "./components";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
+import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
   getParsedLines,
@@ -22,19 +31,22 @@ import {
 } from "./utils";
 
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
+  loading: boolean;
   errors?: OrderErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, errors = [], onSubmit, submitStatus } = props;
+  const { order, loading, errors = [], onSubmit, submitStatus } = props;
+
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const intl = useIntl();
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
-      {({ data, handlers, submit, isSaveDisabled }) => (
+      {({ data, handlers, change, submit, isSaveDisabled }) => (
         <Container>
           <Backlink href={orderUrl(order?.id)}>
             {intl.formatMessage(orderReturnMessages.appTitle, {
@@ -53,7 +65,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                   <ItemsCard
                     errors={errors}
                     order={order}
-                    lines={getUnfulfilledLines(order)}
+                    lines={getUnfulfilledLines(order as OrderSharedType)}
                     itemsQuantities={data.unfulfilledItemsQuantities}
                     itemsSelections={data.itemsToBeReplaced}
                     onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
@@ -66,7 +78,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 </>
               )}
               {renderCollection(
-                getWaitingFulfillments(order),
+                getWaitingFulfillments(order as OrderSharedType),
                 ({ id, lines }) => (
                   <React.Fragment key={id}>
                     <ItemsCard
@@ -87,7 +99,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 ),
               )}
               {renderCollection(
-                getFulfilledFulfillemnts(order),
+                getFulfilledFulfillemnts(order as OrderSharedType),
                 ({ id, lines }) => (
                   <React.Fragment key={id}>
                     <ItemsCard
@@ -109,11 +121,26 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               )}
             </div>
             <div>
-              <SubmitCard
-                disabled={isSaveDisabled}
-                onSubmit={submit}
-                submitStatus={submitStatus}
-              />
+              {isOrderWithTransactions(order, orderTransactions.enabled) ? (
+                <SubmitCard
+                  disabled={isSaveDisabled}
+                  onSubmit={submit}
+                  submitStatus={submitStatus}
+                />
+              ) : (
+                <OrderAmount
+                  allowNoRefund
+                  isReturn
+                  amountData={getReturnProductsAmountValues(order, data)}
+                  data={data}
+                  order={order}
+                  disableSubmitButton={isSaveDisabled}
+                  disabled={loading}
+                  errors={errors}
+                  onChange={change}
+                  onRefund={submit}
+                />
+              )}
             </div>
           </Grid>
         </Container>

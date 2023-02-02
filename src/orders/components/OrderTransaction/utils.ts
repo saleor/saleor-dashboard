@@ -3,7 +3,7 @@ import {
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/transactions";
 import {
   FakeTransaction,
   TransactionFakeEvent,
