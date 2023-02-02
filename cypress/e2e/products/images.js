@@ -29,7 +29,8 @@ describe("Tests for images", () => {
         .its("response.body.data.products.edges")
         .then(products => {
           cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.get(PRODUCTS_LIST.productImage)
+          cy.get(PRODUCTS_LIST.tableCellAvatar)
+            .find(PRODUCTS_LIST.productImage)
             .each($image => {
               cy.wrap($image)
                 .invoke("attr", "src")

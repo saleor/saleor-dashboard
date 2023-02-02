@@ -33,11 +33,11 @@ export function finalizeDraftOrder(name) {
     .get(SELECT_SHIPPING_METHOD_FORM.submitButton)
     .click()
     .wait("@OrderShippingMethodUpdate")
-    .getTextFromElement(SHARED_ELEMENTS.pageHeader)
-    .as("draftOrderNumber")
     .addAliasToGraphRequest("OrderDraftFinalize")
     .get(DRAFT_ORDER_SELECTORS.finalizeButton)
     .click()
     .waitForRequestAndCheckIfNoErrors("@OrderDraftFinalize")
-    .get("@draftOrderNumber");
+    .then(({ response }) => {
+      cy.wrap(response.body.data.draftOrderComplete.order.number);
+    });
 }
