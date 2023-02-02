@@ -5,7 +5,12 @@ export const useEnvFlags = <T extends readonly string[]>(
   flags: readonly [...T],
 ): FlagsResults<T> =>
   flags.reduce((acc, flag) => {
-    const envFlag = readFlagFromEnv(flagNameToEnvName(flag));
+    let envFlag = readFlagFromEnv(flagNameToEnvName(flag));
+
+    // REMOVE ME
+    if (flag === "orderTransactions") {
+      envFlag = "true";
+    }
 
     if (envFlag) {
       acc[flag] = {
