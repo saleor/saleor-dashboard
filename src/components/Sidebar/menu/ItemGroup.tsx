@@ -1,5 +1,4 @@
-import { Box, List, Text, vars } from "@saleor/macaw-ui/next";
-import { calc } from "@vanilla-extract/css-utils";
+import { Box, List, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { MenuItem } from "./Item";
@@ -9,21 +8,16 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-const iconSize = vars.space[6];
-const gap = vars.space[5];
-
-const borderOffset = calc(iconSize).add(gap).divide(2).toString();
-
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
   <List.ItemGroup>
     <List.ItemGroup.Trigger
-      paddingX={3}
-      paddingY={3}
+      paddingX={4}
+      paddingY={4}
       borderRadius={3}
       size="small"
       justifyContent="space-between"
     >
-      <Box display="flex" alignItems="center" gap={5}>
+      <Box display="flex" alignItems="center" gap={6}>
         {menuItem.icon}
         <Text>{menuItem.label}</Text>
       </Box>
@@ -33,11 +27,11 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
         borderLeftWidth={1}
         borderLeftStyle="solid"
         borderColor="neutralPlain"
-        __paddingLeft={borderOffset}
-        __marginLeft={borderOffset}
+        __paddingLeft={18}
+        __marginLeft={15}
         display="flex"
         flexDirection="column"
-        marginBottom={4}
+        marginBottom={5}
       >
         {menuItem.children?.map(child => (
           <MenuItem menuItem={child} key={child.id} />

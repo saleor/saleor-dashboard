@@ -81,7 +81,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <div className={classes.appContent}>
         {sectionsAvailability.installed && (
           <>
-            <Box paddingX={7} paddingY={5}>
+            <Box paddingX={8} paddingY={6}>
               <Text as="h3" variant="heading">
                 {intl.formatMessage(messages.installedApps)}
               </Text>
@@ -99,7 +99,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         <MarketplaceAlert error={marketplaceError} />
         {sectionsAvailability.all && !marketplaceError && (
           <Content>
-            <Box paddingY={5} display="flex">
+            <Box paddingY={6} display="flex">
               <Text as="h3" variant="heading">
                 <FormattedMessage {...messages.allApps} />
               </Text>
@@ -115,7 +115,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         )}
         {sectionsAvailability.comingSoon && !marketplaceError && (
           <Content>
-            <Box paddingY={5}>
+            <Box paddingY={6}>
               <Text as="h3" variant="heading">
                 {intl.formatMessage(messages.comingSoonApps)}
               </Text>
