@@ -812,9 +812,6 @@
     "context": "order status",
     "string": "Returned"
   },
-  "4EkOwL": {
-    "string": "Enable Light Mode"
-  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -956,6 +953,9 @@
   },
   "5LRkEs": {
     "string": "The new dashboard and the GraphQL API are preview-quality software."
+  },
+  "5ObBlW": {
+    "string": "Dark Mode"
   },
   "5OtU+V": {
     "context": "dialog title",
@@ -2407,9 +2407,6 @@
   },
   "Gg4+K7": {
     "string": "No Products"
-  },
-  "GgkZ5I": {
-    "string": "Enable Dark Mode"
   },
   "GhXwO/": {
     "context": "dialog header",
@@ -5860,6 +5857,9 @@
   "hTLCC2": {
     "context": "channel publication date",
     "string": "Will become published on {date}"
+  },
+  "hVPucN": {
+    "string": "Light Mode"
   },
   "hWO1SD": {
     "context": "order history message",

@@ -14,8 +14,8 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
   <Box
     borderStyle="solid"
     borderColor="neutralPlain"
-    paddingLeft={6}
-    paddingRight={6}
+    paddingLeft={7}
+    paddingRight={7}
     borderLeftWidth={1}
     height="100vh"
     __paddingBottom={300}

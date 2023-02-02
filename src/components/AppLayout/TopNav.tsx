@@ -23,8 +23,8 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
     <Box
       display="flex"
       alignItems="center"
-      paddingX={9}
-      paddingY={7}
+      paddingX={10}
+      paddingY={8}
       borderBottomWidth={1}
       borderBottomStyle="solid"
       borderColor="neutralPlain"
@@ -38,7 +38,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
             borderColor: "neutralPlain",
             borderStyle: "solid",
             borderWidth: 1,
-            padding: 4,
+            padding: 5,
             borderRadius: 2,
             display: "flex",
             alignItems: "center",

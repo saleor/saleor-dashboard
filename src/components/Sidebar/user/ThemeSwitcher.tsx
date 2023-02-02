@@ -13,7 +13,7 @@ export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
       <>
         <DarkModeIcon color="iconNeutralSubdued" />
         <Text>
-          <FormattedMessage id="GgkZ5I" defaultMessage="Enable Dark Mode" />
+          <FormattedMessage id="5ObBlW" defaultMessage="Dark Mode" />
         </Text>
       </>
     );
@@ -22,7 +22,7 @@ export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
     <>
       <LightModeIcon color="iconNeutralSubdued" />
       <Text>
-        <FormattedMessage id="4EkOwL" defaultMessage="Enable Light Mode" />
+        <FormattedMessage id="hVPucN" defaultMessage="Light Mode" />
       </Text>
     </>
   );

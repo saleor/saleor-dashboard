@@ -11,16 +11,16 @@ export const UserInfo = () => {
   return (
     <Box
       display="flex"
-      gap={5}
-      paddingX={5}
-      paddingY={6}
+      gap={6}
+      paddingX={6}
+      paddingY={7}
       alignItems="center"
       borderTopWidth={1}
       borderColor="neutralPlain"
       borderTopStyle="solid"
       justifyContent="space-between"
     >
-      <Box display="flex" gap={5} alignItems="center">
+      <Box display="flex" gap={6} alignItems="center">
         <Avatar.User
           initials={getUserInitials(user)}
           scheme="decorative2"
