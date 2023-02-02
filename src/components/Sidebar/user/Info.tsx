@@ -12,8 +12,8 @@ export const UserInfo = () => {
     <Box
       display="flex"
       gap={5}
-      paddingX={6}
-      paddingY={7}
+      paddingX={5}
+      paddingY={6}
       alignItems="center"
       borderTopWidth={1}
       borderColor="neutralPlain"
@@ -26,9 +26,11 @@ export const UserInfo = () => {
           scheme="decorative2"
           src={user?.avatar?.url}
         />
-        <Text variant="bodyEmp" size="medium">
-          {getUserName(user, true)}
-        </Text>
+        <Box __width={128} className="ellipsis">
+          <Text variant="bodyEmp" size="medium">
+            {getUserName(user, false)}
+          </Text>
+        </Box>
       </Box>
       <UserControls />
     </Box>

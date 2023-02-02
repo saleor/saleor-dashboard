@@ -27,6 +27,7 @@ export const Sidebar = () => (
         <Drawer.Content
           backgroundColor="subdued"
           data-test-id="sidebar-drawer-content"
+          paddingTop={0}
         >
           <SidebarContent />
         </Drawer.Content>
