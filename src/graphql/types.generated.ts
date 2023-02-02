@@ -832,6 +832,17 @@ export enum ChannelErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM'
 }
 
+export type ChannelListingUpdateInput = {
+  /** ID of a channel listing. */
+  channelListing: Scalars['ID'];
+  /** Price of the particular variant in channel. */
+  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** Cost price of the variant in channel. */
+  costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** The threshold for preorder variant in channel. */
+  preorderThreshold?: InputMaybe<Scalars['Int']>;
+};
+
 export type ChannelUpdateInput = {
   /** isActive flag. */
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -4521,10 +4532,10 @@ export type ProductVariantBulkUpdateInput = {
    * Added in Saleor 3.10.
    */
   externalReference?: InputMaybe<Scalars['String']>;
-  /** Stocks of a product available for sale. */
-  stocks?: InputMaybe<Array<StockInput>>;
-  /** List of prices assigned to channels. */
-  channelListings?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
+  /** Stocks input. */
+  stocks?: InputMaybe<ProductVariantStocksUpdateInput>;
+  /** Channel listings input. */
+  channelListings?: InputMaybe<ProductVariantChannelListingUpdateInput>;
   /** ID of the product variant to update. */
   id: Scalars['ID'];
 };
@@ -4544,6 +4555,15 @@ export type ProductVariantChannelListingAddInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorderThreshold?: InputMaybe<Scalars['Int']>;
+};
+
+export type ProductVariantChannelListingUpdateInput = {
+  /** List of channels to create variant channel listings. */
+  create?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
+  /** List of channel listings to update. */
+  update?: InputMaybe<Array<ChannelListingUpdateInput>>;
+  /** List of product variant channel listings to remove. */
+  remove?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type ProductVariantCreateInput = {
@@ -4662,6 +4682,15 @@ export type ProductVariantSortingInput = {
   direction: OrderDirection;
   /** Sort productVariants by the selected field. */
   field: ProductVariantSortField;
+};
+
+export type ProductVariantStocksUpdateInput = {
+  /** List of warehouses to create stocks. */
+  create?: InputMaybe<Array<StockInput>>;
+  /** List od stocks that should be updated. */
+  update?: InputMaybe<Array<StockUpdateInput>>;
+  /** List of stocks to remove. */
+  remove?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type PublishableChannelListingInput = {
@@ -5090,6 +5119,13 @@ export type StockInput = {
 export type StockSettingsInput = {
   /** Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations. */
   allocationStrategy: AllocationStrategyEnum;
+};
+
+export type StockUpdateInput = {
+  /** Stock. */
+  stock: Scalars['ID'];
+  /** Quantity of items available for sell. */
+  quantity: Scalars['Int'];
 };
 
 /** Enum representing the type of a payment storage in a gateway. */

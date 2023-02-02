@@ -3027,6 +3027,20 @@ enum ChannelErrorCode {
   DUPLICATED_INPUT_ITEM
 }
 
+input ChannelListingUpdateInput {
+  """ID of a channel listing."""
+  channelListing: ID!
+
+  """Price of the particular variant in channel."""
+  price: PositiveDecimal
+
+  """Cost price of the variant in channel."""
+  costPrice: PositiveDecimal
+
+  """The threshold for preorder variant in channel."""
+  preorderThreshold: Int
+}
+
 """
 Reorder the warehouses of a channel.
 
@@ -18558,8 +18572,14 @@ type ProductVariantBulkError {
   """List of warehouse IDs which causes the error."""
   warehouses: [ID!]
 
+  """List of stocks IDs which causes the error."""
+  stocks: [ID!]
+
   """List of channel IDs which causes the error."""
   channels: [ID!]
+
+  """List of channel listings IDs which causes the error."""
+  channelListings: [ID!]
 }
 
 """An enumeration."""
@@ -18666,11 +18686,11 @@ input ProductVariantBulkUpdateInput {
   """
   externalReference: String
 
-  """Stocks of a product available for sale."""
-  stocks: [StockInput!]
+  """Stocks input."""
+  stocks: ProductVariantStocksUpdateInput
 
-  """List of prices assigned to channels."""
-  channelListings: [ProductVariantChannelListingAddInput!]
+  """Channel listings input."""
+  channelListings: ProductVariantChannelListingUpdateInput
 
   """ID of the product variant to update."""
   id: ID!
@@ -18732,6 +18752,17 @@ type ProductVariantChannelListingUpdate {
   variant: ProductVariant
   productChannelListingErrors: [ProductChannelListingError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [ProductChannelListingError!]!
+}
+
+input ProductVariantChannelListingUpdateInput {
+  """List of channels to create variant channel listings."""
+  create: [ProductVariantChannelListingAddInput!]
+
+  """List of channel listings to update."""
+  update: [ChannelListingUpdateInput!]
+
+  """List of product variant channel listings to remove."""
+  remove: [ID!]
 }
 
 type ProductVariantCountableConnection {
@@ -19140,6 +19171,17 @@ type ProductVariantStocksUpdate {
   productVariant: ProductVariant
   bulkStockErrors: [BulkStockError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [BulkStockError!]!
+}
+
+input ProductVariantStocksUpdateInput {
+  """List of warehouses to create stocks."""
+  create: [StockInput!]
+
+  """List od stocks that should be updated."""
+  update: [StockUpdateInput!]
+
+  """List of stocks to remove."""
+  remove: [ID!]
 }
 
 type ProductVariantTranslatableContent implements Node {
@@ -22995,6 +23037,14 @@ input StockSettingsInput {
   Allocation strategy options. Strategy defines the preference of warehouses for allocations and reservations.
   """
   allocationStrategy: AllocationStrategyEnum!
+}
+
+input StockUpdateInput {
+  """Stock."""
+  stock: ID!
+
+  """Quantity of items available for sell."""
+  quantity: Int!
 }
 
 """Enum representing the type of a payment storage in a gateway."""
