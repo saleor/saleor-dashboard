@@ -7,6 +7,7 @@ import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-sel
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
@@ -188,6 +189,10 @@ describe("Staff members", () => {
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
+      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
+        "be.visible",
+      );
+      cy.get(BUTTON_SELECTORS.dialogBackButton).click();
       cy.confirmationErrorMessageShouldAppear();
     },
   );
@@ -201,9 +206,7 @@ describe("Staff members", () => {
         .get(SHARED_ELEMENTS.searchInput)
         .type(`${email} {enter}`);
       cy.waitForProgressBarToNotExist();
-      cy.get(STAFF_MEMBERS_LIST.staffAvatar)
-        .first()
-        .should("be.visible");
+      cy.get(STAFF_MEMBERS_LIST.staffAvatar).first().should("be.visible");
       cy.waitForProgressBarToNotExist()
         .get(STAFF_MEMBERS_LIST.staffStatusText)
         .first()
@@ -245,19 +248,11 @@ describe("Staff members", () => {
         password: Cypress.env("USER_PASSWORD"),
       });
 
-      cy.visit(urlList.staffMembers)
-        .get(LOGIN_SELECTORS.userMenu)
-        .click();
+      cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
-      cy.get(STAFF_MEMBER_DETAILS.staffFirstName)
-        .clear()
-        .type("สมชาย");
-      cy.get(STAFF_MEMBER_DETAILS.staffLastName)
-        .clear()
-        .type(newLastName);
-      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
-        .clear()
-        .type(changedEmail);
+      cy.get(STAFF_MEMBER_DETAILS.staffFirstName).clear().type("สมชาย");
+      cy.get(STAFF_MEMBER_DETAILS.staffLastName).clear().type(newLastName);
+      cy.get(STAFF_MEMBER_DETAILS.staffEmail).clear().type(changedEmail);
 
       // Test blocked from this point by https://github.com/saleor/saleor-dashboard/issues/2847
       cy.get(BUTTON_SELECTORS.confirm).confirmationMessageShouldAppear();
@@ -295,9 +290,7 @@ describe("Staff members", () => {
         password: Cypress.env("USER_PASSWORD"),
       });
 
-      cy.visit(urlList.staffMembers)
-        .get(LOGIN_SELECTORS.userMenu)
-        .click();
+      cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
       cy.get(STAFF_MEMBER_DETAILS.changePasswordBtn).click();
       cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
@@ -306,9 +299,7 @@ describe("Staff members", () => {
       cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(
         newPass,
       );
-      cy.get(BUTTON_SELECTORS.submit)
-        .click()
-        .confirmationMessageShouldAppear();
+      cy.get(BUTTON_SELECTORS.submit).click().confirmationMessageShouldAppear();
 
       cy.clearSessionData().loginUserViaRequest("auth", {
         email: newEmail,

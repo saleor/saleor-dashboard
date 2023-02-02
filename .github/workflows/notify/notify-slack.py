@@ -14,6 +14,7 @@ Manual Environment Variables (explicit):
 - SLACK_WEBHOOK_URL: incoming webhook URL to send payload/message to
 - JOB_STATUS: status from GitHub's ``job.status``
 - JOB_TITLE: the title of the job
+- JOB_KIND: kind of job to notify about, by default "deployment"
 
 Global GitHub Environment Variables (implicit):
 - GITHUB_RUN_ID
@@ -57,6 +58,9 @@ class JobNotifier:
         # Job Status (success|failure|cancelled)
         self.job_status: str = os.environ["JOB_STATUS"]
 
+        # The kind of job (deployment, release tests, ...)
+        self.job_kind: str = os.getenv("JOB_KIND", "deployment")
+
     @property
     def run_permalink(self) -> str:
         """Permalink to the current run logs"""
@@ -71,7 +75,7 @@ class JobNotifier:
         status = self.job_status.capitalize()
         # Dev deployment triggered by JohnDoe: Success
         text = (
-            f"{self.author} deployment finished for '{self.deployment_kind.capitalize()}', result: "
+            f"{self.author} {self.job_kind} finished for '{self.deployment_kind.capitalize()}', result: "
             f"{status}"
         )
         message_data = {

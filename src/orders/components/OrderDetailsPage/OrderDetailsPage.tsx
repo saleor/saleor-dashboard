@@ -24,7 +24,9 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
@@ -196,6 +198,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
+  const openPlaygroundURL = playgroundOpenHandler({
+    query: defaultGraphiQLQuery,
+    headers: "",
+    operationName: "",
+    variables: `{ "id": "${order?.id}" }`,
+  });
+
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
@@ -211,9 +220,19 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
               cardMenu={
-                <CardMenu
-                  menuItems={[...selectCardMenuItems, ...extensionMenuItems]}
-                />
+                <>
+                  <CardMenu
+                    menuItems={[
+                      ...selectCardMenuItems,
+                      ...extensionMenuItems,
+                      {
+                        label: intl.formatMessage(messages.openGraphiQL),
+                        onSelect: openPlaygroundURL,
+                        testId: "graphiql-redirect",
+                      },
+                    ]}
+                  />
+                </>
               }
             />
             <div className={classes.date}>

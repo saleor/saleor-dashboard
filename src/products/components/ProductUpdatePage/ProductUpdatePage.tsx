@@ -44,10 +44,12 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -59,6 +61,7 @@ import ProductOrganization from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
+import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 import {
   ProductUpdateData,
@@ -242,6 +245,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     productId,
   );
 
+  const openPlaygroundURL = playgroundOpenHandler({
+    query: defaultGraphiQLQuery,
+    headers: "",
+    operationName: "",
+    variables: `{ "id": "${product?.id}" }`,
+  });
+
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
@@ -321,12 +331,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {intl.formatMessage(sectionNames.products)}
               </Backlink>
               <PageHeader title={header}>
-                {extensionMenuItems.length > 0 && (
-                  <CardMenu
-                    menuItems={extensionMenuItems}
-                    data-test-id="menu"
-                  />
-                )}
+                <CardMenu
+                  menuItems={[
+                    ...extensionMenuItems,
+                    {
+                      label: intl.formatMessage(messages.openGraphiQL),
+                      onSelect: openPlaygroundURL,
+                      testId: "graphiql-redirect",
+                    },
+                  ]}
+                  data-test-id="menu"
+                />
               </PageHeader>
               <Grid richText>
                 <div>

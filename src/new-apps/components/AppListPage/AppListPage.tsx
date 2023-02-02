@@ -49,10 +49,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     appsInstallations,
     installableMarketplaceApps,
   );
-  const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
-    installedApps,
-    installableMarketplaceApps,
-  );
+  const verifiedInstallableMarketplaceApps =
+    getVerifiedInstallableMarketplaceApps(
+      installedApps,
+      installableMarketplaceApps,
+    );
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,

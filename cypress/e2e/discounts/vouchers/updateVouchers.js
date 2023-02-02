@@ -12,6 +12,7 @@ import {
 } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
@@ -50,11 +51,22 @@ describe("As an admin I want to update vouchers", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+          cy.checkIfDataAreNotNull({
+            dataForCheckout,
+            defaultChannel,
+            product,
+          });
         },
-        cy.checkIfDataAreNotNull({ dataForCheckout, defaultChannel, product }),
       );
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
+  });
   it(
     "should delete voucher. TC: SALEOR_1905",
     { tags: ["@vouchers", "@allEnv", "@stable"] },

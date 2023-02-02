@@ -13,6 +13,7 @@ import {
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   createVoucher,
   discountOptions,
@@ -52,15 +53,26 @@ describe("As an admin I want to create voucher", () => {
             shippingMethodName: shippingMethodResp.name,
             auth: "token",
           };
+
+          updateTaxConfigurationForChannel({
+            channelSlug: defaultChannel.slug,
+          });
+          cy.checkIfDataAreNotNull({
+            createdChannel,
+            dataForCheckout,
+            defaultChannel,
+          });
         },
-        cy.checkIfDataAreNotNull({
-          createdChannel,
-          dataForCheckout,
-          defaultChannel,
-        }),
       );
   });
 
+  beforeEach(() => {
+    cy.clearSessionData().loginUserViaRequest();
+    updateTaxConfigurationForChannel({
+      channelSlug: defaultChannel.slug,
+      pricesEnteredWithTax: true,
+    });
+  });
   it(
     "should be able to create fixed price voucher. TC: SALEOR_1901",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
@@ -154,9 +166,7 @@ describe("As an admin I want to create voucher", () => {
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
-      cy.clearSessionData()
-        .loginUserViaRequest()
-        .visit(urlList.vouchers);
+      cy.clearSessionData().loginUserViaRequest().visit(urlList.vouchers);
       cy.expectSkeletonIsVisible();
       createChannel({ name }).then(channel => {
         createdChannel = channel;

@@ -23,5 +23,6 @@ export const webhookDetailsFragment = gql`
     }
     secretKey
     targetUrl
+    subscriptionQuery
   }
 `;

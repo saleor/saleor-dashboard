@@ -11,8 +11,8 @@ module.exports = defineConfig({
   viewportWidth: 1400,
   viewportHeight: 660,
   retries: {
-    runMode: 2,
-    openMode: 1,
+    runMode: 1,
+    openMode: 0,
   },
   e2e: {
     env: {

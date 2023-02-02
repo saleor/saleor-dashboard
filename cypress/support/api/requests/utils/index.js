@@ -30,6 +30,7 @@ Cypress.Commands.add(
       const respInSting = JSON.stringify(response.body);
       if (respInSting.includes(`"errors":[{`)) {
         cy.log(query).log(JSON.stringify(response.body));
+        cy.wrap(response);
       }
     });
   },

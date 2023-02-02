@@ -86,12 +86,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     paginationState,
   );
 
-  const {
-    data: appsInProgressData,
-    refetch: appsInProgressRefetch,
-  } = useAppsInstallationsQuery({
-    displayLoader: false,
-  });
+  const { data: appsInProgressData, refetch: appsInProgressRefetch } =
+    useAppsInstallationsQuery({
+      displayLoader: false,
+    });
 
   const installedAppNotify = (name: string) => {
     notify({
@@ -149,13 +147,8 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     AppsConfig.marketplaceApiUri,
   );
 
-  const {
-    installableMarketplaceApps,
-    comingSoonMarketplaceApps,
-  } = getMarketplaceAppsLists(
-    !!AppsConfig.marketplaceApiUri,
-    marketplaceAppList,
-  );
+  const { installableMarketplaceApps, comingSoonMarketplaceApps } =
+    getMarketplaceAppsLists(!!AppsConfig.marketplaceApiUri, marketplaceAppList);
   const appsInstallations = appsInProgressData?.appsInstallations;
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
 
