@@ -24,6 +24,11 @@ export const UserControls = () => {
   const { themeType: legacyThemeType, setTheme: setLegacyTheme } =
     useLegacyTheme();
 
+  const handleClick = () => {
+    setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
+    setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
+  };
+
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -81,14 +86,7 @@ export const UserControls = () => {
                 alignItems="center"
                 gap={5}
                 marginTop={3}
-                onClick={() => {
-                  setLegacyTheme(
-                    isDarkTheme(legacyThemeType) ? "light" : "dark",
-                  );
-                  setTheme(
-                    theme === "defaultLight" ? "defaultDark" : "defaultLight",
-                  );
-                }}
+                onClick={handleClick}
                 {...listItemStyles}
                 data-test-id="theme-switch"
               >
