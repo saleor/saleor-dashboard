@@ -1,7 +1,16 @@
 import { Box } from "@saleor/macaw-ui/next";
+import clsx from "clsx";
 import React from "react";
 
-export const RightSidebar = ({ children }) => (
+interface RightSidebarProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const RightSidebar: React.FC<RightSidebarProps> = ({
+  children,
+  className,
+}) => (
   <Box
     borderStyle="solid"
     borderColor="neutralPlain"
@@ -20,7 +29,7 @@ export const RightSidebar = ({ children }) => (
     borderRightWidth={0}
     padding={6}
     __gridArea="right"
-    className="hide-scrollbar"
+    className={clsx("hide-scrollbar", className)}
   >
     {children}
   </Box>

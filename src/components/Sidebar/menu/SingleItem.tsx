@@ -25,7 +25,12 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
     }
   };
   return (
-    <List.Item borderRadius={3} active={active} onClick={handleMenuItemClick}>
+    <List.Item
+      borderRadius={3}
+      active={active}
+      onClick={handleMenuItemClick}
+      data-test-id={`menu-item-label-${menuItem.id}`}
+    >
       <Link
         to={menuItem.url}
         className={sprinkles({

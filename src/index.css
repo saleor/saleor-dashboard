@@ -1,0 +1,13 @@
+#portal {
+  position: fixed;
+  top: 0;
+}
+
+body {
+  background: var(--mu-colors-background-plain);
+  color: var(--mu-colorc-text-neutral-default) !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
