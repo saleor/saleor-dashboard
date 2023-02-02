@@ -1,6 +1,7 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -77,8 +78,8 @@ const HomePage: React.FC<HomePageProps> = props => {
 
   return (
     <DetailedContent>
+      <TopNav title={<HomeHeader userName={userName} />} />
       <Content>
-        <HomeHeader userName={userName} />
         <CardSpacer />
         <RequirePermissions
           requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
