@@ -12,7 +12,6 @@ import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
 // import NavigatorButton from "../NavigatorButton/NavigatorButton";
 // import UserChip from "../UserChip";
-// import useAppChannel from "./AppChannelContext";
 // import AppChannelSelect from "./AppChannelSelect";
 import { /* useFullSizeStyles,*/ useStyles } from "./styles";
 
@@ -33,13 +32,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
   // const { logout, user } = useUser();
   const [appState] = useAppState();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
-
-  // const {
-  //   availableChannels,
-  //   channel,
-  //   isPickerActive,
-  //   setChannel,
-  // } = useAppChannel(false);
 
   // const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 

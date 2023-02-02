@@ -15,8 +15,8 @@ const useStyles = makeStyles(
       "&& fieldset": {
         borderColor: theme.palette.divider,
       },
-      marginRight: theme.spacing(2),
       width: 192,
+      padding: 10,
     },
   }),
   {
