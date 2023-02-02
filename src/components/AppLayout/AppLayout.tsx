@@ -1,39 +1,23 @@
-// import { useUser } from "@dashboard/auth";
 import useAppState from "@dashboard/hooks/useAppState";
-// import { isDarkTheme } from "@dashboard/misc";
 import { LinearProgress } from "@material-ui/core";
-import { useActionBar /* useBacklink, useTheme*/ } from "@saleor/macaw-ui";
+import { useActionBar } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
-// import clsx from "clsx";
 import React from "react";
 
-// import Container from "../Container";
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
-// import NavigatorButton from "../NavigatorButton/NavigatorButton";
-// import UserChip from "../UserChip";
-// import AppChannelSelect from "./AppChannelSelect";
-import { /* useFullSizeStyles,*/ useStyles } from "./styles";
+import { useStyles } from "./styles";
 
 interface AppLayoutProps {
   children: React.ReactNode;
   fullSize?: boolean;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({
-  children,
-  // fullSize = false,
-}) => {
+const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles();
-  // const fullSizeClasses = useFullSizeStyles();
-  // const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor } = useActionBar();
-  // const appHeaderAnchor = useBacklink();
-  // const { logout, user } = useUser();
   const [appState] = useAppState();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
-
-  // const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
   return (
     <>
