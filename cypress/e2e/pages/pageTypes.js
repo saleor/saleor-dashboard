@@ -22,7 +22,7 @@ describe("Tests for page types", () => {
   });
 
   it(
-    "should create page type",
+    "should create page type. TC: SALEOR_2301",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       const randomName = startsWith + faker.datatype.number();
@@ -47,23 +47,27 @@ describe("Tests for page types", () => {
     },
   );
 
-  xit("should assign attribute", { tags: ["@pages", "@allEnv"] }, () => {
-    const randomName = startsWith + faker.datatype.number();
+  it(
+    "should assign attribute. TC: SALEOR_2302",
+    { tags: ["@pages", "@allEnv"] },
+    () => {
+      const randomName = startsWith + faker.datatype.number();
 
-    createAttribute({ name: randomName, type: "PAGE_TYPE" });
-    createPageType(randomName)
-      .then(({ pageType }) => {
-        cy.visit(pageTypeDetailsUrl(pageType.id))
-          .get(SHARED_ELEMENTS.progressBar)
-          .should("be.not.visible")
-          .get(PAGE_TYPE_DETAILS.assignAttributesButton)
-          .click()
-          .assignElements(randomName)
-          .confirmationMessageShouldDisappear();
-        getPageType(pageType.id);
-      })
-      .then(pageType => {
-        expect(pageType.attributes[0].name).to.eq(randomName);
-      });
-  });
+      createAttribute({ name: randomName, type: "PAGE_TYPE" });
+      createPageType(randomName)
+        .then(({ pageType }) => {
+          cy.visit(pageTypeDetailsUrl(pageType.id))
+            .get(SHARED_ELEMENTS.progressBar)
+            .should("be.not.visible")
+            .get(PAGE_TYPE_DETAILS.assignAttributesButton)
+            .click()
+            .assignElements(randomName)
+            .confirmationMessageShouldDisappear();
+          getPageType(pageType.id);
+        })
+        .then(pageType => {
+          expect(pageType.attributes[0].name).to.eq(randomName);
+        });
+    },
+  );
 });
