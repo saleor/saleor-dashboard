@@ -4,6 +4,7 @@ import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
 import {
+  Box,
   Button,
   Dropdown,
   List,
@@ -23,6 +24,11 @@ export const UserControls = () => {
   const { themeType: legacyThemeType, setTheme: setLegacyTheme } =
     useLegacyTheme();
 
+  const handleClick = () => {
+    setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
+    setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
+  };
+
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -34,68 +40,68 @@ export const UserControls = () => {
         />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
-        <List
-          padding={3}
-          borderRadius={3}
-          boxShadow="overlay"
-          backgroundColor="surfaceNeutralPlain"
-        >
-          <Dropdown.Item>
-            <List.Item borderRadius={3} data-test-id="account-settings-button">
-              <Link
-                to={staffMemberDetailsUrl(user?.id)}
-                className={sprinkles({
-                  display: "block",
-                  width: "100%",
-                  ...listItemStyles,
-                })}
+        <Box __minWidth={192}>
+          <List
+            padding={3}
+            borderRadius={4}
+            boxShadow="overlay"
+            backgroundColor="surfaceNeutralPlain"
+          >
+            <Dropdown.Item>
+              <List.Item
+                borderRadius={4}
+                data-test-id="account-settings-button"
               >
+                <Link
+                  to={staffMemberDetailsUrl(user?.id)}
+                  className={sprinkles({
+                    display: "block",
+                    width: "100%",
+                    ...listItemStyles,
+                  })}
+                >
+                  <Text>
+                    <FormattedMessage
+                      id="NQgbYA"
+                      defaultMessage="Account Settings"
+                    />
+                  </Text>
+                </Link>
+              </List.Item>
+            </Dropdown.Item>
+            <Dropdown.Item data-test-id="log-out-button">
+              <List.Item onClick={logout} {...listItemStyles}>
                 <Text>
                   <FormattedMessage
-                    id="NQgbYA"
-                    defaultMessage="Account Settings"
+                    id="qLbse5"
+                    defaultMessage="Log out"
+                    description="button"
                   />
                 </Text>
-              </Link>
-            </List.Item>
-          </Dropdown.Item>
-          <Dropdown.Item data-test-id="log-out-button">
-            <List.Item onClick={logout} {...listItemStyles}>
-              <Text>
-                <FormattedMessage
-                  id="qLbse5"
-                  defaultMessage="Log out"
-                  description="button"
-                />
-              </Text>
-            </List.Item>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <List.Item
-              display="flex"
-              alignItems="center"
-              gap={5}
-              marginTop={3}
-              onClick={() => {
-                setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
-                setTheme(
-                  theme === "defaultLight" ? "defaultDark" : "defaultLight",
-                );
-              }}
-              {...listItemStyles}
-              data-test-id="theme-switch"
-            >
-              <ThemeSwitcher theme={theme} />
-            </List.Item>
-          </Dropdown.Item>
-        </List>
+              </List.Item>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <List.Item
+                display="flex"
+                alignItems="center"
+                gap={5}
+                marginTop={3}
+                onClick={handleClick}
+                {...listItemStyles}
+                data-test-id="theme-switch"
+              >
+                <ThemeSwitcher theme={theme} />
+              </List.Item>
+            </Dropdown.Item>
+          </List>
+        </Box>
       </Dropdown.Content>
     </Dropdown>
   );
 };
 
 const listItemStyles = {
-  paddingX: 3,
-  paddingY: 4,
-  borderRadius: 3,
+  paddingX: 4,
+  paddingY: 5,
+  borderRadius: 4,
 } as const;

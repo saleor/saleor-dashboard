@@ -34,12 +34,12 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       <Link
         to={menuItem.url}
         className={sprinkles({
-          padding: 3,
+          padding: 4,
           display: "block",
           width: "100%",
         })}
       >
-        <Box display="flex" alignItems="center" gap={5}>
+        <Box display="flex" alignItems="center" gap={6}>
           {menuItem.icon}
           <Text>{menuItem.label}</Text>
         </Box>
