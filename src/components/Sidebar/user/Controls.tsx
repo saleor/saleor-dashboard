@@ -30,6 +30,7 @@ export const UserControls = () => {
           variant="tertiary"
           icon={<MoreOptionsIcon />}
           data-test-id="userMenu"
+          size="medium"
         />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">

@@ -34,8 +34,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       <Link
         to={menuItem.url}
         className={sprinkles({
-          paddingX: 4,
-          paddingY: 5,
+          padding: 3,
           display: "block",
           width: "100%",
         })}

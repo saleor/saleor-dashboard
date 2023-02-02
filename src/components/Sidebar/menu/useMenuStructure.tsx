@@ -26,7 +26,7 @@ import {
   MarketplaceIcon,
   OrdersIcon,
   ProductsIcons,
-  TableEditIcon,
+  StorefrontIcon,
   TranslationsIcon,
   VouchersIcon,
 } from "@saleor/macaw-ui/next";
@@ -39,7 +39,7 @@ import { mapToExtensionsItems } from "./utils";
 
 const iconSettings = {
   color: "iconNeutralSubdued",
-  size: "medium",
+  size: "small",
 } as const;
 
 export function useMenuStructure() {
@@ -51,6 +51,7 @@ export function useMenuStructure() {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
+    paddingY: 2,
   };
 
   // This will be deleted when Marketplace is released
@@ -149,6 +150,10 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
+      id: "extensions",
+      type: "divider",
+    },
+    {
       children: [
         {
           label: intl.formatMessage(sectionNames.orders),
@@ -223,6 +228,10 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
+      id: "extensions",
+      type: "divider",
+    },
+    {
       children: !isEmpty(extensions.NAVIGATION_PAGES) && [
         {
           label: intl.formatMessage(sectionNames.pages),
@@ -236,7 +245,7 @@ export function useMenuStructure() {
           appExtensionsHeaderItem,
         ),
       ],
-      icon: <TableEditIcon {...iconSettings} />,
+      icon: <StorefrontIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.pages),
       permissions: [PermissionEnum.MANAGE_PAGES],
       id: "pages",
@@ -264,6 +273,10 @@ export function useMenuStructure() {
       id: "translations",
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
+    },
+    {
+      id: "extensions",
+      type: "divider",
     },
     {
       icon: <ConfigurationIcon {...iconSettings} />,

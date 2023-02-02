@@ -9,7 +9,7 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-const iconSize = vars.space[8];
+const iconSize = vars.space[6];
 const gap = vars.space[5];
 
 const borderOffset = calc(iconSize).add(gap).divide(2).toString();
@@ -17,9 +17,10 @@ const borderOffset = calc(iconSize).add(gap).divide(2).toString();
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
   <List.ItemGroup>
     <List.ItemGroup.Trigger
-      paddingX={4}
-      paddingY={5}
+      paddingX={3}
+      paddingY={3}
       borderRadius={3}
+      size="small"
       justifyContent="space-between"
     >
       <Box display="flex" alignItems="center" gap={5}>
@@ -36,8 +37,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
         __marginLeft={borderOffset}
         display="flex"
         flexDirection="column"
-        gap={4}
-        marginTop={4}
+        marginBottom={4}
       >
         {menuItem.children?.map(child => (
           <MenuItem menuItem={child} key={child.id} />

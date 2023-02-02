@@ -1,4 +1,5 @@
 import { PermissionEnum } from "@dashboard/graphql";
+import { Sprinkles } from "@saleor/macaw-ui/next";
 
 export interface SidebarMenuItem {
   label?: string;
@@ -9,4 +10,5 @@ export interface SidebarMenuItem {
   icon?: React.ReactNode;
   onClick?: () => void;
   children?: SidebarMenuItem[];
+  paddingY?: Sprinkles["paddingY"];
 }
