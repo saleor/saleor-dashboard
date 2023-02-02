@@ -1,4 +1,4 @@
-import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
+import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
 import {
   CopyIcon,
   GraphiQLProvider,
@@ -78,7 +78,7 @@ export function GraphiQL({
   visiblePlugin,
   defaultHeaders,
   ...props
-}: GraphiQLProps & { asyncEvents: WebhookEventTypeAsyncEnum[] }) {
+}: GraphiQLProps & { data: WebhookFormData }) {
   // Ensure props are correct
   if (typeof fetcher !== "function") {
     throw new TypeError(
@@ -130,7 +130,7 @@ export function GraphiQL({
         setShowDialog={setShowDialog}
         query={query}
         setResult={setResult}
-        asyncEvents={props.asyncEvents}
+        data={props.data}
       />
     </GraphiQLProvider>
   );

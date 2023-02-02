@@ -1,5 +1,8 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
+import {
+  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum,
+} from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import productsMocks from "@test/mocks/products";
 import { render, screen } from "@testing-library/react";
@@ -23,8 +26,15 @@ describe("DryRun", () => {
       query: "",
       showDialog: true,
       setShowDialog: jest.fn(),
-      asyncEvents: [] as WebhookEventTypeAsyncEnum[],
       setResult: jest.fn(),
+      data: {
+        asyncEvents: [] as WebhookEventTypeAsyncEnum[],
+        syncEvents: [] as WebhookEventTypeSyncEnum[],
+        isActive: false,
+        name: "",
+        targetUrl: "",
+        subscriptionQuery: "",
+      },
     };
 
     // Act

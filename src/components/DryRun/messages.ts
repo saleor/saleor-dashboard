@@ -6,6 +6,11 @@ export const messages = defineMessages({
     defaultMessage: "Dry run",
     description: "Dry run dialog header",
   },
+  unavailableSyncEvents: {
+    id: "8+g1k3",
+    defaultMessage: "Dry run currently is not available for synchronous events",
+    description: "Dry ",
+  },
   selectObject: {
     id: "+RffqY",
     defaultMessage: "Select object type to perform dry run on provided query",

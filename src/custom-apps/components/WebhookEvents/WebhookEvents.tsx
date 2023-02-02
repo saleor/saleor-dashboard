@@ -19,7 +19,7 @@ import {
   Pill,
   useListWidths,
 } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -30,12 +30,14 @@ interface WebhookEventsProps {
     syncEvents: WebhookEventTypeSyncEnum[];
     asyncEvents: WebhookEventTypeAsyncEnum[];
   };
+  setQuery: Dispatch<SetStateAction<string>>;
   onSyncEventChange: (event: ChangeEvent) => void;
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
 const WebhookEvents: React.FC<WebhookEventsProps> = ({
   data,
+  setQuery,
   onSyncEventChange,
   onAsyncEventChange,
 }) => {
@@ -56,6 +58,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
 
   const handleTabChange = value => {
     setObject(null);
+    setQuery("");
     setTab(value);
   };
 

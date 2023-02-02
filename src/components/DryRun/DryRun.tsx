@@ -1,9 +1,7 @@
 import Grid from "@dashboard/components/Grid";
+import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
-import {
-  useTriggerWebhookDryRunMutation,
-  WebhookEventTypeAsyncEnum,
-} from "@dashboard/graphql";
+import { useTriggerWebhookDryRunMutation } from "@dashboard/graphql";
 import {
   capitalize,
   Dialog,
@@ -33,8 +31,8 @@ interface DryRunProps {
   query: string;
   showDialog: boolean;
   setShowDialog: Dispatch<SetStateAction<boolean>>;
-  asyncEvents: WebhookEventTypeAsyncEnum[];
   setResult: Dispatch<SetStateAction<string>>;
+  data: WebhookFormData;
 }
 
 const DryRun: React.FC<DryRunProps> = ({
@@ -42,6 +40,7 @@ const DryRun: React.FC<DryRunProps> = ({
   showDialog,
   setShowDialog,
   query,
+  data: { syncEvents },
 }: DryRunProps) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -69,6 +68,23 @@ const DryRun: React.FC<DryRunProps> = ({
 
   if (!showDialog) {
     return <></>;
+  }
+
+  if (syncEvents.length > 0) {
+    return (
+      <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
+        <DialogHeader onClose={closeDialog}>
+          {intl.formatMessage(messages.header)}
+        </DialogHeader>
+        <DialogContent style={{ overflow: "scroll" }}>
+          <Alert variant="error" close={false}>
+            <Typography>
+              {intl.formatMessage(messages.unavailableSyncEvents)}
+            </Typography>
+          </Alert>
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (
