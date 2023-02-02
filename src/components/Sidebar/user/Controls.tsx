@@ -4,7 +4,7 @@ import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
 import {
-  Box,
+  Button,
   Dropdown,
   List,
   MoreOptionsIcon,
@@ -26,22 +26,11 @@ export const UserControls = () => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        {/* TODO: migrate to proper button */}
-        <Box
-          cursor="pointer"
-          display="flex"
-          justifyContent="center"
-          as="button"
-          borderWidth={0}
-          backgroundColor={{
-            default: "interactiveNeutralHighlightDefault",
-            active: "interactiveNeutralHighlightPressing",
-            hover: "interactiveNeutralHighlightHovering",
-            focus: "interactiveNeutralHighlightFocused",
-          }}
-        >
-          <MoreOptionsIcon />
-        </Box>
+        <Button
+          variant="tertiary"
+          icon={<MoreOptionsIcon />}
+          data-test-id="userMenu"
+        />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
         <List
@@ -51,7 +40,7 @@ export const UserControls = () => {
           backgroundColor="surfaceNeutralPlain"
         >
           <Dropdown.Item>
-            <List.Item borderRadius={3}>
+            <List.Item borderRadius={3} data-test-id="account-settings-button">
               <Link
                 to={staffMemberDetailsUrl(user?.id)}
                 className={sprinkles({
@@ -69,7 +58,7 @@ export const UserControls = () => {
               </Link>
             </List.Item>
           </Dropdown.Item>
-          <Dropdown.Item>
+          <Dropdown.Item data-test-id="log-out-button">
             <List.Item onClick={logout} {...listItemStyles}>
               <Text>
                 <FormattedMessage
@@ -93,6 +82,7 @@ export const UserControls = () => {
                 );
               }}
               {...listItemStyles}
+              data-test-id="theme-switch"
             >
               <ThemeSwitcher theme={theme} />
             </List.Item>
