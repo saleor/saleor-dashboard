@@ -24,7 +24,7 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiTable: {
       root: {
-        tableLayout: "auto",
+        tableLayout: "auto !important" as "auto",
       },
     },
     MuiIconButton: {
