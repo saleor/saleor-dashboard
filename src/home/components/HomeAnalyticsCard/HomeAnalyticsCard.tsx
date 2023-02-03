@@ -10,6 +10,8 @@ const useStyles = makeStyles(
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 64px",
+      paddingLeft: 16,
+      paddingRight: 0,
     },
     cardSpacing: {
       [theme.breakpoints.down("sm")]: {

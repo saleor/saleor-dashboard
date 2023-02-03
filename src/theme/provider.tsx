@@ -3,19 +3,15 @@ import {
   DefaultTheme,
   ThemeProvider as MacawThemeProvider,
 } from "@saleor/macaw-ui/next";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { defaultTheme, localStorageKey } from "./consts";
 
 export const ThemeProvider: React.FC = ({ children }) => {
-  const [activeTheme, setActiveTheme] = useLocalStorage<DefaultTheme>(
+  const [activeTheme] = useLocalStorage<DefaultTheme>(
     localStorageKey,
     defaultTheme,
   );
-
-  useEffect(() => {
-    setActiveTheme(defaultTheme);
-  });
 
   return (
     <MacawThemeProvider defaultTheme={activeTheme}>

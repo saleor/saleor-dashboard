@@ -27,6 +27,12 @@ const useStyles = makeStyles(
       paddingBottom: "16px",
       paddingTop: "16px",
     },
+    listItem: {
+      paddingLeft: 0,
+    },
+    cardTitle: {
+      paddingLeft: 0,
+    },
   },
   { name: "HomeActivityCard" },
 );
@@ -50,12 +56,13 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
           defaultMessage: "Activity",
           description: "header",
         })}
+        className={classes.cardTitle}
       />
       <List dense={true}>
         {renderCollection(
           activities,
           (activity, activityId) => (
-            <ListItem key={activityId}>
+            <ListItem key={activityId} className={classes.listItem}>
               {activity ? (
                 <ListItemText
                   primary={
