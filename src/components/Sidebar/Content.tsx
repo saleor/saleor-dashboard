@@ -7,7 +7,6 @@ import { UserInfo } from "./user";
 
 export const SidebarContent = () => (
   <Box
-    className="hide-scrollbar"
     backgroundColor="subdued"
     as="aside"
     height="100%"

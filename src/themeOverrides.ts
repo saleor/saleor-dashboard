@@ -16,6 +16,12 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
+    MuiTypography: {
+      root: {
+        color: vars.colors.foreground.textNeutralDefault,
+        margin: "unset",
+      },
+    },
     MuiPaper: {
       root: {
         backgroundColor: vars.colors.background.plain,
