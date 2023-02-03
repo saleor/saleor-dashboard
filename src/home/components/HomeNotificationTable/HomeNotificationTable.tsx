@@ -19,9 +19,13 @@ const useStyles = makeStyles(
     },
     tableCard: {
       overflow: "hidden",
+      paddingLeft: 16,
     },
     tableRow: {
       cursor: "pointer",
+    },
+    tableCell: {
+      paddingLeft: "0 !important",
     },
   }),
   { name: "HomeNotificationTable" },
@@ -78,7 +82,10 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <TableRowLink hover={true} href={ordersToFulfillHref}>
-              <TableCell data-test-id="orders-to-fulfill">
+              <TableCell
+                data-test-id="orders-to-fulfill"
+                className={classes.tableCell}
+              >
                 {ordersToFulfill === undefined ? (
                   <Skeleton />
                 ) : ordersToFulfill === 0 ? (
@@ -98,7 +105,10 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
               </TableCell>
             </TableRowLink>
             <TableRowLink hover={true} href={ordersToCaptureHref}>
-              <TableCell data-test-id="orders-to-capture">
+              <TableCell
+                data-test-id="orders-to-capture"
+                className={classes.tableCell}
+              >
                 {ordersToCapture === undefined ? (
                   <Skeleton />
                 ) : ordersToCapture === 0 ? (
@@ -122,7 +132,10 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
           >
             <TableRowLink hover={true} href={productsOutOfStockHref}>
-              <TableCell data-test-id="products-out-of-stock">
+              <TableCell
+                data-test-id="products-out-of-stock"
+                className={classes.tableCell}
+              >
                 {productsOutOfStock === undefined ? (
                   <Skeleton />
                 ) : productsOutOfStock === 0 ? (
