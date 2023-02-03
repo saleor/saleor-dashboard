@@ -61,13 +61,12 @@ function openCreatePageAndFillUpGeneralFields({
   pageTypeName,
   isPublished,
 }) {
-  cy.visit(urlList.pages)
-    .get(PAGES_LIST.createPageButton)
-    .click();
+  cy.visit(urlList.pages).get(PAGES_LIST.createPageButton).click();
   fillUpPageTypeDialog({ pageTypeName });
   cy.get(BUTTON_SELECTORS.submit)
     .click()
     .get(PAGE_DETAILS.nameInput)
+    .click()
     .type(pageName);
   if (!isPublished) {
     cy.get(PAGE_DETAILS.isNotPublishedCheckbox).click();
