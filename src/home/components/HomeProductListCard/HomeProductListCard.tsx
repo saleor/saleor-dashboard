@@ -36,9 +36,16 @@ const useStyles = makeStyles(
     noProducts: {
       paddingBottom: 20,
       paddingTop: 20,
+      paddingLeft: "0 !important",
     },
     tableRow: {
       cursor: "pointer",
+    },
+    card: {
+      paddingLeft: 16,
+    },
+    cardTitle: {
+      paddingLeft: 0,
     },
   }),
   { name: "HomeProductListCard" },
@@ -56,13 +63,14 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id={testId}>
+    <Card data-test-id={testId} className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
           description: "header",
         })}
+        className={classes.cardTitle}
       />
       <ResponsiveTable>
         <colgroup>

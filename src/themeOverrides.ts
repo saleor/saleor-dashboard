@@ -38,31 +38,6 @@ export const themeOverrides: Partial<Theme> = {
         marginRight: 0,
       },
     },
-    MuiCardHeader: {
-      action: {
-        marginRight: 0,
-      },
-      root: {
-        paddingLeft: 0,
-        paddingRight: 0,
-      },
-    },
-    MuiCardContent: {
-      root: {
-        paddingLeft: 0,
-        paddingRight: 0,
-      },
-    },
-    MuiListItem: {
-      root: {
-        paddingLeft: 0,
-        paddingRight: 0,
-      },
-      gutters: {
-        paddingLeft: 0,
-        paddingRight: 0,
-      },
-    },
     MuiCardActions: {
       root: {
         paddingLeft: 0,
