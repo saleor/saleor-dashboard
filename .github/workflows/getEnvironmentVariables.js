@@ -72,7 +72,7 @@ async function createEnvironment(version, token, versionBefore, snapshot) {
     throw new Error(
       `Can't create environment- ${JSON.stringify(responseInJson)}`,
     );
-  const throwErrorAfterTimeoutWhenCreatingEnv = setTimeout(function() {
+  const throwErrorAfterTimeoutWhenCreatingEnv = setTimeout(function () {
     throw new Error("Environment didn't crated after 20 minutes");
   }, 1200000);
   return await waitUntilTaskInProgress(
@@ -106,7 +106,7 @@ async function updateEnvironment(environmentId, version, token) {
     throw new Error(
       `Can't update environment- ${JSON.stringify(responseInJson)}`,
     );
-  const throwErrorAfterTimeout = setTimeout(function() {
+  const throwErrorAfterTimeout = setTimeout(function () {
     throw new Error("Environment didn't upgraded after 20 minutes");
   }, 1200000);
   await waitUntilTaskInProgress(
@@ -135,7 +135,7 @@ async function waitUntilTaskInProgress(taskId, token) {
     responseInJson.status == "IN_PROGRESS"
   ) {
     await new Promise(resolve =>
-      setTimeout(function() {
+      setTimeout(function () {
         resolve(waitUntilTaskInProgress(taskId, token));
       }, 10000),
     );
@@ -185,7 +185,9 @@ async function checkIfOldVersion(version) {
 }
 
 async function getTheNewestVersion() {
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+  });
 
   const response = await octokit.request(
     "GET /repos/{owner}/{repo}/releases/latest",
@@ -233,7 +235,7 @@ function sortServicesByVersion(services) {
   // This function is used to sort environments by their version
   // It returns sorted list of services in descending order
 
-  return services.sort(function(a, b) {
+  return services.sort(function (a, b) {
     //Convert version from string to array eg. from "3.5.7" to [3, 5, 7]
     // Where 3 is main version, 5 is major version and 7 is patch version
 
