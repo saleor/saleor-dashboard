@@ -1,5 +1,4 @@
-import { ArrowBack } from "@material-ui/icons";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { ArrowLeftIcon, Box, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React, { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 
@@ -46,7 +45,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
             marginRight: 7,
           })}
         >
-          <ArrowBack />
+          <ArrowLeftIcon />
         </Link>
       )}
       <Box __flex={1}>
