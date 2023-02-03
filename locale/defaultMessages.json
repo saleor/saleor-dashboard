@@ -156,6 +156,10 @@
     "context": "product type shipping settings, section header",
     "string": "Shipping"
   },
+  "/4bJkA": {
+    "context": "header field value, header",
+    "string": "Value"
+  },
   "/5r4he": {
     "context": "label for button",
     "string": "Add country"
@@ -1881,6 +1885,10 @@
     "context": "dialog header",
     "string": "Delete Page Types"
   },
+  "CdxVko": {
+    "context": "empty headers text",
+    "string": "No headers created for this webhook. Use the button below to add new header."
+  },
   "ChAjJu": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
@@ -1899,6 +1907,10 @@
   },
   "Co2U4u": {
     "string": "No plugins found"
+  },
+  "CvyQ1c": {
+    "context": "add header,button",
+    "string": "Add Header"
   },
   "CxfKLC": {
     "string": "Pages"
@@ -3374,6 +3386,10 @@
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
+  },
+  "No4lyL": {
+    "context": "header field name, header",
+    "string": "Name"
   },
   "Np7J92": {
     "context": "deactivate local named app",
@@ -4855,6 +4871,10 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
+  "YIxI6R": {
+    "context": "header name input",
+    "string": "Incorrect name"
+  },
   "YJ4TXc": {
     "context": "tab name",
     "string": "All Staff Members"
@@ -5199,6 +5219,10 @@
   "b810WJ": {
     "context": "product price",
     "string": "Price"
+  },
+  "b89+oM": {
+    "context": "header",
+    "string": "Headers"
   },
   "bDBiac": {
     "context": "dropdown or column label",
@@ -5718,6 +5742,10 @@
     "context": "product's sku",
     "string": "SKU"
   },
+  "fxBN6M": {
+    "context": "accepted header names",
+    "string": "Headers with in following format are accepted: `Autorization`, `X-`"
+  },
   "fyE8BN": {
     "context": "product organization, header",
     "string": "Organization"
@@ -5937,6 +5965,10 @@
   "ht9yOD": {
     "context": "table head",
     "string": "Collection Name"
+  },
+  "hvDSHe": {
+    "context": "number of metadata fields in model",
+    "string": "{number,plural,one{{number} header} other{{number} headers}}"
   },
   "hw9Fah": {
     "context": "button",

@@ -27,9 +27,15 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "../PermissionAlert";
+import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
+interface Header {
+  name: string;
+  value: string;
+  error?: boolean;
+}
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
   asyncEvents: WebhookEventTypeAsyncEnum[];
@@ -38,6 +44,7 @@ export interface WebhookFormData {
   secretKey?: string;
   targetUrl: string;
   subscriptionQuery: string;
+  headers?: Header[];
 }
 
 export interface WebhookDetailsPageProps {
@@ -76,6 +83,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
     subscriptionQuery: prettified || "",
+    headers: [],
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
@@ -134,6 +142,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 />
                 <FormSpacer />
                 <PermissionAlert query={query} />
+                <FormSpacer />
+                <WebhookHeaders data={data} onChange={change} />
               </Box>
             </Content>
             <Savebar
