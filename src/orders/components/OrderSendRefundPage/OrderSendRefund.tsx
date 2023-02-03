@@ -44,6 +44,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
   const classes = useStyles();
 
   const currency = order?.totalBalance?.currency || "";
+  const transactions = order?.transactions ?? [];
 
   return (
     <Container>
@@ -64,7 +65,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
       />
       <Grid>
         <div>
-          {loading && (
+          {loading && transactions.length === 0 && (
             <>
               <Card>
                 <CardContent className={classes.cardLoading} />
@@ -72,7 +73,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
               <CardSpacer />
             </>
           )}
-          {order?.transactions.map(transaction => (
+          {transactions.map(transaction => (
             <TransactionCard
               key={transaction.id}
               transaction={transaction}
