@@ -369,12 +369,18 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     } = data;
     const isError = !!errors.length;
 
-    notify({
-      status: isError ? "error" : "success",
-      text: isError
-        ? getOrderTransactionErrorMessage(errors[0], intl)
-        : intl.formatMessage(transactionMessages.success),
-    });
+    if (isError) {
+      notify({
+        status: "error",
+        text: getOrderTransactionErrorMessage(errors[0], intl),
+      });
+    } else {
+      notify({
+        status: "success",
+        text: intl.formatMessage(transactionMessages.success),
+      });
+      closeModal();
+    }
   };
   const handleAddManualTransaction = (
     data: CreateManualTransactionCaptureMutation,
