@@ -45,7 +45,6 @@
     "currency-codes": "^2.1.0",
     "downshift": "^6.1.7",
     "editorjs-inline-tool": "^0.4.0",
-    "env-var": "^7.3.0",
     "faker": "^5.1.0",
     "fast-array-diff": "^0.2.0",
     "find-test-names": "^1.17.1",
