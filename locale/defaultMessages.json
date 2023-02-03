@@ -4187,6 +4187,10 @@
     "context": "pricing card title",
     "string": "Pricing"
   },
+  "TnnDjx": {
+    "context": "Dry run sync events alert",
+    "string": "Dry run currently is not available for synchronous events"
+  },
   "TnyLrZ": {
     "context": "PageTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages"
