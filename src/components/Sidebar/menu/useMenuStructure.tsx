@@ -39,7 +39,7 @@ import { mapToExtensionsItems } from "./utils";
 
 const iconSettings = {
   color: "iconNeutralSubdued",
-  size: "small",
+  size: "medium",
 } as const;
 
 export function useMenuStructure() {

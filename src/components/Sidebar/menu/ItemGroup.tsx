@@ -27,8 +27,8 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
         borderLeftWidth={1}
         borderLeftStyle="solid"
         borderColor="neutralPlain"
-        __paddingLeft={18}
-        __marginLeft={15}
+        paddingLeft={7}
+        marginLeft={7}
         display="flex"
         flexDirection="column"
         marginBottom={5}
