@@ -96,8 +96,8 @@ const createToUpdateInput =
   });
 
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
-  !!variant.name ||
-  !!variant.sku ||
+  variant.name !== undefined ||
+  variant.sku !== undefined ||
   variant.attributes.length > 0 ||
   variant.stocks.create.length > 0 ||
   variant.stocks.update.length > 0 ||
