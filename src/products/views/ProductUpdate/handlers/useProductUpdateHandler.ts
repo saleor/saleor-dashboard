@@ -17,6 +17,7 @@ import {
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
+  useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
   useProductVariantBulkCreateMutation,
   useProductVariantBulkDeleteMutation,
@@ -27,6 +28,7 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -39,7 +41,9 @@ import {
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
+  getProductChannelsUpdateVariables,
   getProductUpdateVariables,
+  hasProductChannelsUpdate,
 } from "./utils";
 
 export type UseProductUpdateHandlerError =
@@ -82,6 +86,19 @@ export function useProductUpdateHandler(
   const [uploadFile] = useFileUploadMutation();
 
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
+  const [updateChannels, updateChannelsOpts] =
+    useProductChannelListingUpdateMutation({
+      onCompleted: data => {
+        if (!!data.productChannelListingUpdate.errors.length) {
+          data.productChannelListingUpdate.errors.forEach(error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl),
+            }),
+          );
+        }
+      },
+    });
 
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
@@ -102,6 +119,22 @@ export function useProductUpdateHandler(
         product?.attributes,
         variables => deleteAttributeValue({ variables }),
       );
+
+    const updateProductChannelsData = getProductChannelsUpdateVariables(
+      product,
+      data,
+    );
+
+    if (hasProductChannelsUpdate(updateProductChannelsData.input)) {
+      const updateChannelsResult = await updateChannels({
+        variables: updateProductChannelsData,
+      });
+
+      errors = [
+        ...errors,
+        ...updateChannelsResult.data.productChannelListingUpdate.errors,
+      ];
+    }
 
     if (data.variants.removed.length > 0) {
       const deleteVaraintsResult = await deleteVariants({
@@ -200,7 +233,8 @@ export function useProductUpdateHandler(
 
   const errors = updateProductOpts.data?.productUpdate.errors ?? [];
 
-  const channelsErrors = [];
+  const channelsErrors =
+    updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? [];
 
   return [
     submit,

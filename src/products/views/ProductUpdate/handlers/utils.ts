@@ -5,12 +5,16 @@ import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridCh
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
+  ProductChannelListingAddInput,
+  ProductChannelListingUpdateInput,
+  ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import pick from "lodash/pick";
 import uniq from "lodash/uniq";
 
 import { getAttributeData } from "./data/attributes";
@@ -64,6 +68,53 @@ export function getCreateVariantInput(data: DatagridChangeOpts, index: number) {
     channelListings: getVariantChannelsInputs(data, index),
     stocks: getStockData(data.updates, index, data.removed),
   };
+}
+
+export function getProductChannelsUpdateVariables(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+): ProductChannelListingUpdateMutationVariables {
+  const channels = inferProductChannelsAfterUpdate(product, data);
+
+  const dataUpdated = new Map<string, ProductChannelListingAddInput>();
+  data.channels.updateChannels
+    .map(listing =>
+      pick(
+        listing,
+        // Filtering it here so we send only fields defined in input schema
+        [
+          "availableForPurchaseAt",
+          "availableForPurchaseDate",
+          "channelId",
+          "isAvailableForPurchase",
+          "isPublished",
+          "publicationDate",
+          "publishedAt",
+          "visibleInListings",
+        ] as Array<keyof ProductChannelListingAddInput>,
+      ),
+    )
+    .forEach(listing => dataUpdated.set(listing.channelId, listing));
+
+  const updateChannels = channels
+    .filter(channelId => dataUpdated.has(channelId))
+    .map(channelId => ({
+      ...dataUpdated.get(channelId),
+    }));
+
+  return {
+    id: product.id,
+    input: {
+      ...data.channels,
+      updateChannels,
+    },
+  };
+}
+
+export function hasProductChannelsUpdate(
+  data: ProductChannelListingUpdateInput,
+) {
+  return data?.removeChannels?.length || data?.updateChannels?.length;
 }
 
 export function getBulkVariantUpdateInputs(
