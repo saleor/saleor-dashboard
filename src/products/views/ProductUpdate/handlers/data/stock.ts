@@ -45,8 +45,10 @@ function toUpdateStockData(variant: ProductFragment["variants"][number]) {
       variantStock => variantStock.warehouse.id === stock.warehouse,
     );
 
-    if (stock.quantity === numberCellEmptyValue && variantStock) {
-      acc.remove.push(variantStock.id);
+    if (stock.quantity === numberCellEmptyValue) {
+      if (variantStock) {
+        acc.remove.push(variantStock.id);
+      }
       return acc;
     }
 

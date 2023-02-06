@@ -73,8 +73,8 @@ function availabilityToChannelColumn(change: DatagridChange) {
 
 function byColumn(prev: DatagridChange[], change: DatagridChange) {
   const index = prev.findIndex(p => p.column === change.column);
-  if (index > -1) {
-    prev[index] = change;
+
+  if (index > -1 && !prev[index]) {
     return prev;
   }
 
@@ -103,8 +103,11 @@ function toUpdateChannelData(variant: ProductFragment["variants"][number]) {
       c => c.channel.id === channel.channelId,
     );
 
-    if (channel.price === null && variantChannel) {
-      acc.remove.push(variantChannel.id);
+    if (channel.price === null) {
+      if (variantChannel) {
+        acc.remove.push(variantChannel.id);
+      }
+
       return acc;
     }
 
