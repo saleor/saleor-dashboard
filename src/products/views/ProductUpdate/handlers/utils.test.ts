@@ -245,7 +245,7 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 234,
             currency: "USD",
           },
-          column: `channel:${variants[2].stocks[0].id}`,
+          column: `channel:${variants[2].channelListings[0].channel.id}`,
           row: 2,
         },
         {
@@ -254,7 +254,7 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 565,
             currency: "BHD",
           },
-          column: `channel:${variants[2].stocks[1].id}`,
+          column: `channel:${variants[2].channelListings[1].channel.id}`,
           row: 2,
         },
         {
@@ -290,13 +290,22 @@ describe("getBulkVariantUpdateInputs", () => {
     );
 
     // Assert
+
     expect(bulkVariantUpdateInput).toEqual([
       {
         id: variants[1].id,
         attributes: [],
         name: "item 1",
-        stocks: [],
-        channelListings: [],
+        stocks: {
+          create: [],
+          remove: [],
+          update: [],
+        },
+        channelListings: {
+          create: [],
+          remove: [],
+          update: [],
+        },
       },
       {
         id: variants[2].id,
@@ -308,22 +317,30 @@ describe("getBulkVariantUpdateInputs", () => {
         ],
         sku: "2345555",
         name: "new item",
-        stocks: [
-          {
-            warehouse: variants[2].stocks[0].warehouse.id,
-            quantity: 2344,
-          },
-        ],
-        channelListings: [
-          {
-            channelId: variants[2].stocks[0].id,
-            price: 234,
-          },
-          {
-            channelId: variants[2].stocks[1].id,
-            price: 565,
-          },
-        ],
+        stocks: {
+          update: [
+            {
+              stock: variants[2].stocks[0].id,
+              quantity: 2344,
+            },
+          ],
+          create: [],
+          remove: [],
+        },
+        channelListings: {
+          update: [
+            {
+              channelListing: variants[2].channelListings[0].id,
+              price: 234,
+            },
+            {
+              channelListing: variants[2].channelListings[1].id,
+              price: 565,
+            },
+          ],
+          remove: [],
+          create: [],
+        },
       },
     ]);
   });

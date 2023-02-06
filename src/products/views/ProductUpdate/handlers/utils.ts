@@ -1,31 +1,26 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
-import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
-import {
-  DatagridChange,
-  DatagridChangeOpts,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductFragment,
   ProductVariantBulkUpdateInput,
-  ProductVariantStocksUpdateInput,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
-import {
-  getColumnAttribute,
-  getColumnStock,
-  isCurrentRow,
-} from "@dashboard/products/utils/datagrid";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import uniq from "lodash/uniq";
+
+import { getAttributeData } from "./data/attributes";
 import {
   getUpdateVariantChannelInputs,
   getVariantChannelsInputs,
-} from "@dashboard/products/utils/getVariantChannelsInputs";
-import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import uniq from "lodash/uniq";
+} from "./data/channel";
+import { getNameData } from "./data/name";
+import { getSkuData } from "./data/sku";
+import { getStockData, getVaraintUpdateStockData } from "./data/stock";
 
 export function getProductUpdateVariables(
   product: ProductFragment,
@@ -123,125 +118,4 @@ export function inferProductChannelsAfterUpdate(
     ),
     ...updatedChannelsIds,
   ]);
-}
-
-function getAttributeData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-) {
-  return data
-    .filter(change => isCurrentRow(change.row, currentIndex, removedIds))
-    .filter(byHavingAnyAttribute)
-    .map(toAttributeData);
-}
-
-function byHavingAnyAttribute(change: DatagridChange) {
-  return getColumnAttribute(change.column);
-}
-
-function toAttributeData(change: DatagridChange) {
-  const attributeId = getColumnAttribute(change.column);
-
-  return {
-    id: attributeId,
-    values: [change.data.value.value],
-  };
-}
-
-function getSkuData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-) {
-  return data.find(
-    change =>
-      change.column === "sku" &&
-      isCurrentRow(change.row, currentIndex, removedIds),
-  )?.data;
-}
-
-function getNameData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-) {
-  return data.find(
-    change =>
-      change.column === "name" &&
-      isCurrentRow(change.row, currentIndex, removedIds),
-  )?.data;
-}
-
-function getStockData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-) {
-  return data
-    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
-    .map(toStockData)
-    .filter(byStockWithQuantity);
-}
-
-function getVaraintUpdateStockData(
-  data: DatagridChange[],
-  currentIndex: number,
-  removedIds: number[],
-  variant: ProductFragment["variants"][number],
-) {
-  return data
-    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
-    .map(toStockData)
-    .reduce<ProductVariantStocksUpdateInput>(
-      (acc, stock) => {
-        const variantStock = variant.stocks.find(
-          vStock => vStock.warehouse.id === stock.warehouse,
-        );
-
-        if (stock.quantity === numberCellEmptyValue) {
-          acc.remove.push(variantStock.id);
-          return acc;
-        }
-
-        if (variant.stocks.some(s => s.warehouse.id === stock.warehouse)) {
-          acc.update.push({
-            quantity: stock.quantity,
-            stock: variant.stocks.find(s => s.warehouse.id === stock.warehouse)
-              .id,
-          });
-          return acc;
-        }
-
-        acc.create.push(stock);
-        return acc;
-      },
-      {
-        create: [],
-        remove: [],
-        update: [],
-      },
-    );
-}
-
-function toStockData(change: DatagridChange) {
-  return {
-    warehouse: getColumnStock(change.column),
-    quantity: change.data.value,
-  };
-}
-
-function byStockWithQuantity(stock: { quantity: unknown }) {
-  return stock.quantity !== numberCellEmptyValue;
-}
-
-function byHavingStockColumn(
-  change: DatagridChange,
-  currentIndex: number,
-  removedIds: number[],
-) {
-  return (
-    getColumnStock(change.column) &&
-    isCurrentRow(change.row, currentIndex, removedIds)
-  );
 }
