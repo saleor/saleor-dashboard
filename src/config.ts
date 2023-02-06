@@ -8,11 +8,23 @@ export const getAppMountUri = () =>
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
+/**
+ * @deprecated
+ */
 export const MARKETPLACE_URL = window.__SALEOR_CONFIG__.MARKETPLACE_URL;
+/**
+ * @deprecated
+ */
 export const MARKETPLACE_SALEOR_APPS_PAGE_PATH =
   window.__SALEOR_CONFIG__.SALEOR_APPS_PAGE_PATH;
+/**
+ * @deprecated
+ */
 export const MARKETPLACE_SALEOR_APPS_JSON_PATH =
   window.__SALEOR_CONFIG__.SALEOR_APPS_JSON_PATH;
+/**
+ * @deprecated
+ */
 export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
   window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 

@@ -18,6 +18,7 @@ jobs:
       VERSION_FAMILY: ${{ github.event.client_payload.version_family }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
