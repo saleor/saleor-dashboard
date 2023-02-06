@@ -195,15 +195,20 @@ function getVaraintUpdateStockData(
     .map(toStockData)
     .reduce<ProductVariantStocksUpdateInput>(
       (acc, stock) => {
+        const variantStock = variant.stocks.find(
+          vStock => vStock.warehouse.id === stock.warehouse,
+        );
+
         if (stock.quantity === numberCellEmptyValue) {
-          acc.remove.push(stock.warehouse);
+          acc.remove.push(variantStock.id);
           return acc;
         }
 
-        if (variant.stocks.some(s => s.id === stock.warehouse)) {
+        if (variant.stocks.some(s => s.warehouse.id === stock.warehouse)) {
           acc.update.push({
             quantity: stock.quantity,
-            stock: variant.stocks.find(s => s.id === stock.warehouse).id,
+            stock: variant.stocks.find(s => s.warehouse.id === stock.warehouse)
+              .id,
           });
           return acc;
         }
