@@ -1,5 +1,6 @@
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import {
+  makeStyles,
   Savebar as MacawSavebar,
   SavebarLabels,
   SavebarProps as MacawSavebarProps,
@@ -11,8 +12,23 @@ export interface SavebarProps extends Omit<MacawSavebarProps, "labels"> {
   labels?: Partial<SavebarLabels>;
 }
 
+const useStyles = makeStyles(
+  {
+    root: {
+      "& .MuiContainer-root": {
+        paddingRight: 16,
+        paddingLeft: 0,
+      },
+    },
+  },
+  {
+    name: "Savebar",
+  },
+);
+
 export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const defaultLabels: SavebarLabels = {
     cancel: intl.formatMessage(buttonMessages.back),
@@ -25,7 +41,9 @@ export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
     ...labels,
   };
 
-  return <MacawSavebar labels={componentLabels} {...rest} />;
+  return (
+    <MacawSavebar labels={componentLabels} {...rest} className={classes.root} />
+  );
 };
 Savebar.displayName = "SaveBar";
 export default Savebar;

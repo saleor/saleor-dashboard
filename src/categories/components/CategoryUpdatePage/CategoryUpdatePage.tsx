@@ -91,7 +91,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <>
           <TopNav href={backHref} title={category?.name} />
-          <Content>
+          <Content paddingLeft={0}>
             <CategoryDetailsForm
               data={data}
               disabled={disabled}

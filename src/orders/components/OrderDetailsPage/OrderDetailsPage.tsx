@@ -224,7 +224,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ]}
               />
             </TopNav>
-            <Content data-test-id="order-fulfillment">
+            <Content data-test-id="order-fulfillment" paddingRight={10}>
               <div className={classes.date}>
                 {order && order.created ? (
                   <Typography variant="body2">

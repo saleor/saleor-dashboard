@@ -33,6 +33,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
         flexDirection="column"
         marginBottom={5}
         marginTop={3}
+        gap={1}
       >
         {menuItem.children?.map(child => (
           <MenuItem menuItem={child} key={child.id} />

@@ -84,9 +84,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
   };
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
@@ -117,7 +116,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardMenu menuItems={extensionMenuItems} />
               )}
             </TopNav>
-            <Content>
+            <Content paddingLeft={0}>
               <Backlink href={customerListUrl()}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>
