@@ -74,7 +74,8 @@ function availabilityToChannelColumn(change: DatagridChange) {
 function byColumn(prev: DatagridChange[], change: DatagridChange) {
   const index = prev.findIndex(p => p.column === change.column);
 
-  if (index > -1 && !prev[index]) {
+  if (index > -1) {
+    prev[index] = change;
     return prev;
   }
 
