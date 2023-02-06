@@ -14,6 +14,7 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
+  ProductVariantStocksUpdateInput,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
@@ -23,7 +24,10 @@ import {
   getColumnStock,
   isCurrentRow,
 } from "@dashboard/products/utils/datagrid";
-import { getVariantChannelsInputs } from "@dashboard/products/utils/getVariantChannelsInputs";
+import {
+  getUpdateVariantChannelInputs,
+  getVariantChannelsInputs,
+} from "@dashboard/products/utils/getVariantChannelsInputs";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
@@ -159,16 +163,25 @@ const createToUpdateInput =
     attributes: getAttributeData(data.updates, variantIndex, data.removed),
     sku: getSkuData(data.updates, variantIndex, data.removed),
     name: getNameData(data.updates, variantIndex, data.removed),
-    stocks: getStockData(data.updates, variantIndex, data.removed),
-    channelListings: getVariantChannelsInputs(data, variantIndex),
+    stocks: getVaraintUpdateStockData(
+      data.updates,
+      variantIndex,
+      data.removed,
+      variant,
+    ),
+    channelListings: getUpdateVariantChannelInputs(data, variantIndex, variant),
   });
 
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
   !!variant.name ||
   !!variant.sku ||
   variant.attributes.length > 0 ||
-  variant.stocks.length > 0 ||
-  variant.channelListings.length > 0;
+  variant.stocks.create.length > 0 ||
+  variant.stocks.update.length > 0 ||
+  variant.stocks.remove.length > 0 ||
+  variant.channelListings.update.length > 0 ||
+  variant.channelListings.remove.length > 0 ||
+  variant.channelListings.create.length > 0;
 
 export function hasProductChannelsUpdate(
   data: ProductChannelListingUpdateInput,
@@ -202,7 +215,6 @@ function hasChannel(
   if (!variant) {
     return false;
   }
-
   return variant.channelListings.some(c => c.channel.id === channelId);
 }
 
@@ -263,6 +275,41 @@ function getStockData(
     .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
     .map(toStockData)
     .filter(byStockWithQuantity);
+}
+
+function getVaraintUpdateStockData(
+  data: DatagridChange[],
+  currentIndex: number,
+  removedIds: number[],
+  variant: ProductFragment["variants"][number],
+) {
+  return data
+    .filter(change => byHavingStockColumn(change, currentIndex, removedIds))
+    .map(toStockData)
+    .reduce<ProductVariantStocksUpdateInput>(
+      (acc, stock) => {
+        if (stock.quantity === numberCellEmptyValue) {
+          acc.remove.push(stock.warehouse);
+          return acc;
+        }
+
+        if (variant.stocks.some(s => s.id === stock.warehouse)) {
+          acc.update.push({
+            quantity: stock.quantity,
+            stock: variant.stocks.find(s => s.id === stock.warehouse).id,
+          });
+          return acc;
+        }
+
+        acc.create.push(stock);
+        return acc;
+      },
+      {
+        create: [],
+        remove: [],
+        update: [],
+      },
+    );
 }
 
 function toStockData(change: DatagridChange) {

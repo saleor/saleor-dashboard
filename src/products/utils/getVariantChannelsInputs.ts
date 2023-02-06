@@ -2,6 +2,11 @@ import {
   DatagridChange,
   DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/useDatagridChange";
+import {
+  ProductFragment,
+  ProductVariantChannelListingAddInput,
+  ProductVariantChannelListingUpdateInput,
+} from "@dashboard/graphql";
 
 import { getColumnChannel, getColumnChannelAvailability } from "./datagrid";
 
@@ -47,10 +52,58 @@ const byNotNullPrice = (
   change: ReturnType<typeof dataGridChangeToFlatChannel>,
 ) => change.price !== null;
 
+export function getUpdateVariantChannelInputs(
+  data: DatagridChangeOpts,
+  index: number,
+  variant: ProductFragment["variants"][number],
+) {
+  return data.updates
+    .filter(byCurrentRowByIndex(index, data))
+    .map(availabilityToChannelColumn)
+    .filter(byChannelColumn)
+    .reduce(byColumn, [])
+    .map(dataGridChangeToFlatChannel)
+    .reduce<ProductVariantChannelListingUpdateInput>(
+      (acc, channel) => {
+        if (channel.price === null) {
+          acc.remove.push(
+            variant.channelListings.find(
+              c => c.channel.id === channel.channelId,
+            ).id,
+          );
+          return acc;
+        }
+
+        if (
+          variant.channelListings.some(c => c.channel.id === channel.channelId)
+        ) {
+          acc.update.push({
+            channelListing: variant.channelListings.find(
+              c => c.channel.id === channel.channelId,
+            ).id,
+            price: channel.price,
+          });
+        } else {
+          acc.create.push({
+            channelId: channel.channelId,
+            price: channel.price,
+          });
+        }
+
+        return acc;
+      },
+      {
+        create: [],
+        remove: [],
+        update: [],
+      },
+    );
+}
+
 export function getVariantChannelsInputs(
   data: DatagridChangeOpts,
   index: number,
-) {
+): ProductVariantChannelListingAddInput[] {
   return data.updates
     .filter(byCurrentRowByIndex(index, data))
     .map(availabilityToChannelColumn)
