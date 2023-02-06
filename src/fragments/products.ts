@@ -54,7 +54,6 @@ export const fragmentProductMedia = gql`
 
 export const channelListingProductWithoutPricingFragment = gql`
   fragment ChannelListingProductWithoutPricing on ProductChannelListing {
-    id
     isPublished
     publicationDate
     isAvailableForPurchase
