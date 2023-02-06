@@ -2,20 +2,31 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { getApiUrl } from "@dashboard/config";
 import { createFetch } from "@saleor/sdk";
-import { isCI } from "ci-info";
-import { get } from "env-var";
+import isCI from "is-ci";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
 const POLLY_MODES = ["replay", "record", "passthrough", "stopped"] as const;
 
-const POLLY_MODE = get("POLLY_MODE")
-  .default(POLLY_MODES[0])
-  .asEnum(POLLY_MODES);
+function getPollyMode() {
+  const env = process.env.POLLY_MODE as (typeof POLLY_MODES)[number];
+  if (!env) {
+    return POLLY_MODES[0]; // replay
+  }
+  if (POLLY_MODES.includes(env)) {
+    return env;
+  }
+  console.warn(`Unrecognised POLLY_MODE env variable value: ${env}`);
+  return POLLY_MODES[0]; // replay
+}
 
-const POLLY_RECORD_IF_MISSING = get("POLLY_RECORD_IF_MISSING")
-  .default(isCI ? "false" : "true")
-  .asBoolStrict();
+function getPollyRecordIfMissing() {
+  const env = process.env.POLLY_RECORD_IF_MISSING;
+  if (!env) {
+    return !isCI;
+  }
+  return env === "true";
+}
 
 function setupApi() {
   setupPolly({
@@ -34,8 +45,8 @@ function setupApi() {
       },
       body: false,
     },
-    mode: POLLY_MODE,
-    recordIfMissing: POLLY_RECORD_IF_MISSING,
+    mode: getPollyMode(),
+    recordIfMissing: getPollyRecordIfMissing(),
     persister: require("@pollyjs/persister-fs"),
     persisterOptions: {
       keepUnusedRequests: false,
