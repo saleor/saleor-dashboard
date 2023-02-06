@@ -266,6 +266,7 @@ export const CollectionDetailsFragmentDoc = gql`
 ${MetadataFragmentDoc}`;
 export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     fragment ChannelListingProductWithoutPricing on ProductChannelListing {
+  id
   isPublished
   publicationDate
   isAvailableForPurchase
@@ -2042,6 +2043,7 @@ export const PreorderFragmentDoc = gql`
     `;
 export const ChannelListingProductVariantFragmentDoc = gql`
     fragment ChannelListingProductVariant on ProductVariantChannelListing {
+  id
   channel {
     id
     name
