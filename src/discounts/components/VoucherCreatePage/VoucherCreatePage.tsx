@@ -64,9 +64,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     applyOncePerCustomer: false,
@@ -110,9 +109,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, submit, triggerChange, set }) => {
-        const handleDiscountTypeChange = createDiscountTypeChangeHandler(
-          change,
-        );
+        const handleDiscountTypeChange =
+          createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -130,7 +128,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content>
+            <Content paddingLeft={0}>
               <VoucherInfo
                 data={data}
                 errors={errors}

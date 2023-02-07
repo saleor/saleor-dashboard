@@ -157,7 +157,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 !pageExists ? intl.formatMessage(messages.title) : page?.title
               }
             />
-            <Content>
+            <Content paddingLeft={0}>
               <PageInfo
                 data={data}
                 disabled={loading}

@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core/styles";
 import { dark, light, Themes } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { themes, vars } from "@saleor/macaw-ui/next";
 
 const breakpoints = {
   keys: ["xs", "sm", "md", "lg", "xl"],
@@ -46,14 +46,14 @@ export const paletteOverrides: Themes = {
     ...light,
     background: {
       ...light.background,
-      default: vars.colors.background.plain,
+      default: themes.defaultLight.colors.background.plain,
     },
   },
   dark: {
     ...dark,
     background: {
       ...dark.background,
-      default: vars.colors.background.plain,
+      default: themes.defaultDark.colors.background.plain,
     },
   },
 };

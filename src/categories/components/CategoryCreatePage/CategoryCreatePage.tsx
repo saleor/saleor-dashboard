@@ -43,7 +43,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               description: "page header",
             })}
           />
-          <Content>
+          <Content paddingLeft={0}>
             <div>
               <CategoryDetailsForm
                 data={data}

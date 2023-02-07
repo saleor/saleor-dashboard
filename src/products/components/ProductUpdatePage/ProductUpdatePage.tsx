@@ -339,7 +339,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   data-test-id="menu"
                 />
               </TopNav>
-              <Content>
+              <Content paddingLeft={0} paddingRight={0}>
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}

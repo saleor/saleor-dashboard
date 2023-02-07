@@ -141,9 +141,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     [],
   );
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: SaleDetailsPageFormData = {
     channelListings,
@@ -186,7 +185,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={saleListUrl()} title={sale?.name} />
-            <Content>
+            <Content paddingLeft={0}>
               <SaleInfo
                 data={data}
                 disabled={disabled}

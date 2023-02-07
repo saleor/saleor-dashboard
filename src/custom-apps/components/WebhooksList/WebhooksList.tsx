@@ -39,9 +39,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage(sectionNames.webhooksAndEvents)}
+        className={classes.cardTitle}
         toolbar={
           !!createHref && (
             <Button

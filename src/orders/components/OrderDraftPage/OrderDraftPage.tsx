@@ -101,7 +101,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           ]}
         />
       </TopNav>
-      <Content>
+      <Content paddingRight={10}>
         <div className={classes.date}>
           {order && order.created ? (
             <Typography variant="body2">

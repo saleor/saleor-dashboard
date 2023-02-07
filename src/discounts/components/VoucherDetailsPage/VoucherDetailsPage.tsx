@@ -149,9 +149,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     [],
   );
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannelId,
   );
@@ -197,9 +196,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
-        const handleDiscountTypeChange = createDiscountTypeChangeHandler(
-          change,
-        );
+        const handleDiscountTypeChange =
+          createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -214,7 +212,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={voucherListUrl()} title={voucher?.code} />
-            <Content>
+            <Content paddingLeft={0}>
               <VoucherInfo
                 data={data}
                 disabled={disabled}

@@ -9,11 +9,9 @@ import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { DateTime } from "@dashboard/components/Date";
 import Form from "@dashboard/components/Form";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -27,7 +25,6 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -44,7 +41,6 @@ import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
@@ -116,7 +112,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onShippingMethodEdit,
     onSubmit,
   } = props;
-  const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
 
@@ -224,16 +219,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ]}
               />
             </TopNav>
-            <Content data-test-id="order-fulfillment">
-              <div className={classes.date}>
-                {order && order.created ? (
-                  <Typography variant="body2">
-                    <DateTime date={order.created} />
-                  </Typography>
-                ) : (
-                  <Skeleton style={{ width: "10em" }} />
-                )}
-              </div>
+            <Content data-test-id="order-fulfillment" paddingRight={10}>
               {!isOrderUnconfirmed ? (
                 <OrderUnfulfilledProductsCard
                   showFulfillmentAction={canFulfill}

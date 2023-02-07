@@ -5,7 +5,7 @@
 
 body {
   background: var(--mu-colors-background-plain);
-  color: var(--mu-colorc-text-neutral-default) !important;
+  color: var(--mu-colors-text-neutral-default) !important;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

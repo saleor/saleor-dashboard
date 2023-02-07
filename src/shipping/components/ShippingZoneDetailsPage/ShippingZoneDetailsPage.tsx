@@ -124,9 +124,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     MultiAutocompleteChoiceType[]
   >(mapNodeToChoice(shippingZone?.channels));
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   return (
     <Form
@@ -155,7 +154,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
-            <Content>
+            <Content paddingLeft={0}>
               <ShippingZoneInfo
                 data={data}
                 disabled={disabled}
