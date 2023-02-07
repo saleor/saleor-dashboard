@@ -18,6 +18,10 @@ export const useStyles = makeStyles(
     table: {
       tableLayout: "fixed",
     },
+    cardTitle: {
+      paddingLeft: 0,
+      paddingRight: 8,
+    },
   }),
   { name: "CustomAppTokens" },
 );

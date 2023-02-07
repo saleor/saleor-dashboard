@@ -32,6 +32,9 @@ export const useStyles = makeStyles(
     checkbox: {
       padding: 0,
     },
+    card: {
+      paddingLeft: 0,
+    },
   }),
   { name: "WebhookEvents" },
 );

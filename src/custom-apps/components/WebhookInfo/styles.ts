@@ -8,6 +8,12 @@ export const useStyles = makeStyles(
       color: theme.palette.common.black,
       marginBottom: theme.spacing(2),
     },
+    cardTitle: {
+      paddingLeft: 0,
+    },
+    card: {
+      paddingLeft: 0,
+    },
   }),
   { name: "WebhookInfo" },
 );

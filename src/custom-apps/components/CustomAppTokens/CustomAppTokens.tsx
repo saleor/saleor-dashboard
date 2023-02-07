@@ -26,13 +26,14 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
+    <Card style={{ paddingLeft: 30, paddingRight: 16 }}>
       <CardTitle
         title={intl.formatMessage({
           id: "0Mg8o5",
           defaultMessage: "Tokens",
           description: "header",
         })}
+        className={classes.cardTitle}
         toolbar={
           <Button
             variant="secondary"

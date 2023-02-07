@@ -15,6 +15,7 @@ export interface SavebarProps extends Omit<MacawSavebarProps, "labels"> {
 const useStyles = makeStyles(
   {
     root: {
+      height: "64px",
       "& .MuiContainer-root": {
         paddingRight: 16,
         paddingLeft: 0,

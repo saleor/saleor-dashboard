@@ -71,7 +71,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   return (
     <>
       <Card>
-        <CardContent>
+        <CardContent className={classes.card}>
           <PageTabs value={tab} onChange={handleTabChange}>
             <PageTab
               label={intl.formatMessage(messages.asynchronous)}
