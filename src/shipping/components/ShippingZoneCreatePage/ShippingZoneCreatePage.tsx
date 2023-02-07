@@ -82,7 +82,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             href={shippingZonesListUrl()}
             title={intl.formatMessage(messages.createZone)}
           />
-          <Content paddingLeft={0}>
+          <Content>
             <Grid>
               <div>
                 <ShippingZoneInfo

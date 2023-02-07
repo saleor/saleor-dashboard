@@ -3,9 +3,13 @@
   top: 0;
 }
 
+html {
+  font-size: 50% !important;
+}
+
 body {
   background: var(--mu-colors-background-plain);
-  color: var(--mu-colors-text-neutral-default) !important;
+  color: var(--mu-colors-foreground-text-neutral-plain) !important;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

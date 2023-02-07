@@ -19,7 +19,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
     >
       <Box display="flex" alignItems="center" gap={6}>
         {menuItem.icon}
-        <Text>{menuItem.label}</Text>
+        <Text size="small">{menuItem.label}</Text>
       </Box>
     </List.ItemGroup.Trigger>
     <List.ItemGroup.Content>

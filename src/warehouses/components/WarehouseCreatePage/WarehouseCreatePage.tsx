@@ -84,7 +84,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                 description: "header",
               })}
             />
-            <Content paddingLeft={0}>
+            <Content>
               <Grid>
                 <div>
                   <WarehouseInfo

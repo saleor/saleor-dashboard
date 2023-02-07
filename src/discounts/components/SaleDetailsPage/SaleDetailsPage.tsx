@@ -185,7 +185,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={saleListUrl()} title={sale?.name} />
-            <Content paddingLeft={0}>
+            <Content>
               <SaleInfo
                 data={data}
                 disabled={disabled}

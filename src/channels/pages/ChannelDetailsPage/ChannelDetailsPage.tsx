@@ -210,7 +210,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 })
               }
             />
-            <Content paddingLeft={0}>
+            <Content>
               <ChannelForm
                 data={data}
                 disabled={disabled}

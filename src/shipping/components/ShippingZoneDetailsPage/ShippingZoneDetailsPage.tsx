@@ -154,7 +154,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
-            <Content paddingLeft={0}>
+            <Content>
               <ShippingZoneInfo
                 data={data}
                 disabled={disabled}

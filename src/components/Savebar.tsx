@@ -17,7 +17,7 @@ const useStyles = makeStyles(
     root: {
       height: "64px",
       "& .MuiContainer-root": {
-        paddingRight: 16,
+        paddingRight: 0,
         paddingLeft: 0,
       },
     },

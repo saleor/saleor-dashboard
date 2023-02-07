@@ -161,7 +161,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content paddingLeft={0}>
+            <Content>
               <Grid>
                 <div>
                   <CustomerCreateDetails

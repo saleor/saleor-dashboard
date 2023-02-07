@@ -31,14 +31,6 @@ export const useStyles = makeStyles(
     tableRow: {
       cursor: "pointer",
     },
-    cardTitle: {
-      paddingLeft: 0,
-      paddingRight: 8,
-    },
-    card: {
-      paddingLeft: 30,
-      paddingRight: 16,
-    },
   }),
   { name: "WebhooksList" },
 );

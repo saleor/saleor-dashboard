@@ -110,7 +110,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content paddingLeft={0}>
+            <Content>
               <SaleInfo
                 data={data}
                 disabled={disabled}
