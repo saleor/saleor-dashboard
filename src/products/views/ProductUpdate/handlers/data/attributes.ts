@@ -24,6 +24,6 @@ function toAttributeData(change: DatagridChange) {
 
   return {
     id: attributeId,
-    values: [change.data.value.value],
+    values: change.data.value.value ? [change.data.value.value] : [],
   };
 }
