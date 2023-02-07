@@ -64,14 +64,14 @@ describe("Apps AppListCard", () => {
         <AppListCard
           app={releasedApp}
           navigateToAppInstallPage={navigateToAppInstallPage}
-          navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
+          navigateToGithubForkPage={navigateToVercelDeploymentPage}
         />
       </Wrapper>,
     );
     const user = userEvent.setup();
     const installButton = screen.getByTestId("app-install-button");
     const deployToVercelButton = screen.getByTestId(
-      "app-deploy-to-vercel-button",
+      "app-fork-on-github-button",
     );
 
     // Act

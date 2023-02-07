@@ -11,14 +11,14 @@ interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
-  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
+  navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AllAppList: React.FC<AllAppListProps> = ({
   appList,
   appInstallationList,
   navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
+  navigateToGithubForkPage,
 }) => {
   const classes = useStyles();
 
@@ -37,7 +37,7 @@ const AllAppList: React.FC<AllAppListProps> = ({
             appInstallationList,
           )}
           navigateToAppInstallPage={navigateToAppInstallPage}
-          navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
+          navigateToGithubForkPage={navigateToGithubForkPage}
         />
       ))}
     </div>
