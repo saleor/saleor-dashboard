@@ -15,11 +15,13 @@ import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocomp
 import PageHeader from "@dashboard/components/PageHeader";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  ChannelFragment,
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
@@ -36,7 +38,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
+import { ProductListUrlSortField, productUrl } from "../../urls";
 import ProductList from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";
 import { ProductListDatagrid } from "../ProductListDatagrid";
@@ -63,6 +65,7 @@ export interface ProductListPageProps
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
+  channels: ChannelFragment[];
   selectedProductIds: string[];
   onAdd: () => void;
   onExport: () => void;
@@ -117,10 +120,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
+    channels,
     ...listProps
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
+  const navigate = useNavigator();
 
   const staticColumns = [
     {
@@ -290,7 +295,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onUpdateListSettings={onUpdateListSettings}
           filterDependency={filterDependency}
         />
-        <ProductListDatagrid products={listProps.products} />
+        <ProductListDatagrid
+          products={listProps.products}
+          channels={channels}
+          onRowClick={id => {
+            navigate(productUrl(id));
+          }}
+        />
       </Card>
     </Container>
   );
