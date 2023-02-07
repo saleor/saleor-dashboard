@@ -43,6 +43,9 @@ export const useStyles = makeStyles(
       flexWrap: "wrap",
       justifyContent: "right",
     },
+    payments: {
+      paddingRight: 0,
+    },
   }),
   { name: "OrderPayment" },
 );

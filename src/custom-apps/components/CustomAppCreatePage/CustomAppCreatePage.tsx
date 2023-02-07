@@ -67,7 +67,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               description: "header",
             })}
           ></TopNav>
-          <Content>
+          <Content paddingLeft={0}>
             <CustomAppInformation
               data={data}
               disabled={disabled}

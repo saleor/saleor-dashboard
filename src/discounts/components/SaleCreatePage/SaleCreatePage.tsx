@@ -63,9 +63,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onBack,
 }) => {
   const intl = useIntl();
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     channelListings,
@@ -111,7 +110,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content>
+            <Content paddingLeft={0}>
               <SaleInfo
                 data={data}
                 disabled={disabled}

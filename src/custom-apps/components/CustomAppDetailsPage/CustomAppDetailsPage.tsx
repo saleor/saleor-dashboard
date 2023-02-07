@@ -127,7 +127,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               )}
             </Button>
           </TopNav>
-          <Content>
+          <Content paddingLeft={0}>
             {token && (
               <>
                 <CustomAppDefaultToken

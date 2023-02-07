@@ -97,7 +97,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={warehouseListUrl()} title={warehouse?.name} />
-            <Content>
+            <Content paddingLeft={0}>
               <WarehouseInfo
                 data={data}
                 disabled={disabled}

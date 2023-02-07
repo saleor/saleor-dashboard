@@ -42,7 +42,8 @@ export const UserControls = () => {
       <Dropdown.Content align="end">
         <Box __minWidth={192}>
           <List
-            padding={3}
+            paddingY={5}
+            paddingX={6}
             borderRadius={4}
             boxShadow="overlay"
             backgroundColor="surfaceNeutralPlain"

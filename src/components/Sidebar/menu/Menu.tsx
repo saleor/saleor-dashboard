@@ -9,7 +9,7 @@ export const Menu = () => {
 
   return (
     <Box padding={6} overflowY="scroll" className="hide-scrollbar">
-      <List as="ol">
+      <List as="ol" display="grid" gap={1}>
         {menuStructure.map(menuItem => (
           <MenuItem menuItem={menuItem} key={menuItem.id} />
         ))}

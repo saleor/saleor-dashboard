@@ -1,3 +1,4 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -11,6 +12,7 @@ import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -51,9 +53,8 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   return (
     <Form
@@ -75,37 +76,40 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 description: "header",
               })}
             />
-            <Grid variant="inverted">
-              <div>
-                <Typography>
-                  {intl.formatMessage(commonMessages.generalInformations)}
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage
-                    id="kZfIl/"
-                    defaultMessage="These are general information about this Content Type."
+            <Box height="100vh" __marginBottom="auto">
+              <Content>
+                <Grid variant="inverted">
+                  <div>
+                    <Typography>
+                      {intl.formatMessage(commonMessages.generalInformations)}
+                    </Typography>
+                    <Typography variant="body2">
+                      <FormattedMessage
+                        id="kZfIl/"
+                        defaultMessage="These are general information about this Content Type."
+                      />
+                    </Typography>
+                  </div>
+                  <PageTypeDetails
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
                   />
-                </Typography>
-              </div>
-              <PageTypeDetails
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <Hr className={classes.hr} />
-              <div>
-                <Typography>
-                  <FormattedMessage
-                    id="OVOU1z"
-                    defaultMessage="Metadata"
-                    description="section header"
-                  />
-                </Typography>
-              </div>
-              <Metadata data={data} onChange={changeMetadata} />
-              <div></div>
-            </Grid>
+                  <Hr className={classes.hr} />
+                  <div>
+                    <Typography>
+                      <FormattedMessage
+                        id="OVOU1z"
+                        defaultMessage="Metadata"
+                        description="section header"
+                      />
+                    </Typography>
+                  </div>
+                  <Metadata data={data} onChange={changeMetadata} />
+                </Grid>
+              </Content>
+            </Box>
             <Savebar
               onCancel={() => navigate(pageTypeListUrl())}
               onSubmit={submit}

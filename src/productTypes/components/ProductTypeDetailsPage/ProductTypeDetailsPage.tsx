@@ -165,7 +165,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={productTypeListUrl()} title={pageTitle} />
-            <Content>
+            <Content paddingLeft={0}>
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
