@@ -249,7 +249,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <FormattedMessage id="DP5VOH" defaultMessage="Shipping Address" />
           </Typography>
           {canEditAddresses && (
-            <div className={classes.sectionHeaderToolbar}>
+            <div>
               <Button
                 data-test-id="edit-shipping-address"
                 variant="tertiary"
@@ -292,7 +292,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <FormattedMessage id="c7/79+" defaultMessage="Billing Address" />
           </Typography>
           {canEditAddresses && (
-            <div className={classes.sectionHeaderToolbar}>
+            <div>
               <Button
                 data-test-id="edit-billing-address"
                 variant="tertiary"
