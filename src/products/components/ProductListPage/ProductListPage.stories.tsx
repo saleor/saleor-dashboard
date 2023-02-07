@@ -34,6 +34,7 @@ const props: ProductListPageProps = {
       ...sortPageProps.sort,
       sort: ProductListUrlSortField.name,
     },
+    channels: [],
   },
   activeAttributeSortId: undefined,
   availableInGridAttributes: attributes,
