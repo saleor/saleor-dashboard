@@ -2,7 +2,7 @@ name: Deploy to staging demo
 on:
   push:
     tags:
-      - 3.9**
+      - 3.11.**
   workflow_dispatch:
     inputs:
       git_ref:
@@ -20,7 +20,7 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URI: "https://marketplace-gray.vercel.app/api/v2/saleor-apps"
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       ENVIRONMENT: demo-staging
       DEMO_MODE: true
     steps:

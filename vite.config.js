@@ -19,7 +19,10 @@ export default defineConfig(({ command, mode }) => {
     API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
-    MARKETPLACE_URL,
+    /**
+     * @deprecated
+     */
+    MARKETPLACE_URL, // To be removed
     SALEOR_APPS_ENDPOINT,
     APP_MOUNT_URI,
     SENTRY_ORG,

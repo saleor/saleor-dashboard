@@ -124,6 +124,7 @@
     "@types/apollo-upload-client": "^17.0.0",
     "@types/color-convert": "^2.0.0",
     "@types/fuzzaldrin": "^2.1.2",
+    "@types/is-ci": "^3.0.0",
     "@types/jscodeshift": "^0.11.3",
     "@types/lodash-es": "^4.17.3",
     "@types/pollyjs__adapter-node-http": "^2.0.1",
