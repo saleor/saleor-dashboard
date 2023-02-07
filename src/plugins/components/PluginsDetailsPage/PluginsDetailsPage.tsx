@@ -110,7 +110,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 },
               )}
             />
-            <Content paddingLeft={0}>
+            <Content>
               <Grid variant="inverted">
                 <div>
                   <PluginDetailsChannelsCard

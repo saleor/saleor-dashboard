@@ -16,6 +16,11 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
+    MuiCardHeader: {
+      root: {
+        paddingRight: vars.space[11],
+      },
+    },
     MuiPaper: {
       root: {
         backgroundColor: vars.colors.background.plain,

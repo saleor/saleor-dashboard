@@ -41,7 +41,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       >
         <Box display="flex" alignItems="center" gap={6}>
           {menuItem.icon}
-          <Text>{menuItem.label}</Text>
+          <Text size="small">{menuItem.label}</Text>
         </Box>
       </Link>
     </List.Item>

@@ -186,7 +186,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     : maybe(() => attribute.name)
                 }
               ></TopNav>
-              <Content paddingLeft={0}>
+              <Content>
                 <AttributeDetails
                   canChangeType={attribute === null}
                   data={data}

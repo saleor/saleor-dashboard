@@ -28,9 +28,6 @@ const useStyles = makeStyles(
       marginBottom: 0,
       marginTop: 0,
     },
-    cardTitle: {
-      paddingLeft: 0,
-    },
   }),
   { name: "AccountPermissions" },
 );
@@ -93,7 +90,6 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   return (
     <Card>
       <CardTitle
-        className={classes.cardTitle}
         title={intl.formatMessage({
           id: "Fbr4Vp",
           defaultMessage: "Permissions",
@@ -113,7 +109,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             </Typography>
           </CardContent>
           <hr className={classes.hr} />
-          <CardContent style={{ paddingLeft: 0 }}>
+          <CardContent>
             <Typography variant="body2">
               {intl.formatMessage({
                 id: "6cS4Rd",
@@ -133,7 +129,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       )}
       {!permissionsExceeded && (
         <>
-          <CardContent style={{ paddingLeft: 0 }}>
+          <CardContent>
             <Typography variant="body2">{description}</Typography>
             <ListItem
               role={undefined}
@@ -159,7 +155,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           {!data.hasFullAccess && (
             <>
               <hr className={classes.hr} />
-              <CardContent style={{ paddingLeft: 0, paddingTop: 16 }}>
+              <CardContent>
                 {permissions === undefined ? (
                   <Skeleton />
                 ) : (

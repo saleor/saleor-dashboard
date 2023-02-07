@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -91,40 +92,42 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
         {isSmUp && renderVersionInfo}
       </TopNav>
       <Content>
-        {menus
-          .filter(menu =>
-            menu.menuItems.some(menuItem =>
-              hasUserMenuItemPermissions(menuItem, user),
-            ),
-          )
-          .map((menu, menuIndex) => (
-            <div className={classes.configurationCategory} key={menuIndex}>
-              <div className={classes.configurationLabel}>
-                <Typography>{menu.label}</Typography>
+        <Box paddingX={9}>
+          {menus
+            .filter(menu =>
+              menu.menuItems.some(menuItem =>
+                hasUserMenuItemPermissions(menuItem, user),
+              ),
+            )
+            .map((menu, menuIndex) => (
+              <div className={classes.configurationCategory} key={menuIndex}>
+                <div className={classes.configurationLabel}>
+                  <Typography>{menu.label}</Typography>
+                </div>
+                <div className={classes.configurationItem}>
+                  {menu.menuItems
+                    .filter(menuItem =>
+                      hasUserMenuItemPermissions(menuItem, user),
+                    )
+                    .map((item, itemIndex) => (
+                      <Link className={classes.link} to={item.url}>
+                        <NavigationCard
+                          key={itemIndex}
+                          icon={item.icon}
+                          title={item.title}
+                          description={item.description}
+                          data-test-id={
+                            item.testId +
+                            "-settings-subsection-" +
+                            item.title.toLowerCase()
+                          }
+                        />
+                      </Link>
+                    ))}
+                </div>
               </div>
-              <div className={classes.configurationItem}>
-                {menu.menuItems
-                  .filter(menuItem =>
-                    hasUserMenuItemPermissions(menuItem, user),
-                  )
-                  .map((item, itemIndex) => (
-                    <Link className={classes.link} to={item.url}>
-                      <NavigationCard
-                        key={itemIndex}
-                        icon={item.icon}
-                        title={item.title}
-                        description={item.description}
-                        data-test-id={
-                          item.testId +
-                          "-settings-subsection-" +
-                          item.title.toLowerCase()
-                        }
-                      />
-                    </Link>
-                  ))}
-              </div>
-            </div>
-          ))}
+            ))}
+        </Box>
       </Content>
     </>
   );

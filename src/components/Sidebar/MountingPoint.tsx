@@ -5,7 +5,7 @@ import React from "react";
 export const MountingPoint = () => (
   <Box display="flex" gap={6} paddingX={7} paddingY={8}>
     <Avatar.Store src={sideBarDefaultLogo} scheme="decorative2" size="small" />
-    <Text variant="bodyEmp" size="medium">
+    <Text variant="bodyEmp" size="small">
       Saleor Dashboard
     </Text>
   </Box>

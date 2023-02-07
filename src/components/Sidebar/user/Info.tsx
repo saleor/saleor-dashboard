@@ -27,8 +27,8 @@ export const UserInfo = () => {
           src={user?.avatar?.url}
         />
         <Box __width={128} className="ellipsis">
-          <Text variant="bodyEmp" size="medium">
-            {getUserName(user, false)}
+          <Text variant="bodyEmp" size="small">
+            {getUserName(user, true)}
           </Text>
         </Box>
       </Box>

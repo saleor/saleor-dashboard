@@ -7,6 +7,7 @@ import SeoForm from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -43,8 +44,8 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               description: "page header",
             })}
           />
-          <Content paddingLeft={0}>
-            <div>
+          <Content>
+            <Box height="100vh" __marginBottom="auto">
               <CategoryDetailsForm
                 data={data}
                 disabled={disabled}
@@ -71,14 +72,14 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               />
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
-              <Savebar
-                onCancel={() => navigate(backUrl)}
-                onSubmit={submit}
-                state={saveButtonBarState}
-                disabled={isSaveDisabled}
-              />
-            </div>
+            </Box>
           </Content>
+          <Savebar
+            onCancel={() => navigate(backUrl)}
+            onSubmit={submit}
+            state={saveButtonBarState}
+            disabled={isSaveDisabled}
+          />
         </>
       )}
     </CategoryCreateForm>

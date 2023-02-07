@@ -9,7 +9,7 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,65 +47,70 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
         </Button>
       </TopNav>
       <Content>
-        <Box as="p" paddingBottom={11}>
-          <FormattedMessage
-            defaultMessage="Local apps are custom webhooks & token pairs that can be used to
+        <Box padding={9}>
+          <Box marginBottom={4}>
+            <Text as="p">
+              <FormattedMessage
+                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
             connect apps and access Saleor API."
-            id="L/sNGY"
-          />
-        </Box>
-        <ResponsiveTable>
-          <TableBody>
-            {renderCollection(
-              appsList,
-              (app, index) =>
-                app ? (
-                  <TableRowLink
-                    key={app.id}
-                    className={classes.tableRow}
-                    href={getCustomAppHref(app.id)}
-                  >
+                id="L/sNGY"
+              />
+            </Text>
+          </Box>
+
+          <ResponsiveTable>
+            <TableBody>
+              {renderCollection(
+                appsList,
+                (app, index) =>
+                  app ? (
+                    <TableRowLink
+                      key={app.id}
+                      className={classes.tableRow}
+                      href={getCustomAppHref(app.id)}
+                    >
+                      <TableCell className={classes.colName}>
+                        <span data-tc="name" className={classes.appName}>
+                          {app.name}
+                        </span>
+                        {!app.isActive && (
+                          <div className={classes.statusWrapper}>
+                            <DeactivatedText />
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className={classes.colAction}>
+                        <TableButtonWrapper>
+                          <IconButton
+                            variant="secondary"
+                            color="primary"
+                            onClick={() => onRemove(app.id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableButtonWrapper>
+                      </TableCell>
+                    </TableRowLink>
+                  ) : (
+                    <AppsSkeleton key={index} />
+                  ),
+                () => (
+                  <TableRowLink className={classes.tableRow}>
                     <TableCell className={classes.colName}>
-                      <span data-tc="name" className={classes.appName}>
-                        {app.name}
-                      </span>
-                      {!app.isActive && (
-                        <div className={classes.statusWrapper}>
-                          <DeactivatedText />
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colAction}>
-                      <TableButtonWrapper>
-                        <IconButton
-                          variant="secondary"
-                          color="primary"
-                          onClick={() => onRemove(app.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableButtonWrapper>
+                      <Typography className={classes.text} variant="body2">
+                        <FormattedMessage
+                          id="voRaz3"
+                          defaultMessage="Your custom-created apps will be shown here."
+                          description="custom apps content"
+                        />
+                      </Typography>
                     </TableCell>
                   </TableRowLink>
-                ) : (
-                  <AppsSkeleton key={index} />
                 ),
-              () => (
-                <TableRowLink className={classes.tableRow}>
-                  <TableCell className={classes.colName}>
-                    <Typography className={classes.text} variant="body2">
-                      <FormattedMessage
-                        id="voRaz3"
-                        defaultMessage="Your custom-created apps will be shown here."
-                        description="custom apps content"
-                      />
-                    </Typography>
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </Box>
       </Content>
     </>
   );

@@ -128,7 +128,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content paddingLeft={0}>
+            <Content>
               <VoucherInfo
                 data={data}
                 errors={errors}

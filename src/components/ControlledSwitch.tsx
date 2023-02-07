@@ -12,6 +12,7 @@ const useStyles = makeStyles(
 );
 
 interface ControlledSwitchProps {
+  className?: string;
   checked: boolean;
   disabled?: boolean;
   label: string | React.ReactNode;
@@ -30,12 +31,14 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
     name,
     secondLabel,
     uncheckedLabel,
+    className,
   } = props;
 
   const classes = useStyles(props);
 
   return (
     <FormControlLabel
+      className={className}
       control={
         <Switch
           onChange={() =>
