@@ -1,22 +1,14 @@
-import {
-  booleanCell,
-  dropdownCell,
-  textCell,
-} from "@dashboard/components/Datagrid/cells";
-import Datagrid, {
-  GetCellContentOpts,
-} from "@dashboard/components/Datagrid/Datagrid";
-import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/DropdownCell";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/useDatagridChange";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { EditIcon } from "@saleor/macaw-ui";
-import React from "react";
+import React, { useMemo } from "react";
+
+import { createGetCellContent, getColumns } from "./utils";
 
 interface ProductListDatagridProps {
   products: RelayToFlat<ProductListQuery["products"]>;
@@ -31,68 +23,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 }) => {
   const datagrid = useDatagridChangeState();
 
-  const columns: AvailableColumn[] = [
-    {
-      id: "name",
-      title: "Produt name",
-      width: 250,
-    },
-    {
-      id: "productType",
-      title: "Product type",
-      width: 250,
-    },
-    ...(channels ?? []).map(channel => ({
-      id: `channel:${channel.id}`,
-      title: channel.name,
-      width: 250,
-    })),
-  ];
+  const columns = useMemo(() => getColumns(channels), [channels]);
 
-  const getCellContent = (
-    [column, row]: Item,
-    opts: GetCellContentOpts,
-  ): GridCell => {
-    const columnId = columns[column].id;
-    const change =
-      opts.changes.current[opts.getChangeIndex(columnId, row)]?.data;
-    const dataRow = opts.added.includes(row)
-      ? undefined
-      : products[row + opts.removed.filter(r => r <= row).length];
-
-    if (columnId === "productType") {
-      const value =
-        change?.value ?? {
-          label: dataRow?.productType?.name,
-          value: dataRow?.productType?.id,
-        } ??
-        emptyDropdownCellValue;
-
-      return dropdownCell(value, {
-        allowCustomValues: false,
-        emptyOption: false,
-        choices: [
-          { label: "Bear", value: "UHJvZHVjdFR5cGU6MTE=" },
-          { label: "Cushion", value: "UHJvZHVjdFR5cGU6MTI=" },
-          { label: "Audiobook", value: "UHJvZHVjdFR5cGU6MTU=" },
-          { label: "Juice", value: "UHJvZHVjdFR5cGU6OQ==" },
-          { label: "Music", value: "UHJvZHVjdFR5cGU6OA==" },
-        ],
-      });
-    }
-
-    if (columnId.startsWith("channel")) {
-      const channelId = columnId.split(":")[1];
-      const selectedChannel = dataRow.channelListings.find(
-        chan => chan.channel.id === channelId,
-      );
-
-      return booleanCell(change ?? !!selectedChannel ?? false);
-    }
-
-    const value = change ?? (dataRow ? dataRow[columnId] : "");
-    return textCell(value || "");
-  };
+  const getCellContent = useMemo(
+    () => createGetCellContent(columns, products),
+    [columns, products],
+  );
 
   const getCellError = () => false;
 
