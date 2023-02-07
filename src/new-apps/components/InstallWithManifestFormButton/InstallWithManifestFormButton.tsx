@@ -1,7 +1,7 @@
-import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
 import { appsMessages } from "@dashboard/new-apps/messages";
 import { TextField } from "@material-ui/core";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,31 +38,35 @@ export const InstallWithManifestFormButton: React.FC<Props> = ({
   if (inputOpened) {
     return (
       <form onSubmit={handleFormSubmit}>
-        <TextField
-          data-test-id="manifest-url-input"
-          required
-          type="url"
-          name="manifest-url"
-          label={intl.formatMessage(appsMessages.appManifestUrl)}
-          defaultValue=""
-          helperText={intl.formatMessage(messages.appManifestUrlHint)}
-        />
-        <Button
-          size="medium"
-          type="submit"
-          className={styles.installButton}
-          variant="primary"
-          data-test-id="install-app-from-manifest"
-        >
-          <FormattedMessage {...buttonMessages.install} />
-        </Button>
+        <Box display="flex">
+          <TextField
+            data-test-id="manifest-url-input"
+            required
+            type="url"
+            name="manifest-url"
+            label={intl.formatMessage(appsMessages.appManifestUrl)}
+            defaultValue=""
+            helperText={intl.formatMessage(messages.appManifestUrlHint)}
+          />
+          {/* Needs to be updated after TextInput implementation */}
+          <Button
+            size="medium"
+            type="submit"
+            className={styles.installButton}
+            variant="primary"
+            data-test-id="install-app-from-manifest"
+          >
+            <FormattedMessage {...buttonMessages.install} />
+          </Button>
+        </Box>
       </form>
     );
   }
 
   return (
     <Button
-      variant="secondary"
+      variant="primary"
+      size="medium"
       data-test-id="add-app-from-manifest"
       onClick={() => setInputOpened(true)}
     >
