@@ -4,6 +4,7 @@ export const useStyles = makeStyles(
   theme => ({
     appContent: {
       margin: theme.spacing(4, 0),
+      maxWidth: "50vw",
     },
     sectionHeader: {
       fontSize: 14,

@@ -78,55 +78,57 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
       </TopNav>
-      <div className={classes.appContent}>
-        {sectionsAvailability.installed && (
-          <>
-            <Box paddingX={8} paddingY={6}>
-              <Text as="h3" variant="heading">
-                {intl.formatMessage(messages.installedApps)}
-              </Text>
-            </Box>
-            <InstalledAppList
-              appList={verifiedInstalledApps}
-              appInstallationList={verifiedAppsIntallations}
-              disabled={disabled}
-              settings={settings}
-              onUpdateListSettings={onUpdateListSettings}
-            />
-          </>
-        )}
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Box className={classes.appContent}>
+          {sectionsAvailability.installed && (
+            <>
+              <Box paddingX={8} paddingY={6}>
+                <Text as="h3" variant="heading">
+                  {intl.formatMessage(messages.installedApps)}
+                </Text>
+              </Box>
+              <InstalledAppList
+                appList={verifiedInstalledApps}
+                appInstallationList={verifiedAppsIntallations}
+                disabled={disabled}
+                settings={settings}
+                onUpdateListSettings={onUpdateListSettings}
+              />
+            </>
+          )}
 
-        <MarketplaceAlert error={marketplaceError} />
-        {sectionsAvailability.all && !marketplaceError && (
-          <Content>
-            <Box paddingY={6} display="flex">
-              <Text as="h3" variant="heading">
-                <FormattedMessage {...messages.allApps} />
-              </Text>
-              <PreviewPill className={classes.previewLabel} />
-            </Box>
-            <AllAppList
-              appList={verifiedInstallableMarketplaceApps}
-              appInstallationList={appsInstallations}
-              navigateToAppInstallPage={navigateToAppInstallPage}
-              navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
-            />
-          </Content>
-        )}
-        {sectionsAvailability.comingSoon && !marketplaceError && (
-          <Content>
-            <Box paddingY={6}>
-              <Text as="h3" variant="heading">
-                {intl.formatMessage(messages.comingSoonApps)}
-              </Text>
-            </Box>
-            <AllAppList
-              appList={comingSoonMarketplaceApps}
-              appInstallationList={appsInstallations}
-            />
-          </Content>
-        )}
-      </div>
+          <MarketplaceAlert error={marketplaceError} />
+          {sectionsAvailability.all && !marketplaceError && (
+            <Content>
+              <Box paddingY={6} display="flex">
+                <Text as="h3" variant="heading">
+                  <FormattedMessage {...messages.allApps} />
+                </Text>
+                <PreviewPill className={classes.previewLabel} />
+              </Box>
+              <AllAppList
+                appList={verifiedInstallableMarketplaceApps}
+                appInstallationList={appsInstallations}
+                navigateToAppInstallPage={navigateToAppInstallPage}
+                navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
+              />
+            </Content>
+          )}
+          {sectionsAvailability.comingSoon && !marketplaceError && (
+            <Content>
+              <Box paddingY={6}>
+                <Text as="h3" variant="heading">
+                  {intl.formatMessage(messages.comingSoonApps)}
+                </Text>
+              </Box>
+              <AllAppList
+                appList={comingSoonMarketplaceApps}
+                appInstallationList={appsInstallations}
+              />
+            </Content>
+          )}
+        </Box>
+      </Box>
     </>
   );
 };
