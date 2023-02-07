@@ -33,6 +33,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       {href && (
         <Link
           to={href}
+          data-test-id="app-header-back-button"
           className={sprinkles({
             borderColor: "neutralPlain",
             borderStyle: "solid",
