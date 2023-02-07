@@ -39,6 +39,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";
+import { ProductListDatagrid } from "../ProductListDatagrid";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -171,10 +172,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
-  const {
-    PRODUCT_OVERVIEW_CREATE,
-    PRODUCT_OVERVIEW_MORE_ACTIONS,
-  } = useExtensions(extensionMountPoints.PRODUCT_LIST);
+  const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
+    useExtensions(extensionMountPoints.PRODUCT_LIST);
 
   const extensionMenuItems = mapToMenuItemsForProductOverviewActions(
     PRODUCT_OVERVIEW_MORE_ACTIONS,
@@ -291,6 +290,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onUpdateListSettings={onUpdateListSettings}
           filterDependency={filterDependency}
         />
+        <ProductListDatagrid products={listProps.products} />
       </Card>
     </Container>
   );
