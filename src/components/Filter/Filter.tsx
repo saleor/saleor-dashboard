@@ -51,7 +51,6 @@ const useStyles = makeStyles(
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 600 as 600,
-      textTransform: "uppercase",
     },
     filterButton: {
       padding: theme.spacing(1, 2),
