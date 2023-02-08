@@ -1719,6 +1719,10 @@
     "context": "header",
     "string": "Activity"
   },
+  "BYGJ/j": {
+    "context": "button label",
+    "string": "Settings"
+  },
   "BZ7BkQ": {
     "context": "capture payment, button",
     "string": "Capture"
