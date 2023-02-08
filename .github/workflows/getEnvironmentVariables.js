@@ -9,6 +9,7 @@ program
   .name("Approve PR")
   .description("Approve and merge PR if patch release")
   .option("--version <version>", "version of a project")
+  .option("--token <token>", "token fo login to cloud")
   .option("--repo_token <repo_token>", "github token")
   .action(async options => {
     const isOldVersion = await checkIfOldVersion(
