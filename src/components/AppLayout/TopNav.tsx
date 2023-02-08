@@ -29,6 +29,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       borderColor="neutralPlain"
       position="relative"
       __gridArea="nav"
+      data-test-id="page-header"
     >
       {href && (
         <Link
