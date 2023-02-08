@@ -92,7 +92,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
         {isSmUp && renderVersionInfo}
       </TopNav>
       <Content>
-        <Box paddingX={9}>
+        <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>
               menu.menuItems.some(menuItem =>
