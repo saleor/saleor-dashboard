@@ -7,13 +7,12 @@ import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
 import { TableCell, Typography } from "@material-ui/core";
-import { IconButton, Pill, SettingsIcon } from "@saleor/macaw-ui";
+import { Pill } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import AppManifestTableDisplay from "../AppManifestTableDisplay";
-import { AppPermissions } from "../AppPermissions";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -47,9 +46,6 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             />
           )}
         </div>
-        {app.manifestUrl && (
-          <AppManifestTableDisplay manifestUrl={app.manifestUrl} />
-        )}
       </TableCellAvatar>
       <TableCell className={clsx(classes.col, classes.colActions)}>
         <div className={classes.actions}>
@@ -62,16 +58,14 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
               {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
             </Typography>
           ) : null}
-          <AppPermissions permissions={app.permissions} />
           <TableButtonWrapper>
-            <IconButton
+            <Button
               variant="secondary"
-              color="primary"
               onClick={() => openAppSettings(app.id)}
               data-test-id="app-settings-button"
             >
-              <SettingsIcon />
-            </IconButton>
+              <FormattedMessage {...messages.settings} />
+            </Button>
           </TableButtonWrapper>
         </div>
       </TableCell>
