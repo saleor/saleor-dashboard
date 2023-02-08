@@ -3,25 +3,39 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/useDatagridChange";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { EditIcon } from "@saleor/macaw-ui";
+import { ListProps, RelayToFlat } from "@dashboard/types";
+import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { useMemo } from "react";
 
 import { createGetCellContent, getColumns } from "./utils";
 
-interface ProductListDatagridProps {
+interface ProductListDatagridProps extends ListProps<ProductListColumns> {
   products: RelayToFlat<ProductListQuery["products"]>;
   channels: ChannelFragment[];
   onRowClick: (id: string) => void;
 }
 
+const useStyles = makeStyles(
+  theme => ({
+    paginationContainer: {
+      padding: theme.spacing(0, 4),
+    },
+  }),
+  { name: "ProductListPage" },
+);
+
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   products,
   onRowClick,
   channels,
+  settings,
+  onUpdateListSettings,
 }) => {
   const datagrid = useDatagridChangeState();
+  const classes = useStyles();
 
   const columns = useMemo(() => getColumns(channels), [channels]);
 
@@ -55,6 +69,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         fullScreenTitle={"Products"}
         onChange={onChange}
       />
+
+      <div className={classes.paginationContainer}>
+        <TablePaginationWithContext
+          component="div"
+          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
+          settings={settings}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </div>
     </DatagridChangeStateContext.Provider>
   );
 };

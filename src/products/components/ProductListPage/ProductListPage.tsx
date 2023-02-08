@@ -296,8 +296,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           filterDependency={filterDependency}
         /> */}
         <ProductListDatagrid
+          disabled={false}
           products={listProps.products}
           channels={channels}
+          settings={settings}
+          onUpdateListSettings={onUpdateListSettings}
           onRowClick={id => {
             navigate(productUrl(id));
           }}

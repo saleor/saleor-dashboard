@@ -10,6 +10,7 @@ import {
   DropdownChoice,
 } from "./DropdownCell";
 import { MoneyCell } from "./MoneyCell";
+import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
   allowOverlay: true,
@@ -88,5 +89,18 @@ export function dropdownCell(
     },
     kind: GridCellKind.Custom,
     copyData: value.label,
+  };
+}
+
+export function thumbnailCell(name: string, image: string): ThumbnailCell {
+  return {
+    kind: GridCellKind.Custom,
+    allowOverlay: true,
+    copyData: "4",
+    data: {
+      kind: "thumbnail-cell",
+      image,
+      name,
+    },
   };
 }

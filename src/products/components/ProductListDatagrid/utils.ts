@@ -3,12 +3,14 @@ import {
   dropdownCell,
   readonlyTextCell,
   textCell,
+  thumbnailCell,
 } from "@dashboard/components/Datagrid/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DropdownChoice,
   emptyDropdownCellValue,
 } from "@dashboard/components/Datagrid/DropdownCell";
+import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -18,13 +20,13 @@ export function getColumns(channels: ChannelFragment[]): AvailableColumn[] {
   return [
     {
       id: "name",
-      title: "Produt name",
-      width: 250,
+      title: "Name",
+      width: 300,
     },
     {
       id: "productType",
-      title: "Product type",
-      width: 250,
+      title: "Type",
+      width: 200,
     },
     {
       id: "description",
@@ -63,6 +65,10 @@ export function createGetCellContent(
 
     if (columnId === "description") {
       return getDescriptionCellContent(columnId, change, rowData);
+    }
+
+    if (columnId === "name") {
+      return getNameCellContent(change, rowData);
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -125,4 +131,12 @@ function getDescriptionCellContent(
   }
 
   return readonlyTextCell(value || "");
+}
+
+function getNameCellContent(
+  change: ThumbnailCellProps,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  const name = change?.name ?? rowData.name;
+  return thumbnailCell(name, rowData.thumbnail.url);
 }
