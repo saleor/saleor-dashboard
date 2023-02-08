@@ -16,6 +16,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
       borderRadius={3}
       size="small"
       justifyContent="space-between"
+      data-test-id={`menu-item-label-${menuItem.id}`}
     >
       <Box display="flex" alignItems="center" gap={6}>
         {menuItem.icon}
