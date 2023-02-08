@@ -1,7 +1,6 @@
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { AppInstallation, InstalledApp } from "@dashboard/new-apps/types";
 import { ListProps } from "@dashboard/types";
-import { Table, TableBody, TableFooter, TableRow } from "@material-ui/core";
+import { Table, TableBody } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import React from "react";
 
@@ -17,9 +16,6 @@ interface InstalledAppListProps extends ListProps {
 const InstalledAppList: React.FC<InstalledAppListProps> = ({
   appList,
   appInstallationList,
-  disabled,
-  settings,
-  onUpdateListSettings,
 }) => {
   const classes = useStyles();
 
@@ -47,15 +43,6 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           />
         ))}
       </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TablePaginationWithContext
-            disabled={disabled}
-            settings={settings}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        </TableRow>
-      </TableFooter>
     </Table>
   );
 };
