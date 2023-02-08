@@ -51,7 +51,7 @@ export function useMenuStructure() {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
-    paddingY: 2,
+    paddingY: 4,
   };
 
   // This will be deleted when Marketplace is released
