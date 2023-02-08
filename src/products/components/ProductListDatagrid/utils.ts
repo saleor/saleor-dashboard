@@ -1,6 +1,7 @@
 import {
   booleanCell,
   dropdownCell,
+  readonlyTextCell,
   textCell,
 } from "@dashboard/components/Datagrid/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -24,6 +25,11 @@ export function getColumns(channels: ChannelFragment[]): AvailableColumn[] {
       id: "productType",
       title: "Product type",
       width: 250,
+    },
+    {
+      id: "description",
+      title: "Description",
+      width: 400,
     },
     ...(channels ?? []).map(channel => ({
       id: `channel:${channel.id}`,
@@ -53,6 +59,10 @@ export function createGetCellContent(
 
     if (columnId.startsWith("channel")) {
       return getChannelCellContent(columnId, change, rowData);
+    }
+
+    if (columnId === "description") {
+      return getDescriptionCellContent(columnId, change, rowData);
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -95,4 +105,24 @@ function getChannelCellContent(
   );
 
   return booleanCell(change ?? !!selectedChannel ?? false);
+}
+
+function getDescriptionCellContent(
+  columnId: string,
+  change: boolean,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  const value = change ?? rowData?.[columnId] ?? "";
+  const parsed = JSON.parse(value);
+
+  if (parsed) {
+    const descriptionFirstParagraph = parsed.blocks.find(
+      block => block.type === "paragraph",
+    );
+    if (descriptionFirstParagraph) {
+      return readonlyTextCell(descriptionFirstParagraph.data.text);
+    }
+  }
+
+  return readonlyTextCell(value || "");
 }

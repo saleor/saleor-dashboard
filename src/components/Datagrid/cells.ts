@@ -25,6 +25,16 @@ export function textCell(value: string): GridCell {
   };
 }
 
+export function readonlyTextCell(value: string): GridCell {
+  return {
+    allowOverlay: true,
+    readonly: true,
+    data: value,
+    displayData: value,
+    kind: GridCellKind.Text,
+  };
+}
+
 export function booleanCell(value: boolean): GridCell {
   return {
     ...common,
