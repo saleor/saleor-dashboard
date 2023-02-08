@@ -20,6 +20,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { Box, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -119,8 +120,15 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
           <>
             <TopNav href={pageTypeListUrl()} title={pageTitle} />
             <Content>
-              <Grid variant="inverted">
-                <div>
+              <Grid
+                variant="inverted"
+                className={sprinkles({
+                  paddingLeft: 9,
+                  height: "100vh",
+                  margin: "auto",
+                })}
+              >
+                <Box paddingTop={9}>
                   <Typography>
                     {intl.formatMessage(commonMessages.generalInformations)}
                   </Typography>
@@ -130,7 +138,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                       defaultMessage="These are general information about this Content Type."
                     />
                   </Typography>
-                </div>
+                </Box>
                 <PageTypeDetails
                   data={data}
                   disabled={disabled}
