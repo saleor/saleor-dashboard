@@ -26,6 +26,26 @@ export const staffMemberUpdateMutation = gql`
   }
 `;
 
+export const userPassowrdChangeMutation = gql`
+  mutation UserPassowrdChange($newPassword: String!, $oldPassword: String!) {
+    passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
+      errors {
+        ...AccountError
+      }
+    }
+  }
+`;
+
+export const userAccountUpdateMutation = gql`
+  mutation UserAccountUpdate($input: AccountInput!) {
+    accountUpdate(input: $input) {
+      errors {
+        ...AccountError
+      }
+    }
+  }
+`;
+
 export const staffMemberDeleteMutation = gql`
   mutation StaffMemberDelete($id: ID!) {
     staffDelete(id: $id) {
@@ -36,8 +56,8 @@ export const staffMemberDeleteMutation = gql`
   }
 `;
 
-export const staffAvatarUpdateMutation = gql`
-  mutation StaffAvatarUpdate($image: Upload!) {
+export const userAvatarUpdateMutation = gql`
+  mutation UserAvatarUpdate($image: Upload!) {
     userAvatarUpdate(image: $image) {
       errors {
         ...AccountError
@@ -52,8 +72,8 @@ export const staffAvatarUpdateMutation = gql`
   }
 `;
 
-export const staffAvatarDeleteMutation = gql`
-  mutation StaffAvatarDelete {
+export const userAvatarDeleteMutation = gql`
+  mutation UserAvatarDelete {
     userAvatarDelete {
       errors {
         ...AccountError
@@ -68,8 +88,8 @@ export const staffAvatarDeleteMutation = gql`
   }
 `;
 
-export const changeStaffPassword = gql`
-  mutation ChangeStaffPassword($newPassword: String!, $oldPassword: String!) {
+export const changeUserPassword = gql`
+  mutation ChangeUserPassword($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
       errors {
         ...AccountError

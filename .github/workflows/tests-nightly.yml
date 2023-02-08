@@ -158,6 +158,7 @@ jobs:
       url: ${{ steps.get-environment-variables.outputs.url }}
       is_old_version: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
     env:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
       VERSION: ${{github.event.client_payload.version}}
     steps:
@@ -179,7 +180,8 @@ jobs:
         run: |
               node .github/workflows/getEnvironmentVariables.js \
               --version $VERSION \
-              --token "$TOKEN"
+              --token "$TOKEN" \
+              --repo_token "$REPO_TOKEN"
 
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}

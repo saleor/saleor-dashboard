@@ -9,6 +9,7 @@ import {
   installedAppsList,
   releasedApp,
 } from "@dashboard/new-apps/fixtures";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 
 import { AppListPageSections } from "./types";
 import {
@@ -210,26 +211,27 @@ describe("App List verified installed apps util", () => {
         ],
       },
     ];
-    const installableMarketplaceApps = [
-      {
-        name: {
-          en: "Test app",
+    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
+      [
+        {
+          name: {
+            en: "Test app",
+          },
+          description: {
+            en: "Test app description",
+          },
+          logo: {
+            source: "https://www.example.com/logo",
+            color: "#000000",
+          },
+          integrations: [],
+          manifestUrl: "https://www.example.com/manifest",
+          privacyUrl: "https://www.example.com/privacy",
+          supportUrl: "https://www.example.com/support",
+          repositoryUrl: "https://www.example.com/repository",
+          githubForkUrl: "https://www.example.com/repository/fork",
         },
-        description: {
-          en: "Test app description",
-        },
-        logo: {
-          source: "https://www.example.com/logo",
-          color: "#000000",
-        },
-        integrations: [],
-        manifestUrl: "https://www.example.com/manifest",
-        privacyUrl: "https://www.example.com/privacy",
-        supportUrl: "https://www.example.com/support",
-        repositoryUrl: "https://www.example.com/repository",
-        vercelDeploymentUrl: "https://www.example.com/deployment",
-      },
-    ];
+      ];
 
     // Act
     const verifiedInstalledApps = getVerifiedInstalledApps(
@@ -301,44 +303,45 @@ describe("App List verified installable marketplace apps util", () => {
         ],
       },
     ];
-    const installableMarketplaceApps = [
-      {
-        name: {
-          en: "Test app",
+    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
+      [
+        {
+          name: {
+            en: "Test app",
+          },
+          description: {
+            en: "Test app description",
+          },
+          logo: {
+            source: "https://www.example.com/logo",
+            color: "#000000",
+          },
+          integrations: [],
+          manifestUrl: "https://www.example.com/manifest",
+          privacyUrl: "https://www.example.com/privacy",
+          supportUrl: "https://www.example.com/support",
+          repositoryUrl: "https://www.example.com/repository",
+          githubForkUrl: "https://www.example.com/repository/fork",
         },
-        description: {
-          en: "Test app description",
+        {
+          name: {
+            en: "Test app",
+          },
+          description: {
+            en: "Test app description",
+          },
+          logo: {
+            source: "https://www.example-2.com/logo",
+            color: "#000000",
+          },
+          integrations: [],
+          manifestUrl: "https://www.example-2.com/manifest",
+          privacyUrl: "https://www.example-2.com/privacy",
+          supportUrl: "https://www.example-2.com/support",
+          repositoryUrl: "https://www.example-2.com/repository",
+          githubForkUrl: "https://www.example-2.com/repository/fork",
         },
-        logo: {
-          source: "https://www.example.com/logo",
-          color: "#000000",
-        },
-        integrations: [],
-        manifestUrl: "https://www.example.com/manifest",
-        privacyUrl: "https://www.example.com/privacy",
-        supportUrl: "https://www.example.com/support",
-        repositoryUrl: "https://www.example.com/repository",
-        vercelDeploymentUrl: "https://www.example.com/deployment",
-      },
-      {
-        name: {
-          en: "Test app",
-        },
-        description: {
-          en: "Test app description",
-        },
-        logo: {
-          source: "https://www.example-2.com/logo",
-          color: "#000000",
-        },
-        integrations: [],
-        manifestUrl: "https://www.example-2.com/manifest",
-        privacyUrl: "https://www.example-2.com/privacy",
-        supportUrl: "https://www.example-2.com/support",
-        repositoryUrl: "https://www.example-2.com/repository",
-        vercelDeploymentUrl: "https://www.example-2.com/deployment",
-      },
-    ];
+      ];
 
     // Act
     const verifiedInstallableMarketplaceApps =

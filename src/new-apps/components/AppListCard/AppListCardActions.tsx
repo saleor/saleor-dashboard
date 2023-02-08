@@ -16,7 +16,7 @@ interface AppListCardActionsProps {
   installationPending?: boolean;
   appInstallation?: AppInstallationFragment;
   installHandler?: () => void;
-  vercelDeployHandler?: () => void;
+  githubForkHandler?: () => void;
   retryInstallHandler?: () => void;
   removeInstallHandler?: () => void;
 }
@@ -26,7 +26,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   installationPending = false,
   appInstallation,
   installHandler,
-  vercelDeployHandler,
+  githubForkHandler,
   retryInstallHandler,
   removeInstallHandler,
 }) => {
@@ -34,7 +34,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
 
   if (
     !installHandler &&
-    !vercelDeployHandler &&
+    !githubForkHandler &&
     !releaseDate &&
     !retryInstallHandler &&
     !removeInstallHandler &&
@@ -47,13 +47,13 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
     <>
       <Hr />
       <CardActions className={classes.cardActions}>
-        {vercelDeployHandler && (
+        {githubForkHandler && (
           <Button
             variant="secondary"
-            onClick={vercelDeployHandler}
-            data-test-id="app-deploy-to-vercel-button"
+            onClick={githubForkHandler}
+            data-test-id="app-fork-on-github-button"
           >
-            <FormattedMessage {...messages.deployToVercel} />
+            <FormattedMessage {...messages.forkOnGithub} />
           </Button>
         )}
         {installHandler && (

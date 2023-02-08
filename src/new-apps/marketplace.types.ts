@@ -29,7 +29,7 @@ export namespace GetV2SaleorAppsResponse {
     supportUrl: string;
     privacyUrl: string;
     manifestUrl: string;
-    vercelDeploymentUrl?: string;
+    githubForkUrl?: string;
   };
 
   export type ComingSoonSaleorApp = SaleorAppBase & {

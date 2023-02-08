@@ -6771,10 +6771,6 @@
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
-  "ohQrzn": {
-    "context": "button",
-    "string": "Deploy to Vercel"
-  },
   "oiuwOl": {
     "context": "button",
     "string": "Assign"
@@ -8175,6 +8171,10 @@
   "zjkAMs": {
     "context": "header",
     "string": "Translation Sale \"{saleName}\" - {languageCode}"
+  },
+  "zmnGkp": {
+    "context": "button",
+    "string": "Fork on GitHub"
   },
   "znbVYT": {
     "context": "product available for purchase date",
