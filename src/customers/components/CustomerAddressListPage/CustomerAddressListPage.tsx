@@ -6,6 +6,7 @@ import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -81,7 +82,9 @@ const useStyles = makeStyles(
   { name: "CustomerAddressListPage" },
 );
 
-const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
+const CustomerAddressListPage: React.FC<
+  CustomerAddressListPageProps
+> = props => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
 
@@ -110,7 +113,13 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
       </TopNav>
       <Content>
         {isEmpty ? (
-          <div className={classes.empty}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            padding={9}
+            flexDirection="column"
+          >
             <Typography variant="h5">
               {intl.formatMessage(messages.noAddressToShow)}
             </Typography>
@@ -124,7 +133,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
             >
               {intl.formatMessage(messages.addAddress)}
             </Button>
-          </div>
+          </Box>
         ) : (
           <div className={classes.root}>
             {renderCollection(customer?.addresses, (address, addressNumber) => (

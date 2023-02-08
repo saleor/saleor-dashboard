@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr",
       },
-      borderBottom: `solid 1px ${theme.palette.divider}`,
+      borderBottom: `solid 1px ${vars.colors.border.neutralDefault}`,
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",

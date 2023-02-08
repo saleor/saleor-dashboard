@@ -42,7 +42,7 @@ const useStyles = makeStyles(
     root: {
       alignItems: "center",
       display: "flex",
-      height: "calc(100vh - 180px)",
+      height: "100vh",
     },
     header: {
       marginBottom: theme.spacing(2),

@@ -17,6 +17,7 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -53,15 +54,17 @@ export interface SiteSettingsPageProps {
 export function areAddressInputFieldsModified(
   data: SiteSettingsPageAddressFormData,
 ): boolean {
-  return ([
-    "city",
-    "country",
-    "countryArea",
-    "phone",
-    "postalCode",
-    "streetAddress1",
-    "streetAddress2",
-  ] as Array<keyof SiteSettingsPageAddressFormData>)
+  return (
+    [
+      "city",
+      "country",
+      "countryArea",
+      "phone",
+      "postalCode",
+      "streetAddress1",
+      "streetAddress2",
+    ] as Array<keyof SiteSettingsPageAddressFormData>
+  )
     .map(key => data[key])
     .some(field => field !== "");
 }
@@ -89,10 +92,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     shop?.companyAddress?.country.country || "",
   );
 
-  const {
-    errors: validationErrors,
-    submit: handleSubmitWithAddress,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmitWithAddress } =
+    useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: shop?.companyAddress?.city || "",
@@ -143,7 +144,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <Content>
-              <Grid variant="inverted">
+              <Grid
+                variant="inverted"
+                className={sprinkles({ paddingLeft: 9 })}
+              >
                 <PageSectionHeader
                   title={intl.formatMessage(messages.sectionCheckoutTitle)}
                   description={intl.formatMessage(

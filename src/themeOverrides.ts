@@ -16,6 +16,25 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
+    MuiTypography: {
+      body2: {
+        fontSize: "13px",
+      },
+      caption: {
+        fontSize: "13px",
+        fontWeight: 500,
+      },
+    },
+    MuiTextField: {
+      root: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+    },
     MuiCardHeader: {
       root: {
         paddingRight: vars.space[11],

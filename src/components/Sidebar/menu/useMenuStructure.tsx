@@ -150,7 +150,7 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      id: "extensions",
+      id: "divider-1",
       type: "divider",
     },
     {
@@ -228,7 +228,7 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      id: "extensions",
+      id: "divider-2",
       type: "divider",
     },
     {
@@ -275,7 +275,7 @@ export function useMenuStructure() {
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
     {
-      id: "extensions",
+      id: "divider-3",
       type: "divider",
     },
     {
