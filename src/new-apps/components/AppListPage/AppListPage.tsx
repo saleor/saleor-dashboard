@@ -78,12 +78,17 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
       </TopNav>
-      <Box display="flex" flexDirection="column" alignItems="center">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        marginY={8}
+      >
         <Box className={classes.appContent}>
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={8} paddingY={6}>
-                <Text as="h3" variant="heading">
+                <Text as="h3" variant="heading" color="textNeutralSubdued">
                   {intl.formatMessage(messages.installedApps)}
                 </Text>
               </Box>
@@ -96,12 +101,11 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               />
             </>
           )}
-
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
             <Content>
-              <Box paddingY={6} display="flex">
-                <Text as="h3" variant="heading">
+              <Box display="flex">
+                <Text as="h3" variant="heading" color="textNeutralSubdued">
                   <FormattedMessage {...messages.allApps} />
                 </Text>
                 <PreviewPill className={classes.previewLabel} />
