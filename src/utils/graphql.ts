@@ -1,9 +1,10 @@
+import { getApiUrl } from "@dashboard/config";
 import LzString from "lz-string";
 
 export type EditorContent = Record<keyof typeof longKeysToShortKeys, string>;
 
 type ShorterEditorContent = Record<
-  typeof longKeysToShortKeys[keyof typeof longKeysToShortKeys],
+  (typeof longKeysToShortKeys)[keyof typeof longKeysToShortKeys],
   string
 >;
 
@@ -46,18 +47,17 @@ interface PlaygroundOpenHandlerInput {
   variables: string;
 }
 
-export const playgroundOpenHandler = ({
-  query,
-  headers,
-  operationName,
-  variables,
-}: PlaygroundOpenHandlerInput) => () => {
-  const playgroundURL = new URL(process.env.API_URI);
-  playgroundURL.hash = encodeGraphQLStatement({
-    query,
-    headers,
-    operationName,
-    variables,
-  });
-  window.open(playgroundURL, "_blank").focus();
-};
+const thisURL = new URL(getApiUrl(), window.location.origin).href;
+
+export const playgroundOpenHandler =
+  ({ query, headers, operationName, variables }: PlaygroundOpenHandlerInput) =>
+  () => {
+    const playgroundURL = new URL(thisURL);
+    playgroundURL.hash = encodeGraphQLStatement({
+      query,
+      headers,
+      operationName,
+      variables,
+    });
+    window.open(playgroundURL, "_blank").focus();
+  };
