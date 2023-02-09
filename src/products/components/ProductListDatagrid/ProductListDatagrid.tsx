@@ -7,6 +7,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
+import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { useMemo } from "react";
@@ -40,12 +41,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const datagrid = useDatagridChangeState();
   const classes = useStyles();
   const intl = useIntl();
+  const searchProductType = useSearchProductTypes();
 
   const columns = useMemo(() => getColumns(channels), [channels]);
 
   const getCellContent = useMemo(
-    () => createGetCellContent(columns, products),
-    [columns, products],
+    () => createGetCellContent(columns, products, searchProductType),
+    [columns, products, searchProductType],
   );
 
   const getCellError = () => false;

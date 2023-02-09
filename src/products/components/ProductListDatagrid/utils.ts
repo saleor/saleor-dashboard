@@ -44,6 +44,7 @@ export function getColumns(channels: ChannelFragment[]): AvailableColumn[] {
 export function createGetCellContent(
   columns: AvailableColumn[],
   products: RelayToFlat<ProductListQuery["products"]>,
+  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
   return (
     [column, row]: Item,
@@ -56,7 +57,7 @@ export function createGetCellContent(
       : products[row + removed.filter(r => r <= row).length];
 
     if (columnId === "productType") {
-      return getProductTypeCellContent(change, rowData);
+      return getProductTypeCellContent(change, rowData, getProductTypes);
     }
 
     if (columnId.startsWith("channel")) {
@@ -79,6 +80,7 @@ export function createGetCellContent(
 function getProductTypeCellContent(
   change: { value: DropdownChoice },
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
   const value =
     change?.value ?? getRowDataValue(rowData) ?? emptyDropdownCellValue;
@@ -86,19 +88,13 @@ function getProductTypeCellContent(
   return dropdownCell(value, {
     allowCustomValues: false,
     emptyOption: false,
-    choices: [
-      { label: "Bear", value: "UHJvZHVjdFR5cGU6MTE=" },
-      { label: "Cushion", value: "UHJvZHVjdFR5cGU6MTI=" },
-      { label: "Audiobook", value: "UHJvZHVjdFR5cGU6MTU=" },
-      { label: "Juice", value: "UHJvZHVjdFR5cGU6OQ==" },
-      { label: "Music", value: "UHJvZHVjdFR5cGU6OA==" },
-    ],
+    update: (text: string) => getProductTypes(value.label !== text ? text : ""),
   });
 }
 
 function getRowDataValue(
   rowData?: RelayToFlat<ProductListQuery["products"]>[number],
-) {
+): DropdownChoice {
   if (!rowData) {
     return undefined;
   }
