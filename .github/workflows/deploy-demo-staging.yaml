@@ -34,7 +34,7 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
           version=${{ github.event.inputs.git_ref || github.ref_name }}
-          latest_version=$(gh api -H "Accept: application/vnd.github+json" /repos/saleor/saleor-dashboard/releases/latest | jq -r '.name')
+          latest_version=$(gh api -H "Accept: application/vnd.github+json" --cache "12h" --jq .name /repos/saleor/saleor/releases/latest)
           if ! [[ $version != $latest_version ]]; then
               echo "Unsupported version: $version"
               exit 1
