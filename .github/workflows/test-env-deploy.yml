@@ -59,15 +59,6 @@ jobs:
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
         run: |
           echo "custom_api_uri=$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)" >> $GITHUB_OUTPUT
-      - name: Get MARKETPLACE_URL
-        id: marketplace_url
-        # Search for MARKETPLACE_URL in PR description
-        env:
-          pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: MARKETPLACE_URL=
-          pattern: (http|https)://[a-zA-Z0-9.-]+/?
-        run: |
-          echo "custom_marketplace_url=$(echo "$pull_request_body" | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)" >> $GITHUB_OUTPUT
       - name: Get APPS_MARKETPLACE_API_URI
         id: apps_marketplace_api_uri
         # Search for APPS_MARKETPLACE_API_URI in PR description
