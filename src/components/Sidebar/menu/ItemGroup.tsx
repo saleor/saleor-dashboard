@@ -11,7 +11,7 @@ interface Props {
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
   <List.ItemGroup>
     <List.ItemGroup.Trigger
-      paddingX={4}
+      paddingX={5}
       paddingY={4}
       borderRadius={3}
       size="small"

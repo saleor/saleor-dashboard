@@ -10,6 +10,7 @@ const useStyles = makeStyles(
   theme => ({
     arrow: {
       transition: theme.transitions.duration.short + "ms",
+      marginBottom: "4px",
     },
     arrowLeft: {
       marginLeft: -24,
@@ -33,7 +34,6 @@ const useStyles = makeStyles(
         color: theme.palette.text.primary,
       },
       display: "flex",
-      height: 24,
     },
     labelContainerActive: {
       color: theme.palette.text.primary,
