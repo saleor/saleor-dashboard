@@ -81,11 +81,7 @@ function getProductTypeCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const value =
-    change?.value ?? {
-      label: rowData?.productType?.name,
-      value: rowData?.productType?.id,
-    } ??
-    emptyDropdownCellValue;
+    change?.value ?? getRowDataValue(rowData) ?? emptyDropdownCellValue;
 
   return dropdownCell(value, {
     allowCustomValues: false,
@@ -100,13 +96,26 @@ function getProductTypeCellContent(
   });
 }
 
+function getRowDataValue(
+  rowData?: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  if (!rowData) {
+    return undefined;
+  }
+
+  return {
+    label: rowData.productType?.name,
+    value: rowData.productType?.id,
+  };
+}
+
 function getChannelCellContent(
   columnId: string,
   change: boolean,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const channelId = columnId.split(":")[1];
-  const selectedChannel = rowData.channelListings.find(
+  const selectedChannel = rowData?.channelListings.find(
     chan => chan.channel.id === channelId,
   );
 
@@ -119,6 +128,11 @@ function getDescriptionCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const value = change ?? rowData?.[columnId] ?? "";
+
+  if (!value) {
+    return readonlyTextCell("");
+  }
+
   const parsed = JSON.parse(value);
 
   if (parsed) {
@@ -137,6 +151,6 @@ function getNameCellContent(
   change: ThumbnailCellProps,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
-  const name = change?.name ?? rowData.name;
-  return thumbnailCell(name, rowData.thumbnail.url);
+  const name = change?.name ?? rowData?.name ?? "";
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "");
 }

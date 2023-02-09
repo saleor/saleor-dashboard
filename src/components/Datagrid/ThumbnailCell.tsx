@@ -58,7 +58,7 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
       ctx.fillStyle = theme.textDark;
       ctx.fillText(
         name,
-        drawX + size + xPad * 2,
+        drawX + size + xPad,
         rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
       );
     }
