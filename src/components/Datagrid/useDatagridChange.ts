@@ -32,13 +32,21 @@ export interface UseDatagridChangeState {
   removed: number[];
   setRemoved: Dispatch<SetStateAction<number[]>>;
   changes: MutableRefObject<DatagridChange[]>;
+  clear: () => void;
 }
 export function useDatagridChangeState(): UseDatagridChangeState {
   const [added, setAdded] = useState<number[]>([]);
   const [removed, setRemoved] = useState<number[]>([]);
   const changes = useRef<DatagridChange[]>([]);
 
+  const clear = () => {
+    changes.current = [];
+    setAdded([]);
+    setRemoved([]);
+  };
+
   return {
+    clear,
     added,
     setAdded,
     removed,
@@ -47,9 +55,8 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   };
 }
 
-export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(
-  undefined,
-);
+export const DatagridChangeStateContext =
+  createContext<UseDatagridChangeState>(undefined);
 export const useDatagridChangeStateContext = () =>
   useContext(DatagridChangeStateContext);
 
@@ -58,13 +65,8 @@ function useDatagridChange(
   rows: number,
   onChange?: OnDatagridChange,
 ) {
-  const {
-    added,
-    setAdded,
-    removed,
-    setRemoved,
-    changes,
-  } = useDatagridChangeStateContext();
+  const { added, setAdded, removed, setRemoved, changes } =
+    useDatagridChangeStateContext();
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
       changes.current.findIndex(

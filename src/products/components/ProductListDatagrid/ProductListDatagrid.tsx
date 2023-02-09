@@ -1,8 +1,6 @@
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import {
-  DatagridChangeStateContext,
-  useDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/useDatagridChange";
+import Savebar from "@dashboard/components/Savebar";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
@@ -14,6 +12,7 @@ import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { useProductForm } from "./useProductForm";
 import { createGetCellContent, getColumns } from "./utils";
 
 interface ProductListDatagridProps extends ListProps<ProductListColumns> {
@@ -38,10 +37,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   settings,
   onUpdateListSettings,
 }) => {
-  const datagrid = useDatagridChangeState();
   const classes = useStyles();
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
+  const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
 
   const columns = useMemo(() => getColumns(channels), [channels]);
 
@@ -51,8 +50,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   const getCellError = () => false;
-
-  const onChange = () => null;
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
@@ -88,6 +85,17 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           onUpdateListSettings={onUpdateListSettings}
         />
       </div>
+      {isDirty && (
+        <Savebar
+          onCancel={clear}
+          onSubmit={onSubmit}
+          state="default"
+          disabled={false}
+          labels={{
+            cancel: intl.formatMessage(buttonMessages.clear),
+          }}
+        />
+      )}
     </DatagridChangeStateContext.Provider>
   );
 };
