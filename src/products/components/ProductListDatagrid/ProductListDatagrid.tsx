@@ -6,10 +6,13 @@ import {
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { ListProps, RelayToFlat } from "@dashboard/types";
-import { EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { messages } from "./messages";
 import { createGetCellContent, getColumns } from "./utils";
 
 interface ProductListDatagridProps extends ListProps<ProductListColumns> {
@@ -36,6 +39,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 }) => {
   const datagrid = useDatagridChangeState();
   const classes = useStyles();
+  const intl = useIntl();
 
   const columns = useMemo(() => getColumns(channels), [channels]);
 
@@ -51,22 +55,26 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        addButtonLabel="Add new product"
+        addButtonLabel={intl.formatMessage(messages.addProduct)}
         availableColumns={columns}
-        emptyText="Empty text"
+        emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
         getCellError={getCellError}
         menuItems={index => [
           {
-            label: "Edit Variant",
+            label: intl.formatMessage(messages.editProduct),
             onSelect: () => onRowClick(products[index].id),
             Icon: <EditIcon />,
           },
         ]}
         rows={products?.length ?? 0}
-        selectionActions={() => <button>Remove</button>}
-        title={"Products"}
-        fullScreenTitle={"Products"}
+        selectionActions={(indexes, { removeRows }) => (
+          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+            <FormattedMessage {...buttonMessages.delete} />
+          </Button>
+        )}
+        title=""
+        fullScreenTitle={intl.formatMessage(messages.products)}
         onChange={onChange}
       />
 
