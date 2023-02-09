@@ -26,18 +26,20 @@ export const useProfileOperations = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [updateUserAccount, updateUserAccountOpts] =
-    useUserAccountUpdateMutation({
-      onCompleted: data => {
-        if (!data.accountUpdate?.errors.length) {
-          refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+  const [
+    updateUserAccount,
+    updateUserAccountOpts,
+  ] = useUserAccountUpdateMutation({
+    onCompleted: data => {
+      if (!data.accountUpdate?.errors.length) {
+        refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   const [updateUserAvatar] = useUserAvatarUpdateMutation({
     onCompleted: data => {
