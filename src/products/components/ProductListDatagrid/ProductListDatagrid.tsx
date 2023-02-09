@@ -12,6 +12,7 @@ import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
 import { useProductForm } from "./useProductForm";
 import { createGetCellContent, getColumns } from "./utils";
 
@@ -42,7 +43,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const searchProductType = useSearchProductTypes();
   const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
 
-  const columns = useMemo(() => getColumns(channels), [channels]);
+  const columns = useMemo(() => getColumns(channels, intl), [channels, intl]);
 
   const getCellContent = useMemo(
     () => createGetCellContent(columns, products, searchProductType),
@@ -53,48 +54,56 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
-      <Datagrid
-        addButtonLabel={intl.formatMessage(messages.addProduct)}
-        availableColumns={columns}
-        emptyText={intl.formatMessage(messages.emptyText)}
-        getCellContent={getCellContent}
-        getCellError={getCellError}
-        menuItems={index => [
-          {
-            label: intl.formatMessage(messages.editProduct),
-            onSelect: () => onRowClick(products[index].id),
-            Icon: <EditIcon />,
-          },
-        ]}
-        rows={products?.length ?? 0}
-        selectionActions={(indexes, { removeRows }) => (
-          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        )}
-        title=""
-        fullScreenTitle={intl.formatMessage(messages.products)}
-        onChange={onChange}
-      />
+      {products?.length ? (
+        <>
+          <Datagrid
+            addButtonLabel={intl.formatMessage(messages.addProduct)}
+            availableColumns={columns}
+            emptyText={intl.formatMessage(messages.emptyText)}
+            getCellContent={getCellContent}
+            getCellError={getCellError}
+            menuItems={index => [
+              {
+                label: intl.formatMessage(messages.editProduct),
+                onSelect: () => onRowClick(products[index].id),
+                Icon: <EditIcon />,
+              },
+            ]}
+            rows={products?.length ?? 0}
+            selectionActions={(indexes, { removeRows }) => (
+              <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+                <FormattedMessage {...buttonMessages.delete} />
+              </Button>
+            )}
+            title=""
+            fullScreenTitle={intl.formatMessage(messages.products)}
+            onChange={onChange}
+          />
 
-      <div className={classes.paginationContainer}>
-        <TablePaginationWithContext
-          component="div"
-          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
-          settings={settings}
-          onUpdateListSettings={onUpdateListSettings}
-        />
-      </div>
-      {isDirty && (
-        <Savebar
-          onCancel={clear}
-          onSubmit={onSubmit}
-          state="default"
-          disabled={false}
-          labels={{
-            cancel: intl.formatMessage(buttonMessages.clear),
-          }}
-        />
+          <div className={classes.paginationContainer}>
+            <TablePaginationWithContext
+              component="div"
+              colSpan={
+                (products?.length === 0 ? 1 : 2) + settings.columns.length
+              }
+              settings={settings}
+              onUpdateListSettings={onUpdateListSettings}
+            />
+          </div>
+          {isDirty && (
+            <Savebar
+              onCancel={clear}
+              onSubmit={onSubmit}
+              state="default"
+              disabled={false}
+              labels={{
+                cancel: intl.formatMessage(buttonMessages.clear),
+              }}
+            />
+          )}
+        </>
+      ) : (
+        <ProductListDatagridSkeleton />
       )}
     </DatagridChangeStateContext.Provider>
   );

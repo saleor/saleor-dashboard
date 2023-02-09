@@ -13,24 +13,29 @@ import {
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { RelayToFlat } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
+import { IntlShape } from "react-intl";
 
-export function getColumns(channels: ChannelFragment[]): AvailableColumn[] {
+export function getColumns(
+  channels: ChannelFragment[],
+  intl: IntlShape,
+): AvailableColumn[] {
   return [
     {
       id: "name",
-      title: "Name",
+      title: intl.formatMessage(commonMessages.name),
       width: 300,
     },
     {
       id: "productType",
-      title: "Type",
+      title: intl.formatMessage(commonMessages.type),
       width: 200,
     },
     {
       id: "description",
-      title: "Description",
+      title: intl.formatMessage(commonMessages.description),
       width: 400,
     },
     ...(channels ?? []).map(channel => ({
