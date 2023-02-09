@@ -11,6 +11,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Typography } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,10 +39,8 @@ const GiftCardSettingsPage: React.FC = () => {
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
 
-  const [
-    updateGiftCardSettings,
-    updateGiftCardSettingsOpts,
-  ] = useGiftCardSettingsUpdateMutation({});
+  const [updateGiftCardSettings, updateGiftCardSettingsOpts] =
+    useGiftCardSettingsUpdateMutation({});
 
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
@@ -66,27 +65,29 @@ const GiftCardSettingsPage: React.FC = () => {
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, change }) => (
-          <Grid variant="inverted">
-            <div>
-              <Typography>
-                <FormattedMessage
-                  {...expirySettingsMessages.expiryDateSectionDescription}
-                />
-              </Typography>
-            </div>
-            <GiftCardExpirySettingsCard
-              data={formData}
-              disabled={formLoading}
-              onChange={change}
-              errors={formErrors}
-            />
-            <Savebar
-              onCancel={() => navigate(giftCardsListPath)}
-              onSubmit={submit}
-              disabled={formLoading}
-              state={updateGiftCardSettingsOpts?.status}
-            />
-          </Grid>
+          <Box padding={9} margin="auto" height="100vh">
+            <Grid variant="inverted">
+              <div>
+                <Typography>
+                  <FormattedMessage
+                    {...expirySettingsMessages.expiryDateSectionDescription}
+                  />
+                </Typography>
+              </div>
+              <GiftCardExpirySettingsCard
+                data={formData}
+                disabled={formLoading}
+                onChange={change}
+                errors={formErrors}
+              />
+              <Savebar
+                onCancel={() => navigate(giftCardsListPath)}
+                onSubmit={submit}
+                disabled={formLoading}
+                state={updateGiftCardSettingsOpts?.status}
+              />
+            </Grid>
+          </Box>
         )}
       </Form>
     </>
