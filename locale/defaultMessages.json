@@ -4477,10 +4477,6 @@
     "context": "error message",
     "string": "Login went wrong. Please try again."
   },
-  "Ww69SE": {
-    "context": "search input placeholder",
-    "string": "Search tax classes"
-  },
   "WwNtFn": {
     "context": "delete product variant",
     "string": "Are you sure you want to delete {name}?"
