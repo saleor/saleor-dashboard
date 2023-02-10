@@ -21,6 +21,7 @@ const useStyles = makeStyles(
         paddingLeft: 0,
         maxWidth: "1440px",
         margin: "0 auto",
+        boxShadow: "none",
       },
     },
   },

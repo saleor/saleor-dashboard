@@ -17,7 +17,6 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(3.5),
     },
     button: {
-      zIndex: 2,
       padding: `7px`,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
@@ -33,7 +32,6 @@ const useStyles = makeStyles(
         "&::placeholder": {
           opacity: [[1], "!important"] as any,
         },
-        zIndex: 2,
       },
       background: theme.palette.background.paper,
     },
