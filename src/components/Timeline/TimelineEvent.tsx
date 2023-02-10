@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
         position: "absolute",
-        right: theme.spacing(20),
+        right: theme.spacing(24),
       },
       margin: 0,
       minHeight: 0,
