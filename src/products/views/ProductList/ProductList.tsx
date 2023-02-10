@@ -53,7 +53,6 @@ import {
 } from "@dashboard/products/urls";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -290,12 +289,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
-  const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
-    },
-  });
   const gridAttributes = useGridAttributesQuery({
     variables: { ids: filteredColumnIds },
     skip: filteredColumnIds.length === 0,
@@ -368,33 +361,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort,
         }}
         onSort={handleSort}
-        availableInGridAttributes={
-          mapEdgesToItems(
-            availableInGridAttributesOpts.result?.data?.availableInGrid,
-          ) || []
-        }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         settings={settings}
-        loading={
-          availableInGridAttributesOpts.result.loading || gridAttributes.loading
-        }
-        hasMore={maybe(
-          () =>
-            availableInGridAttributesOpts.result.data.availableInGrid.pageInfo
-              .hasNextPage,
-          false,
-        )}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
         channels={availableChannels}
         selectedProductIds={listElements}
-        onColumnQueryChange={availableInGridAttributesOpts.search}
-        onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={updateListSettings}
         onAdd={() => openModal("create-product")}
         onAll={resetFilters}
@@ -425,7 +402,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        columnQuery={availableInGridAttributesOpts.query}
       />
       <ActionDialog
         open={params.action === "delete"}

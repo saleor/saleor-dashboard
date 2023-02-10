@@ -6,12 +6,10 @@ import {
 } from "@dashboard/apps/useExtensions";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Container from "@dashboard/components/Container";
 // import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import PageHeader from "@dashboard/components/PageHeader";
 import { ProductListColumns } from "@dashboard/config";
 import {
@@ -19,13 +17,11 @@ import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
-  FetchMoreProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -40,27 +36,20 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 // import ProductList from "../ProductList";
-import { columnsMessages } from "../ProductList/messages";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import {
   createFilterStructure,
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
-import { getAttributeColumnValue } from "./utils";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-    FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >;
-  columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
@@ -69,19 +58,10 @@ export interface ProductListPageProps
   selectedProductIds: string[];
   onAdd: () => void;
   onExport: () => void;
-  onColumnQueryChange: (query: string) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
-    columnPicker: {
-      marginRight: theme.spacing(3),
-      [theme.breakpoints.down("xs")]: {
-        "& > button": {
-          width: "100%",
-        },
-      },
-    },
     settings: {
       [theme.breakpoints.up("sm")]: {
         marginRight: theme.spacing(2),
@@ -93,24 +73,16 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    columnQuery,
     currencySymbol,
     currentTab,
-    defaultSettings,
-    gridAttributes,
     limits,
-    availableInGridAttributes,
     filterOpts,
-    hasMore,
     initialSearch,
-    loading,
     settings,
     tabs,
     onAdd,
     onAll,
-    onColumnQueryChange,
     onExport,
-    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -126,55 +98,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const navigate = useNavigator();
-
-  const staticColumns = [
-    {
-      label: intl.formatMessage(columnsMessages.availability),
-      value: "availability" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.price),
-      value: "price" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.type),
-      value: "productType" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.updatedAt),
-      value: "date" as ProductListColumns,
-    },
-  ];
-
-  const initialColumnsChoices = React.useMemo(() => {
-    const selectedStaticColumns = staticColumns.filter(column =>
-      (settings.columns || []).includes(column.value),
-    );
-    const selectedAttributeColumns = gridAttributes.map(attribute => ({
-      label: attribute.name,
-      value: getAttributeColumnValue(attribute.id),
-    }));
-
-    return [...selectedStaticColumns, ...selectedAttributeColumns];
-  }, [gridAttributes, settings.columns]);
-
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   // const filterDependency = filterStructure.find(getByName("channel"));
-
-  const availableColumns: MultiAutocompleteChoiceType[] = [
-    ...staticColumns,
-    ...availableInGridAttributes.map(
-      attribute =>
-        ({
-          label: attribute.name,
-          value: getAttributeColumnValue(attribute.id),
-        } as MultiAutocompleteChoiceType),
-    ),
-  ];
 
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
@@ -223,19 +149,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           )
         }
       >
-        <ColumnPicker
-          className={classes.columnPicker}
-          availableColumns={availableColumns}
-          initialColumns={initialColumnsChoices}
-          defaultColumns={defaultSettings.columns}
-          hasMore={hasMore}
-          loading={loading}
-          query={columnQuery}
-          onQueryChange={onColumnQueryChange}
-          onFetchMore={onFetchMore}
-          onSave={handleSave}
-          IconButtonProps={{ variant: "secondary" }}
-        />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
           data-test-id="add-product"
