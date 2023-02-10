@@ -78,7 +78,7 @@ jobs:
               }
             }'
       - name: Notify Slack
-        if: ${{ env.NOTIFY }}
+        if: ${{ always() && env.NOTIFY }}
         env:
           JOB_DEPLOYMENT_KIND: production
           JOB_STATUS: ${{ job.status }}
