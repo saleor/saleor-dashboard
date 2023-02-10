@@ -7,6 +7,7 @@ import DataEditor, {
   GridCell,
   GridSelection,
   Item,
+  Rectangle,
 } from "@glideapps/glide-data-grid";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
@@ -58,6 +59,7 @@ export interface DatagridProps {
     actions: MenuItemsActions,
   ) => React.ReactNode;
   onChange?: OnDatagridChange;
+  onHeaderMenuClick: (col: number, screenPosition: Rectangle) => void;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -71,6 +73,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   selectionActions,
   title,
   fullScreenTitle,
+  onHeaderMenuClick,
   onChange,
 }): React.ReactElement => {
   const classes = useStyles();
@@ -257,6 +260,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   getCellsForSelection
                   onColumnMoved={onColumnMoved}
                   onColumnResize={onColumnResize}
+                  onHeaderClicked={onHeaderMenuClick as any}
                   onGridSelectionChange={setSelection}
                   gridSelection={selection}
                   rowHeight={48}

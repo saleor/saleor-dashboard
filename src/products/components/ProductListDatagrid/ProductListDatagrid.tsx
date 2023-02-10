@@ -5,10 +5,11 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
+import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
-import { ListProps, RelayToFlat } from "@dashboard/types";
+import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -16,7 +17,9 @@ import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
 import { useProductForm } from "./useProductForm";
 import { createGetCellContent, getColumns } from "./utils";
 
-interface ProductListDatagridProps extends ListProps<ProductListColumns> {
+interface ProductListDatagridProps
+  extends ListProps<ProductListColumns>,
+    SortPage<ProductListUrlSortField> {
   products: RelayToFlat<ProductListQuery["products"]>;
   channels: ChannelFragment[];
   onRowClick: (id: string) => void;
@@ -37,6 +40,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   channels,
   settings,
   onUpdateListSettings,
+  onSort,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -50,6 +54,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, products, searchProductType],
   );
 
+  const onHeaderMenuClick = useCallback(
+    (col: number) => {
+      onSort(columns[col].id as ProductListUrlSortField);
+    },
+    [columns, onSort],
+  );
+
   const getCellError = () => false;
 
   return (
@@ -59,6 +70,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           <Datagrid
             addButtonLabel={intl.formatMessage(messages.addProduct)}
             availableColumns={columns}
+            onHeaderMenuClick={onHeaderMenuClick}
             emptyText={intl.formatMessage(messages.emptyText)}
             getCellContent={getCellContent}
             getCellError={getCellError}
