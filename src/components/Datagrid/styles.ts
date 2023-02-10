@@ -1,6 +1,5 @@
 import { Theme } from "@glideapps/glide-data-grid";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
 const useStyles = makeStyles(
@@ -65,11 +64,11 @@ const useStyles = makeStyles(
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: vars.fontSize.bodySmall,
-          letterSpacing: vars.letterSpacing.bodySmall,
-          lineHeight: vars.lineHeight.bodySmall,
-          fontWeight: vars.fontWeight.bodySmall,
-          padding: `1.4rem ${theme.spacing(1)}`,
+          fontSize: "13px",
+          letterSpacing: "0.015em",
+          lineHeight: "20px",
+          fontWeight: "440",
+          padding: `4px`,
           outline: 0,
         },
         '& input[type="number"]': {
@@ -193,17 +192,17 @@ export function useDatagridTheme() {
       bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
-      fontFamily: theme.typography.fontFamily,
-      baseFontStyle: vars.fontSize.bodySmall,
-      headerFontStyle: vars.fontSize.bodySmall,
-      editorFontSize: vars.fontSize.bodySmall,
+      fontFamily: "'Inter var', sans-serif",
+      baseFontStyle: "13px",
+      headerFontStyle: "13px",
+      editorFontSize: "13px",
       textMedium: theme.palette.text.primary,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,
       textDark: theme.palette.text.primary,
       textLight: theme.palette.text.primary,
-      cellHorizontalPadding: 10,
-      cellVerticalPadding: 10,
+      cellHorizontalPadding: 8,
+      cellVerticalPadding: 8,
       lineHeight: 20,
     }),
     [theme],
