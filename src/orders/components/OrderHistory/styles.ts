@@ -9,6 +9,7 @@ export const useStyles = makeStyles(
     header: {
       fontWeight: 500,
       marginBottom: theme.spacing(1),
+      paddingLeft: 0,
     },
     linesTableCell: {
       paddingRight: theme.spacing(3),

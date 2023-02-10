@@ -50,6 +50,7 @@ import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductU
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -339,112 +340,120 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   data-test-id="menu"
                 />
               </TopNav>
-              <Content>
-                <ProductDetailsForm
-                  data={data}
-                  disabled={disabled}
-                  errors={productErrors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <ProductMedia
-                  media={media}
-                  placeholderImage={placeholderImage}
-                  onImageDelete={onImageDelete}
-                  onImageReorder={onImageReorder}
-                  onImageUpload={onImageUpload}
-                  openMediaUrlModal={() => setMediaUrlModalStatus(true)}
-                  getImageEditUrl={imageId =>
-                    productImageUrl(productId, imageId)
-                  }
-                />
-                <CardSpacer />
-                {data.attributes.length > 0 && (
-                  <Attributes
-                    attributes={data.attributes}
-                    attributeValues={attributeValues}
-                    errors={productErrors}
-                    loading={disabled}
+              <Box
+                display="grid"
+                __gridTemplateColumns="2fr 1fr"
+                __maxWidth="1440px"
+                margin="auto"
+              >
+                <Content>
+                  <ProductDetailsForm
+                    data={data}
                     disabled={disabled}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
+                    errors={productErrors}
+                    onChange={change}
                   />
-                )}
-                <CardSpacer />
-                <ProductVariants
-                  productName={product?.name}
-                  errors={variantListErrors}
-                  channels={listings}
-                  limits={limits}
-                  variants={variants}
-                  variantAttributes={product?.productType.variantAttributes}
-                  warehouses={warehouses}
-                  onAttributeValuesSearch={onAttributeValuesSearch}
-                  onChange={handlers.changeVariants}
-                  onRowClick={onVariantShow}
-                />
-                <CardSpacer />
-                <SeoForm
-                  errors={productErrors}
-                  title={data.seoTitle}
-                  titlePlaceholder={data.name}
-                  description={data.seoDescription}
-                  descriptionPlaceholder={""} // TODO: cast description to string
-                  slug={data.slug}
-                  slugPlaceholder={data.name}
-                  loading={disabled}
-                  onClick={onSeoClick}
-                  onChange={change}
-                  helperText={intl.formatMessage({
-                    id: "LKoIB1",
-                    defaultMessage:
-                      "Add search engine title and description to make this product easier to find",
-                  })}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={handlers.changeMetadata} />
-              </Content>
-              <RightSidebar>
-                <ProductOrganization
-                  canChangeType={false}
-                  categories={categories}
-                  categoryInputDisplayValue={selectedCategory}
-                  collections={collections}
-                  collectionsInputDisplayValue={selectedCollections}
-                  data={data}
-                  disabled={disabled}
-                  errors={productOrganizationErrors}
-                  fetchCategories={fetchCategories}
-                  fetchCollections={fetchCollections}
-                  fetchMoreCategories={fetchMoreCategories}
-                  fetchMoreCollections={fetchMoreCollections}
-                  productType={product?.productType}
-                  onCategoryChange={handlers.selectCategory}
-                  onCollectionChange={handlers.selectCollection}
-                />
-                <CardSpacer />
-                <ChannelsAvailabilityCard
-                  {...availabilityCommonProps}
-                  channels={listings}
-                />
-                <CardSpacer />
-                <ProductTaxes
-                  value={data.taxClassId}
-                  disabled={disabled}
-                  onChange={handlers.selectTaxClass}
-                  taxClassDisplayName={selectedTaxClass}
-                  taxClasses={taxClasses}
-                  onFetchMore={fetchMoreTaxClasses}
-                />
-              </RightSidebar>
+                  <CardSpacer />
+                  <ProductMedia
+                    media={media}
+                    placeholderImage={placeholderImage}
+                    onImageDelete={onImageDelete}
+                    onImageReorder={onImageReorder}
+                    onImageUpload={onImageUpload}
+                    openMediaUrlModal={() => setMediaUrlModalStatus(true)}
+                    getImageEditUrl={imageId =>
+                      productImageUrl(productId, imageId)
+                    }
+                  />
+                  <CardSpacer />
+                  {data.attributes.length > 0 && (
+                    <Attributes
+                      attributes={data.attributes}
+                      attributeValues={attributeValues}
+                      errors={productErrors}
+                      loading={disabled}
+                      disabled={disabled}
+                      onChange={handlers.selectAttribute}
+                      onMultiChange={handlers.selectAttributeMultiple}
+                      onFileChange={handlers.selectAttributeFile}
+                      onReferencesRemove={handlers.selectAttributeReference}
+                      onReferencesAddClick={onAssignReferencesClick}
+                      onReferencesReorder={handlers.reorderAttributeValue}
+                      fetchAttributeValues={fetchAttributeValues}
+                      fetchMoreAttributeValues={fetchMoreAttributeValues}
+                      onAttributeSelectBlur={onAttributeSelectBlur}
+                      richTextGetters={attributeRichTextGetters}
+                    />
+                  )}
+                  <CardSpacer />
+                  <ProductVariants
+                    productName={product?.name}
+                    errors={variantListErrors}
+                    channels={listings}
+                    limits={limits}
+                    variants={variants}
+                    variantAttributes={product?.productType.variantAttributes}
+                    warehouses={warehouses}
+                    onAttributeValuesSearch={onAttributeValuesSearch}
+                    onChange={handlers.changeVariants}
+                    onRowClick={onVariantShow}
+                  />
+                  <CardSpacer />
+                  <SeoForm
+                    errors={productErrors}
+                    title={data.seoTitle}
+                    titlePlaceholder={data.name}
+                    description={data.seoDescription}
+                    descriptionPlaceholder={""} // TODO: cast description to string
+                    slug={data.slug}
+                    slugPlaceholder={data.name}
+                    loading={disabled}
+                    onClick={onSeoClick}
+                    onChange={change}
+                    helperText={intl.formatMessage({
+                      id: "LKoIB1",
+                      defaultMessage:
+                        "Add search engine title and description to make this product easier to find",
+                    })}
+                  />
+                  <CardSpacer />
+                  <Metadata data={data} onChange={handlers.changeMetadata} />
+                </Content>
+                <RightSidebar>
+                  <ProductOrganization
+                    canChangeType={false}
+                    categories={categories}
+                    categoryInputDisplayValue={selectedCategory}
+                    collections={collections}
+                    collectionsInputDisplayValue={selectedCollections}
+                    data={data}
+                    disabled={disabled}
+                    errors={productOrganizationErrors}
+                    fetchCategories={fetchCategories}
+                    fetchCollections={fetchCollections}
+                    fetchMoreCategories={fetchMoreCategories}
+                    fetchMoreCollections={fetchMoreCollections}
+                    productType={product?.productType}
+                    onCategoryChange={handlers.selectCategory}
+                    onCollectionChange={handlers.selectCollection}
+                  />
+                  <CardSpacer />
+                  <ChannelsAvailabilityCard
+                    {...availabilityCommonProps}
+                    channels={listings}
+                  />
+                  <CardSpacer />
+                  <ProductTaxes
+                    value={data.taxClassId}
+                    disabled={disabled}
+                    onChange={handlers.selectTaxClass}
+                    taxClassDisplayName={selectedTaxClass}
+                    taxClasses={taxClasses}
+                    onFetchMore={fetchMoreTaxClasses}
+                  />
+                </RightSidebar>
+              </Box>
+
               <Savebar
                 onCancel={() => navigate(productListUrl())}
                 onDelete={onDelete}
