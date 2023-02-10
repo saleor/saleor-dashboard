@@ -30,7 +30,6 @@ jobs:
           ref: ${{ github.event.inputs.git_ref || '' }}
       - name: Check version
         run: |
-          set -x
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
