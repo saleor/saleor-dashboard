@@ -14,10 +14,6 @@ const useStyles = makeStyles(
         tableLayout: "fixed",
       },
       tableLayout: "auto",
-      "& .MuiTableCell-root": {
-        paddingLeft: "0 !important",
-        paddingRight: "0 !important",
-      },
     },
   }),
   {

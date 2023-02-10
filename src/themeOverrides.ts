@@ -40,10 +40,11 @@ export const themeOverrides: Partial<Theme> = {
         paddingRight: vars.space[11],
       },
       title: {
-        fontSize: vars.fontSize.bodyEmpMedium,
-        fontWeight: vars.fontWeight.bodyEmpMedium as any,
-        lineHeight: vars.lineHeight.bodyEmpMedium,
-        letterSpacing: vars.letterSpacing.bodyEmpMedium,
+        fontSize: vars.fontSize.bodyEmpLarge,
+        // MUI it strictly typed to be a number, but we are passing CSS variable here
+        fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
+        lineHeight: vars.lineHeight.bodyEmpLarge,
+        letterSpacing: vars.letterSpacing.bodyEmpLarge,
       },
     },
     MuiPaper: {
