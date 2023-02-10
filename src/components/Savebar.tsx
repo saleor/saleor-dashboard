@@ -25,6 +25,9 @@ const useStyles = makeStyles(
       "& .MuiPaper-root": {
         boxShadow: "none",
       },
+      "& .MuiCardContent-root": {
+        marginTop: 0,
+      },
     },
   },
   {

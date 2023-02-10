@@ -108,9 +108,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const [scrolledToRight, setScrolledToRight] = React.useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
-  const scrollerInner: HTMLDivElement = document.querySelector(
-    ".dvn-scroll-inner",
-  );
+  const scrollerInner: HTMLDivElement =
+    document.querySelector(".dvn-scroll-inner");
 
   usePreventHistoryBack(scroller);
 
@@ -260,8 +259,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onColumnResize={onColumnResize}
                   onGridSelectionChange={setSelection}
                   gridSelection={selection}
-                  rowHeight={48}
-                  headerHeight={48}
+                  rowHeight={36}
+                  headerHeight={36}
                   ref={editor}
                   onPaste
                   rightElementProps={{

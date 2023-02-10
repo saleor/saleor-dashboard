@@ -39,6 +39,12 @@ export const themeOverrides: Partial<Theme> = {
       root: {
         paddingRight: vars.space[11],
       },
+      title: {
+        fontSize: vars.fontSize.bodyEmpMedium,
+        fontWeight: vars.fontWeight.bodyEmpMedium as any,
+        lineHeight: vars.lineHeight.bodyEmpMedium,
+        letterSpacing: vars.letterSpacing.bodyEmpMedium,
+      },
     },
     MuiPaper: {
       root: {

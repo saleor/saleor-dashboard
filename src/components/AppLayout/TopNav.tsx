@@ -23,6 +23,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       display="flex"
       alignItems="center"
       paddingX={9}
+      paddingRight={9}
       paddingY={8}
       borderBottomWidth={1}
       borderBottomStyle="solid"
@@ -30,7 +31,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       position="relative"
       __gridArea="nav"
       data-test-id="page-header"
-      __height={77}
     >
       {href && (
         <Link

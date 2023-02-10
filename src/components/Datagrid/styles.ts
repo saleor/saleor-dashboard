@@ -1,6 +1,6 @@
 import { Theme } from "@glideapps/glide-data-grid";
-import { Typography } from "@material-ui/core/styles/createTypography";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
 const useStyles = makeStyles(
@@ -19,10 +19,10 @@ const useStyles = makeStyles(
         background: theme.palette.background.paper,
         borderRadius: 8,
         // Right and left toolbars
-        width: "calc(100% - 64px - 48px - 1px)",
+        width: "calc(100% - 64px - 36px - 1px)",
         marginTop: 1,
         marginLeft: 50,
-        height: 48,
+        height: 36,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
@@ -32,16 +32,17 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 48,
+        height: 36,
       },
       ghostIcon: {
         color: theme.palette.saleor.main[3],
       },
       portal: {
-        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
-          appearance: "none",
-          margin: 0,
-        },
+        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
+          {
+            appearance: "none",
+            margin: 0,
+          },
         "& input[type=number]": {
           appearance: "textfield",
         },
@@ -61,12 +62,13 @@ const useStyles = makeStyles(
           padding: "0 !important",
         },
         "& input, & textarea": {
-          ...theme.typography.body1,
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: theme.typography.body1.fontSize,
-          letterSpacing: "0.44px",
+          fontSize: vars.fontSize.bodySmall,
+          letterSpacing: vars.letterSpacing.bodySmall,
+          lineHeight: vars.lineHeight.bodySmall,
+          fontWeight: vars.fontWeight.bodySmall,
           padding: `1.4rem ${theme.spacing(1)}`,
           outline: 0,
         },
@@ -98,7 +100,7 @@ const useStyles = makeStyles(
         height: "100%",
         background: theme.palette.background.paper,
         borderLeft: `1px solid ${activeBorderColor}`,
-        width: 48,
+        width: 36,
       },
       rowActionBarScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -119,7 +121,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 47,
+        height: 35,
       },
       rowActionScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -128,7 +130,7 @@ const useStyles = makeStyles(
         position: "absolute",
         top: 1,
         left: 0,
-        height: 48,
+        height: 36,
         width: 10,
         borderLeft: 0,
         background: theme.palette.background.paper,
@@ -176,20 +178,8 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-const calculateFontToPx = (remValue: string | number, base: number) => {
-  if (typeof remValue === "string") {
-    return `${parseFloat(remValue) * base}px`;
-  }
-
-  return `${remValue * base}px`;
-};
-
-type HtmlTypography = Typography & { htmlFontSize: number };
-
 export function useDatagridTheme() {
   const theme = useTheme();
-
-  const base = (theme.typography as HtmlTypography).htmlFontSize * 0.625;
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
@@ -204,14 +194,17 @@ export function useDatagridTheme() {
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
       fontFamily: theme.typography.fontFamily,
-      baseFontStyle: calculateFontToPx(theme.typography.body1.fontSize, base),
-      headerFontStyle: calculateFontToPx(theme.typography.body2.fontSize, base),
-      editorFontSize: calculateFontToPx(theme.typography.body1.fontSize, base),
+      baseFontStyle: vars.fontSize.bodySmall,
+      headerFontStyle: vars.fontSize.bodySmall,
+      editorFontSize: vars.fontSize.bodySmall,
       textMedium: theme.palette.text.primary,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,
       textDark: theme.palette.text.primary,
       textLight: theme.palette.text.primary,
+      cellHorizontalPadding: 10,
+      cellVerticalPadding: 10,
+      lineHeight: 20,
     }),
     [theme],
   );
