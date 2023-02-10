@@ -7,5 +7,7 @@ interface ContentProps {
 }
 
 export const Content: React.FC<ContentProps> = ({ children, ...rest }) => (
-  <Box {...rest}>{children}</Box>
+  <Box __gridArea="content" {...rest}>
+    {children}
+  </Box>
 );

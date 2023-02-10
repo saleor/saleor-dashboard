@@ -15,18 +15,17 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
     borderStyle="solid"
     borderColor="neutralPlain"
     borderLeftWidth={1}
-    // height="100vh"
-    // __paddingBottom={300}
-    // position="sticky"
-    // top={0}
-    // overflowY="scroll"
-    // overflowX="hidden"
+    height="100vh"
+    __paddingBottom={300}
+    position="sticky"
+    top={0}
+    overflowY="scroll"
+    overflowX="hidden"
     borderYWidth={0}
     borderTopWidth={0}
     borderBottomWidth={0}
     borderRightWidth={0}
-    // __gridArea="right"
-    height="100%"
+    __gridArea="right"
     className={clsx("hide-scrollbar", className)}
   >
     {children}

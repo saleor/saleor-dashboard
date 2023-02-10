@@ -28,7 +28,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       borderBottomStyle="solid"
       borderColor="neutralPlain"
       position="relative"
-      // __gridArea="nav"
+      __gridArea="nav"
       data-test-id="page-header"
       __height={77}
     >

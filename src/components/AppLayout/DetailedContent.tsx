@@ -6,12 +6,14 @@ export const DetailedContent = ({ children }) => (
     as="div"
     display="grid"
     height="100%"
-    // __gridTemplateColumns="9fr 4fr"
-    // __gridTemplateRows="auto 1fr"
-    // __gridTemplateAreas="
-    //   'nav nav'
-    //   'content right'
-    // "
+    __maxWidth="1440px"
+    margin="auto"
+    __gridTemplateColumns="9fr 4fr"
+    __gridTemplateRows="auto 1fr"
+    __gridTemplateAreas="
+      'nav right'
+      'content right'
+    "
   >
     {children}
   </Box>
