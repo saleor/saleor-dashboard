@@ -110,6 +110,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
               return (
                 <TimelineEvent
                   {...getTimelineEventTitleProps(event)}
+                  hasPlainDate
                   key={id}
                   date={date}
                 />

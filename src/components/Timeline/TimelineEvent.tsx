@@ -81,10 +81,12 @@ export interface TimelineEventProps {
   secondaryTitle?: string;
   title?: React.ReactNode;
   titleElements?: TitleElement[];
+  hasPlainDate?: boolean;
 }
 
 export const TimelineEvent: React.FC<TimelineEventProps> = props => {
-  const { children, date, secondaryTitle, title, titleElements } = props;
+  const { children, date, secondaryTitle, title, titleElements, hasPlainDate } =
+    props;
 
   const classes = useStyles(props);
 
@@ -110,6 +112,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
           titleElements={titleElements}
           secondaryTitle={secondaryTitle}
           date={date}
+          hasPlainDate={hasPlainDate}
         />
       )}
     </div>
