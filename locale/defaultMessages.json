@@ -7010,6 +7010,9 @@
     "context": "bulk delete label",
     "string": "Delete"
   },
+  "qnPzX7": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
+  },
   "qov29K": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
