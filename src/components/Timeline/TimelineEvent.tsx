@@ -100,6 +100,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
               title={title}
               date={date}
               titleElements={titleElements}
+              hasPlainDate={hasPlainDate}
             />
           </AccordionSummary>
           <AccordionDetails>
