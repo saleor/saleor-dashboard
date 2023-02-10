@@ -81,7 +81,9 @@ const props: ProductUpdatePageProps = {
 xdescribe("Product details page", () => {
   useNavigator.mockImplementation();
 
-  it("can select empty option on attribute", async () => {
+  // Disabled because of failure on intel macbooks.
+  // TODO: Rewrite without using Wrapper
+  xit("can select empty option on attribute", async () => {
     // Arrange
     render(
       <MemoryRouter>
