@@ -59,6 +59,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             borderTopWidth={1}
             borderTopStyle="solid"
             borderColor="neutralPlain"
+            __maxWidth="1440px"
+            margin="auto"
           />
         </Box>
       </Box>

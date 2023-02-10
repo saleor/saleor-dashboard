@@ -10,6 +10,7 @@ html {
 body {
   background: var(--mu-colors-background-plain);
   color: var(--mu-colors-foreground-text-neutral-plain) !important;
+  overscroll-behavior-y: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
