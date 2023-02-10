@@ -14,17 +14,19 @@ export const useStaffUserOperations = () => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [updateStaffMember, updateStaffMemberOpts] =
-    useStaffMemberUpdateMutation({
-      onCompleted: data => {
-        if (!data.staffUpdate?.errors.length) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+  const [
+    updateStaffMember,
+    updateStaffMemberOpts,
+  ] = useStaffMemberUpdateMutation({
+    onCompleted: data => {
+      if (!data.staffUpdate?.errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   const [deleteStaffMember, deleteResult] = useStaffMemberDeleteMutation({
     onCompleted: data => {
