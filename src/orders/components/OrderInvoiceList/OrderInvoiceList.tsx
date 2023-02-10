@@ -24,10 +24,10 @@ const useStyles = makeStyles(
       overflow: "hidden",
     },
     cardContentTable: {
-      "&:last-child": {
-        padding: 0,
-      },
-      padding: 0,
+      // "&:last-child": {
+      //   padding: 0,
+      // },
+      // padding: 0,
     },
     colAction: {
       button: {
