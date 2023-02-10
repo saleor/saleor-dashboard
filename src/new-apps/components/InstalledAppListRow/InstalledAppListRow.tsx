@@ -1,63 +1,77 @@
+import Link from "@dashboard/components/Link";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { appsMessages } from "@dashboard/new-apps/messages";
 import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
-import { TableCell, Typography } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
-import { Button } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
+import {
+  Avatar,
+  Box,
+  Button,
+  List,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import AppPermissions from "../AppPermissions";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
-  const classes = useStyles(props);
   const { openAppSettings } = useAppListContext();
 
+  const avatarProps = {
+    ...(logo?.source
+      ? { src: logo.source }
+      : { initials: app.name?.[0]?.toUpperCase() ?? "" }),
+  };
+
   return (
-    <TableRowLink className={classes.row} href={AppUrls.resolveAppUrl(app.id)}>
-      <TableCellAvatar
-        initials={app.name?.[0]?.toUpperCase()}
-        thumbnail={logo?.source || undefined}
-        avatarProps={classes.logo}
-        className={clsx(classes.col, classes.colLogo)}
+    <List.Item
+      padding={7}
+      borderTopStyle="solid"
+      borderWidth={1}
+      borderColor="neutralPlain"
+      className={sprinkles({
+        justifyContent: "space-between",
+        flexDirection: "row",
+      })}
+    >
+      <Link
+        href={AppUrls.resolveAppUrl(app.id)}
+        className={sprinkles({ display: "contents" })}
+        inline={false}
       >
-        <div className={classes.mainContent}>
-          <Typography variant="body1" className={classes.name}>
-            {app.name}
-          </Typography>
-          <Typography variant="body1" className={classes.version}>
+        <Box display="flex" gap={5} alignItems="center">
+          <Avatar.Store {...avatarProps} />
+          <Text variant="bodyEmp">{app.name}</Text>
+          <Text variant="body" color="textNeutralSubdued">
             {`v${app.version}`}
-          </Typography>
+          </Text>
           {isExternal && (
             <Pill
               color="warning"
-              className={classes.externalAppLabel}
               label={intl.formatMessage(appsMessages.externalApp)}
               data-test-id="app-external-label"
             />
           )}
-        </div>
-      </TableCellAvatar>
-      <TableCell className={clsx(classes.col, classes.colActions)}>
-        <div className={classes.actions}>
           {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
-            <Typography
+            <Text
               variant="caption"
-              className={classes.tunnel}
+              color="textNeutralSubdued"
               data-test-id="app-tunnel-label"
             >
               {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
-            </Typography>
+            </Text>
           ) : null}
+        </Box>
+        <Box display="flex" flexDirection="row" gap={6}>
+          <AppPermissions permissions={app.permissions} />
           <TableButtonWrapper>
             <Button
               variant="secondary"
@@ -67,9 +81,9 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
               <FormattedMessage {...messages.settings} />
             </Button>
           </TableButtonWrapper>
-        </div>
-      </TableCell>
-    </TableRowLink>
+        </Box>
+      </Link>
+    </List.Item>
   );
 };
 
