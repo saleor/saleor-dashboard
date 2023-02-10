@@ -26,6 +26,7 @@ import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import PermissionAlert from "../PermissionAlert";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
@@ -131,6 +132,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                   setQuery={setQuery}
                   data={data}
                 />
+                <FormSpacer />
+                <PermissionAlert query={query} />
               </Box>
             </Content>
             <Savebar

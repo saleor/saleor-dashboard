@@ -3824,10 +3824,6 @@
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
   },
-  "QpSQ5w": {
-    "context": "Webhook subscription query card title",
-    "string": "Payload Query"
-  },
   "Qph0GE": {
     "context": "dialog content",
     "string": "Add a new address:"
@@ -6356,6 +6352,10 @@
     "context": "attribute properties regarding dashboard",
     "string": "Dashboard Properties"
   },
+  "lEG/12": {
+    "context": "Webhook subscription query card title",
+    "string": "Subscription Query"
+  },
   "lF+VJQ": {
     "context": "Shipment information card header",
     "string": "Shipment information"
@@ -6671,6 +6671,10 @@
   "ngAgBy": {
     "context": "tax class rates list label when no countries are assigned",
     "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
+  },
+  "ngSJ7N": {
+    "context": "alert title",
+    "string": "Your subscription query requires the following permissions:"
   },
   "nioOBQ": {
     "context": "delete custom app",

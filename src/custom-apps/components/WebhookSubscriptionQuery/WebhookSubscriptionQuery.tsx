@@ -14,8 +14,8 @@ import { useStyles } from "./styles";
 
 const messages = defineMessages({
   title: {
-    id: "QpSQ5w",
-    defaultMessage: "Payload Query",
+    id: "lEG/12",
+    defaultMessage: "Subscription Query",
     description: "Webhook subscription query card title",
   },
 });
