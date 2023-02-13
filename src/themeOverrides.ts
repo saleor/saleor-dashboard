@@ -13,7 +13,7 @@ export const themeOverrides: Partial<Theme> = {
     MuiCard: {
       root: {
         border: 0,
-        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        backgroundColor: vars.colors.background.plain,
       },
     },
     MuiTypography: {
@@ -27,17 +27,18 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiTextField: {
       root: {
-        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        backgroundColor: vars.colors.background.plain,
       },
     },
     MuiOutlinedInput: {
       root: {
-        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        backgroundColor: vars.colors.background.plain,
       },
     },
     MuiCardHeader: {
       root: {
         paddingRight: vars.space[11],
+        backgroundColor: vars.colors.background.plain,
       },
       title: {
         fontSize: vars.fontSize.bodyEmpLarge,
@@ -45,6 +46,11 @@ export const themeOverrides: Partial<Theme> = {
         fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
         lineHeight: vars.lineHeight.bodyEmpLarge,
         letterSpacing: vars.letterSpacing.bodyEmpLarge,
+      },
+    },
+    MuiCardContent: {
+      root: {
+        backgroundColor: vars.colors.background.plain,
       },
     },
     MuiPaper: {
@@ -65,8 +71,14 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiCardActions: {
       root: {
+        backgroundColor: vars.colors.background.plain,
         paddingLeft: 0,
         paddingRight: 0,
+      },
+    },
+    MuiFormHelperText: {
+      root: {
+        backgroundColor: vars.colors.background.plain,
       },
     },
   },
