@@ -18,6 +18,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Card } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -128,7 +129,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             <CardSpacer />
             <Metadata data={data} onChange={handlers.changeMetadata} />
             <CardSpacer />
-            <TabContainer>
+            <TabContainer className={sprinkles({ paddingX: 9 })}>
               <CategoriesTab
                 isActive={currentTab === CategoryPageTab.categories}
                 changeTab={changeTab}

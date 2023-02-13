@@ -3,19 +3,26 @@ import React from "react";
 
 import { contentMaxWidth } from "./consts";
 
-export const DetailedContent = ({ children }) => (
+interface DetailedContentProps {
+  children: React.ReactNode;
+  useSingleColumn?: boolean;
+}
+
+export const DetailedContent: React.FC<DetailedContentProps> = ({
+  children,
+  useSingleColumn = false,
+}) => (
   <Box
     as="div"
     display="grid"
     height="100%"
-    __maxWidth={contentMaxWidth}
     margin="auto"
-    __gridTemplateColumns="9fr 4fr"
+    __maxWidth={contentMaxWidth}
+    __gridTemplateColumns={useSingleColumn ? "1fr" : "9fr 4fr"}
     __gridTemplateRows="auto 1fr"
-    __gridTemplateAreas="
-      'nav right'
-      'content right'
-    "
+    __gridTemplateAreas={
+      useSingleColumn ? "'nav' 'content'" : "'nav right' 'content right'"
+    }
   >
     {children}
   </Box>
