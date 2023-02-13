@@ -16,14 +16,14 @@ interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (manifestUrl: string) => void;
-  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
+  navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AppListCard: React.FC<AppListCardProps> = ({
   app,
   appInstallation,
   navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
+  navigateToGithubForkPage,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -34,7 +34,7 @@ const AppListCard: React.FC<AppListCardProps> = ({
     app,
     appInstallation,
     navigateToAppInstallPage,
-    navigateToVercelDeploymentPage,
+    navigateToGithubForkPage,
     retryAppInstallation,
     removeAppInstallation,
   });
@@ -51,7 +51,7 @@ const AppListCard: React.FC<AppListCardProps> = ({
           releaseDate={details.releaseDate}
           installationPending={details.installationPending}
           installHandler={details.installHandler}
-          vercelDeployHandler={details.vercelDeployHandler}
+          githubForkHandler={details.githubForkHandler}
           retryInstallHandler={details.retryInstallHandler}
           removeInstallHandler={details.removeInstallHandler}
         />

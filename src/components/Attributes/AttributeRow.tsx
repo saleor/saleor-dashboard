@@ -133,6 +133,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         >
           <TextField
             fullWidth
+            multiline
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}

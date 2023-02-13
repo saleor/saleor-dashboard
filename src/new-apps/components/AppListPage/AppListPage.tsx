@@ -67,12 +67,9 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     [navigate],
   );
 
-  const navigateToVercelDeploymentPage = useCallback(
-    (vercelDeploymentUrl: string) => {
-      window.open(vercelDeploymentUrl, "_blank");
-    },
-    [],
-  );
+  const navigateToGithubForkPage = useCallback((githubForkUrl: string) => {
+    window.open(githubForkUrl, "_blank");
+  }, []);
 
   return (
     <Container>
@@ -110,7 +107,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               appList={verifiedInstallableMarketplaceApps}
               appInstallationList={appsInstallations}
               navigateToAppInstallPage={navigateToAppInstallPage}
-              navigateToVercelDeploymentPage={navigateToVercelDeploymentPage}
+              navigateToGithubForkPage={navigateToGithubForkPage}
             />
           </>
         )}

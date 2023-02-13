@@ -6,9 +6,9 @@ export const messages = defineMessages({
     defaultMessage: "Integrations",
     description: "header",
   },
-  deployToVercel: {
-    id: "ohQrzn",
-    defaultMessage: "Deploy to Vercel",
+  forkOnGithub: {
+    id: "zmnGkp",
+    defaultMessage: "Fork on GitHub",
     description: "button",
   },
   releaseComingSoon: {
