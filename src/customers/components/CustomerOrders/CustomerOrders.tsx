@@ -114,7 +114,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
                 </TableCell>
                 <TableCell>
                   {maybe(() => order.created) ? (
-                    <DateTime date={order.created} />
+                    <DateTime date={order.created} plain />
                   ) : (
                     <Skeleton />
                   )}
