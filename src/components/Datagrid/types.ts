@@ -4,4 +4,5 @@ export interface AvailableColumn {
   width: number;
   group?: string;
   hasMenu?: boolean;
+  icon?: string;
 }

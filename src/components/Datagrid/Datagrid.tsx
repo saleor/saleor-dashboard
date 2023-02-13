@@ -21,6 +21,7 @@ import { CardMenuItem } from "../CardMenu";
 import ColumnPicker from "../ColumnPicker";
 import { FullScreenContainer } from "./FullScreenContainer";
 import { Header } from "./Header";
+import { headerIcons } from "./headerIcons";
 import { RowActions } from "./RowActions";
 import useStyles, { useDatagridTheme, useFullScreenStyles } from "./styles";
 import { AvailableColumn } from "./types";
@@ -244,6 +245,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
               <div className={classes.editorContainer}>
                 <DataEditor
                   {...props}
+                  headerIcons={headerIcons}
                   theme={datagridTheme}
                   className={classes.datagrid}
                   getCellContent={getCellContentEnh}
