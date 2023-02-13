@@ -48,7 +48,10 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         inline={false}
       >
         <Box display="flex" gap={5} alignItems="center">
-          <Avatar.Store {...avatarProps} />
+          <Avatar.Store
+            {...avatarProps}
+            className={sprinkles({ padding: 4 })}
+          />
           <Text variant="bodyEmp">{app.name}</Text>
           <Text variant="body" color="textNeutralSubdued">
             {`v${app.version}`}
