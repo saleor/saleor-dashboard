@@ -14,24 +14,28 @@ import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { RelayToFlat } from "@dashboard/types";
+import { ProductListUrlSortField } from "@dashboard/products/urls";
+import { RelayToFlat, Sort } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 export function getColumns(
   channels: ChannelFragment[],
   intl: IntlShape,
+  sort: Sort<ProductListUrlSortField>,
 ): AvailableColumn[] {
   return [
     {
       id: "name",
       title: intl.formatMessage(commonMessages.name),
       width: 300,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
     {
       id: "productType",
       title: intl.formatMessage(commonMessages.type),
       width: 200,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
     },
     {
       id: "description",
@@ -44,6 +48,21 @@ export function getColumns(
       width: 250,
     })),
   ];
+}
+
+function getColumnSortIconName(
+  sort: Sort<ProductListUrlSortField>,
+  columnName: ProductListUrlSortField,
+) {
+  if (columnName === sort.sort) {
+    if (sort.asc) {
+      return "arrowUp";
+    } else {
+      return "arrowDown";
+    }
+  }
+
+  return undefined;
 }
 
 export function createGetCellContent(

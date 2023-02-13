@@ -41,13 +41,17 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   settings,
   onUpdateListSettings,
   onSort,
+  sort,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
   const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
 
-  const columns = useMemo(() => getColumns(channels, intl), [channels, intl]);
+  const columns = useMemo(
+    () => getColumns(channels, intl, sort),
+    [channels, intl, sort],
+  );
 
   const getCellContent = useMemo(
     () => createGetCellContent(columns, products, searchProductType),
