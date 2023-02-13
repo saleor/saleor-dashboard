@@ -219,7 +219,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <div className={classes.date}>
               {order && order.created ? (
                 <Typography variant="body2">
-                  <DateTime date={order.created} />
+                  <DateTime date={order.created} plain />
                 </Typography>
               ) : (
                 <Skeleton style={{ width: "10em" }} />

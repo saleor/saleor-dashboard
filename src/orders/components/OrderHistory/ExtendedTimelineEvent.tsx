@@ -142,11 +142,13 @@ export const messages = defineMessages({
 interface ExtendedTimelineEventProps {
   event: OrderEventFragment;
   orderCurrency: string;
+  hasPlainDate?: boolean;
 }
 
 const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   event,
   orderCurrency,
+  hasPlainDate,
 }) => {
   const {
     id,
@@ -216,7 +218,12 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   }
 
   return (
-    <TimelineEvent date={date} titleElements={selectTitleElements()} key={id}>
+    <TimelineEvent
+      date={date}
+      titleElements={selectTitleElements()}
+      key={id}
+      hasPlainDate={hasPlainDate}
+    >
       {lines && (
         <>
           <Label

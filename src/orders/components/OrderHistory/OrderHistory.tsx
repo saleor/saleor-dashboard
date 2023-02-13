@@ -99,17 +99,21 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   <ExtendedTimelineEvent
                     event={event}
                     orderCurrency={orderCurrency}
+                    hasPlainDate={true}
                   />
                 );
               }
 
               if (isTimelineEventOfType("linked", type)) {
-                return <LinkedTimelineEvent event={event} key={id} />;
+                return (
+                  <LinkedTimelineEvent event={event} key={id} hasPlainDate />
+                );
               }
 
               return (
                 <TimelineEvent
                   {...getTimelineEventTitleProps(event)}
+                  hasPlainDate
                   key={id}
                   date={date}
                 />

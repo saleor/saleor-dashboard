@@ -35,9 +35,13 @@ export const discountRemovedMessages = defineMessages({
 
 interface LinkedTimelineEventProps {
   event: OrderEventFragment;
+  hasPlainDate?: boolean;
 }
 
-const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event }) => {
+const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
+  event,
+  hasPlainDate,
+}) => {
   const intl = useIntl();
 
   const getTitleElements = (): TitleElement[] => {
@@ -79,7 +83,13 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event }) => {
     }
   };
 
-  return <TimelineEvent titleElements={getTitleElements()} date={event.date} />;
+  return (
+    <TimelineEvent
+      titleElements={getTitleElements()}
+      date={event.date}
+      hasPlainDate={hasPlainDate}
+    />
+  );
 };
 
 export default LinkedTimelineEvent;

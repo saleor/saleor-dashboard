@@ -184,7 +184,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colDate}>
                   {maybe(() => order.created) ? (
-                    <DateTime date={order.created} />
+                    <DateTime date={order.created} plain />
                   ) : (
                     <Skeleton />
                   )}
