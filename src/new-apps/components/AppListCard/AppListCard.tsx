@@ -48,7 +48,7 @@ const AppListCard: React.FC<AppListCardProps> = ({
       borderRadius={3}
       borderColor="neutralPlain"
     >
-      <Box marginBottom={8}>
+      <Box>
         <AppListCardDescription app={app} />
         <AppListCardLinks links={details.links} />
         <AppListCardIntegrations app={app} />

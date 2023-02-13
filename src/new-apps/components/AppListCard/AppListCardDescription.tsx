@@ -15,7 +15,12 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
 
   return (
     <Box>
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        marginBottom={8}
+      >
         <div
           className={classes.logo}
           style={{

@@ -1,33 +1,30 @@
 import Link from "@dashboard/components/Link";
 import { AppLink } from "@dashboard/new-apps/types";
-import { Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-
-import { useLinksStyles } from "./styles";
 
 interface AppListCardLinksProps {
   links: AppLink[];
 }
 
 const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
-  const classes = useLinksStyles();
-
   if (!links.length) {
     return null;
   }
 
   return (
-    <ul className={classes.linkList}>
+    <Box as="ul" display="flex" flexDirection="row" gap={7}>
       {links.map(link => (
-        <li key={link.name}>
-          <Text>
+        <Box as="li" key={link.name}>
+          {/** TODO: change to textBrandDefault */}
+          <Text variant="body" size="small" color="iconBrandDefault">
             <Link href={link.url} target="_blank">
               {link.name}
             </Link>
           </Text>
-        </li>
+        </Box>
       ))}
-    </ul>
+    </Box>
   );
 };
 AppListCardLinks.displayName = "AppListCardLinks";
