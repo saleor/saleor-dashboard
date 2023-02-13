@@ -13,7 +13,7 @@ export const themeOverrides: Partial<Theme> = {
     MuiCard: {
       root: {
         border: 0,
-        backgroundColor: vars.colors.background.plain,
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
     MuiTypography: {
@@ -27,18 +27,18 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiTextField: {
       root: {
-        backgroundColor: vars.colors.background.plain,
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
     MuiOutlinedInput: {
       root: {
-        backgroundColor: vars.colors.background.plain,
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
     MuiCardHeader: {
       root: {
         paddingRight: vars.space[11],
-        backgroundColor: vars.colors.background.plain,
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
       title: {
         fontSize: vars.fontSize.bodyEmpLarge,
