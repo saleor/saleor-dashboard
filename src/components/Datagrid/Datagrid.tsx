@@ -59,7 +59,7 @@ export interface DatagridProps {
     actions: MenuItemsActions,
   ) => React.ReactNode;
   onChange?: OnDatagridChange;
-  onHeaderMenuClick: (col: number, screenPosition: Rectangle) => void;
+  onHeaderMenuClick?: (col: number, screenPosition: Rectangle) => void;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({

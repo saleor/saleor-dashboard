@@ -14,12 +14,12 @@ export function canBeSorted(
   switch (sort) {
     case ProductListUrlSortField.name:
     case ProductListUrlSortField.productType:
-    case ProductListUrlSortField.attribute:
-    case ProductListUrlSortField.rank:
-    case ProductListUrlSortField.date:
+      // case ProductListUrlSortField.attribute:
+      // case ProductListUrlSortField.rank:
+      // case ProductListUrlSortField.date:
       return true;
-    case ProductListUrlSortField.price:
-    case ProductListUrlSortField.status:
+      // case ProductListUrlSortField.price:
+      // case ProductListUrlSortField.status:
       return isChannelSelected;
     default:
       return false;
@@ -32,16 +32,16 @@ export function getSortQueryField(
   switch (sort) {
     case ProductListUrlSortField.name:
       return ProductOrderField.NAME;
-    case ProductListUrlSortField.price:
-      return ProductOrderField.PRICE;
+    // case ProductListUrlSortField.price:
+    // return ProductOrderField.PRICE;
     case ProductListUrlSortField.productType:
       return ProductOrderField.TYPE;
-    case ProductListUrlSortField.status:
-      return ProductOrderField.PUBLISHED;
-    case ProductListUrlSortField.rank:
-      return ProductOrderField.RANK;
-    case ProductListUrlSortField.date:
-      return ProductOrderField.DATE;
+    // case ProductListUrlSortField.status:
+    // return ProductOrderField.PUBLISHED;
+    // case ProductListUrlSortField.rank:
+    // return ProductOrderField.RANK;
+    // case ProductListUrlSortField.date:
+    // return ProductOrderField.DATE;
     default:
       return undefined;
   }
@@ -56,12 +56,12 @@ export function getSortQueryVariables(
   }
 
   const direction = getOrderDirection(params.asc);
-  if (params.sort === ProductListUrlSortField.attribute) {
-    return {
-      attributeId: params.attributeId,
-      direction,
-    };
-  }
+  // if (params.sort === ProductListUrlSortField.attribute) {
+  //   return {
+  //     attributeId: params.attributeId,
+  //     direction,
+  //   };
+  // }
 
   const field = getSortQueryField(params.sort);
   return {
