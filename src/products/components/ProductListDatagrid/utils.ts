@@ -12,12 +12,17 @@ import {
 } from "@dashboard/components/Datagrid/DropdownCell";
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { Locale } from "@dashboard/components/Locale";
+import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
+import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
+
+import { columnsMessages } from "./messages";
 
 export function getColumns(
   intl: IntlShape,
@@ -27,12 +32,12 @@ export function getColumns(
     {
       id: "name",
       title: intl.formatMessage(commonMessages.name),
-      width: 300,
+      width: 350,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
     {
       id: "productType",
-      title: intl.formatMessage(commonMessages.type),
+      title: intl.formatMessage(columnsMessages.type),
       width: 200,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
     },
@@ -43,7 +48,17 @@ export function getColumns(
     },
     {
       id: "availability",
-      title: intl.formatMessage(commonMessages.availability),
+      title: intl.formatMessage(columnsMessages.availability),
+      width: 250,
+    },
+    {
+      id: "updatedAt",
+      title: intl.formatMessage(columnsMessages.updatedAt),
+      width: 250,
+    },
+    {
+      id: "price",
+      title: intl.formatMessage(columnsMessages.price),
       width: 250,
     },
   ];
@@ -69,6 +84,8 @@ export function createGetCellContent(
   products: RelayToFlat<ProductListQuery["products"]>,
   intl: IntlShape,
   getProductTypes: (query: string) => Promise<DropdownChoice[]>,
+  locale: Locale,
+  selectedChannelId?: string,
 ) {
   return (
     [column, row]: Item,
@@ -80,20 +97,25 @@ export function createGetCellContent(
       ? undefined
       : products[row + removed.filter(r => r <= row).length];
 
-    if (columnId === "productType") {
-      return getProductTypeCellContent(change, rowData, getProductTypes);
-    }
+    const channel = rowData?.channelListings.find(
+      listing => listing.channel.id === selectedChannelId,
+    );
 
-    if (columnId === "availability") {
-      return getAvailabilityCellContent(rowData, intl);
-    }
+    switch (columnId) {
+      case "productType":
+        return getProductTypeCellContent(change, rowData, getProductTypes);
 
-    if (columnId === "description") {
-      return getDescriptionCellContent(columnId, change, rowData);
-    }
+      case "availability":
+        return getAvailabilityCellContent(rowData, intl);
 
-    if (columnId === "name") {
-      return getNameCellContent(change, rowData);
+      case "description":
+        return getDescriptionCellContent(columnId, change, rowData);
+      case "name":
+        return getNameCellContent(change, rowData);
+      case "price":
+        return getPriceCellContent(intl, locale, channel);
+      case "updatedAt":
+        return getUpdatedAtrCellContent(rowData, locale);
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -173,4 +195,26 @@ function getNameCellContent(
 ) {
   const name = change?.name ?? rowData?.name ?? "";
   return thumbnailCell(name, rowData?.thumbnail?.url ?? "");
+}
+
+function getPriceCellContent(
+  intl: IntlShape,
+  locale: Locale,
+  selectedChannnel?: RelayToFlat<
+    ProductListQuery["products"]
+  >[number]["channelListings"][number],
+) {
+  const from = selectedChannnel?.pricing?.priceRange?.start?.net;
+  const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
+
+  return readonlyTextCell(getMoneyRange(locale, intl, from, to));
+}
+
+function getUpdatedAtrCellContent(
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  locale: Locale,
+) {
+  return readonlyTextCell(
+    moment(rowData.updatedAt).locale(locale).format("lll"),
+  );
 }

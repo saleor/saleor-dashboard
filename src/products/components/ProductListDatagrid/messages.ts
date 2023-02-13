@@ -18,3 +18,26 @@ export const messages = defineMessages({
     id: "7NFfmz",
   },
 });
+
+export const columnsMessages = defineMessages({
+  availability: {
+    id: "+VEhV8",
+    defaultMessage: "Availability",
+    description: "product channels",
+  },
+  price: {
+    id: "b810WJ",
+    defaultMessage: "Price",
+    description: "product price",
+  },
+  type: {
+    id: "k+HcTv",
+    defaultMessage: "Type",
+    description: "product type",
+  },
+  updatedAt: {
+    id: "kVTWtR",
+    defaultMessage: "Last updated",
+    description: "product updated at",
+  },
+});

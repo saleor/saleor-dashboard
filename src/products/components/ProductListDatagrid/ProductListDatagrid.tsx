@@ -4,10 +4,16 @@ import Savebar from "@dashboard/components/Savebar";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
 import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
-import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import {
+  ChannelProps,
+  ListProps,
+  RelayToFlat,
+  SortPage,
+} from "@dashboard/types";
 import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,7 +25,8 @@ import { createGetCellContent, getColumns } from "./utils";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
-    SortPage<ProductListUrlSortField> {
+    SortPage<ProductListUrlSortField>,
+    ChannelProps {
   products: RelayToFlat<ProductListQuery["products"]>;
   channels: ChannelFragment[];
   onRowClick: (id: string) => void;
@@ -40,6 +47,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   // channels,
   settings,
   onUpdateListSettings,
+  selectedChannelId,
   onSort,
   sort,
 }) => {
@@ -47,12 +55,21 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
   const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
+  const { locale } = useLocale();
 
   const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
   const getCellContent = useMemo(
-    () => createGetCellContent(columns, products, intl, searchProductType),
-    [columns, intl, products, searchProductType],
+    () =>
+      createGetCellContent(
+        columns,
+        products,
+        intl,
+        searchProductType,
+        locale,
+        selectedChannelId,
+      ),
+    [columns, intl, locale, products, searchProductType, selectedChannelId],
   );
 
   const onHeaderMenuClick = useCallback(

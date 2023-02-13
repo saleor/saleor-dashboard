@@ -7,7 +7,6 @@ import {
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
 import Container from "@dashboard/components/Container";
-// import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import PageHeader from "@dashboard/components/PageHeader";
@@ -35,7 +34,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
-// import ProductList from "../ProductList";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import {
   createFilterStructure,
@@ -90,7 +88,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onTabDelete,
     onTabSave,
     onUpdateListSettings,
-    // selectedChannelId,
+    selectedChannelId,
     selectedProductIds,
     channels,
     ...listProps
@@ -200,20 +198,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage: "Search Products...",
           })}
         />
-        {/* <ProductList
-          {...listProps}
-          gridAttributes={gridAttributes}
-          settings={settings}
-          selectedChannelId={selectedChannelId}
-          onUpdateListSettings={onUpdateListSettings}
-          filterDependency={filterDependency}
-        /> */}
         <ProductListDatagrid
           {...listProps}
           disabled={false}
           products={listProps.products}
           channels={channels}
           settings={settings}
+          selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
           onRowClick={id => {
             navigate(productUrl(id));
