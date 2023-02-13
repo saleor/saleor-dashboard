@@ -1,5 +1,5 @@
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { Typography } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useDescriptionStyles } from "./styles";
@@ -14,8 +14,8 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
   const classes = useDescriptionStyles();
 
   return (
-    <>
-      <div className={classes.cardToolbar}>
+    <Box>
+      <Box display="flex" flexDirection="row" alignItems="center">
         <div
           className={classes.logo}
           style={{
@@ -25,19 +25,19 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
         >
           {app.logo.source && <img src={app.logo.source} alt="App logo" />}
           {!app.logo.source && (
-            <Typography variant="h2" data-test-id="app-logo-placeholder">
+            <Text variant="bodyEmp" as="h2" data-test-id="app-logo-placeholder">
               {app.name.en[0] || ""}
-            </Typography>
+            </Text>
           )}
         </div>
-        <Typography className={classes.cardHeader} variant="h2">
+        <Text variant="bodyEmp" size="medium" color="textNeutralDefault">
           {app.name.en}
-        </Typography>
-      </div>
-      <Typography className={classes.description} variant="body1">
+        </Text>
+      </Box>
+      <Text size="small" variant="body" color="textNeutralSubdued">
         {app.description.en}
-      </Typography>
-    </>
+      </Text>
+    </Box>
   );
 };
 AppListCardDescription.displayName = "AppListCardDescription";

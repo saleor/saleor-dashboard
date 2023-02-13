@@ -2,7 +2,7 @@ import { AppInstallationFragment } from "@dashboard/graphql";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { getAppDetails } from "@dashboard/new-apps/utils";
-import { Card, CardContent } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,6 @@ import AppListCardActions from "./AppListCardActions";
 import AppListCardDescription from "./AppListCardDescription";
 import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
-import { useStyles } from "./styles";
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
@@ -25,7 +24,6 @@ const AppListCard: React.FC<AppListCardProps> = ({
   navigateToAppInstallPage,
   navigateToGithubForkPage,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
@@ -40,23 +38,30 @@ const AppListCard: React.FC<AppListCardProps> = ({
   });
 
   return (
-    <>
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          <AppListCardDescription app={app} />
-          <AppListCardLinks links={details.links} />
-          <AppListCardIntegrations app={app} />
-        </CardContent>
-        <AppListCardActions
-          releaseDate={details.releaseDate}
-          installationPending={details.installationPending}
-          installHandler={details.installHandler}
-          githubForkHandler={details.githubForkHandler}
-          retryInstallHandler={details.retryInstallHandler}
-          removeInstallHandler={details.removeInstallHandler}
-        />
-      </Card>
-    </>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      borderStyle="solid"
+      borderWidth={1}
+      padding={8}
+      borderRadius={3}
+      borderColor="neutralPlain"
+    >
+      <Box marginBottom={8}>
+        <AppListCardDescription app={app} />
+        <AppListCardLinks links={details.links} />
+        <AppListCardIntegrations app={app} />
+      </Box>
+      <AppListCardActions
+        releaseDate={details.releaseDate}
+        installationPending={details.installationPending}
+        installHandler={details.installHandler}
+        githubForkHandler={details.githubForkHandler}
+        retryInstallHandler={details.retryInstallHandler}
+        removeInstallHandler={details.removeInstallHandler}
+      />
+    </Box>
   );
 };
 AppListCard.displayName = "AppListCard";

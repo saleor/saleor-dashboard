@@ -1,6 +1,6 @@
 import Link from "@dashboard/components/Link";
 import { AppLink } from "@dashboard/new-apps/types";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useLinksStyles } from "./styles";
@@ -20,11 +20,11 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
     <ul className={classes.linkList}>
       {links.map(link => (
         <li key={link.name}>
-          <Typography>
+          <Text>
             <Link href={link.url} target="_blank">
               {link.name}
             </Link>
-          </Typography>
+          </Text>
         </li>
       ))}
     </ul>
