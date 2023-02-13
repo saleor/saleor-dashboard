@@ -7,6 +7,7 @@ import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
+import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
@@ -72,11 +73,18 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, intl, locale, products, searchProductType, selectedChannelId],
   );
 
-  const onHeaderMenuClick = useCallback(
+  const onHeaderClicked = useCallback(
     (col: number) => {
-      onSort(columns[col].id as ProductListUrlSortField);
+      if (
+        canBeSorted(
+          columns[col].id as ProductListUrlSortField,
+          !!selectedChannelId,
+        )
+      ) {
+        onSort(columns[col].id as ProductListUrlSortField);
+      }
     },
-    [columns, onSort],
+    [columns, onSort, selectedChannelId],
   );
 
   const getCellError = () => false;
@@ -88,7 +96,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           <Datagrid
             addButtonLabel={intl.formatMessage(messages.addProduct)}
             availableColumns={columns}
-            onHeaderMenuClick={onHeaderMenuClick}
+            onHeaderClicked={onHeaderClicked}
             emptyText={intl.formatMessage(messages.emptyText)}
             getCellContent={getCellContent}
             getCellError={getCellError}
