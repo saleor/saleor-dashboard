@@ -52,9 +52,6 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     root: {
-      // borderColor: theme.palette.divider,
-      // borderStyle: "solid",
-      // borderWidth: "0 0 0 1px",
       marginLeft: 20,
       paddingTop: theme.spacing(12),
       paddingLeft: theme.spacing(3.27),

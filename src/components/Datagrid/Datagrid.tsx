@@ -21,7 +21,11 @@ import ColumnPicker from "../ColumnPicker";
 import { FullScreenContainer } from "./FullScreenContainer";
 import { Header } from "./Header";
 import { RowActions } from "./RowActions";
-import useStyles, { useDatagridTheme, useFullScreenStyles } from "./styles";
+import useStyles, {
+  cellHeight,
+  useDatagridTheme,
+  useFullScreenStyles,
+} from "./styles";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
 import useColumns from "./useColumns";
@@ -259,8 +263,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onColumnResize={onColumnResize}
                   onGridSelectionChange={setSelection}
                   gridSelection={selection}
-                  rowHeight={36}
-                  headerHeight={36}
+                  rowHeight={cellHeight}
+                  headerHeight={cellHeight}
                   ref={editor}
                   onPaste
                   rightElementProps={{

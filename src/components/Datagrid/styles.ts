@@ -1,6 +1,9 @@
 import { Theme } from "@glideapps/glide-data-grid";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { themes } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
+
+export const cellHeight = 36;
 
 const useStyles = makeStyles(
   theme => {
@@ -18,10 +21,10 @@ const useStyles = makeStyles(
         background: theme.palette.background.paper,
         borderRadius: 8,
         // Right and left toolbars
-        width: "calc(100% - 64px - 36px - 1px)",
+        width: `calc(100% - 64px - ${cellHeight} - 1px)`,
         marginTop: 1,
         marginLeft: 50,
-        height: 36,
+        height: cellHeight,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
@@ -31,7 +34,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 36,
+        height: cellHeight,
       },
       ghostIcon: {
         color: theme.palette.saleor.main[3],
@@ -64,11 +67,11 @@ const useStyles = makeStyles(
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: "13px",
+          fontSize: themes.defaultLight.fontSize.bodySmall,
           letterSpacing: "0.015em",
-          lineHeight: "20px",
-          fontWeight: "440",
-          padding: `4px`,
+          lineHeight: themes.defaultLight.lineHeight.bodySmall,
+          fontWeight: themes.defaultLight.fontWeight.bodySmall,
+          padding: themes.defaultLight.space[3],
           outline: 0,
         },
         '& input[type="number"]': {
@@ -120,7 +123,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 35,
+        height: `calc(${cellHeight}px - 1px)`,
       },
       rowActionScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -129,7 +132,7 @@ const useStyles = makeStyles(
         position: "absolute",
         top: 1,
         left: 0,
-        height: 36,
+        height: cellHeight,
         width: 10,
         borderLeft: 0,
         background: theme.palette.background.paper,
@@ -192,10 +195,10 @@ export function useDatagridTheme() {
       bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
-      fontFamily: "'Inter var', sans-serif",
-      baseFontStyle: "13px",
-      headerFontStyle: "13px",
-      editorFontSize: "13px",
+      fontFamily: themes.defaultLight.fontFamily.body,
+      baseFontStyle: themes.defaultLight.fontSize.bodySmall,
+      headerFontStyle: themes.defaultLight.fontSize.bodySmall,
+      editorFontSize: themes.defaultLight.fontSize.bodySmall,
       textMedium: theme.palette.text.primary,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,

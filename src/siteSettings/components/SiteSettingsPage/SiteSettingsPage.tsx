@@ -1,5 +1,6 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
@@ -138,7 +139,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <>
+          <DetailedContent>
             <TopNav
               href={configurationMenuUrl}
               title={intl.formatMessage(commonMessages.generalInformations)}
@@ -189,7 +190,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 onSubmit={submit}
               />
             </Content>
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

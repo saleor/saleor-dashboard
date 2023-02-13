@@ -1,12 +1,14 @@
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { contentMaxWidth } from "./consts";
+
 export const DetailedContent = ({ children }) => (
   <Box
     as="div"
     display="grid"
     height="100%"
-    __maxWidth="1440px"
+    __maxWidth={contentMaxWidth}
     margin="auto"
     __gridTemplateColumns="9fr 4fr"
     __gridTemplateRows="auto 1fr"

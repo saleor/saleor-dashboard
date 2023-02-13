@@ -4,6 +4,7 @@ import {
   categoryUrl,
 } from "@dashboard/categories/urls";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -89,7 +90,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       disabled={disabled}
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <>
+        <DetailedContent>
           <TopNav href={backHref} title={category?.name} />
           <Content>
             <CategoryDetailsForm
@@ -208,7 +209,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               disabled={isSaveDisabled}
             />
           </Content>
-        </>
+        </DetailedContent>
       )}
     </CategoryUpdateForm>
   );

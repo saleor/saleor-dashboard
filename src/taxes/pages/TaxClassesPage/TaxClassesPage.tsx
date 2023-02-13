@@ -1,5 +1,6 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import Grid from "@dashboard/components/Grid";
@@ -119,7 +120,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
-          <>
+          <DetailedContent>
             <TopNav title={<TaxPageTitle />} />
             <Content>
               <Box padding={9}>
@@ -297,7 +298,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 onCancel={() => navigate(configurationMenuUrl)}
               />
             </Content>
-          </>
+          </DetailedContent>
         );
       }}
     </TaxClassesForm>

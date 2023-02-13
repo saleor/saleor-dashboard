@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Metadata from "@dashboard/components/Metadata";
@@ -35,7 +36,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   return (
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <>
+        <DetailedContent>
           <TopNav
             href={backUrl}
             title={intl.formatMessage({
@@ -80,7 +81,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
             state={saveButtonBarState}
             disabled={isSaveDisabled}
           />
-        </>
+        </DetailedContent>
       )}
     </CategoryCreateForm>
   );

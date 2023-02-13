@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
+import { topBarHeight } from "./consts";
 
 interface TopNavProps {
   title: string | React.ReactNode;
@@ -31,6 +32,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       position="relative"
       __gridArea="nav"
       data-test-id="page-header"
+      __height={topBarHeight}
     >
       {href && (
         <Link

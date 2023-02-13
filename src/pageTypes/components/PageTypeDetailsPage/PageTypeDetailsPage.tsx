@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -117,7 +118,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <>
+          <DetailedContent>
             <TopNav href={pageTypeListUrl()} title={pageTitle} />
             <Content>
               <Grid
@@ -192,7 +193,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
@@ -96,7 +97,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
           set(newData);
         };
         return (
-          <>
+          <DetailedContent>
             <TopNav
               href={pluginListUrl()}
               title={intl.formatMessage(
@@ -163,7 +164,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 onSubmit={submit}
               />
             </Content>
-          </>
+          </DetailedContent>
         );
       }}
     </Form>
