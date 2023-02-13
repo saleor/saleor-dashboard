@@ -1,5 +1,5 @@
+import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
-  booleanCell,
   dropdownCell,
   readonlyTextCell,
   textCell,
@@ -12,7 +12,7 @@ import {
 } from "@dashboard/components/Datagrid/DropdownCell";
 import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
+import { ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
@@ -20,7 +20,6 @@ import { Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 export function getColumns(
-  channels: ChannelFragment[],
   intl: IntlShape,
   sort: Sort<ProductListUrlSortField>,
 ): AvailableColumn[] {
@@ -42,11 +41,11 @@ export function getColumns(
       title: intl.formatMessage(commonMessages.description),
       width: 400,
     },
-    ...(channels ?? []).map(channel => ({
-      id: `channel:${channel.id}`,
-      title: channel.name,
+    {
+      id: "availability",
+      title: intl.formatMessage(commonMessages.availability),
       width: 250,
-    })),
+    },
   ];
 }
 
@@ -68,6 +67,7 @@ function getColumnSortIconName(
 export function createGetCellContent(
   columns: AvailableColumn[],
   products: RelayToFlat<ProductListQuery["products"]>,
+  intl: IntlShape,
   getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
   return (
@@ -84,8 +84,8 @@ export function createGetCellContent(
       return getProductTypeCellContent(change, rowData, getProductTypes);
     }
 
-    if (columnId.startsWith("channel")) {
-      return getChannelCellContent(columnId, change, rowData);
+    if (columnId === "availability") {
+      return getAvailabilityCellContent(rowData, intl);
     }
 
     if (columnId === "description") {
@@ -129,17 +129,17 @@ function getRowDataValue(
   };
 }
 
-function getChannelCellContent(
-  columnId: string,
-  change: boolean,
+function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  intl: IntlShape,
 ) {
-  const channelId = columnId.split(":")[1];
-  const selectedChannel = rowData?.channelListings.find(
-    chan => chan.channel.id === channelId,
+  return readonlyTextCell(
+    rowData?.channelListings?.length
+      ? intl.formatMessage(messages.dropdownLabel, {
+          channelCount: rowData?.channelListings?.length,
+        })
+      : intl.formatMessage(messages.noChannels),
   );
-
-  return booleanCell(change ?? !!selectedChannel ?? false);
 }
 
 function getDescriptionCellContent(

@@ -37,7 +37,7 @@ const useStyles = makeStyles(
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   products,
   onRowClick,
-  channels,
+  // channels,
   settings,
   onUpdateListSettings,
   onSort,
@@ -48,14 +48,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const searchProductType = useSearchProductTypes();
   const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
 
-  const columns = useMemo(
-    () => getColumns(channels, intl, sort),
-    [channels, intl, sort],
-  );
+  const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
   const getCellContent = useMemo(
-    () => createGetCellContent(columns, products, searchProductType),
-    [columns, products, searchProductType],
+    () => createGetCellContent(columns, products, intl, searchProductType),
+    [columns, intl, products, searchProductType],
   );
 
   const onHeaderMenuClick = useCallback(
