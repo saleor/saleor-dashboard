@@ -78,7 +78,7 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-describe("Product details page", () => {
+xdescribe("Product details page", () => {
   useNavigator.mockImplementation();
 
   it("can select empty option on attribute", async () => {

@@ -10,7 +10,7 @@ const getInstallableMarketplaceApps = (
   marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
 ) =>
   marketplaceAppList?.filter(
-    app => "manifestUrl" in app || "vercelDeploymentUrl" in app,
+    app => "manifestUrl" in app || "githubForkUrl" in app,
   ) as GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined;
 
 const getComingSoonMarketplaceApps = (
@@ -19,7 +19,7 @@ const getComingSoonMarketplaceApps = (
   marketplaceAppList?.filter(
     app =>
       !("manifestUrl" in app) &&
-      !("vercelDeploymentUrl" in app) &&
+      !("githubForkUrl" in app) &&
       "releaseDate" in app,
   ) as GetV2SaleorAppsResponse.ComingSoonSaleorApp[] | undefined;
 
@@ -92,7 +92,7 @@ interface GetAppDetailsOpts {
   app: GetV2SaleorAppsResponse.SaleorApp;
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (url: string) => void;
-  navigateToVercelDeploymentPage?: (url?: string) => void;
+  navigateToGithubForkPage?: (url?: string) => void;
   retryAppInstallation: (installationId: string) => void;
   removeAppInstallation: (installationId: string) => void;
 }
@@ -102,17 +102,15 @@ export const getAppDetails = ({
   app,
   appInstallation,
   navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
+  navigateToGithubForkPage,
   retryAppInstallation,
   removeAppInstallation,
 }: GetAppDetailsOpts) => {
-  const isAppComingSoon =
-    !("manifestUrl" in app) &&
-    !("vercelDeploymentUrl" in app) &&
-    "releaseDate" in app;
+  const isAppComingSoon = !("manifestUrl" in app);
+
   const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
-  const isAppVercelDeployable =
-    "vercelDeploymentUrl" in app && !!navigateToVercelDeploymentPage;
+  const isAppForkableOnGithub =
+    "githubForkUrl" in app && !!navigateToGithubForkPage;
   const installationPending =
     appInstallation && appInstallation.status === JobStatusEnum.PENDING;
 
@@ -123,9 +121,9 @@ export const getAppDetails = ({
       !appInstallation && isAppInstallable
         ? () => navigateToAppInstallPage(app.manifestUrl)
         : undefined,
-    vercelDeployHandler:
-      !appInstallation && isAppVercelDeployable && !!app.vercelDeploymentUrl
-        ? () => navigateToVercelDeploymentPage(app.vercelDeploymentUrl)
+    githubForkHandler:
+      !appInstallation && isAppForkableOnGithub && !!app.githubForkUrl
+        ? () => navigateToGithubForkPage(app.githubForkUrl)
         : undefined,
     installationPending,
     retryInstallHandler:
