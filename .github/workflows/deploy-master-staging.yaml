@@ -18,7 +18,6 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      ENVIRONMENT: saleor-master-staging
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
@@ -42,10 +41,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_DASHBOARD_STAGING_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy
+      - name: Deploy master staging
         run: |
-          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/static/
-          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/
+          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/static/
+          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/
+          for i in {1..3}; do aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*" && break || sleep 5; done
+
+      - name: Deploy fake production
+        run: |
+          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-fake-production/static/
+          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-fake-production/
           for i in {1..3}; do aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*" && break || sleep 5; done
 
       - name: Notify Slack
@@ -54,6 +59,6 @@ jobs:
           JOB_DEPLOYMENT_KIND: staging
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
+          JOB_TITLE: "Dashboard deployment to saleor-master-staging"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py

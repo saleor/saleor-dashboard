@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
         position: "absolute",
-        right: theme.spacing(20),
+        right: theme.spacing(24),
       },
       margin: 0,
       minHeight: 0,
@@ -81,10 +81,12 @@ export interface TimelineEventProps {
   secondaryTitle?: string;
   title?: React.ReactNode;
   titleElements?: TitleElement[];
+  hasPlainDate?: boolean;
 }
 
 export const TimelineEvent: React.FC<TimelineEventProps> = props => {
-  const { children, date, secondaryTitle, title, titleElements } = props;
+  const { children, date, secondaryTitle, title, titleElements, hasPlainDate } =
+    props;
 
   const classes = useStyles(props);
 
@@ -98,6 +100,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
               title={title}
               date={date}
               titleElements={titleElements}
+              hasPlainDate={hasPlainDate}
             />
           </AccordionSummary>
           <AccordionDetails>
@@ -110,6 +113,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
           titleElements={titleElements}
           secondaryTitle={secondaryTitle}
           date={date}
+          hasPlainDate={hasPlainDate}
         />
       )}
     </div>
