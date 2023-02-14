@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,12 +22,6 @@ const useStyles = makeStyles(
   () => ({
     card: {
       overflow: "hidden",
-    },
-    cardContentTable: {
-      "&:last-child": {
-        padding: 0,
-      },
-      padding: 0,
     },
     colAction: {
       button: {
@@ -79,7 +73,10 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         })}
         toolbar={
           onInvoiceGenerate && (
-            <Button onClick={onInvoiceGenerate}>
+            <Button
+              onClick={onInvoiceGenerate}
+              className={sprinkles({ marginRight: 2 })}
+            >
               <FormattedMessage
                 id="e0RKe+"
                 defaultMessage="Generate"
@@ -89,11 +86,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           )
         }
       />
-      <CardContent
-        className={clsx({
-          [classes.cardContentTable]: generatedInvoices?.length,
-        })}
-      >
+      <CardContent>
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (

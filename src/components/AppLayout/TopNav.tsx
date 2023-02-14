@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
+import { topBarHeight } from "./consts";
 
 interface TopNavProps {
   title: string | React.ReactNode;
@@ -22,17 +23,21 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
     <Box
       display="flex"
       alignItems="center"
-      paddingX={10}
+      paddingX={9}
+      paddingRight={9}
       paddingY={8}
       borderBottomWidth={1}
       borderBottomStyle="solid"
       borderColor="neutralPlain"
       position="relative"
       __gridArea="nav"
+      data-test-id="page-header"
+      __height={topBarHeight}
     >
       {href && (
         <Link
           to={href}
+          data-test-id="app-header-back-button"
           className={sprinkles({
             borderColor: "neutralPlain",
             borderStyle: "solid",

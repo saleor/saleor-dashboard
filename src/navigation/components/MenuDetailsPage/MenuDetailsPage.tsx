@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
@@ -11,6 +12,7 @@ import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -84,63 +86,67 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
-        <Content paddingRight={13}>
-          <Backlink href={menuListUrl()}>
-            {intl.formatMessage(sectionNames.navigation)}
-          </Backlink>
-          <Grid variant="inverted">
-            <div>
-              <Typography variant="h5">
+        <DetailedContent>
+          <Content>
+            <Box padding={9} margin="auto" height="100vh">
+              <Backlink href={menuListUrl()}>
                 {intl.formatMessage(sectionNames.navigation)}
-              </Typography>
-              <Typography>
-                <FormattedMessage
-                  id="E54eoT"
-                  defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
-                />
-              </Typography>
-            </div>
-            <div>
-              <MenuProperties
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <MenuItems
-                canUndo={treeOperations.length > 0}
-                items={
-                  menu?.items
-                    ? computeRelativeTree(menu.items, treeOperations)
-                    : []
-                }
-                onChange={handleChange}
-                onItemAdd={onItemAdd}
-                onItemClick={onItemClick}
-                onItemEdit={onItemEdit}
-                onUndo={() =>
-                  setTreeOperations(operations => {
-                    if (operations.length > 1) {
-                      // Undo of a simulated move needs removal of 2 moves instead of one
-                      if (operations[operations.length - 2].simulatedMove) {
-                        return operations.slice(0, operations.length - 2);
-                      }
+              </Backlink>
+              <Grid variant="inverted">
+                <div>
+                  <Typography variant="h5">
+                    {intl.formatMessage(sectionNames.navigation)}
+                  </Typography>
+                  <Typography>
+                    <FormattedMessage
+                      id="E54eoT"
+                      defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+                    />
+                  </Typography>
+                </div>
+                <div>
+                  <MenuProperties
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                  />
+                  <CardSpacer />
+                  <MenuItems
+                    canUndo={treeOperations.length > 0}
+                    items={
+                      menu?.items
+                        ? computeRelativeTree(menu.items, treeOperations)
+                        : []
                     }
-                    return operations.slice(0, operations.length - 1);
-                  })
-                }
+                    onChange={handleChange}
+                    onItemAdd={onItemAdd}
+                    onItemClick={onItemClick}
+                    onItemEdit={onItemEdit}
+                    onUndo={() =>
+                      setTreeOperations(operations => {
+                        if (operations.length > 1) {
+                          // Undo of a simulated move needs removal of 2 moves instead of one
+                          if (operations[operations.length - 2].simulatedMove) {
+                            return operations.slice(0, operations.length - 2);
+                          }
+                        }
+                        return operations.slice(0, operations.length - 1);
+                      })
+                    }
+                  />
+                </div>
+              </Grid>
+              <Savebar
+                onCancel={() => navigate(menuListUrl())}
+                disabled={disabled || treeOperations.length === 0}
+                onDelete={onDelete}
+                onSubmit={submit}
+                state={saveButtonState}
               />
-            </div>
-          </Grid>
-          <Savebar
-            onCancel={() => navigate(menuListUrl())}
-            disabled={disabled || treeOperations.length === 0}
-            onDelete={onDelete}
-            onSubmit={submit}
-            state={saveButtonState}
-          />
-        </Content>
+            </Box>
+          </Content>
+        </DetailedContent>
       )}
     </Form>
   );

@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import {
@@ -25,7 +26,9 @@ export interface TranslationsShippingMethodPageProps
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
+const TranslationsShippingMethodPage: React.FC<
+  TranslationsShippingMethodPageProps
+> = ({
   translationId,
   activeField,
   disabled,
@@ -40,7 +43,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.shippingMethods,
@@ -105,7 +108,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </>
+    </DetailedContent>
   );
 };
 TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";

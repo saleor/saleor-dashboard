@@ -16,6 +16,66 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     },
+    MuiTypography: {
+      body2: {
+        fontSize: "13px",
+      },
+      caption: {
+        fontSize: "13px",
+        fontWeight: 500,
+      },
+    },
+    MuiTextField: {
+      root: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+    },
+    MuiInputBase: {
+      root: {
+        borderColor: vars.colors.border.neutralPlain,
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        borderColor: vars.colors.border.neutralPlain,
+        color: vars.colors.foreground.textNeutralDefault,
+        "&:hover": {
+          boxShadow: "none !important",
+        },
+      },
+      disabled: {
+        color: `${vars.colors.foreground.textNeutralDisabled} !important`,
+        backgroundColor: `${vars.colors.background.surfaceNeutralPlain} !important`,
+      },
+    },
+    MuiInputLabel: {
+      root: {
+        width: "100% !important",
+        color: vars.colors.foreground.textNeutralDefault,
+      },
+      shrink: {
+        width: "100% !important",
+      },
+    },
+    MuiCardHeader: {
+      root: {
+        paddingRight: vars.space[11],
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      },
+      title: {
+        fontSize: vars.fontSize.bodyEmpLarge,
+        // MUI it strictly typed to be a number, but we are passing CSS variable here
+        fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
+        lineHeight: vars.lineHeight.bodyEmpLarge,
+        letterSpacing: vars.letterSpacing.bodyEmpLarge,
+      },
+    },
+    MuiCardContent: {
+      root: {
+        backgroundColor: vars.colors.background.plain,
+      },
+    },
     MuiPaper: {
       root: {
         backgroundColor: vars.colors.background.plain,
@@ -27,6 +87,11 @@ export const themeOverrides: Partial<Theme> = {
         tableLayout: "auto !important" as "auto",
       },
     },
+    MuiTableCell: {
+      root: {
+        borderBottomColor: vars.colors.border.neutralPlain,
+      },
+    },
     MuiIconButton: {
       edgeEnd: {
         marginRight: 0,
@@ -34,8 +99,14 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiCardActions: {
       root: {
+        backgroundColor: vars.colors.background.plain,
         paddingLeft: 0,
         paddingRight: 0,
+      },
+    },
+    MuiFormHelperText: {
+      root: {
+        backgroundColor: vars.colors.background.plain,
       },
     },
   },

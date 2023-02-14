@@ -11,15 +11,18 @@ interface Props {
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
   <List.ItemGroup>
     <List.ItemGroup.Trigger
-      paddingX={4}
+      paddingX={5}
       paddingY={4}
       borderRadius={3}
       size="small"
       justifyContent="space-between"
+      data-test-id={`menu-item-label-${menuItem.id}`}
     >
       <Box display="flex" alignItems="center" gap={6}>
         {menuItem.icon}
-        <Text>{menuItem.label}</Text>
+        <Text size="small" variant="bodyEmp">
+          {menuItem.label}
+        </Text>
       </Box>
     </List.ItemGroup.Trigger>
     <List.ItemGroup.Content>

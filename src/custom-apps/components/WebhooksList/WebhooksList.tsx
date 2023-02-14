@@ -14,7 +14,13 @@ import {
   sectionNames,
 } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  TableBody,
+  TableCell,
+  TableHead,
+} from "@material-ui/core";
 import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -55,87 +61,89 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
           )
         }
       />
-      <ResponsiveTable className={classes.table}>
-        <TableHead>
-          <TableRowLink>
-            <TableCellHeader>
-              {intl.formatMessage(commonMessages.name)}
-            </TableCellHeader>
-            <TableCellHeader>
-              {intl.formatMessage(commonMessages.status)}
-            </TableCellHeader>
-            <TableCell className={clsx(classes.colAction, classes.colRight)}>
-              <FormattedMessage {...messages.action} />
-            </TableCell>
-          </TableRowLink>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            webhooks,
-            webhook => (
-              <TableRowLink
-                hover={!!webhook}
-                className={!!webhook ? classes.tableRow : undefined}
-                href={
-                  webhook &&
-                  CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)
-                }
-                key={webhook ? webhook.id : "skeleton"}
-              >
-                <TableCell
-                  className={clsx(classes.colName, {
-                    [classes.colNameUnnamed]: isUnnamed(webhook),
-                  })}
+      <CardContent>
+        <ResponsiveTable className={classes.table}>
+          <TableHead>
+            <TableRowLink>
+              <TableCellHeader>
+                {intl.formatMessage(commonMessages.name)}
+              </TableCellHeader>
+              <TableCellHeader>
+                {intl.formatMessage(commonMessages.status)}
+              </TableCellHeader>
+              <TableCell className={clsx(classes.colAction, classes.colRight)}>
+                <FormattedMessage {...messages.action} />
+              </TableCell>
+            </TableRowLink>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              webhooks,
+              webhook => (
+                <TableRowLink
+                  hover={!!webhook}
+                  className={!!webhook ? classes.tableRow : undefined}
+                  href={
+                    webhook &&
+                    CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)
+                  }
+                  key={webhook ? webhook.id : "skeleton"}
                 >
-                  {isUnnamed(webhook) ? (
-                    <FormattedMessage {...messages.unnamedWebhook} />
-                  ) : (
-                    webhook?.name || <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell>
-                  {webhook ? (
-                    <Pill
-                      label={
-                        webhook.isActive
-                          ? intl.formatMessage(commonStatusMessages.active)
-                          : intl.formatMessage(commonStatusMessages.notActive)
-                      }
-                      color={webhook.isActive ? "success" : "error"}
-                    />
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-                <TableCell
-                  className={clsx(classes.colAction, classes.colRight)}
-                >
-                  <TableButtonWrapper>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={
-                        webhook
-                          ? stopPropagation(() => onRemove(webhook.id))
-                          : undefined
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableButtonWrapper>
-                </TableCell>
-              </TableRowLink>
-            ),
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  {intl.formatMessage(messages.noWebhooks)}
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+                  <TableCell
+                    className={clsx(classes.colName, {
+                      [classes.colNameUnnamed]: isUnnamed(webhook),
+                    })}
+                  >
+                    {isUnnamed(webhook) ? (
+                      <FormattedMessage {...messages.unnamedWebhook} />
+                    ) : (
+                      webhook?.name || <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {webhook ? (
+                      <Pill
+                        label={
+                          webhook.isActive
+                            ? intl.formatMessage(commonStatusMessages.active)
+                            : intl.formatMessage(commonStatusMessages.notActive)
+                        }
+                        color={webhook.isActive ? "success" : "error"}
+                      />
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell
+                    className={clsx(classes.colAction, classes.colRight)}
+                  >
+                    <TableButtonWrapper>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={
+                          webhook
+                            ? stopPropagation(() => onRemove(webhook.id))
+                            : undefined
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableButtonWrapper>
+                  </TableCell>
+                </TableRowLink>
+              ),
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    {intl.formatMessage(messages.noWebhooks)}
+                  </TableCell>
+                </TableRowLink>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </CardContent>
     </Card>
   );
 };

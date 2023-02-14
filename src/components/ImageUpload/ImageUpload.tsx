@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -29,7 +30,7 @@ const useStyles = makeStyles(
     },
     imageContainer: {
       background: "#ffffff",
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",

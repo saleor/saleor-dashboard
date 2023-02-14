@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
@@ -41,7 +42,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.categories,
@@ -137,7 +138,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </>
+    </DetailedContent>
   );
 };
 TranslationsCategoriesPage.displayName = "TranslationsCategoriesPage";

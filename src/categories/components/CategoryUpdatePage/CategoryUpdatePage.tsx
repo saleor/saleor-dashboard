@@ -4,6 +4,7 @@ import {
   categoryUrl,
 } from "@dashboard/categories/urls";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -17,6 +18,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Card } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -89,9 +91,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       disabled={disabled}
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <>
+        <DetailedContent>
           <TopNav href={backHref} title={category?.name} />
-          <Content paddingLeft={0}>
+          <Content>
             <CategoryDetailsForm
               data={data}
               disabled={disabled}
@@ -127,7 +129,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             <CardSpacer />
             <Metadata data={data} onChange={handlers.changeMetadata} />
             <CardSpacer />
-            <TabContainer>
+            <TabContainer className={sprinkles({ paddingX: 9 })}>
               <CategoriesTab
                 isActive={currentTab === CategoryPageTab.categories}
                 changeTab={changeTab}
@@ -208,7 +210,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               disabled={isSaveDisabled}
             />
           </Content>
-        </>
+        </DetailedContent>
       )}
     </CategoryUpdateForm>
   );

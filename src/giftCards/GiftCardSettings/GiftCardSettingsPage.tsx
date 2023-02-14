@@ -1,3 +1,5 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
@@ -11,6 +13,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Typography } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,10 +41,8 @@ const GiftCardSettingsPage: React.FC = () => {
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
 
-  const [
-    updateGiftCardSettings,
-    updateGiftCardSettingsOpts,
-  ] = useGiftCardSettingsUpdateMutation({});
+  const [updateGiftCardSettings, updateGiftCardSettingsOpts] =
+    useGiftCardSettingsUpdateMutation({});
 
   const handleSubmit = (formData: GiftCardSettingsFormData) => {
     updateGiftCardSettings({
@@ -59,37 +60,43 @@ const GiftCardSettingsPage: React.FC = () => {
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={giftCardsListPath}
         title={intl.formatMessage(messages.title)}
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, change }) => (
-          <Grid variant="inverted">
-            <div>
-              <Typography>
-                <FormattedMessage
-                  {...expirySettingsMessages.expiryDateSectionDescription}
-                />
-              </Typography>
-            </div>
-            <GiftCardExpirySettingsCard
-              data={formData}
-              disabled={formLoading}
-              onChange={change}
-              errors={formErrors}
-            />
+          <>
+            <Content>
+              <Box padding={9} margin="auto" height="100vh">
+                <Grid variant="inverted">
+                  <div>
+                    <Typography>
+                      <FormattedMessage
+                        {...expirySettingsMessages.expiryDateSectionDescription}
+                      />
+                    </Typography>
+                  </div>
+                  <GiftCardExpirySettingsCard
+                    data={formData}
+                    disabled={formLoading}
+                    onChange={change}
+                    errors={formErrors}
+                  />
+                </Grid>
+              </Box>
+            </Content>
             <Savebar
               onCancel={() => navigate(giftCardsListPath)}
               onSubmit={submit}
               disabled={formLoading}
               state={updateGiftCardSettingsOpts?.status}
             />
-          </Grid>
+          </>
         )}
       </Form>
-    </>
+    </DetailedContent>
   );
 };
 

@@ -99,11 +99,6 @@ const useStyles = makeStyles(
           borderColor: isDarkMode
             ? theme.palette.saleor.main[2]
             : theme.palette.saleor.main[4],
-          boxShadow: `0 0 0 3px ${
-            isDarkMode
-              ? theme.palette.saleor.main[4]
-              : theme.palette.saleor.main[6]
-          }`,
         },
       },
       root: {

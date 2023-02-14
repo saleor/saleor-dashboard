@@ -5,6 +5,7 @@ import { HomeQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import {
   Card,
+  CardContent,
   List,
   ListItem,
   ListItemText,
@@ -30,9 +31,6 @@ const useStyles = makeStyles(
     listItem: {
       paddingLeft: 0,
     },
-    cardTitle: {
-      paddingLeft: 0,
-    },
   },
   { name: "HomeActivityCard" },
 );
@@ -56,47 +54,48 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
           defaultMessage: "Activity",
           description: "header",
         })}
-        className={classes.cardTitle}
       />
-      <List dense={true}>
-        {renderCollection(
-          activities,
-          (activity, activityId) => (
-            <ListItem key={activityId} className={classes.listItem}>
-              {activity ? (
+      <CardContent>
+        <List dense>
+          {renderCollection(
+            activities,
+            (activity, activityId) => (
+              <ListItem key={activityId} className={classes.listItem}>
+                {activity ? (
+                  <ListItemText
+                    primary={
+                      <Typography>
+                        {getActivityMessage(activity, intl)}
+                      </Typography>
+                    }
+                    secondary={<DateTime date={activity.date} />}
+                  />
+                ) : (
+                  <ListItemText className={classes.loadingProducts}>
+                    <Typography>
+                      <Skeleton />
+                    </Typography>
+                  </ListItemText>
+                )}
+              </ListItem>
+            ),
+            () => (
+              <ListItem className={classes.noProducts}>
                 <ListItemText
                   primary={
                     <Typography>
-                      {getActivityMessage(activity, intl)}
+                      <FormattedMessage
+                        id="wWTUrM"
+                        defaultMessage="No activities found"
+                      />
                     </Typography>
                   }
-                  secondary={<DateTime date={activity.date} />}
                 />
-              ) : (
-                <ListItemText className={classes.loadingProducts}>
-                  <Typography>
-                    <Skeleton />
-                  </Typography>
-                </ListItemText>
-              )}
-            </ListItem>
-          ),
-          () => (
-            <ListItem className={classes.noProducts}>
-              <ListItemText
-                primary={
-                  <Typography>
-                    <FormattedMessage
-                      id="wWTUrM"
-                      defaultMessage="No activities found"
-                    />
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ),
-        )}
-      </List>
+              </ListItem>
+            ),
+          )}
+        </List>
+      </CardContent>
     </Card>
   );
 };

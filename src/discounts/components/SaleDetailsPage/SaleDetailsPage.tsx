@@ -27,6 +27,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -185,7 +186,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={saleListUrl()} title={sale?.name} />
-            <Content paddingLeft={0}>
+            <Content>
               <SaleInfo
                 data={data}
                 disabled={disabled}
@@ -202,7 +203,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 onChange={handleChannelChange}
               />
               <CardSpacer />
-              <TabContainer>
+              <TabContainer className={sprinkles({ paddingX: 9 })}>
                 <CategoriesTab
                   testId="categories-tab"
                   isActive={activeTab === SaleDetailsPageTab.categories}

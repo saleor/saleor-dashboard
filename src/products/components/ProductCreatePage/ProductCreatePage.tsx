@@ -238,7 +238,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={productListUrl()} title={header} />
-            <Content paddingLeft={0}>
+            <Content>
               <ProductDetailsForm
                 data={data}
                 disabled={loading}

@@ -14,7 +14,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, TableCell } from "@material-ui/core";
+import { Card, CardContent, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -99,103 +99,105 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           </Button>
         }
       />
-      <ResponsiveTable>
-        <colgroup>
-          <col className={classes.colGrab} />
-          <col />
-          <col className={classes.colName} />
-          <col className={classes.colSlug} />
-          <col className={classes.colAction} />
-        </colgroup>
-        {attributes?.length > 0 && (
-          <TableHead
-            colSpan={numberOfColumns}
-            disabled={disabled}
-            dragRows
-            selected={selected}
-            items={attributes}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
-            </TableCell>
-            <TableCell className={classes.colName}>
-              <FormattedMessage
-                id="nf3XSt"
-                defaultMessage="Slug"
-                description="attribute internal name"
-              />
-            </TableCell>
-            <TableCell />
-          </TableHead>
-        )}
-        <SortableTableBody onSortEnd={onAttributeReorder}>
-          {renderCollection(
-            attributes,
-            (attribute, attributeIndex) => {
-              const isSelected = attribute ? isChecked(attribute.id) : false;
+      <CardContent>
+        <ResponsiveTable>
+          <colgroup>
+            <col className={classes.colGrab} />
+            <col />
+            <col className={classes.colName} />
+            <col className={classes.colSlug} />
+            <col className={classes.colAction} />
+          </colgroup>
+          {attributes?.length > 0 && (
+            <TableHead
+              colSpan={numberOfColumns}
+              disabled={disabled}
+              dragRows
+              selected={selected}
+              items={attributes}
+              toggleAll={toggleAll}
+              toolbar={toolbar}
+            >
+              <TableCell className={classes.colName}>
+                <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+              </TableCell>
+              <TableCell className={classes.colName}>
+                <FormattedMessage
+                  id="nf3XSt"
+                  defaultMessage="Slug"
+                  description="attribute internal name"
+                />
+              </TableCell>
+              <TableCell />
+            </TableHead>
+          )}
+          <SortableTableBody onSortEnd={onAttributeReorder}>
+            {renderCollection(
+              attributes,
+              (attribute, attributeIndex) => {
+                const isSelected = attribute ? isChecked(attribute.id) : false;
 
-              return (
-                <SortableTableRow
-                  selected={isSelected}
-                  className={!!attribute ? classes.link : undefined}
-                  hover={!!attribute}
-                  href={attribute ? attributeUrl(attribute.id) : undefined}
-                  key={maybe(() => attribute.id)}
-                  index={attributeIndex || 0}
-                  data-test-id={"id" + maybe(() => attribute.id)}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(attribute.id)}
+                return (
+                  <SortableTableRow
+                    selected={isSelected}
+                    className={!!attribute ? classes.link : undefined}
+                    hover={!!attribute}
+                    href={attribute ? attributeUrl(attribute.id) : undefined}
+                    key={maybe(() => attribute.id)}
+                    index={attributeIndex || 0}
+                    data-test-id={"id" + maybe(() => attribute.id)}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(attribute.id)}
+                      />
+                    </TableCell>
+                    <TableCell className={classes.colName} data-test-id="name">
+                      {maybe(() => attribute.name) ? (
+                        attribute.name
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.colSlug} data-test-id="slug">
+                      {maybe(() => attribute.slug) ? (
+                        attribute.slug
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.colAction}>
+                      <TableButtonWrapper>
+                        <IconButton
+                          data-test-id="delete-icon"
+                          disabled={disabled}
+                          variant="secondary"
+                          onClick={() => onAttributeUnassign(attribute.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableButtonWrapper>
+                    </TableCell>
+                  </SortableTableRow>
+                );
+              },
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage
+                      id="ztQgD8"
+                      defaultMessage="No attributes found"
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test-id="name">
-                    {maybe(() => attribute.name) ? (
-                      attribute.name
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colSlug} data-test-id="slug">
-                    {maybe(() => attribute.slug) ? (
-                      attribute.slug
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colAction}>
-                    <TableButtonWrapper>
-                      <IconButton
-                        data-test-id="delete-icon"
-                        disabled={disabled}
-                        variant="secondary"
-                        onClick={() => onAttributeUnassign(attribute.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableButtonWrapper>
-                  </TableCell>
-                </SortableTableRow>
-              );
-            },
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    id="ztQgD8"
-                    defaultMessage="No attributes found"
-                  />
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </SortableTableBody>
-      </ResponsiveTable>
+                </TableRowLink>
+              ),
+            )}
+          </SortableTableBody>
+        </ResponsiveTable>
+      </CardContent>
     </Card>
   );
 };

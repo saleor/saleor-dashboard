@@ -3,7 +3,13 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  TableBody,
+  TableCell,
+  Typography,
+} from "@material-ui/core";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -19,13 +25,15 @@ const useStyles = makeStyles(
     },
     tableCard: {
       overflow: "hidden",
-      paddingLeft: 16,
     },
     tableRow: {
       cursor: "pointer",
     },
     tableCell: {
       paddingLeft: "0 !important",
+    },
+    cardContent: {
+      padding: 0,
     },
   }),
   { name: "HomeNotificationTable" },
@@ -60,103 +68,105 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
 
   return (
     <Card className={classes.tableCard}>
-      <ResponsiveTable>
-        <TableBody className={classes.tableRow}>
-          {noChannel && (
+      <CardContent className={classes.cardContent}>
+        <ResponsiveTable>
+          <TableBody className={classes.tableRow}>
+            {noChannel && (
+              <RequirePermissions
+                requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+              >
+                <TableRowLink hover={true} href={createNewChannelHref}>
+                  <TableCell>
+                    <Typography>
+                      {intl.formatMessage(messages.createNewChannel)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell className={classes.arrowIcon}>
+                    <KeyboardArrowRight />
+                  </TableCell>
+                </TableRowLink>
+              </RequirePermissions>
+            )}
             <RequirePermissions
-              requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
             >
-              <TableRowLink hover={true} href={createNewChannelHref}>
-                <TableCell>
-                  <Typography>
-                    {intl.formatMessage(messages.createNewChannel)}
-                  </Typography>
+              <TableRowLink hover={true} href={ordersToFulfillHref}>
+                <TableCell
+                  data-test-id="orders-to-fulfill"
+                  className={classes.tableCell}
+                >
+                  {ordersToFulfill === undefined ? (
+                    <Skeleton />
+                  ) : ordersToFulfill === 0 ? (
+                    <Typography>
+                      {intl.formatMessage(messages.noOrders)}
+                    </Typography>
+                  ) : (
+                    <Typography>
+                      {intl.formatMessage(messages.orderReady, {
+                        amount: <strong>{ordersToFulfill}</strong>,
+                      })}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell className={classes.arrowIcon}>
+                  <KeyboardArrowRight />
+                </TableCell>
+              </TableRowLink>
+              <TableRowLink hover={true} href={ordersToCaptureHref}>
+                <TableCell
+                  data-test-id="orders-to-capture"
+                  className={classes.tableCell}
+                >
+                  {ordersToCapture === undefined ? (
+                    <Skeleton />
+                  ) : ordersToCapture === 0 ? (
+                    <Typography>
+                      {intl.formatMessage(messages.noPaymentWaiting)}
+                    </Typography>
+                  ) : (
+                    <Typography>
+                      {intl.formatMessage(messages.paymentCapture, {
+                        amount: <strong>{ordersToCapture}</strong>,
+                      })}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell className={classes.arrowIcon}>
                   <KeyboardArrowRight />
                 </TableCell>
               </TableRowLink>
             </RequirePermissions>
-          )}
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
-            <TableRowLink hover={true} href={ordersToFulfillHref}>
-              <TableCell
-                data-test-id="orders-to-fulfill"
-                className={classes.tableCell}
-              >
-                {ordersToFulfill === undefined ? (
-                  <Skeleton />
-                ) : ordersToFulfill === 0 ? (
-                  <Typography>
-                    {intl.formatMessage(messages.noOrders)}
-                  </Typography>
-                ) : (
-                  <Typography>
-                    {intl.formatMessage(messages.orderReady, {
-                      amount: <strong>{ordersToFulfill}</strong>,
-                    })}
-                  </Typography>
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRowLink>
-            <TableRowLink hover={true} href={ordersToCaptureHref}>
-              <TableCell
-                data-test-id="orders-to-capture"
-                className={classes.tableCell}
-              >
-                {ordersToCapture === undefined ? (
-                  <Skeleton />
-                ) : ordersToCapture === 0 ? (
-                  <Typography>
-                    {intl.formatMessage(messages.noPaymentWaiting)}
-                  </Typography>
-                ) : (
-                  <Typography>
-                    {intl.formatMessage(messages.paymentCapture, {
-                      amount: <strong>{ordersToCapture}</strong>,
-                    })}
-                  </Typography>
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRowLink>
-          </RequirePermissions>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
-          >
-            <TableRowLink hover={true} href={productsOutOfStockHref}>
-              <TableCell
-                data-test-id="products-out-of-stock"
-                className={classes.tableCell}
-              >
-                {productsOutOfStock === undefined ? (
-                  <Skeleton />
-                ) : productsOutOfStock === 0 ? (
-                  <Typography>
-                    {intl.formatMessage(messages.noProductsOut)}
-                  </Typography>
-                ) : (
-                  <Typography>
-                    {intl.formatMessage(messages.productOut, {
-                      amount: <strong>{productsOutOfStock}</strong>,
-                    })}
-                  </Typography>
-                )}
-              </TableCell>
-              <TableCell className={classes.arrowIcon}>
-                <KeyboardArrowRight />
-              </TableCell>
-            </TableRowLink>
-          </RequirePermissions>
-        </TableBody>
-      </ResponsiveTable>
+            <RequirePermissions
+              requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+            >
+              <TableRowLink hover={true} href={productsOutOfStockHref}>
+                <TableCell
+                  data-test-id="products-out-of-stock"
+                  className={classes.tableCell}
+                >
+                  {productsOutOfStock === undefined ? (
+                    <Skeleton />
+                  ) : productsOutOfStock === 0 ? (
+                    <Typography>
+                      {intl.formatMessage(messages.noProductsOut)}
+                    </Typography>
+                  ) : (
+                    <Typography>
+                      {intl.formatMessage(messages.productOut, {
+                        amount: <strong>{productsOutOfStock}</strong>,
+                      })}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell className={classes.arrowIcon}>
+                  <KeyboardArrowRight />
+                </TableCell>
+              </TableRowLink>
+            </RequirePermissions>
+          </TableBody>
+        </ResponsiveTable>
+      </CardContent>
     </Card>
   );
 };

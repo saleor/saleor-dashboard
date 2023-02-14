@@ -47,7 +47,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
           description: "header",
         })}
       />
-      <CardContent style={{ paddingRight: 16 }}>
+      <CardContent>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
