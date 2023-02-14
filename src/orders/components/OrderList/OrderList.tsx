@@ -55,7 +55,9 @@ const useStyles = makeStyles(
         ...overflowing,
       },
       colCustomer: overflowing,
-      colDate: {},
+      colDate: {
+        padding: theme.spacing(0, 3),
+      },
       colFulfillment: {},
       colNumber: {},
       colPayment: {},
@@ -77,14 +79,8 @@ interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
 const numberOfColumns = 6;
 
 export const OrderList: React.FC<OrderListProps> = props => {
-  const {
-    disabled,
-    settings,
-    orders,
-    onUpdateListSettings,
-    onSort,
-    sort,
-  } = props;
+  const { disabled, settings, orders, onUpdateListSettings, onSort, sort } =
+    props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -203,7 +199,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
               </TableCell>
               <TableCell className={classes.colDate}>
                 {maybe(() => order.created) ? (
-                  <DateTime date={order.created} />
+                  <DateTime date={order.created} plain />
                 ) : (
                   <Skeleton />
                 )}
