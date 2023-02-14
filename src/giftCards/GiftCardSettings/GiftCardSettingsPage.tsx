@@ -1,3 +1,5 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
@@ -58,39 +60,43 @@ const GiftCardSettingsPage: React.FC = () => {
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={giftCardsListPath}
         title={intl.formatMessage(messages.title)}
       />
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, change }) => (
-          <Box padding={9} margin="auto" height="100vh">
-            <Grid variant="inverted">
-              <div>
-                <Typography>
-                  <FormattedMessage
-                    {...expirySettingsMessages.expiryDateSectionDescription}
+          <>
+            <Content>
+              <Box padding={9} margin="auto" height="100vh">
+                <Grid variant="inverted">
+                  <div>
+                    <Typography>
+                      <FormattedMessage
+                        {...expirySettingsMessages.expiryDateSectionDescription}
+                      />
+                    </Typography>
+                  </div>
+                  <GiftCardExpirySettingsCard
+                    data={formData}
+                    disabled={formLoading}
+                    onChange={change}
+                    errors={formErrors}
                   />
-                </Typography>
-              </div>
-              <GiftCardExpirySettingsCard
-                data={formData}
-                disabled={formLoading}
-                onChange={change}
-                errors={formErrors}
-              />
-              <Savebar
-                onCancel={() => navigate(giftCardsListPath)}
-                onSubmit={submit}
-                disabled={formLoading}
-                state={updateGiftCardSettingsOpts?.status}
-              />
-            </Grid>
-          </Box>
+                </Grid>
+              </Box>
+            </Content>
+            <Savebar
+              onCancel={() => navigate(giftCardsListPath)}
+              onSubmit={submit}
+              disabled={formLoading}
+              state={updateGiftCardSettingsOpts?.status}
+            />
+          </>
         )}
       </Form>
-    </>
+    </DetailedContent>
   );
 };
 

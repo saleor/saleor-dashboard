@@ -1,6 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { TableCellProps } from "@material-ui/core/TableCell";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -10,7 +11,7 @@ const useStyles = makeStyles(
   theme => ({
     arrow: {
       transition: theme.transitions.duration.short + "ms",
-      marginBottom: "4px",
+      marginBottom: vars.space[3],
     },
     arrowLeft: {
       marginLeft: -24,

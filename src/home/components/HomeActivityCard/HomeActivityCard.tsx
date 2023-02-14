@@ -56,7 +56,7 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
         })}
       />
       <CardContent>
-        <List dense={true}>
+        <List dense>
           {renderCollection(
             activities,
             (activity, activityId) => (
