@@ -26,7 +26,6 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr",
       },
-      // borderBottom: `solid 1px ${vars.colors.border.neutralDefault}`,
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
@@ -120,11 +119,6 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     .map((item, itemIndex) => (
                       <Link className={classes.link} to={item.url}>
                         <NavigationCard
-                          // className={sprinkles({
-                          //   borderStyle: "solid",
-                          //   borderColor: "neutralPlain",
-                          //   borderWidth: 1,
-                          // })}
                           className={classes.navigationCard}
                           key={itemIndex}
                           icon={item.icon}
