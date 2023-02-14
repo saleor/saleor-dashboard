@@ -63,6 +63,9 @@
     "context": "input label",
     "string": "Stock reservation for anonymous user (in minutes)"
   },
+  "+U6ozc": {
+    "string": "Type"
+  },
   "+VEhV8": {
     "context": "product channels",
     "string": "Availability"
@@ -3679,6 +3682,9 @@
     "context": "activate app",
     "string": "Are you sure you want to activate this app? Activating will start gathering events."
   },
+  "Q4m1CG": {
+    "string": "Edit Product"
+  },
   "Q55cTG": {
     "context": "order refund amount",
     "string": "Previously refunded"
@@ -4034,10 +4040,6 @@
   "SZt9kC": {
     "context": "export filtered items to csv file",
     "string": "Current search ({number})"
-  },
-  "Sd0Ppm": {
-    "context": "product publication date",
-    "string": "Published on {date}"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -7008,10 +7010,6 @@
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
   },
-  "qpQ0uB": {
-    "context": "product publication date",
-    "string": "Unpublished"
-  },
   "qrWOxx": {
     "string": "No members found"
   },
@@ -7032,10 +7030,6 @@
   },
   "r+dgiv": {
     "string": "Taxes"
-  },
-  "r0hgpM": {
-    "context": "product publication date",
-    "string": "Becomes published on {date}"
   },
   "r1aQ2f": {
     "context": "dialog header",
@@ -7382,6 +7376,9 @@
   "ti4Hqw": {
     "context": "saleor marketplace section name",
     "string": "Saleor Apps Marketplace"
+  },
+  "tiY7bx": {
+    "string": "Add new product"
   },
   "tlGXkh": {
     "context": "input description",
