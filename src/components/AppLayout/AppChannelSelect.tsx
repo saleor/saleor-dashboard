@@ -2,23 +2,24 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import SingleSelectField from "../SingleSelectField";
 
 const useStyles = makeStyles(
-  theme => ({
+  {
     input: {
       height: 40,
     },
     root: {
       "&& fieldset": {
-        borderColor: theme.palette.divider,
+        borderColor: vars.colors.border.neutralPlain,
       },
       width: 192,
       padding: 10,
     },
-  }),
+  },
   {
     name: "AppChannelSelect",
   },

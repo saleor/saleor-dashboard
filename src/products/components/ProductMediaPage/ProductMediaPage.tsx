@@ -10,6 +10,7 @@ import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -50,7 +51,7 @@ const useStyles = makeStyles(
         width: "100%",
         maxHeight: 420,
       },
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
       width: "100%",

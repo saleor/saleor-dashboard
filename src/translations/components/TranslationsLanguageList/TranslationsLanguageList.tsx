@@ -3,14 +3,10 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { LanguageFragment } from "@dashboard/graphql";
 import { languageEntitiesUrl } from "@dashboard/translations/urls";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
+import { Card, CardContent, TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
+import { clsx } from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -25,8 +21,16 @@ const useStyles = makeStyles(
     capitalize: {
       textTransform: "capitalize",
     },
+    cardContent: {
+      paddingLeft: 0,
+    },
     link: {
       cursor: "pointer",
+    },
+    rowLink: {
+      "& .MuiTableCell-root": {
+        paddingLeft: `${vars.space[9]} !important`,
+      },
     },
   },
   { name: "TranslationsLanguageList" },
@@ -41,22 +45,21 @@ const TranslationsLanguageList: React.FC<
 
   return (
     <Card>
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <ResponsiveTable>
-          <TableHead>
-            <TableRowLink>
-              <TableCell>
-                <FormattedMessage id="y1Z3or" defaultMessage="Language" />
-              </TableCell>
-            </TableRowLink>
-          </TableHead>
           <TableBody>
             {renderCollection(
               languages,
               language => (
                 <TableRowLink
                   data-test-id={language ? language.code : "skeleton"}
-                  className={!!language ? classes.link : undefined}
+                  // className={!!language ? classes.link : undefined}
+                  className={clsx(
+                    {
+                      [classes.link]: !!language,
+                    },
+                    classes.rowLink,
+                  )}
                   hover={!!language}
                   key={language ? language.code : "skeleton"}
                   href={language && languageEntitiesUrl(language.code, {})}

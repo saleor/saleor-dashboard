@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -10,7 +11,7 @@ export const useStyles = makeStyles(
     },
     imageContainer: {
       background: "transparent",
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       cursor: "pointer",
       height: theme.spacing(21.5),

@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr",
       },
-      borderBottom: `solid 1px ${vars.colors.border.neutralDefault}`,
+      // borderBottom: `solid 1px ${vars.colors.border.neutralDefault}`,
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
@@ -56,6 +56,14 @@ const useStyles = makeStyles(
     sectionTitle: {
       fontSize: 20,
       fontWeight: 600 as 600,
+    },
+    navigationCard: {
+      border: `1px solid ${vars.colors.border.neutralDefault}`,
+      height: 124,
+      boxShadow: "none !important",
+      "& .MuiCardContent-root": {
+        borderRadius: vars.borderRadius[3],
+      },
     },
   }),
   { name: "ConfigurationPage" },
@@ -112,6 +120,12 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                     .map((item, itemIndex) => (
                       <Link className={classes.link} to={item.url}>
                         <NavigationCard
+                          // className={sprinkles({
+                          //   borderStyle: "solid",
+                          //   borderColor: "neutralPlain",
+                          //   borderWidth: 1,
+                          // })}
+                          className={classes.navigationCard}
                           key={itemIndex}
                           icon={item.icon}
                           title={item.title}

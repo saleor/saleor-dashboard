@@ -47,6 +47,12 @@ const useStyles = makeStyles(
     tableRow: {
       cursor: "pointer",
     },
+    cardContent: {
+      padding: 0,
+    },
+    cardTitle: {
+      padding: 0,
+    },
   }),
   { name: "HomeProductListCard" },
 );
@@ -65,13 +71,14 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
   return (
     <Card data-test-id={testId}>
       <CardTitle
+        className={classes.cardTitle}
         title={intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
           description: "header",
         })}
       />
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <ResponsiveTable>
           <colgroup>
             <col className={classes.colAvatar} />

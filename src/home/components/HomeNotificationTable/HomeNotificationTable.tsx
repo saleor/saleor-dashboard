@@ -32,6 +32,9 @@ const useStyles = makeStyles(
     tableCell: {
       paddingLeft: "0 !important",
     },
+    cardContent: {
+      padding: 0,
+    },
   }),
   { name: "HomeNotificationTable" },
 );
@@ -65,7 +68,7 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
 
   return (
     <Card className={classes.tableCard}>
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <ResponsiveTable>
           <TableBody className={classes.tableRow}>
             {noChannel && (

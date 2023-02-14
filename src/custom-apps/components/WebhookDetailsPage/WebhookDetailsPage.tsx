@@ -105,7 +105,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         );
 
         return (
-          <DetailedContent>
+          <DetailedContent useSingleColumn>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <Content>
               <Box paddingX={9}>
