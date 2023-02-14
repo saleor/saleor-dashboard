@@ -15,7 +15,6 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { useLocationState } from "./apps/hooks/useLocationState";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -59,6 +58,7 @@ import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import AppsSection from "./new-apps";
+import { ExternalAppProvider } from "./new-apps/components/ExternalAppContext";
 import { AppSections } from "./new-apps/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";

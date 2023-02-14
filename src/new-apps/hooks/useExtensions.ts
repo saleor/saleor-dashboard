@@ -8,9 +8,9 @@ import {
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { useExternalApp } from "./components/ExternalAppContext/";
-import { AppData } from "./components/ExternalAppContext/context";
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { useExternalApp } from "../components/ExternalAppContext";
+import { AppData } from "../components/ExternalAppContext/context";
+import { AppDetailsUrlMountQueryParams } from "../urls";
 
 export interface Extension {
   id: string;

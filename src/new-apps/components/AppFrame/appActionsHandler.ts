@@ -1,8 +1,8 @@
-import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
-import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePostToExtension } from "@dashboard/new-apps/components/AppFrame/usePostToExtension";
+import { useExternalApp } from "@dashboard/new-apps/components/ExternalAppContext/ExternalAppContext";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import {
   DispatchResponseEvent,

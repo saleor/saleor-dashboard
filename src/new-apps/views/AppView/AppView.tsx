@@ -3,12 +3,11 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useAppQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import AppPage from "@dashboard/new-apps/components/AppPage";
+import { AppPaths, AppUrls } from "@dashboard/new-apps/urls";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
-
-import { AppPage } from "../../components/AppPage";
-import { appsListPath, getAppCompleteUrlFromDashboardUrl } from "../../urls";
 
 interface AppProps {
   id: string;
@@ -37,10 +36,10 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
   );
 
   if (!appExists) {
-    return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+    return <NotFoundPage onBack={() => navigate(AppPaths.appListPath)} />;
   }
 
-  const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(
+  const appCompleteUrl = AppUrls.resolveAppCompleteUrlFromDashboardUrl(
     location.pathname,
     data?.app?.appUrl || "",
     id,
@@ -59,3 +58,4 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     />
   );
 };
+export default AppView;

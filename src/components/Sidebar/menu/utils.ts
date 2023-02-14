@@ -1,6 +1,6 @@
 import { getDashboardUrFromAppCompleteUrl } from "@dashboard/apps/urls";
-import { Extension } from "@dashboard/apps/useExtensions";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
+import { Extension } from "@dashboard/new-apps/hooks/useExtensions";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 

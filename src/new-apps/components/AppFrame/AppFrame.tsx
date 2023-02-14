@@ -1,10 +1,10 @@
-import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
+import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { useAppDashboardUpdates } from "@dashboard/new-apps/components/AppFrame/useAppDashboardUpdates";
 import {
   AppDetailsUrlQueryParams,
+  AppUrls,
   prepareFeatureFlagsList,
-  resolveAppIframeUrl,
-} from "@dashboard/apps/urls";
-import { useAllFlags } from "@dashboard/hooks/useFlags";
+} from "@dashboard/new-apps/urls";
 import { CircularProgress } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -89,7 +89,7 @@ export const AppFrame: React.FC<Props> = ({
       </div>
       <iframe
         ref={frameRef}
-        src={resolveAppIframeUrl(appId, src, {
+        src={AppUrls.resolveAppIframeUrl(appId, src, {
           ...params,
           featureFlags: prepareFeatureFlagsList(flags),
           theme: themeType,

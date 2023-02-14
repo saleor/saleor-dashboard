@@ -28,6 +28,14 @@ export const appsMessages = defineMessages({
   },
 });
 
+export const appMessages = defineMessages({
+  failedToFetchAppSettings: {
+    id: "ac+Y98",
+    defaultMessage: "Failed to fetch app settings",
+    description: "app settings error",
+  },
+});
+
 export const appInstallationStatusMessages = defineMessages({
   pending: {
     id: "F1VtFa",

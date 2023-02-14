@@ -2,7 +2,6 @@ import {
   AppDetailsUrlQueryParams,
   AppInstallUrlQueryParams,
 } from "@dashboard/apps/urls";
-import { AppView } from "@dashboard/apps/views/App";
 import AppDetailsView from "@dashboard/apps/views/AppDetails";
 import AppInstallView from "@dashboard/apps/views/AppInstall";
 import { sectionNames } from "@dashboard/intl";
@@ -14,6 +13,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import { AppListUrlQueryParams, AppPaths } from "./urls";
 import AppListView from "./views/AppList";
+import AppView from "./views/AppView";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,

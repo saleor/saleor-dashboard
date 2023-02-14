@@ -35,3 +35,4 @@ export const AppPage: React.FC<AppPageProps> = ({
 };
 
 AppPage.displayName = "AppPage";
+export default AppPage;

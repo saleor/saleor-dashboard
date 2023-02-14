@@ -1,8 +1,4 @@
 import { appsListPath } from "@dashboard/apps/urls";
-import {
-  extensionMountPoints,
-  useExtensions,
-} from "@dashboard/apps/useExtensions";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -15,6 +11,10 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import {
+  extensionMountPoints,
+  useExtensions,
+} from "@dashboard/new-apps/hooks/useExtensions";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";

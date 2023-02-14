@@ -1,7 +1,7 @@
-import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
-import * as ExternalAppContext from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import * as dashboardConfig from "@dashboard/config";
 import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
+import { AppActionsHandler } from "@dashboard/new-apps/components/AppFrame/appActionsHandler";
+import * as ExternalAppContext from "@dashboard/new-apps/components/ExternalAppContext/ExternalAppContext";
 import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
 import { IntlShape } from "react-intl";
