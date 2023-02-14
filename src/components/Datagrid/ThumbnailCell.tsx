@@ -67,25 +67,37 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
 
     return true;
   },
-  provideEditor: () => p => {
-    const { isHighlighted, onChange, value } = p;
-    return (
-      <TextCellEntry
-        highlight={isHighlighted}
-        autoFocus={true}
-        value={value.data.name ?? ""}
-        onChange={e =>
-          onChange({
-            ...value,
-            data: {
-              ...value.data,
-              name: e.target.value,
-            },
-          })
-        }
-      />
-    );
-  },
+
+  provideEditor: () => ({
+    editor: p => {
+      const { isHighlighted, onChange, value } = p;
+      return (
+        <TextCellEntry
+          highlight={isHighlighted}
+          autoFocus={true}
+          value={value.data.name ?? ""}
+          onChange={e =>
+            onChange({
+              ...value,
+              data: {
+                ...value.data,
+                name: e.target.value,
+              },
+            })
+          }
+        />
+      );
+    },
+    disablePadding: true,
+    deletedValue: cell => ({
+      ...cell,
+      copyData: "",
+      data: {
+        ...cell.data,
+        name: "",
+      },
+    }),
+  }),
   onPaste: (v, d) => ({
     ...d,
     name: v,

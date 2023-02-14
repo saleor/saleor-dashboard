@@ -95,8 +95,8 @@ export function dropdownCell(
 export function thumbnailCell(name: string, image: string): ThumbnailCell {
   return {
     kind: GridCellKind.Custom,
-    allowOverlay: true,
-    copyData: "4",
+    ...common,
+    copyData: name ?? "",
     data: {
       kind: "thumbnail-cell",
       image,

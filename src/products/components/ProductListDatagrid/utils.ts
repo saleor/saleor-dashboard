@@ -69,11 +69,11 @@ export function getColumns(
 }
 
 function getColumnSortIconName(
-  sort: Sort<ProductListUrlSortField>,
+  { sort, asc }: Sort<ProductListUrlSortField>,
   columnName: ProductListUrlSortField,
 ) {
-  if (columnName === sort.sort) {
-    if (sort.asc) {
+  if (columnName === sort) {
+    if (asc) {
       return "arrowUp";
     } else {
       return "arrowDown";
@@ -132,8 +132,7 @@ function getProductTypeCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
-  const value =
-    change?.value ?? getRowDataValue(rowData) ?? emptyDropdownCellValue;
+  const value = change?.value ?? getRowDataValue(rowData, change?.value);
 
   return dropdownCell(value, {
     allowCustomValues: false,
@@ -144,9 +143,10 @@ function getProductTypeCellContent(
 
 function getRowDataValue(
   rowData?: RelayToFlat<ProductListQuery["products"]>[number],
+  changeValue?: DropdownChoice,
 ): DropdownChoice {
-  if (!rowData) {
-    return undefined;
+  if (changeValue === null) {
+    return emptyDropdownCellValue;
   }
 
   return {
