@@ -200,7 +200,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductListDatagrid
           {...listProps}
-          disabled={false}
           products={listProps.products}
           channels={channels}
           settings={settings}

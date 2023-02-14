@@ -45,6 +45,7 @@ const useStyles = makeStyles(
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   products,
   onRowClick,
+  disabled,
   // channels,
   settings,
   onUpdateListSettings,
@@ -91,7 +92,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
-      {products?.length ? (
+      {!disabled ? (
         <>
           <Datagrid
             addButtonLabel={intl.formatMessage(messages.addProduct)}
