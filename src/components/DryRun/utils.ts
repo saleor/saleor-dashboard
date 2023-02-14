@@ -1,8 +1,8 @@
-import { AsyncWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents";
+import { getWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents/utils";
+import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
-import uniq from "lodash/uniq";
 
-import { ExcludedDocumentMap } from "../DryRunItemsList/utils";
+import { DocumentMap, ExcludedDocumentMap } from "../DryRunItemsList/utils";
 
 const getEventsFromQuery = (query: string) => {
   if (query.length === 0) {
@@ -32,28 +32,34 @@ const getEventsFromQuery = (query: string) => {
   }
 };
 
-export const getObjects = (query: string, available = true) => {
+export const getUnavailableObjects = (query: string) => {
   const queryEvents = getEventsFromQuery(query);
+  const unavailableObjects = [];
 
-  return uniq(
-    queryEvents.map(event => {
-      const object = event.split(/(?=[A-Z])/).slice(0, -1);
-      if (
-        Object.keys(AsyncWebhookTypes)
-          .filter(object =>
-            available
-              ? !Object.keys(ExcludedDocumentMap).includes(object.toUpperCase())
-              : Object.keys(ExcludedDocumentMap).includes(object.toUpperCase()),
-          )
-          .includes(object.join("_").toUpperCase())
-      ) {
-        return object.join(" ");
-      }
+  queryEvents.forEach(event => {
+    const formattedEvent = event
+      .split(/(?=[A-Z])/)
+      .join("_")
+      .toUpperCase();
 
-      return event
-        .split(/(?=[A-Z])/)
-        .slice(0, -2)
-        .join(" ");
-    }),
-  ).filter(object => object.length > 0);
+    if (checkEventPresence(formattedEvent)) {
+      unavailableObjects.push(event);
+    }
+  });
+
+  return unavailableObjects;
+};
+
+const checkEventPresence = (event: string) => {
+  const webhookTypes = getWebhookTypes(Object.keys(WebhookEventTypeAsyncEnum));
+  const availableObjects = Object.keys(DocumentMap);
+  const excludedObjects = Object.keys(webhookTypes).filter(
+    object => !availableObjects.includes(object),
+  );
+
+  Object.keys(ExcludedDocumentMap).forEach(
+    object => !excludedObjects.includes(object) && excludedObjects.push(object),
+  );
+
+  return excludedObjects.some(object => event.startsWith(object));
 };

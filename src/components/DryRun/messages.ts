@@ -16,11 +16,11 @@ export const messages = defineMessages({
     defaultMessage: "Select object type to perform dry run on provided query",
     description: "Dry run dialog object title",
   },
-  unavailableObjects: {
-    id: "ApNw0L",
+  unavailableEvents: {
+    id: "BYTvv/",
     defaultMessage:
-      "The following objects are currently not available for dry run:",
-    description: "Dry run objects unavailable",
+      "The following events from provided query are currently not available for dry run:",
+    description: "Dry run events unavailable",
   },
   objects: {
     id: "uccjUM",

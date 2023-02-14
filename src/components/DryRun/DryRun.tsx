@@ -1,7 +1,9 @@
 import Grid from "@dashboard/components/Grid";
-import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
-import { useTriggerWebhookDryRunMutation } from "@dashboard/graphql";
+import {
+  useTriggerWebhookDryRunMutation,
+  WebhookEventTypeSyncEnum,
+} from "@dashboard/graphql";
 import {
   capitalize,
   Dialog,
@@ -24,15 +26,16 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
+import { DocumentMap } from "../DryRunItemsList/utils";
 import { messages } from "./messages";
-import { getObjects } from "./utils";
+import { getUnavailableObjects } from "./utils";
 
 interface DryRunProps {
   query: string;
   showDialog: boolean;
   setShowDialog: Dispatch<SetStateAction<boolean>>;
   setResult: Dispatch<SetStateAction<string>>;
-  data: WebhookFormData;
+  syncEvents: WebhookEventTypeSyncEnum[];
 }
 
 const DryRun: React.FC<DryRunProps> = ({
@@ -40,15 +43,16 @@ const DryRun: React.FC<DryRunProps> = ({
   showDialog,
   setShowDialog,
   query,
-  data: { syncEvents },
+  syncEvents,
 }: DryRunProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const [objectId, setObjectId] = useState<string | null>(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
-  const availableObjects = getObjects(query);
-  const unavailableObjects = getObjects(query, false);
-
+  const availableObjects = Object.keys(DocumentMap).map(object =>
+    capitalize(object.split("_").join(" ").toLowerCase()),
+  );
+  const unavailableObjects = getUnavailableObjects(query);
   const [object, setObject] = useState<string | null>(null);
 
   const dryRun = async () => {
@@ -100,8 +104,8 @@ const DryRun: React.FC<DryRunProps> = ({
         {!!unavailableObjects.length && (
           <Alert variant="warning" close={false}>
             <Typography>
-              {intl.formatMessage(messages.unavailableObjects)}
-              &nbsp;
+              {intl.formatMessage(messages.unavailableEvents)}
+              <br />
               <strong>{unavailableObjects.join(", ")}</strong>
             </Typography>
           </Alert>
@@ -174,7 +178,7 @@ const DryRun: React.FC<DryRunProps> = ({
           color="primary"
           variant="primary"
           onClick={dryRun}
-          disabled={!availableObjects.length}
+          disabled={!object}
         >
           {intl.formatMessage(messages.run)}
         </Button>

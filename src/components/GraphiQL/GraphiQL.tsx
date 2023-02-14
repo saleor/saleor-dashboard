@@ -130,7 +130,7 @@ export function GraphiQL({
         setShowDialog={setShowDialog}
         query={query}
         setResult={setResult}
-        data={props.data}
+        syncEvents={props.data.syncEvents}
       />
     </GraphiQLProvider>
   );
