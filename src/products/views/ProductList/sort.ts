@@ -17,6 +17,7 @@ export function canBeSorted(
     case ProductListUrlSortField.date:
       return true;
     case ProductListUrlSortField.price:
+    case ProductListUrlSortField.status:
       return isChannelSelected;
     default:
       return false;
@@ -33,10 +34,8 @@ export function getSortQueryField(
       return ProductOrderField.PRICE;
     case ProductListUrlSortField.productType:
       return ProductOrderField.TYPE;
-    // case ProductListUrlSortField.status:
-    // return ProductOrderField.PUBLISHED;
-    // case ProductListUrlSortField.rank:
-    // return ProductOrderField.RANK;
+    case ProductListUrlSortField.status:
+      return ProductOrderField.PUBLISHED;
     case ProductListUrlSortField.date:
       return ProductOrderField.DATE;
     default:

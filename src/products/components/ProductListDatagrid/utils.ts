@@ -1,4 +1,5 @@
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
+import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import {
   dropdownCell,
   readonlyTextCell,
@@ -47,19 +48,22 @@ export function getColumns(
       width: 400,
     },
     {
-      id: "availability",
+      id: "status",
       title: intl.formatMessage(columnsMessages.availability),
       width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
     },
     {
-      id: "updatedAt",
+      id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
       width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
     },
     {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
     },
   ];
 }
@@ -97,7 +101,7 @@ export function createGetCellContent(
       ? undefined
       : products[row + removed.filter(r => r <= row).length];
 
-    const channel = rowData?.channelListings.find(
+    const channel = rowData?.channelListings?.find(
       listing => listing.channel.id === selectedChannelId,
     );
 
@@ -105,8 +109,8 @@ export function createGetCellContent(
       case "productType":
         return getProductTypeCellContent(change, rowData, getProductTypes);
 
-      case "availability":
-        return getAvailabilityCellContent(rowData, intl);
+      case "status":
+        return getStatusCellContent(rowData, intl, channel);
 
       case "description":
         return getDescriptionCellContent(columnId, change, rowData);
@@ -114,7 +118,7 @@ export function createGetCellContent(
         return getNameCellContent(change, rowData);
       case "price":
         return getPriceCellContent(intl, locale, channel);
-      case "updatedAt":
+      case "date":
         return getUpdatedAtrCellContent(rowData, locale);
     }
 
@@ -151,10 +155,19 @@ function getRowDataValue(
   };
 }
 
-function getAvailabilityCellContent(
+function getStatusCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   intl: IntlShape,
+  selectedChannnel?: RelayToFlat<
+    ProductListQuery["products"]
+  >[number]["channelListings"][number],
 ) {
+  if (!!selectedChannnel) {
+    return readonlyTextCell(
+      intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
+    );
+  }
+
   return readonlyTextCell(
     rowData?.channelListings?.length
       ? intl.formatMessage(messages.dropdownLabel, {
