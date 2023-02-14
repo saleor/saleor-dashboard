@@ -32,20 +32,20 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   };
 
   return (
-    <List.Item
-      padding={7}
-      borderTopStyle="solid"
-      borderWidth={1}
-      borderColor="neutralPlain"
-      className={sprinkles({
-        justifyContent: "space-between",
-        flexDirection: "row",
-      })}
+    <Link
+      href={AppUrls.resolveAppUrl(app.id)}
+      className={sprinkles({ display: "contents" })}
+      inline={false}
     >
-      <Link
-        href={AppUrls.resolveAppUrl(app.id)}
-        className={sprinkles({ display: "contents" })}
-        inline={false}
+      <List.Item
+        padding={7}
+        borderTopStyle="solid"
+        borderWidth={1}
+        borderColor="neutralPlain"
+        className={sprinkles({
+          justifyContent: "space-between",
+          flexDirection: "row",
+        })}
       >
         <Box display="flex" gap={5} alignItems="center">
           <Avatar.Store
@@ -85,8 +85,8 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             </Button>
           </TableButtonWrapper>
         </Box>
-      </Link>
-    </List.Item>
+      </List.Item>
+    </Link>
   );
 };
 
