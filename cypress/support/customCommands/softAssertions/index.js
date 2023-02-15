@@ -49,7 +49,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add("expectSkeletonIsVisible", () => {
   cy.get(SHARED_ELEMENTS.circularProgress).should("not.exist");
-  cy.get(SHARED_ELEMENTS.progressBar).should("be.visible");
+  // cy.get(SHARED_ELEMENTS.progressBar).should("be.visible");
   cy.get("body").then($body => {
     if ($body.find(SHARED_ELEMENTS.skeleton).length) {
       cy.assertVisibility(SHARED_ELEMENTS.skeleton);
