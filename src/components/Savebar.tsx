@@ -8,6 +8,8 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { contentMaxWidth } from "./AppLayout/consts";
+
 export interface SavebarProps extends Omit<MacawSavebarProps, "labels"> {
   labels?: Partial<SavebarLabels>;
 }
@@ -17,8 +19,16 @@ const useStyles = makeStyles(
     root: {
       height: "64px",
       "& .MuiContainer-root": {
-        paddingRight: 16,
+        paddingRight: 0,
         paddingLeft: 0,
+        maxWidth: contentMaxWidth,
+        margin: "0 auto",
+      },
+      "& .MuiPaper-root": {
+        boxShadow: "none",
+      },
+      "& .MuiCardContent-root": {
+        marginTop: 0,
       },
     },
   },

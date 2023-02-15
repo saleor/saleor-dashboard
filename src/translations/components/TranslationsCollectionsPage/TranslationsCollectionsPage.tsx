@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
@@ -26,7 +27,9 @@ export interface TranslationsCollectionsPageProps
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
+const TranslationsCollectionsPage: React.FC<
+  TranslationsCollectionsPageProps
+> = ({
   translationId,
   activeField,
   disabled,
@@ -41,7 +44,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.collections,
@@ -138,7 +141,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </>
+    </DetailedContent>
   );
 };
 TranslationsCollectionsPage.displayName = "TranslationsCollectionsPage";

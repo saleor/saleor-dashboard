@@ -47,10 +47,13 @@ export interface TimelineEventHeaderProps {
   date: string;
   titleElements?: TitleElement[];
   secondaryTitle?: string;
+  hasPlainDate?: boolean;
 }
 
-export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
-  const { title, date, titleElements, secondaryTitle } = props;
+export const TimelineEventHeader: React.FC<
+  TimelineEventHeaderProps
+> = props => {
+  const { title, date, titleElements, secondaryTitle, hasPlainDate } = props;
   const navigate = useNavigator();
 
   const classes = useStyles(props);
@@ -79,7 +82,7 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
         </div>
       )}
       <Typography className={classes.date}>
-        <DateTime date={date} />
+        <DateTime date={date} plain={hasPlainDate} />
       </Typography>
       {secondaryTitle && (
         <Typography className={classes.secondaryTitle}>

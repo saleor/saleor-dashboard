@@ -14,8 +14,6 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
   <Box
     borderStyle="solid"
     borderColor="neutralPlain"
-    paddingLeft={7}
-    paddingRight={7}
     borderLeftWidth={1}
     height="100vh"
     __paddingBottom={300}
@@ -27,7 +25,6 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
     borderTopWidth={0}
     borderBottomWidth={0}
     borderRightWidth={0}
-    padding={6}
     __gridArea="right"
     className={clsx("hide-scrollbar", className)}
   >

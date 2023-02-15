@@ -19,6 +19,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -41,7 +42,7 @@ const initialForm: AddMemberFormData = {
 const useStyles = makeStyles(
   theme => ({
     hr: {
-      backgroundColor: "#eaeaea",
+      backgroundColor: vars.colors.border.neutralPlain,
       border: "none",
       height: 1,
       marginBottom: 0,

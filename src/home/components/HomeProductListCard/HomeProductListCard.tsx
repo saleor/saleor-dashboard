@@ -7,7 +7,13 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { HomeQuery } from "@dashboard/graphql";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  TableBody,
+  TableCell,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -41,11 +47,11 @@ const useStyles = makeStyles(
     tableRow: {
       cursor: "pointer",
     },
-    card: {
-      paddingLeft: 16,
+    cardContent: {
+      padding: 0,
     },
     cardTitle: {
-      paddingLeft: 0,
+      padding: 0,
     },
   }),
   { name: "HomeProductListCard" },
@@ -63,95 +69,97 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id={testId} className={classes.card}>
+    <Card data-test-id={testId}>
       <CardTitle
+        className={classes.cardTitle}
         title={intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
           description: "header",
         })}
-        className={classes.cardTitle}
       />
-      <ResponsiveTable>
-        <colgroup>
-          <col className={classes.colAvatar} />
-          <col className={classes.colName} />
-          <col />
-        </colgroup>
-        <TableBody>
-          {renderCollection(
-            topProducts,
-            variant => (
-              <TableRowLink
-                key={variant ? variant.id : "skeleton"}
-                hover={!!variant}
-                className={clsx({
-                  [classes.tableRow]: !!variant,
-                })}
-                href={productVariantEditUrl(variant.product.id, variant.id)}
-              >
-                <TableCellAvatar
-                  className={classes.colAvatar}
-                  thumbnail={maybe(() => variant.product.thumbnail.url)}
-                  avatarProps={classes.avatarProps}
-                />
+      <CardContent className={classes.cardContent}>
+        <ResponsiveTable>
+          <colgroup>
+            <col className={classes.colAvatar} />
+            <col className={classes.colName} />
+            <col />
+          </colgroup>
+          <TableBody>
+            {renderCollection(
+              topProducts,
+              variant => (
+                <TableRowLink
+                  key={variant ? variant.id : "skeleton"}
+                  hover={!!variant}
+                  className={clsx({
+                    [classes.tableRow]: !!variant,
+                  })}
+                  href={productVariantEditUrl(variant.product.id, variant.id)}
+                >
+                  <TableCellAvatar
+                    className={classes.colAvatar}
+                    thumbnail={maybe(() => variant.product.thumbnail.url)}
+                    avatarProps={classes.avatarProps}
+                  />
 
-                <TableCell className={classes.label}>
-                  {variant ? (
-                    <>
-                      <Typography color={"primary"}>
-                        {variant.product.name}
-                      </Typography>
-                      <Typography color={"textSecondary"}>
-                        {maybe(() =>
-                          variant.attributes
-                            .map(attribute => attribute.values[0].name)
-                            .join(" / "),
-                        )}
-                      </Typography>
-                      <Typography color={"textSecondary"}>
-                        <FormattedMessage
-                          id="0opVvi"
-                          defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
-                          description="number of ordered products"
-                          values={{
-                            amount: variant.quantityOrdered,
-                          }}
-                        />
-                      </Typography>
-                    </>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
-
-                <TableCell>
-                  <Typography align={"right"}>
-                    {maybe(
-                      () => (
-                        <Money money={variant.revenue.gross} />
-                      ),
-                      <Skeleton />,
+                  <TableCell className={classes.label}>
+                    {variant ? (
+                      <>
+                        <Typography color={"primary"}>
+                          {variant.product.name}
+                        </Typography>
+                        <Typography color={"textSecondary"}>
+                          {maybe(() =>
+                            variant.attributes
+                              .map(attribute => attribute.values[0].name)
+                              .join(" / "),
+                          )}
+                        </Typography>
+                        <Typography color={"textSecondary"}>
+                          <FormattedMessage
+                            id="0opVvi"
+                            defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
+                            description="number of ordered products"
+                            values={{
+                              amount: variant.quantityOrdered,
+                            }}
+                          />
+                        </Typography>
+                      </>
+                    ) : (
+                      <Skeleton />
                     )}
-                  </Typography>
-                </TableCell>
-              </TableRowLink>
-            ),
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={3} className={classes.noProducts}>
-                  <Typography>
-                    <FormattedMessage
-                      id="Q1Uzbb"
-                      defaultMessage="No products found"
-                    />
-                  </Typography>
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+                  </TableCell>
+
+                  <TableCell>
+                    <Typography align={"right"}>
+                      {maybe(
+                        () => (
+                          <Money money={variant.revenue.gross} />
+                        ),
+                        <Skeleton />,
+                      )}
+                    </Typography>
+                  </TableCell>
+                </TableRowLink>
+              ),
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={3} className={classes.noProducts}>
+                    <Typography>
+                      <FormattedMessage
+                        id="Q1Uzbb"
+                        defaultMessage="No products found"
+                      />
+                    </Typography>
+                  </TableCell>
+                </TableRowLink>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </CardContent>
     </Card>
   );
 };

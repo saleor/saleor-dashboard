@@ -116,7 +116,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardMenu menuItems={extensionMenuItems} />
               )}
             </TopNav>
-            <Content paddingLeft={0}>
+            <Content>
               <Backlink href={customerListUrl()}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>

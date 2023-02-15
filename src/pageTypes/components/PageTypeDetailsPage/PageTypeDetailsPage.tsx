@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -20,6 +21,7 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { Box, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -116,11 +118,18 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <>
+          <DetailedContent>
             <TopNav href={pageTypeListUrl()} title={pageTitle} />
             <Content>
-              <Grid variant="inverted">
-                <div>
+              <Grid
+                variant="inverted"
+                className={sprinkles({
+                  paddingLeft: 9,
+                  height: "100vh",
+                  margin: "auto",
+                })}
+              >
+                <Box paddingTop={9}>
                   <Typography>
                     {intl.formatMessage(commonMessages.generalInformations)}
                   </Typography>
@@ -130,7 +139,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                       defaultMessage="These are general information about this Content Type."
                     />
                   </Typography>
-                </div>
+                </Box>
                 <PageTypeDetails
                   data={data}
                   disabled={disabled}
@@ -184,7 +193,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

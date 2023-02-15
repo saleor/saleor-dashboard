@@ -3,9 +3,14 @@
   top: 0;
 }
 
+html {
+  /* set base font size to 13px */
+  font-size: 50.782% !important;
+}
+
 body {
-  background: var(--mu-colors-background-plain);
-  color: var(--mu-colors-text-neutral-default) !important;
+  color: var(--mu-colors-foreground-text-neutral-plain) !important;
+  overscroll-behavior-y: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

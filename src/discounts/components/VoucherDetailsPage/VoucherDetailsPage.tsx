@@ -212,7 +212,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         return (
           <DetailedContent>
             <TopNav href={voucherListUrl()} title={voucher?.code} />
-            <Content paddingLeft={0}>
+            <Content>
               <VoucherInfo
                 data={data}
                 disabled={disabled}

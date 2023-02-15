@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import {
@@ -41,7 +42,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.vouchers,
@@ -94,7 +95,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </>
+    </DetailedContent>
   );
 };
 TranslationsVouchersPage.displayName = "TranslationsVouchersPage";

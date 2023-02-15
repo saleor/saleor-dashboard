@@ -17,7 +17,6 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(3.5),
     },
     button: {
-      zIndex: 2,
       padding: `7px`,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
@@ -33,7 +32,6 @@ const useStyles = makeStyles(
         "&::placeholder": {
           opacity: [[1], "!important"] as any,
         },
-        zIndex: 2,
       },
       background: theme.palette.background.paper,
     },
@@ -51,12 +49,9 @@ const useStyles = makeStyles(
       },
       alignItems: "center",
       display: "flex",
-      paddingLeft: theme.spacing(3),
+      paddingLeft: 0,
     },
     root: {
-      borderColor: theme.palette.divider,
-      borderStyle: "solid",
-      borderWidth: "0 0 0 1px",
       marginLeft: 20,
       paddingTop: theme.spacing(12),
       paddingLeft: theme.spacing(3.27),

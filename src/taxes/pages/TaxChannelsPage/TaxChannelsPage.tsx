@@ -1,5 +1,6 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
@@ -31,6 +32,7 @@ import {
   PageTab,
   PageTabs,
 } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -95,14 +97,13 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   const handleSubmit = (data: TaxConfigurationFormData) => {
     const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
-    const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] = updateCountriesConfiguration.map(
-      config => ({
+    const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] =
+      updateCountriesConfiguration.map(config => ({
         countryCode: config.country.code as CountryCode,
         chargeTaxes: config.chargeTaxes,
         taxCalculationStrategy: config.taxCalculationStrategy,
         displayGrossPrices: config.displayGrossPrices,
-      }),
-    );
+      }));
     onSubmit({
       chargeTaxes: data.chargeTaxes,
       taxCalculationStrategy: data.chargeTaxes
@@ -160,147 +161,151 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         };
 
         return (
-          <>
+          <DetailedContent>
             <TopNav title={<TaxPageTitle />} />
             <Content>
-              <PageTabs value="channels" onChange={handleTabChange}>
-                <PageTab
-                  label={intl.formatMessage(taxesMessages.channelsSection)}
-                  value="channels"
-                />
-                <PageTab
-                  label={intl.formatMessage(taxesMessages.countriesSection)}
-                  value="countries"
-                />
-                <PageTab
-                  label={intl.formatMessage(taxesMessages.taxClassesSection)}
-                  value="tax-classes"
-                />
-              </PageTabs>
-              <VerticalSpacer spacing={2} />
-              <Grid variant="inverted">
-                <div>
-                  <TaxChannelsMenu
-                    configurations={taxConfigurations}
-                    selectedConfigurationId={selectedConfigurationId}
+              <Box padding={9}>
+                <PageTabs value="channels" onChange={handleTabChange}>
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.channelsSection)}
+                    value="channels"
                   />
-                </div>
-                <div>
-                  <TaxSettingsCard
-                    values={data}
-                    strategyChoices={taxStrategyChoices}
-                    onChange={change}
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.countriesSection)}
+                    value="countries"
                   />
-                  <VerticalSpacer spacing={3} />
-                  <Card>
-                    <CardTitle
-                      className={classes.toolbarMargin}
-                      title={intl.formatMessage(
-                        taxesMessages.countryExceptions,
-                      )}
-                      toolbar={
-                        <Button
-                          variant="secondary"
-                          onClick={() => openDialog("add-country")}
-                        >
-                          <FormattedMessage
-                            {...taxesMessages.addCountryLabel}
-                          />
-                        </Button>
-                      }
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.taxClassesSection)}
+                    value="tax-classes"
+                  />
+                </PageTabs>
+                <VerticalSpacer spacing={2} />
+                <Grid variant="inverted">
+                  <div>
+                    <TaxChannelsMenu
+                      configurations={taxConfigurations}
+                      selectedConfigurationId={selectedConfigurationId}
                     />
-                    {countryExceptions?.length === 0 ? (
-                      <CardContent>
-                        <FormattedMessage
-                          {...taxesMessages.noExceptionsForChannel}
-                        />
-                      </CardContent>
-                    ) : (
-                      <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
-                        <ListHeader>
-                          <ListItem>
-                            <ListItemCell>
-                              <FormattedMessage
-                                {...taxesMessages.countryNameHeader}
-                              />
-                            </ListItemCell>
-                            <ListItemCell className={classes.left}>
-                              <FormattedMessage
-                                {...taxesMessages.chargeTaxesHeader}
-                              />
-                            </ListItemCell>
-                            <ListItemCell className={classes.center}>
-                              <FormattedMessage
-                                {...taxesMessages.showGrossHeader}
-                              />
-                            </ListItemCell>
-                            <ListItemCell>
-                              {/* This is required for the header row to be aligned with list items */}
-                              <div className={classes.dummy}></div>
-                            </ListItemCell>
-                          </ListItem>
-                        </ListHeader>
-                        <Divider />
-                        {countryExceptions?.map((country, countryIndex) => (
-                          <TaxCountryExceptionListItem
-                            divider={
-                              !isLastElement(countryExceptions, countryIndex)
-                            }
-                            strategyChoices={taxStrategyChoices}
-                            country={country}
-                            key={country.country.code}
-                            onDelete={() => {
-                              const currentRemovals =
-                                data.removeCountriesConfiguration;
-                              const currentExceptions = [
-                                ...data.updateCountriesConfiguration,
-                              ];
-                              set({
-                                removeCountriesConfiguration: [
-                                  ...currentRemovals,
-                                  country.country.code as CountryCode,
-                                ],
-                                updateCountriesConfiguration: currentExceptions.filter(
-                                  exception =>
-                                    exception.country.code !==
-                                    country.country.code,
-                                ),
-                              });
-                              triggerChange();
-                            }}
-                            onChange={event =>
-                              handleExceptionChange(event, countryIndex)
-                            }
+                  </div>
+                  <div>
+                    <TaxSettingsCard
+                      values={data}
+                      strategyChoices={taxStrategyChoices}
+                      onChange={change}
+                    />
+                    <VerticalSpacer spacing={3} />
+                    <Card>
+                      <CardTitle
+                        className={classes.toolbarMargin}
+                        title={intl.formatMessage(
+                          taxesMessages.countryExceptions,
+                        )}
+                        toolbar={
+                          <Button
+                            variant="secondary"
+                            onClick={() => openDialog("add-country")}
+                          >
+                            <FormattedMessage
+                              {...taxesMessages.addCountryLabel}
+                            />
+                          </Button>
+                        }
+                      />
+                      {countryExceptions?.length === 0 ? (
+                        <CardContent>
+                          <FormattedMessage
+                            {...taxesMessages.noExceptionsForChannel}
                           />
-                        )) ?? <Skeleton />}
-                      </List>
-                    )}
-                  </Card>
-                </div>
-              </Grid>
-              <Savebar
-                state={savebarState}
-                disabled={disabled}
-                onSubmit={submit}
-                onCancel={() => navigate(configurationMenuUrl)}
-              />
-              {allCountries && (
-                <TaxCountryDialog
-                  open={isDialogOpen}
-                  countries={allCountries
-                    .filter(
-                      ({ code }) =>
-                        !countryExceptions?.some(
-                          ({ country }) => country.code === code,
-                        ),
-                    )
-                    .map(country => ({ checked: false, ...country }))}
-                  onConfirm={handleCountryChange}
-                  onClose={closeDialog}
-                />
-              )}
+                        </CardContent>
+                      ) : (
+                        <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
+                          <ListHeader>
+                            <ListItem>
+                              <ListItemCell>
+                                <FormattedMessage
+                                  {...taxesMessages.countryNameHeader}
+                                />
+                              </ListItemCell>
+                              <ListItemCell className={classes.left}>
+                                <FormattedMessage
+                                  {...taxesMessages.chargeTaxesHeader}
+                                />
+                              </ListItemCell>
+                              <ListItemCell className={classes.center}>
+                                <FormattedMessage
+                                  {...taxesMessages.showGrossHeader}
+                                />
+                              </ListItemCell>
+                              <ListItemCell>
+                                {/* This is required for the header row to be aligned with list items */}
+                                <div className={classes.dummy}></div>
+                              </ListItemCell>
+                            </ListItem>
+                          </ListHeader>
+                          <Divider />
+                          {countryExceptions?.map((country, countryIndex) => (
+                            <TaxCountryExceptionListItem
+                              divider={
+                                !isLastElement(countryExceptions, countryIndex)
+                              }
+                              strategyChoices={taxStrategyChoices}
+                              country={country}
+                              key={country.country.code}
+                              onDelete={() => {
+                                const currentRemovals =
+                                  data.removeCountriesConfiguration;
+                                const currentExceptions = [
+                                  ...data.updateCountriesConfiguration,
+                                ];
+                                set({
+                                  removeCountriesConfiguration: [
+                                    ...currentRemovals,
+                                    country.country.code as CountryCode,
+                                  ],
+                                  updateCountriesConfiguration:
+                                    currentExceptions.filter(
+                                      exception =>
+                                        exception.country.code !==
+                                        country.country.code,
+                                    ),
+                                });
+                                triggerChange();
+                              }}
+                              onChange={event =>
+                                handleExceptionChange(event, countryIndex)
+                              }
+                            />
+                          )) ?? <Skeleton />}
+                        </List>
+                      )}
+                    </Card>
+                  </div>
+                </Grid>
+
+                {allCountries && (
+                  <TaxCountryDialog
+                    open={isDialogOpen}
+                    countries={allCountries
+                      .filter(
+                        ({ code }) =>
+                          !countryExceptions?.some(
+                            ({ country }) => country.code === code,
+                          ),
+                      )
+                      .map(country => ({ checked: false, ...country }))}
+                    onConfirm={handleCountryChange}
+                    onClose={closeDialog}
+                  />
+                )}
+              </Box>
             </Content>
-          </>
+            <Savebar
+              state={savebarState}
+              disabled={disabled}
+              onSubmit={submit}
+              onCancel={() => navigate(configurationMenuUrl)}
+            />
+          </DetailedContent>
         );
       }}
     </Form>

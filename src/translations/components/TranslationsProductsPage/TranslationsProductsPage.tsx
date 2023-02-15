@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
@@ -47,7 +48,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
@@ -173,7 +174,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           <CardSpacer />
         </>
       )}
-    </>
+    </DetailedContent>
   );
 };
 TranslationsProductsPage.displayName = "TranslationsProductsPage";

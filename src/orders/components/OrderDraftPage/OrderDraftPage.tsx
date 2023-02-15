@@ -21,6 +21,7 @@ import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -28,7 +29,6 @@ import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderDraftAlert from "./OrderDraftAlert";
-import { usePageStyles } from "./styles";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
@@ -77,7 +77,6 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     usersLoading,
     errors,
   } = props;
-  const classes = usePageStyles(props);
   const navigate = useNavigator();
 
   const intl = useIntl();
@@ -86,7 +85,20 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     <DetailedContent>
       <TopNav
         href={orderDraftListUrl()}
-        title={order?.number ? "#" + order?.number : undefined}
+        title={
+          <Box display="flex" alignItems="center" gap={6}>
+            <span>{order?.number ? "#" + order?.number : undefined}</span>
+            <div>
+              {order && order.created ? (
+                <Typography variant="body2">
+                  <DateTime date={order.created} plain />
+                </Typography>
+              ) : (
+                <Skeleton style={{ width: "10em" }} />
+              )}
+            </div>
+          </Box>
+        }
       >
         <CardMenu
           menuItems={[
@@ -101,16 +113,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           ]}
         />
       </TopNav>
-      <Content paddingRight={10}>
-        <div className={classes.date}>
-          {order && order.created ? (
-            <Typography variant="body2">
-              <DateTime date={order.created} />
-            </Typography>
-          ) : (
-            <Skeleton style={{ width: "10em" }} />
-          )}
-        </div>
+      <Content>
         <OrderDraftAlert
           order={order}
           channelUsabilityData={channelUsabilityData}

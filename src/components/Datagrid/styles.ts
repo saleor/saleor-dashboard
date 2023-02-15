@@ -1,7 +1,9 @@
 import { Theme } from "@glideapps/glide-data-grid";
-import { Typography } from "@material-ui/core/styles/createTypography";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { themes } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
+
+export const cellHeight = 36;
 
 const useStyles = makeStyles(
   theme => {
@@ -19,10 +21,10 @@ const useStyles = makeStyles(
         background: theme.palette.background.paper,
         borderRadius: 8,
         // Right and left toolbars
-        width: "calc(100% - 64px - 48px - 1px)",
+        width: `calc(100% - 64px - ${cellHeight} - 1px)`,
         marginTop: 1,
         marginLeft: 50,
-        height: 48,
+        height: cellHeight,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
@@ -32,16 +34,17 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 48,
+        height: cellHeight,
       },
       ghostIcon: {
         color: theme.palette.saleor.main[3],
       },
       portal: {
-        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
-          appearance: "none",
-          margin: 0,
-        },
+        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
+          {
+            appearance: "none",
+            margin: 0,
+          },
         "& input[type=number]": {
           appearance: "textfield",
         },
@@ -61,13 +64,14 @@ const useStyles = makeStyles(
           padding: "0 !important",
         },
         "& input, & textarea": {
-          ...theme.typography.body1,
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: theme.typography.body1.fontSize,
-          letterSpacing: "0.44px",
-          padding: `1.4rem ${theme.spacing(1)}`,
+          fontSize: themes.defaultLight.fontSize.bodySmall,
+          letterSpacing: "0.015em",
+          lineHeight: themes.defaultLight.lineHeight.bodySmall,
+          fontWeight: themes.defaultLight.fontWeight.bodySmall,
+          padding: themes.defaultLight.space[3],
           outline: 0,
         },
         '& input[type="number"]': {
@@ -98,7 +102,7 @@ const useStyles = makeStyles(
         height: "100%",
         background: theme.palette.background.paper,
         borderLeft: `1px solid ${activeBorderColor}`,
-        width: 48,
+        width: 36,
       },
       rowActionBarScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -119,7 +123,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 47,
+        height: `calc(${cellHeight}px - 1px)`,
       },
       rowActionScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -128,7 +132,7 @@ const useStyles = makeStyles(
         position: "absolute",
         top: 1,
         left: 0,
-        height: 48,
+        height: cellHeight,
         width: 10,
         borderLeft: 0,
         background: theme.palette.background.paper,
@@ -176,20 +180,8 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-const calculateFontToPx = (remValue: string | number, base: number) => {
-  if (typeof remValue === "string") {
-    return `${parseFloat(remValue) * base}px`;
-  }
-
-  return `${remValue * base}px`;
-};
-
-type HtmlTypography = Typography & { htmlFontSize: number };
-
 export function useDatagridTheme() {
   const theme = useTheme();
-
-  const base = (theme.typography as HtmlTypography).htmlFontSize * 0.625;
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
@@ -203,15 +195,18 @@ export function useDatagridTheme() {
       bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
-      fontFamily: theme.typography.fontFamily,
-      baseFontStyle: calculateFontToPx(theme.typography.body1.fontSize, base),
-      headerFontStyle: calculateFontToPx(theme.typography.body2.fontSize, base),
-      editorFontSize: calculateFontToPx(theme.typography.body1.fontSize, base),
+      fontFamily: themes.defaultLight.fontFamily.body,
+      baseFontStyle: themes.defaultLight.fontSize.bodySmall,
+      headerFontStyle: themes.defaultLight.fontSize.bodySmall,
+      editorFontSize: themes.defaultLight.fontSize.bodySmall,
       textMedium: theme.palette.text.primary,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,
       textDark: theme.palette.text.primary,
       textLight: theme.palette.text.primary,
+      cellHorizontalPadding: 8,
+      cellVerticalPadding: 8,
+      lineHeight: 20,
     }),
     [theme],
   );

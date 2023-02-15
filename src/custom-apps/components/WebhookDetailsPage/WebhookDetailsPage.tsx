@@ -21,6 +21,7 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -104,31 +105,33 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         );
 
         return (
-          <DetailedContent>
+          <DetailedContent useSingleColumn>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <Content>
-              <WebhookStatus
-                data={data.isActive}
-                disabled={disabled}
-                onChange={change}
-              />
-              <WebhookInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <FormSpacer />
-              <WebhookEvents
-                data={data}
-                onSyncEventChange={handleSyncEventsSelect}
-                onAsyncEventChange={handleAsyncEventsSelect}
-              />
-              <WebhookSubscriptionQuery
-                query={query}
-                setQuery={setQuery}
-                data={data}
-              />
+              <Box paddingX={9}>
+                <WebhookStatus
+                  data={data.isActive}
+                  disabled={disabled}
+                  onChange={change}
+                />
+                <WebhookInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <FormSpacer />
+                <WebhookEvents
+                  data={data}
+                  onSyncEventChange={handleSyncEventsSelect}
+                  onAsyncEventChange={handleAsyncEventsSelect}
+                />
+                <WebhookSubscriptionQuery
+                  query={query}
+                  setQuery={setQuery}
+                  data={data}
+                />
+              </Box>
             </Content>
             <Savebar
               disabled={disabled}

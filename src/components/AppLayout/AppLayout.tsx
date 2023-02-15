@@ -6,6 +6,7 @@ import React from "react";
 
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
+import { contentMaxWidth } from "./consts";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -59,6 +60,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             borderTopWidth={1}
             borderTopStyle="solid"
             borderColor="neutralPlain"
+            __maxWidth={contentMaxWidth}
+            margin="auto"
           />
         </Box>
       </Box>

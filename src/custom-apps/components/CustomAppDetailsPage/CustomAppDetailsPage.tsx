@@ -20,6 +20,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
@@ -111,7 +112,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <img src={activateIcon} alt="" />
+              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage
                   id="whTEcF"
@@ -127,7 +128,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               )}
             </Button>
           </TopNav>
-          <Content paddingLeft={0}>
+          <Content>
             {token && (
               <>
                 <CustomAppDefaultToken

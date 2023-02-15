@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -8,7 +9,7 @@ export const useStyles = makeStyles(
     },
     objectsWrapper: {
       borderRight: "1px solid",
-      borderRightColor: theme.palette.divider,
+      borderRightColor: vars.colors.border.neutralPlain,
       padding: theme.spacing(3),
     },
     listHeader: {
@@ -18,7 +19,7 @@ export const useStyles = makeStyles(
     },
     listBody: {
       height: 300,
-      overflow: "scroll",
+      overflowY: "auto",
     },
     listItem: {
       minHeight: 0,

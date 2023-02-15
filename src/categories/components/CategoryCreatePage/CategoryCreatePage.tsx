@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Metadata from "@dashboard/components/Metadata";
@@ -7,6 +8,7 @@ import SeoForm from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -34,7 +36,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   return (
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <>
+        <DetailedContent>
           <TopNav
             href={backUrl}
             title={intl.formatMessage({
@@ -43,8 +45,8 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               description: "page header",
             })}
           />
-          <Content paddingLeft={0}>
-            <div>
+          <Content>
+            <Box height="100vh" __marginBottom="auto">
               <CategoryDetailsForm
                 data={data}
                 disabled={disabled}
@@ -71,15 +73,15 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               />
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
-              <Savebar
-                onCancel={() => navigate(backUrl)}
-                onSubmit={submit}
-                state={saveButtonBarState}
-                disabled={isSaveDisabled}
-              />
-            </div>
+            </Box>
           </Content>
-        </>
+          <Savebar
+            onCancel={() => navigate(backUrl)}
+            onSubmit={submit}
+            state={saveButtonBarState}
+            disabled={isSaveDisabled}
+          />
+        </DetailedContent>
       )}
     </CategoryCreateForm>
   );

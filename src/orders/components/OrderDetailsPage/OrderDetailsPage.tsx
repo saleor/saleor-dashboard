@@ -219,7 +219,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 ]}
               />
             </TopNav>
-            <Content data-test-id="order-fulfillment" paddingRight={10}>
+
+            <Content data-test-id="order-fulfillment">
               {!isOrderUnconfirmed ? (
                 <OrderUnfulfilledProductsCard
                   showFulfillmentAction={canFulfill}

@@ -1,3 +1,4 @@
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
@@ -38,7 +39,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.sales,
@@ -86,7 +87,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </>
+    </DetailedContent>
   );
 };
 TranslationsSalesPage.displayName = "TranslationsSalesPage";
