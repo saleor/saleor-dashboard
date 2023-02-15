@@ -14,8 +14,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AppsSkeleton from "../../../apps/components/AppsSkeleton";
-import DeactivatedText from "../../../apps/components/DeactivatedText";
 import { useStyles } from "../../../apps/styles";
+import DeactivatedText from "../../../new-apps/components/DeactivatedText";
 
 export interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
