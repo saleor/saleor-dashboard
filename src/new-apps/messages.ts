@@ -35,8 +35,8 @@ export const appInstallationStatusMessages = defineMessages({
     description: "information",
   },
   failed: {
-    id: "26VlBZ",
-    defaultMessage: "Problem occured during installation.",
+    id: "RY4PJY",
+    defaultMessage: "Installation failed",
     description: "information",
   },
 });

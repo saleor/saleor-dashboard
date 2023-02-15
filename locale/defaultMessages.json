@@ -543,10 +543,6 @@
     "context": "order status",
     "string": "Partially returned"
   },
-  "26VlBZ": {
-    "context": "information",
-    "string": "Problem occured during installation."
-  },
   "28GZnc": {
     "string": "Start typing to begin search..."
   },
@@ -3889,6 +3885,10 @@
     "context": "copy code button label",
     "string": "Copy code"
   },
+  "RY4PJY": {
+    "context": "information",
+    "string": "Installation failed"
+  },
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this page type and assigned pages"
@@ -6392,6 +6392,10 @@
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lSd5Zo": {
+    "context": "app permissions label",
+    "string": "None"
   },
   "lT5MYM": {
     "context": "dialog title",
