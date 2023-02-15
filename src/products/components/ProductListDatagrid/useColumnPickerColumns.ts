@@ -1,49 +1,27 @@
-import ColumnPicker from "@dashboard/components/ColumnPicker";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
-import {
-  FetchMoreProps,
-  ListProps,
-  PageListProps,
-  RelayToFlat,
-} from "@dashboard/types";
-import React, { useMemo } from "react";
+import { commonMessages } from "@dashboard/intl";
+import { ListSettings, RelayToFlat } from "@dashboard/types";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { getAttributeColumnValue } from "../ProductListPage/utils";
 import { columnsMessages } from "./messages";
 
-interface ProductListDatagridColumnPickerProps
-  extends ListProps<ProductListColumns>,
-    PageListProps<ProductListColumns>,
-    FetchMoreProps {
-  columnQuery: string;
+export const useColumnPickerColumns = (
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >;
-  onColumnQueryChange: (query: string) => void;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-}
-
-export const ProductListDatagridColumnPicker: React.FC<
-  ProductListDatagridColumnPickerProps
-> = ({
-  onUpdateListSettings,
-  hasMore,
-  loading,
-  onFetchMore,
-  availableInGridAttributes,
-  columnQuery,
-  onColumnQueryChange,
-  settings,
-  defaultSettings,
-  gridAttributes,
-}) => {
+  >,
+  settings: ListSettings<ProductListColumns>,
+  defaultColumns: ProductListColumns[],
+) => {
   const intl = useIntl();
+
   const staticColumns = [
     {
       label: intl.formatMessage(columnsMessages.availability),
@@ -52,6 +30,10 @@ export const ProductListDatagridColumnPicker: React.FC<
     {
       label: intl.formatMessage(columnsMessages.price),
       value: "price" as ProductListColumns,
+    },
+    {
+      label: intl.formatMessage(commonMessages.description),
+      value: "description" as ProductListColumns,
     },
     {
       label: intl.formatMessage(columnsMessages.type),
@@ -63,7 +45,7 @@ export const ProductListDatagridColumnPicker: React.FC<
     },
   ];
 
-  const initialColumnsChoices = useMemo(() => {
+  const initialColumns = useMemo(() => {
     const selectedStaticColumns = staticColumns.filter(column =>
       (settings.columns || []).includes(column.value),
     );
@@ -86,21 +68,9 @@ export const ProductListDatagridColumnPicker: React.FC<
     ),
   ];
 
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
-  return (
-    <ColumnPicker
-      availableColumns={availableColumns}
-      initialColumns={initialColumnsChoices}
-      defaultColumns={defaultSettings.columns}
-      hasMore={hasMore}
-      loading={loading}
-      query={columnQuery}
-      onQueryChange={onColumnQueryChange}
-      onFetchMore={onFetchMore}
-      onSave={handleSave}
-      IconButtonProps={{ variant: "secondary" }}
-    />
-  );
+  return {
+    availableColumns,
+    initialColumns,
+    defaultColumns,
+  };
 };

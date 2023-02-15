@@ -1,3 +1,4 @@
+import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/useDatagridChange";
 import Savebar from "@dashboard/components/Savebar";
@@ -27,8 +28,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { messages } from "./messages";
-import { ProductListDatagridColumnPicker } from "./ProductListDatagridColumnPicker";
 import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
+import { useColumnPickerColumns } from "./useColumnPickerColumns";
 import { useProductForm } from "./useProductForm";
 import { createGetCellContent, getColumns } from "./utils";
 
@@ -84,9 +85,26 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     isAttributeColumnValue,
   );
 
+  const handleSave = (columns: ProductListColumns[]) =>
+    onUpdateListSettings("columns", columns);
+
   const columns = useMemo(
-    () => getColumns(intl, sort, gridAttributes, gridAttributesFromSettings),
-    [gridAttributes, gridAttributesFromSettings, intl, sort],
+    () =>
+      getColumns({
+        intl,
+        sort,
+        gridAttributes,
+        gridAttributesFromSettings,
+        settings,
+      }),
+    [gridAttributes, gridAttributesFromSettings, intl, settings, sort],
+  );
+
+  const columnPickerColumns = useColumnPickerColumns(
+    gridAttributes,
+    availableInGridAttributes,
+    settings,
+    defaultSettings.columns,
   );
 
   const getCellContent = useMemo(
@@ -140,21 +158,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             emptyText={intl.formatMessage(messages.emptyText)}
             getCellContent={getCellContent}
             getCellError={getCellError}
-            customColumnPicker={
-              <ProductListDatagridColumnPicker
-                disabled={false}
-                hasMore={hasMore}
-                loading={loading}
-                onFetchMore={onFetchMore}
-                columnQuery={columnQuery}
-                defaultSettings={defaultSettings}
-                settings={settings}
-                availableInGridAttributes={availableInGridAttributes}
-                onColumnQueryChange={onColumnQueryChange}
-                onUpdateListSettings={onUpdateListSettings}
-                gridAttributes={gridAttributes}
-              />
-            }
             menuItems={index => [
               {
                 label: intl.formatMessage(messages.editProduct),
@@ -171,6 +174,20 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             title=""
             fullScreenTitle={intl.formatMessage(messages.products)}
             onChange={onChange}
+            renderColumnPicker={defaultProps => (
+              <ColumnPicker
+                {...defaultProps}
+                hasMore={hasMore}
+                loading={loading}
+                onFetchMore={onFetchMore}
+                query={columnQuery}
+                onQueryChange={onColumnQueryChange}
+                onSave={handleSave}
+                defaultColumns={columnPickerColumns.defaultColumns}
+                availableColumns={columnPickerColumns.availableColumns}
+                initialColumns={columnPickerColumns.initialColumns}
+              />
+            )}
           />
 
           <div className={classes.paginationContainer}>

@@ -51,6 +51,7 @@ export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns =
   | "productType"
+  | "description"
   | "availability"
   | "price"
   | "date";
@@ -110,7 +111,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["availability", "price", "productType", "date"],
+    columns: ["availability", "description", "price", "productType", "date"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {

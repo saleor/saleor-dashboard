@@ -19,7 +19,7 @@ import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { ListSettings, RelayToFlat, Sort } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -27,12 +27,21 @@ import { IntlShape } from "react-intl";
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { columnsMessages } from "./messages";
 
-export function getColumns(
-  intl: IntlShape,
-  sort: Sort<ProductListUrlSortField>,
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
-  gridAttributesFromSettings: ProductListColumns[],
-): AvailableColumn[] {
+interface GetColumnsProps {
+  intl: IntlShape;
+  sort: Sort<ProductListUrlSortField>;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesFromSettings: ProductListColumns[];
+  settings: ListSettings<ProductListColumns>;
+}
+
+export function getColumns({
+  intl,
+  sort,
+  gridAttributes,
+  gridAttributesFromSettings,
+  settings,
+}: GetColumnsProps): AvailableColumn[] {
   return [
     {
       id: "name",
@@ -40,48 +49,50 @@ export function getColumns(
       width: 350,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
-    {
-      id: "productType",
-      title: intl.formatMessage(columnsMessages.type),
-      width: 200,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
-    },
-    {
-      id: "description",
-      title: intl.formatMessage(commonMessages.description),
-      width: 400,
-    },
-    {
-      id: "status",
-      title: intl.formatMessage(columnsMessages.availability),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
-    },
-    {
-      id: "date",
-      title: intl.formatMessage(columnsMessages.updatedAt),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
-    },
-    {
-      id: "price",
-      title: intl.formatMessage(columnsMessages.price),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
-    },
-    ...gridAttributesFromSettings.map(attribute => {
-      const attributeId = getAttributeIdFromColumnValue(attribute);
-
-      const title =
-        gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
-          ?.name ?? "";
-
-      return {
-        id: attribute,
-        title,
+    ...[
+      {
+        id: "productType",
+        title: intl.formatMessage(columnsMessages.type),
         width: 200,
-      };
-    }),
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
+      },
+      {
+        id: "description",
+        title: intl.formatMessage(commonMessages.description),
+        width: 400,
+      },
+      {
+        id: "availability",
+        title: intl.formatMessage(columnsMessages.availability),
+        width: 250,
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
+      },
+      {
+        id: "date",
+        title: intl.formatMessage(columnsMessages.updatedAt),
+        width: 250,
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
+      },
+      {
+        id: "price",
+        title: intl.formatMessage(columnsMessages.price),
+        width: 250,
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
+      },
+      ...gridAttributesFromSettings.map(attribute => {
+        const attributeId = getAttributeIdFromColumnValue(attribute);
+
+        const title =
+          gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
+            ?.name ?? "";
+
+        return {
+          id: attribute,
+          title,
+          width: 200,
+        };
+      }),
+    ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
   ];
 }
 
@@ -123,6 +134,10 @@ export function createGetCellContent({
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
+    if (column === -1) {
+      return textCell("");
+    }
+
     const columnId = columns[column].id;
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
@@ -137,8 +152,8 @@ export function createGetCellContent({
       case "productType":
         return getProductTypeCellContent(change, rowData, getProductTypes);
 
-      case "status":
-        return getStatusCellContent(rowData, intl, channel);
+      case "availability":
+        return getAvailabilityCellContent(rowData, intl, channel);
 
       case "description":
         return getDescriptionCellContent(columnId, change, rowData);
@@ -187,7 +202,7 @@ function getRowDataValue(
   };
 }
 
-function getStatusCellContent(
+function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   intl: IntlShape,
   selectedChannnel?: RelayToFlat<

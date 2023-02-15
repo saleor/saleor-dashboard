@@ -64,9 +64,8 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
 
   // Component is uncontrolled but we need to reset it somehow, so we change
   // initial prop after reset callback to force value refreshing
-  const [initialColumnsChoices, setInitialColumnsChoices] = useStateFromProps(
-    initialColumns,
-  );
+  const [initialColumnsChoices, setInitialColumnsChoices] =
+    useStateFromProps(initialColumns);
 
   const onChange: FormChange<string[]> = event => {
     selectedColumns.current = event.target.value;

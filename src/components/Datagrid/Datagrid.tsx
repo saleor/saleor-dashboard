@@ -5,6 +5,7 @@ import DataEditor, {
   DataEditorRef,
   EditableGridCell,
   GridCell,
+  GridCellKind,
   GridSelection,
   HeaderClickedEventArgs,
   Item,
@@ -18,7 +19,7 @@ import React, { ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
-import ColumnPicker from "../ColumnPicker";
+import ColumnPicker, { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./FullScreenContainer";
 import { Header } from "./Header";
 import { headerIcons } from "./headerIcons";
@@ -31,6 +32,7 @@ import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
 } from "./useDatagridChange";
+import { useDefaultColumnPickerProps } from "./useDefaultColumnPickerProps";
 import { useFullScreenMode } from "./useFullScreenMode";
 import { usePortalClasses } from "./usePortalClasses";
 
@@ -61,7 +63,9 @@ export interface DatagridProps {
   ) => React.ReactNode;
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
-  customColumnPicker?: ReactElement;
+  renderColumnPicker?: (
+    defaultProps: Partial<ColumnPickerProps>,
+  ) => ReactElement;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -77,7 +81,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   fullScreenTitle,
   onHeaderClicked,
   onChange,
-  customColumnPicker,
+  renderColumnPicker,
 }): React.ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -88,17 +92,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   usePortalClasses({ className: classes.portal });
 
-  const {
-    availableColumnsChoices,
-    columns,
-    columnChoices,
-    defaultColumns,
-    displayedColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumns(availableColumns);
+  const defaultColumnPickerProps =
+    useDefaultColumnPickerProps(availableColumns);
+
+  const { columns, onColumnMoved, onColumnResize } =
+    useColumns(availableColumns);
 
   const {
     added,
@@ -136,11 +134,23 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell => {
+      if (
+        !availableColumns[column]?.id ||
+        !columns[column]?.id ||
+        column === -1
+      ) {
+        return {
+          kind: GridCellKind.Loading,
+          allowOverlay: false,
+        };
+      }
+
       const item = [
-        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
+        availableColumns.findIndex(ac => ac.id === columns[column].id),
         row,
       ] as const;
       const opts = { changes, added, removed, getChangeIndex };
+
       const columnId = availableColumns[column].id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
 
@@ -161,25 +171,35 @@ export const Datagrid: React.FC<DatagridProps> = ({
           : {}),
       };
     },
-    [getCellContent, availableColumns, displayedColumns, added, removed],
+    [
+      availableColumns,
+      changes,
+      added,
+      removed,
+      getChangeIndex,
+      getCellContent,
+      theme.palette.saleor.active,
+      theme.palette.saleor.theme,
+      theme.palette.saleor.fail.light,
+      theme.palette.saleor.errorAction,
+      getCellError,
+      columns,
+    ],
   );
 
   const onCellEditedEnh = React.useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited(
-        [
-          availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-          row,
-        ],
+        [availableColumns.findIndex(ac => ac.id === columns[column].id), row],
         newValue,
       );
       editor.current.updateCells(
-        range(displayedColumns.length).map(offset => ({
+        range(columns.length).map(offset => ({
           cell: [column + offset, row],
         })),
       );
     },
-    [onCellEdited, getCellContent, availableColumns, displayedColumns],
+    [onCellEdited, getCellContent, availableColumns, columns],
   );
 
   const [selection, setSelection] = React.useState<GridSelection>();
@@ -252,7 +272,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   className={classes.datagrid}
                   getCellContent={getCellContentEnh}
                   onCellEdited={onCellEditedEnh}
-                  columns={columns}
+                  columns={availableColumns}
                   rows={rowsTotal}
                   freezeColumns={1}
                   smoothScrollX
@@ -286,8 +306,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         })}
                       />
                       <div className={classes.columnPicker}>
-                        {customColumnPicker ? (
-                          customColumnPicker
+                        {renderColumnPicker ? (
+                          renderColumnPicker({
+                            IconButtonProps: {
+                              className: classes.ghostIcon,
+                              variant: "ghost",
+                              hoverOutline: false,
+                            },
+                          })
                         ) : (
                           <ColumnPicker
                             IconButtonProps={{
@@ -295,15 +321,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                               variant: "ghost",
                               hoverOutline: false,
                             }}
-                            availableColumns={availableColumnsChoices}
-                            initialColumns={columnChoices}
-                            defaultColumns={defaultColumns}
-                            onSave={onColumnsChange}
-                            hasMore={false}
-                            loading={false}
-                            onFetchMore={() => undefined}
-                            onQueryChange={picker.setQuery}
-                            query={picker.query}
+                            {...defaultColumnPickerProps}
                           />
                         )}
                       </div>
