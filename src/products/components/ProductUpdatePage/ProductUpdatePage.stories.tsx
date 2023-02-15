@@ -2,7 +2,10 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { collections } from "@dashboard/collections/fixtures";
 import { fetchMoreProps, limits, limitsReached } from "@dashboard/fixtures";
-import { ProductErrorCode } from "@dashboard/graphql";
+import {
+  ProductErrorCode,
+  ProductVariantBulkErrorCode,
+} from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
@@ -23,7 +26,7 @@ const props: ProductUpdatePageProps = {
       variantId: product.variants[0].id,
       type: "channel",
       channelIds: [channelsList[1].id],
-      error: ProductErrorCode.ALREADY_EXISTS,
+      error: ProductVariantBulkErrorCode.PRODUCT_NOT_ASSIGNED_TO_CHANNEL,
     },
   ],
   productId: "123",
@@ -154,18 +157,20 @@ storiesOf("Products / Product edit", module)
   .add("form errors", () => (
     <ProductUpdatePage
       {...props}
-      errors={([
-        "attributes",
-        "category",
-        "chargeTaxes",
-        "collections",
-        "name",
-        "publicationDate",
-        "seoDescription",
-        "seoTitle",
-        "sku",
-        "stockQuantity",
-      ] as Array<keyof ProductUpdateFormData | "attributes">).map(field => ({
+      errors={(
+        [
+          "attributes",
+          "category",
+          "chargeTaxes",
+          "collections",
+          "name",
+          "publicationDate",
+          "seoDescription",
+          "seoTitle",
+          "sku",
+          "stockQuantity",
+        ] as Array<keyof ProductUpdateFormData | "attributes">
+      ).map(field => ({
         __typename: "ProductError",
         attributes:
           field === "attributes" ? [product.attributes[0].attribute.id] : null,

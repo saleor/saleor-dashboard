@@ -79,6 +79,7 @@ export const channelListingProductFragment = gql`
 
 export const channelListingProductVariantFragment = gql`
   fragment ChannelListingProductVariant on ProductVariantChannelListing {
+    id
     channel {
       id
       name

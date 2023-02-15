@@ -117,48 +117,6 @@ export const variantDeleteMutation = gql`
   }
 `;
 
-export const variantDatagridUpdateMutation = gql`
-  mutation VariantDatagridUpdate($id: ID!, $input: ProductVariantInput!) {
-    productVariantUpdate(id: $id, input: $input) {
-      errors {
-        ...ProductErrorWithAttributes
-      }
-    }
-  }
-`;
-
-export const variantDatagridStockUpdateMutation = gql`
-  mutation VariantDatagridStockUpdate(
-    $stocks: [StockInput!]!
-    $removeStocks: [ID!]!
-    $id: ID!
-  ) {
-    productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
-      errors {
-        ...ProductVariantStocksDeleteError
-      }
-    }
-    productVariantStocksUpdate(stocks: $stocks, variantId: $id) {
-      errors {
-        ...BulkStockError
-      }
-    }
-  }
-`;
-
-export const variantDatagridChannelListingUpdateMutation = gql`
-  mutation VariantDatagridChannelListingUpdate(
-    $id: ID!
-    $input: [ProductVariantChannelListingAddInput!]!
-  ) {
-    productVariantChannelListingUpdate(id: $id, input: $input) {
-      errors {
-        ...ProductChannelListingError
-      }
-    }
-  }
-`;
-
 export const variantUpdateMutation = gql`
   mutation VariantUpdate(
     $addStocks: [StockInput!]!
@@ -454,6 +412,29 @@ export const ProductVariantPreorderDeactivateMutation = gql`
       }
       errors {
         ...ProductError
+      }
+    }
+  }
+`;
+
+export const ProductVariantBulkUpdateMutation = gql`
+  mutation ProductVariantBulkUpdate(
+    $product: ID!
+    $input: [ProductVariantBulkUpdateInput!]!
+    $errorPolicy: ErrorPolicyEnum
+  ) {
+    productVariantBulkUpdate(
+      errorPolicy: $errorPolicy
+      product: $product
+      variants: $input
+    ) {
+      errors {
+        ...ProductVariantBulkError
+      }
+      results {
+        errors {
+          ...ProductVariantBulkError
+        }
       }
     }
   }

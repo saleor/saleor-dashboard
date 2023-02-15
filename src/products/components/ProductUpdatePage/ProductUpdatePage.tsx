@@ -309,10 +309,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         const listings = data.channels.updateChannels.map<ChannelData>(
           listing => {
             const channel = channels?.find(ac => ac.id === listing.channelId);
+
             return {
-              id: listing.channelId,
               ...channel,
               ...listing,
+              id: listing.channelId,
               availableForPurchase: listing.availableForPurchaseDate,
               currency: channel.currencyCode,
             };
