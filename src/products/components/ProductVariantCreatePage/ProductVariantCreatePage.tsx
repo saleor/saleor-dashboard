@@ -3,6 +3,7 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
@@ -132,10 +133,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const {
-    isOpen: isManageChannelsModalOpen,
-    toggle: toggleManageChannels,
-  } = useManageChannels();
+  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } =
+    useManageChannels();
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
   const handleAssignReferenceAttribute = (
@@ -181,7 +180,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         const errors = [...apiErrors, ...validationErrors];
 
         return (
-          <>
+          <DetailedContent>
             <TopNav href={productUrl(productId)} title={header} />
             <Content>
               <Grid variant="inverted">
@@ -345,7 +344,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 />
               )}
             </Content>
-          </>
+          </DetailedContent>
         );
       }}
     </ProductVariantCreateForm>
