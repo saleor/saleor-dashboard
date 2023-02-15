@@ -1,6 +1,4 @@
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { JobStatusEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useAppListContext } from "@dashboard/new-apps/context";
@@ -9,21 +7,21 @@ import {
   appsMessages,
 } from "@dashboard/new-apps/messages";
 import { AppInstallation } from "@dashboard/new-apps/types";
-import { CircularProgress, TableCell, Typography } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
+import { Indicator, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
 import {
+  Avatar,
+  Box,
   Button,
-  DeleteIcon,
-  IconButton,
-  Indicator,
-  Pill,
-  Tooltip,
-  TooltipMountWrapper,
-} from "@saleor/macaw-ui";
-import clsx from "clsx";
+  Chip,
+  List,
+  RemoveIcon,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import AppManifestTableDisplay from "../AppManifestTableDisplay";
 import { useStyles } from "./styles";
 
 export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
@@ -32,86 +30,84 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
   const classes = useStyles(props);
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
+  const avatarProps = {
+    ...(logo?.source
+      ? { src: logo.source }
+      : { initials: appInstallation.appName?.[0]?.toUpperCase() ?? "" }),
+  };
+
   return (
-    <TableRowLink>
-      <TableCellAvatar
-        initials={appInstallation.appName?.[0]?.toUpperCase()}
-        thumbnail={logo?.source || undefined}
-        avatarProps={classes.logo}
-        className={clsx(classes.col, classes.colLogo)}
-      >
-        <div className={classes.mainContent}>
-          <Typography variant="body1" className={classes.name}>
-            {appInstallation.appName}
-          </Typography>
-          {isExternal && (
-            <Pill
-              color="warning"
-              className={classes.externalAppLabel}
-              label={intl.formatMessage(appsMessages.externalApp)}
-              data-test-id="app-external-label"
-            />
-          )}
-        </div>
-        {appInstallation.manifestUrl && (
-          <AppManifestTableDisplay manifestUrl={appInstallation.manifestUrl} />
+    <List.Item
+      padding={7}
+      borderTopStyle="solid"
+      borderWidth={1}
+      borderColor="neutralPlain"
+      className={sprinkles({
+        justifyContent: "space-between",
+        flexDirection: "row",
+      })}
+    >
+      <Box display="flex" gap={5} alignItems="center">
+        <Avatar.Store {...avatarProps} className={sprinkles({ padding: 4 })} />
+        <Text variant="body">{appInstallation.appName}</Text>
+        {isExternal && (
+          <Chip data-test-id="app-external-label">
+            <Text variant="caption" size="small">
+              <FormattedMessage {...appsMessages.externalApp} />
+            </Text>
+          </Chip>
         )}
-      </TableCellAvatar>
-      <TableCell className={clsx(classes.col, classes.colActions)}>
-        <div className={classes.actions}>
-          {appInstallation?.status === JobStatusEnum.PENDING && (
-            <>
-              <Typography
-                variant="caption"
-                className={classes.pending}
-                data-test-id="app-pending-label"
+      </Box>
+      <div className={classes.actions}>
+        {appInstallation?.status === JobStatusEnum.PENDING && (
+          <>
+            <Text
+              variant="caption"
+              className={classes.pending}
+              data-test-id="app-pending-label"
+            >
+              {intl.formatMessage(appInstallationStatusMessages.pending)}
+            </Text>
+            <div className={classes.colSpinner}>
+              <CircularProgress size={20} />
+            </div>
+          </>
+        )}
+        {appInstallation?.status === JobStatusEnum.FAILED && (
+          <>
+            <Text
+              variant="body"
+              color="textCriticalSubdued"
+              data-test-id="app-failed-label"
+            >
+              <Tooltip title={appInstallation.message} variant="error">
+                <TooltipMountWrapper>
+                  {/* TODO: Replace with WarningIcon */}
+                  <Indicator icon="error" />
+                </TooltipMountWrapper>
+              </Tooltip>
+              <FormattedMessage {...appInstallationStatusMessages.failed} />
+            </Text>
+
+            <Button
+              variant="secondary"
+              icon={<RemoveIcon />}
+              onClick={() => removeAppInstallation(appInstallation.id)}
+              data-test-id="app-installation-remove-button"
+            />
+            <TableButtonWrapper>
+              <Button
+                variant="secondary"
+                onClick={() => retryAppInstallation(appInstallation.id)}
+                data-test-id="app-installation-retry-button"
               >
-                {intl.formatMessage(appInstallationStatusMessages.pending)}
-              </Typography>
-              <div className={classes.colSpinner}>
-                <CircularProgress size={20} />
-              </div>
-            </>
-          )}
-          {appInstallation?.status === JobStatusEnum.FAILED && (
-            <>
-              <Typography
-                variant="body2"
-                className={classes.failed}
-                data-test-id="app-failed-label"
-              >
-                <FormattedMessage {...appInstallationStatusMessages.failed} />
-                <Tooltip title={appInstallation.message} variant="error">
-                  <TooltipMountWrapper>
-                    <Indicator icon="error" />
-                  </TooltipMountWrapper>
-                </Tooltip>
-              </Typography>
-              <TableButtonWrapper>
-                <Button
-                  variant="secondary"
-                  color="primary"
-                  onClick={() => retryAppInstallation(appInstallation.id)}
-                  data-test-id="app-installation-retry-button"
-                >
-                  <FormattedMessage {...buttonMessages.retry} />
-                </Button>
-              </TableButtonWrapper>
-              <TableButtonWrapper>
-                <IconButton
-                  variant="secondary"
-                  color="primary"
-                  onClick={() => removeAppInstallation(appInstallation.id)}
-                  data-test-id="app-installation-remove-button"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </TableButtonWrapper>
-            </>
-          )}
-        </div>
-      </TableCell>
-    </TableRowLink>
+                <FormattedMessage {...buttonMessages.retry} />
+              </Button>
+            </TableButtonWrapper>
+          </>
+        )}
+      </div>
+    </List.Item>
   );
 };
 
