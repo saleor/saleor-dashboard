@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, tabletMediaQuery } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -21,8 +21,7 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
   children,
   useSingleColumn = false,
 }) => {
-  // TODO: move this media query to MacawUI
-  const isTablet = useMediaQuery("screen and (min-width: 768px)");
+  const isTablet = useMediaQuery(tabletMediaQuery);
 
   return (
     <Box
