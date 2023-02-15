@@ -69,8 +69,12 @@ export const UserControls = () => {
                 </Link>
               </List.Item>
             </Dropdown.Item>
-            <Dropdown.Item data-test-id="log-out-button">
-              <List.Item onClick={logout} {...listItemStyles}>
+            <Dropdown.Item>
+              <List.Item
+                onClick={logout}
+                {...listItemStyles}
+                data-test-id="log-out-button"
+              >
                 <Text>
                   <FormattedMessage
                     id="qLbse5"
