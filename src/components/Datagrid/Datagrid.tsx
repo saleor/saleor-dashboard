@@ -14,7 +14,7 @@ import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
-import React from "react";
+import React, { ReactElement } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
@@ -61,6 +61,7 @@ export interface DatagridProps {
   ) => React.ReactNode;
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
+  customColumnPicker?: ReactElement;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -76,6 +77,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   fullScreenTitle,
   onHeaderClicked,
   onChange,
+  customColumnPicker,
 }): React.ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -284,22 +286,26 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         })}
                       />
                       <div className={classes.columnPicker}>
-                        <ColumnPicker
-                          IconButtonProps={{
-                            className: classes.ghostIcon,
-                            variant: "ghost",
-                            hoverOutline: false,
-                          }}
-                          availableColumns={availableColumnsChoices}
-                          initialColumns={columnChoices}
-                          defaultColumns={defaultColumns}
-                          onSave={onColumnsChange}
-                          hasMore={false}
-                          loading={false}
-                          onFetchMore={() => undefined}
-                          onQueryChange={picker.setQuery}
-                          query={picker.query}
-                        />
+                        {customColumnPicker ? (
+                          customColumnPicker
+                        ) : (
+                          <ColumnPicker
+                            IconButtonProps={{
+                              className: classes.ghostIcon,
+                              variant: "ghost",
+                              hoverOutline: false,
+                            }}
+                            availableColumns={availableColumnsChoices}
+                            initialColumns={columnChoices}
+                            defaultColumns={defaultColumns}
+                            onSave={onColumnsChange}
+                            hasMore={false}
+                            loading={false}
+                            onFetchMore={() => undefined}
+                            onQueryChange={picker.setQuery}
+                            query={picker.query}
+                          />
+                        )}
                       </div>
                       {hasColumnGroups && (
                         <div

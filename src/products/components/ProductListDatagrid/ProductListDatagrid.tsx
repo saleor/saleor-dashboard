@@ -3,7 +3,11 @@ import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/useDa
 import Savebar from "@dashboard/components/Savebar";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
-import { ChannelFragment, ProductListQuery } from "@dashboard/graphql";
+import {
+  GridAttributesQuery,
+  ProductListQuery,
+  SearchAvailableInGridAttributesQuery,
+} from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
@@ -11,7 +15,9 @@ import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
+  FetchMoreProps,
   ListProps,
+  PageListProps,
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
@@ -19,18 +25,27 @@ import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { messages } from "./messages";
+import { ProductListDatagridColumnPicker } from "./ProductListDatagridColumnPicker";
 import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
 import { useProductForm } from "./useProductForm";
 import { createGetCellContent, getColumns } from "./utils";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
+    PageListProps<ProductListColumns>,
     SortPage<ProductListUrlSortField>,
+    FetchMoreProps,
     ChannelProps {
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  channels: ChannelFragment[];
   onRowClick: (id: string) => void;
+  columnQuery: string;
+  availableInGridAttributes: RelayToFlat<
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  >;
+  onColumnQueryChange: (query: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -46,32 +61,56 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   products,
   onRowClick,
   disabled,
-  // channels,
   settings,
   onUpdateListSettings,
   selectedChannelId,
   onSort,
   sort,
+  gridAttributes,
+  hasMore,
+  loading,
+  onFetchMore,
+  columnQuery,
+  defaultSettings,
+  availableInGridAttributes,
+  onColumnQueryChange,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
   const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
   const { locale } = useLocale();
+  const gridAttributesFromSettings = settings.columns.filter(
+    isAttributeColumnValue,
+  );
 
-  const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+  const columns = useMemo(
+    () => getColumns(intl, sort, gridAttributes, gridAttributesFromSettings),
+    [gridAttributes, gridAttributesFromSettings, intl, sort],
+  );
 
   const getCellContent = useMemo(
     () =>
-      createGetCellContent(
+      createGetCellContent({
         columns,
         products,
         intl,
-        searchProductType,
+        getProductTypes: searchProductType,
         locale,
+        gridAttributes,
+        gridAttributesFromSettings,
         selectedChannelId,
-      ),
-    [columns, intl, locale, products, searchProductType, selectedChannelId],
+      }),
+    [
+      columns,
+      gridAttributes,
+      gridAttributesFromSettings,
+      intl,
+      locale,
+      products,
+      searchProductType,
+      selectedChannelId,
+    ],
   );
 
   const onHeaderClicked = useCallback(
@@ -101,6 +140,21 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             emptyText={intl.formatMessage(messages.emptyText)}
             getCellContent={getCellContent}
             getCellError={getCellError}
+            customColumnPicker={
+              <ProductListDatagridColumnPicker
+                disabled={false}
+                hasMore={hasMore}
+                loading={loading}
+                onFetchMore={onFetchMore}
+                columnQuery={columnQuery}
+                defaultSettings={defaultSettings}
+                settings={settings}
+                availableInGridAttributes={availableInGridAttributes}
+                onColumnQueryChange={onColumnQueryChange}
+                onUpdateListSettings={onUpdateListSettings}
+                gridAttributes={gridAttributes}
+              />
+            }
             menuItems={index => [
               {
                 label: intl.formatMessage(messages.editProduct),

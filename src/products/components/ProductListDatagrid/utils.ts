@@ -15,7 +15,8 @@ import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
-import { ProductListQuery } from "@dashboard/graphql";
+import { ProductListColumns } from "@dashboard/config";
+import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
@@ -23,11 +24,14 @@ import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
+import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { columnsMessages } from "./messages";
 
 export function getColumns(
   intl: IntlShape,
   sort: Sort<ProductListUrlSortField>,
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
+  gridAttributesFromSettings: ProductListColumns[],
 ): AvailableColumn[] {
   return [
     {
@@ -65,6 +69,19 @@ export function getColumns(
       width: 250,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
     },
+    ...gridAttributesFromSettings.map(attribute => {
+      const attributeId = getAttributeIdFromColumnValue(attribute);
+
+      const title =
+        gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
+          ?.name ?? "";
+
+      return {
+        id: attribute,
+        title,
+        width: 200,
+      };
+    }),
   ];
 }
 
@@ -83,14 +100,25 @@ function getColumnSortIconName(
   return undefined;
 }
 
-export function createGetCellContent(
-  columns: AvailableColumn[],
-  products: RelayToFlat<ProductListQuery["products"]>,
-  intl: IntlShape,
-  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
-  locale: Locale,
-  selectedChannelId?: string,
-) {
+interface GetCellContentProps {
+  columns: AvailableColumn[];
+  products: RelayToFlat<ProductListQuery["products"]>;
+  intl: IntlShape;
+  getProductTypes: (query: string) => Promise<DropdownChoice[]>;
+  locale: Locale;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesFromSettings: ProductListColumns[];
+  selectedChannelId?: string;
+}
+
+export function createGetCellContent({
+  columns,
+  getProductTypes,
+  intl,
+  locale,
+  products,
+  selectedChannelId,
+}: GetCellContentProps) {
   return (
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
@@ -120,6 +148,10 @@ export function createGetCellContent(
         return getPriceCellContent(intl, locale, channel);
       case "date":
         return getUpdatedAtrCellContent(rowData, locale);
+    }
+
+    if (columnId.startsWith("attribute")) {
+      return getAttributeCellContent(columnId, rowData);
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -230,4 +262,33 @@ function getUpdatedAtrCellContent(
   return readonlyTextCell(
     moment(rowData.updatedAt).locale(locale).format("lll"),
   );
+}
+
+function getAttributeCellContent(
+  columnId: string,
+  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+) {
+  const attributeId = getAttributeIdFromColumnValue(columnId);
+  const productAttribute = rowData?.attributes.find(
+    attribute => attribute.attribute.id === attributeId,
+  );
+
+  if (productAttribute) {
+    if (productAttribute.values.length) {
+      if (productAttribute.values[0].date) {
+        return readonlyTextCell(productAttribute.values[0].date);
+      }
+      if (productAttribute.values[0].dateTime) {
+        return readonlyTextCell(productAttribute.values[0].dateTime);
+      }
+    }
+
+    const textValue = productAttribute.values
+      .map(value => value.name)
+      .join(", ");
+
+    return readonlyTextCell(textValue);
+  }
+
+  return readonlyTextCell("");
 }

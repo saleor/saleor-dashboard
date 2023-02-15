@@ -12,15 +12,16 @@ import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import PageHeader from "@dashboard/components/PageHeader";
 import { ProductListColumns } from "@dashboard/config";
 import {
-  ChannelFragment,
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
+  SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
+  FetchMoreProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -45,19 +46,23 @@ export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
     FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+    FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
+  availableInGridAttributes: RelayToFlat<
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  >;
+  columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
-  channels: ChannelFragment[];
   selectedProductIds: string[];
   onAdd: () => void;
   onExport: () => void;
+  onColumnQueryChange: (query: string) => void;
 }
-
 const useStyles = makeStyles(
   theme => ({
     settings: {
@@ -71,16 +76,24 @@ const useStyles = makeStyles(
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
+    columnQuery,
     currencySymbol,
     currentTab,
+    defaultSettings,
+    gridAttributes,
     limits,
+    availableInGridAttributes,
     filterOpts,
+    hasMore,
     initialSearch,
+    loading,
     settings,
     tabs,
     onAdd,
     onAll,
+    onColumnQueryChange,
     onExport,
+    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -90,15 +103,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
-    channels,
     ...listProps
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
-
-  // const filterDependency = filterStructure.find(getByName("channel"));
 
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
@@ -200,8 +210,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductListDatagrid
           {...listProps}
+          columnQuery={columnQuery}
+          defaultSettings={defaultSettings}
+          availableInGridAttributes={availableInGridAttributes}
+          loading={loading}
+          hasMore={hasMore}
+          gridAttributes={gridAttributes}
+          onColumnQueryChange={onColumnQueryChange}
+          onFetchMore={onFetchMore}
           products={listProps.products}
-          channels={channels}
           settings={settings}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
