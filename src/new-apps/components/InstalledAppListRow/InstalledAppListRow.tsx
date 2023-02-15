@@ -5,11 +5,11 @@ import { appsMessages } from "@dashboard/new-apps/messages";
 import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
-import { Pill } from "@saleor/macaw-ui";
 import {
   Avatar,
   Box,
   Button,
+  Chip,
   List,
   sprinkles,
   Text,
@@ -57,11 +57,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             {`v${app.version}`}
           </Text>
           {isExternal && (
-            <Pill
-              color="warning"
-              label={intl.formatMessage(appsMessages.externalApp)}
-              data-test-id="app-external-label"
-            />
+            <Chip data-test-id="app-external-label">
+              <Text variant="caption" size="small">
+                <FormattedMessage {...appsMessages.externalApp} />
+              </Text>
+            </Chip>
           )}
           {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
             <Text
