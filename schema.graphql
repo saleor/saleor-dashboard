@@ -2850,6 +2850,15 @@ type Channel implements Node {
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
   """
   stockSettings: StockSettings!
+
+  """
+  Channel-specific order settings.
+  
+  Added in Saleor 3.12.
+  
+  Requires one of the following permissions: MANAGE_CHANNELS, MANAGE_ORDERS.
+  """
+  orderSettings: OrderSettings!
 }
 
 """
@@ -2899,6 +2908,13 @@ input ChannelCreateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   addWarehouses: [ID!]
+
+  """
+  The channel order settings
+  
+  Added in Saleor 3.12.
+  """
+  orderSettings: OrderSettingsInput
 
   """Name of the channel."""
   name: String!
@@ -3081,9 +3097,10 @@ type ChannelStatusChanged implements Event {
 }
 
 """
-Update a channel. 
+Update a channel.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
+Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
 """
 type ChannelUpdate {
   channelErrors: [ChannelError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -3115,6 +3132,13 @@ input ChannelUpdateInput {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   addWarehouses: [ID!]
+
+  """
+  The channel order settings
+  
+  Added in Saleor 3.12.
+  """
+  orderSettings: OrderSettingsInput
 
   """Name of the channel."""
   name: String
@@ -9705,14 +9729,14 @@ type Mutation {
   ): ShopAddressUpdate
 
   """
-  Update shop order settings. 
+  Update shop order settings across all channels. Returns `orderSettings` for the first `channel` in alphabetical order.  
   
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   orderSettingsUpdate(
     """Fields required to update shop order settings."""
     input: OrderSettingsUpdateInput!
-  ): OrderSettingsUpdate
+  ): OrderSettingsUpdate @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
 
   """
   Update gift card settings. 
@@ -12453,9 +12477,10 @@ type Mutation {
   ): ChannelCreate
 
   """
-  Update a channel. 
+  Update a channel.
   
   Requires one of the following permissions: MANAGE_CHANNELS.
+  Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
   """
   channelUpdate(
     """ID of a channel to update."""
@@ -14786,9 +14811,16 @@ input OrderReturnProductsInput {
   refund: Boolean = false
 }
 
-"""Order related settings from site settings."""
+"""Represents the channel-specific order settings."""
 type OrderSettings {
+  """
+  When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately.
+  """
   automaticallyConfirmAllNewOrders: Boolean!
+
+  """
+  When enabled, all non-shippable gift card orders will be fulfilled automatically.
+  """
   automaticallyFulfillNonShippableGiftCard: Boolean!
 }
 
@@ -14810,8 +14842,20 @@ enum OrderSettingsErrorCode {
   INVALID
 }
 
+input OrderSettingsInput {
+  """
+  When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True
+  """
+  automaticallyConfirmAllNewOrders: Boolean
+
+  """
+  When enabled, all non-shippable gift card orders will be fulfilled automatically. By defualt set to True.
+  """
+  automaticallyFulfillNonShippableGiftCard: Boolean
+}
+
 """
-Update shop order settings. 
+Update shop order settings across all channels. Returns `orderSettings` for the first `channel` in alphabetical order.  
 
 Requires one of the following permissions: MANAGE_ORDERS.
 """
@@ -14824,12 +14868,12 @@ type OrderSettingsUpdate {
 
 input OrderSettingsUpdateInput {
   """
-  When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately.
+  When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True
   """
   automaticallyConfirmAllNewOrders: Boolean
 
   """
-  When enabled, all non-shippable gift card orders will be fulfilled automatically.
+  When enabled, all non-shippable gift card orders will be fulfilled automatically. By defualt set to True.
   """
   automaticallyFulfillNonShippableGiftCard: Boolean
 }
@@ -16652,9 +16696,9 @@ input PluginUpdateInput {
 }
 
 """
-Positive Decimal scalar implementation.
+Nonnegative Decimal scalar implementation.
 
-Should be used in places where value must be positive.
+Should be used in places where value must be nonnegative (0 or greater).
 """
 scalar PositiveDecimal
 
@@ -17562,8 +17606,66 @@ input ProductInput {
 }
 
 """Represents a product media."""
-type ProductMedia implements Node {
+type ProductMedia implements Node & ObjectWithMetadata {
   id: ID!
+
+  """
+  List of private metadata items. Requires staff permissions to access.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """
+  List of public metadata items. Can be accessed without permissions.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  metafields(keys: [String!]): Metadata
   sortOrder: Int
   alt: String!
   type: ProductMediaType!
@@ -17583,6 +17685,13 @@ type ProductMedia implements Node {
     """
     format: ThumbnailFormatEnum
   ): String!
+
+  """
+  Product id the media refers to.
+  
+  Added in Saleor 3.12.
+  """
+  productId: ID
 }
 
 """
@@ -17624,6 +17733,28 @@ input ProductMediaCreateInput {
 }
 
 """
+Event sent when new product media is created.
+
+Added in Saleor 3.12.
+"""
+type ProductMediaCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product media the event relates to."""
+  productMedia: ProductMedia
+}
+
+"""
 Deletes a product media. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -17633,6 +17764,28 @@ type ProductMediaDelete {
   media: ProductMedia
   productErrors: [ProductError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [ProductError!]!
+}
+
+"""
+Event sent when product media is deleted.
+
+Added in Saleor 3.12.
+"""
+type ProductMediaDeleted implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product media the event relates to."""
+  productMedia: ProductMedia
 }
 
 """
@@ -17668,6 +17821,28 @@ type ProductMediaUpdate {
 input ProductMediaUpdateInput {
   """Alt text for a product media."""
   alt: String
+}
+
+"""
+Event sent when product media is updated.
+
+Added in Saleor 3.12.
+"""
+type ProductMediaUpdated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product media the event relates to."""
+  productMedia: ProductMedia
 }
 
 """
@@ -18572,10 +18747,18 @@ type ProductVariantBulkError {
   """List of warehouse IDs which causes the error."""
   warehouses: [ID!]
 
-  """List of stocks IDs which causes the error."""
+  """
+  List of stocks IDs which causes the error.
+  
+  Added in Saleor 3.12.
+  """
   stocks: [ID!]
 
-  """List of channel IDs which causes the error."""
+  """
+  List of channel IDs which causes the error.
+  
+  Added in Saleor 3.12.
+  """
   channels: [ID!]
 
   """List of channel listings IDs which causes the error."""
@@ -18686,10 +18869,22 @@ input ProductVariantBulkUpdateInput {
   """
   externalReference: String
 
-  """Stocks input."""
+  """
+  Stocks input.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
   stocks: ProductVariantStocksUpdateInput
 
-  """Channel listings input."""
+  """
+  Channel listings input.
+  
+  Added in Saleor 3.12.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
   channelListings: ProductVariantChannelListingUpdateInput
 
   """ID of the product variant to update."""
@@ -18761,7 +18956,7 @@ input ProductVariantChannelListingUpdateInput {
   """List of channel listings to update."""
   update: [ChannelListingUpdateInput!]
 
-  """List of product variant channel listings to remove."""
+  """List of channel listings to remove."""
   remove: [ID!]
 }
 
@@ -19177,7 +19372,7 @@ input ProductVariantStocksUpdateInput {
   """List of warehouses to create stocks."""
   create: [StockInput!]
 
-  """List od stocks that should be updated."""
+  """List of stocks to update."""
   update: [StockUpdateInput!]
 
   """List of stocks to remove."""
@@ -19513,11 +19708,11 @@ type Query {
   shop: Shop!
 
   """
-  Order related settings from site settings.
+  Order related settings from site settings. Returns `orderSettings` for the first `channel` in alphabetical order.
   
   Requires one of the following permissions: MANAGE_ORDERS.
   """
-  orderSettings: OrderSettings
+  orderSettings: OrderSettings @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `channel` query to fetch the `orderSettings` field instead.")
 
   """
   Gift card related settings from site settings.
@@ -23785,6 +23980,53 @@ type TaxedMoneyRange {
   stop: TaxedMoney
 }
 
+"""
+Event sent when thumbnail is created.
+
+Added in Saleor 3.12.
+"""
+type ThumbnailCreated implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """
+  Thumbnail id.
+  
+  Added in Saleor 3.12.
+  """
+  id: ID
+
+  """
+  Thumbnail url.
+  
+  Added in Saleor 3.12.
+  """
+  url: String
+
+  """
+  Object the thumbnail refers to.
+  
+  Added in Saleor 3.12.
+  """
+  objectId: ID
+
+  """
+  Original media url.
+  
+  Added in Saleor 3.12.
+  """
+  mediaUrl: String
+}
+
 """An enumeration."""
 enum ThumbnailFormatEnum {
   WEBP
@@ -25901,11 +26143,14 @@ type WebhookDryRunError {
 """An enumeration."""
 enum WebhookDryRunErrorCode {
   GRAPHQL_ERROR
-  UNABLE_TO_PARSE
   NOT_FOUND
   INVALID_ID
   MISSING_PERMISSION
   TYPE_NOT_SUPPORTED
+  SYNTAX
+  MISSING_SUBSCRIPTION
+  UNABLE_TO_PARSE
+  MISSING_EVENT
 }
 
 type WebhookError {
@@ -25929,6 +26174,10 @@ enum WebhookErrorCode {
   REQUIRED
   UNIQUE
   DELETE_FAILED
+  SYNTAX
+  MISSING_SUBSCRIPTION
+  UNABLE_TO_PARSE
+  MISSING_EVENT
 }
 
 """Webhook event."""
@@ -26169,6 +26418,27 @@ enum WebhookEventTypeAsyncEnum {
   PRODUCT_DELETED
 
   """
+  A new product media is created.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_CREATED
+
+  """
+  A product media is updated.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_UPDATED
+
+  """
+  A product media is deleted.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_DELETED
+
+  """
   A product metadata is updated.
   
   Added in Saleor 3.8.
@@ -26361,6 +26631,13 @@ enum WebhookEventTypeAsyncEnum {
 
   """An observability event is created."""
   OBSERVABILITY
+
+  """
+  A thumbnail is created.
+  
+  Added in Saleor 3.12.
+  """
+  THUMBNAIL_CREATED
 }
 
 """Enum determining type of webhook."""
@@ -26574,6 +26851,27 @@ enum WebhookEventTypeEnum {
   PRODUCT_DELETED
 
   """
+  A new product media is created.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_CREATED
+
+  """
+  A product media is updated.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_UPDATED
+
+  """
+  A product media is deleted.
+  
+  Added in Saleor 3.12.
+  """
+  PRODUCT_MEDIA_DELETED
+
+  """
   A product metadata is updated.
   
   Added in Saleor 3.8.
@@ -26767,6 +27065,13 @@ enum WebhookEventTypeEnum {
   """An observability event is created."""
   OBSERVABILITY
 
+  """
+  A thumbnail is created.
+  
+  Added in Saleor 3.12.
+  """
+  THUMBNAIL_CREATED
+
   """Authorize payment."""
   PAYMENT_AUTHORIZE
 
@@ -26928,6 +27233,9 @@ enum WebhookSampleEventTypeEnum {
   PRODUCT_CREATED
   PRODUCT_UPDATED
   PRODUCT_DELETED
+  PRODUCT_MEDIA_CREATED
+  PRODUCT_MEDIA_UPDATED
+  PRODUCT_MEDIA_DELETED
   PRODUCT_METADATA_UPDATED
   PRODUCT_VARIANT_CREATED
   PRODUCT_VARIANT_UPDATED
@@ -26976,6 +27284,7 @@ enum WebhookSampleEventTypeEnum {
   VOUCHER_DELETED
   VOUCHER_METADATA_UPDATED
   OBSERVABILITY
+  THUMBNAIL_CREATED
 }
 
 """
@@ -27011,9 +27320,12 @@ enum WebhookTriggerErrorCode {
   NOT_FOUND
   INVALID_ID
   MISSING_PERMISSION
-  MISSING_QUERY
   TYPE_NOT_SUPPORTED
+  SYNTAX
+  MISSING_SUBSCRIPTION
   UNABLE_TO_PARSE
+  MISSING_QUERY
+  MISSING_EVENT
 }
 
 """
