@@ -1,4 +1,3 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -80,7 +79,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         alignItems="center"
         marginY={8}
       >
-        <Box className={classes.appContent}>
+        <Box className={classes.appContent} marginY={8}>
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={8} paddingY={6}>
@@ -99,7 +98,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           )}
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
-            <Content>
+            <Box marginTop={10}>
               <Text as="h3" variant="heading" color="textNeutralSubdued">
                 <FormattedMessage {...messages.allApps} />
               </Text>
@@ -109,20 +108,18 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
                 navigateToAppInstallPage={navigateToAppInstallPage}
                 navigateToGithubForkPage={navigateToGithubForkPage}
               />
-            </Content>
+            </Box>
           )}
           {sectionsAvailability.comingSoon && !marketplaceError && (
-            <Content>
-              <Box paddingY={6}>
-                <Text as="h3" variant="heading">
-                  {intl.formatMessage(messages.comingSoonApps)}
-                </Text>
-              </Box>
+            <Box marginTop={10}>
+              <Text as="h3" variant="heading" color="textNeutralSubdued">
+                {intl.formatMessage(messages.comingSoonApps)}
+              </Text>
               <AllAppList
                 appList={comingSoonMarketplaceApps}
                 appInstallationList={appsInstallations}
-              />
-            </Content>
+              />{" "}
+            </Box>
           )}
         </Box>
       </Box>

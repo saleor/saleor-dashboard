@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     appContent: {
-      maxWidth: "50vw",
+      width: "50vw",
     },
     sectionHeader: {
       fontSize: 14,
