@@ -2,6 +2,7 @@ import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/mes
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import {
   dropdownCell,
+  loadingCell,
   readonlyTextCell,
   textCell,
   thumbnailCell,
@@ -121,6 +122,7 @@ interface GetCellContentProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   selectedChannelId?: string;
+  loading?: boolean;
 }
 
 export function createGetCellContent({
@@ -130,6 +132,7 @@ export function createGetCellContent({
   locale,
   products,
   selectedChannelId,
+  loading,
 }: GetCellContentProps) {
   return (
     [column, row]: Item,
@@ -137,6 +140,10 @@ export function createGetCellContent({
   ) => {
     if (column === -1) {
       return textCell("");
+    }
+
+    if (loading) {
+      return loadingCell();
     }
 
     const columnId = columns[column].id;
@@ -321,4 +328,19 @@ export function getColumnMetadata(column: string) {
   return {
     columnName: column,
   };
+}
+
+export function getProductRowsLength(
+  disabled: boolean,
+  product?: RelayToFlat<ProductListQuery["products"]>,
+) {
+  if (product?.length) {
+    return product.length;
+  }
+
+  if (disabled) {
+    return 1;
+  }
+
+  return 0;
 }

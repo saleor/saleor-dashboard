@@ -28,10 +28,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { messages } from "./messages";
-import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
 import { useColumnPickerColumns } from "./useColumnPickerColumns";
 import { useProductForm } from "./useProductForm";
-import { createGetCellContent, getColumnMetadata, getColumns } from "./utils";
+import {
+  createGetCellContent,
+  getColumnMetadata,
+  getColumns,
+  getProductRowsLength,
+} from "./utils";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -118,9 +122,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         selectedChannelId,
+        loading: disabled,
       }),
     [
       columns,
+      disabled,
       gridAttributes,
       gridAttributesFromSettings,
       intl,
@@ -148,71 +154,64 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
-      {!disabled ? (
-        <>
-          <Datagrid
-            addButtonLabel={intl.formatMessage(messages.addProduct)}
-            availableColumns={columns}
-            onHeaderClicked={onHeaderClicked}
-            emptyText={intl.formatMessage(messages.emptyText)}
-            getCellContent={getCellContent}
-            getCellError={getCellError}
-            menuItems={index => [
-              {
-                label: intl.formatMessage(messages.editProduct),
-                onSelect: () => onRowClick(products[index].id),
-                Icon: <EditIcon />,
-              },
-            ]}
-            rows={products?.length ?? 0}
-            selectionActions={(indexes, { removeRows }) => (
-              <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-                <FormattedMessage {...buttonMessages.delete} />
-              </Button>
-            )}
-            title=""
-            fullScreenTitle={intl.formatMessage(messages.products)}
-            onChange={onChange}
-            renderColumnPicker={defaultProps => (
-              <ColumnPicker
-                {...defaultProps}
-                hasMore={hasMore}
-                loading={loading}
-                onFetchMore={onFetchMore}
-                query={columnQuery}
-                onQueryChange={onColumnQueryChange}
-                onSave={handleSave}
-                defaultColumns={columnPickerColumns.defaultColumns}
-                availableColumns={columnPickerColumns.availableColumns}
-                initialColumns={columnPickerColumns.initialColumns}
-              />
-            )}
+      <Datagrid
+        addButtonLabel={intl.formatMessage(messages.addProduct)}
+        availableColumns={columns}
+        onHeaderClicked={onHeaderClicked}
+        emptyText={intl.formatMessage(messages.emptyText)}
+        getCellContent={getCellContent}
+        getCellError={getCellError}
+        menuItems={index => [
+          {
+            label: intl.formatMessage(messages.editProduct),
+            onSelect: () => onRowClick(products[index].id),
+            Icon: <EditIcon />,
+          },
+        ]}
+        rows={getProductRowsLength(disabled, products)}
+        selectionActions={(indexes, { removeRows }) => (
+          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+            <FormattedMessage {...buttonMessages.delete} />
+          </Button>
+        )}
+        title=""
+        fullScreenTitle={intl.formatMessage(messages.products)}
+        onChange={onChange}
+        renderColumnPicker={defaultProps => (
+          <ColumnPicker
+            {...defaultProps}
+            hasMore={hasMore}
+            loading={loading}
+            onFetchMore={onFetchMore}
+            query={columnQuery}
+            onQueryChange={onColumnQueryChange}
+            onSave={handleSave}
+            defaultColumns={columnPickerColumns.defaultColumns}
+            availableColumns={columnPickerColumns.availableColumns}
+            initialColumns={columnPickerColumns.initialColumns}
           />
+        )}
+      />
 
-          <div className={classes.paginationContainer}>
-            <TablePaginationWithContext
-              component="div"
-              colSpan={
-                (products?.length === 0 ? 1 : 2) + settings.columns.length
-              }
-              settings={settings}
-              onUpdateListSettings={onUpdateListSettings}
-            />
-          </div>
-          {isDirty && (
-            <Savebar
-              onCancel={clear}
-              onSubmit={onSubmit}
-              state="default"
-              disabled={false}
-              labels={{
-                cancel: intl.formatMessage(buttonMessages.clear),
-              }}
-            />
-          )}
-        </>
-      ) : (
-        <ProductListDatagridSkeleton />
+      <div className={classes.paginationContainer}>
+        <TablePaginationWithContext
+          component="div"
+          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </div>
+      {isDirty && (
+        <Savebar
+          onCancel={clear}
+          onSubmit={onSubmit}
+          state="default"
+          disabled={disabled}
+          labels={{
+            cancel: intl.formatMessage(buttonMessages.clear),
+          }}
+        />
       )}
     </DatagridChangeStateContext.Provider>
   );

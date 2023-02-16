@@ -45,6 +45,13 @@ export function booleanCell(value: boolean): GridCell {
   };
 }
 
+export function loadingCell(): GridCell {
+  return {
+    kind: GridCellKind.Loading,
+    allowOverlay: true,
+  };
+}
+
 export function numberCell(
   value: number | typeof numberCellEmptyValue,
 ): NumberCell {
