@@ -6,7 +6,6 @@ import { InstalledApp } from "@dashboard/new-apps/types";
 import { AppUrls } from "@dashboard/new-apps/urls";
 import { isAppInTunnel } from "@dashboard/new-apps/utils";
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -17,6 +16,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AppAvatar } from "../AppAvatar/AppAvatar";
 import AppPermissions from "../AppPermissions";
 import { messages } from "./messages";
 
@@ -24,12 +24,6 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const { openAppSettings } = useAppListContext();
-
-  const avatarProps = {
-    ...(logo?.source
-      ? { src: logo.source }
-      : { initials: app.name?.[0]?.toUpperCase() ?? "" }),
-  };
 
   return (
     <Link
@@ -48,10 +42,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         })}
       >
         <Box display="flex" gap={5} alignItems="center">
-          <Avatar.Store
-            {...avatarProps}
-            className={sprinkles({ padding: 4 })}
-          />
+          <AppAvatar size="medium" logo={logo} />
           <Text variant="bodyEmp">{app.name}</Text>
           <Text variant="body" color="textNeutralSubdued">
             {`v${app.version}`}

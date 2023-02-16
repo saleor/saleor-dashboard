@@ -8,20 +8,21 @@ import {
 } from "@dashboard/new-apps/messages";
 import { AppInstallation } from "@dashboard/new-apps/types";
 import { CircularProgress } from "@material-ui/core";
-import { Indicator, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui";
 import {
-  Avatar,
   Box,
   Button,
   Chip,
   List,
-  RemoveIcon,
   sprinkles,
   Text,
+  TrashBinIcon,
+  WarningIcon,
 } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { useStyles } from "./styles";
 
 export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
@@ -29,12 +30,6 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
-
-  const avatarProps = {
-    ...(logo?.source
-      ? { src: logo.source }
-      : { initials: appInstallation.appName?.[0]?.toUpperCase() ?? "" }),
-  };
 
   return (
     <List.Item
@@ -48,7 +43,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
       })}
     >
       <Box display="flex" gap={5} alignItems="center">
-        <Avatar.Store {...avatarProps} className={sprinkles({ padding: 4 })} />
+        <AppAvatar size="medium" logo={logo} />
         <Text variant="body">{appInstallation.appName}</Text>
         {isExternal && (
           <Chip data-test-id="app-external-label">
@@ -75,23 +70,22 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
         )}
         {appInstallation?.status === JobStatusEnum.FAILED && (
           <>
-            <Text
-              variant="body"
-              color="textCriticalSubdued"
-              data-test-id="app-failed-label"
-            >
-              <Tooltip title={appInstallation.message} variant="error">
-                <TooltipMountWrapper>
-                  {/* TODO: Replace with WarningIcon */}
-                  <Indicator icon="error" />
-                </TooltipMountWrapper>
-              </Tooltip>
-              <FormattedMessage {...appInstallationStatusMessages.failed} />
-            </Text>
-
+            <Tooltip title={appInstallation.message} variant="error">
+              <Box display="flex" placeItems="center" gap={3} marginX={3}>
+                <WarningIcon size="small" color="iconCriticalSubdued" />
+                <Text
+                  variant="caption"
+                  size="small"
+                  color="textCriticalSubdued"
+                  data-test-id="app-failed-label"
+                >
+                  <FormattedMessage {...appInstallationStatusMessages.failed} />
+                </Text>
+              </Box>
+            </Tooltip>
             <Button
               variant="secondary"
-              icon={<RemoveIcon />}
+              icon={<TrashBinIcon />}
               onClick={() => removeAppInstallation(appInstallation.id)}
               data-test-id="app-installation-remove-button"
             />
