@@ -103,6 +103,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
+    activeAttributeSortId,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -210,6 +211,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductListDatagrid
           {...listProps}
+          activeAttributeSortId={activeAttributeSortId}
           columnQuery={columnQuery}
           defaultSettings={defaultSettings}
           availableInGridAttributes={availableInGridAttributes}

@@ -34,6 +34,7 @@ interface GetColumnsProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   settings: ListSettings<ProductListColumns>;
+  activeAttributeSortId: string;
 }
 
 export function getColumns({
@@ -42,6 +43,7 @@ export function getColumns({
   gridAttributes,
   gridAttributesFromSettings,
   settings,
+  activeAttributeSortId,
 }: GetColumnsProps): AvailableColumn[] {
   return [
     {
@@ -79,7 +81,9 @@ export function getColumns({
           id: attribute,
           title,
           width: 200,
-          icon: getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+          icon:
+            attributeId === activeAttributeSortId &&
+            getColumnSortIconName(sort, ProductListUrlSortField.attribute),
         };
       }),
       {

@@ -43,6 +43,7 @@ interface ProductListDatagridProps
     SortPage<ProductListUrlSortField>,
     FetchMoreProps,
     ChannelProps {
+  activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
   onRowClick: (id: string) => void;
@@ -79,6 +80,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   defaultSettings,
   availableInGridAttributes,
   onColumnQueryChange,
+  activeAttributeSortId,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -100,8 +102,16 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         settings,
+        activeAttributeSortId,
       }),
-    [gridAttributes, gridAttributesFromSettings, intl, settings, sort],
+    [
+      activeAttributeSortId,
+      gridAttributes,
+      gridAttributesFromSettings,
+      intl,
+      settings,
+      sort,
+    ],
   );
 
   const columnPickerColumns = useColumnPickerColumns(
