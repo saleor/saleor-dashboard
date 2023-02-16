@@ -75,6 +75,7 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
         <TextCellEntry
           highlight={isHighlighted}
           autoFocus={true}
+          readOnly={value.readonly}
           value={value.data.name ?? ""}
           onChange={e =>
             onChange({

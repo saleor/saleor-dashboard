@@ -99,11 +99,16 @@ export function dropdownCell(
   };
 }
 
-export function thumbnailCell(name: string, image: string): ThumbnailCell {
+export function thumbnailCell(
+  name: string,
+  image: string,
+  readonly?: boolean,
+): ThumbnailCell {
   return {
     kind: GridCellKind.Custom,
     ...common,
     copyData: name ?? "",
+    readonly,
     data: {
       kind: "thumbnail-cell",
       image,
