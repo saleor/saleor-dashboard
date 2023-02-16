@@ -46,7 +46,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
-  addButtonLabel: string;
+  addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
@@ -242,9 +242,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
               />
             )}
           </Header.ButtonFullScreen>
-          <Header.ButtonAddRow onAddRow={onRowAdded}>
-            {addButtonLabel}
-          </Header.ButtonAddRow>
+          {addButtonLabel && (
+            <Header.ButtonAddRow onAddRow={onRowAdded}>
+              {addButtonLabel}
+            </Header.ButtonAddRow>
+          )}
         </Header>
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 ? (
