@@ -13,9 +13,9 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
   }
 
   return (
-    <Box as="ul" display="flex" flexDirection="row" gap={7}>
+    <Box as="div" display="flex" flexDirection="row" gap={7} marginBottom={6}>
       {links.map(link => (
-        <Box as="li" key={link.name}>
+        <Box as="span" key={link.name}>
           {/** TODO: change to textBrandDefault */}
           <Text variant="body" size="small" color="iconBrandDefault">
             <Link href={link.url} target="_blank">

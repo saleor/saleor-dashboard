@@ -9,7 +9,7 @@ interface AppListCardDescriptionProps {
 const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
   app,
 }) => (
-  <Box>
+  <Box marginBottom={6}>
     <Box
       display="flex"
       flexDirection="row"
