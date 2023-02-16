@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "../CardTitle";
@@ -39,18 +39,8 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  const loaded = React.useRef(false);
-  const [expanded, setExpanded] = React.useState(true);
+  const [expanded, setExpanded] = React.useState(false);
   const classes = useStyles();
-
-  useEffect(() => {
-    if (data !== undefined) {
-      loaded.current = true;
-      if (data.length > 0) {
-        setExpanded(false);
-      }
-    }
-  }, [data === undefined]);
 
   return (
     <Card
