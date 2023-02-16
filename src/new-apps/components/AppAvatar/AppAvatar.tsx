@@ -8,9 +8,7 @@ interface AppAvatarProps {
   size: "medium" | "large";
 }
 
-export const AppAvatar = (props: AppAvatarProps) => {
-  const { logo, size } = props;
-
+export const AppAvatar: React.FC<AppAvatarProps> = ({ logo, size }) => {
   const avatarSize = size === "medium" ? 11 : 13;
 
   if (logo?.source) {
