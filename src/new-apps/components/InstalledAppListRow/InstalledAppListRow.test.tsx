@@ -29,8 +29,7 @@ const Component = ({
   </Wrapper>
 );
 
-// TODO: FiXME
-xdescribe("Apps InstalledAppListRow", () => {
+describe("Apps InstalledAppListRow", () => {
   it("displays app details when basic app data passed", () => {
     // Arrange
     const openAppSettings = jest.fn();
@@ -53,16 +52,18 @@ xdescribe("Apps InstalledAppListRow", () => {
     const version = screen.queryByText(activeApp.version as string, {
       exact: false,
     });
-    const manifestDomain = screen.queryByText(
-      new URL(activeApp.manifestUrl as string).host,
-    );
+    // TODO: Uncomment this when manifests are added back in the UI
+    // const manifestDomain = screen.queryByText(
+    //   new URL(activeApp.manifestUrl as string).host,
+    // );
     const externalLabel = screen.queryByTestId("app-external-label");
     const tunnelLabel = screen.queryByTestId("app-tunnel-label");
 
     // Assert
     expect(name).toBeTruthy();
     expect(version).toBeTruthy();
-    expect(manifestDomain).toBeTruthy();
+    // TODO: Uncomment this when manifests are added back in the UI
+    // expect(manifestDomain).toBeTruthy();
     expect(externalLabel).toBeFalsy();
     expect(tunnelLabel).toBeFalsy();
   });
