@@ -1618,10 +1618,6 @@
     "context": "sale status",
     "string": "Active"
   },
-  "ApNw0L": {
-    "context": "Dry run objects unavailable",
-    "string": "The following objects are currently not available for dry run:"
-  },
   "AqHafs": {
     "context": "provided email input placeholder",
     "string": "Provided email address"
@@ -1730,6 +1726,10 @@
   "BYGJ/j": {
     "context": "button label",
     "string": "Settings"
+  },
+  "BYTvv/": {
+    "context": "Dry run events unavailable",
+    "string": "The following events from provided query are currently not available for dry run:"
   },
   "BZ7BkQ": {
     "context": "capture payment, button",
