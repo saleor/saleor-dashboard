@@ -543,10 +543,6 @@
     "context": "order status",
     "string": "Partially returned"
   },
-  "26VlBZ": {
-    "context": "information",
-    "string": "Problem occured during installation."
-  },
   "28GZnc": {
     "string": "Start typing to begin search..."
   },
@@ -1718,6 +1714,10 @@
   "BXkF8Z": {
     "context": "header",
     "string": "Activity"
+  },
+  "BYGJ/j": {
+    "context": "button label",
+    "string": "Settings"
   },
   "BZ7BkQ": {
     "context": "capture payment, button",
@@ -3884,6 +3884,10 @@
   "RXbkle": {
     "context": "copy code button label",
     "string": "Copy code"
+  },
+  "RY4PJY": {
+    "context": "information",
+    "string": "Installation failed"
   },
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
@@ -6388,6 +6392,10 @@
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lSd5Zo": {
+    "context": "app permissions label",
+    "string": "None"
   },
   "lT5MYM": {
     "context": "dialog title",

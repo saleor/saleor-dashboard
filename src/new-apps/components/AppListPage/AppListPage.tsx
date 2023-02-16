@@ -1,6 +1,4 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { AppUrls } from "@dashboard/new-apps/urls";
@@ -75,55 +73,56 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
       </TopNav>
-      <div className={classes.appContent}>
-        {sectionsAvailability.installed && (
-          <>
-            <Box paddingX={8} paddingY={6}>
-              <Text as="h3" variant="heading">
-                {intl.formatMessage(messages.installedApps)}
-              </Text>
-            </Box>
-            <InstalledAppList
-              appList={verifiedInstalledApps}
-              appInstallationList={verifiedAppsIntallations}
-              disabled={disabled}
-              settings={settings}
-              onUpdateListSettings={onUpdateListSettings}
-            />
-          </>
-        )}
-
-        <MarketplaceAlert error={marketplaceError} />
-        {sectionsAvailability.all && !marketplaceError && (
-          <Content>
-            <Box paddingY={6} display="flex">
-              <Text as="h3" variant="heading">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        marginY={8}
+      >
+        <Box className={classes.appContent} marginY={8}>
+          {sectionsAvailability.installed && (
+            <>
+              <Box paddingX={8} paddingY={6}>
+                <Text as="h3" variant="heading" color="textNeutralSubdued">
+                  {intl.formatMessage(messages.installedApps)}
+                </Text>
+              </Box>
+              <InstalledAppList
+                appList={verifiedInstalledApps}
+                appInstallationList={verifiedAppsIntallations}
+                disabled={disabled}
+                settings={settings}
+                onUpdateListSettings={onUpdateListSettings}
+              />
+            </>
+          )}
+          <MarketplaceAlert error={marketplaceError} />
+          {sectionsAvailability.all && !marketplaceError && (
+            <Box marginTop={10}>
+              <Text as="h3" variant="heading" color="textNeutralSubdued">
                 <FormattedMessage {...messages.allApps} />
               </Text>
-              <PreviewPill className={classes.previewLabel} />
+              <AllAppList
+                appList={verifiedInstallableMarketplaceApps}
+                appInstallationList={appsInstallations}
+                navigateToAppInstallPage={navigateToAppInstallPage}
+                navigateToGithubForkPage={navigateToGithubForkPage}
+              />
             </Box>
-            <AllAppList
-              appList={verifiedInstallableMarketplaceApps}
-              appInstallationList={appsInstallations}
-              navigateToAppInstallPage={navigateToAppInstallPage}
-              navigateToGithubForkPage={navigateToGithubForkPage}
-            />
-          </Content>
-        )}
-        {sectionsAvailability.comingSoon && !marketplaceError && (
-          <Content>
-            <Box paddingY={6}>
-              <Text as="h3" variant="heading">
+          )}
+          {sectionsAvailability.comingSoon && !marketplaceError && (
+            <Box marginTop={10}>
+              <Text as="h3" variant="heading" color="textNeutralSubdued">
                 {intl.formatMessage(messages.comingSoonApps)}
               </Text>
+              <AllAppList
+                appList={comingSoonMarketplaceApps}
+                appInstallationList={appsInstallations}
+              />
             </Box>
-            <AllAppList
-              appList={comingSoonMarketplaceApps}
-              appInstallationList={appsInstallations}
-            />
-          </Content>
-        )}
-      </div>
+          )}
+        </Box>
+      </Box>
     </>
   );
 };
