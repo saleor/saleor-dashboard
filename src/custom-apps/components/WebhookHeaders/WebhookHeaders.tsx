@@ -18,40 +18,41 @@ import {
 } from "@material-ui/core";
 import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { ChangeEvent, useEffect } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
+import { mapHeaders, stringifyHeaders } from "./utils";
 
 export interface WebhookHeadersProps {
   data: WebhookFormData;
   onChange: FormChange;
 }
 
+export interface Header {
+  name: string;
+  value: string;
+  error?: boolean;
+}
+
 const nameSeparator = ":";
 const nameInputPrefix = "name";
 const valueInputPrefix = "value";
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
-  data: { headers },
-  onChange,
-}) => {
+const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
+  const customHeaders = data.customHeaders;
+
   const intl = useIntl();
-  const loaded = React.useRef(false);
-  const [expanded, setExpanded] = React.useState(true);
+  const loaded = useRef(false);
+  const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
-
-  const validateName = (name: string) => {
-    if (name.toLowerCase().startsWith("x-")) {
-      return false;
-    }
-
-    if (name.toLowerCase() === "authorization") {
-      return false;
-    }
-
-    return true;
-  };
+  const headers = useMemo(() => mapHeaders(customHeaders), [customHeaders]);
 
   const change = (event: ChangeEvent) => {
     const { name, value } = event.target as HTMLTextAreaElement;
@@ -60,26 +61,24 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
     const item = headers[index];
     item[field] = value;
 
-    if (field === nameInputPrefix) {
-      item.error = validateName(value);
-    }
-
     onChange({
       target: {
-        name: "headers",
-        value: updateAtIndex(item, headers, parseInt(index, 10)),
+        name: "customHeaders",
+        value: stringifyHeaders(
+          updateAtIndex(item, headers, parseInt(index, 10)),
+        ),
       },
     });
   };
 
   useEffect(() => {
-    if (headers !== undefined) {
+    if (headers.length > 0) {
       loaded.current = true;
       if (headers.length > 0) {
-        setExpanded(false);
+        setExpanded(true);
       }
     }
-  }, [headers === undefined]);
+  }, [headers.length]);
 
   const add = () => {
     const items = [...headers];
@@ -87,8 +86,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
 
     onChange({
       target: {
-        name: "headers",
-        value: items,
+        name: "customHeaders",
+        value: stringifyHeaders(items),
       },
     });
   };
@@ -155,8 +154,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                   <CardContent>
                     <Typography variant="body2">
                       <FormattedMessage
-                        id="fxBN6M"
-                        defaultMessage="Headers with in following format are accepted: `Autorization`, `X-`"
+                        id="pSECJe"
+                        defaultMessage="Headers with in following format are accepted: `Authorization`, `X-`"
                         description="accepted header names"
                       />
                     </Typography>
@@ -242,8 +241,10 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                               onClick={() =>
                                 onChange({
                                   target: {
-                                    name: "headers",
-                                    value: removeAtIndex(headers, fieldIndex),
+                                    name: "customHeaders",
+                                    value: stringifyHeaders(
+                                      removeAtIndex(headers, fieldIndex),
+                                    ),
                                   },
                                 })
                               }

@@ -31,11 +31,6 @@ import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
-interface Header {
-  name: string;
-  value: string;
-  error?: boolean;
-}
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
   asyncEvents: WebhookEventTypeAsyncEnum[];
@@ -44,7 +39,7 @@ export interface WebhookFormData {
   secretKey?: string;
   targetUrl: string;
   subscriptionQuery: string;
-  headers?: Header[];
+  customHeaders?: string;
 }
 
 export interface WebhookDetailsPageProps {
@@ -83,7 +78,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
     subscriptionQuery: prettified || "",
-    headers: [],
+    customHeaders: webhook?.customHeaders || "{}",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);

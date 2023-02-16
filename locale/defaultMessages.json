@@ -5742,10 +5742,6 @@
     "context": "product's sku",
     "string": "SKU"
   },
-  "fxBN6M": {
-    "context": "accepted header names",
-    "string": "Headers with in following format are accepted: `Autorization`, `X-`"
-  },
   "fyE8BN": {
     "context": "product organization, header",
     "string": "Organization"
@@ -6899,6 +6895,10 @@
   "pRYGUR": {
     "context": "section description",
     "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
+  },
+  "pSECJe": {
+    "context": "accepted header names",
+    "string": "Headers with in following format are accepted: `Authorization`, `X-`"
   },
   "pTpx0p": {
     "context": "order history message",
