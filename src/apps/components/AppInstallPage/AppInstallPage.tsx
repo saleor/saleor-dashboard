@@ -1,9 +1,9 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Hr from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
@@ -37,7 +37,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   const name = data?.name || "";
 
   return (
-    <Container>
+    <DetailedContent useSingleColumn>
       <CardSpacer />
       <Card>
         <CardTitle
@@ -149,7 +149,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           </Button>
         </Grid>
       </Grid>
-    </Container>
+    </DetailedContent>
   );
 };
 
