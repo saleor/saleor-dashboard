@@ -59,12 +59,13 @@ export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithKeyValueValues<ProductListUrlFiltersWithKeyValueValues> &
   FiltersAsDictWithMultipleValues<ProductListUrlFiltersAsDictWithMultipleValues>;
 export enum ProductListUrlSortField {
+  attribute = "attribute",
   name = "name",
   productType = "productType",
-  price = "price",
-  date = "date",
   status = "status",
-  attribute = "attribute",
+  price = "price",
+  rank = "rank",
+  date = "date",
 }
 export type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export interface ProductListUrlQueryParams
