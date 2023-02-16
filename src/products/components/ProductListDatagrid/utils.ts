@@ -68,18 +68,6 @@ export function getColumns({
         width: 250,
         icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
       },
-      {
-        id: "date",
-        title: intl.formatMessage(columnsMessages.updatedAt),
-        width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
-      },
-      {
-        id: "price",
-        title: intl.formatMessage(columnsMessages.price),
-        width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
-      },
       ...gridAttributesFromSettings.map(attribute => {
         const attributeId = getAttributeIdFromColumnValue(attribute);
 
@@ -94,6 +82,18 @@ export function getColumns({
           icon: getColumnSortIconName(sort, ProductListUrlSortField.attribute),
         };
       }),
+      {
+        id: "date",
+        title: intl.formatMessage(columnsMessages.updatedAt),
+        width: 250,
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
+      },
+      {
+        id: "price",
+        title: intl.formatMessage(columnsMessages.price),
+        width: 250,
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
+      },
     ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
   ];
 }
