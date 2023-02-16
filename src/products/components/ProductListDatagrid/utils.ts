@@ -203,7 +203,7 @@ function getRowDataValue(
   rowData?: RelayToFlat<ProductListQuery["products"]>[number],
   changeValue?: DropdownChoice,
 ): DropdownChoice {
-  if (changeValue === null) {
+  if (changeValue === null || !rowData) {
     return emptyDropdownCellValue;
   }
 
@@ -285,6 +285,10 @@ function getUpdatedAtrCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   locale: Locale,
 ) {
+  if (!rowData) {
+    return readonlyTextCell("");
+  }
+
   return readonlyTextCell(
     moment(rowData.updatedAt).locale(locale).format("lll"),
   );
