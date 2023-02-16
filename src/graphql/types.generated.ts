@@ -179,6 +179,7 @@ export enum AppErrorCode {
   INVALID_PERMISSION = 'INVALID_PERMISSION',
   INVALID_URL_FORMAT = 'INVALID_URL_FORMAT',
   INVALID_MANIFEST_FORMAT = 'INVALID_MANIFEST_FORMAT',
+  INVALID_CUSTOM_HEADERS = 'INVALID_CUSTOM_HEADERS',
   MANIFEST_URL_CANT_CONNECT = 'MANIFEST_URL_CANT_CONNECT',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
@@ -5813,6 +5814,14 @@ export type WebhookCreateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   query?: InputMaybe<Scalars['String']>;
+  /**
+   * Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only "X-*" and "Authorization*" keys are allowed.
+   *
+   * Added in Saleor 3.12.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  customHeaders?: InputMaybe<Scalars['JSONString']>;
 };
 
 /** An enumeration. */
@@ -5839,7 +5848,8 @@ export enum WebhookErrorCode {
   SYNTAX = 'SYNTAX',
   MISSING_SUBSCRIPTION = 'MISSING_SUBSCRIPTION',
   UNABLE_TO_PARSE = 'UNABLE_TO_PARSE',
-  MISSING_EVENT = 'MISSING_EVENT'
+  MISSING_EVENT = 'MISSING_EVENT',
+  INVALID_CUSTOM_HEADERS = 'INVALID_CUSTOM_HEADERS'
 }
 
 /** Enum determining type of webhook. */
@@ -6712,6 +6722,14 @@ export type WebhookUpdateInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   query?: InputMaybe<Scalars['String']>;
+  /**
+   * Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only "X-*" and "Authorization*" keys are allowed.
+   *
+   * Added in Saleor 3.12.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  customHeaders?: InputMaybe<Scalars['JSONString']>;
 };
 
 /** An enumeration. */
