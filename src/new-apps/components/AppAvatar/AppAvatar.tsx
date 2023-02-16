@@ -1,5 +1,6 @@
+import genericAppImg from "@assets/images/app-generic.svg";
 import { AppLogo } from "@dashboard/new-apps/types";
-import { Box, MarketplaceIcon } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface AppAvatarProps {
@@ -8,33 +9,37 @@ interface AppAvatarProps {
 }
 
 export const AppAvatar = (props: AppAvatarProps) => {
-  const { logo } = props;
+  const { logo, size } = props;
+
+  const avatarSize = size === "medium" ? 11 : 13;
+
   if (logo?.source) {
     return (
       <Box
         __backgroundColor={logo?.color}
         padding={3}
-        width={11}
-        height={11}
+        width={avatarSize}
+        height={avatarSize}
         borderRadius={2}
+        display="flex"
+        placeItems="center"
       >
-        <Box as="img" src={logo.source} width={9} height={9} />
+        <Box as="img" src={logo.source} />
       </Box>
     );
   } else {
     return (
       <Box
-        __backgroundColor={logo?.color}
-        backgroundColor={logo?.color ? undefined : "surfaceNeutralSubdued"}
+        __backgroundColor={logo?.color ?? "#EAE8E9"}
+        __color="#7C7F7F"
         padding={3}
-        width={11}
-        height={11}
+        width={avatarSize}
+        height={avatarSize}
         display="flex"
         placeItems="center"
         borderRadius={2}
       >
-        {/** FIXME: Replace with generic app icon & recheck background color */}
-        <MarketplaceIcon color="iconNeutralSubdued" />
+        <img src={genericAppImg} alt="" />
       </Box>
     );
   }
