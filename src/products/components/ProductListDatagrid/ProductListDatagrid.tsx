@@ -31,7 +31,7 @@ import { messages } from "./messages";
 import { ProductListDatagridSkeleton } from "./ProductListDatagridSkeleton";
 import { useColumnPickerColumns } from "./useColumnPickerColumns";
 import { useProductForm } from "./useProductForm";
-import { createGetCellContent, getColumns } from "./utils";
+import { createGetCellContent, getColumnMetadata, getColumns } from "./utils";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -133,13 +133,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const onHeaderClicked = useCallback(
     (col: number) => {
+      const { columnName, columnId } = getColumnMetadata(columns[col].id);
+
       if (
-        canBeSorted(
-          columns[col].id as ProductListUrlSortField,
-          !!selectedChannelId,
-        )
+        canBeSorted(columnName as ProductListUrlSortField, !!selectedChannelId)
       ) {
-        onSort(columns[col].id as ProductListUrlSortField);
+        onSort(columnName as ProductListUrlSortField, columnId);
       }
     },
     [columns, onSort, selectedChannelId],

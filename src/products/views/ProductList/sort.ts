@@ -15,6 +15,7 @@ export function canBeSorted(
     case ProductListUrlSortField.name:
     case ProductListUrlSortField.productType:
     case ProductListUrlSortField.date:
+    case ProductListUrlSortField.attribute:
       return true;
     case ProductListUrlSortField.price:
     case ProductListUrlSortField.status:
@@ -52,6 +53,13 @@ export function getSortQueryVariables(
   }
 
   const direction = getOrderDirection(params.asc);
+
+  if (params.sort === ProductListUrlSortField.attribute) {
+    return {
+      attributeId: params.attributeId,
+      direction,
+    };
+  }
 
   const field = getSortQueryField(params.sort);
   return {

@@ -90,6 +90,7 @@ export function getColumns({
           id: attribute,
           title,
           width: 200,
+          icon: getColumnSortIconName(sort, ProductListUrlSortField.attribute),
         };
       }),
     ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
@@ -306,4 +307,18 @@ function getAttributeCellContent(
   }
 
   return readonlyTextCell("");
+}
+
+export function getColumnMetadata(column: string) {
+  if (column.includes(":")) {
+    const [columnName, columnId] = column.split(":");
+    return {
+      columnName,
+      columnId,
+    };
+  }
+
+  return {
+    columnName: column,
+  };
 }
