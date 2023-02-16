@@ -1,6 +1,5 @@
 import { appsListPath } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ExternalLink from "@dashboard/components/ExternalLink";
@@ -8,6 +7,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { AppQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -57,7 +57,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           />
         </Button>
       </TopNav>
-      <div className={classes.appHeader}>
+      <Box marginX={10}>
         {data ? (
           <div className={classes.appHeaderLinks}>
             <ExternalLink
@@ -97,7 +97,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           <Skeleton />
         )}
         <div className={classes.hr} />
-      </div>
+      </Box>
 
       <Card>
         <CardTitle
