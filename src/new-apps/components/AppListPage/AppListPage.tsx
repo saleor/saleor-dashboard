@@ -118,7 +118,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               <AllAppList
                 appList={comingSoonMarketplaceApps}
                 appInstallationList={appsInstallations}
-              />{" "}
+              />
             </Box>
           )}
         </Box>

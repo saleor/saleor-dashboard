@@ -48,7 +48,7 @@ export const InstallWithManifestFormButton: React.FC<Props> = ({
             defaultValue=""
             helperText={intl.formatMessage(messages.appManifestUrlHint)}
           />
-          {/* Needs to be updated after TextInput implementation */}
+          {/* TODO: Needs to be updated after TextInput implementation */}
           <Button
             size="medium"
             type="submit"

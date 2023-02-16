@@ -36,10 +36,8 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         borderTopStyle="solid"
         borderWidth={1}
         borderColor="neutralPlain"
-        className={sprinkles({
-          justifyContent: "space-between",
-          flexDirection: "row",
-        })}
+        justifyContent="space-between"
+        flexDirection="row"
       >
         <Box display="flex" gap={5} alignItems="center">
           <AppAvatar size="medium" logo={logo} />
