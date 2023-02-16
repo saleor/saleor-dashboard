@@ -98,6 +98,7 @@
       "ProductVariantDeleted",
       "ProductVariantMetadataUpdated",
       "ProductVariantOutOfStock",
+      "ProductVariantStockUpdated",
       "ProductVariantUpdated",
       "SaleCreated",
       "SaleDeleted",
@@ -224,6 +225,7 @@
       "Webhook"
     ],
     "ObjectWithMetadata": [
+      "Address",
       "App",
       "Attribute",
       "Category",

@@ -1,24 +1,19 @@
 import { FetchResult } from "@apollo/client";
 import {
-  ProductChannelListingUpdateMutation,
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
-  ProductVariantChannelListingUpdateMutation,
-  ProductVariantChannelListingUpdateMutationVariables,
-  StockInput,
-  VariantDatagridStockUpdateMutation,
-  VariantDatagridStockUpdateMutationVariables,
-  VariantDatagridUpdateMutation,
-  VariantDatagridUpdateMutationVariables,
+  ProductVariantBulkErrorCode,
+  ProductVariantBulkErrorFragment,
+  ProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
-import { hasMutationErrors } from "@dashboard/misc";
 
 export type ProductVariantListError =
   | {
       __typename: "DatagridError";
       attributes: string[] | null;
-      error: ProductErrorCode;
+      error: ProductVariantBulkErrorCode;
       variantId: string;
+      field?: string;
       type: "variantData";
     }
   | {
@@ -29,7 +24,7 @@ export type ProductVariantListError =
     }
   | {
       __typename: "DatagridError";
-      error: ProductErrorCode;
+      error: ProductVariantBulkErrorCode;
       variantId: string;
       channelIds: string[];
       type: "channel";
@@ -41,80 +36,101 @@ export type ProductVariantListError =
       type: "create";
     };
 
-export function getProductVariantListErrors(
-  productChannelsUpdateResult: FetchResult<ProductChannelListingUpdateMutation>,
-  variantMutationResults: FetchResult[],
+export function getCreateVariantMutationError(
+  result: FetchResult<ProductVariantBulkCreateMutation>,
 ): ProductVariantListError[] {
-  return [productChannelsUpdateResult, ...variantMutationResults]
-    .filter(hasMutationErrors)
-    .flatMap(result => {
-      if (result.data.productVariantChannelListingUpdate) {
-        const data = result.data as ProductVariantChannelListingUpdateMutation;
-        return data.productVariantChannelListingUpdate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "channel",
-          error: error.code,
-          variantId: (result.extensions
-            .variables as ProductVariantChannelListingUpdateMutationVariables)
-            .id,
-          channelIds: error.channels,
-        }));
-      }
+  return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(
+    error => ({
+      __typename: "DatagridError",
+      type: "create",
+      index: error.index,
+      error: error.code,
+    }),
+  );
+}
 
-      if (result.data.productVariantStocksUpdate) {
-        const data = result.data as VariantDatagridStockUpdateMutation;
-        const variables = result.extensions
-          .variables as VariantDatagridStockUpdateMutationVariables;
-        return [
-          ...data.productVariantStocksUpdate.errors.map<
-            ProductVariantListError
-          >(error => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: (variables.stocks as StockInput[])[error.index]
-              .warehouse,
-          })),
-          ...data.productVariantStocksDelete.errors.map<
-            ProductVariantListError
-          >(() => ({
-            __typename: "DatagridError",
-            type: "stock",
-            variantId: (variables as VariantDatagridStockUpdateMutationVariables)
-              .id,
-            warehouseId: null,
-          })),
-        ];
-      }
+export function getVariantUpdateMutationErrors(
+  mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
+  varaintsIds: string[],
+): ProductVariantListError[] {
+  const { productVariantBulkUpdate } = mutationResult.data;
+  const generalErrors = productVariantBulkUpdate.errors;
+  const variantsErrors = productVariantBulkUpdate.results.flatMap(
+    res => res.errors,
+  );
+  const allErrors = [...generalErrors, ...variantsErrors];
 
-      if (result.data.productVariantUpdate) {
-        const data = result.data as VariantDatagridUpdateMutation;
-        const variables = result.extensions
-          .variables as VariantDatagridUpdateMutationVariables;
-        return data.productVariantUpdate.errors.map<ProductVariantListError>(
-          error => ({
-            __typename: "DatagridError",
-            type: "variantData",
-            variantId: (variables as VariantDatagridUpdateMutationVariables).id,
-            error: error.code,
-            attributes: error.attributes,
-          }),
-        );
-      }
+  return [
+    ...getChannelErrors(allErrors, varaintsIds),
+    ...getStockErrors(allErrors, varaintsIds),
+    ...getRestOfErrors(allErrors, varaintsIds),
+  ];
+}
 
-      if (result.data.productVariantBulkCreate) {
-        const data = result.data as ProductVariantBulkCreateMutation;
-        return data.productVariantBulkCreate.errors.map<
-          ProductVariantListError
-        >(error => ({
-          __typename: "DatagridError",
-          type: "create",
-          index: error.index,
-          error: error.code,
-        }));
-      }
-    });
+function getChannelErrors(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
+    if (error.channels?.length) {
+      const variantId = varaintsIds[index];
+
+      acc.push({
+        __typename: "DatagridError",
+        type: "channel",
+        error: error.code,
+        variantId,
+        channelIds: error.channels,
+      });
+    }
+
+    return acc;
+  }, []);
+}
+
+function getStockErrors(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
+    if (error.warehouses?.length) {
+      const variantId = varaintsIds[index];
+
+      acc.push(
+        ...error.warehouses.map(
+          warehouse =>
+            ({
+              __typename: "DatagridError",
+              variantId,
+              warehouseId: warehouse,
+              type: "stock",
+            } as const),
+        ),
+      );
+    }
+
+    return acc;
+  }, []);
+}
+
+function getRestOfErrors(
+  errors: ProductVariantBulkErrorFragment[],
+  varaintsIds: string[],
+) {
+  return errors.reduce<ProductVariantListError[]>((acc, error, index) => {
+    if (!error.warehouses?.length && !error.channels?.length) {
+      const variantId = varaintsIds[index];
+
+      acc.push({
+        __typename: "DatagridError",
+        type: "variantData",
+        variantId,
+        error: error.code,
+        attributes: error.attributes,
+        field: error.field,
+      });
+    }
+
+    return acc;
+  }, []);
 }

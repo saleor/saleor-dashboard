@@ -9,17 +9,11 @@ import {
 import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/DropdownCell";
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import {
-  DatagridChange,
-  DatagridChangeOpts,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
   ProductFragment,
-  VariantDatagridChannelListingUpdateMutationVariables,
-  VariantDatagridStockUpdateMutationVariables,
-  VariantDatagridUpdateMutationVariables,
   WarehouseFragment,
 } from "@dashboard/graphql";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
@@ -32,116 +26,10 @@ import {
   getColumnAttribute,
   getColumnChannel,
   getColumnChannelAvailability,
+  getColumnName,
   getColumnStock,
-} from "./datagrid/columnData";
-import { getVariantChannelsInputs } from "./datagrid/getVariantChannelsInputs";
+} from "../../utils/datagrid";
 import messages from "./messages";
-
-export function getVariantInput(data: DatagridChangeOpts, index: number) {
-  const attributes = data.updates
-    .filter(
-      change =>
-        getColumnAttribute(change.column) &&
-        change.row === index + data.removed.filter(r => r <= index).length,
-    )
-    .map(change => {
-      const attributeId = getColumnAttribute(change.column);
-
-      return {
-        id: attributeId,
-        values: [change.data.value.value],
-      };
-    });
-
-  const sku = data.updates.find(
-    change =>
-      change.column === "sku" &&
-      change.row === index + data.removed.filter(r => r <= index).length,
-  )?.data;
-
-  const name = data.updates.find(
-    change =>
-      change.column === "name" &&
-      change.row === index + data.removed.filter(r => r <= index).length,
-  )?.data;
-
-  return {
-    attributes,
-    sku,
-    name,
-  };
-}
-
-export function getVariantInputs(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridUpdateMutationVariables[] {
-  return variants
-    .map(
-      (variant, variantIndex): VariantDatagridUpdateMutationVariables => ({
-        id: variant.id,
-        input: getVariantInput(data, variantIndex),
-      }),
-    )
-    .filter(
-      variables =>
-        variables.input.sku ||
-        variables.input.name ||
-        variables.input.attributes.length > 0,
-    );
-}
-
-export function getStockInputs(data: DatagridChangeOpts, index: number) {
-  const stockChanges = data.updates.filter(change =>
-    getColumnStock(change.column),
-  );
-
-  const variantChanges = stockChanges
-    .filter(
-      change =>
-        change.row === index + data.removed.filter(r => r <= index).length,
-    )
-    .map(change => ({
-      warehouse: getColumnStock(change.column),
-      quantity: change.data.value,
-    }));
-
-  return {
-    stocks: variantChanges.filter(
-      change => change.quantity !== numberCellEmptyValue,
-    ),
-    removeStocks: variantChanges
-      .filter(change => change.quantity === numberCellEmptyValue)
-      .map(({ warehouse }) => warehouse),
-  };
-}
-
-export function getStocks(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridStockUpdateMutationVariables[] {
-  return variants
-    .map((variant, variantIndex) => ({
-      id: variant.id,
-      ...getStockInputs(data, variantIndex),
-    }))
-    .filter(
-      variables =>
-        variables.removeStocks.length > 0 || variables.stocks.length > 0,
-    );
-}
-
-export function getVariantChannels(
-  variants: ProductFragment["variants"],
-  data: DatagridChangeOpts,
-): VariantDatagridChannelListingUpdateMutationVariables[] {
-  return variants
-    .map((variant, variantIndex) => ({
-      id: variant.id,
-      input: getVariantChannelsInputs(data, variantIndex),
-    }))
-    .filter(({ input }) => input.length > 0);
-}
 
 function errorMatchesColumn(
   error: ProductVariantListError,
@@ -162,7 +50,8 @@ function errorMatchesColumn(
     if (error.attributes?.length > 0) {
       return error.attributes.includes(getColumnAttribute(columnId));
     }
-    return columnId === "sku";
+
+    return error?.field?.includes(getColumnName(columnId)) ?? false;
   }
 }
 

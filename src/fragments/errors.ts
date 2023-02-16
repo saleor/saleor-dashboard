@@ -117,6 +117,17 @@ export const bulkProductErrorFragment = gql`
     message
   }
 `;
+export const productVariantBulkError = gql`
+  fragment ProductVariantBulkError on ProductVariantBulkError {
+    field
+    code
+    message
+    attributes
+    values
+    warehouses
+    channels
+  }
+`;
 export const bulkStockErrorFragment = gql`
   fragment BulkStockError on BulkStockError {
     code

@@ -701,6 +701,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -725,6 +726,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNDM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -787,6 +789,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNEM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -811,6 +814,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoreNTM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -940,6 +944,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaSAD3w2FubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -964,6 +969,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhdwxDaGFubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -3243,6 +3249,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
   __typename: "ProductVariant",
   channelListings: [
     {
+      id: "UHJvZHVjdFZhcasdasdASDDaGFubmVsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
       channel: {
         __typename: "Channel",
@@ -3267,6 +3274,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       },
     },
     {
+      id: "UHJvZHVjdFZhcmlhbnRDaGGSAEdsWsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
       channel: {
         __typename: "Channel",
@@ -3405,8 +3413,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     __typename: "Product" as "Product",
     channelListings: [
       {
+        id: "2",
         __typename: "ProductChannelListing",
-        id: "11",
         isPublished: false,
         publicationDate: null,
         channel: {
@@ -3417,8 +3425,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         },
       },
       {
+        id: "2",
         __typename: "ProductChannelListing",
-        id: "12",
         isPublished: true,
         publicationDate: "2022-01-21",
         channel: {
