@@ -14,7 +14,6 @@ import {
   Button,
   Chip,
   List,
-  sprinkles,
   Text,
   TrashBinIcon,
   WarningIcon,
@@ -37,12 +36,16 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
       borderTopStyle="solid"
       borderWidth={1}
       borderColor="neutralPlain"
-      className={sprinkles({
-        justifyContent: "space-between",
-        flexDirection: "row",
-      })}
+      justifyContent="space-between"
+      flexDirection="row"
+      flexWrap={{ mobile: "wrap", desktop: "nowrap" }}
     >
-      <Box display="flex" gap={5} alignItems="center">
+      <Box
+        display="flex"
+        gap={5}
+        alignItems="center"
+        justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
+      >
         <AppAvatar size="medium" logo={logo} />
         <Text variant="bodyStrong">{appInstallation.appName}</Text>
         {isExternal && (

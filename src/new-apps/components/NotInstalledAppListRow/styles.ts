@@ -50,6 +50,7 @@ export const useStyles = makeStyles<AppInstallation>(
       justifyContent: "flex-end",
       textAlign: "right",
       gap: theme.spacing(1),
+      width: "100%",
     },
     externalAppLabel: {
       cursor: "pointer",
