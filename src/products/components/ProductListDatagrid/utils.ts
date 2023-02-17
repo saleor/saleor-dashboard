@@ -146,7 +146,7 @@ export function createGetCellContent({
       return textCell("");
     }
 
-    if (loading) {
+    if (loading || !columns[column]?.id) {
       return loadingCell();
     }
 

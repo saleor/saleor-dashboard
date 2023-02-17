@@ -1,16 +1,20 @@
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { AvailableColumn } from "./types";
 
 function useColumns(availableColumns: readonly AvailableColumn[]) {
   const [query, setQuery] = useState("");
-  const [displayedColumns, setDisplayedColumns] = useStateFromProps(
+  const [displayedColumns, setDisplayedColumns] = useState(
     availableColumns.map(({ id }) => id),
   );
-  const [columnState, setColumnState] = useStateFromProps(availableColumns);
+  const [columnState, setColumnState] = useState(availableColumns);
+
+  useEffect(() => {
+    setColumnState(availableColumns);
+    setDisplayedColumns(availableColumns.map(({ id }) => id));
+  }, [availableColumns]);
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
@@ -39,7 +43,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
           .filter(column => !prevColumns.find(c => c === column))
           .map(column => availableColumns.find(ac => ac.id === column).id),
       ]),
-    [availableColumns],
+    [availableColumns, setDisplayedColumns],
   );
 
   const columns = useMemo(
@@ -54,6 +58,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [columns],
   );
+
   const availableColumnsChoices = useMemo(
     () =>
       availableColumns.map(({ id, title }) => ({
@@ -62,6 +67,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [availableColumns],
   );
+
   const defaultColumns = useMemo(
     () => availableColumns.map(({ id }) => id),
     [availableColumns],
