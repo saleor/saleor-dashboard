@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
-import useStyles from "@dashboard/components/Metadata/styles";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -28,6 +27,7 @@ import React, {
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
+import useStyles from "./styles";
 import { mapHeaders, stringifyHeaders } from "./utils";
 
 export interface WebhookHeadersProps {
@@ -99,8 +99,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
         title={
           <>
             {intl.formatMessage({
-              id: "b89+oM",
-              defaultMessage: "Headers",
+              id: "2BHjVL",
+              defaultMessage: "Custom request headers",
               description: "header",
             })}
             <IconButton
@@ -127,9 +127,9 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
             {headers.length > 0 && (
               <Typography color="textSecondary" variant="body2">
                 <FormattedMessage
-                  id="hvDSHe"
-                  defaultMessage="{number,plural,one{{number} header} other{{number} headers}}"
-                  description="number of metadata fields in model"
+                  id="9Y5i/8"
+                  defaultMessage="{number,plural,one{{number} header} other{{number} custom request headers}}"
+                  description="number of webhook headers in model"
                   values={{
                     number: headers.length,
                   }}
@@ -143,8 +143,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                 <CardContent className={classes.emptyContainer}>
                   <Typography variant="body2" color="textSecondary">
                     <FormattedMessage
-                      id="CdxVko"
-                      defaultMessage="No headers created for this webhook. Use the button below to add new header."
+                      id="b1t9bM"
+                      defaultMessage="No custom request headers created for this webhook. Use the button below to add new custom request header."
                       description="empty headers text"
                     />
                   </Typography>
@@ -154,8 +154,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                   <CardContent>
                     <Typography variant="body2">
                       <FormattedMessage
-                        id="pSECJe"
-                        defaultMessage="Headers with in following format are accepted: `Authorization`, `X-`"
+                        id="wChjN/"
+                        defaultMessage="Headers with in following format are accepted: `authorization*`, `x-*`"
                         description="accepted header names"
                       />
                     </Typography>
@@ -164,14 +164,21 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRowLink>
-                        <TableCell className={classes.colNameHeader}>
+                        <TableCell
+                          className={clsx(
+                            classes.colNameHeader,
+                            classes.tableCell,
+                          )}
+                        >
                           <FormattedMessage
                             id="No4lyL"
                             defaultMessage="Name"
                             description="header field name, header"
                           />
                         </TableCell>
-                        <TableCell className={classes.colValue}>
+                        <TableCell
+                          className={clsx(classes.colValue, classes.tableCell)}
+                        >
                           <FormattedMessage
                             id="/4bJkA"
                             defaultMessage="Value"
@@ -190,11 +197,13 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                     <TableBody>
                       {headers.map((field, fieldIndex) => (
                         <TableRowLink data-test-id="field" key={fieldIndex}>
-                          <TableCell className={classes.colName}>
+                          <TableCell
+                            className={clsx(classes.colName, classes.tableCell)}
+                          >
                             <TextField
                               InputProps={{
                                 classes: {
-                                  input: classes.nameInput,
+                                  input: classes.input,
                                 },
                               }}
                               inputProps={{
@@ -204,34 +213,39 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                               fullWidth
                               onChange={change}
                               value={field.name}
-                              placeholder="Authorization"
                               error={field.error}
                               helperText={
-                                field.error &&
-                                intl.formatMessage({
-                                  id: "YIxI6R",
-                                  defaultMessage: "Incorrect name",
-                                  description: "header name input",
-                                })
+                                (field.error &&
+                                  intl.formatMessage({
+                                    id: "iERn5G",
+                                    defaultMessage:
+                                      "Should start with `x-` or `authorization`",
+                                    description: "header name input",
+                                  })) ||
+                                " "
                               }
                             />
                           </TableCell>
-                          <TableCell className={classes.colValue}>
+                          <TableCell
+                            className={clsx(
+                              classes.colValue,
+                              classes.tableCell,
+                            )}
+                          >
                             <TextField
                               InputProps={{
                                 classes: {
-                                  root: classes.input,
+                                  input: classes.input,
                                 },
                               }}
                               inputProps={{
                                 "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
                               }}
-                              multiline
                               name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                               fullWidth
                               onChange={change}
                               value={field.value}
-                              placeholder="XYZ"
+                              helperText={" "}
                             />
                           </TableCell>
                           <TableCell className={classes.colAction}>
@@ -265,8 +279,8 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
                   onClick={add}
                 >
                   <FormattedMessage
-                    id="CvyQ1c"
-                    defaultMessage="Add Header"
+                    id="uQNm59"
+                    defaultMessage="Add custom request header"
                     description="add header,button"
                   />
                 </Button>

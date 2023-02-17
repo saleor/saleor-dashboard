@@ -6,16 +6,14 @@ import { Header } from "./WebhookHeaders";
 export const stringifyHeaders = (headers: Header[]): string =>
   JSON.stringify(mapValues(keyBy(headers, "name"), "value"));
 
-const validateName = (name: string): boolean => {
-  if (name.length === 0) {
+const validateName = (name: string) => {
+  if (
+    name.toLowerCase().match("(^x$)|(^x-)|(^authorization$)|(^authorization-)")
+  ) {
     return false;
   }
 
-  if (name.toLowerCase().startsWith("x-")) {
-    return false;
-  }
-
-  if (name.toLowerCase() === "authorization") {
+  if (name === "") {
     return false;
   }
 
