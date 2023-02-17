@@ -25,7 +25,15 @@ const AllAppList: React.FC<AllAppListProps> = ({
   }
 
   return (
-    <Box display="grid" gridTemplateColumns={2} gap={8} marginTop={8}>
+    <Box
+      display="grid"
+      gridTemplateColumns={{
+        mobile: 1,
+        desktop: 2,
+      }}
+      gap={8}
+      marginTop={8}
+    >
       {appList.map(app => (
         <AppListCard
           key={app.name.en}
