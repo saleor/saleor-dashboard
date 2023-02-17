@@ -141,12 +141,12 @@ export function useMenuStructure() {
         ),
       ],
       icon: <ProductsIcons {...iconSettings} />,
-      label: intl.formatMessage(commonMessages.catalog),
+      label: intl.formatMessage(commonMessages.products),
       permissions: [
         PermissionEnum.MANAGE_GIFT_CARD,
         PermissionEnum.MANAGE_PRODUCTS,
       ],
-      id: "catalogue",
+      id: "products",
       type: "itemGroup",
     },
     {

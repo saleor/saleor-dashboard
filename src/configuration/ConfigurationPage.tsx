@@ -58,7 +58,7 @@ const useStyles = makeStyles(
     },
     navigationCard: {
       border: `1px solid ${vars.colors.border.neutralDefault}`,
-      height: 124,
+      height: 130,
       boxShadow: "none !important",
       "& .MuiCardContent-root": {
         borderRadius: vars.borderRadius[3],

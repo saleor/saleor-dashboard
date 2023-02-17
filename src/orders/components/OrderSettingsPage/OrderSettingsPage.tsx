@@ -1,3 +1,5 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Grid from "@dashboard/components/Grid";
 import Savebar from "@dashboard/components/Savebar";
@@ -10,6 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,7 +42,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, submit, change, isSaveDisabled }) => (
-        <>
+        <DetailedContent>
           <TopNav
             href={orderListUrl()}
             title={intl.formatMessage({
@@ -48,30 +51,38 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
               description: "header",
             })}
           />
-          <Grid variant="inverted">
-            <div>
-              <Typography>
-                <FormattedMessage
-                  id="yuiyES"
-                  defaultMessage="General Settings"
+          <Content>
+            <Box padding={9} margin="auto" height="100vh">
+              <Grid variant="inverted">
+                <div>
+                  <Typography>
+                    <FormattedMessage
+                      id="yuiyES"
+                      defaultMessage="General Settings"
+                    />
+                  </Typography>
+                </div>
+                <OrderSettings
+                  data={data}
+                  disabled={disabled}
+                  onChange={change}
                 />
-              </Typography>
-            </div>
-            <OrderSettings data={data} disabled={disabled} onChange={change} />
-            <div />
-            <OrderFulfillmentSettings
-              data={data}
-              disabled={disabled}
-              onChange={change}
-            />
-          </Grid>
+                <div />
+                <OrderFulfillmentSettings
+                  data={data}
+                  disabled={disabled}
+                  onChange={change}
+                />
+              </Grid>
+            </Box>
+          </Content>
           <Savebar
             onCancel={() => navigate(orderListUrl())}
             onSubmit={submit}
             disabled={isSaveDisabled}
             state={saveButtonBarState}
           />
-        </>
+        </DetailedContent>
       )}
     </OrderSettingsForm>
   );

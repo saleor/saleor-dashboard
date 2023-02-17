@@ -96,7 +96,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
       <Form initial={initialForm} onSubmit={onConfirm}>
         {({ change, data: formData }) => (
           <>
-            <DialogTitle>
+            <DialogTitle disableTypography>
               <FormattedMessage
                 id="23g7PY"
                 defaultMessage="Invite Staff Member"

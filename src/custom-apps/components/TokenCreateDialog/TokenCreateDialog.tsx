@@ -69,7 +69,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
       <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
         {({ change, data, submit }) => (
           <>
-            <DialogTitle>
+            <DialogTitle disableTypography>
               <FormattedMessage
                 id="T5nU7u"
                 defaultMessage="Create Token"

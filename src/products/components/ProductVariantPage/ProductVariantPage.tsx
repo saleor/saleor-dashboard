@@ -195,7 +195,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   };
 
   return (
-    <DetailedContent>
+    <DetailedContent useSingleColumn>
       <TopNav href={productUrl(productId)} title={header}>
         {variant?.product?.defaultVariant?.id !== variant?.id && (
           <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />

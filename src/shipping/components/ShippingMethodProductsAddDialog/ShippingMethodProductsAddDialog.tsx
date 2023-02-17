@@ -96,7 +96,9 @@ const handleProductAssign = (
 
 const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
-const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = props => {
+const ShippingMethodProductsAddDialog: React.FC<
+  ShippingMethodProductsAddDialogProps
+> = props => {
   const {
     confirmButtonState,
     open,
@@ -131,7 +133,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
 
   return (
     <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="xZhxBJ"
           defaultMessage="Assign Products"

@@ -54,7 +54,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
       >
         {({ data, change, submit }) => (
           <>
-            <DialogTitle>
+            <DialogTitle disableTypography>
               {intl.formatMessage({
                 id: "+PbHKD",
                 defaultMessage: "Capture Payment",
