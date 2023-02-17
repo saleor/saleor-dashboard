@@ -6,7 +6,7 @@ import React from "react";
 
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
-import { borderHeight, contentMaxWidth, savebarHeight } from "./consts";
+import { contentMaxWidth } from "./consts";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -47,11 +47,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           <Sidebar />
         </Box>
         <Box height="100%" width="100%">
-          <Box
-            as="main"
-            width="100%"
-            __height={`calc(100vh - ${savebarHeight} - ${borderHeight})`}
-          >
+          <Box as="main" width="100%">
             {children}
           </Box>
           <Box
