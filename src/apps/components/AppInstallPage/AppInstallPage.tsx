@@ -9,7 +9,12 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 import { Box, Button, GenericAppIcon } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
@@ -38,7 +43,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   const name = data?.name || "";
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailedContent useSingleColumn constHeight>
       <Content>
         <CardSpacer />
         <Card>
@@ -60,7 +65,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           />
           <CardContent className={classes.installCard}>
             {loading ? (
-              <Skeleton />
+              <CircularProgress />
             ) : (
               <div className={classes.installAppContainer}>
                 <div
@@ -150,7 +155,6 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             />
           </Button>
         </Box>
-        <Box margin="auto" height="100vh" />
       </Content>
     </DetailedContent>
   );
