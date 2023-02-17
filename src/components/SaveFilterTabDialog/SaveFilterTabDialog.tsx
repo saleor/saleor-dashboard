@@ -48,7 +48,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="liLrVs"
           defaultMessage="Save Custom Search"

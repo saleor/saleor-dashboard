@@ -125,7 +125,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent data-test-id="search-query">

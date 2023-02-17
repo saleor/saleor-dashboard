@@ -47,7 +47,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="0OtaXa"
           defaultMessage="Create Menu"

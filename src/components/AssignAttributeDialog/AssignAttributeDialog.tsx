@@ -123,7 +123,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         paper: classes.dialogPaper,
       }}
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent className={classes.searchArea}>

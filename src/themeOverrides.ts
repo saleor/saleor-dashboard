@@ -101,6 +101,15 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.plain,
       },
     },
+    MuiDialogTitle: {
+      root: {
+        fontSize: vars.fontSize.bodyEmpLarge,
+        // MUI it strictly typed to be a number, but we are passing CSS variable here
+        fontWeight: vars.fontWeight.bodyEmpLarge as unknown as number,
+        lineHeight: vars.lineHeight.bodyEmpLarge,
+        letterSpacing: vars.letterSpacing.bodyEmpLarge,
+      },
+    },
   },
 };
 
