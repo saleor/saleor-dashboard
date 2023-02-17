@@ -10,7 +10,7 @@ import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Box, Button } from "@saleor/macaw-ui/next";
+import { Box, Button, GenericAppIcon } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -73,7 +73,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 </div>
                 <img src={plusIcon} alt="" />
                 <div className={classes.installIcon}>
-                  <h2>{name?.charAt(0).toUpperCase()}</h2>
+                  <GenericAppIcon />
                 </div>
               </div>
             )}

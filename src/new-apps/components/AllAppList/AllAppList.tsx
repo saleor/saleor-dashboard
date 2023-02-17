@@ -27,7 +27,7 @@ const AllAppList: React.FC<AllAppListProps> = ({
   return (
     <Box
       display="grid"
-      gridTemplateColumns="repeat(2,1fr)"
+      __gridTemplateColumns="repeat(2,1fr)"
       gap={8}
       marginTop={8}
     >

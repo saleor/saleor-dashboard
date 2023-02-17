@@ -41,8 +41,8 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
           </Text>
         )}
       </Box>
-      <Text variant="bodyEmp" size="medium" color="textNeutralDefault">
-        {app.name.en}
+      <Text variant="bodyStrong" size="medium" color="textNeutralDefault">
+        <strong>{app.name.en}</strong>
       </Text>
     </Box>
     <Text size="small" variant="body" color="textNeutralSubdued">

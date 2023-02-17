@@ -21,7 +21,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
 
   return (
     <>
-      <Text variant="body" size="small" color="textNeutralSubdued">
+      <Text variant="caption" size="medium" color="textNeutralSubdued">
         <FormattedMessage {...messages.integrations} />
       </Text>
       <Box as="ul" display="flex" flexDirection="row" gap={8}>
