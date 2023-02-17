@@ -1,7 +1,7 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
+import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
@@ -9,7 +9,8 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Card, CardContent, Grid, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -38,108 +39,109 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
 
   return (
     <DetailedContent useSingleColumn>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={
-            loading ? (
+      <Content>
+        <CardSpacer />
+        <Card>
+          <CardTitle
+            title={
+              loading ? (
+                <Skeleton />
+              ) : (
+                intl.formatMessage(
+                  {
+                    id: "Id7C0X",
+                    defaultMessage: `You are about to install {name}`,
+                    description: "section header",
+                  },
+                  { name },
+                )
+              )
+            }
+          />
+          <CardContent className={classes.installCard}>
+            {loading ? (
               <Skeleton />
             ) : (
-              intl.formatMessage(
-                {
-                  id: "Id7C0X",
-                  defaultMessage: `You are about to install {name}`,
-                  description: "section header",
-                },
-                { name },
-              )
-            )
-          }
-        />
-        <CardContent className={classes.installCard}>
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <div className={classes.installAppContainer}>
-              <div
-                className={clsx(classes.installIcon, classes.installSaleorIcon)}
-              >
-                <img src={saleorDarkLogoSmall} alt="" />
+              <div className={classes.installAppContainer}>
+                <div
+                  className={clsx(
+                    classes.installIcon,
+                    classes.installSaleorIcon,
+                  )}
+                >
+                  <img src={saleorDarkLogoSmall} alt="" />
+                </div>
+                <img src={plusIcon} alt="" />
+                <div className={classes.installIcon}>
+                  <h2>{name?.charAt(0).toUpperCase()}</h2>
+                </div>
               </div>
-              <img src={plusIcon} alt="" />
-              <div className={classes.installIcon}>
-                <h2>{name?.charAt(0).toUpperCase()}</h2>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            id: "VsGcdP",
-            defaultMessage: "App permissions",
-            description: "section header",
-          })}
-        />
-        <CardContent>
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <>
-              <Typography className={classes.installPermissionTitle}>
-                <FormattedMessage
-                  id="BL/Lbk"
-                  defaultMessage="Installing this app will give it following permissions:"
-                  description="install app permissions"
-                />
-              </Typography>
-              {!!data?.permissions?.length && (
-                <ul className={classes.permissionsContainer}>
-                  {data?.permissions?.map(perm => (
-                    <li key={perm.code}>{perm.name}</li>
-                  ))}
-                </ul>
-              )}
-              <Hr className={classes.installSpacer} />
-
-              <Typography
-                variant="body2"
-                className={classes.installPrivacyText}
-              >
-                <FormattedMessage
-                  id="t1UYU6"
-                  defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
-                  description="install app privacy"
-                  values={{ name }}
-                />
-                {!!data?.dataPrivacyUrl && (
-                  <a
-                    href={data?.dataPrivacyUrl}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    <FormattedMessage
-                      id="k5lHFp"
-                      defaultMessage="Learn more about data privacy"
-                      description="app data privacy link"
-                    />
-                  </a>
+            )}
+          </CardContent>
+        </Card>
+        <CardSpacer />
+        <Card>
+          <CardTitle
+            title={intl.formatMessage({
+              id: "VsGcdP",
+              defaultMessage: "App permissions",
+              description: "section header",
+            })}
+          />
+          <CardContent>
+            {loading ? (
+              <Skeleton />
+            ) : (
+              <>
+                <Typography className={classes.installPermissionTitle}>
+                  <FormattedMessage
+                    id="BL/Lbk"
+                    defaultMessage="Installing this app will give it following permissions:"
+                    description="install app permissions"
+                  />
+                </Typography>
+                {!!data?.permissions?.length && (
+                  <ul className={classes.permissionsContainer}>
+                    {data?.permissions?.map(perm => (
+                      <li key={perm.code}>{perm.name}</li>
+                    ))}
+                  </ul>
                 )}
-              </Typography>
-            </>
-          )}
-        </CardContent>
-      </Card>
-      <CardSpacer />
-      <Grid container justify="space-between">
-        <Grid xs={6} item>
+                <Hr className={classes.installSpacer} />
+
+                <Typography
+                  variant="body2"
+                  className={classes.installPrivacyText}
+                >
+                  <FormattedMessage
+                    id="t1UYU6"
+                    defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
+                    description="install app privacy"
+                    values={{ name }}
+                  />
+                  {!!data?.dataPrivacyUrl && (
+                    <a
+                      href={data?.dataPrivacyUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <FormattedMessage
+                        id="k5lHFp"
+                        defaultMessage="Learn more about data privacy"
+                        description="app data privacy link"
+                      />
+                    </a>
+                  )}
+                </Typography>
+              </>
+            )}
+          </CardContent>
+        </Card>
+        <CardSpacer />
+        <Box display="flex" justifyContent="space-between">
           <Button variant="secondary" onClick={navigateToAppsList}>
             <FormattedMessage {...buttonMessages.cancel} />
           </Button>
-        </Grid>
-        <Grid xs={6} item className={classes.alignRight}>
           <Button variant="primary" onClick={onSubmit}>
             <FormattedMessage
               id="PkCmGU"
@@ -147,8 +149,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
               description="install button"
             />
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+        <Box margin="auto" height="100vh" />
+      </Content>
     </DetailedContent>
   );
 };
