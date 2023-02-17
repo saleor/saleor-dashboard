@@ -2,6 +2,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    appContent: {
+      with: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "50vw",
+      },
+    },
     sectionHeader: {
       fontSize: 14,
       fontWeight: 700,

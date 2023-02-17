@@ -12,6 +12,7 @@ import InstalledAppList from "../InstalledAppList";
 import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 import MarketplaceAlert from "../MarketplaceAlert";
 import { messages } from "./messages";
+import { useStyles } from "./styles";
 import { AppListPageSections } from "./types";
 import {
   getVerifiedAppsInstallations,
@@ -36,6 +37,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     onUpdateListSettings,
   } = props;
   const intl = useIntl();
+  const classes = useStyles();
   const verifiedInstalledApps = getVerifiedInstalledApps(
     installedApps,
     installableMarketplaceApps,
@@ -77,7 +79,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         alignItems="center"
         marginY={8}
       >
-        <Box __width={{ desktop: "50vw", mobile: "100%" }} marginY={8}>
+        <Box className={classes.appContent} marginY={8}>
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={8} paddingY={6}>
