@@ -41,12 +41,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       >
         <Box display="flex" gap={5} alignItems="center">
           <AppAvatar size="medium" logo={logo} />
-          <Text variant="bodyEmp">{app.name}</Text>
+          <Text variant="bodyStrong">{app.name}</Text>
           <Text variant="body" color="textNeutralSubdued">
             {`v${app.version}`}
           </Text>
           {isExternal && (
-            <Chip data-test-id="app-external-label">
+            <Chip data-test-id="app-external-label" size="large">
               <Text variant="caption" size="small">
                 <FormattedMessage {...appsMessages.externalApp} />
               </Text>

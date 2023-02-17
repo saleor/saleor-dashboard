@@ -51,16 +51,18 @@ const AppListCard: React.FC<AppListCardProps> = ({
       <Box>
         <AppListCardDescription app={app} />
         <AppListCardLinks links={details.links} />
-        <AppListCardIntegrations app={app} />
       </Box>
-      <AppListCardActions
-        releaseDate={details.releaseDate}
-        installationPending={details.installationPending}
-        installHandler={details.installHandler}
-        githubForkHandler={details.githubForkHandler}
-        retryInstallHandler={details.retryInstallHandler}
-        removeInstallHandler={details.removeInstallHandler}
-      />
+      <Box>
+        <AppListCardIntegrations app={app} />
+        <AppListCardActions
+          releaseDate={details.releaseDate}
+          installationPending={details.installationPending}
+          installHandler={details.installHandler}
+          githubForkHandler={details.githubForkHandler}
+          retryInstallHandler={details.retryInstallHandler}
+          removeInstallHandler={details.removeInstallHandler}
+        />
+      </Box>
     </Box>
   );
 };

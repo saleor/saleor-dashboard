@@ -44,9 +44,9 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
     >
       <Box display="flex" gap={5} alignItems="center">
         <AppAvatar size="medium" logo={logo} />
-        <Text variant="body">{appInstallation.appName}</Text>
+        <Text variant="bodyStrong">{appInstallation.appName}</Text>
         {isExternal && (
-          <Chip data-test-id="app-external-label">
+          <Chip data-test-id="app-external-label" size="large">
             <Text variant="caption" size="small">
               <FormattedMessage {...appsMessages.externalApp} />
             </Text>

@@ -7,6 +7,7 @@ import { contentMaxWidth } from "./consts";
 interface DetailedContentProps {
   children: React.ReactNode;
   useSingleColumn?: boolean;
+  constHeight?: boolean;
 }
 
 const getLayoutAreas = (useSingleColumn: boolean, isTablet: boolean) => {
@@ -20,6 +21,7 @@ const getLayoutAreas = (useSingleColumn: boolean, isTablet: boolean) => {
 export const DetailedContent: React.FC<DetailedContentProps> = ({
   children,
   useSingleColumn = false,
+  constHeight = false,
 }) => {
   const isTablet = useMediaQuery(tabletMediaQuery);
 
@@ -27,7 +29,7 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
     <Box
       as="div"
       display="grid"
-      height="100%"
+      height={constHeight ? "100vh" : "100%"}
       margin="auto"
       __maxWidth={contentMaxWidth}
       __gridTemplateColumns={useSingleColumn ? "1fr" : "9fr 4fr"}

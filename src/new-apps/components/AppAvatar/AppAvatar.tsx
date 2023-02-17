@@ -1,6 +1,5 @@
-import genericAppImg from "@assets/images/app-generic.svg";
 import { AppLogo } from "@dashboard/new-apps/types";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, GenericAppIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface AppAvatarProps {
@@ -37,7 +36,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({ logo, size }) => {
         placeItems="center"
         borderRadius={2}
       >
-        <img src={genericAppImg} alt="" />
+        <GenericAppIcon />
       </Box>
     );
   }
