@@ -62,6 +62,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             borderColor="neutralPlain"
             __maxWidth={contentMaxWidth}
             margin="auto"
+            // @ts-ignore
+            __zIndex="3"
           />
         </Box>
       </Box>

@@ -44,18 +44,10 @@ export const themeOverrides: Partial<Theme> = {
           boxShadow: "none !important",
         },
       },
-      disabled: {
-        color: `${vars.colors.foreground.textNeutralDisabled} !important`,
-        backgroundColor: `${vars.colors.background.surfaceNeutralPlain} !important`,
-      },
     },
     MuiInputLabel: {
       root: {
-        width: "100% !important",
         color: vars.colors.foreground.textNeutralDefault,
-      },
-      shrink: {
-        width: "100% !important",
       },
     },
     MuiCardHeader: {
