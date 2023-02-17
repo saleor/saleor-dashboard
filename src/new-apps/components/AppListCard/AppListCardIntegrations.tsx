@@ -40,6 +40,8 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
               borderStyle="solid"
               borderColor="neutralPlain"
               padding={3}
+              display="flex"
+              placeItems="center"
             >
               <img
                 title={integration.name}
