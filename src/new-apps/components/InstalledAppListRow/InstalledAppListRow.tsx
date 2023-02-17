@@ -46,7 +46,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             {`v${app.version}`}
           </Text>
           {isExternal && (
-            <Chip data-test-id="app-external-label">
+            <Chip data-test-id="app-external-label" size="large">
               <Text variant="caption" size="small">
                 <FormattedMessage {...appsMessages.externalApp} />
               </Text>
