@@ -22,7 +22,6 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
   children,
   useSingleColumn = false,
   constHeight = false,
-  ...props
 }) => {
   const isTablet = useMediaQuery(tabletMediaQuery);
 
@@ -36,7 +35,6 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
       __gridTemplateColumns={useSingleColumn ? "1fr" : "9fr 4fr"}
       __gridTemplateRows="auto 1fr"
       __gridTemplateAreas={getLayoutAreas(useSingleColumn, isTablet)}
-      {...props}
     >
       {children}
     </Box>
