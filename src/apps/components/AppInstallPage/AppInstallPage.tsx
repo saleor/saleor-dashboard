@@ -86,13 +86,15 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
         </Card>
         <CardSpacer />
         <Card>
-          <CardTitle
-            title={intl.formatMessage({
-              id: "VsGcdP",
-              defaultMessage: "App permissions",
-              description: "section header",
-            })}
-          />
+          {!loading && (
+            <CardTitle
+              title={intl.formatMessage({
+                id: "VsGcdP",
+                defaultMessage: "App permissions",
+                description: "section header",
+              })}
+            />
+          )}
           <CardContent>
             {loading ? (
               <Skeleton />
