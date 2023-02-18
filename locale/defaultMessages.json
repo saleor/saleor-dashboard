@@ -3549,6 +3549,10 @@
     "context": "error message",
     "string": "Page not found."
   },
+  "PDw0YN": {
+    "context": "open new window button",
+    "string": "Open this product in GraphiQL"
+  },
   "PFXGaR": {
     "string": "Shipping Zones"
   },
