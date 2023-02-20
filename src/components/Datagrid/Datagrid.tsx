@@ -100,7 +100,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     onColumnResize,
     onColumnsChange,
     picker,
-  } = useColumns(availableColumns);
+  } = useColumns(availableColumns, !!renderColumnPicker);
 
   const {
     added,

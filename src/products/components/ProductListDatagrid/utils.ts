@@ -70,22 +70,9 @@ export function getColumns({
         width: 250,
         icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
       },
-      ...gridAttributesFromSettings.map(attribute => {
-        const attributeId = getAttributeIdFromColumnValue(attribute);
-
-        const title =
-          gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
-            ?.name ?? "";
-
-        return {
-          id: attribute,
-          title,
-          width: 200,
-          icon:
-            attributeId === activeAttributeSortId &&
-            getColumnSortIconName(sort, ProductListUrlSortField.attribute),
-        };
-      }),
+      ...gridAttributesFromSettings.map(
+        toAttributeColumndData(gridAttributes, activeAttributeSortId, sort),
+      ),
       {
         id: "date",
         title: intl.formatMessage(columnsMessages.updatedAt),
@@ -100,6 +87,29 @@ export function getColumns({
       },
     ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
   ];
+}
+
+function toAttributeColumndData(
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
+  activeAttributeSortId: string,
+  sort: Sort<ProductListUrlSortField>,
+) {
+  return (attribute: ProductListColumns) => {
+    const attributeId = getAttributeIdFromColumnValue(attribute);
+
+    const title =
+      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
+        ?.name ?? "";
+
+    return {
+      id: attribute,
+      title,
+      width: 200,
+      icon:
+        attributeId === activeAttributeSortId &&
+        getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+    };
+  };
 }
 
 function getColumnSortIconName(
@@ -146,7 +156,7 @@ export function createGetCellContent({
       return textCell("");
     }
 
-    if (loading || !columns[column]?.id) {
+    if (loading) {
       return loadingCell();
     }
 

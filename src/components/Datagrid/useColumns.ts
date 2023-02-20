@@ -4,7 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { AvailableColumn } from "./types";
 
-function useColumns(availableColumns: readonly AvailableColumn[]) {
+function useColumns(
+  availableColumns: readonly AvailableColumn[],
+  hasCustomColumnPicker?: boolean,
+) {
   const [query, setQuery] = useState("");
   const [displayedColumns, setDisplayedColumns] = useState(
     availableColumns.map(({ id }) => id),
@@ -46,10 +49,16 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
     [availableColumns, setDisplayedColumns],
   );
 
-  const columns = useMemo(
-    () => displayedColumns.map(id => columnState.find(ac => ac.id === id)),
-    [displayedColumns, columnState],
-  );
+  const columns = useMemo(() => {
+    if (
+      displayedColumns.length !== availableColumns.length &&
+      hasCustomColumnPicker
+    ) {
+      return availableColumns;
+    }
+    return displayedColumns.map(id => columnState.find(ac => ac.id === id));
+  }, [displayedColumns, availableColumns, hasCustomColumnPicker, columnState]);
+
   const columnChoices = useMemo(
     () =>
       columns.map(({ id, title }) => ({
