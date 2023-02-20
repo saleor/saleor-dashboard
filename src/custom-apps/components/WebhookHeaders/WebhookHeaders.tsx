@@ -45,9 +45,10 @@ const nameSeparator = ":";
 const nameInputPrefix = "name";
 const valueInputPrefix = "value";
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
-  const customHeaders = data.customHeaders;
-
+const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
+  data: { customHeaders },
+  onChange,
+}) => {
   const intl = useIntl();
   const loaded = useRef(false);
   const [expanded, setExpanded] = useState(false);
