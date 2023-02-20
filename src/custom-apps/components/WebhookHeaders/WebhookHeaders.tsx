@@ -59,7 +59,13 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data, onChange }) => {
     const [field, index] = name.split(":");
 
     const item = headers[index];
-    item[field] = value;
+
+    // lowercase header name
+    if (field === nameInputPrefix) {
+      item[field] = value.toLowerCase();
+    } else {
+      item[field] = value;
+    }
 
     onChange({
       target: {
