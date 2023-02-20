@@ -1,6 +1,4 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
@@ -51,14 +49,9 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
   const currentTab = queryTab >= 0 ? queryTab : 0;
 
   return (
-    <Container>
-      <Backlink href={languageListUrl}>
-        {intl.formatMessage({
-          id: "GsBRWL",
-          defaultMessage: "Languages",
-        })}
-      </Backlink>
-      <PageHeader
+    <>
+      <TopNav
+        href={languageListUrl}
         title={intl.formatMessage(
           {
             id: "FemBUF",
@@ -138,7 +131,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
         </FilterTabs>
         {children}
       </Card>
-    </Container>
+    </>
   );
 };
 TranslationsEntitiesListPage.displayName = "TranslationsEntitiesListPage";

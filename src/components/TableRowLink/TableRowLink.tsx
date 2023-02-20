@@ -2,7 +2,7 @@ import { isExternalURL } from "@dashboard/utils/urls";
 import { TableRow, TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import React, { forwardRef } from "react";
 import { Link } from "react-router-dom";
 
 type MaterialTableRowPropsType = TableRowTypeMap["props"];
@@ -25,31 +25,28 @@ const useStyles = makeStyles(
   { name: "TableRowLink" },
 );
 
-const TableRowLink = ({
-  href,
-  children,
-  linkClassName,
-  onClick,
-  ...props
-}: TableRowLinkProps) => {
-  const classes = useStyles();
+const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>(
+  (props, ref) => {
+    const { href, children, linkClassName, onClick, ...restProps } = props;
+    const classes = useStyles();
 
-  if (!href || isExternalURL(href)) {
+    if (!href || isExternalURL(href)) {
+      return (
+        <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
+          {children}
+        </TableRow>
+      );
+    }
+
     return (
-      <TableRow hover={!!onClick} onClick={onClick} {...props}>
-        {children}
+      <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
+        <Link className={clsx(classes.link, linkClassName)} to={href}>
+          {children}
+        </Link>
       </TableRow>
     );
-  }
-
-  return (
-    <TableRow hover={true} onClick={onClick} {...props}>
-      <Link className={clsx(classes.link, linkClassName)} to={href}>
-        {children}
-      </Link>
-    </TableRow>
-  );
-};
+  },
+);
 
 TableRowLink.displayName = "TableRowLink";
 export default TableRowLink;

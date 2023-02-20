@@ -1,12 +1,12 @@
 import { ChannelSaleData, validateSalePrice } from "@dashboard/channels/utils";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
@@ -24,10 +24,10 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -142,9 +142,8 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     [],
   );
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: SaleDetailsPageFormData = {
     channelListings,
@@ -185,144 +184,136 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         const allErrors = [...localErrors, ...errors];
 
         return (
-          <Container>
-            <Backlink href={saleListUrl()}>
-              {intl.formatMessage(sectionNames.sales)}
-            </Backlink>
-            <PageHeader title={sale?.name} />
-            <Grid>
-              <div>
-                <SaleInfo
-                  data={data}
+          <DetailedContent>
+            <TopNav href={saleListUrl()} title={sale?.name} />
+            <Content>
+              <SaleInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <SaleType data={data} disabled={disabled} onChange={change} />
+              <CardSpacer />
+              <SaleValue
+                data={data}
+                disabled={disabled}
+                errors={allErrors}
+                onChange={handleChannelChange}
+              />
+              <CardSpacer />
+              <TabContainer className={sprinkles({ paddingX: 9 })}>
+                <CategoriesTab
+                  testId="categories-tab"
+                  isActive={activeTab === SaleDetailsPageTab.categories}
+                  changeTab={onTabClick}
+                >
+                  {intl.formatMessage(itemsQuantityMessages.categories, {
+                    quantity: tabItemsCount.categories?.toString() || "…",
+                  })}
+                </CategoriesTab>
+                <CollectionsTab
+                  testId="collections-tab"
+                  isActive={activeTab === SaleDetailsPageTab.collections}
+                  changeTab={onTabClick}
+                >
+                  {intl.formatMessage(itemsQuantityMessages.collections, {
+                    quantity: tabItemsCount.collections?.toString() || "…",
+                  })}
+                </CollectionsTab>
+                <ProductsTab
+                  testId="products-tab"
+                  isActive={activeTab === SaleDetailsPageTab.products}
+                  changeTab={onTabClick}
+                >
+                  {intl.formatMessage(itemsQuantityMessages.products, {
+                    quantity: tabItemsCount.products?.toString() || "…",
+                  })}
+                </ProductsTab>
+                <VariantsTab
+                  testId="variants-tab"
+                  isActive={activeTab === SaleDetailsPageTab.variants}
+                  changeTab={onTabClick}
+                >
+                  {intl.formatMessage(itemsQuantityMessages.variants, {
+                    quantity: tabItemsCount.variants?.toString() || "…",
+                  })}
+                </VariantsTab>
+              </TabContainer>
+              <CardSpacer />
+              {activeTab === SaleDetailsPageTab.categories ? (
+                <DiscountCategories
                   disabled={disabled}
-                  errors={errors}
-                  onChange={change}
+                  onCategoryAssign={onCategoryAssign}
+                  onCategoryUnassign={onCategoryUnassign}
+                  discount={sale}
+                  isChecked={isChecked}
+                  selected={selected}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  toolbar={categoryListToolbar}
                 />
-                <CardSpacer />
-                <SaleType data={data} disabled={disabled} onChange={change} />
-                <CardSpacer />
-                <SaleValue
-                  data={data}
+              ) : activeTab === SaleDetailsPageTab.collections ? (
+                <DiscountCollections
                   disabled={disabled}
-                  errors={allErrors}
-                  onChange={handleChannelChange}
+                  onCollectionAssign={onCollectionAssign}
+                  onCollectionUnassign={onCollectionUnassign}
+                  discount={sale}
+                  isChecked={isChecked}
+                  selected={selected}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  toolbar={collectionListToolbar}
                 />
-                <CardSpacer />
-                <TabContainer>
-                  <CategoriesTab
-                    testId="categories-tab"
-                    isActive={activeTab === SaleDetailsPageTab.categories}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.categories, {
-                      quantity: tabItemsCount.categories?.toString() || "…",
-                    })}
-                  </CategoriesTab>
-                  <CollectionsTab
-                    testId="collections-tab"
-                    isActive={activeTab === SaleDetailsPageTab.collections}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.collections, {
-                      quantity: tabItemsCount.collections?.toString() || "…",
-                    })}
-                  </CollectionsTab>
-                  <ProductsTab
-                    testId="products-tab"
-                    isActive={activeTab === SaleDetailsPageTab.products}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.products, {
-                      quantity: tabItemsCount.products?.toString() || "…",
-                    })}
-                  </ProductsTab>
-                  <VariantsTab
-                    testId="variants-tab"
-                    isActive={activeTab === SaleDetailsPageTab.variants}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.variants, {
-                      quantity: tabItemsCount.variants?.toString() || "…",
-                    })}
-                  </VariantsTab>
-                </TabContainer>
-                <CardSpacer />
-                {activeTab === SaleDetailsPageTab.categories ? (
-                  <DiscountCategories
-                    disabled={disabled}
-                    onCategoryAssign={onCategoryAssign}
-                    onCategoryUnassign={onCategoryUnassign}
-                    discount={sale}
-                    isChecked={isChecked}
-                    selected={selected}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={categoryListToolbar}
-                  />
-                ) : activeTab === SaleDetailsPageTab.collections ? (
-                  <DiscountCollections
-                    disabled={disabled}
-                    onCollectionAssign={onCollectionAssign}
-                    onCollectionUnassign={onCollectionUnassign}
-                    discount={sale}
-                    isChecked={isChecked}
-                    selected={selected}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={collectionListToolbar}
-                  />
-                ) : activeTab === SaleDetailsPageTab.products ? (
-                  <DiscountProducts
-                    disabled={disabled}
-                    onProductAssign={onProductAssign}
-                    onProductUnassign={onProductUnassign}
-                    products={mapEdgesToItems(sale?.products)}
-                    isChecked={isChecked}
-                    selected={selected}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={productListToolbar}
-                  />
-                ) : (
-                  <DiscountVariants
-                    disabled={disabled}
-                    onVariantAssign={onVariantAssign}
-                    onVariantUnassign={onVariantUnassign}
-                    variants={mapEdgesToItems(sale?.variants)}
-                    isChecked={isChecked}
-                    selected={selected}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={variantListToolbar}
-                  />
-                )}
-                <CardSpacer />
-                <DiscountDates
-                  data={data}
+              ) : activeTab === SaleDetailsPageTab.products ? (
+                <DiscountProducts
                   disabled={disabled}
-                  errors={errors}
-                  onChange={change}
+                  onProductAssign={onProductAssign}
+                  onProductUnassign={onProductUnassign}
+                  products={mapEdgesToItems(sale?.products)}
+                  isChecked={isChecked}
+                  selected={selected}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  toolbar={productListToolbar}
                 />
-              </div>
-              <div>
-                <SaleSummary
-                  selectedChannelId={selectedChannelId}
-                  sale={sale}
-                />
-                <CardSpacer />
-                <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name,
-                  }))}
+              ) : (
+                <DiscountVariants
                   disabled={disabled}
-                  openModal={openChannelsModal}
+                  onVariantAssign={onVariantAssign}
+                  onVariantUnassign={onVariantUnassign}
+                  variants={mapEdgesToItems(sale?.variants)}
+                  isChecked={isChecked}
+                  selected={selected}
+                  toggle={toggle}
+                  toggleAll={toggleAll}
+                  toolbar={variantListToolbar}
                 />
-              </div>
-              <Metadata data={data} onChange={changeMetadata} />
-            </Grid>
+              )}
+              <CardSpacer />
+              <DiscountDates
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </Content>
+            <RightSidebar>
+              <SaleSummary selectedChannelId={selectedChannelId} sale={sale} />
+              <CardSpacer />
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings.map(channel => ({
+                  id: channel.id,
+                  name: channel.name,
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
+              />
+            </RightSidebar>
+            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={() => navigate(saleListUrl())}
@@ -330,7 +321,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               onSubmit={() => handleSubmit(data)}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

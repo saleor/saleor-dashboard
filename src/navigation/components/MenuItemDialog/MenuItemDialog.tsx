@@ -112,9 +112,10 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   });
 
   // Refresh initial display value if changed
-  React.useEffect(() => setDisplayValue(initialDisplayValue), [
-    initialDisplayValue,
-  ]);
+  React.useEffect(
+    () => setDisplayValue(initialDisplayValue),
+    [initialDisplayValue],
+  );
 
   const mutationErrors = errors.filter(err => err.field === null);
   const formErrors = getFormErrors(["name"], errors);
@@ -227,7 +228,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
         style: { overflowY: "visible" },
       }}
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         {!!initial
           ? intl.formatMessage({
               id: "KKQUMK",

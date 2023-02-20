@@ -92,7 +92,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{labels.title}</DialogTitle>
+      <DialogTitle disableTypography>{labels.title}</DialogTitle>
       <DialogContent>
         <TextField
           name="query"

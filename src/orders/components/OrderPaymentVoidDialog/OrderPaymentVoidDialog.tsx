@@ -34,7 +34,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="KszPFx"
           defaultMessage="Void Payment"

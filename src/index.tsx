@@ -1,8 +1,12 @@
+import "@saleor/macaw-ui/next/style";
+import "./index.css";
+
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
-import { ThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider } from "@dashboard/theme";
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
 import { render } from "react-dom";
@@ -69,7 +73,7 @@ import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
-import themeOverrides from "./themeOverrides";
+import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
@@ -84,32 +88,37 @@ const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
-        <ThemeProvider overrides={themeOverrides}>
-          <DateProvider>
-            <LocaleProvider>
-              <MessageManagerProvider>
-                <ServiceWorker />
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <FlagsServiceProvider>
-                      <AuthProvider>
-                        <ShopProvider>
-                          <AppChannelProvider>
-                            <ExternalAppProvider>
-                              <ExitFormDialogProvider>
-                                <Routes />
-                              </ExitFormDialogProvider>
-                            </ExternalAppProvider>
-                          </AppChannelProvider>
-                        </ShopProvider>
-                      </AuthProvider>
-                    </FlagsServiceProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </MessageManagerProvider>
-            </LocaleProvider>
-          </DateProvider>
-        </ThemeProvider>
+        <LegacyThemeProvider
+          overrides={themeOverrides}
+          palettes={paletteOverrides}
+        >
+          <ThemeProvider>
+            <DateProvider>
+              <LocaleProvider>
+                <MessageManagerProvider>
+                  <ServiceWorker />
+                  <BackgroundTasksProvider>
+                    <AppStateProvider>
+                      <FlagsServiceProvider>
+                        <AuthProvider>
+                          <ShopProvider>
+                            <AppChannelProvider>
+                              <ExternalAppProvider>
+                                <ExitFormDialogProvider>
+                                  <Routes />
+                                </ExitFormDialogProvider>
+                              </ExternalAppProvider>
+                            </AppChannelProvider>
+                          </ShopProvider>
+                        </AuthProvider>
+                      </FlagsServiceProvider>
+                    </AppStateProvider>
+                  </BackgroundTasksProvider>
+                </MessageManagerProvider>
+              </LocaleProvider>
+            </DateProvider>
+          </ThemeProvider>
+        </LegacyThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
   </SaleorProvider>
@@ -132,7 +141,6 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      <style>{`#portal { position: fixed; top: 0; }`}</style>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
       {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (

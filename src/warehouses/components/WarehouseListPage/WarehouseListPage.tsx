@@ -1,8 +1,8 @@
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import PageHeader from "@dashboard/components/PageHeader";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -59,27 +59,13 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   const limitReached = isLimitReached(limits, "warehouses");
 
   return (
-    <Container>
+    <>
       <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
-      <PageHeader
+      <TopNav
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.warehouses)}
-        limitText={
-          hasLimits(limits, "warehouses")
-            ? intl.formatMessage(
-                {
-                  id: "YkOzse",
-                  defaultMessage: "{count}/{max} warehouses used",
-                  description: "used warehouses counter",
-                },
-                {
-                  count: limits?.currentUsage.warehouses,
-                  max: limits?.allowedUsage.warehouses,
-                },
-              )
-            : undefined
-        }
       >
         <Button
           data-test-id="create-warehouse"
@@ -93,7 +79,22 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        {hasLimits(limits, "warehouses") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "YkOzse",
+                defaultMessage: "{count}/{max} warehouses used",
+                description: "used warehouses counter",
+              },
+              {
+                count: limits?.currentUsage.warehouses,
+                max: limits?.allowedUsage.warehouses,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -137,7 +138,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           {...listProps}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 WarehouseListPage.displayName = "WarehouseListPage";

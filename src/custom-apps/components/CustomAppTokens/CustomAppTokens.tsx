@@ -5,7 +5,13 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  TableBody,
+  TableCell,
+  TableHead,
+} from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,6 +39,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
           defaultMessage: "Tokens",
           description: "header",
         })}
+        className={classes.cardTitle}
         toolbar={
           <Button
             variant="secondary"
@@ -47,63 +54,69 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
           </Button>
         }
       />
-      <ResponsiveTable>
-        <TableHead>
-          <TableRowLink>
-            <TableCell className={classes.colNote}>
-              <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
-            </TableCell>
-            <TableCell className={classes.colKey}>
-              <FormattedMessage
-                id="MAsLIT"
-                defaultMessage="Key"
-                description="custom app token key"
-              />
-            </TableCell>
-            <TableCell className={classes.colActions}>
-              <FormattedMessage
-                id="VHuzgq"
-                defaultMessage="Actions"
-                description="table actions"
-              />
-            </TableCell>
-          </TableRowLink>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            tokens,
-            token => (
-              <TableRowLink key={token ? token.id : "skeleton"}>
-                <TableCell className={classes.colNote}>
-                  {token?.name || <Skeleton />}
-                </TableCell>
-                <TableCell className={classes.colKey}>
-                  {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
-                </TableCell>
-                <TableCell className={classes.colActions}>
-                  <IconButton
-                    variant="secondary"
-                    color="primary"
-                    onClick={() => onDelete(token.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRowLink>
-            ),
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    id="bsP4f3"
-                    defaultMessage="No tokens found"
-                  />
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+      <CardContent>
+        <ResponsiveTable>
+          <TableHead>
+            <TableRowLink>
+              <TableCell className={classes.colNote}>
+                <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
+              </TableCell>
+              <TableCell className={classes.colKey}>
+                <FormattedMessage
+                  id="MAsLIT"
+                  defaultMessage="Key"
+                  description="custom app token key"
+                />
+              </TableCell>
+              <TableCell className={classes.colActions}>
+                <FormattedMessage
+                  id="VHuzgq"
+                  defaultMessage="Actions"
+                  description="table actions"
+                />
+              </TableCell>
+            </TableRowLink>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              tokens,
+              token => (
+                <TableRowLink key={token ? token.id : "skeleton"}>
+                  <TableCell className={classes.colNote}>
+                    {token?.name || <Skeleton />}
+                  </TableCell>
+                  <TableCell className={classes.colKey}>
+                    {token?.authToken ? (
+                      `**** ${token.authToken}`
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell className={classes.colActions}>
+                    <IconButton
+                      variant="secondary"
+                      color="primary"
+                      onClick={() => onDelete(token.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRowLink>
+              ),
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage
+                      id="bsP4f3"
+                      defaultMessage="No tokens found"
+                    />
+                  </TableCell>
+                </TableRowLink>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </CardContent>
     </Card>
   );
 };

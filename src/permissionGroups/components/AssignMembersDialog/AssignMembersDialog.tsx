@@ -188,7 +188,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
         paper: classes.dialogPaper,
       }}
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent className={classes.inputContainer}>

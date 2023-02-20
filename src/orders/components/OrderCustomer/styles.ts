@@ -11,10 +11,6 @@ export const useStyles = makeStyles(
       flex: 1,
       fontWeight: 600 as 600,
       lineHeight: 1,
-      textTransform: "uppercase",
-    },
-    sectionHeaderToolbar: {
-      marginRight: theme.spacing(-2),
     },
     userEmail: {
       fontWeight: 600 as 600,

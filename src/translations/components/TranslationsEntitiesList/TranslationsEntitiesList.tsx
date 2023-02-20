@@ -44,7 +44,9 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" },
 );
-const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
+const TranslationsEntitiesList: React.FC<
+  TranslationsEntitiesListProps
+> = props => {
   const { disabled, entities, getRowHref } = props;
 
   const classes = useStyles(props);

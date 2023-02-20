@@ -1,9 +1,8 @@
 import { collectionAddUrl } from "@dashboard/collections/urls";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import { Container } from "@dashboard/components/Container";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { sectionNames } from "@dashboard/intl";
 import {
   FilterPageProps,
@@ -52,8 +51,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.collections)}>
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.collections)}>
         <Button
           disabled={disabled}
           variant="primary"
@@ -66,7 +65,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
@@ -97,7 +96,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           {...listProps}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 CollectionListPage.displayName = "CollectionListPage";

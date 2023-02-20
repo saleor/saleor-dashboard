@@ -1,7 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -50,11 +48,11 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
+    <>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.plugins)}
+      />
       <Card>
         <FilterBar
           errorMessages={pluginsFilterErrorMessages}
@@ -80,7 +78,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
         />
         <PluginsList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PluginsListPage.displayName = "PluginsListPage";

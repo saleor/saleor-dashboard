@@ -1,10 +1,10 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -14,7 +14,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import {
   MembersListUrlSortField,
   permissionGroupListUrl,
@@ -93,49 +92,46 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => (
-        <Container>
-          <Backlink href={permissionGroupListUrl()}>
-            {intl.formatMessage(sectionNames.permissionGroups)}
-          </Backlink>
-          <PageHeader title={permissionGroup?.name} />
-
-          <Grid>
-            <div>
-              <PermissionGroupInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <FormSpacer />
-              <PermissionGroupMemberList
-                disabled={disabled}
-                {...listProps}
-                users={data?.users || []}
-              />
-            </div>
-            <div>
-              <AccountPermissions
-                permissionsExceeded={permissionsExceeded}
-                data={data}
-                disabled={disabled}
-                permissions={permissions}
-                onChange={change}
-                errorMessage={permissionsError}
-                fullAccessLabel={intl.formatMessage({
-                  id: "mAabef",
-                  defaultMessage: "Group has full access to the store",
-                  description: "checkbox label",
-                })}
-                description={intl.formatMessage({
-                  id: "CYZse9",
-                  defaultMessage:
-                    "Expand or restrict group's permissions to access certain part of saleor system.",
-                  description: "card description",
-                })}
-              />
-            </div>
-          </Grid>
+        <DetailedContent>
+          <TopNav
+            href={permissionGroupListUrl()}
+            title={permissionGroup?.name}
+          />
+          <Content>
+            <PermissionGroupInfo
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+            <FormSpacer />
+            <PermissionGroupMemberList
+              disabled={disabled}
+              {...listProps}
+              users={data?.users || []}
+            />
+          </Content>
+          <RightSidebar>
+            <AccountPermissions
+              permissionsExceeded={permissionsExceeded}
+              data={data}
+              disabled={disabled}
+              permissions={permissions}
+              onChange={change}
+              errorMessage={permissionsError}
+              fullAccessLabel={intl.formatMessage({
+                id: "mAabef",
+                defaultMessage: "Group has full access to the store",
+                description: "checkbox label",
+              })}
+              description={intl.formatMessage({
+                id: "CYZse9",
+                defaultMessage:
+                  "Expand or restrict group's permissions to access certain part of saleor system.",
+                description: "card description",
+              })}
+            />
+          </RightSidebar>
           <div>
             <Savebar
               onCancel={() => navigate(permissionGroupListUrl())}
@@ -144,7 +140,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               disabled={disabled}
             />
           </div>
-        </Container>
+        </DetailedContent>
       )}
     </Form>
   );

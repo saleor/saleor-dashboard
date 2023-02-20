@@ -3,17 +3,15 @@ import {
   mapToMenuItemsForOrderDetails,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { Container } from "@dashboard/components/Container";
-import { DateTime } from "@dashboard/components/Date";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -22,19 +20,17 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
+import OrderChannelSectionCard from "../OrderChannelSectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -45,7 +41,6 @@ import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
@@ -117,7 +112,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onShippingMethodEdit,
     onSubmit,
   } = props;
-  const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
 
@@ -211,122 +205,102 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={orderListUrl()}>
-              {intl.formatMessage(sectionNames.orders)}
-            </Backlink>
-            <PageHeader
-              className={classes.header}
-              inline
-              title={<Title order={order} />}
-              cardMenu={
-                <>
-                  <CardMenu
-                    menuItems={[
-                      ...selectCardMenuItems,
-                      ...extensionMenuItems,
-                      {
-                        label: intl.formatMessage(messages.openGraphiQL),
-                        onSelect: openPlaygroundURL,
-                        testId: "graphiql-redirect",
-                      },
-                    ]}
-                  />
-                </>
-              }
-            />
-            <div className={classes.date}>
-              {order && order.created ? (
-                <Typography variant="body2">
-                  <DateTime date={order.created} plain />
-                </Typography>
+          <DetailedContent>
+            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+              <CardMenu
+                menuItems={[
+                  ...selectCardMenuItems,
+                  ...extensionMenuItems,
+                  {
+                    label: intl.formatMessage(messages.openGraphiQL),
+                    onSelect: openPlaygroundURL,
+                    testId: "graphiql-redirect",
+                  },
+                ]}
+              />
+            </TopNav>
+
+            <Content data-test-id="order-fulfillment">
+              {!isOrderUnconfirmed ? (
+                <OrderUnfulfilledProductsCard
+                  showFulfillmentAction={canFulfill}
+                  notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
+                  lines={unfulfilled}
+                  onFulfill={onOrderFulfill}
+                />
               ) : (
-                <Skeleton style={{ width: "10em" }} />
-              )}
-            </div>
-            <Grid>
-              <div data-test-id="order-fulfillment">
-                {!isOrderUnconfirmed ? (
-                  <OrderUnfulfilledProductsCard
-                    showFulfillmentAction={canFulfill}
-                    notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
-                    lines={unfulfilled}
-                    onFulfill={onOrderFulfill}
+                <>
+                  <OrderDraftDetails
+                    order={order}
+                    errors={errors}
+                    onOrderLineAdd={onOrderLineAdd}
+                    onOrderLineChange={onOrderLineChange}
+                    onOrderLineRemove={onOrderLineRemove}
+                    onShippingMethodEdit={onShippingMethodEdit}
                   />
-                ) : (
-                  <>
-                    <OrderDraftDetails
-                      order={order}
-                      errors={errors}
-                      onOrderLineAdd={onOrderLineAdd}
-                      onOrderLineChange={onOrderLineChange}
-                      onOrderLineRemove={onOrderLineRemove}
-                      onShippingMethodEdit={onShippingMethodEdit}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                {order?.fulfillments?.map(fulfillment => (
-                  <React.Fragment key={fulfillment.id}>
-                    <OrderFulfilledProductsCard
-                      fulfillment={fulfillment}
-                      fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                      order={order}
-                      onOrderFulfillmentCancel={() =>
-                        onFulfillmentCancel(fulfillment.id)
-                      }
-                      onTrackingCodeAdd={() =>
-                        onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                      }
-                      onRefund={onPaymentRefund}
-                      onOrderFulfillmentApprove={() =>
-                        onFulfillmentApprove(fulfillment.id)
-                      }
-                    />
-                  </React.Fragment>
-                ))}
-                <OrderPayment
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-                <OrderHistory
-                  history={order?.events}
-                  orderCurrency={order?.total?.gross.currency}
-                  onNoteAdd={onNoteAdd}
-                />
-              </div>
-              <div>
-                <OrderCustomer
-                  canEditAddresses={canEditAddresses}
-                  canEditCustomer={false}
-                  order={order}
-                  errors={errors}
-                  onBillingAddressEdit={onBillingAddressEdit}
-                  onShippingAddressEdit={onShippingAddressEdit}
-                  onProfileView={onProfileView}
-                />
-                <CardSpacer />
-                <OrderChannelSectionCard channel={order?.channel} />
-                <CardSpacer />
-                {!isOrderUnconfirmed && (
-                  <>
-                    <OrderInvoiceList
-                      invoices={order?.invoices}
-                      onInvoiceClick={onInvoiceClick}
-                      onInvoiceGenerate={onInvoiceGenerate}
-                      onInvoiceSend={onInvoiceSend}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                <OrderCustomerNote note={maybe(() => order.customerNote)} />
-              </div>
-            </Grid>
+                  <CardSpacer />
+                </>
+              )}
+              {order?.fulfillments?.map(fulfillment => (
+                <React.Fragment key={fulfillment.id}>
+                  <OrderFulfilledProductsCard
+                    fulfillment={fulfillment}
+                    fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                    order={order}
+                    onOrderFulfillmentCancel={() =>
+                      onFulfillmentCancel(fulfillment.id)
+                    }
+                    onTrackingCodeAdd={() =>
+                      onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                    }
+                    onRefund={onPaymentRefund}
+                    onOrderFulfillmentApprove={() =>
+                      onFulfillmentApprove(fulfillment.id)
+                    }
+                  />
+                </React.Fragment>
+              ))}
+              <OrderPayment
+                order={order}
+                onCapture={onPaymentCapture}
+                onMarkAsPaid={onPaymentPaid}
+                onRefund={onPaymentRefund}
+                onVoid={onPaymentVoid}
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={changeMetadata} />
+              <OrderHistory
+                history={order?.events}
+                orderCurrency={order?.total?.gross.currency}
+                onNoteAdd={onNoteAdd}
+              />
+            </Content>
+            <RightSidebar>
+              <OrderCustomer
+                canEditAddresses={canEditAddresses}
+                canEditCustomer={false}
+                order={order}
+                errors={errors}
+                onBillingAddressEdit={onBillingAddressEdit}
+                onShippingAddressEdit={onShippingAddressEdit}
+                onProfileView={onProfileView}
+              />
+              <CardSpacer />
+              <OrderChannelSectionCard channel={order?.channel} />
+              <CardSpacer />
+              {!isOrderUnconfirmed && (
+                <>
+                  <OrderInvoiceList
+                    invoices={order?.invoices}
+                    onInvoiceClick={onInvoiceClick}
+                    onInvoiceGenerate={onInvoiceGenerate}
+                    onInvoiceSend={onInvoiceSend}
+                  />
+                  <CardSpacer />
+                </>
+              )}
+              <OrderCustomerNote note={maybe(() => order.customerNote)} />
+            </RightSidebar>
             <Savebar
               labels={saveLabel}
               onCancel={() => navigate(orderListUrl())}
@@ -334,7 +308,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               state={saveButtonBarState}
               disabled={allowSave()}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

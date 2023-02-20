@@ -6,4 +6,9 @@ export const messages = defineMessages({
     defaultMessage: "App permissions",
     description: "app permissions tooltip header",
   },
+  noPermissions: {
+    id: "lSd5Zo",
+    defaultMessage: "None",
+    description: "app permissions label",
+  },
 });

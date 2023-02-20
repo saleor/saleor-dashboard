@@ -3,7 +3,7 @@ import {
   AppListItemFragment,
 } from "@dashboard/graphql";
 
-interface AppLogo {
+export interface AppLogo {
   source: string | null;
   color: string;
 }

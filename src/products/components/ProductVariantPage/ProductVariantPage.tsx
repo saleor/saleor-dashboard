@@ -3,18 +3,18 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { ChannelPriceData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Grid from "@dashboard/components/Grid";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
@@ -159,21 +159,17 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const {
-    isOpen: isManageChannelsModalOpen,
-    toggle: toggleManageChannels,
-  } = useManageChannels();
+  const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } =
+    useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
-  const [
-    isEndPreorderModalOpened,
-    setIsEndPreorderModalOpened,
-  ] = React.useState(false);
+  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] =
+    React.useState(false);
 
-  const productMedia = [
-    ...(variant?.product?.media ?? []),
-  ]?.sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
+  const productMedia = [...(variant?.product?.media ?? [])]?.sort(
+    (prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1),
+  );
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
 
@@ -199,18 +195,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   };
 
   return (
-    <>
-      <Container>
-        <Backlink href={productUrl(productId)}>
-          {variant?.product?.name}
-        </Backlink>
-        <PageHeader title={header}>
-          {variant?.product?.defaultVariant?.id !== variant?.id && (
-            <ProductVariantSetDefault
-              onSetDefaultVariant={onSetDefaultVariant}
-            />
-          )}
-        </PageHeader>
+    <DetailedContent useSingleColumn>
+      <TopNav href={productUrl(productId)} title={header}>
+        {variant?.product?.defaultVariant?.id !== variant?.id && (
+          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+        )}
+      </TopNav>
+      <Content>
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}
@@ -440,7 +431,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             );
           }}
         </ProductVariantUpdateForm>
-      </Container>
+      </Content>
       {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={variantDeactivatePreoderButtonState}
@@ -450,7 +441,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
         />
       )}
-    </>
+    </DetailedContent>
   );
 };
 ProductVariantPage.displayName = "ProductVariantPage";

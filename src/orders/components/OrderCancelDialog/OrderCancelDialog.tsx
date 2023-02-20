@@ -40,7 +40,7 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="PRXpBm"
           defaultMessage="Cancel Order"

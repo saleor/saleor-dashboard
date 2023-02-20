@@ -3,11 +3,11 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
@@ -78,42 +78,24 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
 
   return (
-    <Container>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.orders)}
-        limitText={
-          hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "zyceue",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed order counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )
-        }
-        cardMenu={
-          !!onSettingsOpen && (
-            <CardMenu
-              className={classes.settings}
-              menuItems={[
-                {
-                  label: intl.formatMessage({
-                    id: "WbV1Xm",
-                    defaultMessage: "Order Settings",
-                    description: "button",
-                  }),
-                  onSelect: onSettingsOpen,
-                },
-                ...extensionMenuItems,
-              ]}
-            />
-          )
-        }
-      >
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.orders)}>
+        {!!onSettingsOpen && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  id: "WbV1Xm",
+                  defaultMessage: "Order Settings",
+                  description: "button",
+                }),
+                onSelect: onSettingsOpen,
+              },
+              ...extensionMenuItems,
+            ]}
+          />
+        )}
         <ButtonWithSelect
           disabled={limitsReached}
           options={extensionCreateButtonItems}
@@ -126,7 +108,22 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-      </PageHeader>
+        {hasLimits(limits, "orders") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "zyceue",
+                defaultMessage: "{count}/{max} orders",
+                description: "placed order counter",
+              },
+              {
+                count: limits.currentUsage.orders,
+                max: limits.allowedUsage.orders,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
@@ -152,7 +149,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         />
         <OrderList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 OrderListPage.displayName = "OrderListPage";
