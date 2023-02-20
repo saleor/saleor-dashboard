@@ -50,6 +50,8 @@ function useColumns(
   );
 
   const columns = useMemo(() => {
+    // Prevent errors when availableColumns change
+    // but displayedColumns stay old because useEffect fire setState after component render
     if (
       displayedColumns.length !== availableColumns.length &&
       hasCustomColumnPicker

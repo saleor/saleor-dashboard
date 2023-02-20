@@ -189,15 +189,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         renderColumnPicker={defaultProps => (
           <ColumnPicker
             {...defaultProps}
+            {...columnPickerColumns}
             hasMore={hasMore}
             loading={loading}
             onFetchMore={onFetchMore}
             query={columnQuery}
             onQueryChange={onColumnQueryChange}
             onSave={handleSave}
-            defaultColumns={columnPickerColumns.defaultColumns}
-            availableColumns={columnPickerColumns.availableColumns}
-            initialColumns={columnPickerColumns.initialColumns}
           />
         )}
       />
