@@ -116,6 +116,7 @@ describe("As an admin I want to manage categories", () => {
       createCategory({ name: categoryName, description: categoryName })
         .visit(categoryDetailsUrl(category.id))
         .contains(CATEGORY_DETAILS.categoryChildrenRow, categoryName)
+        .scrollIntoView()
         .should("be.visible");
       getCategory(category.id).then(categoryResp => {
         expect(categoryResp.children.edges[0].node.name).to.eq(categoryName);
