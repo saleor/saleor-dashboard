@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     appContent: {
-      with: "100%",
+      width: "100%",
       [theme.breakpoints.up("md")]: {
         width: "50vw",
       },
