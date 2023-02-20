@@ -97,7 +97,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
           set(newData);
         };
         return (
-          <DetailedContent>
+          <DetailedContent useSingleColumn>
             <TopNav
               href={pluginListUrl()}
               title={intl.formatMessage(

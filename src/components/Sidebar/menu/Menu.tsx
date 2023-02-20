@@ -8,7 +8,7 @@ export const Menu = () => {
   const menuStructure = useMenuStructure();
 
   return (
-    <Box padding={6} overflowY="scroll" className="hide-scrollbar">
+    <Box padding={6} overflowY="auto" className="hide-scrollbar">
       <List as="ol" display="grid" gap={3}>
         {menuStructure.map(menuItem => (
           <MenuItem menuItem={menuItem} key={menuItem.id} />
