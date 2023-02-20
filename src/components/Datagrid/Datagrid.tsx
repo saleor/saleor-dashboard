@@ -147,11 +147,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell => {
       const item = [
-        columns.findIndex(ac => ac.id === displayedColumns[column]),
+        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
         row,
       ] as const;
       const opts = { changes, added, removed, getChangeIndex };
-      const columnId = columns[column].id;
+      const columnId = availableColumns[column].id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
 
       return {
@@ -171,13 +171,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
           : {}),
       };
     },
-    [getCellContent, columns, displayedColumns, added, removed],
+    [getCellContent, availableColumns, displayedColumns, added, removed],
   );
 
   const onCellEditedEnh = React.useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited(
-        [columns.findIndex(ac => ac.id === displayedColumns[column]), row],
+        [
+          availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
+          row,
+        ],
         newValue,
       );
       editor.current.updateCells(
@@ -186,7 +189,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         })),
       );
     },
-    [onCellEdited, getCellContent, columns, displayedColumns],
+    [onCellEdited, getCellContent, availableColumns, displayedColumns],
   );
 
   const [selection, setSelection] = React.useState<GridSelection>();

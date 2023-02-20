@@ -91,9 +91,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     isAttributeColumnValue,
   );
 
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
   const columns = useMemo(
     () =>
       getColumns({
@@ -160,7 +157,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, onSort, selectedChannelId],
   );
 
-  const getCellError = () => false;
+  const onColumnsChange = useCallback(
+    (columns: ProductListColumns[]) => onUpdateListSettings("columns", columns),
+    [onUpdateListSettings],
+  );
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
@@ -169,7 +169,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         onHeaderClicked={onHeaderClicked}
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
-        getCellError={getCellError}
+        getCellError={() => false}
         menuItems={index => [
           {
             label: intl.formatMessage(messages.editProduct),
@@ -195,7 +195,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             onFetchMore={onFetchMore}
             query={columnQuery}
             onQueryChange={onColumnQueryChange}
-            onSave={handleSave}
+            onSave={onColumnsChange}
           />
         )}
       />
