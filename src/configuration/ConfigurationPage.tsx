@@ -1,4 +1,5 @@
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -94,7 +95,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <>
+    <DetailedContent useSingleColumn>
       <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
       </TopNav>
@@ -137,7 +138,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             ))}
         </Box>
       </Content>
-    </>
+    </DetailedContent>
   );
 };
 ConfigurationPage.displayName = "ConfigurationPage";
