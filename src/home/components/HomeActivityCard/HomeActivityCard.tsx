@@ -63,7 +63,7 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
                       {getActivityMessage(activity, intl)}
                     </Typography>
                   }
-                  secondary={<DateTime date={activity.date} />}
+                  secondary={<DateTime date={activity.date} plain />}
                 />
               ) : (
                 <ListItemText className={classes.loadingProducts}>
