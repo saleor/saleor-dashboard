@@ -38,8 +38,14 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         borderColor="neutralPlain"
         justifyContent="space-between"
         flexDirection="row"
+        flexWrap="wrap"
       >
-        <Box display="flex" gap={5} alignItems="center">
+        <Box
+          display="flex"
+          justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
+          gap={5}
+          alignItems="center"
+        >
           <AppAvatar size="medium" logo={logo} />
           <Text variant="bodyStrong">{app.name}</Text>
           <Text variant="body" color="textNeutralSubdued">
@@ -62,7 +68,13 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             </Text>
           ) : null}
         </Box>
-        <Box display="flex" flexDirection="row" gap={6}>
+        <Box
+          display="flex"
+          marginTop={{ mobile: 4, desktop: 0 }}
+          flexDirection="row"
+          justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
+          gap={6}
+        >
           <AppPermissions permissions={app.permissions} />
           <TableButtonWrapper>
             <Button
