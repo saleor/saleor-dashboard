@@ -65,7 +65,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   let prettified: string;
   try {
-    prettified = print(parse(webhook?.subscriptionQuery));
+    prettified = print(parse(webhook?.subscriptionQuery || ""));
   } catch {
     prettified = webhook?.subscriptionQuery || "";
   }
@@ -78,7 +78,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
     subscriptionQuery: prettified || "",
-    customHeaders: webhook?.customHeaders || "{}",
+    customHeaders: webhook?.customHeaders,
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
