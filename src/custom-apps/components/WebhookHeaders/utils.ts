@@ -1,7 +1,11 @@
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 
-import { Header } from "./WebhookHeaders";
+export interface Header {
+  name: string;
+  value: string;
+  error?: boolean;
+}
 
 export const stringifyHeaders = (headers: Header[]): string =>
   JSON.stringify(mapValues(keyBy(headers, "name"), "value"));

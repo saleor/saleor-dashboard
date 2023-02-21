@@ -78,7 +78,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
     subscriptionQuery: prettified || "",
-    customHeaders: webhook?.customHeaders,
+    customHeaders: webhook?.customHeaders || "{}",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);

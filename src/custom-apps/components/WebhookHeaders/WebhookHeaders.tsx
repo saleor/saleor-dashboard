@@ -3,48 +3,30 @@ import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import {
   Card,
   CardActions,
   CardContent,
   Table,
-  TableBody,
   TableCell,
   TableHead,
-  TextField,
   Typography,
 } from "@material-ui/core";
-import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, {
-  ChangeEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
 import { messages } from "./messages";
 import useStyles from "./styles";
 import { mapHeaders, stringifyHeaders } from "./utils";
+import WebhookHeadersTableBody from "./WebhookHeadersTableBody";
 
 export interface WebhookHeadersProps {
   data: WebhookFormData;
   onChange: FormChange;
 }
-
-export interface Header {
-  name: string;
-  value: string;
-  error?: boolean;
-}
-
-const nameSeparator = ":";
-const nameInputPrefix = "name";
-const valueInputPrefix = "value";
 
 const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
   data: { customHeaders },
@@ -55,29 +37,6 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
   const headers = useMemo(() => mapHeaders(customHeaders), [customHeaders]);
-
-  const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = target;
-    const [field, index] = name.split(nameSeparator);
-
-    const item = headers[index];
-
-    // lowercase header name
-    if (field === nameInputPrefix) {
-      item[field] = value.toLowerCase();
-    } else {
-      item[field] = value;
-    }
-
-    onChange({
-      target: {
-        name: "customHeaders",
-        value: stringifyHeaders(
-          updateAtIndex(item, headers, parseInt(index, 10)),
-        ),
-      },
-    });
-  };
 
   useEffect(() => {
     if (headers.length > 0) {
@@ -176,78 +135,10 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                         </TableCell>
                       </TableRowLink>
                     </TableHead>
-                    <TableBody>
-                      {headers.map((field, fieldIndex) => (
-                        <TableRowLink data-test-id="field" key={fieldIndex}>
-                          <TableCell
-                            className={clsx(classes.colName, classes.tableCell)}
-                          >
-                            <TextField
-                              InputProps={{
-                                classes: {
-                                  input: classes.input,
-                                },
-                              }}
-                              inputProps={{
-                                "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
-                              }}
-                              name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-                              fullWidth
-                              onChange={change}
-                              value={field.name}
-                              error={field.error}
-                              helperText={
-                                (field.error &&
-                                  intl.formatMessage(
-                                    messages.headerNameError,
-                                  )) ||
-                                " "
-                              }
-                            />
-                          </TableCell>
-                          <TableCell
-                            className={clsx(
-                              classes.colValue,
-                              classes.tableCell,
-                            )}
-                          >
-                            <TextField
-                              InputProps={{
-                                classes: {
-                                  input: classes.input,
-                                },
-                              }}
-                              inputProps={{
-                                "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
-                              }}
-                              name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-                              fullWidth
-                              onChange={change}
-                              value={field.value}
-                              helperText={" "}
-                            />
-                          </TableCell>
-                          <TableCell className={classes.colAction}>
-                            <IconButton
-                              variant="secondary"
-                              data-test-id={"delete-field-" + fieldIndex}
-                              onClick={() =>
-                                onChange({
-                                  target: {
-                                    name: "customHeaders",
-                                    value: stringifyHeaders(
-                                      removeAtIndex(headers, fieldIndex),
-                                    ),
-                                  },
-                                })
-                              }
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRowLink>
-                      ))}
-                    </TableBody>
+                    <WebhookHeadersTableBody
+                      onChange={onChange}
+                      headers={headers}
+                    />
                   </Table>
                 </>
               )}
