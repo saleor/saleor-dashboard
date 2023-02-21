@@ -20,7 +20,7 @@ export const Content: React.FC<ContentProps> = ({
     __gridArea="content"
     __height={
       noSavebar
-        ? "100%"
+        ? `calc(100vh - ${topBarHeight} - ${borderHeight})`
         : `calc(100vh - ${
             noTopNav ? "0px" : topBarHeight
           } - ${savebarHeight} - ${borderHeight})`
