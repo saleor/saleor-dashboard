@@ -73,9 +73,11 @@ export function fillUpAllCommonFieldsInCreateAndUpdate({
       editSeoSettings(seo);
     })
     .then(() => {
+      cy.get(BUTTON_SELECTORS.expandMetadataButton).first().click();
       addMetadataField(metadata.public);
     })
     .then(() => {
+      cy.get(BUTTON_SELECTORS.expandMetadataButton).last().click();
       addMetadataField(metadata.private);
     });
 }
