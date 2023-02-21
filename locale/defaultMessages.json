@@ -3760,10 +3760,6 @@
   "QVraQY": {
     "string": "App manifest URL"
   },
-  "QY7FSs": {
-    "context": "button",
-    "string": "create product type"
-  },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
@@ -5817,6 +5813,10 @@
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
+  },
+  "gksZwp": {
+    "context": "button",
+    "string": "Create product type"
   },
   "glT6fm": {
     "string": "Voucher is limited to these countries"
