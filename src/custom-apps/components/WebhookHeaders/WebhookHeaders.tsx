@@ -27,6 +27,7 @@ import React, {
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
+import { messages } from "./messages";
 import useStyles from "./styles";
 import { mapHeaders, stringifyHeaders } from "./utils";
 
@@ -105,11 +106,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
         className={classes.header}
         title={
           <>
-            {intl.formatMessage({
-              id: "2BHjVL",
-              defaultMessage: "Custom request headers",
-              description: "header",
-            })}
+            {intl.formatMessage(messages.header)}
             <IconButton
               className={clsx(classes.expandBtn, {
                 [classes.rotate]: expanded,
@@ -134,9 +131,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
             {headers.length > 0 && (
               <Typography color="textSecondary" variant="body2">
                 <FormattedMessage
-                  id="9Y5i/8"
-                  defaultMessage="{number,plural,one{{number} header} other{{number} custom request headers}}"
-                  description="number of webhook headers in model"
+                  {...messages.headersCount}
                   values={{
                     number: headers.length,
                   }}
@@ -149,22 +144,14 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
               {headers.length === 0 ? (
                 <CardContent className={classes.emptyContainer}>
                   <Typography variant="body2" color="textSecondary">
-                    <FormattedMessage
-                      id="b1t9bM"
-                      defaultMessage="No custom request headers created for this webhook. Use the button below to add new custom request header."
-                      description="empty headers text"
-                    />
+                    <FormattedMessage {...messages.noHeaders} />
                   </Typography>
                 </CardContent>
               ) : (
                 <>
                   <CardContent>
                     <Typography variant="body2">
-                      <FormattedMessage
-                        id="wChjN/"
-                        defaultMessage="Headers with in following format are accepted: `authorization*`, `x-*`"
-                        description="accepted header names"
-                      />
+                      <FormattedMessage {...messages.acceptedFormat} />
                     </Typography>
                   </CardContent>
 
@@ -177,27 +164,15 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                             classes.tableCell,
                           )}
                         >
-                          <FormattedMessage
-                            id="No4lyL"
-                            defaultMessage="Name"
-                            description="header field name, header"
-                          />
+                          <FormattedMessage {...messages.headerName} />
                         </TableCell>
                         <TableCell
                           className={clsx(classes.colValue, classes.tableCell)}
                         >
-                          <FormattedMessage
-                            id="/4bJkA"
-                            defaultMessage="Value"
-                            description="header field value, header"
-                          />
+                          <FormattedMessage {...messages.headerValue} />
                         </TableCell>
                         <TableCell className={classes.colActionHeader}>
-                          <FormattedMessage
-                            id="nEixpu"
-                            defaultMessage="Actions"
-                            description="table action"
-                          />
+                          <FormattedMessage {...messages.actions} />
                         </TableCell>
                       </TableRowLink>
                     </TableHead>
@@ -223,12 +198,9 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                               error={field.error}
                               helperText={
                                 (field.error &&
-                                  intl.formatMessage({
-                                    id: "iERn5G",
-                                    defaultMessage:
-                                      "Should start with `x-` or `authorization`",
-                                    description: "header name input",
-                                  })) ||
+                                  intl.formatMessage(
+                                    messages.headerNameError,
+                                  )) ||
                                 " "
                               }
                             />
@@ -285,11 +257,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                   data-test-id="add-header"
                   onClick={add}
                 >
-                  <FormattedMessage
-                    id="uQNm59"
-                    defaultMessage="Add custom request header"
-                    description="add header,button"
-                  />
+                  <FormattedMessage {...messages.add} />
                 </Button>
               </CardActions>
             </>

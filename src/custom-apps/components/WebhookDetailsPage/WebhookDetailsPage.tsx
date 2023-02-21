@@ -39,7 +39,7 @@ export interface WebhookFormData {
   secretKey?: string;
   targetUrl: string;
   subscriptionQuery: string;
-  customHeaders?: string;
+  customHeaders: string;
 }
 
 export interface WebhookDetailsPageProps {
