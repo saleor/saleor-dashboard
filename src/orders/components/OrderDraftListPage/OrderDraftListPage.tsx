@@ -1,7 +1,7 @@
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
@@ -58,24 +58,8 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   const limitsReached = isLimitReached(limits, "orders");
 
   return (
-    <Container>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.draftOrders)}
-        limitText={
-          hasLimits(limits, "orders") &&
-          intl.formatMessage(
-            {
-              id: "w2eTzO",
-              defaultMessage: "{count}/{max} orders",
-              description: "placed orders counter",
-            },
-            {
-              count: limits.currentUsage.orders,
-              max: limits.allowedUsage.orders,
-            },
-          )
-        }
-      >
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.draftOrders)}>
         <Button
           variant="primary"
           disabled={disabled || limitsReached}
@@ -87,7 +71,22 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        {hasLimits(limits, "orders") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "w2eTzO",
+                defaultMessage: "{count}/{max} orders",
+                description: "placed orders counter",
+              },
+              {
+                count: limits.currentUsage.orders,
+                max: limits.allowedUsage.orders,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
@@ -113,7 +112,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
         />
         <OrderDraftList disabled={disabled} {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 OrderDraftListPage.displayName = "OrderDraftListPage";

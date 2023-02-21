@@ -62,7 +62,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         {attributeValue === null ? (
           <FormattedMessage
             id="PqMbma"

@@ -1,8 +1,7 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   voucherAddUrl,
   VoucherListUrlSortField,
@@ -56,8 +55,8 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const filterDependency = structure.find(getByName("channel"));
 
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.vouchers)}>
         <Button
           href={voucherAddUrl()}
           variant="primary"
@@ -69,7 +68,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
@@ -94,7 +93,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
         />
         <VoucherList filterDependency={filterDependency} {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 VoucherListPage.displayName = "VoucherListPage";

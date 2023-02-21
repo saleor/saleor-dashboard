@@ -8,6 +8,7 @@ import { CollectionDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,7 +34,7 @@ const useStyles = makeStyles(
     },
     imageContainer: {
       background: "#ffffff",
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: 148,
       justifySelf: "start",

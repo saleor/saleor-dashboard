@@ -44,7 +44,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
 
   return (
     <Dialog fullWidth onClose={onClose} open={open} maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         {field ? (
           field.value === null ? (
             intl.formatMessage({

@@ -11,12 +11,12 @@ import {
   makeStyles,
   useTheme,
 } from "@saleor/macaw-ui";
+import { GripIcon, vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import SortableTree, { NodeRendererProps } from "react-sortable-tree";
 
-import Draggable from "../../../icons/Draggable";
 import { MenuItemType } from "../MenuItemDialog";
 import {
   getDiff,
@@ -75,15 +75,15 @@ const useStyles = makeStyles(
       "& .rst__node": {
         "&:first-of-type": {
           "& $row": {
-            borderTop: `1px ${theme.palette.divider} solid`,
+            borderTop: `1px ${vars.colors.border.neutralPlain} solid`,
           },
         },
       },
     },
     row: {
       alignItems: "center",
-      background: theme.palette.background.paper,
-      borderBottom: `1px ${theme.palette.divider} solid`,
+      background: vars.colors.background.surfaceNeutralPlain,
+      borderBottom: `1px ${vars.colors.border.neutralPlain} solid`,
       borderRadius: 0,
       display: "flex",
       flexDirection: "row",
@@ -101,8 +101,8 @@ const useStyles = makeStyles(
     rowContainerDragged: {
       "&$rowContainer": {
         "&:before": {
-          background: theme.palette.background.paper,
-          border: `1px solid ${theme.palette.primary.main}`,
+          background: vars.colors.background.surfaceNeutralPlain,
+          border: `1px solid ${vars.colors.border.neutralPlain}`,
           borderRadius: "100%",
           content: "''",
           height: 7,
@@ -111,7 +111,7 @@ const useStyles = makeStyles(
           top: -3,
           width: 7,
         },
-        borderTop: `1px solid ${theme.palette.primary.main}`,
+        borderTop: `1px solid ${vars.colors.border.neutralPlain}`,
         height: 0,
         position: "relative",
         top: -1,
@@ -143,13 +143,8 @@ const Placeholder: React.FC = props => {
 };
 
 const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
-  const {
-    node,
-    path,
-    connectDragPreview,
-    connectDragSource,
-    isDragging,
-  } = props;
+  const { node, path, connectDragPreview, connectDragSource, isDragging } =
+    props;
   const classes = useStyles(props);
 
   const draggedClassName = clsx(
@@ -180,7 +175,7 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
       <Paper className={classes.row} elevation={0}>
         {connectDragSource(
           <div onDragStart={handleDragStart}>
-            <Draggable className={classes.dragIcon} />
+            <GripIcon color="iconNeutralDefault" />
           </div>,
         )}
         <Typography className={classes.nodeTitle} onClick={node.onEdit}>

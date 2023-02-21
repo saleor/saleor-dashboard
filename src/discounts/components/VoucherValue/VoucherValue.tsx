@@ -69,8 +69,8 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
       <CardContent>
         <Typography variant="caption">
           <FormattedMessage
-            id="K+ROF8"
-            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+            id="qnPzX7"
+            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
           />
         </Typography>
         <div className={classes.tableContainer}>

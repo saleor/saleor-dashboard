@@ -3,7 +3,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, TableBody } from "@material-ui/core";
+import { Card, CardContent, TableBody } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -36,7 +36,9 @@ const cancelableStatuses = [
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
 
-const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
+const OrderFulfilledProductsCard: React.FC<
+  OrderFulfilledProductsCardProps
+> = props => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -83,24 +85,26 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
             )
           }
         />
-        <ResponsiveTable className={classes.table}>
-          <TableHeader />
-          <TableBody>
-            {renderCollection(getLines(), line => (
-              <TableLine key={line.id} line={line} />
-            ))}
-          </TableBody>
-          <ExtraInfoLines fulfillment={fulfillment} />
-        </ResponsiveTable>
-        <ActionButtons
-          status={fulfillment?.status}
-          trackingNumber={fulfillment?.trackingNumber}
-          orderIsPaid={order?.isPaid}
-          fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-          onTrackingCodeAdd={onTrackingCodeAdd}
-          onRefund={onRefund}
-          onApprove={onOrderFulfillmentApprove}
-        />
+        <CardContent>
+          <ResponsiveTable className={classes.table}>
+            <TableHeader />
+            <TableBody>
+              {renderCollection(getLines(), line => (
+                <TableLine key={line.id} line={line} />
+              ))}
+            </TableBody>
+            <ExtraInfoLines fulfillment={fulfillment} />
+          </ResponsiveTable>
+          <ActionButtons
+            status={fulfillment?.status}
+            trackingNumber={fulfillment?.trackingNumber}
+            orderIsPaid={order?.isPaid}
+            fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+            onTrackingCodeAdd={onTrackingCodeAdd}
+            onRefund={onRefund}
+            onApprove={onOrderFulfillmentApprove}
+          />
+        </CardContent>
       </Card>
       <CardSpacer />
     </>

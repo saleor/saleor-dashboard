@@ -1,7 +1,4 @@
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelCreateMutation,
@@ -14,7 +11,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
-import { sectionNames } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import currencyCodes from "currency-codes";
@@ -22,7 +18,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import { channelPath, channelsListUrl } from "../../urls";
+import { channelPath } from "../../urls";
 import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
@@ -146,17 +142,7 @@ export const ChannelCreateView = ({}) => {
           description: "window title",
         })}
       />
-      <Container>
-        <Backlink href={channelsListUrl()}>
-          {intl.formatMessage(sectionNames.channels)}
-        </Backlink>
-        <PageHeader
-          title={intl.formatMessage({
-            id: "DnghuS",
-            defaultMessage: "New Channel",
-            description: "channel create",
-          })}
-        />
+      <>
         <ChannelDetailsPage
           allShippingZonesCount={
             shippingZonesCountData?.shippingZones?.totalCount
@@ -186,7 +172,7 @@ export const ChannelCreateView = ({}) => {
           saveButtonBarState={createChannelOpts.status}
           countries={shop?.countries || []}
         />
-      </Container>
+      </>
     </>
   );
 };

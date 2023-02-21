@@ -543,10 +543,6 @@
     "context": "order status",
     "string": "Partially returned"
   },
-  "26VlBZ": {
-    "context": "information",
-    "string": "Problem occured during installation."
-  },
   "28GZnc": {
     "string": "Start typing to begin search..."
   },
@@ -965,6 +961,9 @@
   },
   "5LRkEs": {
     "string": "The new dashboard and the GraphQL API are preview-quality software."
+  },
+  "5ObBlW": {
+    "string": "Dark Mode"
   },
   "5OtU+V": {
     "context": "dialog title",
@@ -1716,6 +1715,10 @@
     "context": "header",
     "string": "Activity"
   },
+  "BYGJ/j": {
+    "context": "button label",
+    "string": "Settings"
+  },
   "BZ7BkQ": {
     "context": "capture payment, button",
     "string": "Capture"
@@ -2390,9 +2393,6 @@
   "GNKG74": {
     "context": "webhooks inactive label",
     "string": "Inactive"
-  },
-  "GOdq5V": {
-    "string": "Catalog"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -3333,6 +3333,9 @@
     "context": "webhook input label",
     "string": "Secret Key"
   },
+  "NQgbYA": {
+    "string": "Account Settings"
+  },
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
@@ -3546,6 +3549,10 @@
     "context": "error message",
     "string": "Page not found."
   },
+  "PDw0YN": {
+    "context": "open new window button",
+    "string": "Open this product in GraphiQL"
+  },
   "PFXGaR": {
     "string": "Shipping Zones"
   },
@@ -3567,9 +3574,6 @@
   "PRXpBm": {
     "context": "dialog header",
     "string": "Cancel Order"
-  },
-  "PRlD0A": {
-    "string": "Shipping"
   },
   "PTW56s": {
     "context": "alert",
@@ -3756,10 +3760,6 @@
   "QVraQY": {
     "string": "App manifest URL"
   },
-  "QY7FSs": {
-    "context": "button",
-    "string": "create product type"
-  },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
@@ -3881,6 +3881,10 @@
   "RXbkle": {
     "context": "copy code button label",
     "string": "Copy code"
+  },
+  "RY4PJY": {
+    "context": "information",
+    "string": "Installation failed"
   },
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
@@ -5810,6 +5814,10 @@
     "context": "gift card history message",
     "string": "Gift card was resent"
   },
+  "gksZwp": {
+    "context": "button",
+    "string": "Create product type"
+  },
   "glT6fm": {
     "string": "Voucher is limited to these countries"
   },
@@ -5890,6 +5898,9 @@
   "hTLCC2": {
     "context": "channel publication date",
     "string": "Will become published on {date}"
+  },
+  "hVPucN": {
+    "string": "Light Mode"
   },
   "hWO1SD": {
     "context": "order history message",
@@ -6382,6 +6393,10 @@
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lSd5Zo": {
+    "context": "app permissions label",
+    "string": "None"
   },
   "lT5MYM": {
     "context": "dialog title",
@@ -7003,6 +7018,9 @@
   "qkt/Km": {
     "context": "bulk delete label",
     "string": "Delete"
+  },
+  "qnPzX7": {
+    "string": "Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
   },
   "qov29K": {
     "context": "dialog content",
@@ -7943,9 +7961,6 @@
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
-  },
-  "y1Z3or": {
-    "string": "Language"
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"

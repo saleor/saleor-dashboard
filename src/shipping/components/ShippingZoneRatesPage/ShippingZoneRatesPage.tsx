@@ -1,12 +1,12 @@
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
 import { WithFormId } from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -37,7 +37,6 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { FormEventHandler } from "react";
-import { FormattedMessage } from "react-intl";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
@@ -183,93 +182,88 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   return (
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
-        <Container>
-          <Backlink href={backHref}>
-            <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
-          </Backlink>
-          <PageHeader title={rate?.name} />
-          <Grid>
-            <div>
-              <ShippingRateInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              {isPriceVariant ? (
-                <OrderValue
-                  channels={data.channelListings}
-                  errors={channelErrors}
-                  orderValueRestricted={data.orderValueRestricted}
-                  disabled={disabled}
-                  onChange={change}
-                  onChannelsChange={handleChannelsChange}
-                />
-              ) : (
-                <OrderWeight
-                  orderValueRestricted={data.orderValueRestricted}
-                  disabled={disabled}
-                  minValue={data.minValue}
-                  maxValue={data.maxValue}
-                  onChange={change}
-                  errors={errors}
-                />
-              )}
-              <CardSpacer />
-              <PricingCard
+        <DetailedContent>
+          <TopNav href={backHref} title={rate?.name} />
+          <Content>
+            <ShippingRateInfo
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+            <CardSpacer />
+            {isPriceVariant ? (
+              <OrderValue
                 channels={data.channelListings}
-                onChange={handleChannelsChange}
-                disabled={disabled}
                 errors={channelErrors}
-              />
-              <CardSpacer />
-              <ShippingZonePostalCodes
+                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
-                onPostalCodeDelete={onPostalCodeUnassign}
-                onPostalCodeInclusionChange={onPostalCodeInclusionChange}
-                onPostalCodeRangeAdd={onPostalCodeAssign}
-                postalCodes={postalCodeRules}
+                onChange={change}
+                onChannelsChange={handleChannelsChange}
               />
-              <CardSpacer />
-              <ShippingMethodProducts
-                products={mapEdgesToItems(rate?.excludedProducts)}
-                onProductAssign={onProductAssign}
-                onProductUnassign={onProductUnassign}
+            ) : (
+              <OrderWeight
+                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
-                {...listProps}
+                minValue={data.minValue}
+                maxValue={data.maxValue}
+                onChange={change}
+                errors={errors}
               />
-              <CardSpacer />
-              <Metadata data={data} onChange={changeMetadata} />
-            </div>
-            <div>
-              <ChannelsAvailabilityCard
-                managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
-                allChannelsCount={allChannelsCount}
-                channelsList={data.channelListings.map(channel => ({
-                  id: channel.id,
-                  name: channel.name,
-                }))}
-                openModal={openChannelsModal}
-              />
-              <CardSpacer />
-              <ShippingMethodTaxes
-                value={formData.taxClassId}
-                taxClassDisplayName={taxClassDisplayName}
-                taxClasses={taxClasses}
-                disabled={false}
-                onChange={event =>
-                  handleTaxClassChange(
-                    event,
-                    taxClasses,
-                    change,
-                    setTaxClassDisplayName,
-                  )
-                }
-                onFetchMore={fetchMoreTaxClasses}
-              />
-            </div>
-          </Grid>
+            )}
+            <CardSpacer />
+            <PricingCard
+              channels={data.channelListings}
+              onChange={handleChannelsChange}
+              disabled={disabled}
+              errors={channelErrors}
+            />
+            <CardSpacer />
+            <ShippingZonePostalCodes
+              disabled={disabled}
+              onPostalCodeDelete={onPostalCodeUnassign}
+              onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+              onPostalCodeRangeAdd={onPostalCodeAssign}
+              postalCodes={postalCodeRules}
+            />
+            <CardSpacer />
+            <ShippingMethodProducts
+              products={mapEdgesToItems(rate?.excludedProducts)}
+              onProductAssign={onProductAssign}
+              onProductUnassign={onProductUnassign}
+              disabled={disabled}
+              {...listProps}
+            />
+            <CardSpacer />
+            <Metadata data={data} onChange={changeMetadata} />
+          </Content>
+          <RightSidebar>
+            <ChannelsAvailabilityCard
+              managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
+              allChannelsCount={allChannelsCount}
+              channelsList={data.channelListings.map(channel => ({
+                id: channel.id,
+                name: channel.name,
+              }))}
+              openModal={openChannelsModal}
+            />
+            <CardSpacer />
+            <ShippingMethodTaxes
+              value={formData.taxClassId}
+              taxClassDisplayName={taxClassDisplayName}
+              taxClasses={taxClasses}
+              disabled={false}
+              onChange={event =>
+                handleTaxClassChange(
+                  event,
+                  taxClasses,
+                  change,
+                  setTaxClassDisplayName,
+                )
+              }
+              onFetchMore={fetchMoreTaxClasses}
+            />
+          </RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             onCancel={() => navigate(backHref)}
@@ -277,7 +271,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             onSubmit={handleSubmit}
             state={saveButtonBarState}
           />
-        </Container>
+        </DetailedContent>
       </form>
     </RichTextContext.Provider>
   );

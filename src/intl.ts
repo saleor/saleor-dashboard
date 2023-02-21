@@ -5,9 +5,9 @@ export const commonMessages = defineMessages({
     id: "hOxIeP",
     defaultMessage: "Availability",
   },
-  catalog: {
-    id: "GOdq5V",
-    defaultMessage: "Catalog",
+  products: {
+    id: "7NFfmz",
+    defaultMessage: "Products",
   },
   chooseFile: {
     id: "eWcvOc",

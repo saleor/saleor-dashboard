@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -42,6 +43,9 @@ export const useStyles = makeStyles(
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "right",
+    },
+    payments: {
+      paddingRight: vars.space[9],
     },
   }),
   { name: "OrderPayment" },

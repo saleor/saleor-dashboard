@@ -17,7 +17,6 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(3.5),
     },
     button: {
-      zIndex: 2,
       padding: `7px`,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
@@ -33,15 +32,15 @@ const useStyles = makeStyles(
         "&::placeholder": {
           opacity: [[1], "!important"] as any,
         },
-        zIndex: 2,
       },
       background: theme.palette.background.paper,
     },
     noteRoot: {
-      left: theme.spacing(-8.5),
       marginBottom: theme.spacing(3),
-      position: "relative",
-      width: `calc(100% + ${theme.spacing(8.5)})`,
+      position: "absolute",
+      top: 0,
+      left: -19,
+      right: 0,
     },
     noteTitle: {
       "&:last-child": {
@@ -49,16 +48,14 @@ const useStyles = makeStyles(
         paddingRight: 0,
       },
       alignItems: "center",
-      background: theme.palette.background.default,
       display: "flex",
-      paddingLeft: theme.spacing(3),
+      paddingLeft: 0,
     },
     root: {
-      borderColor: theme.palette.divider,
-      borderStyle: "solid",
-      borderWidth: "0 0 0 2px",
       marginLeft: 20,
-      paddingLeft: theme.spacing(3),
+      paddingTop: theme.spacing(12),
+      paddingLeft: theme.spacing(3.27),
+      position: "relative",
     },
   }),
   { name: "Timeline" },

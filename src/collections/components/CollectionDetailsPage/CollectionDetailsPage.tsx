@@ -1,12 +1,12 @@
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { Container } from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import {
@@ -17,7 +17,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -76,80 +75,75 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       disabled={disabled}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
-        <Container>
-          <Backlink href={collectionListUrl()}>
-            {intl.formatMessage(sectionNames.collections)}
-          </Backlink>
-          <PageHeader title={collection?.name} />
-          <Grid>
+        <DetailedContent>
+          <TopNav href={collectionListUrl()} title={collection?.name} />
+          <Content>
+            <CollectionDetails
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+            <CardSpacer />
+            <CollectionImage
+              data={data}
+              image={collection?.backgroundImage}
+              onImageDelete={onImageDelete}
+              onImageUpload={onImageUpload}
+              onChange={change}
+            />
+            <CardSpacer />
+            <Metadata data={data} onChange={handlers.changeMetadata} />
+            <CardSpacer />
+            <CollectionProducts
+              disabled={disabled}
+              collection={collection}
+              {...collectionProductsProps}
+            />
+            <CardSpacer />
+            <SeoForm
+              description={data.seoDescription}
+              disabled={disabled}
+              descriptionPlaceholder=""
+              helperText={intl.formatMessage({
+                id: "Rj8LxK",
+                defaultMessage:
+                  "Add search engine title and description to make this collection easier to find",
+              })}
+              errors={errors}
+              slug={data.slug}
+              slugPlaceholder={data.name}
+              title={data.seoTitle}
+              titlePlaceholder={collection?.name}
+              onChange={change}
+            />
+          </Content>
+          <RightSidebar>
             <div>
-              <CollectionDetails
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <CollectionImage
-                data={data}
-                image={collection?.backgroundImage}
-                onImageDelete={onImageDelete}
-                onImageUpload={onImageUpload}
-                onChange={change}
-              />
-              <CardSpacer />
-              <Metadata data={data} onChange={handlers.changeMetadata} />
-              <CardSpacer />
-              <CollectionProducts
-                disabled={disabled}
-                collection={collection}
-                {...collectionProductsProps}
-              />
-              <CardSpacer />
-              <SeoForm
-                description={data.seoDescription}
-                disabled={disabled}
-                descriptionPlaceholder=""
-                helperText={intl.formatMessage({
-                  id: "Rj8LxK",
-                  defaultMessage:
-                    "Add search engine title and description to make this collection easier to find",
-                })}
-                errors={errors}
-                slug={data.slug}
-                slugPlaceholder={data.name}
-                title={data.seoTitle}
-                titlePlaceholder={collection?.name}
-                onChange={change}
-              />
-            </div>
-            <div>
-              <div>
-                <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                  messages={{
-                    hiddenLabel: intl.formatMessage({
-                      id: "V8FhTt",
-                      defaultMessage: "Hidden",
-                      description: "collection label",
-                    }),
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                messages={{
+                  hiddenLabel: intl.formatMessage({
+                    id: "V8FhTt",
+                    defaultMessage: "Hidden",
+                    description: "collection label",
+                  }),
 
-                    visibleLabel: intl.formatMessage({
-                      id: "9vQR6c",
-                      defaultMessage: "Visible",
-                      description: "collection label",
-                    }),
-                  }}
-                  errors={channelsErrors}
-                  allChannelsCount={channelsCount}
-                  channels={data.channelListings}
-                  disabled={disabled}
-                  onChange={handlers.changeChannels}
-                  openModal={openChannelsModal}
-                />
-              </div>
+                  visibleLabel: intl.formatMessage({
+                    id: "9vQR6c",
+                    defaultMessage: "Visible",
+                    description: "collection label",
+                  }),
+                }}
+                errors={channelsErrors}
+                allChannelsCount={channelsCount}
+                channels={data.channelListings}
+                disabled={disabled}
+                onChange={handlers.changeChannels}
+                openModal={openChannelsModal}
+              />
             </div>
-          </Grid>
+          </RightSidebar>
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
@@ -157,7 +151,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
             onDelete={onCollectionRemove}
             onSubmit={submit}
           />
-        </Container>
+        </DetailedContent>
       )}
     </CollectionUpdateForm>
   );

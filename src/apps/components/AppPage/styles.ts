@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       height: "100%",
       "& > iframe": {
         border: "none",
-        minHeight: "60vh",
+        minHeight: "100vh",
         height: "100%",
         width: "100%",
       },

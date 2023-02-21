@@ -28,11 +28,9 @@ interface GiftCardCreateDialogContentProps
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
-  onClose,
-  refetchQueries,
-  initialCustomer,
-}) => {
+const GiftCardCreateDialogContent: React.FC<
+  GiftCardCreateDialogContentProps
+> = ({ onClose, refetchQueries, initialCustomer }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -97,7 +95,9 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
 
   return (
     <>
-      <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
+      <DialogTitle disableTypography>
+        {intl.formatMessage(messages.title)}
+      </DialogTitle>
       <ContentWithProgress>
         {!loadingChannelCurrencies &&
           (cardCode ? (

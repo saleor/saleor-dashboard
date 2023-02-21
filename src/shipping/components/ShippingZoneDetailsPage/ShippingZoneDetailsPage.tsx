@@ -1,12 +1,12 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
@@ -25,7 +25,7 @@ import { mapNodeToChoice } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
@@ -124,9 +124,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     MultiAutocompleteChoiceType[]
   >(mapNodeToChoice(shippingZone?.channels));
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   return (
     <Form
@@ -153,77 +152,72 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={shippingZonesListUrl()}>
-              <FormattedMessage {...messages.shipping} />
-            </Backlink>
-            <PageHeader title={shippingZone?.name} />
-            <Grid>
-              <div>
-                <ShippingZoneInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <CountryList
-                  countries={shippingZone?.countries}
-                  disabled={disabled}
-                  emptyText={getStringOrPlaceholder(
-                    shippingZone &&
-                      intl.formatMessage(messages.noCountriesAssigned),
-                  )}
-                  onCountryAssign={onCountryAdd}
-                  onCountryUnassign={onCountryRemove}
-                  title={intl.formatMessage(messages.countries)}
-                />
-                <CardSpacer />
-                <ShippingZoneRates
-                  disabled={disabled}
-                  onRateAdd={onPriceRateAdd}
-                  getRateEditHref={getPriceRateEditHref}
-                  onRateRemove={onRateRemove}
-                  rates={shippingZone?.shippingMethods?.filter(
-                    method => method.type === ShippingMethodTypeEnum.PRICE,
-                  )}
-                  variant="price"
-                  selectedChannelId={selectedChannelId}
-                  testId="add-price-rate"
-                />
-                <CardSpacer />
-                <ShippingZoneRates
-                  disabled={disabled}
-                  onRateAdd={onWeightRateAdd}
-                  getRateEditHref={getWeightRateEditHref}
-                  onRateRemove={onRateRemove}
-                  rates={shippingZone?.shippingMethods?.filter(
-                    method => method.type === ShippingMethodTypeEnum.WEIGHT,
-                  )}
-                  variant="weight"
-                  selectedChannelId={selectedChannelId}
-                  testId="add-weight-rate"
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-              </div>
-              <div>
-                <ShippingZoneSettingsCard
-                  formData={data}
-                  warehousesDisplayValues={warehouseDisplayValues}
-                  hasMoreWarehouses={hasMore}
-                  loading={loading}
-                  onWarehouseChange={handleWarehouseChange}
-                  onFetchMoreWarehouses={onFetchMore}
-                  onWarehousesSearchChange={onSearchChange}
-                  onWarehouseAdd={onWarehouseAdd}
-                  warehousesChoices={warehouseChoices}
-                  allChannels={allChannels}
-                  channelsDisplayValues={channelsDisplayValues}
-                  onChannelChange={handleChannelChange}
-                />
-              </div>
-            </Grid>
+          <DetailedContent>
+            <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
+            <Content>
+              <ShippingZoneInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CountryList
+                countries={shippingZone?.countries}
+                disabled={disabled}
+                emptyText={getStringOrPlaceholder(
+                  shippingZone &&
+                    intl.formatMessage(messages.noCountriesAssigned),
+                )}
+                onCountryAssign={onCountryAdd}
+                onCountryUnassign={onCountryRemove}
+                title={intl.formatMessage(messages.countries)}
+              />
+              <CardSpacer />
+              <ShippingZoneRates
+                disabled={disabled}
+                onRateAdd={onPriceRateAdd}
+                getRateEditHref={getPriceRateEditHref}
+                onRateRemove={onRateRemove}
+                rates={shippingZone?.shippingMethods?.filter(
+                  method => method.type === ShippingMethodTypeEnum.PRICE,
+                )}
+                variant="price"
+                selectedChannelId={selectedChannelId}
+                testId="add-price-rate"
+              />
+              <CardSpacer />
+              <ShippingZoneRates
+                disabled={disabled}
+                onRateAdd={onWeightRateAdd}
+                getRateEditHref={getWeightRateEditHref}
+                onRateRemove={onRateRemove}
+                rates={shippingZone?.shippingMethods?.filter(
+                  method => method.type === ShippingMethodTypeEnum.WEIGHT,
+                )}
+                variant="weight"
+                selectedChannelId={selectedChannelId}
+                testId="add-weight-rate"
+              />
+              <CardSpacer />
+              <Metadata data={data} onChange={changeMetadata} />
+            </Content>
+            <RightSidebar>
+              <ShippingZoneSettingsCard
+                formData={data}
+                warehousesDisplayValues={warehouseDisplayValues}
+                hasMoreWarehouses={hasMore}
+                loading={loading}
+                onWarehouseChange={handleWarehouseChange}
+                onFetchMoreWarehouses={onFetchMore}
+                onWarehousesSearchChange={onSearchChange}
+                onWarehouseAdd={onWarehouseAdd}
+                warehousesChoices={warehouseChoices}
+                allChannels={allChannels}
+                channelsDisplayValues={channelsDisplayValues}
+                onChannelChange={handleChannelChange}
+              />
+            </RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               onCancel={() => navigate(shippingZonesListUrl())}
@@ -231,7 +225,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

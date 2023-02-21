@@ -98,7 +98,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       />
       {permissionsExceeded && (
         <>
-          <CardContent>
+          <CardContent style={{ paddingLeft: 0 }}>
             <Typography variant="body2">
               {intl.formatMessage({
                 id: "MVU6ol",
