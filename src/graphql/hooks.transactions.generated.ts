@@ -710,6 +710,17 @@ export const BulkProductErrorFragmentDoc = gql`
   message
 }
     `;
+export const ProductVariantBulkErrorFragmentDoc = gql`
+    fragment ProductVariantBulkError on ProductVariantBulkError {
+  field
+  code
+  message
+  attributes
+  values
+  warehouses
+  channels
+}
+    `;
 export const BulkStockErrorFragmentDoc = gql`
     fragment BulkStockError on BulkStockError {
   code
@@ -2454,6 +2465,7 @@ export const PreorderFragmentDoc = gql`
     `;
 export const ChannelListingProductVariantFragmentDoc = gql`
     fragment ChannelListingProductVariant on ProductVariantChannelListing {
+  id
   channel {
     id
     name
