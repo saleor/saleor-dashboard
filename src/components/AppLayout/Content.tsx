@@ -1,7 +1,7 @@
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { borderHeight, savebarHeight, topBarHeight } from "./consts";
+import { useContentHeight } from "./useContentHeight";
 
 interface ContentProps {
   [key: `data-${string}`]: string;
@@ -15,20 +15,18 @@ export const Content: React.FC<ContentProps> = ({
   noSavebar = false,
   noTopNav = false,
   ...rest
-}) => (
-  <Box
-    __gridArea="content"
-    __height={
-      noSavebar
-        ? `calc(100vh - ${topBarHeight} - ${borderHeight})`
-        : `calc(100vh - ${
-            noTopNav ? "0px" : topBarHeight
-          } - ${savebarHeight} - ${borderHeight})`
-    }
-    overflowY="auto"
-    className="hide-scrollbar"
-    {...rest}
-  >
-    {children}
-  </Box>
-);
+}) => {
+  const { withoutSaveBar, withSaveBar } = useContentHeight();
+
+  return (
+    <Box
+      __gridArea="content"
+      __height={noSavebar ? withoutSaveBar() : withSaveBar({ noTopNav })}
+      overflowY="auto"
+      className="hide-scrollbar"
+      {...rest}
+    >
+      {children}
+    </Box>
+  );
+};
