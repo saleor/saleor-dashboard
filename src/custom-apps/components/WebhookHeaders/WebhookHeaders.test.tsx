@@ -4,6 +4,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
+import { customHeaders } from "./utils.test";
 import WebhookHeaders, { WebhookHeadersProps } from "./WebhookHeaders";
 
 export const props: WebhookHeadersProps = {
@@ -14,8 +15,7 @@ export const props: WebhookHeadersProps = {
     name: "Test webhook",
     targetUrl: "http://localhost:3000",
     subscriptionQuery: "",
-    customHeaders:
-      '{"authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6IlNhbGVvciIsIlRleHQiOiJIZWxsbyBmcm9tIFNhbGVvciJ9.1CQjaMOfk5tEMLr37vvik2gJWe2wlvgl4go4ZZs9jEQ", "x-auth-token": "eyJhbGciOiJIUzI1NiJ9.eyJVc2VybmFtZSI6IlNhbGVvciIsIlRleHQiOiJIZWxsbyBmcm9tIFNhbGVvciJ9.1CQjaMOfk5tEMLr37vvik2gJWe2wlvgl4go4ZZs9jEQ"}',
+    customHeaders,
   },
   onChange: () => undefined,
 };
@@ -30,7 +30,7 @@ const Component = () => {
   );
 };
 
-const getFirstExpandIcon = () => screen.getAllByTestId("expand")[0];
+const getExpandIcon = () => screen.getByTestId("expand");
 
 describe("WebhookHeaders", () => {
   it("is available on the webhook page", async () => {
@@ -46,12 +46,12 @@ describe("WebhookHeaders", () => {
     render(<Component />);
     const user = userEvent.setup();
     const isExpandedAttribute = "data-test-expanded";
-    const editor = screen.getAllByTestId("webhook-headers-editor")[0];
+    const editor = screen.getByTestId("webhook-headers-editor");
     // Assert
     expect(editor).toHaveAttribute(isExpandedAttribute, "true");
     // Act
     await act(async () => {
-      await user.click(getFirstExpandIcon());
+      await user.click(getExpandIcon());
     });
 
     // Assert

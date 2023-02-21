@@ -55,9 +55,9 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
   const classes = useStyles();
   const headers = useMemo(() => mapHeaders(customHeaders), [customHeaders]);
 
-  const change = (event: ChangeEvent) => {
-    const { name, value } = event.target as HTMLTextAreaElement;
-    const [field, index] = name.split(":");
+  const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = target;
+    const [field, index] = name.split(nameSeparator);
 
     const item = headers[index];
 

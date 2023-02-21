@@ -3,7 +3,7 @@ import {
   stringifyHeaders,
 } from "@dashboard/custom-apps/components/WebhookHeaders/utils";
 
-const customHeaders = '{"x-auth-token":"ABC","authorization":"XYZ"}';
+export const customHeaders = '{"x-auth-token":"ABC","authorization":"XYZ"}';
 
 const parsedHeaders = [
   {
