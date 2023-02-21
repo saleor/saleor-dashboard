@@ -108,7 +108,10 @@ export const getAppDetails = ({
 }: GetAppDetailsOpts) => {
   const isAppComingSoon = !("manifestUrl" in app);
 
-  const isAppInstallable = "manifestUrl" in app && !!navigateToAppInstallPage;
+  const isAppInstallable =
+    "manifestUrl" in app &&
+    app.manifestUrl !== null &&
+    !!navigateToAppInstallPage;
   const isAppForkableOnGithub =
     "githubForkUrl" in app && !!navigateToGithubForkPage;
   const installationPending =

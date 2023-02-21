@@ -733,7 +733,7 @@ export type CategoryUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	category?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ChannelKeySpecifier = ('id' | 'slug' | 'name' | 'isActive' | 'currencyCode' | 'hasOrders' | 'defaultCountry' | 'warehouses' | 'countries' | 'availableShippingMethodsPerCountry' | 'stockSettings' | ChannelKeySpecifier)[];
+export type ChannelKeySpecifier = ('id' | 'slug' | 'name' | 'isActive' | 'currencyCode' | 'hasOrders' | 'defaultCountry' | 'warehouses' | 'countries' | 'availableShippingMethodsPerCountry' | 'stockSettings' | 'orderSettings' | ChannelKeySpecifier)[];
 export type ChannelFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -745,7 +745,8 @@ export type ChannelFieldPolicy = {
 	warehouses?: FieldPolicy<any> | FieldReadFunction<any>,
 	countries?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableShippingMethodsPerCountry?: FieldPolicy<any> | FieldReadFunction<any>,
-	stockSettings?: FieldPolicy<any> | FieldReadFunction<any>
+	stockSettings?: FieldPolicy<any> | FieldReadFunction<any>,
+	orderSettings?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ChannelActivateKeySpecifier = ('channel' | 'channelErrors' | 'errors' | ChannelActivateKeySpecifier)[];
 export type ChannelActivateFieldPolicy = {
@@ -3675,14 +3676,21 @@ export type ProductImageFieldPolicy = {
 	sortOrder?: FieldPolicy<any> | FieldReadFunction<any>,
 	url?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductMediaKeySpecifier = ('id' | 'sortOrder' | 'alt' | 'type' | 'oembedData' | 'url' | ProductMediaKeySpecifier)[];
+export type ProductMediaKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'sortOrder' | 'alt' | 'type' | 'oembedData' | 'url' | 'productId' | ProductMediaKeySpecifier)[];
 export type ProductMediaFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
+	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
+	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
+	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
+	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
+	metafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	sortOrder?: FieldPolicy<any> | FieldReadFunction<any>,
 	alt?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	oembedData?: FieldPolicy<any> | FieldReadFunction<any>,
-	url?: FieldPolicy<any> | FieldReadFunction<any>
+	url?: FieldPolicy<any> | FieldReadFunction<any>,
+	productId?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductMediaBulkDeleteKeySpecifier = ('count' | 'productErrors' | 'errors' | ProductMediaBulkDeleteKeySpecifier)[];
 export type ProductMediaBulkDeleteFieldPolicy = {
@@ -3697,12 +3705,28 @@ export type ProductMediaCreateFieldPolicy = {
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ProductMediaCreatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'productMedia' | ProductMediaCreatedKeySpecifier)[];
+export type ProductMediaCreatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	productMedia?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ProductMediaDeleteKeySpecifier = ('product' | 'media' | 'productErrors' | 'errors' | ProductMediaDeleteKeySpecifier)[];
 export type ProductMediaDeleteFieldPolicy = {
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
 	media?: FieldPolicy<any> | FieldReadFunction<any>,
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductMediaDeletedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'productMedia' | ProductMediaDeletedKeySpecifier)[];
+export type ProductMediaDeletedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	productMedia?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductMediaReorderKeySpecifier = ('product' | 'media' | 'productErrors' | 'errors' | ProductMediaReorderKeySpecifier)[];
 export type ProductMediaReorderFieldPolicy = {
@@ -3717,6 +3741,14 @@ export type ProductMediaUpdateFieldPolicy = {
 	media?: FieldPolicy<any> | FieldReadFunction<any>,
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductMediaUpdatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'productMedia' | ProductMediaUpdatedKeySpecifier)[];
+export type ProductMediaUpdatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	productMedia?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductMetadataUpdatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'product' | 'category' | ProductMetadataUpdatedKeySpecifier)[];
 export type ProductMetadataUpdatedFieldPolicy = {
@@ -4997,6 +5029,17 @@ export type TaxedMoneyRangeKeySpecifier = ('start' | 'stop' | TaxedMoneyRangeKey
 export type TaxedMoneyRangeFieldPolicy = {
 	start?: FieldPolicy<any> | FieldReadFunction<any>,
 	stop?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ThumbnailCreatedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'id' | 'url' | 'objectId' | 'mediaUrl' | ThumbnailCreatedKeySpecifier)[];
+export type ThumbnailCreatedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	url?: FieldPolicy<any> | FieldReadFunction<any>,
+	objectId?: FieldPolicy<any> | FieldReadFunction<any>,
+	mediaUrl?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TimePeriodKeySpecifier = ('amount' | 'type' | TimePeriodKeySpecifier)[];
 export type TimePeriodFieldPolicy = {
@@ -7331,9 +7374,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | ProductMediaCreateKeySpecifier | (() => undefined | ProductMediaCreateKeySpecifier),
 		fields?: ProductMediaCreateFieldPolicy,
 	},
+	ProductMediaCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductMediaCreatedKeySpecifier | (() => undefined | ProductMediaCreatedKeySpecifier),
+		fields?: ProductMediaCreatedFieldPolicy,
+	},
 	ProductMediaDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductMediaDeleteKeySpecifier | (() => undefined | ProductMediaDeleteKeySpecifier),
 		fields?: ProductMediaDeleteFieldPolicy,
+	},
+	ProductMediaDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductMediaDeletedKeySpecifier | (() => undefined | ProductMediaDeletedKeySpecifier),
+		fields?: ProductMediaDeletedFieldPolicy,
 	},
 	ProductMediaReorder?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductMediaReorderKeySpecifier | (() => undefined | ProductMediaReorderKeySpecifier),
@@ -7342,6 +7393,10 @@ export type StrictTypedTypePolicies = {
 	ProductMediaUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductMediaUpdateKeySpecifier | (() => undefined | ProductMediaUpdateKeySpecifier),
 		fields?: ProductMediaUpdateFieldPolicy,
+	},
+	ProductMediaUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductMediaUpdatedKeySpecifier | (() => undefined | ProductMediaUpdatedKeySpecifier),
+		fields?: ProductMediaUpdatedFieldPolicy,
 	},
 	ProductMetadataUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductMetadataUpdatedKeySpecifier | (() => undefined | ProductMetadataUpdatedKeySpecifier),
@@ -7970,6 +8025,10 @@ export type StrictTypedTypePolicies = {
 	TaxedMoneyRange?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TaxedMoneyRangeKeySpecifier | (() => undefined | TaxedMoneyRangeKeySpecifier),
 		fields?: TaxedMoneyRangeFieldPolicy,
+	},
+	ThumbnailCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ThumbnailCreatedKeySpecifier | (() => undefined | ThumbnailCreatedKeySpecifier),
+		fields?: ThumbnailCreatedFieldPolicy,
 	},
 	TimePeriod?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TimePeriodKeySpecifier | (() => undefined | TimePeriodKeySpecifier),
