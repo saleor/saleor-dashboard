@@ -1,7 +1,7 @@
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
-import PageHeader from "@dashboard/components/PageHeader";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import React from "react";
@@ -16,11 +16,8 @@ const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    openCreateDialog,
-    openBulkCreateDialog,
-    openExportDialog,
-  } = useGiftCardListDialogs();
+  const { openCreateDialog, openBulkCreateDialog, openExportDialog } =
+    useGiftCardListDialogs();
 
   const openSettings = () => navigate(giftCardSettingsUrl);
 
@@ -44,11 +41,8 @@ const GiftCardsListHeader: React.FC = () => {
 
   return (
     <>
-      <PageHeader
-        preview
-        title={intl.formatMessage(sectionNames.giftCards)}
-        cardMenu={<CardMenu menuItems={menuItems} data-test-id="menu" />}
-      >
+      <TopNav title={intl.formatMessage(sectionNames.giftCards)}>
+        <CardMenu menuItems={menuItems} data-test-id="menu" />
         <HorizontalSpacer spacing={2} />
         <Button
           variant="primary"
@@ -57,7 +51,7 @@ const GiftCardsListHeader: React.FC = () => {
         >
           {intl.formatMessage(messages.issueButtonLabel)}
         </Button>
-      </PageHeader>
+      </TopNav>
       <GiftCardsListHeaderAlert />
     </>
   );

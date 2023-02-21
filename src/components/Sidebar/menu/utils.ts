@@ -2,19 +2,31 @@ import { getDashboardUrFromAppCompleteUrl } from "@dashboard/apps/urls";
 import { Extension } from "@dashboard/apps/useExtensions";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
-import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { matchPath } from "react-router";
 
-import { FilterableMenuItem } from "./menuStructure";
+import { SidebarMenuItem } from "./types";
+
+export const mapToExtensionsItems = (
+  extensions: Extension[],
+  header: SidebarMenuItem,
+) => {
+  const items: SidebarMenuItem[] = extensions.map(
+    ({ label, id, app, url, permissions, open }) => ({
+      id: `extension-${id}`,
+      label,
+      url: getDashboardUrFromAppCompleteUrl(url, app.appUrl, app.id),
+      permissions,
+      onClick: open,
+      type: "item",
+    }),
+  );
+  if (items.length) {
+    items.unshift(header);
+  }
+  return items;
+};
 
 export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
-  if (menuItem.children) {
-    return menuItem.children.reduce(
-      (acc, subMenuItem) => acc || isMenuActive(location, subMenuItem),
-      false,
-    );
-  }
-
   if (!menuItem.url) {
     return false;
   }
@@ -39,39 +51,19 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   });
 }
 
-export const mapToExtensionsItems = (
-  extensions: Extension[],
-  header: FilterableMenuItem,
-) => {
-  const items: FilterableMenuItem[] = extensions.map(
-    ({ label, id, app, url, permissions, open }) => ({
-      ariaLabel: `app-${label}`,
-      id: `extension-${id}`,
-      label,
-      url: getDashboardUrFromAppCompleteUrl(url, app.appUrl, app.id),
-      onClick: open,
-      permissions,
-    }),
-  );
-  if (items.length) {
-    items.unshift(header);
-  }
-  return items;
-};
-
 const isMenuItemExtension = (menuItem: SidebarMenuItem) =>
   menuItem.id.startsWith("extension-");
 
 export const getMenuItemExtension = (
   extensions: Record<AppExtensionMountEnum, Extension[]>,
-  menuItem: SidebarMenuItem,
+  id: string,
 ) => {
   const extensionsList = Object.values(extensions).reduce(
     (list, extensions) => list.concat(extensions),
     [],
   );
   const extension = extensionsList.find(
-    extension => menuItem.id === `extension-${extension.id}`,
+    extension => id === `extension-${extension.id}`,
   );
   return extension;
 };

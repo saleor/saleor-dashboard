@@ -1,5 +1,4 @@
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
-import Hr from "@dashboard/components/Hr";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper, Typography } from "@material-ui/core";
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
@@ -121,12 +120,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
     {},
   );
 
-  const [
-    autocompleteDisplayValues,
-    setAutocompleteDisplayValues,
-  ] = useStateFromProps<FilterAutocompleteDisplayValues>(
-    initialAutocompleteDisplayValues,
-  );
+  const [autocompleteDisplayValues, setAutocompleteDisplayValues] =
+    useStateFromProps<FilterAutocompleteDisplayValues>(
+      initialAutocompleteDisplayValues,
+    );
 
   const commonFilterBodyProps: Omit<
     FilterContentBodyProps<string>,
@@ -153,9 +150,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
     }
   };
 
-  const handleFilterPropertyGroupChange = function<
+  const handleFilterPropertyGroupChange = function <
     K extends string,
-    T extends FieldType
+    T extends FieldType,
   >(action: FilterReducerAction<K, T>, filter: FilterElement<string>) {
     const switchToActive = action.payload.update.active;
     if (switchToActive && filter.name !== openedFilter?.name) {
@@ -169,9 +166,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
     onFilterPropertyChange(action);
   };
 
-  const handleMultipleFieldPropertyChange = function<
+  const handleMultipleFieldPropertyChange = function <
     K extends string,
-    T extends FieldType
+    T extends FieldType,
   >(action: FilterReducerAction<K, T>) {
     const { update } = action.payload;
     onFilterPropertyChange({
@@ -180,7 +177,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     });
   };
 
-  const getFilterFromCurrentData = function<T extends string>(
+  const getFilterFromCurrentData = function <T extends string>(
     filter: FilterElement<T>,
   ) {
     return filters.find(({ name }) => filter.name === name);
@@ -195,7 +192,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
         }}
       >
         <FilterContentHeader onClear={onClear} />
-        <Hr />
+
         {dataStructure
           .sort((a, b) => (a.name > b.name ? 1 : -1))
           .map(filter => {

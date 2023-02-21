@@ -1,15 +1,13 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -80,11 +78,11 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
     >
       {({ change, data, isSaveDisabled, submit }) => (
         <>
-          <Container>
-            <Backlink href={shippingZonesListUrl()}>
-              {intl.formatMessage(sectionNames.shipping)}
-            </Backlink>
-            <PageHeader title={intl.formatMessage(messages.createZone)} />
+          <TopNav
+            href={shippingZonesListUrl()}
+            title={intl.formatMessage(messages.createZone)}
+          />
+          <Content>
             <Grid>
               <div>
                 <ShippingZoneInfo
@@ -121,7 +119,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </Content>
           <ShippingZoneCountriesAssignDialog
             open={isModalOpened}
             onConfirm={formData => {

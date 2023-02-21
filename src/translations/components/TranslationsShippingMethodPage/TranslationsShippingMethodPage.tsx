@@ -1,12 +1,11 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   LanguageCodeEnum,
   ShippingMethodTranslationFragment,
 } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
@@ -27,7 +26,9 @@ export interface TranslationsShippingMethodPageProps
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
+const TranslationsShippingMethodPage: React.FC<
+  TranslationsShippingMethodPageProps
+> = ({
   translationId,
   activeField,
   disabled,
@@ -42,15 +43,11 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink
+    <DetailedContent useSingleColumn>
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.shippingMethods,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "1UKx20",
@@ -75,7 +72,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
             )
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}
@@ -111,7 +108,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </DetailedContent>
   );
 };
 TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";

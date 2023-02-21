@@ -22,7 +22,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
 
   return (
     <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle disableTypography>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogButtons {...rest} onClose={onClose} variant={variant} />
     </Dialog>

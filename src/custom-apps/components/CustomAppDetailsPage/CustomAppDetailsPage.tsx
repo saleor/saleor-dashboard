@@ -1,10 +1,10 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -16,11 +16,11 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
@@ -104,18 +104,15 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, change, submit, isSaveDisabled }) => (
-        <Container>
-          <Backlink href={CustomAppUrls.resolveAppListUrl()}>
-            {intl.formatMessage(sectionNames.apps)}
-          </Backlink>
-          <PageHeader title={app?.name}>
+        <DetailedContent>
+          <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
             <Button
               variant="secondary"
               className={classes.activateButton}
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <img src={activateIcon} alt="" />
+              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage
                   id="whTEcF"
@@ -130,68 +127,66 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 />
               )}
             </Button>
-          </PageHeader>
-          <Grid>
-            <div>
-              {token && (
-                <>
-                  <CustomAppDefaultToken
-                    apiUrl={apiUrl}
-                    token={token}
-                    onApiUrlClick={onApiUrlClick}
-                    onTokenClose={onTokenClose}
-                  />
-                  <CardSpacer />
-                </>
-              )}
-              <CustomAppInformation
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <CustomAppTokens
-                tokens={app?.tokens}
-                onCreate={onTokenCreate}
-                onDelete={onTokenDelete}
-              />
-              <CardSpacer />
-              <WebhooksList
-                webhooks={webhooks}
-                onRemove={onWebhookRemove}
-                createHref={app?.isActive && webhookCreateHref}
-              />
-            </div>
-            <div>
-              <AccountPermissions
-                data={data}
-                errorMessage={permissionsError}
-                disabled={disabled}
-                permissions={permissions}
-                permissionsExceeded={false}
-                onChange={change}
-                fullAccessLabel={intl.formatMessage({
-                  id: "D4nzdD",
-                  defaultMessage: "Grant this app full access to the store",
-                  description: "checkbox label",
-                })}
-                description={intl.formatMessage({
-                  id: "flP8Hj",
-                  defaultMessage:
-                    "Expand or restrict app permissions to access certain part of Saleor system.",
-                  description: "card description",
-                })}
-              />
-            </div>
-          </Grid>
+          </TopNav>
+          <Content>
+            {token && (
+              <>
+                <CustomAppDefaultToken
+                  apiUrl={apiUrl}
+                  token={token}
+                  onApiUrlClick={onApiUrlClick}
+                  onTokenClose={onTokenClose}
+                />
+                <CardSpacer />
+              </>
+            )}
+            <CustomAppInformation
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+            />
+            <CardSpacer />
+            <CustomAppTokens
+              tokens={app?.tokens}
+              onCreate={onTokenCreate}
+              onDelete={onTokenDelete}
+            />
+            <CardSpacer />
+            <WebhooksList
+              webhooks={webhooks}
+              onRemove={onWebhookRemove}
+              createHref={app?.isActive && webhookCreateHref}
+            />
+          </Content>
+          <RightSidebar>
+            <AccountPermissions
+              data={data}
+              errorMessage={permissionsError}
+              disabled={disabled}
+              permissions={permissions}
+              permissionsExceeded={false}
+              onChange={change}
+              fullAccessLabel={intl.formatMessage({
+                id: "D4nzdD",
+                defaultMessage: "Grant this app full access to the store",
+                description: "checkbox label",
+              })}
+              description={intl.formatMessage({
+                id: "flP8Hj",
+                defaultMessage:
+                  "Expand or restrict app permissions to access certain part of Saleor system.",
+                description: "card description",
+              })}
+            />
+          </RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
-        </Container>
+        </DetailedContent>
       )}
     </Form>
   );

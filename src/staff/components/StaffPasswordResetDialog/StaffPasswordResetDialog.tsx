@@ -52,7 +52,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="+kb2lM"
           defaultMessage="Change Password"

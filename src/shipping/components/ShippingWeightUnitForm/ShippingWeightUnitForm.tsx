@@ -6,6 +6,7 @@ import { WeightUnitsEnum } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { Card, CardActions, CardContent } from "@material-ui/core";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,6 +29,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
   const initialForm: FormData = {
     unit: defaultWeightUnit,
   };
+
   return (
     <Form
       confirmLeave
@@ -58,7 +60,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
               onChange={change}
             />
           </CardContent>
-          <CardActions>
+          <CardActions style={{ paddingLeft: vars.space[9] }}>
             <Button onClick={submit} data-test-id="save-unit">
               <FormattedMessage {...buttonMessages.save} />
             </Button>

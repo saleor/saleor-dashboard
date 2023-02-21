@@ -1,8 +1,6 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -55,23 +53,23 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   const structure = createFilterStructure(intl, filterOpts);
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
+    <>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.productTypes)}
+      >
         <Button
           variant="primary"
           href={productTypeAddUrl()}
           data-test-id="add-product-type"
         >
           <FormattedMessage
-            id="QY7FSs"
-            defaultMessage="create product type"
+            id="gksZwp"
+            defaultMessage="Create product type"
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
@@ -96,7 +94,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
         />
         <ProductTypeList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 ProductTypeListPage.displayName = "ProductTypeListPage";

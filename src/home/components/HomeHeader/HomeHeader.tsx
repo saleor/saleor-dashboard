@@ -32,7 +32,7 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <div className={classes.headerContainer} data-test-id="home-header">
+    <div data-test-id="home-header">
       <div>
         <Typography
           className={classes.pageHeader}

@@ -49,7 +49,6 @@ describe("WebhookSubscriptionQuery", () => {
         subscriptionQuery: "",
       },
     };
-    // const user = userEvent.setup();
 
     // Act
     render(
@@ -62,31 +61,4 @@ describe("WebhookSubscriptionQuery", () => {
     expect(screen.queryByTestId("graphiql-container")).toBeInTheDocument();
     expect(screen.queryByTestId("graphiql-container2")).not.toBeInTheDocument();
   });
-
-  /*
-  it("triggers setQuery when user enters text", async () => {
-    // Arrange
-    const props = {
-      query: '',
-      setQuery: jest.fn(),
-      data: {
-        syncEvents: [] as WebhookEventTypeSyncEnum[],
-        asyncEvents: [] as WebhookEventTypeAsyncEnum[],
-        isActive: false,
-        name: '',
-        targetUrl: '',
-        subscriptionQuery: ''
-      }
-    };
-    const user = userEvent.setup();
-
-    // Act
-    const { getByTestId } = render(<WebhookSubscriptionQuery {...props} />);
-    const graphiQLContainer = getByTestId("graphiql-container");
-    user.type(graphiQLContainer, "{}");
-
-    // Assert
-    expect(props.setQuery).toHaveBeenCalled();
-  });
-  */
 });

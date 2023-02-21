@@ -1,6 +1,6 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import MultiSelectField from "@dashboard/components/MultiSelectField";
-import PageHeader from "@dashboard/components/PageHeader";
 import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { Card, CardContent } from "@material-ui/core";
 import React from "react";
@@ -28,44 +28,46 @@ const ProductCategoryAndCollectionsForm = ({
   const intl = useIntl();
 
   return (
-    <Card>
-      <PageHeader
-        title={intl.formatMessage({
-          id: "fyE8BN",
-          defaultMessage: "Organization",
-          description: "product organization, header",
-        })}
-      />
-      <CardContent>
-        <SingleSelectField
-          disabled={loading}
-          error={!!errors.category}
-          hint={errors.category}
-          label={intl.formatMessage({
-            id: "ccXLVi",
-            defaultMessage: "Category",
+    <>
+      <Card>
+        <TopNav
+          title={intl.formatMessage({
+            id: "fyE8BN",
+            defaultMessage: "Organization",
+            description: "product organization, header",
           })}
-          choices={loading ? [] : categories}
-          name="category"
-          value={category}
-          onChange={onChange}
         />
-        <FormSpacer />
-        <MultiSelectField
-          disabled={loading}
-          error={!!errors.collections}
-          hint={errors.collections}
-          label={intl.formatMessage({
-            id: "ulh3kf",
-            defaultMessage: "Collections",
-          })}
-          choices={loading ? [] : collections}
-          name="collections"
-          value={productCollections}
-          onChange={onChange}
-        />
-      </CardContent>
-    </Card>
+        <CardContent>
+          <SingleSelectField
+            disabled={loading}
+            error={!!errors.category}
+            hint={errors.category}
+            label={intl.formatMessage({
+              id: "ccXLVi",
+              defaultMessage: "Category",
+            })}
+            choices={loading ? [] : categories}
+            name="category"
+            value={category}
+            onChange={onChange}
+          />
+          <FormSpacer />
+          <MultiSelectField
+            disabled={loading}
+            error={!!errors.collections}
+            hint={errors.collections}
+            label={intl.formatMessage({
+              id: "ulh3kf",
+              defaultMessage: "Collections",
+            })}
+            choices={loading ? [] : collections}
+            name="collections"
+            value={productCollections}
+            onChange={onChange}
+          />
+        </CardContent>
+      </Card>
+    </>
   );
 };
 ProductCategoryAndCollectionsForm.displayName =

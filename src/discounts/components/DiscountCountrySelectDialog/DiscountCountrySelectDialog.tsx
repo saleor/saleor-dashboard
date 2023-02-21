@@ -41,15 +41,11 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => SubmitPromise;
 }
 
-const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
-  const {
-    confirmButtonState,
-    onClose,
-    countries,
-    open,
-    initial,
-    onConfirm,
-  } = props;
+const DiscountCountrySelectDialog: React.FC<
+  DiscountCountrySelectDialogProps
+> = props => {
+  const { confirmButtonState, onClose, countries, open, initial, onConfirm } =
+    props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle();
 
@@ -77,7 +73,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
 
           return (
             <>
-              <DialogTitle>
+              <DialogTitle disableTypography>
                 <FormattedMessage
                   id="cvVIV/"
                   defaultMessage="Assign Countries"

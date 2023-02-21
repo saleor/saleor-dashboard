@@ -248,7 +248,7 @@ describe("App utils app details", () => {
         appName: releasedApp.name.en,
         status: JobStatusEnum.PENDING,
         message: "Test message",
-        manifestUrl: releasedApp.manifestUrl,
+        manifestUrl: releasedApp.manifestUrl as string,
       };
       const appInstallationList: AppInstallationFragment[] = [
         releasedAppInstallation,

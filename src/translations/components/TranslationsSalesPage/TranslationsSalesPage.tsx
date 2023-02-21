@@ -1,9 +1,8 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
@@ -40,15 +39,11 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink
+    <DetailedContent useSingleColumn>
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.sales,
         })}
-      >
-        {intl.formatMessage(sectionNames.translations)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "zjkAMs",
@@ -68,7 +63,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
             languageEntityUrl(lang, TranslatableEntities.sales, translationId)
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}
@@ -92,7 +87,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
-    </Container>
+    </DetailedContent>
   );
 };
 TranslationsSalesPage.displayName = "TranslationsSalesPage";

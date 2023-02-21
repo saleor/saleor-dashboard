@@ -1,5 +1,6 @@
 import { AppPermissionFragment } from "@dashboard/graphql";
-import { IconButton, PermissionsIcon, Tooltip } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui";
+import { Box, InfoIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -20,15 +21,21 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
       header={<FormattedMessage {...messages.appPermissions} />}
       title={
         <ul className={classes.list}>
-          {permissions?.map(permission => (
-            <li key={permission.code}>{permission.name}</li>
-          ))}
+          {permissions?.length ? (
+            permissions?.map(permission => (
+              <li key={permission.code}>{permission.name}</li>
+            ))
+          ) : (
+            <li>
+              <FormattedMessage {...messages.noPermissions} />
+            </li>
+          )}
         </ul>
       }
     >
-      <IconButton variant="secondary" color="primary">
-        <PermissionsIcon />
-      </IconButton>
+      <Box display="flex" placeItems="center">
+        <InfoIcon color="iconNeutralSubdued" size="large" />
+      </Box>
     </Tooltip>
   );
 };

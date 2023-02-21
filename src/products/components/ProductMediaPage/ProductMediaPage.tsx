@@ -1,9 +1,7 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaType } from "@dashboard/graphql";
@@ -12,6 +10,7 @@ import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -52,7 +51,7 @@ const useStyles = makeStyles(
         width: "100%",
         maxHeight: 420,
       },
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
       width: "100%",
@@ -89,7 +88,6 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     disabled,
     mediaObj,
     media,
-    product,
     saveButtonBarState,
     onDelete,
     onRowClick,
@@ -107,9 +105,11 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
       confirmLeave
     >
       {({ change, data, submit }) => (
-        <Container>
-          <Backlink href={productUrl(productId)}>{product}</Backlink>
-          <PageHeader title={intl.formatMessage(messages.editMedia)} />
+        <>
+          <TopNav
+            href={productUrl(productId)}
+            title={intl.formatMessage(messages.editMedia)}
+          />
           <Grid variant="inverted">
             <div>
               <ProductMediaNavigation
@@ -171,7 +171,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
             onDelete={onDelete}
             onSubmit={submit}
           />
-        </Container>
+        </>
       )}
     </Form>
   );

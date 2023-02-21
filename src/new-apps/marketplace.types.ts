@@ -28,7 +28,7 @@ export namespace GetV2SaleorAppsResponse {
     repositoryUrl: string;
     supportUrl: string;
     privacyUrl: string;
-    manifestUrl: string;
+    manifestUrl: string | null;
     githubForkUrl?: string;
   };
 

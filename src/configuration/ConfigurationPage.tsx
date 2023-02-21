@@ -1,15 +1,17 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
+import { Box, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import Container from "../components/Container";
-import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
 import { MenuSection } from "./types";
 import { hasUserMenuItemPermissions } from "./utils";
@@ -25,7 +27,6 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr",
       },
-      borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
@@ -33,9 +34,6 @@ const useStyles = makeStyles(
     },
 
     configurationItem: {
-      [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr",
-      },
       display: "grid",
       gap: theme.spacing(4),
       gridTemplateColumns: "1fr 1fr",
@@ -58,6 +56,14 @@ const useStyles = makeStyles(
     sectionTitle: {
       fontSize: 20,
       fontWeight: 600 as 600,
+    },
+    navigationCard: {
+      border: `1px solid ${vars.colors.border.neutralDefault}`,
+      height: 130,
+      boxShadow: "none !important",
+      "& .MuiCardContent-root": {
+        borderRadius: vars.borderRadius[3],
+      },
     },
   }),
   { name: "ConfigurationPage" },
@@ -89,44 +95,50 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Container>
-      {!isSmUp && renderVersionInfo}
-      <PageHeader title={intl.formatMessage(sectionNames.configuration)}>
+    <DetailedContent useSingleColumn>
+      <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
-      </PageHeader>
-      {menus
-        .filter(menu =>
-          menu.menuItems.some(menuItem =>
-            hasUserMenuItemPermissions(menuItem, user),
-          ),
-        )
-        .map((menu, menuIndex) => (
-          <div className={classes.configurationCategory} key={menuIndex}>
-            <div className={classes.configurationLabel}>
-              <Typography>{menu.label}</Typography>
-            </div>
-            <div className={classes.configurationItem}>
-              {menu.menuItems
-                .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
-                .map((item, itemIndex) => (
-                  <Link className={classes.link} to={item.url}>
-                    <NavigationCard
-                      key={itemIndex}
-                      icon={item.icon}
-                      title={item.title}
-                      description={item.description}
-                      data-test-id={
-                        item.testId +
-                        "-settings-subsection-" +
-                        item.title.toLowerCase()
-                      }
-                    />
-                  </Link>
-                ))}
-            </div>
-          </div>
-        ))}
-    </Container>
+      </TopNav>
+      <Content>
+        <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
+          {menus
+            .filter(menu =>
+              menu.menuItems.some(menuItem =>
+                hasUserMenuItemPermissions(menuItem, user),
+              ),
+            )
+            .map((menu, menuIndex) => (
+              <div className={classes.configurationCategory} key={menuIndex}>
+                <div className={classes.configurationLabel}>
+                  <Typography>{menu.label}</Typography>
+                </div>
+                <div className={classes.configurationItem}>
+                  {menu.menuItems
+                    .filter(menuItem =>
+                      hasUserMenuItemPermissions(menuItem, user),
+                    )
+                    .map((item, itemIndex) => (
+                      <Link className={classes.link} to={item.url}>
+                        <NavigationCard
+                          className={classes.navigationCard}
+                          key={itemIndex}
+                          icon={item.icon}
+                          title={item.title}
+                          description={item.description}
+                          data-test-id={
+                            item.testId +
+                            "-settings-subsection-" +
+                            item.title.toLowerCase()
+                          }
+                        />
+                      </Link>
+                    ))}
+                </div>
+              </div>
+            ))}
+        </Box>
+      </Content>
+    </DetailedContent>
   );
 };
 ConfigurationPage.displayName = "ConfigurationPage";

@@ -30,15 +30,17 @@ describe("Apps NotInstalledAppListRow", () => {
       </Wrapper>,
     );
     const name = screen.queryByText(failedAppInProgress.appName);
-    const manifestDomain = screen.queryByText(
-      new URL(failedAppInProgress.manifestUrl as string).host,
-    );
+    // TODO: Uncomment this when manifests are implemented back in the UI
+    // const manifestDomain = screen.queryByText(
+    //   new URL(failedAppInProgress.manifestUrl as string).host,
+    // );
     const pendingLabel = screen.queryByTestId("app-pending-label");
     const failedLabel = screen.queryByTestId("app-failed-label");
 
     // Assert
     expect(name).toBeTruthy();
-    expect(manifestDomain).toBeTruthy();
+    // TODO: Uncomment this when manifests are implemented back in the UI
+    // expect(manifestDomain).toBeTruthy();
     expect(pendingLabel).toBeFalsy();
     expect(failedLabel).toBeTruthy();
   });
@@ -54,15 +56,17 @@ describe("Apps NotInstalledAppListRow", () => {
       </Wrapper>,
     );
     const name = screen.queryByText(pendingAppInProgress.appName);
-    const manifestDomain = screen.queryByText(
-      new URL(pendingAppInProgress.manifestUrl as string).host,
-    );
+    // TODO: Uncomment this when manifests are implemented back in the UI
+    // const manifestDomain = screen.queryByText(
+    //   new URL(pendingAppInProgress.manifestUrl as string).host,
+    // );
     const pendingLabel = screen.queryByTestId("app-pending-label");
     const failedLabel = screen.queryByTestId("app-failed-label");
 
     // Assert
     expect(name).toBeTruthy();
-    expect(manifestDomain).toBeTruthy();
+    // TODO: Uncomment this when manifests are implemented back in the UI
+    // expect(manifestDomain).toBeTruthy();
     expect(pendingLabel).toBeTruthy();
     expect(failedLabel).toBeFalsy();
   });

@@ -1,9 +1,8 @@
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
-import { Backlink } from "@dashboard/components/Backlink";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import PageHeader from "@dashboard/components/PageHeader";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -40,26 +39,10 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   const limitReached = isLimitReached(limits, "channels");
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader
+    <>
+      <TopNav
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.channels)}
-        limitText={
-          hasLimits(limits, "channels") &&
-          intl.formatMessage(
-            {
-              id: "rZMT44",
-              defaultMessage: "{count}/{max} channels used",
-              description: "created channels counter",
-            },
-            {
-              count: limits.currentUsage.channels,
-              max: limits.allowedUsage.channels,
-            },
-          )
-        }
       >
         <Button
           disabled={limitReached}
@@ -73,7 +56,22 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        {hasLimits(limits, "channels") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "rZMT44",
+                defaultMessage: "{count}/{max} channels used",
+                description: "created channels counter",
+              },
+              {
+                count: limits.currentUsage.channels,
+                max: limits.allowedUsage.channels,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -156,7 +154,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           </TableBody>
         </ResponsiveTable>
       </Card>
-    </Container>
+    </>
   );
 };
 

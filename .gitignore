@@ -21,7 +21,6 @@
 !.travis*
 !.tx
 !.husky
-*.css
 *.log
 *.pyc
 *.mo

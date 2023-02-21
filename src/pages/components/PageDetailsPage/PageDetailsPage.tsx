@@ -2,14 +2,14 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
@@ -24,7 +24,6 @@ import {
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { pageListUrl } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
@@ -151,94 +150,88 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
         const errors = [...apiErrors, ...validationErrors];
 
         return (
-          <Container>
-            <Backlink href={pageListUrl()}>
-              {intl.formatMessage(sectionNames.pages)}
-            </Backlink>
-            <PageHeader
+          <DetailedContent>
+            <TopNav
+              href={pageListUrl()}
               title={
                 !pageExists ? intl.formatMessage(messages.title) : page?.title
               }
             />
-            <Grid>
-              <div>
-                <PageInfo
-                  data={data}
+            <Content>
+              <PageInfo
+                data={data}
+                disabled={loading}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <SeoForm
+                errors={errors}
+                allowEmptySlug={!pageExists}
+                description={data.seoDescription}
+                disabled={loading}
+                descriptionPlaceholder={""} // TODO: Cast description to string and trim it
+                onChange={change}
+                slug={data.slug}
+                slugPlaceholder={data.title}
+                title={data.seoTitle}
+                titlePlaceholder={data.title}
+                helperText={intl.formatMessage(messages.seoOptionsDescription)}
+              />
+              <CardSpacer />
+              {data.attributes.length > 0 && (
+                <Attributes
+                  attributes={data.attributes}
+                  attributeValues={attributeValues}
                   disabled={loading}
+                  loading={loading}
                   errors={errors}
-                  onChange={change}
+                  onChange={handlers.selectAttribute}
+                  onMultiChange={handlers.selectAttributeMulti}
+                  onFileChange={handlers.selectAttributeFile}
+                  onReferencesRemove={handlers.selectAttributeReference}
+                  onReferencesAddClick={onAssignReferencesClick}
+                  onReferencesReorder={handlers.reorderAttributeValue}
+                  fetchAttributeValues={fetchAttributeValues}
+                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  onAttributeSelectBlur={onAttributeSelectBlur}
+                  richTextGetters={attributeRichTextGetters}
                 />
-                <CardSpacer />
-                <SeoForm
-                  errors={errors}
-                  allowEmptySlug={!pageExists}
-                  description={data.seoDescription}
-                  disabled={loading}
-                  descriptionPlaceholder={""} // TODO: Cast description to string and trim it
-                  onChange={change}
-                  slug={data.slug}
-                  slugPlaceholder={data.title}
-                  title={data.seoTitle}
-                  titlePlaceholder={data.title}
-                  helperText={intl.formatMessage(
-                    messages.seoOptionsDescription,
-                  )}
-                />
-                <CardSpacer />
-                {data.attributes.length > 0 && (
-                  <Attributes
-                    attributes={data.attributes}
-                    attributeValues={attributeValues}
-                    disabled={loading}
-                    loading={loading}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMulti}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
-                  />
-                )}
-                <CardSpacer />
-                <Metadata data={data} onChange={handlers.changeMetadata} />
-              </div>
-              <div>
-                <VisibilityCard
-                  data={data}
-                  errors={errors}
-                  disabled={loading}
-                  messages={{
-                    hiddenLabel: intl.formatMessage(messages.hiddenLabel),
-                    hiddenSecondLabel: intl.formatMessage(
-                      messages.hiddenSecondLabel,
-                      {
-                        date: localizeDate(data.publicationDate),
-                      },
-                    ),
-                    visibleLabel: intl.formatMessage(messages.visibleLabel),
-                  }}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <PageOrganizeContent
-                  data={data}
-                  errors={errors}
-                  disabled={loading}
-                  pageTypes={pageTypes}
-                  pageType={data.pageType}
-                  pageTypeInputDisplayValue={data.pageType?.name || ""}
-                  onPageTypeChange={handlers.selectPageType}
-                  fetchPageTypes={fetchPageTypes}
-                  fetchMorePageTypes={fetchMorePageTypes}
-                  canChangeType={!page?.pageType}
-                />
-              </div>
-            </Grid>
+              )}
+              <CardSpacer />
+              <Metadata data={data} onChange={handlers.changeMetadata} />
+            </Content>
+            <RightSidebar>
+              <VisibilityCard
+                data={data}
+                errors={errors}
+                disabled={loading}
+                messages={{
+                  hiddenLabel: intl.formatMessage(messages.hiddenLabel),
+                  hiddenSecondLabel: intl.formatMessage(
+                    messages.hiddenSecondLabel,
+                    {
+                      date: localizeDate(data.publicationDate),
+                    },
+                  ),
+                  visibleLabel: intl.formatMessage(messages.visibleLabel),
+                }}
+                onChange={change}
+              />
+              <CardSpacer />
+              <PageOrganizeContent
+                data={data}
+                errors={errors}
+                disabled={loading}
+                pageTypes={pageTypes}
+                pageType={data.pageType}
+                pageTypeInputDisplayValue={data.pageType?.name || ""}
+                onPageTypeChange={handlers.selectPageType}
+                fetchPageTypes={fetchPageTypes}
+                fetchMorePageTypes={fetchMorePageTypes}
+                canChangeType={!page?.pageType}
+              />
+            </RightSidebar>
             <Savebar
               disabled={loading}
               state={saveButtonBarState}
@@ -270,7 +263,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 }
               />
             )}
-          </Container>
+          </DetailedContent>
         );
       }}
     </PageForm>

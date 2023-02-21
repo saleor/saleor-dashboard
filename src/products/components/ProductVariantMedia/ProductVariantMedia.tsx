@@ -4,6 +4,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -41,7 +42,7 @@ const useStyles = makeStyles(
     },
     imageContainer: {
       background: "#ffffff",
-      border: "1px solid #eaeaea",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: theme.spacing(17.5),
       marginBottom: theme.spacing(2),
@@ -63,7 +64,9 @@ interface ProductVariantMediaProps {
   onImageAdd();
 }
 
-export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
+export const ProductVariantMedia: React.FC<
+  ProductVariantMediaProps
+> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const { disabled, media, onImageAdd } = props;

@@ -3,9 +3,12 @@ import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
@@ -30,6 +33,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
@@ -43,7 +47,7 @@ import {
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
 export interface ChannelDetailsPageProps<
-  TErrors extends ChannelErrorFragment[]
+  TErrors extends ChannelErrorFragment[],
 > {
   channel?: ChannelDetailsFragment;
   currencyCodes?: SingleAutocompleteChoiceType[];
@@ -67,7 +71,7 @@ export interface ChannelDetailsPageProps<
   searchWarehouses: (query: string) => void;
 }
 
-const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
+const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channel,
   currencyCodes,
   disabled,
@@ -90,16 +94,15 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
   countries,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const [validationErrors, setValidationErrors] = useState<
     ChannelErrorFragment[]
   >([]);
 
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
-  const [
-    selectedCountryDisplayName,
-    setSelectedCountryDisplayName,
-  ] = useStateFromProps(channel?.defaultCountry.country || "");
+  const [selectedCountryDisplayName, setSelectedCountryDisplayName] =
+    useStateFromProps(channel?.defaultCountry.country || "");
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
@@ -160,11 +163,12 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
           setSelectedCurrencyCode,
           currencyCodes,
         );
-        const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setSelectedCountryDisplayName,
-          countryChoices,
-        );
+        const handleDefaultCountrySelect =
+          createSingleAutocompleteSelectHandler(
+            change,
+            setSelectedCountryDisplayName,
+            countryChoices,
+          );
 
         const addShippingZone = createShippingZoneAddHandler(
           data,
@@ -194,79 +198,88 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
         const allErrors = [...errors, ...validationErrors];
 
         return (
-          <>
-            <Grid>
-              <div>
-                <ChannelForm
-                  data={data}
-                  disabled={disabled}
-                  currencyCodes={currencyCodes}
-                  countries={countryChoices}
-                  selectedCurrencyCode={selectedCurrencyCode}
-                  selectedCountryDisplayName={selectedCountryDisplayName}
-                  onChange={change}
-                  onCurrencyCodeChange={handleCurrencyCodeSelect}
-                  onDefaultCountryChange={handleDefaultCountrySelect}
-                  errors={allErrors}
-                />
-              </div>
-              <div>
-                {!!updateChannelStatus && (
-                  <>
-                    <ChannelStatus
-                      isActive={channel?.isActive}
-                      disabled={disabledStatus}
-                      updateChannelStatus={updateChannelStatus}
-                    />
-                    <CardSpacer />
-                  </>
-                )}
-                <RequirePermissions
-                  requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
-                >
-                  <ShippingZones
-                    shippingZonesChoices={getFilteredShippingZonesChoices(
-                      data.shippingZonesToDisplay,
-                    )}
-                    shippingZones={data.shippingZonesToDisplay}
-                    addShippingZone={addShippingZone}
-                    removeShippingZone={removeShippingZone}
-                    searchShippingZones={searchShippingZones}
-                    fetchMoreShippingZones={fetchMoreShippingZones}
-                    totalCount={allShippingZonesCount}
-                    loading={disabled}
+          <DetailedContent>
+            <TopNav
+              href={channelsListUrl()}
+              title={
+                channel?.name ||
+                intl.formatMessage({
+                  id: "DnghuS",
+                  defaultMessage: "New Channel",
+                  description: "channel create",
+                })
+              }
+            />
+            <Content>
+              <ChannelForm
+                data={data}
+                disabled={disabled}
+                currencyCodes={currencyCodes}
+                countries={countryChoices}
+                selectedCurrencyCode={selectedCurrencyCode}
+                selectedCountryDisplayName={selectedCountryDisplayName}
+                onChange={change}
+                onCurrencyCodeChange={handleCurrencyCodeSelect}
+                onDefaultCountryChange={handleDefaultCountrySelect}
+                errors={allErrors}
+              />
+            </Content>
+            <RightSidebar>
+              {!!updateChannelStatus && (
+                <>
+                  <ChannelStatus
+                    isActive={channel?.isActive}
+                    disabled={disabledStatus}
+                    updateChannelStatus={updateChannelStatus}
                   />
                   <CardSpacer />
-                </RequirePermissions>
-                <RequirePermissions
-                  oneOfPermissions={[
-                    PermissionEnum.MANAGE_SHIPPING,
-                    PermissionEnum.MANAGE_ORDERS,
-                    PermissionEnum.MANAGE_PRODUCTS,
-                  ]}
-                >
-                  <Warehouses
-                    warehousesChoices={getFilteredWarehousesChoices(
-                      data.warehousesToDisplay,
-                    )}
-                    warehouses={data.warehousesToDisplay}
-                    addWarehouse={addWarehouse}
-                    removeWarehouse={removeWarehouse}
-                    searchWarehouses={searchWarehouses}
-                    fetchMoreWarehouses={fetchMoreWarehouses}
-                    totalCount={allWarehousesCount}
-                    reorderWarehouses={reorderWarehouse}
-                    loading={disabled}
-                  />
-                  <CardSpacer />
-                </RequirePermissions>
-                <ChannelAllocationStrategy
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
+                </>
+              )}
+              <RequirePermissions
+                requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}
+              >
+                <ShippingZones
+                  shippingZonesChoices={getFilteredShippingZonesChoices(
+                    data.shippingZonesToDisplay,
+                  )}
+                  shippingZones={data.shippingZonesToDisplay}
+                  addShippingZone={addShippingZone}
+                  removeShippingZone={removeShippingZone}
+                  searchShippingZones={searchShippingZones}
+                  fetchMoreShippingZones={fetchMoreShippingZones}
+                  totalCount={allShippingZonesCount}
+                  loading={disabled}
                 />
-              </div>
-            </Grid>
+                <CardSpacer />
+              </RequirePermissions>
+              <RequirePermissions
+                oneOfPermissions={[
+                  PermissionEnum.MANAGE_SHIPPING,
+                  PermissionEnum.MANAGE_ORDERS,
+                  PermissionEnum.MANAGE_PRODUCTS,
+                ]}
+              >
+                <Warehouses
+                  warehousesChoices={getFilteredWarehousesChoices(
+                    data.warehousesToDisplay,
+                  )}
+                  warehouses={data.warehousesToDisplay}
+                  addWarehouse={addWarehouse}
+                  removeWarehouse={removeWarehouse}
+                  searchWarehouses={searchWarehouses}
+                  fetchMoreWarehouses={fetchMoreWarehouses}
+                  totalCount={allWarehousesCount}
+                  reorderWarehouses={reorderWarehouse}
+                  loading={disabled}
+                />
+                <CardSpacer />
+              </RequirePermissions>
+              <ChannelAllocationStrategy
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+            </RightSidebar>
             <Savebar
               onCancel={() => navigate(channelsListUrl())}
               onSubmit={submit}
@@ -274,7 +287,7 @@ const ChannelDetailsPage = function<TErrors extends ChannelErrorFragment[]>({
               state={saveButtonBarState}
               disabled={disabled}
             />
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

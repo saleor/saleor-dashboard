@@ -51,7 +51,9 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>{intl.formatMessage(messages.buttonMessage)}</DialogTitle>
+      <DialogTitle disableTypography>
+        {intl.formatMessage(messages.buttonMessage)}
+      </DialogTitle>
       <Form initial={initialValues} onSubmit={handleOnSubmit}>
         {({ change, data, submit }) => (
           <>

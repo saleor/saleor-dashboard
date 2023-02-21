@@ -43,9 +43,12 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
   const anchor = React.useRef<HTMLDivElement>(null);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.webhookInformation)} />
-      <CardContent>
+    <Card className={classes.card}>
+      <CardTitle
+        title={intl.formatMessage(messages.webhookInformation)}
+        className={classes.cardTitle}
+      />
+      <CardContent className={classes.card}>
         <Typography variant="caption">
           {intl.formatMessage(commonMessages.generalInformations)}
         </Typography>

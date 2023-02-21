@@ -9,7 +9,6 @@ import MoneyRange from "@dashboard/components/MoneyRange";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -76,6 +75,7 @@ const useStyles = makeStyles(
     },
     colName: {
       wordBreak: "break-all",
+      paddingLeft: 0,
       "&$colNameFixed": {
         width: 300,
       },
@@ -84,9 +84,6 @@ const useStyles = makeStyles(
       wordBreak: "break-all",
     },
     colNameFixed: {},
-    colNameHeader: {
-      marginLeft: AVATAR_MARGIN,
-    },
     colNameWrapper: {
       display: "block",
     },
@@ -203,13 +200,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             }
             onClick={() => onSort(ProductListUrlSortField.name)}
           >
-            <span className={classes.colNameHeader}>
-              <FormattedMessage
-                id="VQLIXd"
-                defaultMessage="Name"
-                description="product"
-              />
-            </span>
+            <FormattedMessage
+              id="VQLIXd"
+              defaultMessage="Name"
+              description="product"
+            />
           </TableCellHeader>
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader

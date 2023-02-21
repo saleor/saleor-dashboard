@@ -1,7 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PermissionGroupFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -23,15 +21,17 @@ export interface PermissionGroupListPageProps
   onDelete: (id: string) => void;
 }
 
-const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
+const PermissionGroupListPage: React.FC<
+  PermissionGroupListPageProps
+> = listProps => {
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
+    <>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.permissionGroups)}
+      >
         <Button
           variant="primary"
           href={permissionGroupAddUrl}
@@ -43,11 +43,11 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProp
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <PermissionGroupList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PermissionGroupListPage.displayName = "PermissionGroupListPage";

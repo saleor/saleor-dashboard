@@ -32,12 +32,9 @@ const useStyles = makeStyles(
   },
 );
 
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
-  confirmButtonState,
-  open,
-  onClose,
-  onSubmit,
-}) => {
+const ShippingZonePostalCodeRangeDialog: React.FC<
+  ShippingZonePostalCodeRangeDialogProps
+> = ({ confirmButtonState, open, onClose, onSubmit }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -48,7 +45,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
 
   return (
     <Dialog open={open}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="2Xt+sw"
           defaultMessage="Add postal codes"

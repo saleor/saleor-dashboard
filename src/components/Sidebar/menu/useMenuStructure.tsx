@@ -1,284 +1,294 @@
-import appsIcon from "@assets/images/menu-apps-icon.svg";
-import catalogIcon from "@assets/images/menu-catalog-icon.svg";
-import configurationIcon from "@assets/images/menu-configure-icon.svg";
-import customerIcon from "@assets/images/menu-customers-icon.svg";
-import discountsIcon from "@assets/images/menu-discounts-icon.svg";
-import homeIcon from "@assets/images/menu-home-icon.svg";
-import ordersIcon from "@assets/images/menu-orders-icon.svg";
-import pagesIcon from "@assets/images/menu-pages-icon.svg";
-import translationIcon from "@assets/images/menu-translation-icon.svg";
+import { appsListPath } from "@dashboard/apps/urls";
 import {
   extensionMountPoints,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { useUser } from "@dashboard/auth";
+import { categoryListUrl } from "@dashboard/categories/urls";
+import { collectionListUrl } from "@dashboard/collections/urls";
 import { MARKETPLACE_URL } from "@dashboard/config";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
+import { customerListUrl } from "@dashboard/customers/urls";
+import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
-import { PermissionEnum, UserFragment } from "@dashboard/graphql";
+import { PermissionEnum } from "@dashboard/graphql";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
-import { SidebarMenuItem } from "@saleor/macaw-ui";
-import { IntlShape } from "react-intl";
+import { productListUrl } from "@dashboard/products/urls";
+import { languageListUrl } from "@dashboard/translations/urls";
+import {
+  ConfigurationIcon,
+  CustomersIcon,
+  HomeIcon,
+  MarketplaceIcon,
+  OrdersIcon,
+  ProductsIcons,
+  StorefrontIcon,
+  TranslationsIcon,
+  VouchersIcon,
+} from "@saleor/macaw-ui/next";
+import isEmpty from "lodash/isEmpty";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { appsListPath } from "../../apps/urls";
-import { categoryListUrl } from "../../categories/urls";
-import { collectionListUrl } from "../../collections/urls";
-import { customerListUrl } from "../../customers/urls";
-import { saleListUrl, voucherListUrl } from "../../discounts/urls";
-import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
-import { productListUrl } from "../../products/urls";
-import { languageListUrl } from "../../translations/urls";
-import { getMenuItemExtension, mapToExtensionsItems } from "./utils";
+import { SidebarMenuItem } from "./types";
+import { mapToExtensionsItems } from "./utils";
 
-export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
-  children?: FilterableMenuItem[];
-  permissions?: PermissionEnum[];
-}
+const iconSettings = {
+  color: "iconNeutralSubdued",
+  size: "medium",
+} as const;
 
-function useMenuStructure(
-  intl: IntlShape,
-  user: UserFragment,
-): [SidebarMenuItem[], (menuItem: SidebarMenuItem) => void] {
+export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
+  const intl = useIntl();
+  const { user } = useUser();
 
-  const handleMenuItemClick = (menuItem: SidebarMenuItem) => {
-    const extension = getMenuItemExtension(extensions, menuItem);
-    if (extension) {
-      extension.open();
-      return;
-    }
-  };
-
-  const appExtensionsHeaderItem = {
+  const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
-    ariaLabel: "apps",
     label: intl.formatMessage(sectionNames.appExtensions),
+    type: "divider",
+    paddingY: 4,
   };
 
   // This will be deleted when Marketplace is released
   // Consider this solution as temporary
-  const getAppSection = () => {
+  const getAppSection = (): SidebarMenuItem => {
     if (MARKETPLACE_URL) {
       return {
-        ariaLabel: "apps_section",
-        iconSrc: appsIcon,
+        icon: <MarketplaceIcon {...iconSettings} />,
         label: intl.formatMessage(sectionNames.apps),
         permissions: [PermissionEnum.MANAGE_APPS],
         id: "apps_section",
+        type: "itemGroup",
         children: [
           {
             label: intl.formatMessage(sectionNames.apps),
             id: "apps",
             url: appsListPath,
+            type: "item",
           },
           {
-            ariaLabel: "marketplace",
             label: intl.formatMessage(sectionNames.marketplace),
             id: "marketplace-saleor-apps",
             url: marketplaceUrlResolver.getSaleorAppsDashboardPath(),
+            type: "item",
           },
           {
-            ariaLabel: "marketplace",
             label: intl.formatMessage(sectionNames.appTemplateGallery),
             id: "marketplace-template-gallery",
             url: marketplaceUrlResolver.getTemplateGalleryDashboardPath(),
+            type: "item",
           },
         ],
       };
     }
 
     return {
-      ariaLabel: "apps",
-      iconSrc: appsIcon,
+      icon: <MarketplaceIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.apps),
       permissions: [PermissionEnum.MANAGE_APPS],
       id: "apps",
       url: appsListPath,
+      type: "item",
     };
   };
 
-  const menuItems: FilterableMenuItem[] = [
+  const menuItems: SidebarMenuItem[] = [
     {
-      ariaLabel: "home",
-      iconSrc: homeIcon,
+      icon: <HomeIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.home),
       id: "home",
       url: "/",
+      type: "item",
     },
     {
-      ariaLabel: "catalogue",
       children: [
         {
-          ariaLabel: "products",
           label: intl.formatMessage(sectionNames.products),
           id: "products",
           url: productListUrl(),
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          type: "item",
         },
         {
-          ariaLabel: "categories",
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
           url: categoryListUrl(),
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          type: "item",
         },
         {
-          ariaLabel: "collections",
           label: intl.formatMessage(sectionNames.collections),
           id: "collections",
           url: collectionListUrl(),
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          type: "item",
         },
         {
-          ariaLabel: "giftCards",
           label: intl.formatMessage(sectionNames.giftCards),
           id: "giftCards",
           url: giftCardListUrl(),
           permissions: [PermissionEnum.MANAGE_GIFT_CARD],
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_CATALOG,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: catalogIcon,
-      label: intl.formatMessage(commonMessages.catalog),
+      icon: <ProductsIcons {...iconSettings} />,
+      label: intl.formatMessage(commonMessages.products),
       permissions: [
         PermissionEnum.MANAGE_GIFT_CARD,
         PermissionEnum.MANAGE_PRODUCTS,
       ],
-      id: "catalogue",
+      id: "products",
+      type: "itemGroup",
     },
     {
-      ariaLabel: "orders",
+      id: "divider-1",
+      type: "divider",
+    },
+    {
       children: [
         {
-          ariaLabel: "orders",
           label: intl.formatMessage(sectionNames.orders),
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "orders",
           url: orderListUrl(),
+          type: "item",
         },
         {
-          ariaLabel: "order drafts",
           label: intl.formatMessage(commonMessages.drafts),
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "order-drafts",
           url: orderDraftListUrl(),
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_ORDERS,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: ordersIcon,
+      icon: <OrdersIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.orders),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
+      type: "itemGroup",
     },
     {
-      ariaLabel: "customers",
-      children: extensions.NAVIGATION_CUSTOMERS.length > 0 && [
+      children: !isEmpty(extensions.NAVIGATION_CUSTOMERS) && [
         {
-          ariaLabel: "customers",
           label: intl.formatMessage(sectionNames.customers),
           permissions: [PermissionEnum.MANAGE_USERS],
           id: "customers",
           url: customerListUrl(),
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_CUSTOMERS,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: customerIcon,
+      icon: <CustomersIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.customers),
       permissions: [PermissionEnum.MANAGE_USERS],
       id: "customers",
       url: customerListUrl(),
+      type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
     },
 
     {
-      ariaLabel: "discounts",
       children: [
         {
-          ariaLabel: "sales",
           label: intl.formatMessage(sectionNames.sales),
           id: "sales",
           url: saleListUrl(),
+          type: "item",
         },
         {
-          ariaLabel: "vouchers",
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
           url: voucherListUrl(),
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_DISCOUNTS,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: discountsIcon,
+      icon: <VouchersIcon {...iconSettings} />,
       label: intl.formatMessage(commonMessages.discounts),
       permissions: [PermissionEnum.MANAGE_DISCOUNTS],
       id: "discounts",
+      type: "itemGroup",
     },
     {
-      ariaLabel: "pages",
-      children: extensions.NAVIGATION_PAGES.length > 0 && [
+      id: "divider-2",
+      type: "divider",
+    },
+    {
+      children: !isEmpty(extensions.NAVIGATION_PAGES) && [
         {
-          ariaLabel: "pages",
           label: intl.formatMessage(sectionNames.pages),
           permissions: [PermissionEnum.MANAGE_PAGES],
           id: "pages",
           url: pageListPath,
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_PAGES,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: pagesIcon,
+      icon: <StorefrontIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.pages),
       permissions: [PermissionEnum.MANAGE_PAGES],
       id: "pages",
       url: pageListPath,
+      type: !isEmpty(extensions.NAVIGATION_PAGES) ? "itemGroup" : "item",
     },
     getAppSection(),
     {
-      ariaLabel: "translations",
-      children: extensions.NAVIGATION_TRANSLATIONS.length > 0 && [
+      children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) && [
         {
-          ariaLabel: "translations",
           label: intl.formatMessage(sectionNames.translations),
           permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
           id: "translations",
           url: languageListUrl,
+          type: "item",
         },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_TRANSLATIONS,
           appExtensionsHeaderItem,
         ),
       ],
-      iconSrc: translationIcon,
+      icon: <TranslationsIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.translations),
       permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
       id: "translations",
       url: languageListUrl,
+      type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
     {
-      ariaLabel: "configure",
-      iconSrc: configurationIcon,
+      id: "divider-3",
+      type: "divider",
+    },
+    {
+      icon: <ConfigurationIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.configuration),
       permissions: getConfigMenuItemsPermissions(intl),
       id: "configure",
       url: configurationMenuUrl,
+      type: "item",
     },
   ];
 
-  const isMenuItemPermitted = (menuItem: FilterableMenuItem) => {
+  const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
     const userPermissions = (user?.userPermissions || []).map(
       permission => permission.code,
     );
@@ -290,26 +300,21 @@ function useMenuStructure(
     );
   };
 
-  const getFilteredMenuItems = (menuItems: FilterableMenuItem[]) =>
+  const getFilteredMenuItems = (menuItems: SidebarMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
 
-  return [
-    menuItems.reduce(
-      (resultItems: FilterableMenuItem[], menuItem: FilterableMenuItem) => {
-        if (!isMenuItemPermitted(menuItem)) {
-          return resultItems;
-        }
-        const { children } = menuItem;
-        const filteredChildren = children
-          ? getFilteredMenuItems(children)
-          : undefined;
+  return menuItems.reduce(
+    (resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
+      if (!isMenuItemPermitted(menuItem)) {
+        return resultItems;
+      }
+      const { children } = menuItem;
+      const filteredChildren = children
+        ? getFilteredMenuItems(children)
+        : undefined;
 
-        return [...resultItems, { ...menuItem, children: filteredChildren }];
-      },
-      [] as FilterableMenuItem[],
-    ),
-    handleMenuItemClick,
-  ];
+      return [...resultItems, { ...menuItem, children: filteredChildren }];
+    },
+    [],
+  );
 }
-
-export default useMenuStructure;

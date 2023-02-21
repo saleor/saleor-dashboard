@@ -1,7 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
@@ -45,11 +43,11 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
 }) => {
   const intl = useIntl();
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
+    <>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.pageTypes)}
+      >
         <Button
           variant="primary"
           href={pageTypeAddUrl}
@@ -61,7 +59,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
@@ -84,7 +82,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
         />
         <PageTypeList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PageTypeListPage.displayName = "PageTypeListPage";
