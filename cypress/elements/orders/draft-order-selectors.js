@@ -1,5 +1,6 @@
 export const DRAFT_ORDER_SELECTORS = {
   addProducts: "[data-test-id='add-products-button']",
+  newAddressSelectButton: "[data-test-id='customerAddressnewAddress']",
   salesChannel: "[data-test-id='order-sales-channel']",
   editCustomerButton: "[data-test-id='edit-customer']",
   selectCustomer: "[data-test-id='select-customer']",
