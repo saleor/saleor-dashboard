@@ -32,7 +32,9 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm(data: FormData);
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
+const OrderFulfillmentTrackingDialog: React.FC<
+  OrderFulfillmentTrackingDialogProps
+> = ({
   confirmButtonState,
   errors: apiErrors,
   open,
@@ -55,7 +57,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
       <Form initial={initialData} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
           <>
-            <DialogTitle>
+            <DialogTitle disableTypography>
               <FormattedMessage
                 id="/BJQIq"
                 defaultMessage="Add Tracking Code"

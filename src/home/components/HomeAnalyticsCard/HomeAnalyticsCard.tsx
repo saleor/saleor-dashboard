@@ -1,18 +1,18 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     cardContent: {
-      "&:last-child": {
-        padding: theme.spacing(2, 3),
-      },
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "1fr 64px",
+      border: `1px solid ${vars.colors.border.neutralPlain}`,
+      borderRadius: vars.borderRadius[3],
     },
     cardSpacing: {
       [theme.breakpoints.down("sm")]: {

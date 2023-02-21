@@ -40,6 +40,8 @@ export function fillUpShippingZoneData({
     .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog);
   cy.contains(SHIPPING_ZONE_DETAILS.option, warehouseName)
     .click({ force: true })
+    .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
+    .click()
     .get(SHIPPING_ZONE_DETAILS.channelSelector)
     .click()
     .get(SHIPPING_ZONE_DETAILS.option)

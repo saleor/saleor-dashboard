@@ -4,12 +4,12 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import PageHeader from "@dashboard/components/PageHeader";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -122,42 +122,24 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
-    <Container>
-      <PageHeader
-        cardMenu={
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  id: "7FL+WZ",
-                  defaultMessage: "Export Products",
-                  description: "export products to csv file, button",
-                }),
-                onSelect: onExport,
-                testId: "export",
-              },
-              ...extensionMenuItems,
-            ]}
-            data-test-id="menu"
-          />
-        }
-        title={intl.formatMessage(sectionNames.products)}
-        limitText={
-          hasLimits(limits, "productVariants") &&
-          intl.formatMessage(
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.products)}>
+        <CardMenu
+          className={classes.settings}
+          menuItems={[
             {
-              id: "Kw0jHS",
-              defaultMessage: "{count}/{max} SKUs used",
-              description: "created products counter",
+              label: intl.formatMessage({
+                id: "7FL+WZ",
+                defaultMessage: "Export Products",
+                description: "export products to csv file, button",
+              }),
+              onSelect: onExport,
+              testId: "export",
             },
-            {
-              count: limits.currentUsage.productVariants,
-              max: limits.allowedUsage.productVariants,
-            },
-          )
-        }
-      >
+            ...extensionMenuItems,
+          ]}
+          data-test-id="menu"
+        />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
           data-test-id="add-product"
@@ -170,7 +152,22 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             description="button"
           />
         </ButtonWithSelect>
-      </PageHeader>
+        {hasLimits(limits, "productVariants") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "Kw0jHS",
+                defaultMessage: "{count}/{max} SKUs used",
+                description: "created products counter",
+              },
+              {
+                count: limits.currentUsage.productVariants,
+                max: limits.allowedUsage.productVariants,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -229,7 +226,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           }}
         />
       </Card>
-    </Container>
+    </>
   );
 };
 ProductListPage.displayName = "ProductListPage";

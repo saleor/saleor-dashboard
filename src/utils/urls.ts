@@ -1,5 +1,4 @@
 import { getAppDefaultUri, getAppMountUri } from "@dashboard/config";
-import isArray from "lodash/isArray";
 import { stringify } from "qs";
 
 export function stringifyQs(params: unknown, arrayFormat?: string): string {
@@ -15,7 +14,7 @@ export function getArrayQueryParam(
     return undefined;
   }
 
-  if (isArray(param)) {
+  if (Array.isArray(param)) {
     return param;
   }
 

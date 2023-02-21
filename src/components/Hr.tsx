@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -7,16 +8,16 @@ interface HrProps {
 }
 
 const useStyles = makeStyles(
-  theme => ({
+  {
     root: {
-      backgroundColor: theme.palette.divider,
+      backgroundColor: vars.colors.border.neutralPlain,
       border: "none",
       display: "block",
       height: 1,
       margin: 0,
       width: "100%",
     },
-  }),
+  },
   { name: "Hr" },
 );
 

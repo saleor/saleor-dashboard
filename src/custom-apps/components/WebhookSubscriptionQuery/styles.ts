@@ -13,6 +13,9 @@ export const useStyles = makeStyles(
     card: {
       marginBottom: theme.spacing(2),
     },
+    cardTitle: {
+      paddingLeft: 0,
+    },
   }),
   { name: "WebhookSubscriptionQuery" },
 );

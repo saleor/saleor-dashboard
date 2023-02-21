@@ -1,12 +1,15 @@
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
-import Grid from "@dashboard/components/Grid";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import Orders from "../../../icons/Orders";
@@ -75,11 +78,11 @@ const HomePage: React.FC<HomePageProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Container>
-      <HomeHeader userName={userName} />
-      <CardSpacer />
-      <Grid>
-        <div>
+    <DetailedContent>
+      <TopNav title={<HomeHeader userName={userName} />} />
+      <Content>
+        <Box paddingLeft={9} paddingRight={11}>
+          <CardSpacer />
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
@@ -149,21 +152,18 @@ const HomePage: React.FC<HomePageProps> = props => {
               <CardSpacer />
             </RequirePermissions>
           )}
-        </div>
-        {activities && (
-          <div>
-            <RequirePermissions
-              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-            >
-              <HomeActivityCard
-                activities={activities}
-                testId="activity-card"
-              />
-            </RequirePermissions>
-          </div>
-        )}
-      </Grid>
-    </Container>
+        </Box>
+      </Content>
+      {activities && (
+        <RightSidebar>
+          <RequirePermissions
+            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+          >
+            <HomeActivityCard activities={activities} testId="activity-card" />
+          </RequirePermissions>
+        </RightSidebar>
+      )}
+    </DetailedContent>
   );
 };
 HomePage.displayName = "HomePage";

@@ -1,7 +1,7 @@
 import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
-import themeOverrides from "@dashboard/themeOverrides";
+import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlProvider } from "react-intl";
@@ -24,7 +24,10 @@ export const Decorator = storyFn => (
       >
         <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
           <TimezoneProvider value="America/New_York">
-            <ThemeProvider overrides={themeOverrides}>
+            <ThemeProvider
+              overrides={themeOverrides}
+              palettes={paletteOverrides}
+            >
               <BrowserRouter basename={getAppMountUri()}>
                 <ExternalAppProvider>
                   <FlagsServiceProvider>

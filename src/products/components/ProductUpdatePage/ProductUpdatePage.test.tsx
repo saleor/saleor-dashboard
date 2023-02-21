@@ -81,7 +81,9 @@ const props: ProductUpdatePageProps = {
 xdescribe("Product details page", () => {
   useNavigator.mockImplementation();
 
-  it("can select empty option on attribute", async () => {
+  // Disabled because of failure on intel macbooks.
+  // TODO: Rewrite without using Wrapper
+  xit("can select empty option on attribute", async () => {
     // Arrange
     render(
       <MemoryRouter>
@@ -122,7 +124,6 @@ xdescribe("Product details page", () => {
     const moreButton = screen.queryAllByTestId("show-more-button")[0];
     await user.click(moreButton);
     const graphiQLLink = screen.queryAllByTestId("graphiql-redirect")[0];
-
     // Assert
     expect(graphiQLLink).toBeInTheDocument();
   });

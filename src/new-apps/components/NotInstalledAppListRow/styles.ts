@@ -47,9 +47,14 @@ export const useStyles = makeStyles<AppInstallation>(
       alignItems: "center",
       display: "flex",
       flexDirection: "row",
-      justifyContent: "flex-end",
+      justifyContent: "flex-start",
       textAlign: "right",
       gap: theme.spacing(1),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        width: "auto",
+        justifyContent: "flex-end",
+      },
     },
     externalAppLabel: {
       cursor: "pointer",

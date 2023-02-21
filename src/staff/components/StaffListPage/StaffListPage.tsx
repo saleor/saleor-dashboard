@@ -1,9 +1,8 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import { Container } from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { RefreshLimitsQuery, StaffListQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -58,26 +57,10 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   const reachedLimit = isLimitReached(limits, "staffUsers");
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader
+    <>
+      <TopNav
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
-        limitText={
-          hasLimits(limits, "staffUsers") &&
-          intl.formatMessage(
-            {
-              id: "9xlPgt",
-              defaultMessage: "{count}/{max} members",
-              description: "used staff users counter",
-            },
-            {
-              count: limits.currentUsage.staffUsers,
-              max: limits.allowedUsage.staffUsers,
-            },
-          )
-        }
       >
         <Button
           data-test-id="invite-staff-member"
@@ -91,7 +74,22 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+        {hasLimits(limits, "staffUsers") && (
+          <LimitsInfo
+            text={intl.formatMessage(
+              {
+                id: "9xlPgt",
+                defaultMessage: "{count}/{max} members",
+                description: "used staff users counter",
+              },
+              {
+                count: limits.currentUsage.staffUsers,
+                max: limits.allowedUsage.staffUsers,
+              },
+            )}
+          />
+        )}
+      </TopNav>
       {reachedLimit && (
         <LimitReachedAlert
           title={intl.formatMessage({
@@ -130,7 +128,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         />
         <StaffList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 StaffListPage.displayName = "StaffListPage";

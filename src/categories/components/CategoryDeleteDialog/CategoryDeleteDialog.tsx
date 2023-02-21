@@ -41,7 +41,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="xo5UIb"
           defaultMessage="Delete category"

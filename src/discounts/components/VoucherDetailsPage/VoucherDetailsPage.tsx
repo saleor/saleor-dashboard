@@ -1,13 +1,13 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Container from "@dashboard/components/Container";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
@@ -29,7 +29,6 @@ import {
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
@@ -150,9 +149,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     [],
   );
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannelId,
   );
@@ -198,9 +196,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
-        const handleDiscountTypeChange = createDiscountTypeChangeHandler(
-          change,
-        );
+        const handleDiscountTypeChange =
+          createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
@@ -213,186 +210,176 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         const allErrors = [...localErrors, ...errors];
 
         return (
-          <Container>
-            <Backlink href={voucherListUrl()}>
-              {intl.formatMessage(sectionNames.vouchers)}
-            </Backlink>
-            <PageHeader title={voucher?.code} />
-            <Grid>
-              <div>
-                <VoucherInfo
+          <DetailedContent>
+            <TopNav href={voucherListUrl()} title={voucher?.code} />
+            <Content>
+              <VoucherInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                variant="update"
+              />
+              <CardSpacer />
+              <VoucherTypes
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={event => handleDiscountTypeChange(data, event)}
+              />
+              <CardSpacer />
+              {data.discountType.toString() !== "SHIPPING" ? (
+                <VoucherValue
                   data={data}
                   disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                  variant="update"
-                />
-                <CardSpacer />
-                <VoucherTypes
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={event => handleDiscountTypeChange(data, event)}
-                />
-                <CardSpacer />
-                {data.discountType.toString() !== "SHIPPING" ? (
-                  <VoucherValue
-                    data={data}
-                    disabled={disabled}
-                    errors={allErrors}
-                    onChange={change}
-                    onChannelChange={handleChannelChange}
-                    variant="update"
-                  />
-                ) : null}
-                <CardSpacer />
-                {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
-                data.discountType.toString() !== "SHIPPING" ? (
-                  <>
-                    <TabContainer>
-                      <CategoriesTab
-                        isActive={
-                          activeTab === VoucherDetailsPageTab.categories
-                        }
-                        changeTab={onTabClick}
-                      >
-                        {intl.formatMessage(itemsQuantityMessages.categories, {
-                          quantity: tabItemsCount.categories?.toString() || "…",
-                        })}
-                      </CategoriesTab>
-                      <CollectionsTab
-                        isActive={
-                          activeTab === VoucherDetailsPageTab.collections
-                        }
-                        changeTab={onTabClick}
-                      >
-                        {intl.formatMessage(itemsQuantityMessages.collections, {
-                          quantity:
-                            tabItemsCount.collections?.toString() || "…",
-                        })}
-                      </CollectionsTab>
-                      <ProductsTab
-                        isActive={activeTab === VoucherDetailsPageTab.products}
-                        changeTab={onTabClick}
-                      >
-                        {intl.formatMessage(itemsQuantityMessages.products, {
-                          quantity: tabItemsCount.products?.toString() || "…",
-                        })}
-                      </ProductsTab>
-                    </TabContainer>
-                    <CardSpacer />
-                    {activeTab === VoucherDetailsPageTab.categories ? (
-                      <DiscountCategories
-                        disabled={disabled}
-                        onCategoryAssign={onCategoryAssign}
-                        onCategoryUnassign={onCategoryUnassign}
-                        discount={voucher}
-                        isChecked={isChecked}
-                        selected={selected}
-                        toggle={toggle}
-                        toggleAll={toggleAll}
-                        toolbar={categoryListToolbar}
-                      />
-                    ) : activeTab === VoucherDetailsPageTab.collections ? (
-                      <DiscountCollections
-                        disabled={disabled}
-                        onCollectionAssign={onCollectionAssign}
-                        onCollectionUnassign={onCollectionUnassign}
-                        discount={voucher}
-                        isChecked={isChecked}
-                        selected={selected}
-                        toggle={toggle}
-                        toggleAll={toggleAll}
-                        toolbar={collectionListToolbar}
-                      />
-                    ) : (
-                      <DiscountProducts
-                        disabled={disabled}
-                        onProductAssign={onProductAssign}
-                        onProductUnassign={onProductUnassign}
-                        products={mapEdgesToItems(voucher?.products)}
-                        isChecked={isChecked}
-                        selected={selected}
-                        toggle={toggle}
-                        toggleAll={toggleAll}
-                        toolbar={productListToolbar}
-                      />
-                    )}
-                  </>
-                ) : null}
-                <CardSpacer />
-                {data.discountType.toString() === "SHIPPING" ? (
-                  <CountryList
-                    countries={voucher?.countries}
-                    disabled={disabled}
-                    emptyText={intl.formatMessage({
-                      id: "jd/LWa",
-                      defaultMessage: "Voucher applies to all countries",
-                    })}
-                    title={
-                      <>
-                        {intl.formatMessage({
-                          id: "ibnmEd",
-                          defaultMessage: "Countries",
-                          description: "voucher country range",
-                        })}
-                        <Typography variant="caption">
-                          <FormattedMessage
-                            id="glT6fm"
-                            defaultMessage="Voucher is limited to these countries"
-                          />
-                        </Typography>
-                      </>
-                    }
-                    onCountryAssign={onCountryAssign}
-                    onCountryUnassign={onCountryUnassign}
-                  />
-                ) : null}
-                <CardSpacer />
-                <VoucherRequirements
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
+                  errors={allErrors}
                   onChange={change}
                   onChannelChange={handleChannelChange}
+                  variant="update"
                 />
-                <CardSpacer />
-                <VoucherLimits
-                  data={data}
-                  initialUsageLimit={initialForm.usageLimit}
+              ) : null}
+              <CardSpacer />
+              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+              data.discountType.toString() !== "SHIPPING" ? (
+                <>
+                  <TabContainer>
+                    <CategoriesTab
+                      isActive={activeTab === VoucherDetailsPageTab.categories}
+                      changeTab={onTabClick}
+                    >
+                      {intl.formatMessage(itemsQuantityMessages.categories, {
+                        quantity: tabItemsCount.categories?.toString() || "…",
+                      })}
+                    </CategoriesTab>
+                    <CollectionsTab
+                      isActive={activeTab === VoucherDetailsPageTab.collections}
+                      changeTab={onTabClick}
+                    >
+                      {intl.formatMessage(itemsQuantityMessages.collections, {
+                        quantity: tabItemsCount.collections?.toString() || "…",
+                      })}
+                    </CollectionsTab>
+                    <ProductsTab
+                      isActive={activeTab === VoucherDetailsPageTab.products}
+                      changeTab={onTabClick}
+                    >
+                      {intl.formatMessage(itemsQuantityMessages.products, {
+                        quantity: tabItemsCount.products?.toString() || "…",
+                      })}
+                    </ProductsTab>
+                  </TabContainer>
+                  <CardSpacer />
+                  {activeTab === VoucherDetailsPageTab.categories ? (
+                    <DiscountCategories
+                      disabled={disabled}
+                      onCategoryAssign={onCategoryAssign}
+                      onCategoryUnassign={onCategoryUnassign}
+                      discount={voucher}
+                      isChecked={isChecked}
+                      selected={selected}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                      toolbar={categoryListToolbar}
+                    />
+                  ) : activeTab === VoucherDetailsPageTab.collections ? (
+                    <DiscountCollections
+                      disabled={disabled}
+                      onCollectionAssign={onCollectionAssign}
+                      onCollectionUnassign={onCollectionUnassign}
+                      discount={voucher}
+                      isChecked={isChecked}
+                      selected={selected}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                      toolbar={collectionListToolbar}
+                    />
+                  ) : (
+                    <DiscountProducts
+                      disabled={disabled}
+                      onProductAssign={onProductAssign}
+                      onProductUnassign={onProductUnassign}
+                      products={mapEdgesToItems(voucher?.products)}
+                      isChecked={isChecked}
+                      selected={selected}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                      toolbar={productListToolbar}
+                    />
+                  )}
+                </>
+              ) : null}
+              <CardSpacer />
+              {data.discountType.toString() === "SHIPPING" ? (
+                <CountryList
+                  countries={voucher?.countries}
                   disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                  setData={set}
-                  isNewVoucher={false}
+                  emptyText={intl.formatMessage({
+                    id: "jd/LWa",
+                    defaultMessage: "Voucher applies to all countries",
+                  })}
+                  title={
+                    <>
+                      {intl.formatMessage({
+                        id: "ibnmEd",
+                        defaultMessage: "Countries",
+                        description: "voucher country range",
+                      })}
+                      <Typography variant="caption">
+                        <FormattedMessage
+                          id="glT6fm"
+                          defaultMessage="Voucher is limited to these countries"
+                        />
+                      </Typography>
+                    </>
+                  }
+                  onCountryAssign={onCountryAssign}
+                  onCountryUnassign={onCountryUnassign}
                 />
-                <CardSpacer />
-                <DiscountDates
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-              </div>
-              <div>
-                <VoucherSummary
-                  voucher={voucher}
-                  selectedChannelId={selectedChannelId}
-                />
-                <CardSpacer />
-                <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                  allChannelsCount={allChannelsCount}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name,
-                  }))}
-                  disabled={disabled}
-                  openModal={openChannelsModal}
-                />
-              </div>
+              ) : null}
+              <CardSpacer />
+              <VoucherRequirements
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                onChannelChange={handleChannelChange}
+              />
+              <CardSpacer />
+              <VoucherLimits
+                data={data}
+                initialUsageLimit={initialForm.usageLimit}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                setData={set}
+                isNewVoucher={false}
+              />
+              <CardSpacer />
+              <DiscountDates
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
               <Metadata data={data} onChange={changeMetadata} />
-            </Grid>
+            </Content>
+            <RightSidebar>
+              <VoucherSummary
+                voucher={voucher}
+                selectedChannelId={selectedChannelId}
+              />
+              <CardSpacer />
+              <ChannelsAvailabilityCard
+                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                allChannelsCount={allChannelsCount}
+                channelsList={data.channelListings.map(channel => ({
+                  id: channel.id,
+                  name: channel.name,
+                }))}
+                disabled={disabled}
+                openModal={openChannelsModal}
+              />
+            </RightSidebar>
             <Savebar
               onCancel={() => navigate(voucherListUrl())}
               disabled={disabled}
@@ -400,7 +387,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               onSubmit={() => handleSubmit(data)}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

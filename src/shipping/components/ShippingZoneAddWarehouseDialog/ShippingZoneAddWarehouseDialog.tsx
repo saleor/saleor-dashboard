@@ -67,7 +67,9 @@ const useStyles = makeStyles(
   },
 );
 
-const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
+const ShippingZoneAddWarehouseDialog: React.FC<
+  ShippingZoneAddWarehouseDialogProps
+> = ({
   confirmButtonState,
   countries,
   disabled,
@@ -78,10 +80,8 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
 }) => {
   const classes = useStyles({});
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
-  const {
-    errors: validationErrors,
-    submit: handleSubmit,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmit } =
+    useAddressValidation(onSubmit);
   const errors = useModalDialogErrors(
     [...apiErrors, ...validationErrors],
     open,
@@ -99,7 +99,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="yzYXW/"
           defaultMessage="Create New Warehouse"

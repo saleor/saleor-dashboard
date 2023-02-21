@@ -3,6 +3,7 @@ import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
 } from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
 import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -16,6 +17,15 @@ export interface GiftCardExpirySettingsCardProps
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
+const useStyles = makeStyles(
+  () => ({
+    cardTitle: {
+      paddingTop: 0,
+    },
+  }),
+  { name: "GiftCardExpirySettingsCard" },
+);
+
 const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   data,
   disabled,
@@ -23,10 +33,14 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const classes = useStyles({});
 
   return (
     <Card data-test-id="gift-card-settings">
-      <CardTitle title={intl.formatMessage(messages.expiryDateTitle)} />
+      <CardTitle
+        title={intl.formatMessage(messages.expiryDateTitle)}
+        className={classes.cardTitle}
+      />
       <CardContent>
         <GiftCardSettingsExpirySelect
           expiryPeriodActive={data.expiryPeriodActive}

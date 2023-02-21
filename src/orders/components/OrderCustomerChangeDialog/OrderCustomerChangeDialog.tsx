@@ -27,7 +27,9 @@ export interface OrderCustomerChangeDialogProps {
   onClose();
 }
 
-const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = props => {
+const OrderCustomerChangeDialog: React.FC<
+  OrderCustomerChangeDialogProps
+> = props => {
   const { open, onClose, onConfirm } = props;
 
   const classes = useStyles(props);
@@ -38,7 +40,7 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
       <OrderCustomerChangeForm onSubmit={onConfirm}>
         {({ change, data }) => (
           <>
-            <DialogTitle>
+            <DialogTitle disableTypography>
               <FormattedMessage {...messages.title} />
             </DialogTitle>
             <DialogContent className={classes.overflow}>

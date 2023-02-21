@@ -17,11 +17,9 @@ interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
 }
 
-const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogProps> = ({
-  open,
-  onClose,
-  idsToExport,
-}) => {
+const GiftCardBulkCreateSuccessDialog: React.FC<
+  GiftCardBulkCreateSuccessDialogProps
+> = ({ open, onClose, idsToExport }) => {
   const intl = useIntl();
   const [openEmailExport, setOpenEmailExport] = useState(false);
 
@@ -33,7 +31,7 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
   return (
     <>
       <Dialog open={open} maxWidth="sm">
-        <DialogTitle>
+        <DialogTitle disableTypography>
           {intl.formatMessage(messages.bulkCreateIssuedTitle)}
         </DialogTitle>
         <DialogContent>

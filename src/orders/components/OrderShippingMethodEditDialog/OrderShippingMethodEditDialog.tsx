@@ -66,7 +66,9 @@ export interface OrderShippingMethodEditDialogProps {
   onSubmit?(data: FormData);
 }
 
-const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps> = props => {
+const OrderShippingMethodEditDialog: React.FC<
+  OrderShippingMethodEditDialogProps
+> = props => {
   const {
     confirmButtonState,
     errors: apiErrors,
@@ -112,7 +114,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
 
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="V/YxJa"
           defaultMessage="Edit Shipping Method"

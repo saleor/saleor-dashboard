@@ -48,7 +48,10 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
     <Card
       className={clsx(classes.card, data.syncEvents.length && classes.disabled)}
     >
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle
+        title={intl.formatMessage(messages.title)}
+        className={classes.cardTitle}
+      />
       <CardContent className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

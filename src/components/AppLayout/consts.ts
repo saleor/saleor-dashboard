@@ -1,6 +1,5 @@
-export const drawerWidthExpanded = 210;
-export const drawerWidthExpandedMobile = 250;
-export const drawerWidth = 80;
-export const drawerNestedMenuWidth = 300;
-export const navigationBarHeight = 64;
-export const appLoaderHeight = 4;
+export const topBarHeight = "77px";
+export const appLoaderHeight = 2;
+export const contentMaxWidth = "1440px";
+export const savebarHeight = "64px";
+export const borderHeight = "1px";

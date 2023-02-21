@@ -35,6 +35,7 @@ const useStyles = makeStyles(
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
   color?: "primary" | "secondary";
+  inline?: boolean;
   underline?: boolean;
   typographyProps?: TypographyProps;
   onClick?: React.MouseEventHandler;
@@ -45,6 +46,7 @@ const Link: React.FC<LinkProps> = props => {
   const {
     className,
     children,
+    inline = true,
     color = "primary",
     underline = false,
     onClick,
@@ -60,13 +62,16 @@ const Link: React.FC<LinkProps> = props => {
   const opensNewTab = target === "_blank";
 
   const commonLinkProps = {
-    className: clsx(className, {
-      [classes.root]: true,
-      [classes[color]]: true,
-      [classes.underline]: underline,
-      [classes.noUnderline]: !underline,
-      [classes.disabled]: disabled,
-    }),
+    className: clsx(
+      {
+        [classes.root]: inline,
+        [classes[color]]: true,
+        [classes.underline]: underline,
+        [classes.noUnderline]: !underline,
+        [classes.disabled]: disabled,
+      },
+      className,
+    ),
     onClick: event => {
       if (disabled || !onClick) {
         return;

@@ -3,15 +3,16 @@ import {
   mapToMenuItemsForCustomerDetails,
   useExtensions,
 } from "@dashboard/apps/useExtensions";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import PageHeader from "@dashboard/components/PageHeader";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -83,9 +84,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     privateMetadata: customer?.privateMetadata.map(mapMetadataItemToInput),
   };
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
@@ -107,64 +107,62 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <Backlink href={customerListUrl()}>
-              {intl.formatMessage(sectionNames.customers)}
-            </Backlink>
-            <PageHeader
+          <DetailedContent>
+            <TopNav
+              href={customerListUrl()}
               title={getUserName(customer, true)}
-              cardMenu={
-                extensionMenuItems.length > 0 && (
-                  <CardMenu menuItems={extensionMenuItems} />
-                )
-              }
-            />
-            <Grid>
-              <div>
-                <CustomerDetails
-                  customer={customer}
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
+            >
+              {extensionMenuItems.length > 0 && (
+                <CardMenu menuItems={extensionMenuItems} />
+              )}
+            </TopNav>
+            <Content>
+              <Backlink href={customerListUrl()}>
+                {intl.formatMessage(sectionNames.customers)}
+              </Backlink>
+              <CustomerDetails
+                customer={customer}
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CustomerInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <RequirePermissions
+                requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+              >
+                <CustomerOrders
+                  orders={mapEdgesToItems(customer?.orders)}
+                  viewAllHref={orderListUrl({
+                    customer: customer?.email,
+                  })}
                 />
                 <CardSpacer />
-                <CustomerInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <RequirePermissions
-                  requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-                >
-                  <CustomerOrders
-                    orders={mapEdgesToItems(customer?.orders)}
-                    viewAllHref={orderListUrl({
-                      customer: customer?.email,
-                    })}
-                  />
-                  <CardSpacer />
-                </RequirePermissions>
-                <Metadata data={data} onChange={changeMetadata} />
-              </div>
-              <div>
-                <CustomerAddresses
-                  customer={customer}
-                  disabled={disabled}
-                  manageAddressHref={customerAddressesUrl(customerId)}
-                />
-                <CardSpacer />
-                <CustomerStats customer={customer} />
-                <CardSpacer />
-                <RequirePermissions
-                  requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}
-                >
-                  <CustomerGiftCardsCard />
-                </RequirePermissions>
-              </div>
-            </Grid>
+              </RequirePermissions>
+              <Metadata data={data} onChange={changeMetadata} />
+            </Content>
+            <RightSidebar>
+              <CustomerAddresses
+                customer={customer}
+                disabled={disabled}
+                manageAddressHref={customerAddressesUrl(customerId)}
+              />
+              <CardSpacer />
+              <CustomerStats customer={customer} />
+              <CardSpacer />
+              <RequirePermissions
+                requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+              >
+                <CustomerGiftCardsCard />
+              </RequirePermissions>
+            </RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBar}
@@ -172,7 +170,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               onCancel={() => navigate(customerListUrl())}
               onDelete={onDelete}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

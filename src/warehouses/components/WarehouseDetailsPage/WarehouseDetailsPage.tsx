@@ -1,11 +1,11 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
@@ -18,13 +18,12 @@ import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { sectionNames } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import WarehouseInfo from "../WarehouseInfo";
 import WarehouseSettings from "../WarehouseSettings";
@@ -96,45 +95,40 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
-            <Backlink href={warehouseListUrl()}>
-              <FormattedMessage {...sectionNames.warehouses} />
-            </Backlink>
-            <PageHeader title={warehouse?.name} />
-            <Grid>
-              <div>
-                <WarehouseInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <CompanyAddressInput
-                  countries={countryChoices}
-                  data={data}
-                  disabled={disabled}
-                  displayCountry={displayCountry}
-                  errors={[...errors, ...validationErrors]}
-                  header={intl.formatMessage({
-                    id: "43Nlay",
-                    defaultMessage: "Address Information",
-                    description: "warehouse",
-                  })}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-              </div>
-              <div>
-                <WarehouseSettings
-                  zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                  setData={set}
-                />
-              </div>
-            </Grid>
+          <DetailedContent>
+            <TopNav href={warehouseListUrl()} title={warehouse?.name} />
+            <Content>
+              <WarehouseInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CompanyAddressInput
+                countries={countryChoices}
+                data={data}
+                disabled={disabled}
+                displayCountry={displayCountry}
+                errors={[...errors, ...validationErrors]}
+                header={intl.formatMessage({
+                  id: "43Nlay",
+                  defaultMessage: "Address Information",
+                  description: "warehouse",
+                })}
+                onChange={change}
+                onCountryChange={handleCountrySelect}
+              />
+            </Content>
+            <RightSidebar>
+              <WarehouseSettings
+                zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
+                data={data}
+                disabled={disabled}
+                onChange={change}
+                setData={set}
+              />
+            </RightSidebar>
             <Savebar
               disabled={!!isSaveDisabled}
               onCancel={() => navigate(warehouseListUrl())}
@@ -142,7 +136,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

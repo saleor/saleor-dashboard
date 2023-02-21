@@ -29,9 +29,11 @@ import { giftCardExportDialogMessages as messages } from "./messages";
 import useStyles from "./styles";
 import { getExportGiftCardsInput } from "./utils";
 
-const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
-  idsToExport?: string[] | null;
-}> = ({ onClose, idsToExport }) => {
+const GiftCardExportDialog: React.FC<
+  Pick<DialogProps, "onClose"> & {
+    idsToExport?: string[] | null;
+  }
+> = ({ onClose, idsToExport }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
@@ -47,10 +49,8 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
 
   const selectedIds = idsToExport ?? listElements;
 
-  const {
-    data: allGiftCardsCountData,
-    loading: loadingGiftCardCount,
-  } = useGiftCardTotalCountQuery();
+  const { data: allGiftCardsCountData, loading: loadingGiftCardCount } =
+    useGiftCardTotalCountQuery();
 
   const loading = loadingGiftCardList || loadingGiftCardCount;
 
@@ -117,7 +117,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
 
   return (
     <>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent>

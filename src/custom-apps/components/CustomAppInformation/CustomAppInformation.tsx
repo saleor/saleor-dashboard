@@ -4,8 +4,18 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Card, CardContent, TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
+
+const useStyles = makeStyles(
+  {
+    cardTitle: {
+      paddingRight: 16,
+    },
+  },
+  { name: "AccountPermissions" },
+);
 
 export interface CustomAppInfoProps {
   data: {
@@ -23,12 +33,14 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
       <CardTitle
+        className={classes.cardTitle}
         title={intl.formatMessage({
           id: "imYxM9",
           defaultMessage: "App Information",

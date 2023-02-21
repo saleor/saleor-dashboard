@@ -1,8 +1,8 @@
-import { Backlink } from "@dashboard/components/Backlink";
-import Container from "@dashboard/components/Container";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import PageHeader from "@dashboard/components/PageHeader";
 import Savebar from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
@@ -21,11 +21,12 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import { parse, print } from "graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
+import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
 export interface WebhookFormData {
@@ -50,7 +51,6 @@ export interface WebhookDetailsPageProps {
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   appId,
-  appName,
   disabled,
   errors,
   webhook,
@@ -105,40 +105,41 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         );
 
         return (
-          <Container>
-            <Backlink href={backUrl}>{appName}</Backlink>
-            <PageHeader title={getHeaderTitle(intl, webhook)}>
-              <WebhookStatus
-                data={data.isActive}
-                disabled={disabled}
-                onChange={change}
-              />
-            </PageHeader>
-            <WebhookInfo
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
-            <FormSpacer />
-            <WebhookEvents
-              data={data}
-              onSyncEventChange={handleSyncEventsSelect}
-              onAsyncEventChange={handleAsyncEventsSelect}
-            />
-            <FormSpacer />
-            <WebhookSubscriptionQuery
-              query={query}
-              setQuery={setQuery}
-              data={data}
-            />
+          <DetailedContent useSingleColumn>
+            <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
+            <Content>
+              <Box paddingX={9}>
+                <WebhookStatus
+                  data={data.isActive}
+                  disabled={disabled}
+                  onChange={change}
+                />
+                <WebhookInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <FormSpacer />
+                <WebhookEvents
+                  data={data}
+                  onSyncEventChange={handleSyncEventsSelect}
+                  onAsyncEventChange={handleAsyncEventsSelect}
+                />
+                <WebhookSubscriptionQuery
+                  query={query}
+                  setQuery={setQuery}
+                  data={data}
+                />
+              </Box>
+            </Content>
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
               onCancel={() => navigate(backUrl)}
               onSubmit={submit}
             />
-          </Container>
+          </DetailedContent>
         );
       }}
     </Form>

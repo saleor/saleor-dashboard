@@ -1,10 +1,8 @@
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import PageHeader from "@dashboard/components/PageHeader";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
-import { sectionNames } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -24,7 +22,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   if (!giftCard) {
-    return <PageHeader preview title={getStringOrPlaceholder(undefined)} />;
+    return <TopNav title={getStringOrPlaceholder(undefined)} />;
   }
 
   const { last4CodeChars, isExpired } = giftCard;
@@ -35,12 +33,8 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
   return (
     <>
-      <Backlink href={giftCardsListPath}>
-        {intl.formatMessage(sectionNames.giftCards)}
-      </Backlink>
-      <PageHeader
-        preview
-        inline
+      <TopNav
+        href={giftCardsListPath}
         title={
           <div className={classes.title}>
             {title}
@@ -56,7 +50,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}
-      </PageHeader>
+      </TopNav>
     </>
   );
 };
