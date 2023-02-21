@@ -34,20 +34,18 @@ const getEventsFromQuery = (query: string) => {
 
 export const getUnavailableObjects = (query: string) => {
   const queryEvents = getEventsFromQuery(query);
-  const unavailableObjects = [];
 
-  queryEvents.forEach(event => {
+  return queryEvents.reduce((acc, event) => {
     const formattedEvent = event
       .split(/(?=[A-Z])/)
       .join("_")
       .toUpperCase();
-
     if (checkEventPresence(formattedEvent)) {
-      unavailableObjects.push(event);
+      acc.push(event);
     }
-  });
 
-  return unavailableObjects;
+    return acc;
+  }, []);
 };
 
 const checkEventPresence = (event: string) => {
