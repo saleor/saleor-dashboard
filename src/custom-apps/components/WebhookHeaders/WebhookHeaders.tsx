@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";
@@ -33,17 +33,13 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  const loaded = useRef(false);
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
   const headers = useMemo(() => mapHeaders(customHeaders), [customHeaders]);
 
   useEffect(() => {
     if (headers.length > 0) {
-      loaded.current = true;
-      if (headers.length > 0) {
-        setExpanded(true);
-      }
+      setExpanded(true);
     }
   }, [headers.length]);
 
