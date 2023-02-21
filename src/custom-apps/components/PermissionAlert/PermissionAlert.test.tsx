@@ -1,15 +1,11 @@
 import "@testing-library/jest-dom";
 
-import {
-  WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
 import { Fetcher } from "@graphiql/toolkit";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
-import WebhookSubscriptionQuery from "./WebhookSubscriptionQuery";
+import PermissionAlert from "./PermissionAlert";
 
 jest.mock("@graphiql/toolkit", () => ({
   clear: jest.fn(),
@@ -38,27 +34,37 @@ describe("WebhookSubscriptionQuery", () => {
   it("is available on the webhook page", async () => {
     // Arrange
     const props = {
-      query: "",
-      setQuery: jest.fn(),
-      data: {
-        syncEvents: [] as WebhookEventTypeSyncEnum[],
-        asyncEvents: [] as WebhookEventTypeAsyncEnum[],
-        isActive: false,
-        name: "",
-        targetUrl: "",
-        subscriptionQuery: "",
-      },
+      query: `subscription {
+        event {
+          ... on SaleUpdated {
+            version
+            sale {
+              name
+            }
+          }
+          ... on OrderCreated {
+            version
+            order {
+              invoices {
+                number
+              }
+            }
+          }
+        }
+      }
+      `,
     };
 
-    // Act
     render(
       <ApolloMockedProvider>
-        <WebhookSubscriptionQuery {...props} />
+        <PermissionAlert {...props} />
       </ApolloMockedProvider>,
     );
 
+    // FIXME async components don't work with the current setup
+    // await waitFor(() => new Promise((res) => setTimeout(res, 500)))
+
     // Assert
-    expect(screen.queryByTestId("graphiql-container")).toBeInTheDocument();
-    expect(screen.queryByTestId("graphiql-container2")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("permission-alert")).toBeInTheDocument();
   });
 });

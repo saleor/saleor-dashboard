@@ -83,6 +83,7 @@ const handleQuery = (
       .split("_")
       .map(chunk => capitalize(chunk))
       .join("");
+
     setQuery(
       print(parse(`subscription { event { ... on ${event} { __typename } } }`)),
     );
