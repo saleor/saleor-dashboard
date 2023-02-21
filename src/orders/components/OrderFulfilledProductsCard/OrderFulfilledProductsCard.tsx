@@ -95,6 +95,7 @@ const OrderFulfilledProductsCard: React.FC<
             <ExtraInfoLines fulfillment={fulfillment} />
           </ResponsiveTable>
           <ActionButtons
+            orderId={order?.id}
             status={fulfillment?.status}
             trackingNumber={fulfillment?.trackingNumber}
             orderIsPaid={order?.isPaid}

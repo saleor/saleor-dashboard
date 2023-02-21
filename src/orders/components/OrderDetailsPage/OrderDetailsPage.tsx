@@ -16,14 +16,13 @@ import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDetailsWithTransactionsFragment,
   OrderDetailsWithTransactionsQuery,
-  OrderErrorFragment,
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql/transactions";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
-import { OrderSharedType } from "@dashboard/orders/types";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -213,7 +212,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <DetailedContent>
-            <TopNav href={orderListUrl()} title={<Title order={order} />}>
+            <TopNav
+              href={orderListUrl()}
+              title={<Title order={order as OrderSharedType} />}
+            >
               <CardMenu
                 menuItems={[
                   ...selectCardMenuItems,

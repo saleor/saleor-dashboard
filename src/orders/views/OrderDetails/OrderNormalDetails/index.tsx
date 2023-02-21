@@ -191,8 +191,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         disabled={
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
         }
-        // TODO: Fix type mismatch
-        // @ts-expect-error
         errors={errors}
         onNoteAdd={variables =>
           extractMutationErrors(

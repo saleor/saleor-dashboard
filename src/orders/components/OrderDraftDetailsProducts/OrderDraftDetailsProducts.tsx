@@ -1,8 +1,7 @@
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderErrorFragment } from "@dashboard/graphql";
-import { OrderSharedType } from "@dashboard/orders/types";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,

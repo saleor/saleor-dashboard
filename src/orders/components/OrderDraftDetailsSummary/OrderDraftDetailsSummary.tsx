@@ -1,8 +1,8 @@
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
-import { DiscountValueTypeEnum, OrderErrorFragment } from "@dashboard/graphql";
-import { OrderSharedType } from "@dashboard/orders/types";
+import { DiscountValueTypeEnum } from "@dashboard/graphql";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";

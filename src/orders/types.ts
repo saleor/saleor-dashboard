@@ -1,11 +1,14 @@
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderErrorCode as OrderErrorCodeWithoutTransactions,
+  OrderErrorFragment as OrderErrorFragmentWithoutTransactions,
   OrderRefundDataQuery,
 } from "@dashboard/graphql";
 import {
   OrderDetailsWithTransactionsFragment,
   OrderDetailsWithTransactionsQuery,
+  OrderErrorCode as OrderErrorCodeWithTransactions,
   TransactionEventFragment,
   TransactionItemFragment,
 } from "@dashboard/graphql/transactions";
@@ -22,6 +25,25 @@ export type OrderSharedType = Pick<
   OrderDetailsWithTransactionsFragment,
   keyof OrderDetailsFragment & keyof OrderDetailsWithTransactionsFragment
 >;
+
+// convert TS enum to string union
+type OrderErrorCodeWithoutTransactionsUnion =
+  OrderErrorCodeWithoutTransactions[keyof OrderErrorCodeWithoutTransactions];
+type OrderErrorCodeWithTransactionsUnion =
+  OrderErrorCodeWithTransactions[keyof OrderErrorCodeWithTransactions];
+export type OrderErrorCode = OrderErrorCodeWithoutTransactionsUnion &
+  OrderErrorCodeWithTransactionsUnion;
+export const OrderErrorCode = {
+  ...OrderErrorCodeWithTransactions,
+  ...OrderErrorCodeWithoutTransactions,
+};
+
+export type OrderErrorFragment = Omit<
+  OrderErrorFragmentWithoutTransactions,
+  "code"
+> & {
+  code: OrderErrorCode;
+};
 
 export const isOrderWithTransactions = (
   _order: any,

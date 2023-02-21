@@ -1,8 +1,5 @@
-import {
-  OrderEventFragment,
-  OrderEventsEmailsEnum,
-  OrderEventsEnum,
-} from "@dashboard/graphql";
+import { OrderEventsEmailsEnum, OrderEventsEnum } from "@dashboard/graphql";
+import { OrderEventFragment } from "@dashboard/graphql/transactions";
 import { IntlShape } from "react-intl";
 
 export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {

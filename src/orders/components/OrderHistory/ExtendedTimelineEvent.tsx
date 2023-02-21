@@ -1,6 +1,9 @@
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import {
+  OrderEventFragment,
+  OrderEventsEnum,
+} from "@dashboard/graphql/transactions";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import camelCase from "lodash/camelCase";

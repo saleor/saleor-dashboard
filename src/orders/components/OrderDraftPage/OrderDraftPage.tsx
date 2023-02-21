@@ -9,14 +9,17 @@ import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
-  OrderErrorFragment,
   OrderLineInput,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
-import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
+import {
+  OrderBothTypes,
+  OrderErrorFragment,
+  OrderSharedType,
+} from "@dashboard/orders/types";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";

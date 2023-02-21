@@ -1,11 +1,7 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
-import {
-  ChannelUsabilityDataQuery,
-  OrderErrorFragment,
-  OrderLineInput,
-} from "@dashboard/graphql";
-import { OrderSharedType } from "@dashboard/orders/types";
+import { ChannelUsabilityDataQuery, OrderLineInput } from "@dashboard/graphql";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,

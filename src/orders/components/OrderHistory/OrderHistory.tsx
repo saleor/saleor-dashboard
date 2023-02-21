@@ -8,7 +8,7 @@ import {
   TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
-import { OrderEventFragment } from "@dashboard/graphql";
+import { OrderEventFragment } from "@dashboard/graphql/transactions";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { Typography } from "@material-ui/core";
 import React from "react";
