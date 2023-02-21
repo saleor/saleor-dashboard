@@ -163,7 +163,7 @@ describe("As an admin I should be able to create variant", () => {
               });
               getProductVariants(createdProduct.id, defaultChannel.slug);
             })
-            .then(([firstVariant, secondVariant]) => {
+            .then(([secondVariant, firstVariant]) => {
               expect(firstVariant).to.have.property("price", variants[0].price);
               expect(firstVariant).to.have.property("name", "value");
               expect(firstVariant).to.have.property("currency", "USD");

@@ -1,0 +1,24 @@
+#portal {
+  position: fixed;
+  top: 0;
+}
+
+html {
+  /* set base font size to 13px */
+  font-size: 50.782% !important;
+}
+
+body {
+  color: var(--mu-colors-foreground-text-neutral-plain) !important;
+  overscroll-behavior-y: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

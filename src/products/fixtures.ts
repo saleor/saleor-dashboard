@@ -635,8 +635,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            id: "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
             name: "Europe for click and collect",
             __typename: "Warehouse",
           },
@@ -647,8 +646,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            id: "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
             name: "Europe",
             __typename: "Warehouse",
           },
@@ -659,8 +657,7 @@ export const product: (
           quantity: 274,
           quantityAllocated: 2,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            id: "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
             name: "Asia",
             __typename: "Warehouse",
           },
@@ -671,8 +668,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            id: "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
             name: "Oceania",
             __typename: "Warehouse",
           },
@@ -683,8 +679,7 @@ export const product: (
           quantity: 272,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            id: "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
             name: "Africa",
             __typename: "Warehouse",
           },
@@ -695,8 +690,7 @@ export const product: (
           quantity: 274,
           quantityAllocated: 2,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            id: "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
             name: "Americas",
             __typename: "Warehouse",
           },
@@ -707,6 +701,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -731,6 +726,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNDM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -793,6 +789,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNEM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -817,6 +814,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoreNTM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -880,8 +878,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
+            id: "V2FyZWhvdXNlOmFmZDA4YjY4LWQwYmMtNGQ1My1iNjJkLTg1YWMxOWI3MjliYg==",
             name: "Europe",
             __typename: "Warehouse",
           },
@@ -892,8 +889,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
+            id: "V2FyZWhvdXNlOjMxOTRjNjY5LTY1YjItNDBjYy04ZDI5LWI3M2Q0YTUwODBmMQ==",
             name: "Asia",
             __typename: "Warehouse",
           },
@@ -904,8 +900,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
+            id: "V2FyZWhvdXNlOmQwODA2MzM5LTVhNjAtNDAxNi1hNGUwLTRjNDYxNTZlY2IzMQ==",
             name: "Americas",
             __typename: "Warehouse",
           },
@@ -916,8 +911,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
+            id: "V2FyZWhvdXNlOjI5YzBlYmYwLWVkNzktNDlmOS1hYmQ0LWQwNDBlOGNlZmI3Mg==",
             name: "Oceania",
             __typename: "Warehouse",
           },
@@ -928,8 +922,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
+            id: "V2FyZWhvdXNlOjI2NDNiNmIwLWExMTQtNGRiMC1hM2U4LTFkZGY3ZGM3NDVkMg==",
             name: "Europe for click and collect",
             __typename: "Warehouse",
           },
@@ -940,8 +933,7 @@ export const product: (
           quantity: 418,
           quantityAllocated: 0,
           warehouse: {
-            id:
-              "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
+            id: "V2FyZWhvdXNlOjRiNjc1ZmVlLTE3OWYtNGMwNS04YmJlLWE0ZDJjOTc0OWQzMA==",
             name: "Africa",
             __typename: "Warehouse",
           },
@@ -952,6 +944,7 @@ export const product: (
       preorder: null,
       channelListings: [
         {
+          id: "UHJvZHVjdFZhcmlhbnRDaSAD3w2FubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
@@ -976,6 +969,7 @@ export const product: (
           __typename: "ProductVariantChannelListing",
         },
         {
+          id: "UHJvZHVjdFZhcmlhdwxDaGFubmVsTGlzdGluZzoyNTM=",
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
@@ -3215,6 +3209,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
   __typename: "ProductVariant",
   channelListings: [
     {
+      id: "UHJvZHVjdFZhcasdasdASDDaGFubmVsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
       channel: {
         __typename: "Channel",
@@ -3239,6 +3234,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       },
     },
     {
+      id: "UHJvZHVjdFZhcmlhbnRDaGGSAEdsWsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
       channel: {
         __typename: "Channel",
@@ -3377,8 +3373,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     __typename: "Product" as "Product",
     channelListings: [
       {
+        id: "2",
         __typename: "ProductChannelListing",
-        id: "11",
         isPublished: false,
         publicationDate: null,
         channel: {
@@ -3389,8 +3385,8 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         },
       },
       {
+        id: "2",
         __typename: "ProductChannelListing",
-        id: "12",
         isPublished: true,
         publicationDate: "2022-01-21",
         channel: {
@@ -3791,10 +3787,9 @@ export const variantProductImages = (placeholderImage: string) =>
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
 
-export const productTypesList: Array<Pick<
-  ProductType,
-  "id" | "name" | "hasVariants"
->> = [
+export const productTypesList: Array<
+  Pick<ProductType, "id" | "name" | "hasVariants">
+> = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",

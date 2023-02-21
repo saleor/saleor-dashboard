@@ -1,13 +1,11 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Container from "@dashboard/components/Container";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   LanguageCodeEnum,
   ProductVariantTranslationFragment,
 } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
@@ -51,15 +49,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
-      <Backlink
+    <>
+      <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
         })}
-      >
-        {intl.formatMessage(sectionNames.products)}
-      </Backlink>
-      <PageHeader
         title={intl.formatMessage(
           {
             id: "98WMlR",
@@ -85,7 +79,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             productVariantUrl(lang, productId, translationId)
           }
         />
-      </PageHeader>
+      </TopNav>
       <TranslationFields
         activeField={activeField}
         disabled={disabled}
@@ -130,7 +124,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           <CardSpacer />
         </>
       )}
-    </Container>
+    </>
   );
 };
 TranslationsProductsPage.displayName = "TranslationsProductsPage";

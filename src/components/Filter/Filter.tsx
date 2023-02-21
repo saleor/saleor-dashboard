@@ -1,6 +1,7 @@
 import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -51,7 +52,6 @@ const useStyles = makeStyles(
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 600 as 600,
-      textTransform: "uppercase",
     },
     filterButton: {
       padding: theme.spacing(1, 2),
@@ -66,6 +66,10 @@ const useStyles = makeStyles(
       width: 240,
     },
     popover: {
+      backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      overflowY: "scroll",
+      boxShadow: `0px 6px 11px 9px ${theme.palette.divider}`,
+      height: 450,
       width: 376,
       zIndex: 3,
     },
@@ -182,14 +186,8 @@ const Filter: React.FC<FilterProps> = props => {
             },
           }}
         >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "right top" : "right bottom",
-              }}
-            >
+          {() => (
+            <Grow>
               <FilterContent
                 errorMessages={errorMessages}
                 errors={filterErrors}

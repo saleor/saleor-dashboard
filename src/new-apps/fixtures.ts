@@ -130,7 +130,7 @@ export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
   privacyUrl: "https://www.released-example.com/privacy",
   supportUrl: "https://www.released-example.com/support",
   repositoryUrl: "https://www.released-example.com/repository",
-  vercelDeploymentUrl: "https://www.released-example.com/deployment",
+  githubForkUrl: "https://www.released-example.com/repository/fork",
   integrations: [
     {
       name: "First released integration",

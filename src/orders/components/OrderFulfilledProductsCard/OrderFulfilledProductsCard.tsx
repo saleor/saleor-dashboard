@@ -4,7 +4,7 @@ import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { OrderSharedType } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, TableBody } from "@material-ui/core";
+import { Card, CardContent, TableBody } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -84,24 +84,25 @@ const OrderFulfilledProductsCard: React.FC<
             )
           }
         />
-        <ResponsiveTable className={classes.table}>
-          <TableHeader />
-          <TableBody>
-            {renderCollection(getLines(), line => (
-              <TableLine key={line.id} line={line} />
-            ))}
-          </TableBody>
-          <ExtraInfoLines fulfillment={fulfillment} />
-        </ResponsiveTable>
-        <ActionButtons
-          orderId={order?.id}
-          status={fulfillment?.status}
-          trackingNumber={fulfillment?.trackingNumber}
-          orderIsPaid={order?.isPaid}
-          fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-          onTrackingCodeAdd={onTrackingCodeAdd}
-          onApprove={onOrderFulfillmentApprove}
-        />
+        <CardContent>
+          <ResponsiveTable className={classes.table}>
+            <TableHeader />
+            <TableBody>
+              {renderCollection(getLines(), line => (
+                <TableLine key={line.id} line={line} />
+              ))}
+            </TableBody>
+            <ExtraInfoLines fulfillment={fulfillment} />
+          </ResponsiveTable>
+          <ActionButtons
+            status={fulfillment?.status}
+            trackingNumber={fulfillment?.trackingNumber}
+            orderIsPaid={order?.isPaid}
+            fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+            onTrackingCodeAdd={onTrackingCodeAdd}
+            onApprove={onOrderFulfillmentApprove}
+          />
+        </CardContent>
       </Card>
       <CardSpacer />
     </>

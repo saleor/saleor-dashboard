@@ -19,7 +19,10 @@ export default defineConfig(({ command, mode }) => {
     API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
-    MARKETPLACE_URL,
+    /**
+     * @deprecated
+     */
+    MARKETPLACE_URL, // To be removed
     SALEOR_APPS_ENDPOINT,
     APP_MOUNT_URI,
     SENTRY_ORG,
@@ -180,7 +183,10 @@ export default defineConfig(({ command, mode }) => {
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
           We enforce to use a different path, ignoring jsnext:main field.
         */
-        moment: path.resolve(__dirname, "./node_modules/moment/moment.js"),
+        moment: path.resolve(
+          __dirname,
+          "./node_modules/moment/min/moment-with-locales.js",
+        ),
       },
     },
     plugins,

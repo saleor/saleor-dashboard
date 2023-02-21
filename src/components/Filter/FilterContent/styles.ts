@@ -1,4 +1,3 @@
-import { alpha } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
@@ -10,7 +9,6 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2),
     },
     filterSettings: {
-      background: alpha(theme.palette.primary.main, 0.1),
       padding: theme.spacing(2, 3),
     },
     inputRange: {

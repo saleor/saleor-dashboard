@@ -244,7 +244,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <>
-        <DialogTitle>
+        <DialogTitle disableTypography>
           <FormattedMessage {...messages.title} />
         </DialogTitle>
         <DialogContent>

@@ -26,7 +26,7 @@ describe("App utils app details", () => {
       privacyUrl: "https://www.example.com/privacy",
       supportUrl: "https://www.example.com/support",
       repositoryUrl: "https://www.example.com/repository",
-      vercelDeploymentUrl: "https://www.example.com/deployment",
+      githubForkUrl: "https://www.example.com/repository/fork",
     };
 
     // Act
@@ -35,7 +35,7 @@ describe("App utils app details", () => {
       app,
       appInstallation: undefined,
       navigateToAppInstallPage: () => undefined,
-      navigateToVercelDeploymentPage: () => undefined,
+      navigateToGithubForkPage: () => undefined,
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
@@ -44,7 +44,7 @@ describe("App utils app details", () => {
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
       installHandler: expect.any(Function),
-      vercelDeployHandler: expect.any(Function),
+      githubForkHandler: expect.any(Function),
       installationPending: undefined,
       removeInstallHandler: undefined,
       retryInstallHandler: undefined,
@@ -89,7 +89,7 @@ describe("App utils app details", () => {
       app,
       appInstallation: undefined,
       navigateToAppInstallPage: () => undefined,
-      navigateToVercelDeploymentPage: () => undefined,
+      navigateToGithubForkPage: () => undefined,
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
@@ -98,7 +98,7 @@ describe("App utils app details", () => {
     const expectedDetails: AppDetails = {
       releaseDate: "2019-12-16",
       installHandler: undefined,
-      vercelDeployHandler: undefined,
+      githubForkHandler: undefined,
       links: [],
       installationPending: undefined,
       removeInstallHandler: undefined,
@@ -125,7 +125,7 @@ describe("App utils app details", () => {
       privacyUrl: "https://www.example.com/privacy",
       supportUrl: "https://www.example.com/support",
       repositoryUrl: "https://www.example.com/repository",
-      vercelDeploymentUrl: "https://www.example.com/deployment",
+      githubForkUrl: "https://www.example.com/repository/fork",
     };
     const appInstallation: AppInstallationFragment = {
       __typename: "AppInstallation",
@@ -142,7 +142,7 @@ describe("App utils app details", () => {
       app,
       appInstallation,
       navigateToAppInstallPage: () => undefined,
-      navigateToVercelDeploymentPage: () => undefined,
+      navigateToGithubForkPage: () => undefined,
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
@@ -151,7 +151,7 @@ describe("App utils app details", () => {
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
       installHandler: undefined,
-      vercelDeployHandler: undefined,
+      githubForkHandler: undefined,
       links: [
         {
           name: expect.any(String),
@@ -191,7 +191,7 @@ describe("App utils app details", () => {
       privacyUrl: "https://www.example.com/privacy",
       supportUrl: "https://www.example.com/support",
       repositoryUrl: "https://www.example.com/repository",
-      vercelDeploymentUrl: "https://www.example.com/deployment",
+      githubForkUrl: "https://www.example.com/repository/fork",
     };
     const appInstallation: AppInstallationFragment = {
       __typename: "AppInstallation",
@@ -208,7 +208,7 @@ describe("App utils app details", () => {
       app,
       appInstallation,
       navigateToAppInstallPage: () => undefined,
-      navigateToVercelDeploymentPage: () => undefined,
+      navigateToGithubForkPage: () => undefined,
       removeAppInstallation: () => undefined,
       retryAppInstallation: () => undefined,
     });
@@ -217,7 +217,7 @@ describe("App utils app details", () => {
     const expectedDetails: AppDetails = {
       releaseDate: undefined,
       installHandler: undefined,
-      vercelDeployHandler: undefined,
+      githubForkHandler: undefined,
       links: [
         {
           name: expect.any(String),
@@ -248,7 +248,7 @@ describe("App utils app details", () => {
         appName: releasedApp.name.en,
         status: JobStatusEnum.PENDING,
         message: "Test message",
-        manifestUrl: releasedApp.manifestUrl,
+        manifestUrl: releasedApp.manifestUrl as string,
       };
       const appInstallationList: AppInstallationFragment[] = [
         releasedAppInstallation,

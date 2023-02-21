@@ -1,11 +1,11 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import Container from "@dashboard/components/Container";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
-import PageHeader from "@dashboard/components/PageHeader";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -14,10 +14,11 @@ import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -54,15 +55,17 @@ export interface SiteSettingsPageProps {
 export function areAddressInputFieldsModified(
   data: SiteSettingsPageAddressFormData,
 ): boolean {
-  return ([
-    "city",
-    "country",
-    "countryArea",
-    "phone",
-    "postalCode",
-    "streetAddress1",
-    "streetAddress2",
-  ] as Array<keyof SiteSettingsPageAddressFormData>)
+  return (
+    [
+      "city",
+      "country",
+      "countryArea",
+      "phone",
+      "postalCode",
+      "streetAddress1",
+      "streetAddress2",
+    ] as Array<keyof SiteSettingsPageAddressFormData>
+  )
     .map(key => data[key])
     .some(field => field !== "");
 }
@@ -90,10 +93,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     shop?.companyAddress?.country.country || "",
   );
 
-  const {
-    errors: validationErrors,
-    submit: handleSubmitWithAddress,
-  } = useAddressValidation(onSubmit);
+  const { errors: validationErrors, submit: handleSubmitWithAddress } =
+    useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
     city: shop?.companyAddress?.city || "",
@@ -138,56 +139,58 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <Container>
-            <Backlink href={configurationMenuUrl}>
-              {intl.formatMessage(sectionNames.configuration)}
-            </Backlink>
-            <PageHeader
+          <DetailedContent>
+            <TopNav
+              href={configurationMenuUrl}
               title={intl.formatMessage(commonMessages.generalInformations)}
-              underline={true}
             />
-            <Grid variant="inverted">
-              <PageSectionHeader
-                title={intl.formatMessage(messages.sectionCheckoutTitle)}
-                description={intl.formatMessage(
-                  messages.sectionCheckoutDescription,
-                )}
+            <Content>
+              <Grid
+                variant="inverted"
+                className={sprinkles({ paddingLeft: 9 })}
+              >
+                <PageSectionHeader
+                  title={intl.formatMessage(messages.sectionCheckoutTitle)}
+                  description={intl.formatMessage(
+                    messages.sectionCheckoutDescription,
+                  )}
+                />
+                <SiteCheckoutSettingsCard
+                  data={data}
+                  errors={errors}
+                  disabled={disabled}
+                  onChange={change}
+                />
+                <Hr className={classes.hr} />
+                <PageSectionHeader
+                  title={intl.formatMessage(messages.sectionCompanyTitle)}
+                  description={intl.formatMessage(
+                    messages.sectionCompanyDescription,
+                  )}
+                />
+                <CompanyAddressInput
+                  data={data}
+                  displayCountry={displayCountry}
+                  countries={countryChoices}
+                  errors={[...errors, ...validationErrors]}
+                  disabled={disabled}
+                  header={intl.formatMessage({
+                    id: "+jCDvp",
+                    defaultMessage: "Store Information",
+                    description: "section header",
+                  })}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
+              </Grid>
+              <Savebar
+                state={saveButtonBarState}
+                disabled={!!isSaveDisabled}
+                onCancel={() => navigate(configurationMenuUrl)}
+                onSubmit={submit}
               />
-              <SiteCheckoutSettingsCard
-                data={data}
-                errors={errors}
-                disabled={disabled}
-                onChange={change}
-              />
-              <Hr className={classes.hr} />
-              <PageSectionHeader
-                title={intl.formatMessage(messages.sectionCompanyTitle)}
-                description={intl.formatMessage(
-                  messages.sectionCompanyDescription,
-                )}
-              />
-              <CompanyAddressInput
-                data={data}
-                displayCountry={displayCountry}
-                countries={countryChoices}
-                errors={[...errors, ...validationErrors]}
-                disabled={disabled}
-                header={intl.formatMessage({
-                  id: "+jCDvp",
-                  defaultMessage: "Store Information",
-                  description: "section header",
-                })}
-                onChange={change}
-                onCountryChange={handleCountrySelect}
-              />
-            </Grid>
-            <Savebar
-              state={saveButtonBarState}
-              disabled={!!isSaveDisabled}
-              onCancel={() => navigate(configurationMenuUrl)}
-              onSubmit={submit}
-            />
-          </Container>
+            </Content>
+          </DetailedContent>
         );
       }}
     </Form>

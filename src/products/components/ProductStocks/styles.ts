@@ -1,4 +1,5 @@
 import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -36,12 +37,14 @@ export const useStyles = makeStyles(
     },
     paper: {
       padding: theme.spacing(2),
+      maxHeight: 400,
+      overflow: "scroll",
+      border: `1px solid ${vars.colors.border.neutralDefault}`,
+      borderRadius: vars.borderRadius[3],
     },
     popper: {
       marginTop: theme.spacing(1),
       zIndex: 2,
-      maxHeight: 400,
-      overflow: "scroll",
     },
     quantityContainer: {
       paddingTop: theme.spacing(),

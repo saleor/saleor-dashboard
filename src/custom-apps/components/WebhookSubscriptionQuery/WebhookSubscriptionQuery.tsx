@@ -14,8 +14,8 @@ import { useStyles } from "./styles";
 
 const messages = defineMessages({
   title: {
-    id: "QpSQ5w",
-    defaultMessage: "Payload Query",
+    id: "lEG/12",
+    defaultMessage: "Subscription Query",
     description: "Webhook subscription query card title",
   },
 });
@@ -48,7 +48,10 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
     <Card
       className={clsx(classes.card, data.syncEvents.length && classes.disabled)}
     >
-      <CardTitle title={intl.formatMessage(messages.title)} />
+      <CardTitle
+        title={intl.formatMessage(messages.title)}
+        className={classes.cardTitle}
+      />
       <CardContent className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"

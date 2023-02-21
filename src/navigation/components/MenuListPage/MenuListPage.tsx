@@ -1,7 +1,5 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { MenuFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -27,11 +25,11 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   });
 
   return (
-    <Container>
-      <Backlink href={configurationMenuUrl}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
-      <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
+    <>
+      <TopNav
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.navigation)}
+      >
         <Button variant="primary" href={addUrl} data-test-id="add-menu">
           <FormattedMessage
             id="JXRYQg"
@@ -39,9 +37,9 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <MenuList {...listProps} />
-    </Container>
+    </>
   );
 };
 MenuListPage.displayName = "MenuListPage";

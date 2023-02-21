@@ -23,7 +23,9 @@ interface ProductVariantImageSelectDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
+const ProductVariantMediaSelectDialog: React.FC<
+  ProductVariantImageSelectDialogProps
+> = props => {
   const {
     media,
     open,
@@ -59,7 +61,7 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage
           id="iPk640"
           defaultMessage="Media Selection"

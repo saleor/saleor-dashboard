@@ -32,12 +32,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  const {
-    editorRef,
-    defaultValue,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { editorRef, defaultValue, isReadyForMount, handleChange } =
+    useRichTextContext();
 
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
 
@@ -50,7 +46,6 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         <TextField
           error={!!formErrors.name}
           helperText={getProductErrorMessage(formErrors.name, intl)}
-          disabled={disabled}
           fullWidth
           label={intl.formatMessage({
             id: "6AMFki",

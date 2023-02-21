@@ -16,14 +16,10 @@ export const useStyles = makeStyles(
     },
     appLoader: {
       height: appLoaderHeight,
-      marginBottom: theme.spacing(4),
       zIndex: 1201,
+      position: "fixed",
+      width: "100%",
     },
-    appLoaderPlaceholder: {
-      height: appLoaderHeight,
-      marginBottom: theme.spacing(4),
-    },
-
     content: {
       flex: 1,
       [theme.breakpoints.up("md")]: {

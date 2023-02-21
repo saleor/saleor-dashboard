@@ -10,8 +10,12 @@ program
   .description("Approve and merge PR if patch release")
   .option("--version <version>", "version of a project")
   .option("--token <token>", "token fo login to cloud")
+  .option("--repo_token <repo_token>", "github token")
   .action(async options => {
-    const isOldVersion = await checkIfOldVersion(options.version);
+    const isOldVersion = await checkIfOldVersion(
+      options.version,
+      options.repo_token,
+    );
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
     if (!isPatchRelease(options.version)) {
@@ -176,16 +180,18 @@ async function getDomainForUpdatedEnvironment(environmentId, token) {
   return responseInJson.domain;
 }
 
-async function checkIfOldVersion(version) {
-  const newestVersion = await getTheNewestVersion();
+async function checkIfOldVersion(version, token) {
+  const newestVersion = await getTheNewestVersion(token);
   const howManyVersionsBehind =
     getFormattedVersion(newestVersion) - getFormattedVersion(version);
   //All versions besides last three are old versions
   return howManyVersionsBehind > 2 ? "true" : "false";
 }
 
-async function getTheNewestVersion() {
-  const octokit = new Octokit();
+async function getTheNewestVersion(token) {
+  const octokit = new Octokit({
+    auth: token,
+  });
 
   const response = await octokit.request(
     "GET /repos/{owner}/{repo}/releases/latest",

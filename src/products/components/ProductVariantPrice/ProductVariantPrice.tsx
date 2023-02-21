@@ -31,7 +31,7 @@ const useStyles = makeStyles(
   () => ({
     colPrice: {
       textAlign: "right",
-      verticalAlign: "top",
+      verticalAlign: "middle",
       width: 200,
     },
     colType: {

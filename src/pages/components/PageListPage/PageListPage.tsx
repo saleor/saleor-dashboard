@@ -1,6 +1,5 @@
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
-import Container from "@dashboard/components/Container";
-import PageHeader from "@dashboard/components/PageHeader";
 import { PageFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import {
@@ -39,8 +38,8 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const intl = useIntl();
 
   return (
-    <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.pages)}>
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.pages)}>
         <Button onClick={onAdd} variant="primary" data-test-id="create-page">
           <FormattedMessage
             id="AHRDWt"
@@ -48,7 +47,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
             description="button"
           />
         </Button>
-      </PageHeader>
+      </TopNav>
       <Card>
         <PageListSearchAndFilters
           params={params}
@@ -56,7 +55,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
         />
         <PageList {...listProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 PageListPage.displayName = "PageListPage";

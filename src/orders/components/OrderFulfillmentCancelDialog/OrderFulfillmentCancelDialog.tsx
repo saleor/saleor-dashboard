@@ -46,15 +46,11 @@ export interface OrderFulfillmentCancelDialogProps {
   onConfirm(data: OrderFulfillmentCancelDialogFormData);
 }
 
-const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
-  const {
-    confirmButtonState,
-    errors,
-    open,
-    warehouses,
-    onConfirm,
-    onClose,
-  } = props;
+const OrderFulfillmentCancelDialog: React.FC<
+  OrderFulfillmentCancelDialogProps
+> = props => {
+  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } =
+    props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -84,7 +80,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
           );
           return (
             <>
-              <DialogTitle>
+              <DialogTitle disableTypography>
                 <FormattedMessage
                   id="bb4nSp"
                   defaultMessage="Cancel Fulfillment"

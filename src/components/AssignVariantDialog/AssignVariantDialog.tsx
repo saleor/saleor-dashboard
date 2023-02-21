@@ -94,7 +94,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
       <DialogContent>

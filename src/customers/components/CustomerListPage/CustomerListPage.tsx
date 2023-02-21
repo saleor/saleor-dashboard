@@ -5,11 +5,10 @@ import {
   useExtensions,
 } from "@dashboard/apps/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
-import Container from "@dashboard/components/Container";
 import FilterBar from "@dashboard/components/FilterBar";
-import PageHeader from "@dashboard/components/PageHeader";
 import {
   customerAddUrl,
   CustomerListUrlSortField,
@@ -77,10 +76,8 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
-  const {
-    CUSTOMER_OVERVIEW_CREATE,
-    CUSTOMER_OVERVIEW_MORE_ACTIONS,
-  } = useExtensions(extensionMountPoints.CUSTOMER_LIST);
+  const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } =
+    useExtensions(extensionMountPoints.CUSTOMER_LIST);
   const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
     selectedCustomerIds,
@@ -88,18 +85,14 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const extensionCreateButtonItems = mapToMenuItems(CUSTOMER_OVERVIEW_CREATE);
 
   return (
-    <Container>
-      <PageHeader
-        title={intl.formatMessage(sectionNames.customers)}
-        cardMenu={
-          extensionMenuItems.length > 0 && (
-            <CardMenu
-              className={classes.settings}
-              menuItems={extensionMenuItems}
-            />
-          )
-        }
-      >
+    <>
+      <TopNav title={intl.formatMessage(sectionNames.customers)}>
+        {extensionMenuItems.length > 0 && (
+          <CardMenu
+            className={classes.settings}
+            menuItems={extensionMenuItems}
+          />
+        )}
         <ButtonWithSelect
           onClick={() => navigate(customerAddUrl)}
           options={extensionCreateButtonItems}
@@ -111,7 +104,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
             description="button"
           />
         </ButtonWithSelect>
-      </PageHeader>
+      </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
@@ -136,7 +129,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
         />
         <CustomerList {...customerListProps} />
       </Card>
-    </Container>
+    </>
   );
 };
 CustomerListPage.displayName = "CustomerListPage";

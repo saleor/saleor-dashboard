@@ -2,7 +2,7 @@ import { AppInstallationFragment } from "@dashboard/graphql";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { getAppDetails } from "@dashboard/new-apps/utils";
-import { Card, CardContent } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -10,22 +10,20 @@ import AppListCardActions from "./AppListCardActions";
 import AppListCardDescription from "./AppListCardDescription";
 import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
-import { useStyles } from "./styles";
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (manifestUrl: string) => void;
-  navigateToVercelDeploymentPage?: (vercelDeploymentUrl: string) => void;
+  navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AppListCard: React.FC<AppListCardProps> = ({
   app,
   appInstallation,
   navigateToAppInstallPage,
-  navigateToVercelDeploymentPage,
+  navigateToGithubForkPage,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
@@ -34,29 +32,38 @@ const AppListCard: React.FC<AppListCardProps> = ({
     app,
     appInstallation,
     navigateToAppInstallPage,
-    navigateToVercelDeploymentPage,
+    navigateToGithubForkPage,
     retryAppInstallation,
     removeAppInstallation,
   });
 
   return (
-    <>
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          <AppListCardDescription app={app} />
-          <AppListCardLinks links={details.links} />
-          <AppListCardIntegrations app={app} />
-        </CardContent>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      borderStyle="solid"
+      borderWidth={1}
+      padding={8}
+      borderRadius={3}
+      borderColor="neutralPlain"
+    >
+      <Box>
+        <AppListCardDescription app={app} />
+        <AppListCardLinks links={details.links} />
+      </Box>
+      <Box>
+        <AppListCardIntegrations app={app} />
         <AppListCardActions
           releaseDate={details.releaseDate}
           installationPending={details.installationPending}
           installHandler={details.installHandler}
-          vercelDeployHandler={details.vercelDeployHandler}
+          githubForkHandler={details.githubForkHandler}
           retryInstallHandler={details.retryInstallHandler}
           removeInstallHandler={details.removeInstallHandler}
         />
-      </Card>
-    </>
+      </Box>
+    </Box>
   );
 };
 AppListCard.displayName = "AppListCard";

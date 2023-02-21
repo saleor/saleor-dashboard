@@ -69,6 +69,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   return (
     <Card data-test-id="OrderPayment">
       <CardTitle
+        className={classes.payments}
         title={
           !order?.paymentStatus ? (
             <Skeleton />
@@ -116,7 +117,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           )
         }
       />
-      <CardContent>
+      <CardContent className={classes.payments}>
         <div className={classes.root}>
           {order?.discounts?.map(discount => (
             <div>
@@ -201,7 +202,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         </div>
       </CardContent>
       <Hr />
-      <CardContent>
+      <CardContent className={classes.payments}>
         <div className={classes.root}>
           {!!usedGiftCardAmount && (
             <div>

@@ -2,6 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -11,7 +12,12 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
+      position: "sticky",
+      top: 0,
       padding: theme.spacing(1, 3),
+      backgroundColor: vars.colors.background.surfaceNeutralPlain,
+      borderBottom: `1px solid ${vars.colors.border.neutralPlain}`,
+      zIndex: 1,
     },
     clear: {
       marginRight: theme.spacing(1),

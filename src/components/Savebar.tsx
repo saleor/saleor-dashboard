@@ -1,5 +1,6 @@
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import {
+  makeStyles,
   Savebar as MacawSavebar,
   SavebarLabels,
   SavebarProps as MacawSavebarProps,
@@ -7,12 +8,38 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { contentMaxWidth, savebarHeight } from "./AppLayout/consts";
+
 export interface SavebarProps extends Omit<MacawSavebarProps, "labels"> {
   labels?: Partial<SavebarLabels>;
 }
 
+const useStyles = makeStyles(
+  {
+    root: {
+      height: savebarHeight,
+      "& .MuiContainer-root": {
+        paddingRight: 0,
+        paddingLeft: 0,
+        maxWidth: contentMaxWidth,
+        margin: "0 auto",
+      },
+      "& .MuiPaper-root": {
+        boxShadow: "none",
+      },
+      "& .MuiCardContent-root": {
+        marginTop: 0,
+      },
+    },
+  },
+  {
+    name: "Savebar",
+  },
+);
+
 export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const defaultLabels: SavebarLabels = {
     cancel: intl.formatMessage(buttonMessages.back),
@@ -25,7 +52,9 @@ export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
     ...labels,
   };
 
-  return <MacawSavebar labels={componentLabels} {...rest} />;
+  return (
+    <MacawSavebar labels={componentLabels} {...rest} className={classes.root} />
+  );
 };
 Savebar.displayName = "SaveBar";
 export default Savebar;

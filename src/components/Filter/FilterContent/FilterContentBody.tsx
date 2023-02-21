@@ -5,7 +5,6 @@ import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/util
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Skeleton from "@dashboard/components/Skeleton";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
-import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -27,7 +26,6 @@ import {
 const useStyles = makeStyles(
   theme => ({
     filterSettings: {
-      background: alpha(theme.palette.primary.main, 0.1),
       padding: theme.spacing(2, 3),
     },
 
