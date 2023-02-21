@@ -6,12 +6,25 @@ import { borderHeight, savebarHeight, topBarHeight } from "./consts";
 interface ContentProps {
   [key: `data-${string}`]: string;
   children: React.ReactNode;
+  noSavebar?: boolean;
+  noTopNav?: boolean;
 }
 
-export const Content: React.FC<ContentProps> = ({ children, ...rest }) => (
+export const Content: React.FC<ContentProps> = ({
+  children,
+  noSavebar = false,
+  noTopNav = false,
+  ...rest
+}) => (
   <Box
     __gridArea="content"
-    __height={`calc(100vh - ${topBarHeight} - ${savebarHeight} - ${borderHeight})`}
+    __height={
+      noSavebar
+        ? "100%"
+        : `calc(100vh - ${
+            noTopNav ? "0px" : topBarHeight
+          } - ${savebarHeight} - ${borderHeight})`
+    }
     overflowY="auto"
     className="hide-scrollbar"
     {...rest}

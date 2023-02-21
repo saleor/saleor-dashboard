@@ -1,4 +1,7 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
+import {
+  borderHeight,
+  topBarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -46,72 +49,73 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           />
         </Button>
       </TopNav>
-      <Content>
-        <Box padding={9}>
-          <Box marginBottom={4}>
-            <Text as="p">
-              <FormattedMessage
-                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
+      <Box
+        padding={9}
+        __height={`calc(100vh - ${topBarHeight} - ${borderHeight})`}
+      >
+        <Box marginBottom={4}>
+          <Text as="p">
+            <FormattedMessage
+              defaultMessage="Local apps are custom webhooks & token pairs that can be used to
             connect apps and access Saleor API."
-                id="L/sNGY"
-              />
-            </Text>
-          </Box>
+              id="L/sNGY"
+            />
+          </Text>
+        </Box>
 
-          <ResponsiveTable>
-            <TableBody>
-              {renderCollection(
-                appsList,
-                (app, index) =>
-                  app ? (
-                    <TableRowLink
-                      key={app.id}
-                      className={classes.tableRow}
-                      href={getCustomAppHref(app.id)}
-                    >
-                      <TableCell className={classes.colName}>
-                        <span data-tc="name" className={classes.appName}>
-                          {app.name}
-                        </span>
-                        {!app.isActive && (
-                          <div className={classes.statusWrapper}>
-                            <DeactivatedText />
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell className={classes.colAction}>
-                        <TableButtonWrapper>
-                          <IconButton
-                            variant="secondary"
-                            color="primary"
-                            onClick={() => onRemove(app.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableButtonWrapper>
-                      </TableCell>
-                    </TableRowLink>
-                  ) : (
-                    <AppsSkeleton key={index} />
-                  ),
-                () => (
-                  <TableRowLink className={classes.tableRow}>
+        <ResponsiveTable>
+          <TableBody>
+            {renderCollection(
+              appsList,
+              (app, index) =>
+                app ? (
+                  <TableRowLink
+                    key={app.id}
+                    className={classes.tableRow}
+                    href={getCustomAppHref(app.id)}
+                  >
                     <TableCell className={classes.colName}>
-                      <Typography className={classes.text} variant="body2">
-                        <FormattedMessage
-                          id="voRaz3"
-                          defaultMessage="Your custom-created apps will be shown here."
-                          description="custom apps content"
-                        />
-                      </Typography>
+                      <span data-tc="name" className={classes.appName}>
+                        {app.name}
+                      </span>
+                      {!app.isActive && (
+                        <div className={classes.statusWrapper}>
+                          <DeactivatedText />
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.colAction}>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          color="primary"
+                          onClick={() => onRemove(app.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableButtonWrapper>
                     </TableCell>
                   </TableRowLink>
+                ) : (
+                  <AppsSkeleton key={index} />
                 ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </Box>
-      </Content>
+              () => (
+                <TableRowLink className={classes.tableRow}>
+                  <TableCell className={classes.colName}>
+                    <Typography className={classes.text} variant="body2">
+                      <FormattedMessage
+                        id="voRaz3"
+                        defaultMessage="Your custom-created apps will be shown here."
+                        description="custom apps content"
+                      />
+                    </Typography>
+                  </TableCell>
+                </TableRowLink>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </Box>
     </>
   );
 };

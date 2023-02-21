@@ -86,8 +86,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
-        <DetailedContent>
-          <Content>
+        <DetailedContent useSingleColumn>
+          <Content noTopNav>
             <Box padding={9} margin="auto" height="100vh">
               <Backlink href={menuListUrl()}>
                 {intl.formatMessage(sectionNames.navigation)}
