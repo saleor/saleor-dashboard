@@ -21,7 +21,8 @@ export const Content: React.FC<ContentProps> = ({
   return (
     <Box
       __gridArea="content"
-      __height={noSavebar ? withoutSaveBar() : withSaveBar({ noTopNav })}
+      // __height={noSavebar ? withoutSaveBar() : withSaveBar({ noTopNav })}
+      height="100%"
       overflowY="auto"
       className="hide-scrollbar"
       {...rest}

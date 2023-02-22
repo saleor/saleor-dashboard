@@ -2,8 +2,6 @@ import { Box } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
-import { borderHeight, savebarHeight } from "./consts";
-
 interface RightSidebarProps {
   children: React.ReactNode;
   className?: string;
@@ -19,9 +17,10 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
     borderStyle="solid"
     borderColor="neutralPlain"
     borderLeftWidth={1}
-    __height={
-      noSavebar ? "100%" : `calc(100vh - ${savebarHeight} - ${borderHeight})`
-    }
+    // __height={
+    //   noSavebar ? "100%" : `calc(100vh - ${savebarHeight} - ${borderHeight})`
+    // }
+    height="100%"
     position="sticky"
     top={0}
     overflowY="auto"

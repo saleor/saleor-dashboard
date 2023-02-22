@@ -29,8 +29,9 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
     <Box
       as="div"
       display="grid"
-      height={constHeight ? "100vh" : "100%"}
+      // height={constHeight ? "100vh" : "100%"}
       margin="auto"
+      __height="calc(100vh - 64px - 1px)"
       __maxWidth={contentMaxWidth}
       __gridTemplateColumns={useSingleColumn ? "1fr" : "9fr 4fr"}
       __gridTemplateRows="auto 1fr"
