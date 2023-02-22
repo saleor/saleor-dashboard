@@ -27,11 +27,11 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+  const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
     const { name, value } = target;
     const [field, index] = name.split(nameSeparator);
 
-    const item = headers[index];
+    const item: Header = headers[index];
 
     // lowercase header name
     if (field === nameInputPrefix) {
@@ -40,12 +40,19 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
       item[field] = value;
     }
 
+    return {
+      item,
+      index: parseInt(index, 10),
+    };
+  };
+
+  const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+    const { item, index } = updateWebhookItem(target);
+
     onChange({
       target: {
         name: "customHeaders",
-        value: stringifyHeaders(
-          updateAtIndex(item, headers, parseInt(index, 10)),
-        ),
+        value: stringifyHeaders(updateAtIndex(item, headers, index)),
       },
     });
   };
@@ -53,7 +60,7 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({
   return (
     <TableBody>
       {headers.map((field, fieldIndex) => (
-        <TableRowLink data-test-id="field">
+        <TableRowLink data-test-id="field" key={fieldIndex}>
           <TableCell className={clsx(classes.colName, classes.tableCell)}>
             <TextField
               InputProps={{
