@@ -145,7 +145,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           </CardContent>
         </Card>
         <CardSpacer />
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" justifyContent="space-between" paddingX={9}>
           <Button variant="secondary" onClick={navigateToAppsList}>
             <FormattedMessage {...buttonMessages.cancel} />
           </Button>
