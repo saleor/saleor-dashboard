@@ -21,6 +21,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add redirect to GraphiQL from product & order details pages - #2940 by @zaiste
 - Extract permissions for subscription query - #3155 by @zaiste
 - Add custom request headers to webhook form - #3107 by @2can
+- Allow subscription query for sync events - #3099 by @2can
 
 ## 3.4
 
