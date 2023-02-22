@@ -1226,10 +1226,6 @@
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
-  "6u4K7e": {
-    "context": "page header",
-    "string": "Order"
-  },
   "6udlH+": {
     "string": "Order draft successfully created"
   },
@@ -7142,10 +7138,6 @@
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
     "string": "Refund reversed"
-  },
-  "ohQrzn": {
-    "context": "button",
-    "string": "Deploy to Vercel"
   },
   "oiuwOl": {
     "context": "button",

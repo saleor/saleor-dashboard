@@ -18,6 +18,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
+      paddingRight: theme.spacing(4),
     },
   }),
   { name: "OrderAddTransaction" },

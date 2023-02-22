@@ -9,6 +9,7 @@ export const useStyles = makeStyles(
       display: "grid",
       gridTemplateColumns: "repeat(2, 1fr)",
       gap: theme.spacing(2),
+      paddingRight: theme.spacing(4),
     },
     header: {
       display: "flex",
