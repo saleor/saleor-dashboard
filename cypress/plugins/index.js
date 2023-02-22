@@ -21,7 +21,7 @@
 const graphql = require("graphql-request");
 
 module.exports = async (on, config) => {
-  // require("cypress-mochawesome-reporter/plugin")(on); - uncomment to run reports
+  require("cypress-mochawesome-reporter/plugin")(on);
 
   require("dotenv").config();
 
