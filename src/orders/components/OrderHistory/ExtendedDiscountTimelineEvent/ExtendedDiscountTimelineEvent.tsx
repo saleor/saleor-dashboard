@@ -2,7 +2,7 @@ import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { OrderEventFragment, OrderEventsEnum } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

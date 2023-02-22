@@ -3,12 +3,16 @@ import {
   OrderDetailsQuery,
   OrderErrorCode as OrderErrorCodeWithoutTransactions,
   OrderErrorFragment as OrderErrorFragmentWithoutTransactions,
+  OrderEventFragment as OrderEventFragmentWithoutTransactions,
+  OrderEventsEnum as OrderEventsEnumWithoutTransactions,
   OrderRefundDataQuery,
 } from "@dashboard/graphql";
 import {
   OrderDetailsWithTransactionsFragment,
   OrderDetailsWithTransactionsQuery,
   OrderErrorCode as OrderErrorCodeWithTransactions,
+  OrderEventFragment as OrderEventFragmentWithTransactions,
+  OrderEventsEnum as OrderEventsEnumWithTransactions,
   TransactionEventFragment,
   TransactionItemFragment,
 } from "@dashboard/graphql/transactions";
@@ -43,6 +47,15 @@ export type OrderErrorFragment = Omit<
   "code"
 > & {
   code: OrderErrorCode;
+};
+
+export type OrderEventFragment =
+  | OrderEventFragmentWithTransactions
+  | OrderEventFragmentWithoutTransactions;
+
+export const OrderEventsEnum = {
+  ...OrderEventsEnumWithTransactions,
+  ...OrderEventsEnumWithoutTransactions,
 };
 
 export const isOrderWithTransactions = (

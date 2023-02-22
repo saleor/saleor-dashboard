@@ -8,8 +8,8 @@ import {
   TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
-import { OrderEventFragment } from "@dashboard/graphql/transactions";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { OrderEventFragment } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
