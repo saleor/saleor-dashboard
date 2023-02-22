@@ -5,6 +5,7 @@ interface DetailPageLayoutProps {
   children: React.ReactNode;
   hasSaveBar?: boolean;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
+  gridTemplateRows?: Sprinkles["gridTemplateRows"];
 }
 
 import { contentMaxWidth } from "../AppLayout/consts";
@@ -13,13 +14,14 @@ const RootLayout: React.FC<DetailPageLayoutProps> = ({
   children,
   hasSaveBar = true,
   gridTemplateColumns = 12,
+  gridTemplateRows = 12,
 }) => (
   <Box
     as="article"
     display="grid"
     margin="auto"
     gridTemplateColumns={gridTemplateColumns}
-    gridTemplateRows={12}
+    gridTemplateRows={gridTemplateRows}
     __maxWidth={contentMaxWidth}
     __height={hasSaveBar ? "calc(100vh - 64px - 1px)" : "calc(100vh - 1px)"}
   >
