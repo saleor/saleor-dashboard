@@ -99,7 +99,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
       </TopNav>
-      <Content>
+      <Content noSavebar>
         <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>

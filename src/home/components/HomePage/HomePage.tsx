@@ -80,7 +80,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   return (
     <DetailedContent>
       <TopNav title={<HomeHeader userName={userName} />} />
-      <Content>
+      <Content noSavebar>
         <Box paddingLeft={9} paddingRight={11}>
           <CardSpacer />
           <RequirePermissions
@@ -155,7 +155,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         </Box>
       </Content>
       {activities && (
-        <RightSidebar>
+        <RightSidebar noSavebar>
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >

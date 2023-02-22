@@ -139,7 +139,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <DetailedContent>
+          <DetailedContent useSingleColumn>
             <TopNav
               href={configurationMenuUrl}
               title={intl.formatMessage(commonMessages.generalInformations)}
