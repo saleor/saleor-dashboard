@@ -6,14 +6,7 @@ const fs = require("fs");
 module.exports = defineConfig({
   reporter: "junit",
   reporterOptions: {
-    mochaFile: "results/test-results.xml",
-    jenkinsMode: true,
-    outputs: true,
-    testCaseSwitchClassnameAndName: true,
-  },
-  reporterOptions: {
-    mochaFile: "results/my-test-output-[hash].xml.xml",
-    toConsole: true,
+    mochaFile: "results/my-test-output-[hash].xml",
   },
   projectId: "51ef7c",
   chromeWebSecurity: false,
