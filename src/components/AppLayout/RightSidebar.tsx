@@ -7,17 +7,21 @@ import { borderHeight, savebarHeight } from "./consts";
 interface RightSidebarProps {
   children: React.ReactNode;
   className?: string;
+  noSavebar?: boolean;
 }
 
 export const RightSidebar: React.FC<RightSidebarProps> = ({
   children,
+  noSavebar = false,
   className,
 }) => (
   <Box
     borderStyle="solid"
     borderColor="neutralPlain"
     borderLeftWidth={1}
-    __height={`calc(100vh - ${savebarHeight} - ${borderHeight})`}
+    __height={
+      noSavebar ? "100%" : `calc(100vh - ${savebarHeight} - ${borderHeight})`
+    }
     position="sticky"
     top={0}
     overflowY="auto"

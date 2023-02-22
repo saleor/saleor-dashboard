@@ -27,6 +27,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "../PermissionAlert";
+import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
@@ -38,6 +39,7 @@ export interface WebhookFormData {
   secretKey?: string;
   targetUrl: string;
   subscriptionQuery: string;
+  customHeaders: string;
 }
 
 export interface WebhookDetailsPageProps {
@@ -63,7 +65,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   let prettified: string;
   try {
-    prettified = print(parse(webhook?.subscriptionQuery));
+    prettified = print(parse(webhook?.subscriptionQuery || ""));
   } catch {
     prettified = webhook?.subscriptionQuery || "";
   }
@@ -76,6 +78,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     secretKey: webhook?.secretKey || "",
     targetUrl: webhook?.targetUrl || "",
     subscriptionQuery: prettified || "",
+    customHeaders: webhook?.customHeaders || "{}",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
@@ -134,6 +137,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 />
                 <FormSpacer />
                 <PermissionAlert query={query} />
+                <FormSpacer />
+                <WebhookHeaders data={data} onChange={change} />
               </Box>
             </Content>
             <Savebar

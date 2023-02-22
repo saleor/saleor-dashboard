@@ -118,7 +118,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailedContent useSingleColumn>
             <TopNav href={pageTypeListUrl()} title={pageTitle} />
             <Content>
               <Grid

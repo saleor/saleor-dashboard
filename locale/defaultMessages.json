@@ -168,6 +168,10 @@
     "context": "product type shipping settings, section header",
     "string": "Shipping"
   },
+  "/4bJkA": {
+    "context": "header field value, header",
+    "string": "Value"
+  },
   "/5r4he": {
     "context": "label for button",
     "string": "Add country"
@@ -590,6 +594,10 @@
   "29L5Yq": {
     "context": "gift card not found message",
     "string": "Couldn't find gift card"
+  },
+  "2BHjVL": {
+    "context": "header",
+    "string": "Custom request headers"
   },
   "2CBcub": {
     "context": "CreateVariantTitle manage",
@@ -1518,6 +1526,10 @@
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
+  },
+  "9Y5i/8": {
+    "context": "number of webhook headers in model",
+    "string": "{number,plural,one{{number} header} other{{number} custom request headers}}"
   },
   "9Y6vg+": {
     "context": "dialog header",
@@ -3537,6 +3549,10 @@
     "context": "amount of sent refund for transaction",
     "string": "{transactionType} refund"
   },
+  "No4lyL": {
+    "context": "header field name, header",
+    "string": "Name"
+  },
   "Np7J92": {
     "context": "deactivate local named app",
     "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app."
@@ -5418,6 +5434,10 @@
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
+  "b1t9bM": {
+    "context": "empty headers text",
+    "string": "No custom request headers created for this webhook. Use the button below to add new custom request header."
+  },
   "b1zuN9": {
     "string": "Price"
   },
@@ -6286,6 +6306,10 @@
   "iBW3rG": {
     "context": "button",
     "string": "Apply"
+  },
+  "iERn5G": {
+    "context": "header name input",
+    "string": "Should start with `x-` or `authorization`"
   },
   "iEeIhY": {
     "context": "draft order",
@@ -7878,6 +7902,10 @@
   "uMpv1v": {
     "string": "Fulfillment successfully cancelled"
   },
+  "uQNm59": {
+    "context": "add header,button",
+    "string": "Add custom request header"
+  },
   "uQk8gB": {
     "context": "export all items to csv file",
     "string": "All gift cards ({number})"
@@ -8158,6 +8186,10 @@
   "w9xgN9": {
     "context": "see error log label in notification",
     "string": "See error log"
+  },
+  "wChjN/": {
+    "context": "accepted header names",
+    "string": "Headers with in following format are accepted: `authorization*`, `x-*`"
   },
   "wDUBLR": {
     "context": "order refund amount",

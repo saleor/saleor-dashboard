@@ -16,4 +16,5 @@ export const webhook: WebhookDetailsFragment = {
   subscriptionQuery:
     "subscription { event { ... on ProductUpdated { product { name } } } }",
   targetUrl: "http://www.getsaleor.com",
+  customHeaders: "{}",
 };
