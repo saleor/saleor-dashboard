@@ -50,6 +50,7 @@ import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
+  orderRefundUrl,
   orderReturnUrl,
   orderUrl,
   OrderUrlQueryParams,
@@ -256,6 +257,7 @@ export const OrderUnconfirmedDetails: React.FC<
             }
             onPaymentCapture={() => openModal("capture")}
             onPaymentVoid={() => openModal("void")}
+            onPaymentRefund={() => navigate(orderRefundUrl(id))}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
