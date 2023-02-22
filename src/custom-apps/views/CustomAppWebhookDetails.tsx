@@ -63,6 +63,7 @@ export const CustomAppWebhookDetails: React.FC<
             secretKey: data.secretKey,
             targetUrl: data.targetUrl,
             query: data.subscriptionQuery,
+            customHeaders: data.customHeaders,
           },
         },
       }),
