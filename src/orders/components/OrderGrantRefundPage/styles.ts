@@ -15,6 +15,9 @@ export const useStyles = makeStyles(
       height: "20em",
       background: "white",
     },
+    form: {
+      display: "contents",
+    },
   }),
   { name: "OrderGrantRefund" },
 );

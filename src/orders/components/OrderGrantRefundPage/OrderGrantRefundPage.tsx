@@ -1,19 +1,14 @@
-import { Backlink } from "@dashboard/components/Backlink";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import Grid from "@dashboard/components/Grid";
-import PageHeader from "@dashboard/components/PageHeader";
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
-import { buttonMessages } from "@dashboard/intl";
 import { orderUrl } from "@dashboard/orders/urls";
-import {
-  Card,
-  CardContent,
-  Container,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -84,11 +79,9 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   };
 
   return (
-    <Container>
-      <Backlink href={orderUrl(order?.id)}>
-        <FormattedMessage {...buttonMessages.back} />
-      </Backlink>
-      <PageHeader
+    <DetailedContent>
+      <TopNav
+        href={orderUrl(order?.id)}
         title={
           <FormattedMessage
             {...(isEdit
@@ -96,12 +89,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               : grantRefundPageMessages.pageHeader)}
           />
         }
-      />
-      <Typography variant="subtitle1">
-        <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
-      </Typography>
-      <CardSpacer />
-      <form onSubmit={handleSubmit}>
+      ></TopNav>
+      <form onSubmit={handleSubmit} className={classes.form}>
         <GrantRefundContext.Provider
           value={{
             dispatch,
@@ -110,7 +99,15 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
             totalSelectedPrice,
           }}
         >
-          <Grid>
+          <Content>
+            <Card>
+              <CardContent>
+                <Text variant="bodyEmp" as="p">
+                  <FormattedMessage {...grantRefundPageMessages.pageSubtitle} />
+                </Text>
+              </CardContent>
+            </Card>
+            <CardSpacer />
             <div className={classes.cardsContainer}>
               {loading && <Skeleton className={classes.cardLoading} />}
               <ProductsCard
@@ -158,19 +155,19 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 </CardContent>
               </Card>
             </div>
-            <div>
-              <RefundCard
-                order={order}
-                loading={loading}
-                submitState={submitState}
-                isEdit={isEdit}
-                submitDisabled={submitDisabled}
-              />
-            </div>
-          </Grid>
+          </Content>
+          <RightSidebar>
+            <RefundCard
+              order={order}
+              loading={loading}
+              submitState={submitState}
+              isEdit={isEdit}
+              submitDisabled={submitDisabled}
+            />
+          </RightSidebar>
         </GrantRefundContext.Provider>
       </form>
-    </Container>
+    </DetailedContent>
   );
 };
 
