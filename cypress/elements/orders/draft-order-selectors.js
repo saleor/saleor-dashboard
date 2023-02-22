@@ -9,4 +9,5 @@ export const DRAFT_ORDER_SELECTORS = {
   editShippingAddress: '[data-test-id="edit-shipping-address"]',
   editBillingAddress: '[data-test-id="edit-billing-address"]',
   customerEmail: '[data-test-id="customer-email"]',
+  newAddressSelectButton: "[data-test-id='customerAddressnewAddress']",
 };
