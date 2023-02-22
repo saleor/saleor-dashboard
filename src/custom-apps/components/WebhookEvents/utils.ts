@@ -8,7 +8,7 @@ type Actions = string[];
 export const getWebhookTypes = (webhookEvents: string[]) => {
   const multiWords = ["DRAFT_ORDER", "GIFT_CARD", "ANY_EVENTS"];
 
-  return webhookEvents.reduce((acc, key) => {
+  return webhookEvents.reduce<Record<string, Actions>>((acc, key) => {
     const keywords = key.split("_");
     const multiKeyword = keywords.slice(0, 2).join("_");
 
