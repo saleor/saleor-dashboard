@@ -77,7 +77,7 @@ describe("As an admin I should be able to create variant", () => {
 
   it(
     "should be able to create variant visible for the customers in all channels. TC: SALEOR_2901",
-    { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
+    { tags: ["@variants", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const price = 10;
@@ -127,6 +127,36 @@ describe("As an admin I should be able to create variant", () => {
         });
     },
   );
+  it(
+    "should be able to create variant. TC: SALEOR_2900",
+    { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
+    () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let createdProduct;
+
+      createProduct({
+        attributeId: attribute.id,
+        name,
+        productTypeId: productType.id,
+        categoryId: category.id,
+      }).then(resp => {
+        createdProduct = resp;
+
+        updateChannelInProduct({
+          productId: createdProduct.id,
+          channelId: defaultChannel.id,
+        });
+        updateChannelInProduct({
+          productId: createdProduct.id,
+          channelId: newChannel.id,
+        });
+        cy.visit(
+          `${urlList.products}${createdProduct.id}`,
+        ).waitForProgressBarToNotBeVisible();
+        addVariantToDataGrid(name);
+      });
+    },
+  );
 
   it(
     "should be able to create several variants visible for the customers. TC: SALEOR_2902",
@@ -151,7 +181,10 @@ describe("As an admin I should be able to create variant", () => {
           createdProduct = productResp;
 
           cy.visit(`${urlList.products}${createdProduct.id}`);
+          cy.get(PRODUCT_DETAILS.dataGridTable).scrollIntoView();
+
           enterVariantEditPage();
+
           cy.get(PRODUCT_DETAILS.addVariantButton)
             .click()
             .then(() => {
