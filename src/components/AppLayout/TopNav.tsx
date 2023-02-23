@@ -66,7 +66,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
             onChannelSelect={setChannel}
           />
         )}
-
         {children}
       </Box>
     </Box>
