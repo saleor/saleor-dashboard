@@ -1,5 +1,5 @@
 schema: ${API_URI}
 generates:
-  ./introspection.transactions.json:
+  ./introspection.json:
     plugins:
       - introspection
