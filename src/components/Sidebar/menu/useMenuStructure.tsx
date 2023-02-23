@@ -108,13 +108,6 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(sectionNames.products),
-          id: "products",
-          url: productListUrl(),
-          permissions: [PermissionEnum.MANAGE_PRODUCTS],
-          type: "item",
-        },
-        {
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
           url: categoryListUrl(),
@@ -141,6 +134,7 @@ export function useMenuStructure() {
         ),
       ],
       icon: <ProductsIcons {...iconSettings} />,
+      url: productListUrl(),
       label: intl.formatMessage(commonMessages.products),
       permissions: [
         PermissionEnum.MANAGE_GIFT_CARD,
@@ -155,13 +149,6 @@ export function useMenuStructure() {
     },
     {
       children: [
-        {
-          label: intl.formatMessage(sectionNames.orders),
-          permissions: [PermissionEnum.MANAGE_ORDERS],
-          id: "orders",
-          url: orderListUrl(),
-          type: "item",
-        },
         {
           label: intl.formatMessage(commonMessages.drafts),
           permissions: [PermissionEnum.MANAGE_ORDERS],
@@ -178,6 +165,7 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.orders),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
+      url: orderListUrl(),
       type: "itemGroup",
     },
     {
@@ -222,6 +210,7 @@ export function useMenuStructure() {
         ),
       ],
       icon: <VouchersIcon {...iconSettings} />,
+      url: saleListUrl(),
       label: intl.formatMessage(commonMessages.discounts),
       permissions: [PermissionEnum.MANAGE_DISCOUNTS],
       id: "discounts",
