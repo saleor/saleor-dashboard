@@ -6,7 +6,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ConfigurationPage from "./ConfigurationPage";
+import { ConfigurationPage } from "./ConfigurationPage";
 
 const user = {
   __typename: staffMember.__typename,

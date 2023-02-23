@@ -1,7 +1,10 @@
+import {
+  borderHeight,
+  contentMaxWidth,
+  savebarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import { Box, Sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
-
-import { borderHeight, contentMaxWidth, savebarHeight } from "../consts";
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
