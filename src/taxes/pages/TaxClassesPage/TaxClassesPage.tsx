@@ -119,7 +119,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
-          <DetailPageLayout>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
               <Box padding={9}>

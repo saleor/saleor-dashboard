@@ -2,8 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -77,12 +76,12 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       disabled={disabled}
     >
       {({ change, data, isSaveDisabled, submit }) => (
-        <ListPageLayout>
+        <DetailPageLayout gridTemplateColumns={1}>
           <TopNav
             href={shippingZonesListUrl()}
             title={intl.formatMessage(messages.createZone)}
           />
-          <Grid>
+          <DetailPageLayout.Content>
             <div>
               <ShippingZoneInfo
                 data={data}
@@ -111,31 +110,32 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                 title={intl.formatMessage(messages.countries)}
               />
             </div>
-          </Grid>
+
+            <ShippingZoneCountriesAssignDialog
+              open={isModalOpened}
+              onConfirm={formData => {
+                change({
+                  target: {
+                    name: "countries",
+                    value: formData.countries,
+                  },
+                } as any);
+                toggleModal();
+              }}
+              confirmButtonState="default"
+              countries={countries}
+              restWorldCountries={restWorldCountries}
+              initial={data.countries}
+              onClose={toggleModal}
+            />
+          </DetailPageLayout.Content>
           <Savebar
             disabled={isSaveDisabled}
             onCancel={() => navigate(shippingZonesListUrl())}
             onSubmit={submit}
             state={saveButtonBarState}
           />
-          <ShippingZoneCountriesAssignDialog
-            open={isModalOpened}
-            onConfirm={formData => {
-              change({
-                target: {
-                  name: "countries",
-                  value: formData.countries,
-                },
-              } as any);
-              toggleModal();
-            }}
-            confirmButtonState="default"
-            countries={countries}
-            restWorldCountries={restWorldCountries}
-            initial={data.countries}
-            onClose={toggleModal}
-          />
-        </ListPageLayout>
+        </DetailPageLayout>
       )}
     </Form>
   );

@@ -67,7 +67,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailPageLayout>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={pageTypeListUrl()}
               title={intl.formatMessage({

@@ -64,10 +64,10 @@ const GiftCardSettingsPage: React.FC = () => {
         href={giftCardsListPath}
         title={intl.formatMessage(messages.title)}
       />
-      <Form initial={initialData} onSubmit={handleSubmit}>
-        {({ data: formData, submit, change }) => (
-          <>
-            <DetailPageLayout.Content>
+      <DetailPageLayout.Content>
+        <Form initial={initialData} onSubmit={handleSubmit}>
+          {({ data: formData, submit, change }) => (
+            <>
               <Box padding={9} margin="auto" height="100vh">
                 <Grid variant="inverted">
                   <div>
@@ -85,16 +85,16 @@ const GiftCardSettingsPage: React.FC = () => {
                   />
                 </Grid>
               </Box>
-            </DetailPageLayout.Content>
-            <Savebar
-              onCancel={() => navigate(giftCardsListPath)}
-              onSubmit={submit}
-              disabled={formLoading}
-              state={updateGiftCardSettingsOpts?.status}
-            />
-          </>
-        )}
-      </Form>
+              <Savebar
+                onCancel={() => navigate(giftCardsListPath)}
+                onSubmit={submit}
+                disabled={formLoading}
+                state={updateGiftCardSettingsOpts?.status}
+              />
+            </>
+          )}
+        </Form>
+      </DetailPageLayout.Content>
     </DetailPageLayout>
   );
 };

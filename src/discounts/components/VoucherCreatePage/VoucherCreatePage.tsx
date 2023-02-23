@@ -179,6 +179,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 errors={errors}
                 onChange={change}
               />
+              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <ChannelsAvailabilityCard
@@ -192,7 +193,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={() => navigate(voucherListUrl())}

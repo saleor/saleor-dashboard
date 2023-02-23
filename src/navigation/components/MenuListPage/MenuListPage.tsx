@@ -1,15 +1,11 @@
-import {
-  borderHeight,
-  topBarHeight,
-} from "@dashboard/components/AppLayout/consts";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { MenuFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, MenuListUrlSortField } from "@dashboard/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,7 +26,7 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   });
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.navigation)}
@@ -43,10 +39,8 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
           />
         </Button>
       </TopNav>
-      <Box __height={`calc(100vh - ${topBarHeight} - ${borderHeight})`}>
-        <MenuList {...listProps} />
-      </Box>
-    </>
+      <MenuList {...listProps} />
+    </ListPageLayout>
   );
 };
 MenuListPage.displayName = "MenuListPage";

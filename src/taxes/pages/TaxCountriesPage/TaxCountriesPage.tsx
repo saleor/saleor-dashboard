@@ -91,7 +91,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
         );
 
         return (
-          <DetailPageLayout>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
               <Box padding={9}>

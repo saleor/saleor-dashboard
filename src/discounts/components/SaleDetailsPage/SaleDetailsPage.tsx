@@ -296,6 +296,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 errors={errors}
                 onChange={change}
               />
+              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <SaleSummary selectedChannelId={selectedChannelId} sale={sale} />
@@ -311,7 +312,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={() => navigate(saleListUrl())}

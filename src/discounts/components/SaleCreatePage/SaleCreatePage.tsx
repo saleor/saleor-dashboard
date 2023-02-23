@@ -131,6 +131,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 errors={errors}
                 onChange={change}
               />
+              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <ChannelsAvailabilityCard
@@ -144,7 +145,6 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 openModal={openChannelsModal}
               />
             </DetailPageLayout.RightSidebar>
-            <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
               onCancel={onBack}

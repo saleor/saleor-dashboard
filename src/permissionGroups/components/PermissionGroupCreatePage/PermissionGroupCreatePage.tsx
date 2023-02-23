@@ -1,4 +1,5 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -67,6 +68,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     >
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
+          <TopNav title="New Permission Group" />
           <DetailPageLayout.Content>
             <Backlink href={permissionGroupListUrl()}>
               {intl.formatMessage(sectionNames.permissionGroups)}
@@ -99,14 +101,12 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               })}
             />
           </DetailPageLayout.RightSidebar>
-          <div>
-            <Savebar
-              onCancel={() => navigate(permissionGroupListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={isSaveDisabled}
-            />
-          </div>
+          <Savebar
+            onCancel={() => navigate(permissionGroupListUrl())}
+            onSubmit={submit}
+            state={saveButtonBarState}
+            disabled={isSaveDisabled}
+          />
         </DetailPageLayout>
       )}
     </Form>

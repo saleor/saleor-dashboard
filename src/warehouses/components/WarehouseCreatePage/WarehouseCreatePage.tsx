@@ -3,7 +3,6 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -85,31 +84,29 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
               })}
             />
             <DetailPageLayout.Content>
-              <Grid>
-                <div>
-                  <WarehouseInfo
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <CompanyAddressInput
-                    countries={countryChoices}
-                    data={data}
-                    disabled={disabled}
-                    displayCountry={displayCountry}
-                    errors={[...errors, ...validationErrors]}
-                    header={intl.formatMessage({
-                      id: "43Nlay",
-                      defaultMessage: "Address Information",
-                      description: "warehouse",
-                    })}
-                    onChange={change}
-                    onCountryChange={handleCountrySelect}
-                  />
-                </div>
-              </Grid>
+              <div>
+                <WarehouseInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <CompanyAddressInput
+                  countries={countryChoices}
+                  data={data}
+                  disabled={disabled}
+                  displayCountry={displayCountry}
+                  errors={[...errors, ...validationErrors]}
+                  header={intl.formatMessage({
+                    id: "43Nlay",
+                    defaultMessage: "Address Information",
+                    description: "warehouse",
+                  })}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
+              </div>
               <Savebar
                 disabled={disabled}
                 onCancel={() => navigate(warehouseListUrl())}

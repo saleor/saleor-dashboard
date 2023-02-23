@@ -160,7 +160,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         };
 
         return (
-          <DetailPageLayout>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
               <Box padding={9}>
