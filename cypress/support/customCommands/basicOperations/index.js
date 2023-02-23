@@ -11,6 +11,9 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     }
   });
 });
+Cypress.Commands.add("clickOnElement", selector => {
+  cy.get(selector).click();
+});
 
 Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
   cy.wait(alias).then(resp => {

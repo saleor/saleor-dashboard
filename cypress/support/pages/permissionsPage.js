@@ -1,4 +1,4 @@
-import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
+import { MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { urlList } from "../../fixtures/urlList";
 
@@ -29,7 +29,7 @@ export function isElementDisplayed(element = SHARED_ELEMENTS.header) {
   return cy.get("body").then(body => body.find(element).length > 0);
 }
 
-export function getDisplayedSelectors(selectors = LEFT_MENU_SELECTORS) {
+export function getDisplayedSelectors(selectors = MENU_SELECTORS) {
   const displayedSelectors = {};
 
   cy.wrap(displayedSelectors).as("displayedSelectors");
@@ -58,7 +58,7 @@ export function expectAllSelectorsPermitted(permissions, selectors) {
 }
 
 function isPermitted(permissions, selector) {
-  let permittedSelectors = [LEFT_MENU_SELECTORS.home];
+  let permittedSelectors = [MENU_SELECTORS.home];
 
   permissions.forEach(permission => {
     if (permission.parent) {

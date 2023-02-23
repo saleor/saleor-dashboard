@@ -1,4 +1,4 @@
-export const LEFT_MENU_SELECTORS = {
+export const MENU = {
   catalog: "[data-test-id='menu-item-label-catalogue']",
   pages: "[data-test-id='menu-item-label-pages']",
   configuration: "[data-test-id='menu-item-label-configure']",
@@ -9,8 +9,10 @@ export const LEFT_MENU_SELECTORS = {
   app: "[data-test-id='menu-item-label-apps']",
   translations: "[data-test-id='menu-item-label-translations']",
   customers: "[data-test-id='menu-item-label-customers']",
+  list: "[data-test-id='menu-list']",
+  listItem: "[data-test-id='menu-list-item']",
 };
-export const DISCOUNTS_MENU_SELECTORS = {
+export const DISCOUNTS = {
   sales: "[data-test-id='menu-item-label-sales']",
   vouchers: "[data-test-id='menu-item-label-vouchers']",
 };
@@ -24,7 +26,7 @@ export const CATALOG = {
   collections: "[data-test-id='menu-item-label-collections']",
 };
 
-export const APP_MENU_SELECTORS = {
+export const APP = {
   app: "[data-test-id='menu-item-label-apps']",
 };
 
