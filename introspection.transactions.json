@@ -3812,6 +3812,12 @@
             "deprecationReason": null
           },
           {
+            "name": "INVALID_CUSTOM_HEADERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "MANIFEST_URL_CANT_CONNECT",
             "description": null,
             "isDeprecated": false,
@@ -11601,7 +11607,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -11613,7 +11619,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -18401,7 +18407,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -18413,7 +18419,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -64229,7 +64235,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -64241,7 +64247,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -74756,7 +74762,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -74768,7 +74774,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -77601,7 +77607,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -77613,7 +77619,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -78124,7 +78130,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -78136,7 +78142,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -108373,7 +108379,7 @@
             "args": [
               {
                 "name": "size",
-                "description": "Size of the image. If not provided, the original image will be returned.",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -108385,7 +108391,7 @@
               },
               {
                 "name": "format",
-                "description": "The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.6.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 "type": {
                   "kind": "ENUM",
                   "name": "ThumbnailFormatEnum",
@@ -114348,6 +114354,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "customHeaders",
+            "description": "Custom headers, which will be added to HTTP request.\n\nAdded in Saleor 3.12.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSONString",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -114564,6 +114582,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customHeaders",
+            "description": "Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only \"X-*\" and \"Authorization*\" keys are allowed.\n\nAdded in Saleor 3.12.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSONString",
               "ofType": null
             },
             "defaultValue": null,
@@ -114924,6 +114954,12 @@
           },
           {
             "name": "MISSING_EVENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID_CUSTOM_HEADERS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -117666,6 +117702,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customHeaders",
+            "description": "Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only \"X-*\" and \"Authorization*\" keys are allowed.\n\nAdded in Saleor 3.12.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "JSONString",
               "ofType": null
             },
             "defaultValue": null,

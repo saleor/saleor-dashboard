@@ -3264,6 +3264,7 @@ export const WebhookDetailsFragmentDoc = gql`
   secretKey
   targetUrl
   subscriptionQuery
+  customHeaders
 }
     ${WebhookFragmentDoc}`;
 export const OrderTransactionRequestActionDocument = gql`
