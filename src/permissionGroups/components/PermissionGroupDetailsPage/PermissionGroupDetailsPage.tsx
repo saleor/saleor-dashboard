@@ -1,10 +1,8 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -92,12 +90,12 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={permissionGroupListUrl()}
             title={permissionGroup?.name}
           />
-          <Content>
+          <DetailPageLayout.Content>
             <PermissionGroupInfo
               data={data}
               disabled={disabled}
@@ -110,8 +108,8 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               {...listProps}
               users={data?.users || []}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <AccountPermissions
               permissionsExceeded={permissionsExceeded}
               data={data}
@@ -131,7 +129,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                 description: "card description",
               })}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <div>
             <Savebar
               onCancel={() => navigate(permissionGroupListUrl())}
@@ -140,7 +138,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               disabled={disabled}
             />
           </div>
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </Form>
   );

@@ -8,7 +8,7 @@ interface RightSidebarProps {
   noSavebar?: boolean;
 }
 
-export const RightSidebar: React.FC<RightSidebarProps> = ({
+const RightSidebar: React.FC<RightSidebarProps> = ({
   children,
   noSavebar = false,
   className,

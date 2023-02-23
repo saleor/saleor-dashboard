@@ -1,9 +1,8 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -120,9 +119,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
         const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav title={<TaxPageTitle />} />
-            <Content>
+            <DetailPageLayout.Content>
               <Box padding={9}>
                 <PageTabs value="tax-classes" onChange={handleTabChange}>
                   <PageTab
@@ -297,8 +296,8 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                 onSubmit={submit}
                 onCancel={() => navigate(configurationMenuUrl)}
               />
-            </Content>
-          </DetailedContent>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </TaxClassesForm>

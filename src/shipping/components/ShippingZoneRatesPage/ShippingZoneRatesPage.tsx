@@ -1,11 +1,9 @@
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { WithFormId } from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -102,25 +100,23 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
 
-  const initialForm: Omit<
-    ShippingZoneRateUpdateFormData,
-    "description"
-  > = React.useMemo(
-    () => ({
-      channelListings: shippingChannels,
-      maxDays: rate?.maximumDeliveryDays?.toString() || "",
-      maxValue: rate?.maximumOrderWeight?.value.toString() || "",
-      metadata: rate?.metadata.map(mapMetadataItemToInput),
-      minDays: rate?.minimumDeliveryDays?.toString() || "",
-      minValue: rate?.minimumOrderWeight?.value.toString() || "",
-      name: rate?.name || "",
-      orderValueRestricted: !!rate?.channelListings.length,
-      privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
-      type: rate?.type || null,
-      taxClassId: rate?.taxClass?.id || "",
-    }),
-    [shippingChannels, rate],
-  );
+  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> =
+    React.useMemo(
+      () => ({
+        channelListings: shippingChannels,
+        maxDays: rate?.maximumDeliveryDays?.toString() || "",
+        maxValue: rate?.maximumOrderWeight?.value.toString() || "",
+        metadata: rate?.metadata.map(mapMetadataItemToInput),
+        minDays: rate?.minimumDeliveryDays?.toString() || "",
+        minValue: rate?.minimumOrderWeight?.value.toString() || "",
+        name: rate?.name || "",
+        orderValueRestricted: !!rate?.channelListings.length,
+        privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
+        type: rate?.type || null,
+        taxClassId: rate?.taxClass?.id || "",
+      }),
+      [shippingChannels, rate],
+    );
 
   const {
     change,
@@ -144,9 +140,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const data: ShippingZoneRateUpdateFormData = {
     ...formData,
@@ -182,9 +177,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   return (
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav href={backHref} title={rate?.name} />
-          <Content>
+          <DetailPageLayout.Content>
             <ShippingRateInfo
               data={data}
               disabled={disabled}
@@ -236,8 +231,8 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             />
             <CardSpacer />
             <Metadata data={data} onChange={changeMetadata} />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
               managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
               allChannelsCount={allChannelsCount}
@@ -263,7 +258,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               }
               onFetchMore={fetchMoreTaxClasses}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             onCancel={() => navigate(backHref)}
@@ -271,7 +266,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
             onSubmit={handleSubmit}
             state={saveButtonBarState}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       </form>
     </RichTextContext.Provider>
   );

@@ -18,7 +18,7 @@ const getLayoutAreas = (useSingleColumn: boolean, isTablet: boolean) => {
   return isTablet ? '"nav right" "content right"' : '"nav" "content" "right"';
 };
 
-export const DetailedContent: React.FC<DetailedContentProps> = ({
+const DetailedContent: React.FC<DetailedContentProps> = ({
   children,
   useSingleColumn = false,
   constHeight = false,

@@ -1,9 +1,9 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { CountryFragment, ShippingErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -77,49 +77,47 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       disabled={disabled}
     >
       {({ change, data, isSaveDisabled, submit }) => (
-        <>
+        <ListPageLayout>
           <TopNav
             href={shippingZonesListUrl()}
             title={intl.formatMessage(messages.createZone)}
           />
-          <Content>
-            <Grid>
-              <div>
-                <ShippingZoneInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <CountryList
-                  countries={data.countries.map(selectedCountry =>
-                    countries.find(country => country.code === selectedCountry),
-                  )}
-                  disabled={disabled}
-                  emptyText={intl.formatMessage(messages.noCountriesAssigned)}
-                  onCountryAssign={toggleModal}
-                  onCountryUnassign={countryCode =>
-                    change({
-                      target: {
-                        name: "countries",
-                        value: data.countries.filter(
-                          country => country !== countryCode,
-                        ),
-                      },
-                    } as any)
-                  }
-                  title={intl.formatMessage(messages.countries)}
-                />
-              </div>
-            </Grid>
-            <Savebar
-              disabled={isSaveDisabled}
-              onCancel={() => navigate(shippingZonesListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-            />
-          </Content>
+          <Grid>
+            <div>
+              <ShippingZoneInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CountryList
+                countries={data.countries.map(selectedCountry =>
+                  countries.find(country => country.code === selectedCountry),
+                )}
+                disabled={disabled}
+                emptyText={intl.formatMessage(messages.noCountriesAssigned)}
+                onCountryAssign={toggleModal}
+                onCountryUnassign={countryCode =>
+                  change({
+                    target: {
+                      name: "countries",
+                      value: data.countries.filter(
+                        country => country !== countryCode,
+                      ),
+                    },
+                  } as any)
+                }
+                title={intl.formatMessage(messages.countries)}
+              />
+            </div>
+          </Grid>
+          <Savebar
+            disabled={isSaveDisabled}
+            onCancel={() => navigate(shippingZonesListUrl())}
+            onSubmit={submit}
+            state={saveButtonBarState}
+          />
           <ShippingZoneCountriesAssignDialog
             open={isModalOpened}
             onConfirm={formData => {
@@ -137,7 +135,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             initial={data.countries}
             onClose={toggleModal}
           />
-        </>
+        </ListPageLayout>
       )}
     </Form>
   );

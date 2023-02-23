@@ -1,11 +1,9 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
@@ -95,9 +93,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={warehouseListUrl()} title={warehouse?.name} />
-            <Content>
+            <DetailPageLayout.Content>
               <WarehouseInfo
                 data={data}
                 disabled={disabled}
@@ -119,8 +117,8 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 onChange={change}
                 onCountryChange={handleCountrySelect}
               />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <WarehouseSettings
                 zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
                 data={data}
@@ -128,7 +126,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 onChange={change}
                 setData={set}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={!!isSaveDisabled}
               onCancel={() => navigate(warehouseListUrl())}
@@ -136,7 +134,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

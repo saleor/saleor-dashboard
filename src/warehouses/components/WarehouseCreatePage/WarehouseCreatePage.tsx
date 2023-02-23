@@ -1,10 +1,10 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
@@ -75,7 +75,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={warehouseListUrl()}
               title={intl.formatMessage({
@@ -84,7 +84,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                 description: "header",
               })}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid>
                 <div>
                   <WarehouseInfo
@@ -116,8 +116,8 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                 onSubmit={submit}
                 state={saveButtonBarState}
               />
-            </Content>
-          </>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </Form>

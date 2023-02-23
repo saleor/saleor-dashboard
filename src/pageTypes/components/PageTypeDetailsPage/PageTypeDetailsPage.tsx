@@ -1,9 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import Savebar from "@dashboard/components/Savebar";
@@ -118,9 +117,9 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={pageTypeListUrl()} title={pageTitle} />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid
                 variant="inverted"
                 className={sprinkles({
@@ -185,7 +184,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 </div>
                 <Metadata data={data} onChange={changeMetadata} />
               </Grid>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               onCancel={() => navigate(pageTypeListUrl())}
               onDelete={onDelete}
@@ -193,7 +192,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

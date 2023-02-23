@@ -1,8 +1,7 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
@@ -110,9 +109,9 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         });
 
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
-            <Content>
+            <DetailPageLayout.Content>
               <Box paddingX={9}>
                 <WebhookStatus
                   data={data.isActive}
@@ -142,14 +141,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <FormSpacer />
                 <WebhookHeaders data={data} onChange={change} />
               </Box>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
               onCancel={() => navigate(backUrl)}
               onSubmit={submit}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

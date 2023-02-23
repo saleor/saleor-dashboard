@@ -7,7 +7,7 @@ interface ListPageLayoutProps {
   hasTopNav?: boolean;
 }
 
-import { contentMaxWidth } from "../AppLayout/consts";
+import { contentMaxWidth } from "../consts";
 
 export const ListPageLayout: React.FC<ListPageLayoutProps> = ({ children }) => (
   <Box

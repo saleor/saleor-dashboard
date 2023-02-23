@@ -1,9 +1,7 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { Backlink } from "@dashboard/components/Backlink";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -68,8 +66,8 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
       disabled={disabled}
     >
       {({ data, change, submit, isSaveDisabled }) => (
-        <DetailedContent>
-          <Content>
+        <DetailPageLayout>
+          <DetailPageLayout.Content>
             <Backlink href={permissionGroupListUrl()}>
               {intl.formatMessage(sectionNames.permissionGroups)}
             </Backlink>
@@ -79,8 +77,8 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               onChange={change}
               disabled={disabled}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <AccountPermissions
               permissionsExceeded={false}
               data={data}
@@ -100,7 +98,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
                 description: "card description",
               })}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <div>
             <Savebar
               onCancel={() => navigate(permissionGroupListUrl())}
@@ -109,7 +107,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               disabled={isSaveDisabled}
             />
           </div>
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </Form>
   );

@@ -1,11 +1,9 @@
 import { validateSalePrice } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@dashboard/discounts/handlers";
@@ -102,7 +100,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               title={intl.formatMessage({
                 id: "2E1xZ0",
@@ -110,7 +108,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <SaleInfo
                 data={data}
                 disabled={disabled}
@@ -133,8 +131,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 errors={errors}
                 onChange={change}
               />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 allChannelsCount={allChannelsCount}
@@ -145,7 +143,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Metadata data={data} onChange={changeMetadata} />
             <Savebar
               disabled={disabled}
@@ -153,7 +151,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

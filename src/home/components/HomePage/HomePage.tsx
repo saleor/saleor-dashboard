@@ -76,7 +76,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <DetailPageLayout hasSaveBar={false}>
+    <DetailPageLayout withSavebar={false}>
       <TopNav title={<HomeHeader userName={userName} />} />
       <DetailPageLayout.Content>
         <Box paddingLeft={9} paddingRight={11}>

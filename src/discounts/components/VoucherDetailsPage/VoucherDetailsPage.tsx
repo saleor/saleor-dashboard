@@ -1,12 +1,10 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
@@ -210,9 +208,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         const allErrors = [...localErrors, ...errors];
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={voucherListUrl()} title={voucher?.code} />
-            <Content>
+            <DetailPageLayout.Content>
               <VoucherInfo
                 data={data}
                 disabled={disabled}
@@ -362,8 +360,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onChange={change}
               />
               <Metadata data={data} onChange={changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <VoucherSummary
                 voucher={voucher}
                 selectedChannelId={selectedChannelId}
@@ -379,7 +377,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(voucherListUrl())}
               disabled={disabled}
@@ -387,7 +385,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               onSubmit={() => handleSubmit(data)}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

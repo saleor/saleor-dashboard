@@ -1,7 +1,7 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, PageTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
@@ -42,7 +42,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.pages,
@@ -160,7 +160,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           <CardSpacer />
         </>
       )}
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 TranslationsPagesPage.displayName = "TranslationsPagesPage";

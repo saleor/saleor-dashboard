@@ -1,8 +1,7 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   GiftCardSettingsExpiryTypeEnum,
@@ -60,7 +59,7 @@ const GiftCardSettingsPage: React.FC = () => {
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={giftCardsListPath}
         title={intl.formatMessage(messages.title)}
@@ -68,7 +67,7 @@ const GiftCardSettingsPage: React.FC = () => {
       <Form initial={initialData} onSubmit={handleSubmit}>
         {({ data: formData, submit, change }) => (
           <>
-            <Content>
+            <DetailPageLayout.Content>
               <Box padding={9} margin="auto" height="100vh">
                 <Grid variant="inverted">
                   <div>
@@ -86,7 +85,7 @@ const GiftCardSettingsPage: React.FC = () => {
                   />
                 </Grid>
               </Box>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               onCancel={() => navigate(giftCardsListPath)}
               onSubmit={submit}
@@ -96,7 +95,7 @@ const GiftCardSettingsPage: React.FC = () => {
           </>
         )}
       </Form>
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 

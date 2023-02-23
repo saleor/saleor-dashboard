@@ -10,7 +10,7 @@ interface ContentProps {
   noTopNav?: boolean;
 }
 
-export const Content: React.FC<ContentProps> = ({
+const Content: React.FC<ContentProps> = ({
   children,
   noSavebar = false,
   noTopNav = false,

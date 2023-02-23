@@ -1,10 +1,9 @@
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -161,9 +160,9 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         };
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav title={<TaxPageTitle />} />
-            <Content>
+            <DetailPageLayout.Content>
               <Box padding={9}>
                 <PageTabs value="channels" onChange={handleTabChange}>
                   <PageTab
@@ -298,14 +297,14 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   />
                 )}
               </Box>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               state={savebarState}
               disabled={disabled}
               onSubmit={submit}
               onCancel={() => navigate(configurationMenuUrl)}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

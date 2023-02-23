@@ -42,11 +42,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   const name = data?.name || "";
 
   return (
-    <DetailPageLayout
-      gridTemplateColumns={1}
-      gridTemplateRows={1}
-      hasSaveBar={false}
-    >
+    <DetailPageLayout gridTemplateColumns={1} gridTemplateRows={1}>
       <DetailPageLayout.Content>
         <Box paddingY={9}>
           <CardSpacer />
