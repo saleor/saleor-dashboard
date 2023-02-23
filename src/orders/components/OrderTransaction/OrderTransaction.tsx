@@ -4,6 +4,7 @@ import {
 } from "@dashboard/graphql/transactions";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { Card } from "@material-ui/core";
+import clsx from "clsx";
 import React from "react";
 
 import { CardTitle } from "./components";
@@ -20,6 +21,7 @@ export interface OrderTransactionProps {
   ) => void;
   showActions?: boolean;
   cardFooter?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const OrderTransaction: React.FC<OrderTransactionProps> = ({
@@ -28,6 +30,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   onTransactionAction,
   showActions,
   cardFooter,
+  disabled = false,
 }) => {
   const classes = useStyles();
 
@@ -38,7 +41,7 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   }
 
   return (
-    <Card className={classes.card}>
+    <Card className={clsx(classes.card, disabled && classes.disabled)}>
       <CardTitle
         transaction={transaction}
         onTransactionAction={onTransactionAction}

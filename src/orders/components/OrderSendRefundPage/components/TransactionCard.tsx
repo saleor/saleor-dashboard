@@ -54,18 +54,16 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
   const [value, setValue] = React.useState<number | undefined>();
 
-  const [
-    sendRefund,
-    { status, loading, error, data },
-  ] = useOrderSendRefundMutation({
-    refetchQueries: [
-      { query: OrderDetailsDocument, variables: { id: orderId } },
-    ],
-    variables: {
-      transactionId: transaction.id,
-      amount: value,
-    },
-  });
+  const [sendRefund, { status, loading, error, data }] =
+    useOrderSendRefundMutation({
+      refetchQueries: [
+        { query: OrderDetailsDocument, variables: { id: orderId } },
+      ],
+      variables: {
+        transactionId: transaction.id,
+        amount: value,
+      },
+    });
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
@@ -102,6 +100,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       transaction={transaction}
       onTransactionAction={() => undefined}
       showActions={false}
+      disabled={!canBeRefunded}
       cardFooter={
         canBeRefunded && (
           <div className={classes.wrapper}>

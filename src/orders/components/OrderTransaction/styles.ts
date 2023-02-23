@@ -8,6 +8,9 @@ export const useStyles = makeStyles(
         marginBottom: 0,
       },
     },
+    disabled: {
+      filter: "opacity(0.6)",
+    },
   }),
   { name: "OrderTransaction" },
 );
