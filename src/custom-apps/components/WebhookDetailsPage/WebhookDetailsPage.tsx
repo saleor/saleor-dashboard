@@ -96,17 +96,18 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
-        const handleSyncEventsSelect = createSyncEventsSelectHandler(
+        const handleSyncEventsSelect = createSyncEventsSelectHandler({
           change,
-          data.syncEvents,
-          setQuery,
-        );
-        const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
-          change,
-          data.asyncEvents,
+          data,
           query,
           setQuery,
-        );
+        });
+        const handleAsyncEventsSelect = createAsyncEventsSelectHandler({
+          change,
+          data,
+          query,
+          setQuery,
+        });
 
         return (
           <DetailedContent useSingleColumn>
@@ -127,6 +128,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <FormSpacer />
                 <WebhookEvents
                   data={data}
+                  setQuery={setQuery}
                   onSyncEventChange={handleSyncEventsSelect}
                   onAsyncEventChange={handleAsyncEventsSelect}
                 />

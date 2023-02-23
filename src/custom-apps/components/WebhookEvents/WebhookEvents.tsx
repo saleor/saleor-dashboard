@@ -19,23 +19,26 @@ import {
   Pill,
   useListWidths,
 } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import { EventTypes, getEventName } from "./utils";
 
 interface WebhookEventsProps {
   data: {
     syncEvents: WebhookEventTypeSyncEnum[];
     asyncEvents: WebhookEventTypeAsyncEnum[];
   };
+  setQuery: Dispatch<SetStateAction<string>>;
   onSyncEventChange: (event: ChangeEvent) => void;
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
 const WebhookEvents: React.FC<WebhookEventsProps> = ({
   data,
+  setQuery,
   onSyncEventChange,
   onAsyncEventChange,
 }) => {
@@ -56,14 +59,19 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
 
   const handleTabChange = value => {
     setObject(null);
+    setQuery("");
     setTab(value);
   };
 
   const countEvents = object => {
     const selected = tab === "sync" ? data.syncEvents : data.asyncEvents;
-    const objectEvents = EventTypes[tab][object].map(
-      event => `${object}_${event}`,
-    );
+    const objectEvents = EventTypes[tab][object].map(event => {
+      if (event === object) {
+        return object;
+      }
+
+      return `${object}_${event}`;
+    });
 
     return objectEvents.filter((event: never) => selected.includes(event))
       .length;
@@ -177,62 +185,3 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
 };
 WebhookEvents.displayName = "WebhookEvents";
 export default WebhookEvents;
-
-type Actions = string[];
-
-export const AsyncWebhookTypes: Record<string, Actions> = {
-  ADDRESS: ["CREATED", "UPDATED", "DELETED"],
-  APP: ["INSTALLED", "UPDATED", "DELETED"],
-  ATTRIBUTE: ["CREATED", "UPDATED", "DELETED"],
-  CATEGORY: ["CREATED", "UPDATED", "DELETED"],
-  CHANNEL: ["CREATED", "UPDATED", "DELETED"],
-  GIFT_CARD: ["CREATED", "UPDATED", "DELETED", "STATUS_CHANGED"],
-
-  CHECKOUT: ["CREATED", "UPDATED", "DELETED"],
-  COLLECTION: ["CREATED", "UPDATED", "DELETED"],
-  CUSTOMER: ["CREATED", "UPDATED", "DELETED"],
-  FULFILLMENT: ["CREATED"],
-  INVOICE: ["DELETED", "REQUESTED", "SENT"],
-  MENU: ["CREATED", "UPDATED", "DELETED"],
-  ORDER: [
-    "CANCELLED",
-    "CONFIRMED",
-    "CREATED",
-    "FULFILLED",
-    "FULLY_PAID",
-    "UPDATED",
-  ],
-  PAGE: ["CREATED", "UPDATED", "DELETED"],
-  PRODUCT: ["CREATED", "UPDATED", "DELETED"],
-  PRODUCT_VARIANT: ["CREATED", "UPDATED", "DELETED"],
-  SALE: ["CREATED", "UPDATED", "DELETED", "TOGGLE"],
-  SHIPPING_PRICE: ["CREATED", "UPDATED", "DELETED"],
-  SHIPPING_ZONE: ["CREATED", "UPDATED", "DELETED"],
-  STAFF: ["CREATED", "UPDATED", "DELETED"],
-  TRANSLATION: ["ACTION_REQUEST", "CREATED", "UPDATED"],
-  VOUCHER: ["CREATED", "UPDATED", "DELETED"],
-  WAREHOUSE: ["CREATED", "UPDATED", "DELETED"],
-};
-
-const SyncWebhookTypes: Record<string, Actions> = {
-  PAYMENT: [
-    "AUTHORIZE",
-    "CAPTURE",
-    "CONFIRM",
-    "LIST_GATEWAYS",
-    "PROCESS",
-    "REFUND",
-    "VOID",
-  ],
-  CHECKOUT: ["CALCULATE_TAXES", "FILTER_SHIPPING_METHODS"],
-  ORDER: ["CALCULATE_TAXES", "FILTER_SHIPPING_METHODS"],
-  SHIPPING: ["LIST_METHODS_FOR_CHECKOUT"],
-};
-
-const EventTypes = {
-  async: AsyncWebhookTypes,
-  sync: SyncWebhookTypes,
-};
-
-const getEventName = (object: string, event: string) =>
-  [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
