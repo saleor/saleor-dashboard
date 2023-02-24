@@ -24,7 +24,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       display="flex"
       alignItems="center"
       paddingX={9}
-      paddingRight={9}
       paddingY={8}
       borderBottomWidth={1}
       borderBottomStyle="solid"
