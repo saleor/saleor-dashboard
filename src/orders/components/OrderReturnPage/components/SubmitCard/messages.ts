@@ -12,8 +12,8 @@ export const submitCardMessages = defineMessages({
     id: "ZTG+Dv",
   },
   submitButton: {
-    defaultMessage: "Replace products",
-    id: "Edg9FT",
+    defaultMessage: "Return and Replace products",
+    id: "uN88fb",
     description: "button, submit form",
   },
 });
