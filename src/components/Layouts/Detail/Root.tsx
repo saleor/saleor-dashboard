@@ -9,7 +9,6 @@ import React from "react";
 interface DetailPageLayoutProps {
   children: React.ReactNode;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
-  gridTemplateRows?: Sprinkles["gridTemplateRows"];
   withSavebar?: boolean;
 }
 
@@ -19,7 +18,6 @@ const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
 export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   children,
   gridTemplateColumns = 12,
-  gridTemplateRows = 12,
   withSavebar = true,
 }) => (
   <Box
@@ -27,7 +25,7 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
     display="grid"
     margin="auto"
     gridTemplateColumns={gridTemplateColumns}
-    gridTemplateRows={gridTemplateRows}
+    __gridTemplateRows="auto 1fr"
     __maxWidth={contentMaxWidth}
     __height={
       withSavebar ? contentWithSidebarHeight : contentWithoutSidebarHeight
