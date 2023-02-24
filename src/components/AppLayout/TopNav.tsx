@@ -35,7 +35,6 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       gridColumn="8"
       gridRowStart="1"
       backgroundColor="plain"
-      zIndex="3"
     >
       {href && (
         <Link

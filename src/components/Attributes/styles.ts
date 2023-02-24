@@ -57,7 +57,6 @@ export const useBasicAttributeStyles = makeStyles(
       "&:hover": {
         fillOpacity: 1,
       },
-      position: "absolute",
       padding: theme.spacing(0.25),
       marginLeft: theme.spacing(0.75),
     },
