@@ -3,7 +3,7 @@ import { Box, GenericAppIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface AppAvatarProps {
-  logo: AppLogo | undefined;
+  logo?: AppLogo | undefined;
   size: "medium" | "large";
 }
 

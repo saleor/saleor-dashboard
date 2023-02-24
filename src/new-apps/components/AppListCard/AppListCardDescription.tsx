@@ -2,6 +2,8 @@ import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { AppLogo } from "./AppLogo";
+
 interface AppListCardDescriptionProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
 }
@@ -17,19 +19,10 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
       marginBottom={8}
       gap={6}
     >
-      <Box
-        width={13}
-        height={13}
-        display="flex"
-        placeItems="center"
-        borderRadius={3}
-        style={{
-          backgroundColor: app.logo.color,
-        }}
-        data-test-id="app-logo"
-      >
-        {app.logo.source && <img src={app.logo.source} alt="App logo" />}
-        {!app.logo.source && (
+      <AppLogo backgroundColor={app.logo.color}>
+        {app.logo.source ? (
+          <img src={app.logo.source} alt="App logo" />
+        ) : (
           <Text
             variant="bodyEmp"
             size="large"
@@ -37,10 +30,10 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
             data-test-id="app-logo-placeholder"
             color="textNeutralContrasted"
           >
-            {app.name.en[0] || ""}
+            {app.name.en.charAt(0).toUpperCase() || ""}
           </Text>
         )}
-      </Box>
+      </AppLogo>
       <Text variant="bodyStrong" size="medium" color="textNeutralDefault">
         <strong>{app.name.en}</strong>
       </Text>
