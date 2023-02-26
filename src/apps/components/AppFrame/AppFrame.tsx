@@ -5,6 +5,7 @@ import {
   resolveAppIframeUrl,
 } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { CircularProgress } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
@@ -82,19 +83,24 @@ export const AppFrame: React.FC<Props> = ({
   };
 
   return (
-    <iframe
-      ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, {
-        ...params,
-        featureFlags: prepareFeatureFlagsList(flags),
-        theme: themeType,
-      })}
-      onError={onError}
-      onLoad={handleLoad}
-      className={clsx(classes.iframe, className, {
-        [classes.iframeHidden]: !handshakeDone,
-      })}
-      sandbox="allow-same-origin allow-forms allow-scripts"
-    />
+    <>
+      <div className={classes.loader}>
+        <CircularProgress color="primary" />
+      </div>
+      <iframe
+        ref={frameRef}
+        src={resolveAppIframeUrl(appId, src, {
+          ...params,
+          featureFlags: prepareFeatureFlagsList(flags),
+          theme: themeType,
+        })}
+        onError={onError}
+        onLoad={handleLoad}
+        className={clsx(classes.iframe, className, {
+          [classes.iframeHidden]: !handshakeDone,
+        })}
+        sandbox="allow-same-origin allow-forms allow-scripts"
+      />
+    </>
   );
 };
