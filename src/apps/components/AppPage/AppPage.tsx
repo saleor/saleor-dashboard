@@ -18,7 +18,6 @@ export const AppPage: React.FC<AppPageProps> = ({
   refetch,
 }) => {
   const classes = useStyles();
-  console.log("AppPage render");
 
   return (
     <div className={classes.iframeContainer}>

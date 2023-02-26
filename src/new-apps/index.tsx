@@ -26,11 +26,9 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
-const _App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
-  <AppView id={decodeURIComponent(match.params.id)} />
-);
-
-const MemoApp = React.memo(_App);
+const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match,
+}) => <AppView id={decodeURIComponent(match.params.id)} />;
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -60,7 +58,7 @@ const Apps = () => {
           path={AppPaths.resolveAppDetailsPath(":id")}
           component={AppDetails}
         />
-        <Route path={AppPaths.resolveAppPath(":id")} component={MemoApp} />
+        <Route path={AppPaths.resolveAppPath(":id")} component={AppViewRoute} />
       </Switch>
     </>
   );

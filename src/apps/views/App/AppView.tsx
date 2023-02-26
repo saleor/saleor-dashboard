@@ -21,10 +21,6 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     variables: { id },
   });
 
-  console.group("AppView render");
-  console.log(data);
-  console.groupEnd();
-
   const appExists = data?.app !== null;
 
   const navigate = useNavigator();
@@ -53,8 +49,6 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
   if (!data || !appCompleteUrl) {
     return null;
   }
-
-  console.log("Will render AppPage");
 
   return (
     <AppPage

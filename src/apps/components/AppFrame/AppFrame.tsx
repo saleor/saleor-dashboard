@@ -6,7 +6,6 @@ import {
 } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/hooks/useFlags";
 import useLocale from "@dashboard/hooks/useLocale";
-import useShop from "@dashboard/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect } from "react";
@@ -29,7 +28,7 @@ interface Props {
 
 const getOrigin = (url: string) => new URL(url).origin;
 
-const _AppFrame: React.FC<Props> = ({
+export const AppFrame: React.FC<Props> = ({
   src,
   appToken,
   appId,
@@ -39,15 +38,13 @@ const _AppFrame: React.FC<Props> = ({
   onError,
   refetch,
 }) => {
-  console.log("AppFrame render");
-  // const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
   const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
-    frameRef,
+    frameRef.current,
     appOrigin,
     appId,
     appToken,
@@ -66,7 +63,7 @@ const _AppFrame: React.FC<Props> = ({
         locale,
       },
     });
-  }, [locale, postToExtension]);
+  }, [handshakeDone, locale, postToExtension]);
 
   useEffect(() => {
     if (!handshakeDone) {
@@ -78,7 +75,7 @@ const _AppFrame: React.FC<Props> = ({
         theme: themeType,
       },
     });
-  }, [themeType, postToExtension]);
+  }, [themeType, postToExtension, handshakeDone]);
 
   useEffect(() => {
     if (!handshakeDone) {
@@ -90,7 +87,7 @@ const _AppFrame: React.FC<Props> = ({
         path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
       },
     });
-  }, [location.pathname]);
+  }, [appId, handshakeDone, location.pathname, postToExtension]);
 
   useTokenRefresh(appToken, refetch);
 
@@ -119,12 +116,6 @@ const _AppFrame: React.FC<Props> = ({
       onLoad();
     }
   };
-  //
-  // if (!shop?.domain.host) {
-  //   return null;
-  // }
-
-  console.log({ handshakeDone });
 
   return (
     <iframe
@@ -144,4 +135,4 @@ const _AppFrame: React.FC<Props> = ({
   );
 };
 
-export const AppFrame = React.memo(_AppFrame);
+// export const AppFrame = React.memo(_AppFrame);
