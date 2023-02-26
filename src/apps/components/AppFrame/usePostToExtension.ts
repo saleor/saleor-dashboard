@@ -2,7 +2,7 @@ import { Events } from "@saleor/app-sdk/app-bridge";
 import { useCallback } from "react";
 
 export const usePostToExtension = (
-  iframeElement: HTMLIFrameElement,
+  iframeElement: HTMLIFrameElement | null,
   appOrigin: string,
 ) => {
   const postToExtension = useCallback(
@@ -15,7 +15,7 @@ export const usePostToExtension = (
         }
       }
     },
-    [appOrigin, iframeElement.contentWindow],
+    [appOrigin, iframeElement],
   );
 
   return postToExtension;

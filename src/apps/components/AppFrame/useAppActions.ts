@@ -4,7 +4,7 @@ import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import React, { useState } from "react";
 
 export const useAppActions = (
-  frameEl: HTMLIFrameElement,
+  frameEl: HTMLIFrameElement | null,
   appOrigin: string,
   appId: string,
   appToken: string,
@@ -17,7 +17,15 @@ export const useAppActions = (
     AppActionsHandler.useHandleUpdateRoutingAction(appId);
   const { handle: handleRedirect } =
     AppActionsHandler.useHandleRedirectAction(appId);
+  const { handle: handleNotifyReady } = AppActionsHandler.useNotifyReadyAction(
+    frameEl,
+    appOrigin,
+    appToken,
+  );
 
+  /**
+   * Store if app has performed a handshake with Dashboard, to avoid sending events before that
+   */
   const [handshakeDone, setHandshakeDone] = useState(false);
 
   const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
@@ -35,20 +43,11 @@ export const useAppActions = (
        * Send handshake after app informs its ready and mounted
        */
       case "notifyReady": {
-        postToExtension({
-          type: "handshake",
-          payload: {
-            token: appToken,
-            version: 1,
-          },
-        });
+        const response = handleNotifyReady(action);
 
         setHandshakeDone(true);
 
-        return AppActionsHandler.createResponseStatus(
-          action.payload.actionId,
-          true,
-        );
+        return response;
       }
       default: {
         throw new Error("Unknown action type");

@@ -1,15 +1,13 @@
+import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import {
   AppDetailsUrlQueryParams,
-  getAppDeepPathFromDashboardUrl,
   prepareFeatureFlagsList,
   resolveAppIframeUrl,
 } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/hooks/useFlags";
-import useLocale from "@dashboard/hooks/useLocale";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { useEffect } from "react";
-import { useLocation } from "react-router";
+import React from "react";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
@@ -38,56 +36,26 @@ export const AppFrame: React.FC<Props> = ({
   onError,
   refetch,
 }) => {
-  const frameRef = React.useRef<HTMLIFrameElement>(null);
+  const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
+
+  /**
+   * React on messages from App
+   */
   const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
     frameRef.current,
     appOrigin,
     appId,
     appToken,
   );
-  const location = useLocation();
-  const { locale } = useLocale();
 
-  useEffect(() => {
-    if (!handshakeDone) {
-      return;
-    }
-
-    postToExtension({
-      type: "localeChanged",
-      payload: {
-        locale,
-      },
-    });
-  }, [handshakeDone, locale, postToExtension]);
-
-  useEffect(() => {
-    if (!handshakeDone) {
-      return;
-    }
-    postToExtension({
-      type: "theme",
-      payload: {
-        theme: themeType,
-      },
-    });
-  }, [themeType, postToExtension, handshakeDone]);
-
-  useEffect(() => {
-    if (!handshakeDone) {
-      return;
-    }
-    postToExtension({
-      type: "redirect",
-      payload: {
-        path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
-      },
-    });
-  }, [appId, handshakeDone, location.pathname, postToExtension]);
+  /**
+   * Listen to Dashboard context like theme or locale and inform app about it
+   */
+  useAppDashboardUpdates(frameRef.current, appOrigin, handshakeDone, appId);
 
   useTokenRefresh(appToken, refetch);
 
@@ -95,7 +63,8 @@ export const AppFrame: React.FC<Props> = ({
     /**
      * @deprecated
      *
-     * Move handshake to notifyReady, so app is requesting token after its ready to receive it
+     * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
+     * Currently handshake it 2 times, for compatibility
      */
     postToExtension({
       type: "handshake",
@@ -104,13 +73,8 @@ export const AppFrame: React.FC<Props> = ({
         version: 1,
       },
     });
+
     setHandshakeDone(true);
-    postToExtension({
-      type: "theme",
-      payload: {
-        theme: themeType,
-      },
-    });
 
     if (onLoad) {
       onLoad();
@@ -134,5 +98,3 @@ export const AppFrame: React.FC<Props> = ({
     />
   );
 };
-
-// export const AppFrame = React.memo(_AppFrame);

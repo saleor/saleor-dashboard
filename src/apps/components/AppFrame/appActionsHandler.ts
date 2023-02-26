@@ -1,3 +1,4 @@
+import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
 import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -169,15 +170,29 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
   },
 });
 
-const useNotifyReadyAction = () => ({
-  handle(action: NotifyReady) {
-    console.debug(
-      `Handling NotifyReady action with ID: ${action.payload.actionId}`,
-    );
-    console.warn("Not implemented");
-    return createResponseStatus(action.payload.actionId, true);
-  },
-});
+/**
+ * TODO Remove prop drilling, consume context
+ */
+const useNotifyReadyAction = (
+  frameEl: HTMLIFrameElement | null,
+  appOrigin: string,
+  appToken: string,
+) => {
+  const postToExtension = usePostToExtension(frameEl, appOrigin);
+
+  return {
+    handle(action: NotifyReady) {
+      postToExtension({
+        type: "handshake",
+        payload: {
+          token: appToken,
+          version: 1,
+        },
+      });
+      return createResponseStatus(action.payload.actionId, true);
+    },
+  };
+};
 
 export const AppActionsHandler = {
   useHandleNotificationAction,
