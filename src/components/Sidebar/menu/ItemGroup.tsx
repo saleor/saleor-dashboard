@@ -4,52 +4,58 @@ import { Link } from "react-router-dom";
 
 import { MenuItem } from "./Item";
 import { SidebarMenuItem } from "./types";
+import { isMenuActive } from "./utils";
 
 interface Props {
   menuItem: SidebarMenuItem;
 }
 
-export const ItemGroup: React.FC<Props> = ({ menuItem }) => (
-  <List.ItemGroup>
-    <List.ItemGroup.Trigger
-      paddingX={5}
-      paddingY={4}
-      borderRadius={3}
-      size="small"
-      justifyContent="space-between"
-      data-test-id={`menu-item-label-${menuItem.id}`}
-    >
-      <Link
-        to={menuItem?.url ?? ""}
-        className={sprinkles({
-          width: "100%",
-        })}
+export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
+  const isActive = isMenuActive(location.pathname, menuItem);
+
+  return (
+    <List.ItemGroup defaultExpanded={isActive}>
+      <List.ItemGroup.Trigger
+        paddingX={5}
+        paddingY={4}
+        borderRadius={3}
+        size="small"
+        active={isActive}
+        justifyContent="space-between"
+        data-test-id={`menu-item-label-${menuItem.id}`}
       >
-        <Box display="flex" alignItems="center" gap={6}>
-          {menuItem.icon}
-          <Text size="small" variant="bodyEmp">
-            {menuItem.label}
-          </Text>
+        <Link
+          to={menuItem?.url ?? ""}
+          className={sprinkles({
+            width: "100%",
+          })}
+        >
+          <Box display="flex" alignItems="center" gap={6}>
+            {menuItem.icon}
+            <Text size="small" variant="bodyEmp">
+              {menuItem.label}
+            </Text>
+          </Box>
+        </Link>
+      </List.ItemGroup.Trigger>
+      <List.ItemGroup.Content>
+        <Box
+          borderLeftWidth={1}
+          borderLeftStyle="solid"
+          borderColor="neutralPlain"
+          paddingLeft={7}
+          marginLeft={7}
+          display="flex"
+          flexDirection="column"
+          marginBottom={5}
+          marginTop={3}
+          gap={1}
+        >
+          {menuItem.children?.map(child => (
+            <MenuItem menuItem={child} key={child.id} />
+          ))}
         </Box>
-      </Link>
-    </List.ItemGroup.Trigger>
-    <List.ItemGroup.Content>
-      <Box
-        borderLeftWidth={1}
-        borderLeftStyle="solid"
-        borderColor="neutralPlain"
-        paddingLeft={7}
-        marginLeft={7}
-        display="flex"
-        flexDirection="column"
-        marginBottom={5}
-        marginTop={3}
-        gap={1}
-      >
-        {menuItem.children?.map(child => (
-          <MenuItem menuItem={child} key={child.id} />
-        ))}
-      </Box>
-    </List.ItemGroup.Content>
-  </List.ItemGroup>
-);
+      </List.ItemGroup.Content>
+    </List.ItemGroup>
+  );
+};

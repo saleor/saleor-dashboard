@@ -189,7 +189,6 @@ export function useMenuStructure() {
       url: customerListUrl(),
       type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
     },
-
     {
       children: [
         {
