@@ -14,7 +14,7 @@ const useStyles = makeStyles(
       colAction: {
         "&:last-child": {
           ...colAction,
-          paddingRight: theme.spacing(3),
+          paddingRight: theme.spacing(4),
         },
       },
       colActionHeader: {

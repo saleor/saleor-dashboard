@@ -49,10 +49,10 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
           description: "header",
         })}
       />
-      <Content>
+      <Content noSavebar>
         <ShippingZonesList disabled={disabled} {...listProps} />
       </Content>
-      <RightSidebar>
+      <RightSidebar noSavebar>
         <RequirePermissions
           requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
         >

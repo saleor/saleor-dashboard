@@ -19,6 +19,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add format tip for text attribute rows - #2340 by @orzechdev
 - Add GraphiQL editor to webhook form for defining the subscription query #2885 by @2can @zaiste
 - Add redirect to GraphiQL from product & order details pages - #2940 by @zaiste
+- Extract permissions for subscription query - #3155 by @zaiste
+- Add custom request headers to webhook form - #3107 by @2can
+- Allow subscription query for sync events - #3099 by @2can
 
 ## 3.4
 

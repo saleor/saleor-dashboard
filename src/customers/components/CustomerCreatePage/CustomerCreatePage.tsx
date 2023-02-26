@@ -1,9 +1,9 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Savebar from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
 import {
@@ -152,7 +152,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <>
+          <DetailedContent useSingleColumn>
             <TopNav
               href={customerListUrl()}
               title={intl.formatMessage({
@@ -162,33 +162,31 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
               })}
             />
             <Content>
-              <Grid>
-                <div>
-                  <CustomerCreateDetails
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  <CardSpacer />
-                  <CustomerCreateAddress
-                    countries={countryChoices}
-                    countryDisplayName={countryDisplayName}
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                    onCountryChange={handleCountrySelect}
-                  />
-                  <CardSpacer />
-                  <CustomerCreateNote
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
-                </div>
-              </Grid>
+              <div>
+                <CustomerCreateDetails
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <CustomerCreateAddress
+                  countries={countryChoices}
+                  countryDisplayName={countryDisplayName}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
+                <CardSpacer />
+                <CustomerCreateNote
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+              </div>
               <Savebar
                 disabled={isSaveDisabled}
                 state={saveButtonBar}
@@ -196,7 +194,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                 onCancel={() => navigate(customerListUrl())}
               />
             </Content>
-          </>
+          </DetailedContent>
         );
       }}
     </Form>

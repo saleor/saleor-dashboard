@@ -73,9 +73,11 @@ export function fillUpAllCommonFieldsInCreateAndUpdate({
       editSeoSettings(seo);
     })
     .then(() => {
+      cy.get(BUTTON_SELECTORS.expandMetadataButton).first().click();
       addMetadataField(metadata.public);
     })
     .then(() => {
+      cy.get(BUTTON_SELECTORS.expandMetadataButton).last().click();
       addMetadataField(metadata.private);
     });
 }
@@ -142,11 +144,10 @@ export function addVariantToDataGrid(variantName) {
     .should("be.visible")
     .get(PRODUCT_DETAILS.firstRowDataGrid)
     .click({ force: true })
-    .type(variantName)
+    .type(variantName, { force: true })
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldAppear()
-    .reload()
     .waitForProgressBarToNotBeVisible();
 }
 

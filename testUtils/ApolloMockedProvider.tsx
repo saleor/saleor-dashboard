@@ -4,6 +4,7 @@ import React from "react";
 import {
   addressMocks,
   appsMocks,
+  introspectionMocks,
   pageTypesMocks,
   warehousesMocks,
 } from "./mocks";
@@ -13,6 +14,7 @@ const mocks: MockedResponse[] = [
   ...addressMocks,
   ...warehousesMocks,
   ...pageTypesMocks,
+  ...introspectionMocks,
 ];
 
 export const ApolloMockedProvider = ({ children }) => (

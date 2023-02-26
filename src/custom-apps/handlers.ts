@@ -12,28 +12,36 @@ import {
   print,
   visit,
 } from "graphql";
+import isEmpty from "lodash/isEmpty";
+import React, { Dispatch, SetStateAction } from "react";
 
+import { WebhookFormData } from "./components/WebhookDetailsPage";
 import { filterSelectedAsyncEvents } from "./utils";
 
+interface CreateSyncEventsSelectHandler {
+  change: (event: ChangeEvent, cb?: () => void) => void;
+  data: WebhookFormData;
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
+}
+
 export const createSyncEventsSelectHandler =
-  (
-    change: (event: ChangeEvent, cb?: () => void) => void,
-    syncEvents: WebhookEventTypeSyncEnum[],
-    setQuery: React.Dispatch<React.SetStateAction<string>>,
-  ) =>
+  ({ change, data, query, setQuery }: CreateSyncEventsSelectHandler) =>
   (event: ChangeEvent) => {
+    const { syncEvents, asyncEvents } = data;
     const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
 
-    // Clear query
-    setQuery("");
-
     // Clear asyncEvents
-    change({
-      target: {
-        name: "asyncEvents",
-        value: [],
-      },
-    });
+    if (!isEmpty(asyncEvents)) {
+      setQuery("");
+
+      change({
+        target: {
+          name: "asyncEvents",
+          value: [],
+        },
+      });
+    }
 
     change({
       target: {
@@ -41,26 +49,35 @@ export const createSyncEventsSelectHandler =
         value: events,
       },
     });
+
+    handleQuery(events, query, setQuery);
   };
 
+interface CreateAsyncEventsSelectHandler {
+  change: (event: ChangeEvent, cb?: () => void) => void;
+  data: WebhookFormData;
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
+}
+
 export const createAsyncEventsSelectHandler =
-  (
-    change: (event: ChangeEvent, cb?: () => void) => void,
-    asyncEvents: WebhookEventTypeAsyncEnum[],
-    query: string,
-    setQuery: React.Dispatch<React.SetStateAction<string>>,
-  ) =>
+  ({ change, data, query, setQuery }: CreateAsyncEventsSelectHandler) =>
   (event: ChangeEvent) => {
+    const { syncEvents, asyncEvents } = data;
     const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
     const filteredEvents = filterSelectedAsyncEvents(events);
 
     // Clear syncEvents
-    change({
-      target: {
-        name: "syncEvents",
-        value: [],
-      },
-    });
+    if (!isEmpty(syncEvents)) {
+      setQuery("");
+
+      change({
+        target: {
+          name: "syncEvents",
+          value: [],
+        },
+      });
+    }
 
     change({
       target: {
@@ -73,7 +90,7 @@ export const createAsyncEventsSelectHandler =
   };
 
 const handleQuery = (
-  events: WebhookEventTypeAsyncEnum[],
+  events: WebhookEventTypeAsyncEnum[] | WebhookEventTypeSyncEnum[],
   query: string,
   setQuery: React.Dispatch<React.SetStateAction<string>>,
 ) => {
@@ -83,6 +100,7 @@ const handleQuery = (
       .split("_")
       .map(chunk => capitalize(chunk))
       .join("");
+
     setQuery(
       print(parse(`subscription { event { ... on ${event} { __typename } } }`)),
     );

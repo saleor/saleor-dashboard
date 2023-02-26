@@ -5545,7 +5545,7 @@ export type WarehouseUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type WebhookKeySpecifier = ('id' | 'name' | 'events' | 'syncEvents' | 'asyncEvents' | 'app' | 'eventDeliveries' | 'targetUrl' | 'isActive' | 'secretKey' | 'subscriptionQuery' | WebhookKeySpecifier)[];
+export type WebhookKeySpecifier = ('id' | 'name' | 'events' | 'syncEvents' | 'asyncEvents' | 'app' | 'eventDeliveries' | 'targetUrl' | 'isActive' | 'secretKey' | 'subscriptionQuery' | 'customHeaders' | WebhookKeySpecifier)[];
 export type WebhookFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5557,7 +5557,8 @@ export type WebhookFieldPolicy = {
 	targetUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	isActive?: FieldPolicy<any> | FieldReadFunction<any>,
 	secretKey?: FieldPolicy<any> | FieldReadFunction<any>,
-	subscriptionQuery?: FieldPolicy<any> | FieldReadFunction<any>
+	subscriptionQuery?: FieldPolicy<any> | FieldReadFunction<any>,
+	customHeaders?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type WebhookCreateKeySpecifier = ('webhookErrors' | 'errors' | 'webhook' | WebhookCreateKeySpecifier)[];
 export type WebhookCreateFieldPolicy = {
