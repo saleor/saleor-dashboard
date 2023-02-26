@@ -4,12 +4,13 @@ import {
   DispatchResponseEvent,
   Events,
 } from "@saleor/app-sdk/app-bridge";
-import React from "react";
+import React, { useRef, useState } from "react";
 
 export const useAppActions = (
   frameEl: React.MutableRefObject<HTMLIFrameElement | null>,
   appOrigin: string,
   appId: string,
+  appToken: string,
 ) => {
   const { handle: handleNotification } =
     AppActionsHandler.useHandleNotificationAction();
@@ -17,6 +18,20 @@ export const useAppActions = (
     AppActionsHandler.useHandleUpdateRoutingAction(appId);
   const { handle: handleRedirect } =
     AppActionsHandler.useHandleRedirectAction(appId);
+  const [handshakeDone, setHandshakeDone] = useState(false);
+
+  const postToExtension = (event: Events) => {
+    console.log({ handshakeDone });
+
+    if (frameEl?.current?.contentWindow) {
+      console.log(`event ${event.type}`);
+      try {
+        frameEl.current.contentWindow.postMessage(event, appOrigin);
+      } catch (e) {
+        console.info(e);
+      }
+    }
+  };
 
   const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
     switch (action?.type) {
@@ -29,18 +44,33 @@ export const useAppActions = (
       case "updateRouting": {
         return handleUpdateRouting(action);
       }
+      /**
+       * Send handshake after app informs its ready and mounted
+       */
       case "notifyReady": {
-        console.warn("Not implemented");
+        console.log("notifyReady");
+        postToExtension({
+          type: "handshake",
+          payload: {
+            token: appToken,
+            version: 1,
+          },
+        });
+
+        setHandshakeDone(true);
+
+        // move somewhere todo
+        return {
+          type: "response",
+          payload: {
+            actionId: action.payload.actionId,
+            ok: true,
+          },
+        };
       }
       default: {
         throw new Error("Unknown action type");
       }
-    }
-  };
-
-  const postToExtension = (event: Events) => {
-    if (frameEl?.current?.contentWindow) {
-      frameEl.current.contentWindow.postMessage(event, appOrigin);
     }
   };
 
@@ -61,6 +91,8 @@ export const useAppActions = (
   }, []);
 
   return {
+    handshakeDone,
     postToExtension,
+    setHandshakeDone,
   };
 };

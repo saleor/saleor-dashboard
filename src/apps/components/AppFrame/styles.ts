@@ -7,6 +7,9 @@ export const useStyles = makeStyles(
       height: "100%",
       border: "none",
     },
+    iframeHidden: {
+      visibility: "hidden",
+    },
   }),
   { name: "AppFrame" },
 );

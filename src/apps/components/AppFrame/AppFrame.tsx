@@ -29,7 +29,7 @@ interface Props {
 
 const getOrigin = (url: string) => new URL(url).origin;
 
-export const AppFrame: React.FC<Props> = ({
+const _AppFrame: React.FC<Props> = ({
   src,
   appToken,
   appId,
@@ -39,17 +39,27 @@ export const AppFrame: React.FC<Props> = ({
   onError,
   refetch,
 }) => {
-  const shop = useShop();
+  console.log("AppFrame render");
+  // const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
-  const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
+  const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
+    frameRef,
+    appOrigin,
+    appId,
+    appToken,
+  );
   const location = useLocation();
   const { locale } = useLocale();
 
   useEffect(() => {
+    if (!handshakeDone) {
+      return;
+    }
+
     postToExtension({
       type: "localeChanged",
       payload: {
@@ -59,6 +69,9 @@ export const AppFrame: React.FC<Props> = ({
   }, [locale, postToExtension]);
 
   useEffect(() => {
+    if (!handshakeDone) {
+      return;
+    }
     postToExtension({
       type: "theme",
       payload: {
@@ -68,6 +81,9 @@ export const AppFrame: React.FC<Props> = ({
   }, [themeType, postToExtension]);
 
   useEffect(() => {
+    if (!handshakeDone) {
+      return;
+    }
     postToExtension({
       type: "redirect",
       payload: {
@@ -79,6 +95,11 @@ export const AppFrame: React.FC<Props> = ({
   useTokenRefresh(appToken, refetch);
 
   const handleLoad = () => {
+    /**
+     * @deprecated
+     *
+     * Move handshake to notifyReady, so app is requesting token after its ready to receive it
+     */
     postToExtension({
       type: "handshake",
       payload: {
@@ -86,6 +107,7 @@ export const AppFrame: React.FC<Props> = ({
         version: 1,
       },
     });
+    setHandshakeDone(true);
     postToExtension({
       type: "theme",
       payload: {
@@ -97,10 +119,12 @@ export const AppFrame: React.FC<Props> = ({
       onLoad();
     }
   };
+  //
+  // if (!shop?.domain.host) {
+  //   return null;
+  // }
 
-  if (!shop?.domain.host) {
-    return null;
-  }
+  console.log({ handshakeDone });
 
   return (
     <iframe
@@ -112,8 +136,12 @@ export const AppFrame: React.FC<Props> = ({
       })}
       onError={onError}
       onLoad={handleLoad}
-      className={clsx(classes.iframe, className)}
+      className={clsx(classes.iframe, className, {
+        [classes.iframeHidden]: !handshakeDone,
+      })}
       sandbox="allow-same-origin allow-forms allow-scripts"
     />
   );
 };
+
+export const AppFrame = React.memo(_AppFrame);
