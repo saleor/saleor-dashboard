@@ -26,7 +26,6 @@ import {
   MarketplaceIcon,
   OrdersIcon,
   ProductsIcons,
-  SellsIcon,
   StorefrontIcon,
   TranslationsIcon,
   VouchersIcon,
@@ -191,18 +190,30 @@ export function useMenuStructure() {
       type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
     },
     {
-      icon: <SellsIcon {...iconSettings} />,
-      label: intl.formatMessage(sectionNames.sales),
-      id: "sales",
-      url: saleListUrl(),
-      type: "item",
-    },
-    {
+      children: [
+        {
+          label: intl.formatMessage(sectionNames.sales),
+          id: "sales",
+          url: saleListUrl(),
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.vouchers),
+          id: "vouchers",
+          url: voucherListUrl(),
+          type: "item",
+        },
+        ...mapToExtensionsItems(
+          extensions.NAVIGATION_DISCOUNTS,
+          appExtensionsHeaderItem,
+        ),
+      ],
       icon: <VouchersIcon {...iconSettings} />,
-      label: intl.formatMessage(sectionNames.vouchers),
-      id: "vouchers",
-      url: voucherListUrl(),
-      type: "item",
+      label: intl.formatMessage(commonMessages.discounts),
+      permissions: [PermissionEnum.MANAGE_DISCOUNTS],
+      url: saleListUrl(),
+      id: "discounts",
+      type: "itemGroup",
     },
     {
       id: "divider-2",
@@ -210,13 +221,6 @@ export function useMenuStructure() {
     },
     {
       children: !isEmpty(extensions.NAVIGATION_PAGES) && [
-        {
-          label: intl.formatMessage(sectionNames.pages),
-          permissions: [PermissionEnum.MANAGE_PAGES],
-          id: "pages",
-          url: pageListPath,
-          type: "item",
-        },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_PAGES,
           appExtensionsHeaderItem,
@@ -232,13 +236,6 @@ export function useMenuStructure() {
     getAppSection(),
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) && [
-        {
-          label: intl.formatMessage(sectionNames.translations),
-          permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
-          id: "translations",
-          url: languageListUrl,
-          type: "item",
-        },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_TRANSLATIONS,
           appExtensionsHeaderItem,
