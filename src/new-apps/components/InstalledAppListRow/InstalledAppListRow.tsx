@@ -49,7 +49,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           gap={5}
           alignItems="center"
         >
-          <AppAvatar size="medium" logo={logo} />
+          <AppAvatar logo={logo} />
           <Text variant="bodyStrong">{app.name}</Text>
           <Text variant="body" color="textNeutralSubdued">
             {`v${app.version}`}
