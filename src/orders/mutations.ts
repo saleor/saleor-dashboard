@@ -401,6 +401,15 @@ export const orderLinesAddMutation = gql`
       }
       order {
         id
+        shippingMethods {
+          id
+          name
+          price {
+            ...Money
+          }
+          active
+          message
+        }
         lines {
           ...OrderLine
         }

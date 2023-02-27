@@ -9291,6 +9291,15 @@ export const OrderLinesAddDocument = gql`
     }
     order {
       id
+      shippingMethods {
+        id
+        name
+        price {
+          ...Money
+        }
+        active
+        message
+      }
       lines {
         ...OrderLine
       }
@@ -9298,6 +9307,7 @@ export const OrderLinesAddDocument = gql`
   }
 }
     ${OrderErrorFragmentDoc}
+${MoneyFragmentDoc}
 ${OrderLineFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 

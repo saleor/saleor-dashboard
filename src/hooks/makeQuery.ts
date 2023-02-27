@@ -55,7 +55,7 @@ export interface LoadMore<TData, TVariables> {
 
 export type LazyQueryHookOptions<
   TData = any,
-  TVariables = OperationVariables
+  TVariables = OperationVariables,
 > = BaseLazyQueryHookOptions<TData, TVariables>;
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
@@ -101,7 +101,7 @@ export function useQuery<TData, TVariables>(
       useBatching: true,
     },
     errorPolicy: "all",
-    fetchPolicy: fetchPolicy ?? "cache-and-network",
+    fetchPolicy: fetchPolicy ?? "cache-first",
     onError: error => {
       if (!!handleError) {
         handleError(error);
