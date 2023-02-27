@@ -14,6 +14,7 @@ export const ListPageLayout: React.FC<ListPageLayoutProps> = ({ children }) => (
     margin="auto"
     gridTemplateColumns={1}
     height="100%"
+    as="article"
     __maxWidth={contentMaxWidth}
   >
     {children}
