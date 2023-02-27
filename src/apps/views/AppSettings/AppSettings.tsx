@@ -5,7 +5,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import AppPage from "../../components/AppPage";
+import { AppPage } from "../../components/AppPage";
 import { appsListPath } from "../../urls";
 
 interface AppSettingsProps {

@@ -21,12 +21,12 @@ export const AppPage: React.FC<AppPageProps> = ({
 
   return (
     <div className={classes.iframeContainer}>
-      {url && (
+      {url && data.id && data.accessToken && (
         <AppFrame
           src={url}
-          appToken={data?.accessToken ?? ""}
+          appToken={data?.accessToken}
           onError={onError}
-          appId={data?.id ?? ""}
+          appId={data?.id}
           refetch={refetch}
         />
       )}
@@ -35,4 +35,3 @@ export const AppPage: React.FC<AppPageProps> = ({
 };
 
 AppPage.displayName = "AppPage";
-export default AppPage;
