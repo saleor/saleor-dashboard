@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -32,13 +33,8 @@ interface OrderFulfillLineProps {
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const {
-    line,
-    lineIndex,
-    formsetData,
-    formsetChange,
-    onWarehouseChange,
-  } = props;
+  const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } =
+    props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -100,9 +96,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                 <WarningIcon />
               </div>
             </Tooltip>
-          ) : (
-            undefined
-          )
+          ) : undefined
         }
       >
         {line.productName}
@@ -122,8 +116,8 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             type="number"
             inputProps={{
               className: clsx(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]: !line.variant
-                  ?.trackInventory,
+                [classes.quantityInnerInputNoRemaining]:
+                  !line.variant?.trackInventory,
               }),
               min: 0,
               style: { textAlign: "right" },

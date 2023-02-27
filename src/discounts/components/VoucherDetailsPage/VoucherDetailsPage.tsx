@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";

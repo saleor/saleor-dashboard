@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { makeStyles, SearchLargeIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

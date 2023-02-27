@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
 import { ProductFragment } from "@dashboard/graphql";
 

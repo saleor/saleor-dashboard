@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import Decorator from "@dashboard/storybook/Decorator";
 import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";

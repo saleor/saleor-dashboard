@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Money from "@dashboard/components/Money";
@@ -70,7 +71,9 @@ interface OrderRefundUnfulfilledProductsProps {
   onSetMaximalQuantities: () => void;
 }
 
-const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsProps> = props => {
+const OrderRefundUnfulfilledProducts: React.FC<
+  OrderRefundUnfulfilledProductsProps
+> = props => {
   const {
     unfulfilledLines,
     data,

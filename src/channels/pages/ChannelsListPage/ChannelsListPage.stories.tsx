@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { limits, limitsReached } from "@dashboard/fixtures";
 import Decorator from "@dashboard/storybook/Decorator";

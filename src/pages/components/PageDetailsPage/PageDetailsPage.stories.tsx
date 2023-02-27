@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { fetchMoreProps } from "@dashboard/fixtures";
 import { PageErrorCode } from "@dashboard/graphql";
 import { PageData } from "@dashboard/pages/components/PageDetailsPage/form";
@@ -34,15 +35,17 @@ storiesOf("Pages / Page details", module)
   .add("form errors", () => (
     <PageDetailsPage
       {...props}
-      errors={([
-        "title",
-        "slug",
-        "content",
-        "publicationDate",
-        "isPublished",
-        "seoDescription",
-        "seoTitle",
-      ] as Array<keyof PageData>).map(field => ({
+      errors={(
+        [
+          "title",
+          "slug",
+          "content",
+          "publicationDate",
+          "isPublished",
+          "seoDescription",
+          "seoTitle",
+        ] as Array<keyof PageData>
+      ).map(field => ({
         __typename: "PageError",
         attributes: [],
         code: PageErrorCode.INVALID,

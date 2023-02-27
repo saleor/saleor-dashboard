@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SearchCollectionsQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import React from "react";

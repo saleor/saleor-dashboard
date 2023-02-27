@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createVoucherChannels } from "@dashboard/channels/utils";
 import { DiscountErrorCode } from "@dashboard/graphql";
@@ -29,18 +30,20 @@ storiesOf("Discounts / Voucher create", module)
   .add("form errors", () => (
     <VoucherCreatePage
       {...props}
-      errors={([
-        "applyOncePerOrder",
-        "code",
-        "discountType",
-        "endDate",
-        "minSpent",
-        "name",
-        "startDate",
-        "type",
-        "usageLimit",
-        "value",
-      ] as Array<keyof FormData>).map(field => ({
+      errors={(
+        [
+          "applyOncePerOrder",
+          "code",
+          "discountType",
+          "endDate",
+          "minSpent",
+          "name",
+          "startDate",
+          "type",
+          "usageLimit",
+          "value",
+        ] as Array<keyof FormData>
+      ).map(field => ({
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,

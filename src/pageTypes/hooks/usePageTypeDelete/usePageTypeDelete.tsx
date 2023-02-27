@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
 import { pageListUrl } from "@dashboard/pages/urls";
 import {
@@ -10,7 +11,7 @@ import * as messages from "./messages";
 import { UseTypeDeleteData, UseTypeDeleteProps } from "./types";
 
 type UsePageTypeDeleteProps<
-  T = PageTypeListUrlQueryParams | PageTypeUrlQueryParams
+  T = PageTypeListUrlQueryParams | PageTypeUrlQueryParams,
 > = UseTypeDeleteProps<T>;
 
 function usePageTypeDelete({
@@ -22,16 +23,15 @@ function usePageTypeDelete({
 
   const isDeleteDialogOpen = params.action === "remove";
 
-  const pagesAssignedToSelectedTypesQueryVars = React.useMemo<
-    PageCountQueryVariables
-  >(
-    () => ({
-      filter: {
-        pageTypes,
-      },
-    }),
-    [pageTypes],
-  );
+  const pagesAssignedToSelectedTypesQueryVars =
+    React.useMemo<PageCountQueryVariables>(
+      () => ({
+        filter: {
+          pageTypes,
+        },
+      }),
+      [pageTypes],
+    );
 
   const shouldSkipPageListQuery = !pageTypes.length || !isDeleteDialogOpen;
 

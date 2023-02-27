@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -105,9 +106,8 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
     filter.value.includes(displayValue.value);
 
-  const filteredValuesChecked = initialFieldDisplayValues.filter(
-    isValueChecked,
-  );
+  const filteredValuesChecked =
+    initialFieldDisplayValues.filter(isValueChecked);
 
   const filteredValuesUnchecked = fieldDisplayValues.filter(
     displayValue => !isValueChecked(displayValue),

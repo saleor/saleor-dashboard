@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PageFilterInput, PageSortField } from "@dashboard/graphql";
 import {
   PageListUrlFilters,
@@ -27,6 +28,5 @@ export function getFilterVariables(
   };
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

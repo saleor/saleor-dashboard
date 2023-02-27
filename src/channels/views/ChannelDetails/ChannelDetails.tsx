@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
@@ -84,29 +85,25 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     },
   });
 
-  const [
-    deactivateChannel,
-    deactivateChannelOpts,
-  ] = useChannelDeactivateMutation({
-    onCompleted: data => {
-      const errors = data.channelDeactivate.errors;
-      if (errors.length) {
-        errors.forEach(error => handleError(error));
-      }
-    },
-  });
+  const [deactivateChannel, deactivateChannelOpts] =
+    useChannelDeactivateMutation({
+      onCompleted: data => {
+        const errors = data.channelDeactivate.errors;
+        if (errors.length) {
+          errors.forEach(error => handleError(error));
+        }
+      },
+    });
 
-  const [
-    reorderChannelWarehouses,
-    reorderChannelWarehousesOpts,
-  ] = useChannelReorderWarehousesMutation({
-    onCompleted: data => {
-      const errors = data.channelReorderWarehouses.errors;
-      if (errors.length) {
-        errors.forEach(error => handleError(error));
-      }
-    },
-  });
+  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
+    useChannelReorderWarehousesMutation({
+      onCompleted: data => {
+        const errors = data.channelReorderWarehouses.errors;
+        if (errors.length) {
+          errors.forEach(error => handleError(error));
+        }
+      },
+    });
 
   const handleSubmit = async ({
     name,

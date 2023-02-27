@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorCode,

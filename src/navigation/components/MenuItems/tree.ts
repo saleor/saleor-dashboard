@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 import { getPatch } from "fast-array-diff";
 import { TreeItem } from "react-sortable-tree";

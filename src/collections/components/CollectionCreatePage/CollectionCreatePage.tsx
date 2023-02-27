@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { Content } from "@dashboard/components/AppLayout/Content";

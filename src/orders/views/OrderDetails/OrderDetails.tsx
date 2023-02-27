@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
@@ -42,10 +43,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
-  const [
-    updatePrivateMetadata,
-    updatePrivateMetadataOpts,
-  ] = useUpdatePrivateMetadataMutation({});
+  const [updatePrivateMetadata, updatePrivateMetadataOpts] =
+    useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
 
   const [openModal, closeModal] = createDialogActionHandlers<

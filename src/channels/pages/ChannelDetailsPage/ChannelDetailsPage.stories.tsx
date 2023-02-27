@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channel, channelCreateErrors } from "@dashboard/channels/fixtures";
 import { countries } from "@dashboard/fixtures";
 import { ChannelErrorFragment } from "@dashboard/graphql";

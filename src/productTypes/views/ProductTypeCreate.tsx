@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ProductTypeKindEnum,
@@ -50,23 +51,21 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
-  const [
-    createProductType,
-    createProductTypeOpts,
-  ] = useProductTypeCreateMutation({
-    onCompleted: data => {
-      if (data.productTypeCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "paa4m0",
-            defaultMessage: "Successfully created product type",
-          }),
-        });
-        navigate(productTypeUrl(data.productTypeCreate.productType.id));
-      }
-    },
-  });
+  const [createProductType, createProductTypeOpts] =
+    useProductTypeCreateMutation({
+      onCompleted: data => {
+        if (data.productTypeCreate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "paa4m0",
+              defaultMessage: "Successfully created product type",
+            }),
+          });
+          navigate(productTypeUrl(data.productTypeCreate.productType.id));
+        }
+      },
+    });
 
   const handleCreate = async (formData: ProductTypeForm) => {
     const result = await createProductType({

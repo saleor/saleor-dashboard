@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { RequireOnlyOne } from "@dashboard/misc";

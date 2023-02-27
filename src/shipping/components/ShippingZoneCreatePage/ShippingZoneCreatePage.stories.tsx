@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ShippingErrorCode } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";

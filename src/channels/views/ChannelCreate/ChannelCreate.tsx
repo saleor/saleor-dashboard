@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -42,19 +43,17 @@ export const ChannelCreateView = ({}) => {
     },
   });
 
-  const [
-    reorderChannelWarehouses,
-    reorderChannelWarehousesOpts,
-  ] = useChannelReorderWarehousesMutation({
-    onCompleted: data => {
-      const errors = data.channelReorderWarehouses.errors;
-      if (errors.length) {
-        errors.forEach(error => handleError(error));
-      }
+  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
+    useChannelReorderWarehousesMutation({
+      onCompleted: data => {
+        const errors = data.channelReorderWarehouses.errors;
+        if (errors.length) {
+          errors.forEach(error => handleError(error));
+        }
 
-      navigate(channelPath(data.channelReorderWarehouses.channel?.id));
-    },
-  });
+        navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+      },
+    });
 
   const handleSubmit = async ({
     shippingZonesIdsToAdd,

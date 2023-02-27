@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { createContext } from "react";
 
 export type Status = "success" | "error" | "info" | "warning";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { SortPage } from "@dashboard/types";

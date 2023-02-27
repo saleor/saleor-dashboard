@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
@@ -32,7 +33,8 @@ export const ProductFilterKeys = {
   channel: "channel",
   productKind: "productKind",
 } as const;
-export type ProductFilterKeys = typeof ProductFilterKeys[keyof typeof ProductFilterKeys];
+export type ProductFilterKeys =
+  (typeof ProductFilterKeys)[keyof typeof ProductFilterKeys];
 
 export type AttributeFilterOpts = FilterOpts<string[]> & {
   id: string;
@@ -105,9 +107,9 @@ const messages = defineMessages({
   },
 });
 
-const filterByType = (type: AttributeInputTypeEnum) => (
-  attribute: AttributeFilterOpts,
-) => attribute.inputType === type;
+const filterByType =
+  (type: AttributeInputTypeEnum) => (attribute: AttributeFilterOpts) =>
+    attribute.inputType === type;
 
 export function createFilterStructure(
   intl: IntlShape,

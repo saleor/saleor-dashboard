@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { HomeQuery, OrderEventsEnum } from "@dashboard/graphql";
 
 export const shop: (placeholderImage: string) => HomeQuery = (

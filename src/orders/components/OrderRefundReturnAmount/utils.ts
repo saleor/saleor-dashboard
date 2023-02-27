@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IMoney } from "@dashboard/components/Money";
 import { OrderDetailsFragment, OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";

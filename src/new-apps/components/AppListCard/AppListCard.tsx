@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";

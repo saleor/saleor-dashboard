@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -55,46 +56,40 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     },
   });
 
-  const [
-    createCustomerAddress,
-    createCustomerAddressOpts,
-  ] = useCreateCustomerAddressMutation({
-    onCompleted: data => {
-      if (data.addressCreate.errors.length === 0) {
-        closeModal();
-      }
-    },
-  });
+  const [createCustomerAddress, createCustomerAddressOpts] =
+    useCreateCustomerAddressMutation({
+      onCompleted: data => {
+        if (data.addressCreate.errors.length === 0) {
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    updateCustomerAddress,
-    updateCustomerAddressOpts,
-  ] = useUpdateCustomerAddressMutation({
-    onCompleted: data => {
-      if (data.addressUpdate.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [updateCustomerAddress, updateCustomerAddressOpts] =
+    useUpdateCustomerAddressMutation({
+      onCompleted: data => {
+        if (data.addressUpdate.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
-  const [
-    removeCustomerAddress,
-    removeCustomerAddressOpts,
-  ] = useRemoveCustomerAddressMutation({
-    onCompleted: data => {
-      if (data.addressDelete.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+  const [removeCustomerAddress, removeCustomerAddressOpts] =
+    useRemoveCustomerAddressMutation({
+      onCompleted: data => {
+        if (data.addressDelete.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const customerData = useCustomerAddressesQuery({
     displayLoader: true,

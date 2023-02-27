@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 
 export const hasPermission = (permission: PermissionEnum, user: UserFragment) =>

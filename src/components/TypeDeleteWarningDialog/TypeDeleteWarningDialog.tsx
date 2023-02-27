@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getById } from "@dashboard/misc";
 import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
 import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
@@ -87,8 +88,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   const singleItemSelectedId = typesToDelete[0];
 
-  const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))
-    ?.name;
+  const singleItemSelectedName = typesData.find(
+    getById(singleItemSelectedId),
+  )?.name;
 
   return (
     <Modal open={isOpen}>

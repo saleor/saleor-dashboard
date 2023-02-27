@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   MoneyFragment,
   OrderDetailsFragment,
@@ -53,21 +54,17 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
       handleDiscountDataSubmission(errors),
   });
 
-  const [
-    orderDiscountUpdate,
-    orderDiscountUpdateOpts,
-  ] = useOrderDiscountUpdateMutation({
-    onCompleted: ({ orderDiscountUpdate: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderDiscountUpdate, orderDiscountUpdateOpts] =
+    useOrderDiscountUpdateMutation({
+      onCompleted: ({ orderDiscountUpdate: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
-  const [
-    orderDiscountRemove,
-    orderDiscountRemoveOpts,
-  ] = useOrderDiscountDeleteMutation({
-    onCompleted: ({ orderDiscountDelete: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderDiscountRemove, orderDiscountRemoveOpts] =
+    useOrderDiscountDeleteMutation({
+      onCompleted: ({ orderDiscountDelete: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
@@ -123,6 +120,5 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   );
 };
 
-export const OrderDiscountContext = createContext<
-  OrderDiscountContextConsumerProps
->(null);
+export const OrderDiscountContext =
+  createContext<OrderDiscountContextConsumerProps>(null);

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { appPath } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { collections } from "@dashboard/collections/fixtures";

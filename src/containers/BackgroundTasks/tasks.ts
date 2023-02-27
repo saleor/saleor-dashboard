@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloQueryResult } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createChannelsDataWithDiscountPrice } from "@dashboard/channels/utils";
 import { listActionsProps, pageListProps } from "@dashboard/fixtures";
@@ -64,18 +65,20 @@ storiesOf("Discounts / Voucher details", module)
   .add("form errors", () => (
     <VoucherDetailsPage
       {...props}
-      errors={([
-        "applyOncePerOrder",
-        "code",
-        "discountType",
-        "endDate",
-        "minSpent",
-        "name",
-        "startDate",
-        "type",
-        "usageLimit",
-        "discountValue",
-      ] as Array<keyof VoucherDetailsPageFormData>).map(field => ({
+      errors={(
+        [
+          "applyOncePerOrder",
+          "code",
+          "discountType",
+          "endDate",
+          "minSpent",
+          "name",
+          "startDate",
+          "type",
+          "usageLimit",
+          "discountValue",
+        ] as Array<keyof VoucherDetailsPageFormData>
+      ).map(field => ({
         __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,

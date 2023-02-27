@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   orderSettings as orderSettingsFixture,
   shopOrderSettings as shopOrderSettingsFixture,

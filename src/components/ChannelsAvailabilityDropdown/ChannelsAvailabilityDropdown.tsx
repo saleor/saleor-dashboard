@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Card, Popper } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
@@ -15,16 +16,17 @@ export interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  channels,
-}) => {
+export const ChannelsAvailabilityDropdown: React.FC<
+  ChannelsAvailabilityDropdownProps
+> = ({ channels }) => {
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);
 
-  const dropdownColor = React.useMemo(() => getDropdownColor(channels), [
-    channels,
-  ]);
+  const dropdownColor = React.useMemo(
+    () => getDropdownColor(channels),
+    [channels],
+  );
 
   if (!channels?.length) {
     return (

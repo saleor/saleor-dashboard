@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { isDarkTheme } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";

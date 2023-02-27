@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { APP_VERSION } from "@dashboard/config";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";

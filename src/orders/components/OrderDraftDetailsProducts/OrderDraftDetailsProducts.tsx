@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -62,7 +63,9 @@ interface OrderDraftDetailsProductsProps {
   onOrderLineRemove: (id: string) => void;
 }
 
-const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = props => {
+const OrderDraftDetailsProducts: React.FC<
+  OrderDraftDetailsProductsProps
+> = props => {
   const { order, errors, onOrderLineChange, onOrderLineRemove } = props;
   const lines = order?.lines ?? [];
 

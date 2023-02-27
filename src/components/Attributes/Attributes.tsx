@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AttributeReference } from "@dashboard/attributes/utils/data";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";

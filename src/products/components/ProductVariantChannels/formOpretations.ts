@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
 import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
 import { UseFormsetOutput } from "@dashboard/hooks/useFormset";

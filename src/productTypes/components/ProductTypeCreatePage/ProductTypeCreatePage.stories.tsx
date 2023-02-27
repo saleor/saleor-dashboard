@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ProductTypeKindEnum, WeightUnitsEnum } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { formError } from "@dashboard/storybook/formError";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ConfirmButton from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";

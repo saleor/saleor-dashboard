@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useTheme } from "@saleor/macaw-ui";
 import React, { CSSProperties, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";

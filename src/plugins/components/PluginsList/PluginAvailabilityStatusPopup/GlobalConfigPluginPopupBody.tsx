@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { CardContent, Typography } from "@material-ui/core";
@@ -14,9 +15,9 @@ interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
 }
 
-const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({
-  plugin,
-}) => {
+const GlobalConfigPluginPopupBody: React.FC<
+  GlobalConfigPluginPopupBodyProps
+> = ({ plugin }) => {
   const intl = useIntl();
 
   const { active } = plugin.globalConfiguration;

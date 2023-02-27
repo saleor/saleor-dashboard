@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -132,15 +133,13 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const {
-    data: customerAddresses,
-    loading: customerAddressesLoading,
-  } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
+  const { data: customerAddresses, loading: customerAddressesLoading } =
+    useCustomerAddressesQuery({
+      variables: {
+        id: order?.user?.id,
+      },
+      skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
+    });
 
   const intl = useIntl();
 

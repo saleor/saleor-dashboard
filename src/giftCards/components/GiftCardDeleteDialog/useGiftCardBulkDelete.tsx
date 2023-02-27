@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import {
   BulkDeleteGiftCardMutation,
@@ -31,33 +32,31 @@ const useGiftCardBulkDelete = ({
     reset: resetSelectedItems,
   } = useGiftCardList();
 
-  const [
-    bulkDeleteGiftCard,
-    bulkDeleteGiftCardOpts,
-  ] = useBulkDeleteGiftCardMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardBulkDelete?.errors;
+  const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] =
+    useBulkDeleteGiftCardMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardBulkDelete?.errors;
 
-      if (!errors.length) {
+        if (!errors.length) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(messages.deleteSuccessAlertText, {
+              selectedItemsCount,
+            }),
+          });
+
+          onClose();
+          resetSelectedItems();
+          return;
+        }
+
         notify({
-          status: "success",
-          text: intl.formatMessage(messages.deleteSuccessAlertText, {
-            selectedItemsCount,
-          }),
+          status: "error",
+          text: intl.formatMessage(commonErrorMessages.unknownError),
         });
-
-        onClose();
-        resetSelectedItems();
-        return;
-      }
-
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError),
-      });
-    },
-    refetchQueries,
-  });
+      },
+      refetchQueries,
+    });
 
   const onBulkDeleteGiftCards = () =>
     bulkDeleteGiftCard({ variables: { ids: listElements } });

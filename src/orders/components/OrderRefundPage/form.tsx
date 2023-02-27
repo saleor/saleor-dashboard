@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import useForm, {
@@ -133,19 +134,17 @@ function useOrderRefundForm(
     refundedFulfilledProductQuantities.change(id, value);
   };
   const handleMaximalRefundedProductQuantitiesSet = () => {
-    const newQuantities: FormsetData<
-      null,
-      string
-    > = refundedProductQuantities.data.map(selectedLine => {
-      const line = order.lines.find(line => line.id === selectedLine.id);
+    const newQuantities: FormsetData<null, string> =
+      refundedProductQuantities.data.map(selectedLine => {
+        const line = order.lines.find(line => line.id === selectedLine.id);
 
-      return {
-        data: null,
-        id: line.id,
-        label: null,
-        value: line.quantityToFulfill.toString(),
-      };
-    });
+        return {
+          data: null,
+          id: line.id,
+          label: null,
+          value: line.quantityToFulfill.toString(),
+        };
+      });
     refundedProductQuantities.set(newQuantities);
     triggerChange();
   };
@@ -155,22 +154,22 @@ function useOrderRefundForm(
     const fulfillment = order.fulfillments.find(
       fulfillment => fulfillment.id === fulfillmentId,
     );
-    const newQuantities: FormsetData<
-      null,
-      string
-    > = refundedFulfilledProductQuantities.data.map(selectedLine => {
-      const line = fulfillment.lines.find(line => line.id === selectedLine.id);
+    const newQuantities: FormsetData<null, string> =
+      refundedFulfilledProductQuantities.data.map(selectedLine => {
+        const line = fulfillment.lines.find(
+          line => line.id === selectedLine.id,
+        );
 
-      if (line) {
-        return {
-          data: null,
-          id: line.id,
-          label: null,
-          value: line.quantity.toString(),
-        };
-      }
-      return selectedLine;
-    });
+        if (line) {
+          return {
+            data: null,
+            id: line.id,
+            label: null,
+            value: line.quantity.toString(),
+          };
+        }
+        return selectedLine;
+      });
     refundedFulfilledProductQuantities.set(newQuantities);
     triggerChange();
   };
@@ -198,10 +197,13 @@ function useOrderRefundForm(
     data,
     disabled,
     handlers: {
-      changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
+      changeRefundedFulfilledProductQuantity:
+        handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
-      setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
-      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet,
+      setMaximalRefundedFulfilledProductQuantities:
+        handleMaximalRefundedFulfilledProductQuantitiesSet,
+      setMaximalRefundedProductQuantities:
+        handleMaximalRefundedProductQuantitiesSet,
     },
     submit,
     isSaveDisabled,

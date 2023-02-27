@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { Backlink } from "@dashboard/components/Backlink";

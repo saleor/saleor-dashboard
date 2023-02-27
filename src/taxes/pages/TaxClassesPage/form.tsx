@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { TaxClassFragment } from "@dashboard/graphql";
 import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
@@ -75,9 +76,8 @@ function useTaxClassesForm(
     formset.change(id, value);
   };
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
@@ -116,10 +116,10 @@ function useTaxClassesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [
-    setExitDialogSubmitRef,
-    submit,
-  ]);
+  React.useEffect(
+    () => setExitDialogSubmitRef(submit),
+    [setExitDialogSubmitRef, submit],
+  );
   setIsSubmitDisabled(disabled);
 
   return {

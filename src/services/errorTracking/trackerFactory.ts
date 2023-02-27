@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TrackerMethods, TrackerPermission, UserData } from "./types";
 
 type ErrorTrackerFactory = (

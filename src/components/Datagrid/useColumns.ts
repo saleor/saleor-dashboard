@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
@@ -62,9 +63,10 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [availableColumns],
   );
-  const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [
-    availableColumns,
-  ]);
+  const defaultColumns = useMemo(
+    () => availableColumns.map(({ id }) => id),
+    [availableColumns],
+  );
 
   return {
     availableColumnsChoices,

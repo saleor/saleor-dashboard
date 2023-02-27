@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";

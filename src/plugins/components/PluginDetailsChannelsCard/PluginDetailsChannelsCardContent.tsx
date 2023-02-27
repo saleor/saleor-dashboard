@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
@@ -32,11 +33,9 @@ export interface PluginDetailsChannelsCardProps {
   plugin: PluginsDetailsFragment;
 }
 
-const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
-  plugin,
-  selectedChannelId,
-  setSelectedChannelId,
-}) => {
+const PluginDetailsChannelsCardContent: React.FC<
+  PluginDetailsChannelsCardProps
+> = ({ plugin, selectedChannelId, setSelectedChannelId }) => {
   const classes = useStyles({});
 
   if (!plugin) {

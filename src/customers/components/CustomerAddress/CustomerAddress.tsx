@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardTitle from "@dashboard/components/CardTitle";

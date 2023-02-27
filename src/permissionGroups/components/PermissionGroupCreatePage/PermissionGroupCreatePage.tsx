@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";

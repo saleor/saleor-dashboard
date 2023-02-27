@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AccountErrorCode } from "@dashboard/graphql";
 import CardDecorator from "@dashboard/storybook//CardDecorator";
 import Decorator from "@dashboard/storybook//Decorator";

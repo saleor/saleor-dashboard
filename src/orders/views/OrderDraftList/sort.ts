@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderSortField } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
@@ -17,6 +18,5 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

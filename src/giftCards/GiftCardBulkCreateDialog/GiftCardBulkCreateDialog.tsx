@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IMessage } from "@dashboard/components/messages";
 import {
   GiftCardBulkCreateInput,

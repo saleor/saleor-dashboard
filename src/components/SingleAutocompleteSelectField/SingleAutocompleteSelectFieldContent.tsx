@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import chevronDown from "@assets/images/ChevronDown.svg";
 import useElementScroll, {
   isScrolledToBottom,
@@ -26,7 +27,7 @@ const offset = 24;
 export type ChoiceValue = string;
 export interface SingleAutocompleteChoiceType<
   V extends ChoiceValue = ChoiceValue,
-  L = string
+  L = string,
 > {
   label: L;
   value: V;
@@ -137,7 +138,9 @@ function getChoiceIndex(
 
 const sliceSize = 20;
 
-const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
+const SingleAutocompleteSelectFieldContent: React.FC<
+  SingleAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices,
@@ -280,7 +283,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
               );
               const key = React.isValidElement(suggestion.label)
                 ? `${index}${suggestion.value}${
-                    ((suggestion as unknown) as ReactElement).props
+                    (suggestion as unknown as ReactElement).props
                   }`
                 : JSON.stringify(suggestion);
 

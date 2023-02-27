@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getDashboardUrFromAppCompleteUrl } from "@dashboard/apps/urls";
 import { Extension } from "@dashboard/apps/useExtensions";
 import { AppExtensionMountEnum } from "@dashboard/graphql";

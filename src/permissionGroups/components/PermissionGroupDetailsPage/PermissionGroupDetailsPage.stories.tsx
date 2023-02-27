@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { permissions } from "@dashboard/fixtures";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";

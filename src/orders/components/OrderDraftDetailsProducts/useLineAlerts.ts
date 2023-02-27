@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { useMemo } from "react";

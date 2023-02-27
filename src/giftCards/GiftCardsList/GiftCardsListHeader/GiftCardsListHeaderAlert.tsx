@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useGiftCardProductsCountQuery } from "@dashboard/graphql";
 import { Alert } from "@saleor/macaw-ui";
 import React from "react";
@@ -9,10 +10,8 @@ import GiftCardsListHeaderAlertContent from "./GiftCardsListHeaderAlertContent";
 const GiftCardsListHeaderAlert: React.FC = () => {
   const intl = useIntl();
 
-  const {
-    data: giftCardProductsCount,
-    loading: giftCardProductsCountLoading,
-  } = useGiftCardProductsCountQuery();
+  const { data: giftCardProductsCount, loading: giftCardProductsCountLoading } =
+    useGiftCardProductsCountQuery();
 
   const giftCardProductTypesExist =
     giftCardProductsCount?.giftCardProductTypes.totalCount > 0;

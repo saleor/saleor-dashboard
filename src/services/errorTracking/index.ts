@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SentryAdapter } from "./adapters";
 import { ErrorTrackerFactory } from "./trackerFactory";
 

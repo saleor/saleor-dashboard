@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   TableCell,

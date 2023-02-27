@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";

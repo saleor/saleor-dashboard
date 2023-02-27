@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";

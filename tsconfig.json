@@ -20,7 +20,6 @@
     "plugins": [
       {
         "name": "typescript-strict-plugin",
-        "paths": ["./src"]
       }
     ],
   },

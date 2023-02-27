@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ShippingZoneQuery } from "@dashboard/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderErrorCode } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { warehouseList } from "@dashboard/warehouses/fixtures";

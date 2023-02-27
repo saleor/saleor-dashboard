@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WebhookErrorCode } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";

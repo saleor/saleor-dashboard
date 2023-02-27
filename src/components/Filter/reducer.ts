@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { update } from "@dashboard/utils/lists";
 
 import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
@@ -16,7 +17,7 @@ export interface FilterReducerAction<K extends string, T extends FieldType> {
   }>;
 }
 export type UpdateStateFunction<K extends string = string> = <
-  T extends FieldType
+  T extends FieldType,
 >(
   value: FilterReducerAction<K, T>,
 ) => void;

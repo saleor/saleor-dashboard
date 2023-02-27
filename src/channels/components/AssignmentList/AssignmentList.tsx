@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import { ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Typography } from "@material-ui/core";

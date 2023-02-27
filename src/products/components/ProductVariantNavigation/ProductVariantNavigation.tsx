@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -39,7 +40,9 @@ interface ProductVariantNavigationProps {
   onReorder: ReorderAction;
 }
 
-const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props => {
+const ProductVariantNavigation: React.FC<
+  ProductVariantNavigationProps
+> = props => {
   const {
     current,
     defaultVariantId,

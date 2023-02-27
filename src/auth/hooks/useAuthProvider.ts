@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import { DEMO_MODE } from "@dashboard/config";

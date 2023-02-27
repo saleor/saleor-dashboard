@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { FormData } from "@dashboard/discounts/components/SaleCreatePage";
 import { getSaleChannelsVariables } from "@dashboard/discounts/handlers";

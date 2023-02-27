@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
@@ -74,9 +75,8 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   const navigate = useNavigator();
 
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialData = {
     ...formInitialData,

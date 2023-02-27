@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";

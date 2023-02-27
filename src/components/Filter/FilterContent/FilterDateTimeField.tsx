@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FieldType, FilterFieldBaseProps } from "@dashboard/components/Filter";
 import Arrow from "@dashboard/components/Filter/Arrow";
 import { splitDateTime } from "@dashboard/misc";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter";
 import {
   ProductTypeConfigurable,
@@ -74,16 +75,10 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<ProductTypeListUrlFilters>(PRODUCT_TYPE_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<ProductTypeListUrlFilters>(PRODUCT_TYPE_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<ProductTypeListUrlQueryParams, ProductTypeListUrlFilters>(
-  ProductTypeListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<ProductTypeListUrlQueryParams, ProductTypeListUrlFilters>(
+    ProductTypeListUrlFiltersEnum,
+  );

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";

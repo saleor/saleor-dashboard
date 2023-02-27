@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { Pill } from "@saleor/macaw-ui";

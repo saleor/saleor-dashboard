@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createChannelsData } from "@dashboard/channels/utils";
 import { fetchMoreProps } from "@dashboard/fixtures";
@@ -101,13 +102,11 @@ storiesOf("Products / Create product", module)
       currentChannels={channels}
       allChannelsCount={5}
       loading={false}
-      errors={([
-        "attributes",
-        "name",
-        "productType",
-        "category",
-        "sku",
-      ] as Array<keyof ProductCreateFormData | "attributes">).map(field => ({
+      errors={(
+        ["attributes", "name", "productType", "category", "sku"] as Array<
+          keyof ProductCreateFormData | "attributes"
+        >
+      ).map(field => ({
         __typename: "ProductError",
         attributes:
           field === "attributes"

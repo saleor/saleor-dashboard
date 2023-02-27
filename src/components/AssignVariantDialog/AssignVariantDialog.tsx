@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ConfirmButton from "@dashboard/components/ConfirmButton";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";

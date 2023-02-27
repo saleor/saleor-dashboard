@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
 import SingleAutocompleteSelectField, {

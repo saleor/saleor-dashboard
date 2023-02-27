@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import React from "react";
 

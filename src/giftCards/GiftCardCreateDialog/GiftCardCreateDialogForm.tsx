@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -69,14 +70,13 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    data: settingsData,
-    loading: loadingSettings,
-  } = useGiftCardSettingsQuery();
+  const { data: settingsData, loading: loadingSettings } =
+    useGiftCardSettingsQuery();
 
-  const [selectedCustomer, setSelectedCustomer] = useState<
-    GiftCardCreateFormCustomer
-  >(initialCustomer || defaultInitialCustomer);
+  const [selectedCustomer, setSelectedCustomer] =
+    useState<GiftCardCreateFormCustomer>(
+      initialCustomer || defaultInitialCustomer,
+    );
 
   const handleSubmit = (data: GiftCardCreateFormData) =>
     onSubmit({ ...data, selectedCustomer });

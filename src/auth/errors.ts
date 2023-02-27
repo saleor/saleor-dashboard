@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloError } from "@apollo/client";
 import { findValueInEnum } from "@dashboard/misc";
 import { GraphQLError } from "graphql";
@@ -15,7 +16,7 @@ export const AuthError = {
   OAuthError: "OAuthError",
 } as const;
 
-export type AuthError = typeof AuthError[keyof typeof AuthError];
+export type AuthError = (typeof AuthError)[keyof typeof AuthError];
 
 export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;

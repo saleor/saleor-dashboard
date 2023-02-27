@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -201,12 +202,9 @@ function useOrderCustomerAddressesEditForm(
   };
 }
 
-const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormProps> = ({
-  children,
-  initial,
-  onSubmit,
-  ...rest
-}) => {
+const OrderCustomerAddressesEditForm: React.FC<
+  OrderCustomerAddressesEditFormProps
+> = ({ children, initial, onSubmit, ...rest }) => {
   const props = useOrderCustomerAddressesEditForm(
     initial || {},
     onSubmit,

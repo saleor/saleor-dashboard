@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   FormControl,
   FormControlLabel,
@@ -13,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 import { useStyles } from "./styles";
 
 export interface RadioGroupFieldChoice<
-  T extends string | number = string | number
+  T extends string | number = string | number,
 > {
   disabled?: boolean;
   value: T;

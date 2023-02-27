@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
 import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
@@ -18,9 +19,9 @@ export interface Pill {
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
-  pills,
-}) => {
+export const ChannelsAvailabilityMenuContent: React.FC<
+  ChannelsAvailabilityMenuContentProps
+> = ({ pills }) => {
   const intl = useIntl();
   const classes = useStyles({});
 

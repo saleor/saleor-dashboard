@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -55,7 +56,9 @@ interface CategoryProductListProps extends ListProps, ListActions {
   products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
 }
 
-export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
+export const CategoryProductList: React.FC<
+  CategoryProductListProps
+> = props => {
   const {
     disabled,
     isChecked,

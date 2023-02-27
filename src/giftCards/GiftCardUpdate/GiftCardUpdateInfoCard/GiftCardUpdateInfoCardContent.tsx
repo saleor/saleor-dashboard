@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { appUrl } from "@dashboard/apps/urls";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Link from "@dashboard/components/Link";

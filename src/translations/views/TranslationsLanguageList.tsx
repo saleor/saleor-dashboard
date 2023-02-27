@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useShop from "@dashboard/hooks/useShop";
 import React from "react";
 

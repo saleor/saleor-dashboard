@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -29,10 +30,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     data: externalAuthentications,
     loading: externalAuthenticationsLoading,
   } = useAvailableExternalAuthenticationsQuery();
-  const [
-    requestedExternalPluginId,
-    setRequestedExternalPluginId,
-  ] = useLocalStorage("requestedExternalPluginId", null);
+  const [requestedExternalPluginId, setRequestedExternalPluginId] =
+    useLocalStorage("requestedExternalPluginId", null);
 
   const [fallbackUri, setFallbackUri] = useLocalStorage(
     "externalLoginFallbackUri",

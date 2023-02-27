@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AppActivateDialog from "@dashboard/apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/apps/components/AppDeactivateDialog";
 import { appMessages } from "@dashboard/apps/messages";

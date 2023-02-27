@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
 import {
   CopyIcon,

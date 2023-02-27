@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
 import * as ExternalAppContext from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import * as dashboardConfig from "@dashboard/config";

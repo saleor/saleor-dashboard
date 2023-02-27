@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useRequestPasswordResetMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -17,30 +18,28 @@ const ResetPasswordView: React.FC = () => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [
-    requestPasswordReset,
-    requestPasswordResetOpts,
-  ] = useRequestPasswordResetMutation({
-    onCompleted: data => {
-      if (data.requestPasswordReset.errors.length === 0) {
-        navigate(passwordResetSuccessUrl);
-      } else {
-        if (
-          data.requestPasswordReset.errors.find(err => err.field === "email")
-        ) {
-          setError(
-            intl.formatMessage({
-              id: "C0JLNW",
-              defaultMessage:
-                "Provided email address does not exist in our database.",
-            }),
-          );
+  const [requestPasswordReset, requestPasswordResetOpts] =
+    useRequestPasswordResetMutation({
+      onCompleted: data => {
+        if (data.requestPasswordReset.errors.length === 0) {
+          navigate(passwordResetSuccessUrl);
         } else {
-          setError(intl.formatMessage(commonMessages.somethingWentWrong));
+          if (
+            data.requestPasswordReset.errors.find(err => err.field === "email")
+          ) {
+            setError(
+              intl.formatMessage({
+                id: "C0JLNW",
+                defaultMessage:
+                  "Provided email address does not exist in our database.",
+              }),
+            );
+          } else {
+            setError(intl.formatMessage(commonMessages.somethingWentWrong));
+          }
         }
-      }
-    },
-  });
+      },
+    });
 
   const handleSubmit = (data: ResetPasswordPageFormData) =>
     extractMutationErrors(

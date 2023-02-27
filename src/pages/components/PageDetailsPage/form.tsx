@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -138,13 +139,14 @@ function usePageForm(
 ): UsePageUpdateFormOutput {
   const pageExists = page !== null;
 
-  const { handleChange, triggerChange, data: formData, formId } = useForm(
-    getInitialFormData(pageExists, page),
-    undefined,
-    {
-      confirmLeave: true,
-    },
-  );
+  const {
+    handleChange,
+    triggerChange,
+    data: formData,
+    formId,
+  } = useForm(getInitialFormData(pageExists, page), undefined, {
+    confirmLeave: true,
+  });
   const [validationErrors, setValidationErrors] = useState<
     PageErrorWithAttributesFragment[]
   >([]);
@@ -166,13 +168,10 @@ function usePageForm(
   });
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
-  const {
-    setExitDialogSubmitRef,
-    setIsSubmitDisabled,
-    setIsDirty,
-  } = useExitFormDialog({
-    formId,
-  });
+  const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } =
+    useExitFormDialog({
+      formId,
+    });
 
   const richText = useRichText({
     initial: pageExists ? page?.content : null,

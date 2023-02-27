@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ProductOrder, ProductOrderField } from "@dashboard/graphql";
 import {
   ProductListUrlQueryParams,

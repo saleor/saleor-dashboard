@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormChange } from "@dashboard/hooks/useForm";
 import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";

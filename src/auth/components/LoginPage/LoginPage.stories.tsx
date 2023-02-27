@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardDecorator from "@dashboard/storybook/CardDecorator";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";

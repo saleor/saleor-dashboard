@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserContext } from "@dashboard/auth";
 import { adminUserPermissions } from "@dashboard/fixtures";
 import { UserFragment } from "@dashboard/graphql";

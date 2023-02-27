@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";

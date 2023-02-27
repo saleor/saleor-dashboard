@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,

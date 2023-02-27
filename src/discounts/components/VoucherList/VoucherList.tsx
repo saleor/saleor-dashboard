@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import Date from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";

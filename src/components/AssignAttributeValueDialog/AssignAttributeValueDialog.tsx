@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import React from "react";

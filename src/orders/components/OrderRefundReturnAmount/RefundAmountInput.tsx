@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IMoney } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import { OrderErrorFragment } from "@dashboard/graphql";

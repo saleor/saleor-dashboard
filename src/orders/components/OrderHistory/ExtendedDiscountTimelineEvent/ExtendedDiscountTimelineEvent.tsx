@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { TimelineEvent } from "@dashboard/components/Timeline";
