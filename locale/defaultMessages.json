@@ -4342,6 +4342,9 @@
     "context": "collection availability",
     "string": "Availability"
   },
+  "UxeJFE": {
+    "string": "Repository"
+  },
   "UycVMp": {
     "context": "button",
     "string": "Create subcategory"
@@ -7377,6 +7380,9 @@
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
+  },
+  "tDlWb6": {
+    "string": "Request a feature"
   },
   "tEdFmZ": {
     "context": "notification title",
