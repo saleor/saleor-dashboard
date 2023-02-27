@@ -11,10 +11,12 @@ interface Props {
 }
 
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
-  const isActive = isMenuActive(location.pathname, menuItem);
-  const isExpanded =
-    isActive ||
-    menuItem?.children.some(item => isMenuActive(location.pathname, item));
+  const hasSubmenuActive = menuItem?.children.some(item =>
+    isMenuActive(location.pathname, item),
+  );
+  const isActive =
+    isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
+  const isExpanded = isActive || hasSubmenuActive;
 
   return (
     <List.ItemGroup defaultExpanded={isExpanded}>
